@@ -22,7 +22,8 @@ from multicall.utils import await_awaitable, gather
 from tqdm.asyncio import tqdm_asyncio
 from web3.types import BlockData, TxData
 from y import Contract, convert, get_price_async
-from y.constants import weth, EEE_ADDRESS
+from y.classes.common import ERC20
+from y.constants import EEE_ADDRESS, weth
 from y.datatypes import Address, Block
 from y.exceptions import ContractNotVerified
 from y.utils.dank_mids import dank_w3
@@ -32,7 +33,7 @@ from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.decorators import sentry_catch_all, wait_or_exit_after
 from eth_portfolio.lending import lending
 from eth_portfolio.shitcoins import SHITCOINS
-from eth_portfolio.utils import Decimal, _get_price
+from eth_portfolio.utils import Decimal, _get_price, get_token_from_event
 
 logger = logging.getLogger(__name__)
 
@@ -465,3 +466,19 @@ class PortfolioAddress:
                 logger.error('unable to decode logs, dev figure out why')
                 logger.error(e)
                 logger.error(log)
+
+    def list_tokens_at_block(self, block: int = None) -> List[ERC20]:
+        tokens = set()
+        for transfer in self.token_transfers:
+            token = get_token_from_event(transfer)
+            if token is None:
+                continue
+
+            if transfer.values()[1] == self.address:
+                if block:
+                    if transfer.block_number <= block:
+                        tokens.add(token)
+                else:
+                    tokens.add(token)
+
+        return list(tokens)

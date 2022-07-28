@@ -261,24 +261,6 @@ class Ledger:
     def __getitem__(self, block: Block) -> Dict:
         assert isinstance(block, int), f"You must pass an integer block number, not {block}"
         assert block >= self.portfolio._start_block, f"Input block must be greater than `self.start_block`, {self.portfolio._start_block}"
-
-    # Legacy code
-
-    def list_tokens_at_block(self, address: Address, block: int = None) -> List[ERC20]:
-        tokens = set()
-        for transfer in self.token_transfers:
-            token = get_token_from_event(transfer)
-            if token is None:
-                continue
-
-            if transfer.values()[1] == address:
-                if block:
-                    if transfer.block_number <= block:
-                        tokens.add(token)
-                else:
-                    tokens.add(token)
-
-        return list(tokens)
     
     # Pandas
 
