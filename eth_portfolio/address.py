@@ -150,7 +150,7 @@ class PortfolioAddress:
         return await_awaitable(self.token_balances_async(block))
     
     async def token_balances_async(self, block):
-        tokens = self.list_tokens_at_block(self.address, block=block)
+        tokens = self.list_tokens_at_block(block=block)
         token_balances, token_prices = await gather([
             gather([token.balance_of_readable_async(self.address, block) for token in tokens]),
             gather([_get_price(token, block) for token in tokens]),
