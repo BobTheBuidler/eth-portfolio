@@ -150,7 +150,7 @@ class PortfolioAddress:
         return await_awaitable(self.token_balances_async(block))
     
     async def token_balances_async(self, block):
-        tokens = self.list_tokens_at_block(block=block)
+        tokens = await self.list_tokens_at_block_async(block=block)
         token_balances, token_prices = await gather([
             gather([token.balance_of_readable_async(self.address, block) for token in tokens]),
             gather([_get_price(token, block) for token in tokens]),
@@ -467,9 +467,15 @@ class PortfolioAddress:
                 logger.error(e)
                 logger.error(log)
 
-    def list_tokens_at_block(self, block: int = None) -> List[ERC20]:
+    def list_tokens_at_block(self, block: Optional[int] = None) -> List[ERC20]:
+        coro = self.list_tokens_at_block_async(block)
+        if self.portfolio.asynchronous:
+            return coro
+        return await_awaitable(coro)
+    
+    async def list_tokens_at_block_async(self, block: Optional[int] = None) -> List[ERC20]:
         tokens = set()
-        for transfer in self.token_transfers:
+        for transfer in await self.token_transfers_async:
             token = get_token_from_event(transfer)
             if token is None:
                 continue
