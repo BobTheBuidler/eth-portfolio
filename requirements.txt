@@ -1,0 +1,2 @@
+pandas>=1.4.3,<1.5
+ypricemagic>=1.1.1.dev67,<1.1.3
