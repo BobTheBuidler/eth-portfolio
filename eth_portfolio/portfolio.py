@@ -415,7 +415,7 @@ class Ledger:
                 for address in token_transfers
             ]),
             asyncio.gather(*[
-                asyncio.gather(*[ERC20(transfer.address).symbol_async for transfer in token_transfers[address]])
+                asyncio.gather(*[_get_symbol(transfer.address) for transfer in token_transfers[address]])
                 for address in token_transfers
             ]),
         ])
@@ -455,6 +455,12 @@ async def _get_price(token, block) -> UsdPrice:
     try:
         return await get_price_async(token, block, fail_to_None=True)
     except (NonStandardERC20, PriceError):
+        return None
+
+async def _get_symbol(token) -> str:
+    try:
+        return await ERC20(token).symbol_async
+    except NonStandardERC20:
         return None
 
 # Use this var for a convenient way to set up your portfolio using env vars.
