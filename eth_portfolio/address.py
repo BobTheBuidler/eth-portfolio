@@ -28,7 +28,7 @@ from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.decorators import sentry_catch_all, wait_or_exit_after
 from eth_portfolio.lending import lending
 from eth_portfolio.shitcoins import SHITCOINS
-from eth_portfolio.utils import Decimal, _get_price, get_token_from_event
+from eth_portfolio.utils import Decimal, _get_price
 
 logger = logging.getLogger(__name__)
 
