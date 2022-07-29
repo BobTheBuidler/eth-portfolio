@@ -417,17 +417,5 @@ class PortfolioAddress:
         return await_awaitable(coro)
     
     async def list_tokens_at_block_async(self, block: Optional[int] = None) -> List[ERC20]:
-        tokens = set()
-        for transfer in await self.token_transfers_async:
-            token = get_token_from_event(transfer)
-            if token is None:
-                continue
-
-            if transfer.values()[1] == self.address:
-                if block:
-                    if transfer.block_number <= block:
-                        tokens.add(token)
-                else:
-                    tokens.add(token)
-
+        tokens = {ERC20(transfer.address) for transfer in await self.token_transfers_async if transfer.block_number <= block}
         return list(tokens)

@@ -73,16 +73,3 @@ async def _get_price(token: Address, block: int = None) -> float:
             raise
         logger.critical(f'{type(e).__name__} while fetching price for {desc_str} | {e}')
     return 0
-
-def get_token_from_event(transfer: _EventItem) -> ERC20:
-    return ERC20(transfer.address)
-    """
-    try:
-        return ERC20(transfer.address)
-    except EventLookupError:
-        logger.critical(transfer)
-        logger.critical(
-            f'One of your cached contracts has an incorrect definition: {transfer.address}. Please fix this manually'
-        )
-    return None
-    """
