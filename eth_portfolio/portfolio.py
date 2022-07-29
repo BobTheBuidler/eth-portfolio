@@ -15,7 +15,7 @@ from web3.types import TxData
 from y import Contract, Network, get_price_async
 from y.classes.common import ERC20
 from y.datatypes import Address, Block, UsdPrice
-from y.exceptions import PriceError
+from y.exceptions import NonStandardERC20, PriceError
 
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.constants import ADDRESSES
@@ -454,7 +454,7 @@ class Ledger:
 async def _get_price(token, block) -> UsdPrice:
     try:
         return await get_price_async(token, block, fail_to_None=True)
-    except PriceError:
+    except (NonStandardERC20, PriceError):
         return None
 
 # Use this var for a convenient way to set up your portfolio using env vars.
