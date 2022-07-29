@@ -250,58 +250,6 @@ class PortfolioAddress:
     
     @async_property
     async def internal_transfers_async(self):
-        """
-        blocks = list(range(self.portfolio._start_block, chain.height))
-        batches = [blocks[i:i+100] for i in range(0, len(blocks), 100)]
-        relevant_batches = await tqdm_asyncio.gather(*[self._check_if_block_range_contains_internal_transactions(blocks) for blocks in batches])
-        relevant_batches = [batch for batch, is_relevant in zip(batches, relevant_batches) if is_relevant]
-        relevant_blocks = await asyncio.gather(*[self._get_relevant_blocks_from_batch(batch) for batch in relevant_batches])
-        relevant_blocks = [block for batch in relevant_blocks for block in batch]
-        
-        for block in relevant_blocks:
-            block = await dank_w3.eth.get_block(block, full_transactions=True)
-            for tx in block.transactions:
-                # TODO make this async
-                for transfer in chain.get_transaction(tx).internal_transfers:
-                    raise ValueError(transfer)
-        """
-
-        # Mostly working
-        """
-        internal_transfers = defaultdict(list)
-        async for block in self._internal_transfer_blocks():
-            block: BlockData = await dank_w3.eth.get_block(block, full_transactions=True)
-            for tx in block.transactions:
-                # TODO make this async
-                tx = await asyncio.get_event_loop().run_in_executor(threadpool, chain.get_transaction, tx['hash'])
-
-                # Get the internal transfers for this transaction
-                if tx._internal_transfers is None:
-                    try:
-                        await asyncio.get_event_loop().run_in_executor(threadpool, tx._expand_trace)
-                    except DecodingError:
-                        logger.error(f"Decoding error for transaction {tx.txid}")
-                    except InsufficientDataBytes:
-                        logger.error(f"Insufficient data bytes for transaction {tx.txid}")
-                    except KeyError as e:
-                        logger.error(f"KeyError: {e} for transaction {tx.txid}")
-                    except OverflowError:
-                        logger.error(f"Overflow error for transaction {tx.txid}")
-                    except RPCRequestError:
-                        logger.error(f"RPC error for transaction {tx.txid}")
-
-                if tx._internal_transfers is not None:
-                    for transfer in tx._internal_transfers:
-                        if self.address in [transfer['from'], transfer['to']]:
-                            internal_transfers[block.number].append(transfer)
-        
-        for block, transfers in internal_transfers.items():
-            if len(transfers) > 1:
-                raise ValueError(transfers)
-        
-        internal_transfers = [transfer for block in sorted(internal_transfers) for transfer in internal_transfers[block]]
-        """
-
         to_traces, from_traces = await asyncio.gather(
             dank_w3.provider.make_request('trace_filter', [{"toAddress": [self.address],"fromBlock": "0x1", "toBlock": '0xe861a3'}]),
             dank_w3.provider.make_request('trace_filter', [{"fromAddress": [self.address],"fromBlock": "0x1", "toBlock": '0xe861a3'}]),
