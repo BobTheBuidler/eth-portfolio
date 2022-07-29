@@ -1,10 +1,11 @@
 
+import asyncio
 from typing import Dict, Optional
 
 from eth_portfolio.lending.compound import Compound
 from eth_portfolio.lending.maker import Maker
 from eth_portfolio.lending.unit import UnitXyz
-from multicall.utils import await_awaitable, gather
+from multicall.utils import await_awaitable
 from y.datatypes import Address, Block
 
 protocols = [Compound, Maker, UnitXyz]
@@ -22,7 +23,7 @@ class Lending:
 
     async def collateral_async(self, address: Address, block: Optional[Block] = None) -> Dict:
         # Under contrcutcion
-        collaterals = await gather([
+        collaterals = await asyncio.gather(*[
             protocol.collateral_async(address, block)
             for protocol in self.protocols
             if hasattr(protocol, 'collateral')
@@ -41,7 +42,7 @@ class Lending:
     
     async def debt_async(self, address: Address, block: Optional[Block] = None) -> Dict:
         # Under construction
-        debts = await gather([protocol.debt_async(address, block) for protocol in self.protocols])
+        debts = await asyncio.gather(*[protocol.debt_async(address, block) for protocol in self.protocols])
         return {
             token: balances
             for protocol_debts in debts if protocol_debts

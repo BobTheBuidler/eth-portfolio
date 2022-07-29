@@ -1,4 +1,5 @@
 
+import asyncio
 from typing import Dict, Optional
 
 from brownie import chain
@@ -7,7 +8,7 @@ from async_lru import alru_cache
 from eth_abi import encode_single
 from eth_portfolio.lending.base import LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import PortfolioBalanceDetails
-from multicall.utils import await_awaitable, gather
+from multicall.utils import await_awaitable
 from y import Network, get_price_async
 from y.constants import dai
 from y.contracts import Contract
@@ -50,10 +51,10 @@ class Maker(LendingProtocolWithLockedCollateral):
     async def debt_async(self, address: Address, block: int = None) -> Optional[PortfolioBalanceDetails]:
         ilk = encode_single('bytes32', b'YFI-A')
         urn = await self._urn(address)
-        urns, ilks = await gather([
+        urns, ilks = await asyncio.gather(
             self.vat.urns.coroutine(ilk, urn, block_identifier=block),
             self.vat.ilks.coroutine(ilk, block_identifier=block),
-        ])
+        )
         art = urns.dict()["art"]
         rate = ilks.dict()["rate"]
         debt = art * rate / 1e45

@@ -1,14 +1,15 @@
 
+import asyncio
 from typing import Optional
 
 from brownie import ZERO_ADDRESS, Contract
 from eth_portfolio.lending.base import LendingProtocol
 from eth_portfolio.typing import PortfolioBalanceDetails
-from multicall.utils import await_awaitable, gather
-from y import fetch_multicall, weth, get_prices_async
+from multicall.utils import await_awaitable
+from y import fetch_multicall, get_prices_async, weth
 from y.classes.common import ERC20
 from y.datatypes import Address, Block
-from y.prices.lending.compound import CToken, compound
+from y.prices.lending.compound import compound
 
 
 class Compound(LendingProtocol):
@@ -41,10 +42,10 @@ class Compound(LendingProtocol):
             return None
 
         address = str(address)
-        debts, underlying_scale = await gather([
-            gather(_borrow_balance_stored(market, address, block) for market in self.markets),
-            gather(underlying.scale for underlying in self.underlyings),
-        ])
+        debts, underlying_scale = await asyncio.gather(
+            asyncio.gather(*[_borrow_balance_stored(market, address, block) for market in self.markets]),
+            asyncio.gather(*[underlying.scale for underlying in self.underlyings]),
+        )
 
         debts = {underlying: debt / scale for underlying, scale, debt in zip(self.underlyings,underlying_scale,debts) if debt}
         prices = await get_prices_async(debts.keys(), block=block)

@@ -3,22 +3,17 @@ import asyncio
 import logging
 import threading
 import time
-from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from typing import AsyncIterator, Dict, List, Literal, Optional, Union
 
 from aiohttp import ClientError
 from async_lru import alru_cache
 from async_property import async_property
-from brownie import chain, web3
-from brownie._config import CONFIG
-from brownie.convert.datatypes import EthAddress
-from brownie.exceptions import RPCRequestError
+from brownie import chain
 from brownie.network.event import _EventItem
 from eth_abi import encode_single
-from eth_abi.exceptions import DecodingError, InsufficientDataBytes
 from eth_utils import encode_hex
-from multicall.utils import await_awaitable, gather
+from multicall.utils import await_awaitable
 from tqdm.asyncio import tqdm_asyncio
 from web3.types import BlockData, TxData
 from y import Contract, convert, get_price_async
@@ -106,10 +101,10 @@ class PortfolioAddress:
         return await_awaitable(coro)
     
     async def assets_async(self, block: Optional[Block] = None) -> Dict:
-        balances, collateral = await gather([
+        balances, collateral = await asyncio.gather(
             self.balances_async(block=block),
             self.collateral_async(block=block),
-        ])
+        )
         balances.update(collateral)
         return balances
 
@@ -128,10 +123,10 @@ class PortfolioAddress:
         return await_awaitable(self.balances_async(block))
     
     async def balances_async(self, block: Optional[Block]):
-        eth_balance, token_balances = await gather([
+        eth_balance, token_balances = await asyncio.gather(
             self.eth_balance_async(block),
             self.token_balances_async(block),
-        ])
+        )
         balances = token_balances
         balances['ETH'] = eth_balance
         return {token: balance for token, balance in balances.items() if balance['balance'] != 0 and balance['usd value'] != 0}
@@ -140,10 +135,10 @@ class PortfolioAddress:
         return await_awaitable(self.eth_balance_async(block))
 
     async def eth_balance_async(self, block: Optional[Block]) -> Dict[Literal["balance", "usd value"], Decimal]:
-        balance, price = await gather([
+        balance, price = await asyncio.gather(
             _get_eth_balance(self.address, block),
             get_price_async(weth, block),
-        ])
+        )
         return {'balance': balance, 'usd value': balance * Decimal(price)}
     
     def token_balances(self, block: Optional[Block]):
@@ -151,10 +146,10 @@ class PortfolioAddress:
     
     async def token_balances_async(self, block):
         tokens = await self.list_tokens_at_block_async(block=block)
-        token_balances, token_prices = await gather([
-            gather([token.balance_of_readable_async(self.address, block) for token in tokens]),
-            gather([_get_price(token, block) for token in tokens]),
-        ])
+        token_balances, token_prices = await asyncio.gather(
+            asyncio.gather(*[token.balance_of_readable_async(self.address, block) for token in tokens]),
+            asyncio.gather(*[_get_price(token, block) for token in tokens]),
+        )
         token_balances = [
             {'balance': balance, 'usd value': balance * price}
             for balance, price in zip(token_balances, token_prices)

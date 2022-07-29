@@ -7,7 +7,7 @@ from async_property import async_property
 from brownie import chain, web3
 from brownie.network.event import EventDict, _EventItem
 from eth_abi import encode_single
-from multicall.utils import await_awaitable, gather
+from multicall.utils import await_awaitable
 from pandas import DataFrame, concat
 from tqdm.asyncio import tqdm_asyncio
 from web3 import Web3
@@ -20,7 +20,7 @@ from y.exceptions import PriceError
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.constants import ADDRESSES
 from eth_portfolio.typing import PortfolioBalanceDetails
-from eth_portfolio.utils import Decimal, get_token_from_event
+from eth_portfolio.utils import Decimal
 
 logger = logging.getLogger(__name__)
 
@@ -68,7 +68,7 @@ class Portfolio:
         return await_awaitable(coro)
     
     async def assets_async(self, block: int = None) -> PortfolioBalanceDetails:
-        assets = await gather([address.assets_async(block=block) for address in self.addresses])
+        assets = await asyncio.gather(*[address.assets_async(block=block) for address in self.addresses])
         return {address: data for address, data in zip(self.addresses, assets)}
 
     def held_assets(self, block: int = None) -> PortfolioBalanceDetails:
@@ -78,7 +78,7 @@ class Portfolio:
         return await_awaitable(coro)
     
     async def held_assets_async(self, block: int = None) -> PortfolioBalanceDetails:
-        assets = await gather(address.balances_async(block=block) for address in self.addresses)
+        assets = await asyncio.gather(*[address.balances_async(block=block) for address in self.addresses])
         return {address: data for address, data in zip(self.addresses, assets)}
 
     def collateral(self, block: int = None) -> PortfolioBalanceDetails:
@@ -90,10 +90,10 @@ class Portfolio:
     async def collateral_async(self, block: int = None) -> PortfolioBalanceDetails:
         collateral = {}
 
-        maker_collateral, unit_collateral = await gather([
+        maker_collateral, unit_collateral = await asyncio.gather(
             self.maker_collateral_async(block=block),
             self.unit_collateral_async(block=block)
-        ])
+        )
 
         if maker_collateral:
             for address, data in maker_collateral.items():
@@ -135,8 +135,7 @@ class Portfolio:
                     }
                 }
         return collateral
-    '''
-    '''
+    
     def unit_collateral(self, block: int = None) -> Optional[PortfolioBalanceDetails]:
         coro = self.unit_collateral_async(block=block)
         if self.asynchronous:
@@ -175,7 +174,7 @@ class Portfolio:
         return await_awaitable(coro)
     
     async def debt_async(self, block: int = None) -> PortfolioBalanceDetails:
-        debt = await gather([address.debt_async(block=block) for address in self.addresses])
+        debt = await asyncio.gather(*[address.debt_async(block=block) for address in self.addresses])
         return {address: data for address, data in zip(self.addresses, debt)}
 
     # export functions
@@ -184,7 +183,7 @@ class Portfolio:
     
     async def describe_async(self, block: int) -> Dict[str, Dict]:
         assert block
-        assets, debt = await gather([self.assets_async(block), self.debt_async(block)])
+        assets, debt = await asyncio.gather(*[self.assets_async(block), self.debt_async(block)])
         return {'assets': assets, 'debt': debt}
 
 
