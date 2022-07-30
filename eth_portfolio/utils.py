@@ -2,8 +2,10 @@
 import logging
 from decimal import Decimal as _Decimal
 from typing import Optional
+from brownie import chain
 
 from brownie.network.event import _EventItem
+from y import Contract
 from y.classes.common import ERC20
 from y.datatypes import Address, Block
 from y.exceptions import NonStandardERC20, PriceError
@@ -11,6 +13,13 @@ from y.networks import Network
 from y.prices.magic import get_price_async
 
 logger = logging.getLogger(__name__)
+
+NON_STANDARD_ERC721 = {
+    Network.Mainnet: [
+        "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB" # CryptoPunks
+    ],
+}.get(chain.id, [])
+
 
 class Decimal(_Decimal):
     """
@@ -73,3 +82,13 @@ async def _get_price(token: Address, block: int = None) -> float:
             raise
         logger.critical(f'{type(e).__name__} while fetching price for {desc_str} | {e}')
     return 0
+
+async def is_erc721(token: Address) -> bool:
+    # This can probably be improved
+    attrs = 'setApprovalForAll','getApproved','isApprovedForAll'
+    contract = Contract(token)
+    if all(hasattr(contract, attr) for attr in attrs):
+        return True
+    
+    elif contract.address in NON_STANDARD_ERC721:
+        return True

@@ -20,7 +20,7 @@ from y.exceptions import NonStandardERC20, PriceError
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.constants import ADDRESSES
 from eth_portfolio.typing import PortfolioBalanceDetails
-from eth_portfolio.utils import Decimal
+from eth_portfolio.utils import Decimal, is_erc721
 
 logger = logging.getLogger(__name__)
 
@@ -452,6 +452,8 @@ class Ledger:
         return token_transfers
 
 async def _get_price(token, block) -> UsdPrice:
+    if await is_erc721(token):
+        return None
     try:
         return await get_price_async(token, block, fail_to_None=True)
     except Exception as e:
