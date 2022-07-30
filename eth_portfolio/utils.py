@@ -89,6 +89,6 @@ async def is_erc721(token: Address) -> bool:
     contract = Contract(token)
     if all(hasattr(contract, attr) for attr in attrs):
         return True
-    
     elif contract.address in NON_STANDARD_ERC721:
         return True
+    return False
