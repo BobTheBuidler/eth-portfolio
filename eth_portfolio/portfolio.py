@@ -454,7 +454,9 @@ class Ledger:
 async def _get_price(token, block) -> UsdPrice:
     try:
         return await get_price_async(token, block, fail_to_None=True)
-    except (NonStandardERC20, PriceError):
+    except Exception as e:
+        logger.error(f"{type(e).__name__} when fetching price for {token} at block {block}")
+        logger.error(e)
         return None
 
 async def _get_symbol(token) -> str:
