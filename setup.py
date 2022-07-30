@@ -15,7 +15,7 @@ setup(
     url='https://github.com/BobTheBuidler/eth-portfolio',
     install_requires=[
         "pandas>=1.4.3,<1.5",
-        "ypricemagic>=1.1.1.dev67,<1.1.3",
+        "ypricemagic>=1.1.1.dev68,<1.1.3",
     ],
     setup_requires=[
         'setuptools_scm',
