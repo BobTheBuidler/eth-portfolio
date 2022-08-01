@@ -260,7 +260,7 @@ class PortfolioAddress:
             dank_w3.provider.make_request('trace_filter', [{"fromAddress": [self.address],"fromBlock": "0x1", "toBlock": '0xe861a3'}]),
         )
 
-        internal_transfers: List = to_traces['result'] + from_traces['result']
+        internal_transfers = [transfer for transfer in to_traces['result'] + from_traces['result'] if transfer['error'] != "Reverted"]
         internal_transfers.sort(key=lambda x: (x['blockNumber'], x['transactionPosition']))
 
         # Un-nest the dicts
