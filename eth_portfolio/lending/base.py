@@ -10,7 +10,7 @@ class LendingProtocol:
         raise NotImplementedError
 
 class LendingProtocolWithLockedCollateral(LendingProtocol):
-    """ Locked collateral would be like Maker, not Aave. """
+    """ Locked collateral would be like Maker, not Aave, because Aave gives you atokens. """
     def collateral(self, address: Address, block: Optional[Block] = None) -> Dict:
         raise NotImplementedError
 
