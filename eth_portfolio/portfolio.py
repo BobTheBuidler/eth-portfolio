@@ -19,7 +19,7 @@ from y.exceptions import NonStandardERC20, PriceError
 
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.constants import ADDRESSES
-from eth_portfolio.typing import PortfolioBalanceDetails
+from eth_portfolio.typing import PortfolioBalanceDetails, StakedTokenBalances
 from eth_portfolio.utils import Decimal, is_erc721
 
 logger = logging.getLogger(__name__)
@@ -68,7 +68,7 @@ class Portfolio:
         return await_awaitable(coro)
     
     async def assets_async(self, block: int = None) -> PortfolioBalanceDetails:
-        assets = await asyncio.gather(*[address.assets_async(block=block) for address in self.addresses])
+        assets = await asyncio.gather(*[address._assets_async(block=block) for address in self.addresses])
         return {address: data for address, data in zip(self.addresses, assets)}
 
     def held_assets(self, block: int = None) -> PortfolioBalanceDetails:
@@ -78,7 +78,7 @@ class Portfolio:
         return await_awaitable(coro)
     
     async def held_assets_async(self, block: int = None) -> PortfolioBalanceDetails:
-        assets = await asyncio.gather(*[address.balances_async(block=block) for address in self.addresses])
+        assets = await asyncio.gather(*[address._balances_async(block=block) for address in self.addresses])
         return {address: data for address, data in zip(self.addresses, assets)}
 
     def collateral(self, block: int = None) -> PortfolioBalanceDetails:
@@ -164,6 +164,16 @@ class Portfolio:
                 }
         return collateral
     
+    def staked_assets(self, block: int = None) -> Dict[PortfolioAddress, StakedTokenBalances]:
+        coro = self._staked_assets_async(block=block)
+        if self.asynchronous:
+            return coro
+        return await_awaitable(coro)
+    
+    async def _staked_assets_async(self, block: int = None) -> Dict[PortfolioAddress, StakedTokenBalances]:
+        staked_assets = await asyncio.gather(*[address._staking_async(block=block) for address in self.addresses])
+        return {address: data for address, data in zip(self.addresses, staked_assets)}
+    
     # descriptive functions
     # debt
 
@@ -174,7 +184,7 @@ class Portfolio:
         return await_awaitable(coro)
     
     async def debt_async(self, block: int = None) -> PortfolioBalanceDetails:
-        debt = await asyncio.gather(*[address.debt_async(block=block) for address in self.addresses])
+        debt = await asyncio.gather(*[address._debt_async(block=block) for address in self.addresses])
         return {address: data for address, data in zip(self.addresses, debt)}
 
     # export functions

@@ -27,6 +27,7 @@ from y.utils.events import decode_logs
 from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.decorators import sentry_catch_all, wait_or_exit_after
 from eth_portfolio.lending import lending
+from eth_portfolio.staking import staking
 from eth_portfolio.shitcoins import SHITCOINS
 from eth_portfolio.utils import Decimal, _get_price
 
@@ -95,46 +96,46 @@ class PortfolioAddress:
     # Primary functions
 
     def assets(self, block: Optional[Block] = None) -> Dict:
-        coro = self.assets_async(block)
+        coro = self._assets_async(block)
         if self.portfolio.asynchronous:
             return coro
         return await_awaitable(coro)
     
-    async def assets_async(self, block: Optional[Block] = None) -> Dict:
+    async def _assets_async(self, block: Optional[Block] = None) -> Dict:
         balances, collateral = await asyncio.gather(
-            self.balances_async(block=block),
-            self.collateral_async(block=block),
+            self._balances_async(block=block),
+            self._collateral_async(block=block),
         )
         balances.update(collateral)
         return balances
 
     def debt(self, block: Optional[Block] = None) -> Dict:
-        coro = self.debt_async(block)
+        coro = self._debt_async(block)
         if self.portfolio.asynchronous:
             return coro
         return await_awaitable(coro)
     
-    async def debt_async(self, block: Optional[Block] = None) -> Dict:
+    async def _debt_async(self, block: Optional[Block] = None) -> Dict:
         return await lending.debt_async(self.address, block=block)
 
     # Assets
 
     def balances(self, block: Optional[Block]):
-        return await_awaitable(self.balances_async(block))
+        return await_awaitable(self._balances_async(block))
     
-    async def balances_async(self, block: Optional[Block]):
+    async def _balances_async(self, block: Optional[Block]):
         eth_balance, token_balances = await asyncio.gather(
-            self.eth_balance_async(block),
-            self.token_balances_async(block),
+            self._eth_balance_async(block),
+            self._token_balances_async(block),
         )
         balances = token_balances
         balances['ETH'] = eth_balance
         return {token: balance for token, balance in balances.items() if balance['balance'] != 0 and balance['usd value'] != 0}
     
     def eth_balance(self, block: Optional[Block]) -> Dict[Literal["balance", "usd value"], Decimal]:
-        return await_awaitable(self.eth_balance_async(block))
+        return await_awaitable(self._eth_balance_async(block))
 
-    async def eth_balance_async(self, block: Optional[Block]) -> Dict[Literal["balance", "usd value"], Decimal]:
+    async def _eth_balance_async(self, block: Optional[Block]) -> Dict[Literal["balance", "usd value"], Decimal]:
         balance, price = await asyncio.gather(
             _get_eth_balance(self.address, block),
             get_price_async(weth, block),
@@ -142,9 +143,9 @@ class PortfolioAddress:
         return {'balance': balance, 'usd value': balance * Decimal(price)}
     
     def token_balances(self, block: Optional[Block]):
-        return await_awaitable(self.token_balances_async(block))
+        return await_awaitable(self._token_balances_async(block))
     
-    async def token_balances_async(self, block):
+    async def _token_balances_async(self, block):
         tokens = await self.list_tokens_at_block_async(block=block)
         token_balances, token_prices = await asyncio.gather(
             asyncio.gather(*[token.balance_of_readable_async(self.address, block) for token in tokens]),
@@ -157,13 +158,22 @@ class PortfolioAddress:
         return dict(zip(tokens, token_balances))
     
     def collateral(self, block: Optional[Block] = None) -> Dict:
-        coro = self.collateral_async(block)
+        coro = self._collateral_async(block)
         if self.portfolio.asynchronous:
             return coro
         return await_awaitable(coro)
     
-    async def collateral_async(self, block: Optional[Block] = None) -> Dict:
+    async def _collateral_async(self, block: Optional[Block] = None) -> Dict:
         return await lending.collateral_async(self.address, block=block)
+    
+    def staking(self, block: Optional[Block] = None) -> Dict:
+        coro = self._staking_async(block)
+        if self.portfolio.asynchronous:
+            return coro
+        return await_awaitable(coro)
+    
+    async def _staking_async(self, block: Optional[Block] = None) -> Dict:
+        return await staking._balances_async(self.address, block=block)
     
     # ETH Transactions
 
