@@ -4,11 +4,10 @@ from decimal import Decimal as _Decimal
 from typing import Optional
 from brownie import chain
 
-from brownie.network.event import _EventItem
 from y import Contract
 from y.classes.common import ERC20
 from y.datatypes import Address, Block
-from y.exceptions import NonStandardERC20, PriceError
+from y.exceptions import NonStandardERC20, PriceError, ContractNotVerified
 from y.networks import Network
 from y.prices.magic import get_price_async
 
@@ -85,8 +84,11 @@ async def _get_price(token: Address, block: int = None) -> float:
 
 async def is_erc721(token: Address) -> bool:
     # This can probably be improved
+    try:
+        contract = Contract(token)
+    except ContractNotVerified:
+        return False
     attrs = 'setApprovalForAll','getApproved','isApprovedForAll'
-    contract = Contract(token)
     if all(hasattr(contract, attr) for attr in attrs):
         return True
     elif contract.address in NON_STANDARD_ERC721:
