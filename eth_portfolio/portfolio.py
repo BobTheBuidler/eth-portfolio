@@ -402,7 +402,9 @@ class Ledger:
         internal_transfers.gasUsed = internal_transfers.gasUsed.apply(lambda x: int(x, 16) if x else None)
         internal_transfers.rename(columns={'transactionHash': 'hash', 'transactionPosition': 'transactionIndex'}, inplace=True)
         internal_transfers.transactionIndex = internal_transfers.transactionIndex.apply(int)
-        internal_transfers.drop_duplicates(inplace=True)
+        # We cant use drop_duplicates when one of the columns contains lists.
+        # We must first convert the lists to strings
+        internal_transfers.loc[internal_transfers.astype(str).drop_duplicates().index]
         internal_transfers[internal_transfers['value'] != 0]
         internal_transfers.set_index('blockNumber', inplace=True)
         return internal_transfers
