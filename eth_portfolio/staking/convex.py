@@ -12,7 +12,7 @@ from y.contracts import contract_creation_block
 from y.datatypes import Address, Block
 
 convex_locker_v2 = Contract("0x72a19342e8F1838460eBFCCEf09F6585e32db86E")
-locker_deploy_block = contract_creation_block(convex_locker_v2)
+locker_deploy_block = contract_creation_block(convex_locker_v2.address)
 cvx = ERC20("0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B")
 
 
