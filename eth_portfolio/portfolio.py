@@ -398,7 +398,7 @@ class Ledger:
         internal_transfers['chainId'] = chain.id
         internal_transfers.blockNumber = internal_transfers.blockNumber.apply(int)
         internal_transfers.gas = internal_transfers.gas.apply(lambda x: int(x, 16))
-        #internal_transfers.gasUsed = internal_transfers.gasUsed.apply(lambda x: int(x, 16))
+        internal_transfers.gasUsed = internal_transfers.gasUsed.apply(lambda x: int(x, 16) if x else None)
         internal_transfers.rename(columns={'transactionHash': 'hash', 'transactionPosition': 'transactionIndex'}, inplace=True)
         internal_transfers.transactionIndex = internal_transfers.transactionIndex.apply(int)
         internal_transfers[internal_transfers['value'] != 0]
