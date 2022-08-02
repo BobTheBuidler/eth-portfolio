@@ -213,58 +213,51 @@ class Ledger:
     
     # Transactions
     
-    @property
-    def transactions(self) -> Dict[PortfolioAddress, List[TxData]]:
-        coro = self.transactions_async
+    def transactions(self, load_prices: bool = False) -> Dict[PortfolioAddress, List[TxData]]:
+        coro = self.transactions_async(load_prices=load_prices)
         if self.portfolio.asynchronous:
             return coro
         return await_awaitable(coro)
     
-    @async_property
-    async def transactions_async(self) -> Dict[PortfolioAddress, List[TxData]]:
-        txs = await asyncio.gather(*[address.transactions_async for address in self.portfolio.addresses])
+    async def transactions_async(self, load_prices: bool = False) -> Dict[PortfolioAddress, List[TxData]]:
+        txs = await asyncio.gather(*[address.transactions_async(load_prices=load_prices) for address in self.portfolio.addresses])
         return {address: txs for address, txs in zip(self.portfolio.addresses, txs)}
     
     # Internal Transactions
 
-    @property
-    def internal_transfers(self) -> Dict[PortfolioAddress, List]:
-        coro = self.internal_transfers_async
+    def internal_transfers(self, load_prices: bool = False) -> Dict[PortfolioAddress, List]:
+        coro = self.internal_transfers_async(load_prices=load_prices)
         if self.portfolio.asynchronous:
             return coro
         return await_awaitable(coro)
     
-    @async_property
-    async def internal_transfers_async(self) -> Dict[PortfolioAddress, List]:
-        int_txs = await asyncio.gather(*[address.internal_transfers_async for address in self.portfolio.addresses])
+    async def internal_transfers_async(self, load_prices: bool = False) -> Dict[PortfolioAddress, List]:
+        int_txs = await asyncio.gather(*[address.internal_transfers_async(load_prices=load_prices) for address in self.portfolio.addresses])
         return {address: int_txs for address, int_txs in zip(self.portfolio.addresses, int_txs)}
     
     # Token Transfers
 
-    @property
-    def token_transfers(self) -> Dict[PortfolioAddress, List[EventDict]]:
-        coro = self.token_transfers_async
+    def token_transfers(self, load_prices: bool = False) -> Dict[PortfolioAddress, List[EventDict]]:
+        coro = self.token_transfers_async(load_prices=load_prices)
         if self.portfolio.asynchronous:
             return coro
         return await_awaitable(coro)
     
-    @async_property
-    async def token_transfers_async(self) -> Dict[PortfolioAddress, List[EventDict]]:
-        token_transfers = await asyncio.gather(*[address.token_transfers_async for address in self.portfolio.addresses])
+    async def token_transfers_async(self, load_prices: bool = False) -> Dict[PortfolioAddress, List[EventDict]]:
+        token_transfers = await asyncio.gather(*[address.token_transfers_async(load_prices=load_prices) for address in self.portfolio.addresses])
         return {address: transfers for address, transfers in zip(self.portfolio.addresses, token_transfers)}
 
     # All Ledger entries
     
-    @property
-    def all_transactions(self) -> Dict:
-        coro = self.all_entries_async
+    def all_transactions(self, load_prices: bool = False) -> Dict:
+        coro = self.all_entries_async(load_prices=load_prices)
         if self.portfolio.asynchronous:
             return coro
         return await_awaitable(coro)
     
     @async_property
-    async def all_entries_async(self) -> Dict[PortfolioAddress, Dict[str, List[Union[TxData, _EventItem]]]]:
-        all_transactions = await asyncio.gather(*[address.all_async for address in self.portfolio.addresses])
+    async def all_entries_async(self, load_prices: bool = False) -> Dict[PortfolioAddress, Dict[str, List[Union[TxData, _EventItem]]]]:
+        all_transactions = await asyncio.gather(*[address.all_async(load_prices=load_prices) for address in self.portfolio.addresses])
         return {address: data for address, data in zip(self.portfolio.addresses, all_transactions)}
 
     def __getitem__(self, block: Block) -> Dict:
@@ -273,18 +266,18 @@ class Ledger:
     
     # Pandas
 
-    def df(self, full: bool = False) -> DataFrame:
-        coro = self.df_async(full=full)
+    def df(self, load_prices: bool = False, full: bool = False) -> DataFrame:
+        coro = self.df_async(load_prices=load_prices,full=full)
         if self.portfolio.asynchronous:
             return coro
         return await_awaitable(coro)
     
-    async def df_async(self, full: bool = False) -> DataFrame:
+    async def df_async(self, load_prices: bool = False, full: bool = False) -> DataFrame:
         df = concat(
             await asyncio.gather(
-                self.transactions_df_async,
-                self.internal_transfers_df_async,
-                self.token_transfers_df_async,
+                self.transactions_df_async(load_prices=load_prices),
+                self.internal_transfers_df_async(load_prices=load_prices),
+                self.token_transfers_df_async(load_prices=load_prices),
             )
         )
         
@@ -356,96 +349,89 @@ class Ledger:
         logger.critical(df.dtypes)
         return df
 
-    @property
-    def transactions_df(self) -> DataFrame:
-        coro = self.transactions_df_async
+    def transactions_df(self, load_prices: bool = False) -> DataFrame:
+        coro = self.transactions_df_async(load_prices=load_prices)
         if self.portfolio.asynchronous:
             return coro
         return await_awaitable(coro)
 
-    @async_property
-    async def transactions_df_async(self) -> DataFrame: 
-        transactions = await self.transactions_async
+    async def transactions_df_async(self, load_prices: bool = False) -> DataFrame: 
+        transactions = await self.transactions_async(load_prices=load_prices)
         transactions = {address: DataFrame(data) for address, data in transactions.items()}
         transactions = concat(transactions.values())
-        transactions.chainId = transactions.chainId.apply(lambda x: int(x, 16))
         transactions.chainId = transactions.chainId.apply(int)
         transactions.blockNumber = transactions.blockNumber.apply(int)
-        transactions.blockHash = transactions.blockHash.apply(lambda x: x.hex())
         transactions.transactionIndex = transactions.transactionIndex.apply(int)
-        transactions.hash = transactions.hash.apply(lambda x: x.hex())
         transactions.nonce = transactions.nonce.apply(int)
         transactions.gas = transactions.gas.apply(int)
         transactions.gasPrice = transactions.gasPrice.apply(int)
-        transactions.r = transactions.r.apply(lambda x: x.hex())
-        transactions.s = transactions.s.apply(lambda x: x.hex())
-        transactions.type = transactions.type.apply(lambda x: int(x, 16))
         transactions.drop_duplicates(inplace=True)
         transactions.set_index('blockNumber', inplace=True)
         return transactions
     
-    @property
-    def internal_transfers_df(self) -> DataFrame:
-        coro = self.internal_transfers_df_async
+    def internal_transfers_df(self, load_prices: bool = False) -> DataFrame:
+        coro = self.internal_transfers_df_async(load_prices=load_prices)
         if self.portfolio.asynchronous:
             return coro
         return await_awaitable(coro)
     
-    @async_property
-    async def internal_transfers_df_async(self) -> DataFrame:
-        internal_transfers = await self.internal_transfers_async
+    async def internal_transfers_df_async(self, load_prices: bool = False) -> DataFrame:
+        internal_transfers = await self.internal_transfers_async(load_prices=load_prices)
         internal_transfers = {address: DataFrame(data) for address, data in internal_transfers.items()}
         internal_transfers = concat(internal_transfers.values())
         internal_transfers['chainId'] = chain.id
         internal_transfers.blockNumber = internal_transfers.blockNumber.apply(int)
-        internal_transfers.gas = internal_transfers.gas.apply(lambda x: int(x, 16))
-        internal_transfers.gasUsed = internal_transfers.gasUsed.apply(lambda x: int(x, 16) / 1e18 if x else None)
         internal_transfers.rename(columns={'transactionHash': 'hash', 'transactionPosition': 'transactionIndex'}, inplace=True)
         internal_transfers.transactionIndex = internal_transfers.transactionIndex.apply(int)
-        # We cant use drop_duplicates when one of the columns contains lists.
+        
+        internal_transfers[internal_transfers['value'] != 0]
+
+        # Deduplicate:
+        # We cant use drop_duplicates when one of the columns, `traceAddress`, contains lists.
         # We must first convert the lists to strings
         internal_transfers.loc[internal_transfers.astype(str).drop_duplicates().index]
-        internal_transfers[internal_transfers['value'] != 0]
+
         internal_transfers.set_index('blockNumber', inplace=True)
         return internal_transfers
     
-    @property
-    def token_transfers_df(self) -> DataFrame:
-        coro = self.token_transfers_df_async
+    def token_transfers_df(self, load_prices: bool = False) -> DataFrame:
+        coro = self.token_transfers_df_async(load_prices=load_prices)
         if self.portfolio.asynchronous:
             return coro
         return await_awaitable(coro)
     
-    @async_property
-    async def token_transfers_df_async(self) -> DataFrame:
-        token_transfers = await self.token_transfers_async
-        prices, scales, symbols = await asyncio.gather(*[
-            asyncio.gather(*[
+    async def token_transfers_df_async(self, load_prices: bool = False) -> DataFrame:
+        token_transfers = await self.token_transfers_async(load_prices=load_prices)
+
+        scales_coro = asyncio.gather(*[
+            asyncio.gather(*[ERC20(transfer.address).scale for transfer in token_transfers[address]])
+            for address in token_transfers
+        ])
+        symbols_coro = asyncio.gather(*[
+            asyncio.gather(*[_get_symbol(transfer.address) for transfer in token_transfers[address]])
+            for address in token_transfers
+        ])
+
+        if load_prices:
+            prices_coro = asyncio.gather(*[
                 tqdm_asyncio.gather(*[_get_price(transfer.address, transfer.block_number) for transfer in token_transfers[address]])
                 for address in token_transfers
-            ]),
-            asyncio.gather(*[
-                asyncio.gather(*[ERC20(transfer.address).scale for transfer in token_transfers[address]])
-                for address in token_transfers
-            ]),
-            asyncio.gather(*[
-                asyncio.gather(*[_get_symbol(transfer.address) for transfer in token_transfers[address]])
-                for address in token_transfers
-            ]),
-        ])
+            ])
+            scales, symbols, prices = await asyncio.gather(prices_coro, scales_coro, symbols_coro)
+        else:
+            scales, symbols = await asyncio.gather(scales_coro, symbols_coro)
 
         for i, address in enumerate(token_transfers):
             _transfers = []
-            _prices = prices[i]
             _scales = scales[i]
             _symbols = symbols[i]
+            if load_prices:
+                _prices = prices[i]
             for i, transfer in enumerate(token_transfers[address]):
                 sender, receiver, amount = transfer.values()
                 scale = Decimal(_scales[i])
                 amount = Decimal(amount) / scale
-                price = _prices[i]
-                price = round(Decimal(price), 18) if price is not None else None
-                _transfers.append({
+                item = {
                     'chainId': chain.id,
                     'blockNumber': transfer.block_number,
                     'log_index': transfer.log_index,
@@ -455,9 +441,13 @@ class Ledger:
                     'from': sender,
                     'to': receiver,
                     'value': amount,
-                    'price': price,
-                    'value_usd': round(amount * price, 18) if price is not None else None,
-                })
+                }
+                if load_prices:
+                    price = _prices[i]
+                    price = round(Decimal(price), 18) if price is not None else None
+                    item['price'] = price
+                    item['value_usd'] = round(amount * price, 18) if price is not None else None
+                _transfers.append(item)
             token_transfers[address] = DataFrame(_transfers)
         token_transfers = concat(token_transfers.values())
         token_transfers.hash = token_transfers.hash.apply(lambda x: x.hex())

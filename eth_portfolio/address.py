@@ -177,31 +177,41 @@ class PortfolioAddress:
     
     # ETH Transactions
 
-    @property
-    def transactions(self) -> List[TxData]:
-        coro = self.transactions_async
+    def transactions(self, load_prices: bool = False) -> List[TxData]:
+        coro = self.transactions_async(load_prices=load_prices)
         if self.portfolio.asynchronous:
             return coro
         return await_awaitable(coro)
     
-    @async_property
-    async def transactions_async(self) -> List[TxData]:
+    async def transactions_async(self, load_prices: bool = False) -> List[TxData]:
         if not self._transactions:
             # TODO keep transactions updated in background
-            await self.load_transactions()
+            await self.load_transactions(load_prices=load_prices)
+        
         return self._transactions
 
-    async def load_transactions(self) -> None:
+    async def load_transactions(self, load_prices: bool = False) -> None:
         height = chain.height
         current_nonce = await self.get_nonce_at_block(height)
         nonces = range(current_nonce + 1)
         self._transactions = await tqdm_asyncio.gather(*[self.get_transaction_by_nonce(nonce, height) for nonce in nonces])
-        prices = await asyncio.gather(*[get_price_async(EEE_ADDRESS, block = transaction['blockNumber']) for transaction in self._transactions])
-        for transaction, price in zip(self._transactions, prices):
-            #transaction['price'] = Decimal(price)
-            #transaction['value_usd'] = Decimal(transaction['value']) * Decimal(price)
-            pass
-        return None
+        for i, transaction in enumerate(self._transactions):
+            transaction = dict(transaction)
+            transaction['chainId'] = int(transaction['chainId'], 16)
+            transaction['blockHash'] = transaction['blockHash'].hex()
+            transaction['hash'] = transaction['hash'].hex()
+            transaction['value'] = Decimal(transaction['value']) / Decimal(1e18)
+            transaction['type'] = int(transaction['type'], 16)
+            transaction['r'] = transaction['r'].hex()
+            transaction['s'] = transaction['s'].hex()
+            self._transactions[i] = transaction
+
+        if load_prices:
+            prices = await asyncio.gather(*[get_price_async(EEE_ADDRESS, block = transaction['blockNumber']) for transaction in self._transactions])
+            for transaction, price in zip(self._transactions, prices):
+                price = round(Decimal(price), 18)
+                transaction['price'] = price
+                transaction['value_usd'] = transaction['value'] * price
 
     async def get_transaction_by_nonce(self, nonce: int, height: Block) -> TxData:
         lo = 0
@@ -216,7 +226,7 @@ class PortfolioAddress:
                 prev_block_nonce = await self.get_nonce_at_block(lo - 1)
                 if prev_block_nonce < nonce:
                     logger.debug(f"Found nonce {nonce} at block {lo}")
-                    return await self.get_transaction_by_nonce_and_block(nonce, lo)
+                    return dict(await self.get_transaction_by_nonce_and_block(nonce, lo))
                 hi = lo
                 lo = int(lo / 2)
                 logger.debug(f"Nonce at {hi} is {_nonce}, checking lower block {lo}")
@@ -246,15 +256,13 @@ class PortfolioAddress:
     
     # Internal Transactions
     
-    @property
-    def internal_transfers(self):
-        coro = self.internal_transfers_async
+    def internal_transfers(self, load_prices: bool = False):
+        coro = self.internal_transfers_async(load_prices=load_prices)
         if self.portfolio.asynchronous:
             return coro
         return await_awaitable(coro)
     
-    @async_property
-    async def internal_transfers_async(self):
+    async def internal_transfers_async(self, load_prices: bool = False):
         to_traces, from_traces = await asyncio.gather(
             dank_w3.provider.make_request('trace_filter', [{"toAddress": [self.address],"fromBlock": "0x1", "toBlock": '0xe861a3'}]),
             dank_w3.provider.make_request('trace_filter', [{"fromAddress": [self.address],"fromBlock": "0x1", "toBlock": '0xe861a3'}]),
@@ -283,13 +291,17 @@ class PortfolioAddress:
                     raise ValueError(transfer['result'])
                 del transfer['result']
         
-        prices = await asyncio.gather(*[get_price_async(EEE_ADDRESS, transfer['blockNumber']) for transfer in internal_transfers])
-        for transfer, price in zip(internal_transfers, prices):
-            value = Decimal(int(transfer['value'], 16)) / Decimal(1e18)
-            price = round(Decimal(price), 18)
-            transfer['value'] = value
-            transfer['price'] = price
-            transfer['value_usd'] = round(value * price, 18)
+        for transfer in internal_transfers:
+            transfer['value'] = Decimal(int(transfer['value'], 16)) / Decimal(1e18)
+            transfer['gas'] = int(transfer['gas'], 16)
+            transfer['gasUsed'] = int(transfer['gasUsed'], 16) if transfer['gasUsed'] else None
+
+        if load_prices:
+            prices = await asyncio.gather(*[get_price_async(EEE_ADDRESS, transfer['blockNumber']) for transfer in internal_transfers])
+            for transfer, price in zip(internal_transfers, prices):
+                price = round(Decimal(price), 18)
+                transfer['price'] = price
+                transfer['value_usd'] = round(transfer['value'] * price, 18)
 
         return internal_transfers
     
@@ -324,31 +336,33 @@ class PortfolioAddress:
     
     # Token Transfers
 
-    @property
-    def token_transfers(self) -> List[_EventItem]:
-        coro = self.token_transfers_async
+    def token_transfers(self, load_prices: bool = False) -> List[_EventItem]:
+        coro = self.token_transfers_async(load_prices=load_prices)
         if self.portfolio.asynchronous:
             return coro
         return await_awaitable(coro)
     
-    @async_property
-    async def token_transfers_async(self) -> List[_EventItem]:
+    async def token_transfers_async(self, load_prices: bool = False) -> List[_EventItem]:
         self.load_token_transfers()
+        if load_prices:
+            prices = await asyncio.gather(*[get_price_async(token_transfer.address, token_transfer.block_number) for token_transfer in self._token_transfers])
+            for token_transfer, price in zip(self._token_transfers, prices):
+                price = round(Decimal(price), 18)
+                token_transfer.price = price
+                token_transfer.value_usd = round(token_transfer.value * price, 18)
         return self._token_transfers
     
-    @property
-    def all(self) -> None:
-        coro = self.all_async
+    def all(self, load_prices: bool = False) -> None:
+        coro = self.all_async(load_prices=load_prices)
         if self.portfolio.asynchronous:
             return coro
         return await_awaitable(coro)
     
-    @async_property
-    async def all_async(self) -> Dict[str, List[Union[TxData, _EventItem]]]:
+    async def all_async(self, load_prices: bool = False) -> Dict[str, List[Union[TxData, _EventItem]]]:
         transactions, internal_transactions, token_transfers = await asyncio.gather(
-            self.transactions_async,
-            self.internal_transfers_async,
-            self.token_transfers_async,
+            self.transactions_async(load_prices=load_prices),
+            self.internal_transfers_async(load_prices=load_prices),
+            self.token_transfers_async(load_prices=load_prices),
         )
         return {
             "transactions": transactions,
