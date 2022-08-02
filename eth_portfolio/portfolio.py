@@ -380,6 +380,7 @@ class Ledger:
         transactions.r = transactions.r.apply(lambda x: x.hex())
         transactions.s = transactions.s.apply(lambda x: x.hex())
         transactions.type = transactions.type.apply(lambda x: int(x, 16))
+        transactions.drop_duplicates(inplace=True)
         transactions.set_index('blockNumber', inplace=True)
         return transactions
     
@@ -401,6 +402,7 @@ class Ledger:
         internal_transfers.gasUsed = internal_transfers.gasUsed.apply(lambda x: int(x, 16) if x else None)
         internal_transfers.rename(columns={'transactionHash': 'hash', 'transactionPosition': 'transactionIndex'}, inplace=True)
         internal_transfers.transactionIndex = internal_transfers.transactionIndex.apply(int)
+        internal_transfers.drop_duplicates(inplace=True)
         internal_transfers[internal_transfers['value'] != 0]
         internal_transfers.set_index('blockNumber', inplace=True)
         return internal_transfers
@@ -457,6 +459,7 @@ class Ledger:
             token_transfers[address] = DataFrame(_transfers)
         token_transfers = concat(token_transfers.values())
         token_transfers.hash = token_transfers.hash.apply(lambda x: x.hex())
+        token_transfers.drop_duplicates(inplace=True)
         token_transfers.set_index('blockNumber', inplace=True)
         logger.warning(f"token transfers: {token_transfers}")
         return token_transfers
