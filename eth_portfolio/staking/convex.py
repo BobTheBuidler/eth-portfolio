@@ -1,7 +1,7 @@
 
 import asyncio
 from decimal import Decimal
-from typing import Dict, Optional
+from typing import Optional
 
 from eth_portfolio.staking.base import StakingPool
 from eth_portfolio.typing import StakedTokenBalances
@@ -29,7 +29,7 @@ class Convex(StakingPool):
     async def balances_async(self, address: Address, block: Optional[Block] = None) -> StakedTokenBalances:
         if block and block < locker_deploy_block:
             return {}
-        balance = await convex_locker_v2.balanceOf.coroutine(address, block_identifier=block)
+        balance = Decimal(await convex_locker_v2.balanceOf.coroutine(address, block_identifier=block))
         if balance:
             scale, price = await asyncio.gather(cvx.scale, cvx.price_async(block))
             balance /= scale
