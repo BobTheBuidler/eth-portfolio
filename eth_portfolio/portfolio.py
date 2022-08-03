@@ -64,7 +64,9 @@ class PortfolioLedgerEntryBase:
     async def _df_async(self, start_block: Block, end_block: Block) -> DataFrame:
         """ Override this method if you want to do something special with the dataframe """
         df = await self._df_base(start_block, end_block)
-        return self._cleanup_df(df)
+        if len(df) > 0:
+            df = self._cleanup_df(df)
+        return df
     
     async def _df_base(self, start_block: Block, end_block: Block) -> DataFrame:
         data: Dict[Address, PandableListOfDicts] = await self._get_async(start_block, end_block)
@@ -91,8 +93,10 @@ class PortfolioInternalTransfers(PortfolioLedgerEntryBase):
     @set_end_block_if_none
     async def _df_async(self, start_block: Block, end_block: Block) -> DataFrame:
         df = await self._df_base(start_block, end_block)
-        df.rename(columns={'transactionHash': 'hash', 'transactionPosition': 'transactionIndex'}, inplace=True)
-        return self._cleanup_df(df)
+        if len(df) > 0:
+            df.rename(columns={'transactionHash': 'hash', 'transactionPosition': 'transactionIndex'}, inplace=True)
+            df = self._cleanup_df(df)
+        return df
 
     def _deduplicate_df(self, df: DataFrame) -> DataFrame:
         """
