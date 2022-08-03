@@ -253,7 +253,15 @@ class AddressObjectCacheBase:
         elif start_block < self.cached_from and end_block >= self.cached_from and end_block < self.cached_thru:
             return start_block, self.cached_from - 1
         
-        # Beginning and end both outside bounds of cache
+        # Beginning and end both outside bounds of cache to high side
+        elif start_block > self.cached_thru:
+            return self.cached_thru + 1, end_block
+        
+        # Beginning and end both outside bounds of cache to low side
+        elif end_block < self.cached_from:
+            return start_block, self.cached_from - 1
+            
+        # Beginning and end both outside bounds of cache, split
         elif start_block < self.cached_from and end_block > self.cached_thru:
             raise BlockRangeOutOfBounds()
         
