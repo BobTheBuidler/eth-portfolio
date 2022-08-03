@@ -25,7 +25,7 @@ from eth_portfolio.lending import _lending
 from eth_portfolio.shitcoins import SHITCOINS
 from eth_portfolio.staking import _staking
 from eth_portfolio.utils import (Decimal, PandableListOfDicts, _get_price,
-                                 _unpack_indicies, get_chain_height, is_erc721)
+                                 _unpack_indicies, get_buffered_chain_height, is_erc721)
 
 logger = logging.getLogger(__name__)
 
@@ -228,7 +228,7 @@ class AddressObjectCacheBase:
     
     async def _new_async(self) -> PandableListOfDicts:
         start_block = 0 if self.cached_thru is None else self.cached_thru + 1
-        end_block = await get_chain_height()
+        end_block = await get_buffered_chain_height()
         return self[start_block, end_block]
     
     @set_end_block_if_none
@@ -304,7 +304,7 @@ class AddressTransactionsCache(AddressObjectCacheBase):
     @set_end_block_if_none
     async def _load_new_objects(self, _: Block, end_block: Block) -> None:
         if end_block is None:
-            end_block = await get_chain_height()
+            end_block = await get_buffered_chain_height()
         if self.cached_thru and end_block < self.cached_thru:
             return
         end_block_nonce = await self._get_nonce_at_block(end_block)

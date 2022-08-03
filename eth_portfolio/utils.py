@@ -28,7 +28,7 @@ NON_STANDARD_ERC721 = {
     ],
 }.get(chain.id, [])
 
-async def get_chain_height() -> int:
+async def get_buffered_chain_height() -> int:
     ''' Returns an int equal to the current height of the chain minus `_config.REORG_BUFFER`.'''
     return await dank_w3.eth.get_block_number() - _config.REORG_BUFFER
 
