@@ -1,10 +1,10 @@
 
-from functools import cached_property
 import importlib
 import inspect
 import logging
 import pkgutil
 from decimal import Decimal as _Decimal
+from functools import cached_property
 from types import ModuleType
 from typing import Any, Dict, Iterable, List, Optional, Tuple, Union
 
@@ -16,6 +16,9 @@ from y.datatypes import Address, Block
 from y.exceptions import ContractNotVerified, NonStandardERC20, PriceError
 from y.networks import Network
 from y.prices.magic import get_price_async
+from y.utils.dank_mids import dank_w3
+
+from eth_portfolio import _config
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +27,10 @@ NON_STANDARD_ERC721 = {
         "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB" # CryptoPunks
     ],
 }.get(chain.id, [])
+
+async def get_chain_height() -> int:
+    ''' Returns an int equal to the current height of the chain minus `_config.REORG_BUFFER`.'''
+    return await dank_w3.eth.get_block_number() - _config.REORG_BUFFER
 
 
 class ChecksumAddressDict(dict):

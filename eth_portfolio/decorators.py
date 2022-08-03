@@ -6,18 +6,20 @@ import logging
 from brownie import chain
 from y.datatypes import Block
 
+from eth_portfolio import _config
+
 logger = logging.getLogger(__name__)
 
 
 def set_end_block_if_none(func):
     """ 
-    Used to set `end_block` = `chain.height` if `end_block` is None.
+    Used to set `end_block` = `chain.height - _config.REORG_BUFFER` if `end_block` is None.
     Only works with a class function that takes args (self, start_block, end_block)
     """
     @functools.wraps(func)
     def wrap(obj, start_block: Block, end_block: Block, **kwargs):
         if end_block is None:
-            end_block = chain.height
+            end_block = chain.height - _config.REORG_BUFFER
             logger.debug(f"end_block not provided, using {end_block}")
         return func(obj, start_block, end_block, **kwargs)
     return wrap
