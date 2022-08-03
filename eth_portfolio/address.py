@@ -275,12 +275,13 @@ class TransactionsList(PandableListOfDicts):
     
     def _df(self) -> DataFrame:
         df = DataFrame(self)
-        df.chainId = df.chainId.apply(int)
-        df.blockNumber = df.blockNumber.apply(int)
-        df.transactionIndex = df.transactionIndex.apply(int)
-        df.nonce = df.nonce.apply(int)
-        df.gas = df.gas.apply(int)
-        df.gasPrice = df.gasPrice.apply(int)
+        if len(df) > 0:
+            df.chainId = df.chainId.apply(int)
+            df.blockNumber = df.blockNumber.apply(int)
+            df.transactionIndex = df.transactionIndex.apply(int)
+            df.nonce = df.nonce.apply(int)
+            df.gas = df.gas.apply(int)
+            df.gasPrice = df.gasPrice.apply(int)
         return df
 
 class AddressTransactionsCache(AddressObjectCacheBase):
@@ -376,7 +377,8 @@ class InternalTransfersList(PandableListOfDicts):
     
     def _df(self) -> DataFrame:
         df = DataFrame(self)
-        df['chainId'] = chain.id
+        if len(df) > 0:
+            df['chainId'] = chain.id
         return df
 
 class AddressInternalTransfersCache(AddressObjectCacheBase):
