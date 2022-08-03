@@ -1,11 +1,11 @@
 
 import asyncio
-from decimal import Decimal
 from typing import Optional
 
+from eth_portfolio.decorators import await_if_sync
 from eth_portfolio.staking.base import StakingPool
 from eth_portfolio.typing import StakedTokenBalances
-from multicall.utils import await_awaitable
+from eth_portfolio.utils import Decimal
 from y import Contract
 from y.classes.common import ERC20
 from y.contracts import contract_creation_block
@@ -20,19 +20,17 @@ class Convex(StakingPool):
     def __init__(self, asynchronous: bool) -> None:
         self.asynchronous = asynchronous
     
+    @await_if_sync
     def balances(self, address: Address, block: Optional[Block] = None) -> StakedTokenBalances:
-        coro = self.balances_async(address, block)
-        if self.asynchronous:
-            return coro
-        return await_awaitable(coro)
+        return self._balances_async(address, block)
     
-    async def balances_async(self, address: Address, block: Optional[Block] = None) -> StakedTokenBalances:
+    async def _balances_async(self, address: Address, block: Optional[Block] = None) -> StakedTokenBalances:
         if block and block < locker_deploy_block:
             return {}
         balance = Decimal(await convex_locker_v2.balanceOf.coroutine(address, block_identifier=block))
         if balance:
             scale, price = await asyncio.gather(cvx.scale, cvx.price_async(block))
             balance /= scale
-            return {cvx.address: {'balance': balance, 'usd value': balance * price}}
+            return {cvx.address: {'balance': balance, 'usd value': balance * Decimal(price)}}
         return {}
 

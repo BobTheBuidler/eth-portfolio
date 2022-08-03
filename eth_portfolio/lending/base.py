@@ -6,7 +6,7 @@ class LendingProtocol:
     def debt(self, address: Address, block: Optional[Block] = None) -> Dict:
         raise NotImplementedError
     
-    async def debt_async(self, address: Address, block: Optional[Block] = None) -> Dict:
+    async def _debt_async(self, address: Address, block: Optional[Block] = None) -> Dict:
         raise NotImplementedError
 
 class LendingProtocolWithLockedCollateral(LendingProtocol):
@@ -14,5 +14,5 @@ class LendingProtocolWithLockedCollateral(LendingProtocol):
     def collateral(self, address: Address, block: Optional[Block] = None) -> Dict:
         raise NotImplementedError
 
-    async def collateral_async(self, address: Address, block: Optional[Block] = None) -> Dict:
+    async def _collateral_async(self, address: Address, block: Optional[Block] = None) -> Dict:
         raise NotImplementedError

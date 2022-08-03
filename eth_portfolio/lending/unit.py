@@ -2,9 +2,9 @@
 from typing import Dict, Optional
 
 from brownie import chain
+from eth_portfolio.decorators import await_if_sync
 from eth_portfolio.lending.base import LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import PortfolioBalanceDetails
-from multicall.utils import await_awaitable
 from y import Contract, Network, get_price_async
 from y.datatypes import Address, Block
 
@@ -18,13 +18,11 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
         self.unitVault = Contract("0xb1cff81b9305166ff1efc49a129ad2afcd7bcf19")
         self.start_block = 11315910
     
+    @await_if_sync
     def collateral(self, address: Address, block: Optional[Block] = None) -> Dict:
-        coro = self.collateral_async(address, block)
-        if self.asynchronous:
-            return coro
-        return await_awaitable(coro)
+        return self._collateral_async(address, block)
     
-    async def collateral_async(self, address: Address, block: Optional[Block] = None) -> Dict:
+    async def _collateral_async(self, address: Address, block: Optional[Block] = None) -> Dict:
         if block and block < self.start_block:
             return None
         
@@ -37,13 +35,11 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
                 }
             }
 
+    @await_if_sync
     def debt(self, address: Address, block: Optional[Block] = None) -> Dict:
-        coro = self.debt_async(address, block)
-        if self.asynchronous:
-            return coro
-        return await_awaitable(coro)
+        return self._debt_async(address, block)
     
-    async def debt_async(self, address: Address, block: Optional[Block] = None) -> Optional[PortfolioBalanceDetails]:
+    async def _debt_async(self, address: Address, block: Optional[Block] = None) -> Optional[PortfolioBalanceDetails]:
         if block and block < self.start_block:
             return None
         # NOTE: This only works for YFI based debt, must extend before using for other collaterals

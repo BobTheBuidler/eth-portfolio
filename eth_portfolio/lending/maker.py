@@ -6,9 +6,9 @@ from brownie import chain
 
 from async_lru import alru_cache
 from eth_abi import encode_single
+from eth_portfolio.decorators import await_if_sync
 from eth_portfolio.lending.base import LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import PortfolioBalanceDetails
-from multicall.utils import await_awaitable
 from y import Network, get_price_async
 from y.constants import dai
 from y.contracts import Contract
@@ -23,13 +23,11 @@ class Maker(LendingProtocolWithLockedCollateral):
         self.cdp_manager = Contract('0x5ef30b9986345249bc32d8928B7ee64DE9435E39')
         self.vat = Contract('0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B')
     
+    @await_if_sync
     def collateral(self, address: Address, block: Optional[Block] = None) -> Dict:
-        coro = self.collateral_async(address, block)
-        if self.asynchronous:
-            return coro
-        return await_awaitable(coro)
+        return self._collateral_async(address, block)
     
-    async def collateral_async(self, address: Address, block: Optional[Block] = None) -> Dict:
+    async def _collateral_async(self, address: Address, block: Optional[Block] = None) -> Dict:
         ilk = encode_single('bytes32', b'YFI-A')
         urn = await self._urn(address)
         ink = (await self.vat.urns.coroutine(ilk, urn, block_identifier=block)).dict()["ink"]
@@ -42,13 +40,11 @@ class Maker(LendingProtocolWithLockedCollateral):
             }
         return {}
     
+    @await_if_sync
     def debt(self, address: Address, block: int = None) -> Optional[PortfolioBalanceDetails]:
-        coro = self.debt_async(block=block)
-        if self.asynchronous:
-            return coro
-        return await_awaitable(coro)
+        return self._debt_async(block=block)
     
-    async def debt_async(self, address: Address, block: int = None) -> Optional[PortfolioBalanceDetails]:
+    async def _debt_async(self, address: Address, block: int = None) -> Optional[PortfolioBalanceDetails]:
         ilk = encode_single('bytes32', b'YFI-A')
         urn = await self._urn(address)
         urns, ilks = await asyncio.gather(

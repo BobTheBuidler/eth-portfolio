@@ -3,9 +3,9 @@ import asyncio
 from typing import Optional
 
 from brownie import ZERO_ADDRESS, Contract
+from eth_portfolio.decorators import await_if_sync
 from eth_portfolio.lending.base import LendingProtocol
 from eth_portfolio.typing import PortfolioBalanceDetails
-from multicall.utils import await_awaitable
 from y import fetch_multicall, get_prices_async, weth
 from y.classes.common import ERC20
 from y.datatypes import Address, Block
@@ -31,13 +31,11 @@ class Compound(LendingProtocol):
                 underlyings.append(underlying)
         self.underlyings = [ERC20(underlying) for underlying in underlyings]
 
+    @await_if_sync
     def debt(self, address: Address, block: Optional[Block] = None) -> Optional[PortfolioBalanceDetails]:
-        coro = self.debt_async(address, block=block)
-        if self.asynchronous:
-            return coro
-        return await_awaitable(coro)
+        return self._debt_async(address, block=block)
     
-    async def debt_async(self, address: Address, block: Optional[Block] = None) -> Optional[PortfolioBalanceDetails]:
+    async def _debt_async(self, address: Address, block: Optional[Block] = None) -> Optional[PortfolioBalanceDetails]:
         if len(compound.trollers) == 0: # if ypricemagic doesn't support any Compound forks on current chain
             return None
 
