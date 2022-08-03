@@ -1,8 +1,7 @@
 
 import asyncio
 import logging
-from typing import (Any, AsyncIterator, Dict, List, Literal, Optional, Tuple,
-                    Type, Union)
+from typing import Dict, List, Literal, Optional, Tuple, Type, Union
 
 from aiohttp import ClientError
 from async_lru import alru_cache
@@ -11,7 +10,6 @@ from brownie.network.event import _EventItem
 from eth_abi import encode_single
 from eth_utils import encode_hex
 from pandas import DataFrame
-from tqdm.asyncio import tqdm_asyncio
 from web3.types import BlockData, TxData
 from y import Contract, convert, get_price_async
 from y.classes.common import ERC20
@@ -307,7 +305,7 @@ class AddressTransactionsCache(AddressObjectCacheBase):
             return
         end_block_nonce = await self._get_nonce_at_block(end_block)
         nonces = range(self.cached_thru_nonce + 1, end_block_nonce + 1)
-        new_transactions = await tqdm_asyncio.gather(*[self._get_transaction_by_nonce(nonce, end_block) for nonce in nonces])
+        new_transactions = await asyncio.gather(*[self._get_transaction_by_nonce(nonce, end_block) for nonce in nonces])
         for i, transaction in enumerate(new_transactions):
             transaction = dict(transaction)
             transaction['chainId'] = int(transaction['chainId'], 16)
@@ -456,35 +454,6 @@ class AddressInternalTransfersCache(AddressObjectCacheBase):
             self.cached_from = start_block
         if self.cached_thru is None or end_block > self.cached_thru:
             self.cached_thru = end_block
-    
-    async def _get_relevant_blocks_from_batch(self, batch: List[Block]) -> List[Block]:
-        relevant_blocks = await asyncio.gather(*[self._check_if_block_range_contains_internal_transactions([block]) for block in batch])
-        return [block for block, is_relevant in zip(batch, relevant_blocks) if is_relevant]
-
-    async def _check_if_block_range_contains_internal_transactions(self, blocks: List[Block]) -> List[Block]:
-        start = blocks[0]
-        stop = blocks[-1]
-        async with debug_semaphore:
-            while True:
-                try:
-                    if self.address.lower() in await dank_w3.manager.coro_request("debug_getModifiedAccountsByNumber", [start, stop]):
-                        return blocks
-                    else:
-                        return []
-                except ClientError:
-                    pass
-    
-    async def _internal_transfer_blocks(self) -> AsyncIterator[Block]:
-        blocks = list(range(self.portfolio._start_block, chain.height))
-        batches = [blocks[i:i+100] for i in range(0, len(blocks), 100)]
-        for blocks in tqdm_asyncio.as_completed([self._check_if_block_range_contains_internal_transactions(batch) for batch in batches], timeout=600):
-            blocks = await blocks
-            _batches = [blocks[i:i+10] for i in range(0, len(blocks), 10)]
-            for _blocks in asyncio.as_completed([self._check_if_block_range_contains_internal_transactions(_batch) for _batch in _batches], timeout=600):
-                for block in asyncio.as_completed([self._check_if_block_range_contains_internal_transactions([block]) for block in await _blocks], timeout=600):
-                    block = await block
-                    if block:
-                        yield block[0]
 
 
 shitcoins = SHITCOINS.get(chain.id, [])
