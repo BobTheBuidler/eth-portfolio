@@ -1,8 +1,8 @@
 
 import logging
 from decimal import Decimal as _Decimal
-from typing import Optional
-from brownie import chain
+from typing import Any, List, Optional
+from brownie import chain, convert
 
 from y import Contract
 from y.classes.common import ERC20
@@ -18,6 +18,22 @@ NON_STANDARD_ERC721 = {
         "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB" # CryptoPunks
     ],
 }.get(chain.id, [])
+
+
+class ChecksumAddressDict(dict):
+    """
+    A dict that maps addresses to PortfolioAddress objects.
+    Will automatically checksum your provided address key when setting and getting.
+    """
+    def __init__(self):
+        super().__init__()
+        self.__dict__ = self
+    
+    def __getitem__(self, key: Address) -> Any:
+        return super().__getitem__(convert.to_address(key))
+    
+    def __setitem__(self, key: Address, value: Any) -> None:
+        return super().__setitem__(convert.to_address(key), value)
 
 
 class Decimal(_Decimal):
