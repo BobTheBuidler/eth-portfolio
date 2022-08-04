@@ -5,8 +5,7 @@ from typing import Dict, List, Optional
 from eth_portfolio.decorators import await_if_sync
 from eth_portfolio.staking.base import StakingPool
 from eth_portfolio.typing import StakedTokenBalances, TokenBalances
-from eth_portfolio.utils import (Decimal, get_protocols_for_submodule,
-                                 import_submodules)
+from eth_portfolio.utils import get_protocols_for_submodule, import_submodules
 from y.datatypes import Address, Block
 
 import_submodules()

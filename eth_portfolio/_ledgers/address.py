@@ -46,10 +46,12 @@ PandableLedgerEntryList = Union["TransactionsList", "InternalTransfersList", "To
 class AddressLedgerBase(Generic[_LedgerEntryList]):
     list_type: Type[_LedgerEntryList]
 
-    def __init__(self, portfolio_address: PortfolioAddress) -> None:
+    def __init__(self, portfolio_address: "PortfolioAddress") -> None:
         assert hasattr(self.__class__, 'list_type'), f"{self.__class__.__name__} must have a list_type attribute."
         assert hasattr(self, 'list_type'), f"{self.__class__.__name__} must have a list_type attribute."
-        assert isinstance(portfolio_address, PortfolioAddress), f"address must be a PortfolioAddress. try passing in PortfolioAddress({portfolio_address}) instead."
+
+        # TODO replace the following line with an abc implementation.
+        # assert isinstance(portfolio_address, PortfolioAddress), f"address must be a PortfolioAddress. try passing in PortfolioAddress({portfolio_address}) instead."
 
         self.portfolio_address = portfolio_address
         self.objects: _LedgerEntryList = self.list_type()
@@ -171,7 +173,7 @@ class TransactionsList(PandableList[TransactionData]):
 class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
     list_type = TransactionsList
 
-    def __init__(self, portfolio_address: PortfolioAddress):
+    def __init__(self, portfolio_address: "PortfolioAddress"):
         super().__init__(portfolio_address)
         self.cached_thru_nonce = -1
 

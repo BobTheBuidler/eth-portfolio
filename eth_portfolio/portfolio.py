@@ -11,13 +11,13 @@ from web3 import Web3
 from y import Contract, Network, get_price_async
 from y.datatypes import Address, Block
 
+from eth_portfolio._ledgers.address import PandableLedgerEntryList
 from eth_portfolio._ledgers.portfolio import (PortfolioInternalTransfersLedger,
                                               PortfolioTokenTransfersLedger,
                                               PortfolioTransactionsLedger)
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.constants import ADDRESSES
 from eth_portfolio.decorators import await_if_sync, set_end_block_if_none
-from eth_portfolio.ledger.address import PandableLedgerEntryList
 from eth_portfolio.typing import (Addresses, PortfolioBalances,
                                   StakedTokenBalances)
 from eth_portfolio.utils import ChecksumAddressDict
@@ -60,15 +60,25 @@ class Portfolio:
         assert isinstance(load_prices, bool), f"`load_prices` must be a boolean, you passed {type(load_prices)}"
         self.load_prices: bool = load_prices
 
+        self.ledger = PortfolioLedger(self)
+
         self.w3: Web3 = web3
-        self.ledger = Ledger(self)
-        self.transactions = PortfolioTransactionsLedger(self)
-        self.internal_transfers = PortfolioInternalTransfersLedger(self)
-        self.token_transfers = PortfolioTokenTransfersLedger(self)
     
     @cached_property
     def chain_id(self) -> int:
         return self.w3.eth.chainId
+    
+    @property
+    def transactions(self) -> PortfolioTransactionsLedger:
+        return self.ledger.transactions
+    
+    @property
+    def internal_transfers(self) -> PortfolioInternalTransfersLedger:
+        return self.ledger.internal_transfers
+    
+    @property
+    def token_transfers(self) -> PortfolioTokenTransfersLedger:
+        return self.ledger.token_transfers
 
     # descriptive functions
     # assets
@@ -195,15 +205,17 @@ class Portfolio:
         return {'assets': assets, 'debt': debt}
 
 
-class Ledger:
-    """
-    Stores a ledger of all transactions for a ``Portfolio`` object, along with information about them .
-    """
-    def __init__(self, portfolio: Portfolio) -> None:
+def _get_missing_cols_from_KeyError(e: KeyError) -> List[str]:
+    split = str(e).split("'")
+    return [split[i * 2 + 1] for i in range(len(split)//2)]
+
+class PortfolioLedger:
+    def __init__(self, portfolio: "Portfolio") -> None:
         self.portfolio = portfolio
+
+        self.transactions = PortfolioTransactionsLedger(portfolio)
+        self.internal_transfers = PortfolioInternalTransfersLedger(portfolio)
         self.token_transfers = PortfolioTokenTransfersLedger(portfolio)
-        self.max_block = self.portfolio._start_block - 1
-        self.w3: Web3 = web3
     
     @property
     def asynchronous(self) -> bool:
@@ -212,6 +224,10 @@ class Ledger:
     @property
     def load_prices(self) -> bool:
         return self.portfolio.load_prices
+    
+    @property
+    def w3(self) -> Web3:
+        return self.portfolio.w3
     
     # All Ledger entries
     
@@ -304,20 +320,10 @@ class Ledger:
                     df = df[df['value'] != 0]
                 break
             except KeyError as e:
-                for column in get_missing_cols_from_KeyError(e):
+                for column in _get_missing_cols_from_KeyError(e):
                     df[column] = None
+        return df.sort_index()
 
-        df.sort_index(inplace=True)
-
-
-        logger.critical(df)
-        logger.critical(df.columns)
-        logger.critical(df.dtypes)
-        return df
-
-def get_missing_cols_from_KeyError(e: KeyError) -> List[str]:
-    split = str(e).split("'")
-    return [split[i * 2 + 1] for i in range(len(split)//2)]
 
 # Use this var for a convenient way to set up your portfolio using env vars.
 portfolio = Portfolio(ADDRESSES)

@@ -1,14 +1,20 @@
 import asyncio
-from typing import Dict, Generic, Tuple, Union
+import logging
+from typing import TYPE_CHECKING, Dict, Generic, Tuple, Union
 
-from eth_portfolio.decorators import await_if_sync, set_end_block_if_none
 from eth_portfolio._ledgers.address import (AddressLedgerBase,
-                                           InternalTransfersList,
-                                           TokenTransfersList,
-                                           TransactionsList, _LedgerEntryList)
+                                            InternalTransfersList,
+                                            TokenTransfersList,
+                                            TransactionsList, _LedgerEntryList)
+from eth_portfolio.decorators import await_if_sync, set_end_block_if_none
 from eth_portfolio.utils import _unpack_indicies
 from pandas import DataFrame, concat  # type: ignore
 from y.datatypes import Address, Block
+
+if TYPE_CHECKING:
+    from eth_portfolio.portfolio import Portfolio
+
+logger = logging.getLogger(__name__)
 
 
 class PortfolioLedgerBase(Generic[_LedgerEntryList]):

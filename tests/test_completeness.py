@@ -5,13 +5,13 @@ import eth_portfolio.lending
 import eth_portfolio.staking
 import pytest
 from eth_portfolio.address import PortfolioAddress
-from eth_portfolio.portfolio import Ledger, Portfolio
+from eth_portfolio.portfolio import PortfolioLedger, Portfolio
 
 """
 Test sync-async completeness.
 """
 
-exposed_classes = [Portfolio, Ledger, PortfolioAddress]
+exposed_classes = [Portfolio, PortfolioLedger, PortfolioAddress]
 exposed_classes.extend(obj for submodule in [eth_portfolio.lending, eth_portfolio.staking] for _, obj in submodule.__dict__.items() if isinstance(obj, type) and obj.__module__.startswith("eth_portfolio."))
 functions = [(cls, name) for cls in exposed_classes for name, obj in cls.__dict__.items() if callable(obj)]
 
