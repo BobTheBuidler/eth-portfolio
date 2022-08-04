@@ -1,8 +1,11 @@
 
 import asyncio
-from typing import Dict, Optional
-from eth_portfolio.decorators import await_if_sync
+from typing import List, Optional, Union
 
+from eth_portfolio.decorators import await_if_sync
+from eth_portfolio.lending.base import (LendingProtocol,
+                                        LendingProtocolWithLockedCollateral)
+from eth_portfolio.typing import TokenBalances
 from eth_portfolio.utils import get_protocols_for_submodule, import_submodules
 from y.datatypes import Address, Block
 
@@ -12,16 +15,16 @@ import_submodules()
 class Lending:
     def __init__(self, asynchronous: bool = False) -> None:
         self.asynchronous = bool(asynchronous)
-        self.protocols = get_protocols_for_submodule(self.asynchronous)
+        self.protocols: List[Union[LendingProtocol, LendingProtocolWithLockedCollateral]] = get_protocols_for_submodule(self.asynchronous)
 
     @await_if_sync
-    def collateral(self, address: Address, block: Optional[Block] = None) -> Dict:
-        return self._collateral_async(address, block)
+    def collateral(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        return self._collateral_async(address, block) # type: ignore
 
-    async def _collateral_async(self, address: Address, block: Optional[Block] = None) -> Dict:
+    async def _collateral_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         # Under contrcutcion
         collaterals = await asyncio.gather(*[
-            protocol._collateral_async(address, block)
+            protocol._collateral_async(address, block) # type: ignore
             for protocol in self.protocols
             if hasattr(protocol, 'collateral')
         ])
@@ -32,10 +35,10 @@ class Lending:
         }
 
     @await_if_sync
-    def debt(self, address: Address, block: Optional[Block] = None) -> Dict:
-        return self._debt_async(address, block)
+    def debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        return self._debt_async(address, block) # type: ignore
     
-    async def _debt_async(self, address: Address, block: Optional[Block] = None) -> Dict:
+    async def _debt_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         # Under construction
         debts = await asyncio.gather(*[protocol._debt_async(address, block) for protocol in self.protocols])
         return {

@@ -1,7 +1,8 @@
 
 import asyncio
+import decimal
 import logging
-from typing import Dict, List, Literal, Optional, Tuple, Type, Union
+from typing import Dict, Generic, List, Optional, Tuple, Type, TypeVar, Union
 
 from aiohttp import ClientError
 from async_lru import alru_cache
@@ -9,12 +10,12 @@ from brownie import chain
 from brownie.network.event import _EventItem
 from eth_abi import encode_single
 from eth_utils import encode_hex
-from pandas import DataFrame
+from pandas import DataFrame  # type: ignore
 from web3.types import BlockData, TxData
 from y import Contract, convert, get_price_async
 from y.classes.common import ERC20
 from y.constants import EEE_ADDRESS, weth
-from y.datatypes import Address, Block, UsdPrice
+from y.datatypes import Address, Block
 from y.exceptions import ContractNotVerified, NonStandardERC20
 from y.utils.dank_mids import dank_w3
 from y.utils.events import decode_logs
@@ -24,20 +25,24 @@ from eth_portfolio.decorators import await_if_sync, set_end_block_if_none
 from eth_portfolio.lending import _lending
 from eth_portfolio.shitcoins import SHITCOINS
 from eth_portfolio.staking import _staking
-from eth_portfolio.utils import (Decimal, PandableListOfDicts, _get_price,
-                                 _unpack_indicies, get_buffered_chain_height, is_erc721)
+from eth_portfolio.typing import (BalanceItem, InternalTransferData,
+                                  TokenBalances, TokenTransferData,
+                                  TransactionData)
+from eth_portfolio.utils import (Decimal, PandableList, _get_price,
+                                 _unpack_indicies, get_buffered_chain_height)
 
 logger = logging.getLogger(__name__)
 
 debug_semaphore = asyncio.Semaphore(value=100)
 
 
-async def _get_eth_balance(address: Address, block: Optional[Block]) -> Decimal:
+async def _get_eth_balance(address: Address, block: Optional[Block]) -> decimal.Decimal:
     return Decimal(await dank_w3.eth.get_balance(address, block_identifier=block)) / Decimal(1e18)
 
+_PandableList = Union["TransactionsList", "InternalTransfersList", "TokenTransfersList"]
 
 class PortfolioAddress:
-    def __init__(self, address: Address, portfolio: "Portfolio") -> None:
+    def __init__(self, address: Address, portfolio: "Portfolio") -> None: # type: ignore
         self.address = convert.to_address(address)
         self.portfolio = portfolio
         self.transactions = AddressTransactionsCache(self)
@@ -71,31 +76,34 @@ class PortfolioAddress:
     # Primary functions
 
     @await_if_sync
-    def assets(self, block: Optional[Block] = None) -> Dict:
-        return self._assets_async(block)
+    def assets(self, block: Optional[Block] = None) -> TokenBalances:
+        return self._assets_async(block) # type: ignore
     
-    async def _assets_async(self, block: Optional[Block] = None) -> Dict:
+    async def _assets_async(self, block: Optional[Block] = None) -> TokenBalances:
         balances, collateral = await asyncio.gather(
             self._balances_async(block=block),
             self._collateral_async(block=block),
         )
+        for token, _balances in collateral.items():
+            balances[token]['balance'] += _balances['balance']
+            balances[token]['usd value'] += _balances['usd value']
         balances.update(collateral)
         return balances
 
     @await_if_sync
-    def debt(self, block: Optional[Block] = None) -> Dict:
-        return self._debt_async(block)
+    def debt(self, block: Optional[Block] = None) -> TokenBalances:
+        return self._debt_async(block) # type: ignore
     
-    async def _debt_async(self, block: Optional[Block] = None) -> Dict:
+    async def _debt_async(self, block: Optional[Block] = None) -> TokenBalances:
         return await _lending._debt_async(self.address, block=block)
 
     # Assets
 
     @await_if_sync
-    def balances(self, block: Optional[Block]):
-        return self._balances_async(block)
+    def balances(self, block: Optional[Block]) -> TokenBalances:
+        return self._balances_async(block) # type: ignore
     
-    async def _balances_async(self, block: Optional[Block]):
+    async def _balances_async(self, block: Optional[Block]) -> TokenBalances:
         eth_balance, token_balances = await asyncio.gather(
             self._eth_balance_async(block),
             self._token_balances_async(block),
@@ -105,10 +113,10 @@ class PortfolioAddress:
         return {token: balance for token, balance in balances.items() if balance['balance'] != 0 and balance['usd value'] != 0}
     
     @await_if_sync
-    def eth_balance(self, block: Optional[Block]) -> Dict[Literal["balance", "usd value"], Decimal]:
-        return self._eth_balance_async(block)
+    def eth_balance(self, block: Optional[Block]) -> BalanceItem:
+        return self._eth_balance_async(block) # type: ignore
 
-    async def _eth_balance_async(self, block: Optional[Block]) -> Dict[Literal["balance", "usd value"], Decimal]:
+    async def _eth_balance_async(self, block: Optional[Block]) -> BalanceItem:
         balance, price = await asyncio.gather(
             _get_eth_balance(self.address, block),
             get_price_async(weth, block),
@@ -116,10 +124,10 @@ class PortfolioAddress:
         return {'balance': balance, 'usd value': balance * Decimal(price)}
     
     @await_if_sync
-    def token_balances(self, block: Optional[Block]):
-        return self._token_balances_async(block)
+    def token_balances(self, block: Optional[Block]) -> TokenBalances:
+        return self._token_balances_async(block) # type: ignore
     
-    async def _token_balances_async(self, block):
+    async def _token_balances_async(self, block) -> TokenBalances:
         tokens = await self.token_transfers._list_tokens_at_block_async(block=block)
         token_balances, token_prices = await asyncio.gather(
             asyncio.gather(*[token.balance_of_readable_async(self.address, block) for token in tokens]),
@@ -132,30 +140,30 @@ class PortfolioAddress:
         return dict(zip(tokens, token_balances))
     
     @await_if_sync
-    def collateral(self, block: Optional[Block] = None) -> Dict:
-        return self._collateral_async(block)
+    def collateral(self, block: Optional[Block] = None) -> TokenBalances:
+        return self._collateral_async(block) # type: ignore
     
-    async def _collateral_async(self, block: Optional[Block] = None) -> Dict:
+    async def _collateral_async(self, block: Optional[Block] = None) -> TokenBalances:
         return await _lending._collateral_async(self.address, block=block)
     
     @await_if_sync
-    def staking(self, block: Optional[Block] = None) -> Dict:
-        return self._staking_async(block)
+    def staking(self, block: Optional[Block] = None) -> Dict[str, TokenBalances]:
+        return self._staking_async(block) # type: ignore
     
-    async def _staking_async(self, block: Optional[Block] = None) -> Dict:
+    async def _staking_async(self, block: Optional[Block] = None) -> Dict[str, TokenBalances]:
         return await _staking._balances_async(self.address, block=block)
     
     # Ledger Entries
 
     @await_if_sync
-    def all(self, load_prices: bool = False) -> None:
-        return self._all_async(load_prices=load_prices)
+    def all(self, load_prices: bool = False) -> Dict[str, _PandableList]:
+        return self._all_async(load_prices=load_prices) # type: ignore
     
-    async def _all_async(self, load_prices: bool = False) -> Dict[str, List[Union[TxData, _EventItem]]]:
+    async def _all_async(self, start_block: Block, end_block: Block) -> Dict[str, _PandableList]:
         transactions, internal_transactions, token_transfers = await asyncio.gather(
-            self.transactions._get_async(load_prices=load_prices),
-            self.internal_transfers_async(load_prices=load_prices),
-            self.token_transfers_async(load_prices=load_prices),
+            self.transactions._get_async(start_block, end_block),
+            self.internal_transfers._get_async(start_block, end_block),
+            self.token_transfers._get_async(start_block, end_block),
         )
         return {
             "transactions": transactions,
@@ -170,8 +178,10 @@ class BlockRangeIsCached(Exception):
 class BlockRangeOutOfBounds(Exception):
     pass
 
-class AddressObjectCacheBase:
-    list_type: Type[PandableListOfDicts]
+_LedgerEntryList = TypeVar("_LedgerEntryList", "TransactionsList", "InternalTransfersList", "TokenTransfersList")
+
+class AddressObjectCacheBase(Generic[_LedgerEntryList]):
+    list_type: Type[_LedgerEntryList]
 
     def __init__(self, portfolio_address: PortfolioAddress) -> None:
         assert hasattr(self.__class__, 'list_type'), f"{self.__class__.__name__} must have a list_type attribute."
@@ -179,9 +189,10 @@ class AddressObjectCacheBase:
         assert isinstance(portfolio_address, PortfolioAddress), f"address must be a PortfolioAddress. try passing in PortfolioAddress({portfolio_address}) instead."
 
         self.portfolio_address = portfolio_address
-        self.objects = []
-        self.cached_from = None
-        self.cached_thru = None
+        self.objects: _LedgerEntryList = self.list_type()
+        # The following two properties will both be ints once the cache has contents
+        self.cached_from: int = None # type: ignore
+        self.cached_thru: int = None # type: ignore
     
     @property
     def address(self) -> Address:
@@ -196,21 +207,21 @@ class AddressObjectCacheBase:
         return self.portfolio.load_prices
     
     @property
-    def portfolio(self) -> "Portfolio":
+    def portfolio(self) -> "Portfolio": # type: ignore
         return self.portfolio_address.portfolio
     
-    def __getitem__(self, indicies: Union[Block,Tuple[Block,Block]]) -> PandableListOfDicts:
+    def __getitem__(self, indicies: Union[Block,Tuple[Block,Block]]) -> _LedgerEntryList:
         start_block, end_block = _unpack_indicies(indicies)
         if asyncio.get_event_loop().is_running():
-            return self._get_async(start_block, end_block)
+            return self._get_async(start_block, end_block) #type: ignore
         return self.get(start_block, end_block)
     
     @await_if_sync
-    def get(self, start_block: Block, end_block: Block) -> PandableListOfDicts:
-        return self._get_async(start_block, end_block)
+    def get(self, start_block: Block, end_block: Block) -> _LedgerEntryList:
+        return self._get_async(start_block, end_block) # type: ignore
     
     @set_end_block_if_none
-    async def _get_async(self, start_block: Block, end_block: Block) -> PandableListOfDicts:
+    async def _get_async(self, start_block: Block, end_block: Block) -> _LedgerEntryList:
         await self._load_new_objects(start_block, end_block)
         objects = self.list_type()
         for obj in self.objects:
@@ -223,10 +234,10 @@ class AddressObjectCacheBase:
         return objects
     
     @await_if_sync
-    def new(self) -> PandableListOfDicts:
-        return self._new_async()
+    def new(self) -> _LedgerEntryList:
+        return self._new_async() # type: ignore
     
-    async def _new_async(self) -> PandableListOfDicts:
+    async def _new_async(self) -> _LedgerEntryList:
         start_block = 0 if self.cached_thru is None else self.cached_thru + 1
         end_block = await get_buffered_chain_height()
         return self[start_block, end_block]
@@ -279,7 +290,7 @@ async def _get_block(block: Block) -> BlockData:
         except ClientError:
             pass
 
-class TransactionsList(PandableListOfDicts):
+class TransactionsList(PandableList[TransactionData]):
     def __init__(self):
         super().__init__()
     
@@ -294,7 +305,7 @@ class TransactionsList(PandableListOfDicts):
             df.gasPrice = df.gasPrice.apply(int)
         return df
 
-class AddressTransactionsCache(AddressObjectCacheBase):
+class AddressTransactionsCache(AddressObjectCacheBase[TransactionsList]):
     list_type = TransactionsList
 
     def __init__(self, portfolio_address: PortfolioAddress):
@@ -339,7 +350,7 @@ class AddressTransactionsCache(AddressObjectCacheBase):
         elif end_block > self.cached_thru:
             self.cached_thru = end_block
 
-    async def _get_transaction_by_nonce(self, nonce: int, height: Block) -> TxData:
+    async def _get_transaction_by_nonce(self, nonce: int, height: Block) -> dict:
         lo = 0
         hi = height
         while True:
@@ -381,7 +392,7 @@ class AddressTransactionsCache(AddressObjectCacheBase):
                 pass
 
 
-class InternalTransfersList(PandableListOfDicts):
+class InternalTransfersList(PandableList[InternalTransferData]):
     def __init__(self):
         super().__init__()
     
@@ -391,7 +402,7 @@ class InternalTransfersList(PandableListOfDicts):
             df['chainId'] = chain.id
         return df
 
-class AddressInternalTransfersCache(AddressObjectCacheBase):
+class AddressInternalTransfersCache(AddressObjectCacheBase[InternalTransfersList]):
     list_type = InternalTransfersList
     
     @set_end_block_if_none
@@ -462,29 +473,20 @@ class AddressInternalTransfersCache(AddressObjectCacheBase):
 
 shitcoins = SHITCOINS.get(chain.id, [])
 
-class TokenTransfersList(PandableListOfDicts):
+class TokenTransfersList(PandableList[TokenTransferData]):
     def __init__(self):
         super().__init__()
     
     def _df(self) -> DataFrame:
         return DataFrame(self)
 
-async def _get_symbol(token) -> str:
+async def _get_symbol(token) -> Optional[str]:
     try:
         return await ERC20(token).symbol_async
     except NonStandardERC20:
         return None
 
-async def _get_price(token, block) -> UsdPrice:
-    if await is_erc721(token):
-        return None
-    try:
-        return await get_price_async(token, block, fail_to_None=True)
-    except Exception as e:
-        logger.error(f"{type(e).__name__} when fetching price for {token} at block {block}")
-        logger.error(e)
-        return None
-class AddressTokenTransfersCache(AddressObjectCacheBase):
+class AddressTokenTransfersCache(AddressObjectCacheBase[TokenTransfersList]):
     list_type = TokenTransfersList
 
     def __init__(self, portfolio_address: PortfolioAddress):
@@ -505,7 +507,7 @@ class AddressTokenTransfersCache(AddressObjectCacheBase):
 
     @await_if_sync
     def list_tokens_at_block(self, block: Optional[int] = None) -> List[ERC20]:
-        return self._list_tokens_at_block_async(block)
+        return self._list_tokens_at_block_async(block) # type: ignore
     
     async def _list_tokens_at_block_async(self, block: Optional[int] = None) -> List[ERC20]:
         return list({ERC20(transfer['token_address']) for transfer in await self._get_async(0, block)})

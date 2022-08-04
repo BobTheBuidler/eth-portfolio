@@ -4,7 +4,7 @@ from typing import Optional
 
 from eth_portfolio.decorators import await_if_sync
 from eth_portfolio.staking.base import StakingPool
-from eth_portfolio.typing import StakedTokenBalances
+from eth_portfolio.typing import TokenBalances
 from eth_portfolio.utils import Decimal
 from y import Contract
 from y.classes.common import ERC20
@@ -21,10 +21,10 @@ class Convex(StakingPool):
         self.asynchronous = asynchronous
     
     @await_if_sync
-    def balances(self, address: Address, block: Optional[Block] = None) -> StakedTokenBalances:
-        return self._balances_async(address, block)
+    def balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        return self._balances_async(address, block) # type: ignore
     
-    async def _balances_async(self, address: Address, block: Optional[Block] = None) -> StakedTokenBalances:
+    async def _balances_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         if block and block < locker_deploy_block:
             return {}
         balance = Decimal(await convex_locker_v2.balanceOf.coroutine(address, block_identifier=block))

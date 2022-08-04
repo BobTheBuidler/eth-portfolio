@@ -1,10 +1,10 @@
 
-from typing import Dict, Optional
+from typing import Optional
 
 from brownie import chain
 from eth_portfolio.decorators import await_if_sync
 from eth_portfolio.lending.base import LendingProtocolWithLockedCollateral
-from eth_portfolio.typing import PortfolioBalanceDetails
+from eth_portfolio.typing import TokenBalances
 from y import Contract, Network, get_price_async
 from y.datatypes import Address, Block
 
@@ -19,12 +19,12 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
         self.start_block = 11315910
     
     @await_if_sync
-    def collateral(self, address: Address, block: Optional[Block] = None) -> Dict:
-        return self._collateral_async(address, block)
+    def collateral(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        return self._collateral_async(address, block) # type: ignore
     
-    async def _collateral_async(self, address: Address, block: Optional[Block] = None) -> Dict:
+    async def _collateral_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         if block and block < self.start_block:
-            return None
+            return {}
         
         bal = await self.unitVault.collaterals.coroutine(yfi, address, block_identifier=block)
         if bal:
@@ -34,18 +34,20 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
                     'usd value': bal / 1e18 * await get_price_async(yfi, block),
                 }
             }
+        return {}
 
     @await_if_sync
-    def debt(self, address: Address, block: Optional[Block] = None) -> Dict:
-        return self._debt_async(address, block)
+    def debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        return self._debt_async(address, block) # type: ignore
     
-    async def _debt_async(self, address: Address, block: Optional[Block] = None) -> Optional[PortfolioBalanceDetails]:
+    async def _debt_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         if block and block < self.start_block:
-            return None
+            return {}
         # NOTE: This only works for YFI based debt, must extend before using for other collaterals
         debt = await self.unitVault.getTotalDebt.coroutine(yfi, address, block_identifier=block) / 1e18
         if debt:
             return {usdp: {'balance': debt, 'usd value': debt}}
+        return {}
 
 unit = UnitXyz(asynchronous=True) if chain.id == Network.Mainnet else None
 

@@ -1,31 +1,30 @@
 import asyncio
 import logging
 from functools import cached_property
-from typing import Dict, Iterable, List, Optional, Tuple, Union
+from typing import Dict, Generic, Iterable, List, Tuple, Union
 
 from async_property import async_property
 from brownie import web3
-from brownie.network.event import _EventItem
 from eth_abi import encode_single
-from pandas import DataFrame, concat
+from pandas import DataFrame, concat  # type: ignore
 from web3 import Web3
-from web3.types import TxData
 from y import Contract, Network, get_price_async
 from y.datatypes import Address, Block
 
-from eth_portfolio.address import AddressObjectCacheBase, PortfolioAddress
+from eth_portfolio.address import (AddressObjectCacheBase,
+                                   InternalTransfersList, PortfolioAddress,
+                                   TokenTransfersList, TransactionsList,
+                                   _LedgerEntryList, _PandableList)
 from eth_portfolio.constants import ADDRESSES
 from eth_portfolio.decorators import await_if_sync, set_end_block_if_none
-from eth_portfolio.typing import PortfolioBalanceDetails, StakedTokenBalances
-from eth_portfolio.utils import (ChecksumAddressDict, PandableListOfDicts,
-                                 _unpack_indicies)
+from eth_portfolio.typing import (Addresses, PortfolioBalances,
+                                  StakedTokenBalances)
+from eth_portfolio.utils import ChecksumAddressDict, _unpack_indicies
 
 logger = logging.getLogger(__name__)
 
-Addresses = Union[Address, Iterable[Address]]
 
-
-class PortfolioLedgerEntryBase:
+class PortfolioLedgerBase(Generic[_LedgerEntryList]):
     property_name: str
 
     def __init__(self, portfolio: "Portfolio"):
@@ -33,10 +32,10 @@ class PortfolioLedgerEntryBase:
         self.object_caches: Dict[Address, AddressObjectCacheBase] = {address.address: getattr(address, self.property_name) for address in portfolio.addresses.values()}
         self.portfolio = portfolio
     
-    def __getitem__(self, indicies: Union[Block,Tuple[Block,Block]]) -> Dict[Address, PandableListOfDicts]:
+    def __getitem__(self, indicies: Union[Block,Tuple[Block,Block]]) -> Dict[Address, _LedgerEntryList]:
         start_block, end_block = _unpack_indicies(indicies)
         if asyncio.get_event_loop().is_running():
-            return self._get_async(start_block, end_block)
+            return self._get_async(start_block, end_block) # type: ignore
         return self.get(start_block, end_block)
     
     @property
@@ -48,11 +47,11 @@ class PortfolioLedgerEntryBase:
         return self.portfolio.load_prices
     
     @await_if_sync
-    def get(self, start_block: Block, end_block: Block) -> Dict[Address, PandableListOfDicts]:
-        return self._get_async(start_block, end_block)
+    def get(self, start_block: Block, end_block: Block) -> Dict[Address, _LedgerEntryList]:
+        return self._get_async(start_block, end_block) # type: ignore
     
     @set_end_block_if_none
-    async def _get_async(self, start_block: Block, end_block: Block) -> Dict[Address, PandableListOfDicts]:
+    async def _get_async(self, start_block: Block, end_block: Block) -> Dict[Address, _LedgerEntryList]:
         token_transfers = await asyncio.gather(*[cache._get_async(start_block, end_block) for cache in self.object_caches.values()])
         return {address: transfers for address, transfers in zip(self.portfolio.addresses, token_transfers)}
 
@@ -69,7 +68,7 @@ class PortfolioLedgerEntryBase:
         return df
     
     async def _df_base(self, start_block: Block, end_block: Block) -> DataFrame:
-        data: Dict[Address, PandableListOfDicts] = await self._get_async(start_block, end_block)
+        data: Dict[Address, _LedgerEntryList] = await self._get_async(start_block, end_block)
         df = concat(pandable.df for pandable in data.values())
         return df
     
@@ -81,13 +80,13 @@ class PortfolioLedgerEntryBase:
         return df.set_index('blockNumber')
 
 
-class PortfolioTransactions(PortfolioLedgerEntryBase):
+class PortfolioTransactions(PortfolioLedgerBase[TransactionsList]):
     property_name = "transactions"
 
-class PortfolioTokenTransfers(PortfolioLedgerEntryBase):
+class PortfolioTokenTransfers(PortfolioLedgerBase[TokenTransfersList]):
     property_name = "token_transfers"
 
-class PortfolioInternalTransfers(PortfolioLedgerEntryBase):
+class PortfolioInternalTransfers(PortfolioLedgerBase[InternalTransfersList]):
     property_name = "internal_transfers"
 
     @set_end_block_if_none
@@ -137,10 +136,10 @@ class Portfolio:
         self.label = label
 
         assert isinstance(asynchronous, bool), f"`asynchronous` must be a boolean, you passed {type(asynchronous)}"
-        self.asynchronous = asynchronous
+        self.asynchronous: bool = asynchronous
 
         assert isinstance(load_prices, bool), f"`load_prices` must be a boolean, you passed {type(load_prices)}"
-        self.load_prices = load_prices
+        self.load_prices: bool = load_prices
 
         self.w3: Web3 = web3
         self.ledger = Ledger(self)
@@ -156,26 +155,26 @@ class Portfolio:
     # assets
 
     @await_if_sync
-    def assets(self, block: int = None) -> PortfolioBalanceDetails:
-        return self._assets_async(block=block)
+    def assets(self, block: int = None) -> PortfolioBalances:
+        return self._assets_async(block=block) # type: ignore
     
-    async def _assets_async(self, block: int = None) -> PortfolioBalanceDetails:
+    async def _assets_async(self, block: int = None) -> PortfolioBalances:
         assets = await asyncio.gather(*[address._assets_async(block=block) for address in self.addresses.values()])
         return {address: data for address, data in zip(self.addresses, assets)}
 
     @await_if_sync
-    def held_assets(self, block: int = None) -> PortfolioBalanceDetails:
-        return self._held_assets_async(block=block)
+    def held_assets(self, block: int = None) -> PortfolioBalances:
+        return self._held_assets_async(block=block) # type: ignore
     
-    async def _held_assets_async(self, block: int = None) -> PortfolioBalanceDetails:
+    async def _held_assets_async(self, block: int = None) -> PortfolioBalances:
         assets = await asyncio.gather(*[address._balances_async(block=block) for address in self.addresses.values()])
         return {address: data for address, data in zip(self.addresses, assets)}
 
     @await_if_sync
-    def collateral(self, block: int = None) -> PortfolioBalanceDetails:
-        return self._collateral_async(block=block)
+    def collateral(self, block: int = None) -> PortfolioBalances:
+        return self._collateral_async(block=block) # type: ignore
     
-    async def _collateral_async(self, block: int = None) -> PortfolioBalanceDetails:
+    async def _collateral_async(self, block: int = None) -> PortfolioBalances:
         collateral = {}
 
         maker_collateral, unit_collateral = await asyncio.gather(
@@ -195,12 +194,12 @@ class Portfolio:
         return collateral
 
     @await_if_sync
-    def maker_collateral(self, block: int = None) -> Optional[PortfolioBalanceDetails]:
-        return self._maker_collateral_async(block=block)
+    def maker_collateral(self, block: int = None) -> PortfolioBalances:
+        return self._maker_collateral_async(block=block) # type: ignore
     
-    async def _maker_collateral_async(self, block: int = None) -> Optional[PortfolioBalanceDetails]:
+    async def _maker_collateral_async(self, block: int = None) -> PortfolioBalances:
         if self.chain_id != Network.Mainnet:
-            return None
+            return {}
         proxy_registry = Contract('0x4678f0a6958e4D2Bc4F1BAF7Bc52E8F3564f3fE4')
         cdp_manager = Contract('0x5ef30b9986345249bc32d8928B7ee64DE9435E39')
         vat = Contract('0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B')
@@ -222,14 +221,14 @@ class Portfolio:
         return collateral
     
     @await_if_sync
-    def unit_collateral(self, block: int = None) -> Optional[PortfolioBalanceDetails]:
-        return self._unit_collateral_async(block=block)
+    def unit_collateral(self, block: int = None) -> PortfolioBalances:
+        return self._unit_collateral_async(block=block) # type: ignore
     
-    async def _unit_collateral_async(self, block: int = None) -> Optional[PortfolioBalanceDetails]:
+    async def _unit_collateral_async(self, block: int = None) -> PortfolioBalances:
         if self.chain_id != Network.Mainnet:
-            return None
+            return {}
         if block and block < 11315910:
-            return None
+            return {}
         
         # NOTE: This only works for YFI collateral, must extend before using for other collaterals
         unitVault = Contract("0xb1cff81b9305166ff1efc49a129ad2afcd7bcf19")
@@ -249,7 +248,7 @@ class Portfolio:
     
     @await_if_sync
     def staked_assets(self, block: int = None) -> Dict[PortfolioAddress, StakedTokenBalances]:
-        return self._staked_assets_async(block=block)
+        return self._staked_assets_async(block=block) # type: ignore
     
     async def _staked_assets_async(self, block: int = None) -> Dict[PortfolioAddress, StakedTokenBalances]:
         staked_assets = await asyncio.gather(*[address._staking_async(block=block) for address in self.addresses.values()])
@@ -259,19 +258,19 @@ class Portfolio:
     # debt
 
     @await_if_sync
-    def debt(self, block: int = None) -> PortfolioBalanceDetails:
-        return self._debt_async(block=block)
+    def debt(self, block: int = None) -> PortfolioBalances:
+        return self._debt_async(block=block) # type: ignore
     
-    async def _debt_async(self, block: int = None) -> PortfolioBalanceDetails:
+    async def _debt_async(self, block: int = None) -> PortfolioBalances:
         debt = await asyncio.gather(*[address._debt_async(block=block) for address in self.addresses.values()])
         return {address: data for address, data in zip(self.addresses, debt)}
 
     # export functions
     @await_if_sync
-    def describe(self, block: int) -> dict:
-        return self._describe_async(block=block)
+    def describe(self, block: int) -> Dict[str, PortfolioBalances]:
+        return self._describe_async(block=block) # type: ignore
     
-    async def _describe_async(self, block: int) -> Dict[str, Dict]:
+    async def _describe_async(self, block: int) -> Dict[str, PortfolioBalances]:
         assert block
         assets, debt = await asyncio.gather(*[self._assets_async(block), self._debt_async(block)])
         return {'assets': assets, 'debt': debt}
@@ -298,11 +297,11 @@ class Ledger:
     # All Ledger entries
     
     @await_if_sync
-    def all_entries(self, start_block: Block = 0, end_block: Block = None, full: bool = False) -> Dict:
+    def all_entries(self, start_block: Block = 0, end_block: Block = None) -> Dict[PortfolioAddress, Dict[str, _PandableList]]:
         return self._all_entries_async(start_block, end_block)
     
     @async_property
-    async def _all_entries_async(self, start_block: Block, end_block: Block) -> Dict[PortfolioAddress, Dict[str, List[Union[TxData, _EventItem]]]]:
+    async def _all_entries_async(self, start_block: Block, end_block: Block) -> Dict[PortfolioAddress, Dict[str, _PandableList]]:
         all_transactions = await asyncio.gather(*[address._all_async(start_block, end_block) for address in self.portfolio.addresses.values()])
         return {address: data for address, data in zip(self.portfolio.addresses, all_transactions)}
 

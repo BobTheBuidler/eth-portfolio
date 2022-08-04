@@ -1,18 +1,38 @@
 
 
 from decimal import Decimal
-from typing import Dict, Literal
-from y.datatypes import Address
+from typing import Dict, Iterable, Optional, TypedDict, TypeVar, Union
 
+from y.datatypes import Address, Block
 
-Protocol = str
-Token = Address
+_T = TypeVar('_T')
 
-BalanceKey = Literal["balance", "usd value"]
-TokenBalanceDetails = Dict[BalanceKey, Decimal]
+TransactionData = Dict # TODO define TypedDict
+InternalTransferData = Dict # TODO define TypedDict
 
-StakedTokenBalances = Dict[Protocol, Dict[Token, TokenBalanceDetails]]
+TokenTransferData = TypedDict('TokenTransferData', {
+    'chainId': int,
+    'blockNumber': Block,
+    'transactionIndex': int,
+    'hash': str,
+    'log_index': int,
+    'token': Optional[str],
+    'token_address': Address,
+    'from': Address,
+    'to': Address,
+    'value': Decimal,
+})
 
-# these are flexible
-WalletBalanceDetails = Dict[Address, TokenBalanceDetails]
-PortfolioBalanceDetails = Dict[Address, WalletBalanceDetails]
+ProtocolLabel = str
+
+Addresses = Union[Address, Iterable[Address]]
+TokenAddress = TypeVar('TokenAddress', bound=Address)
+
+BalanceItem = TypedDict('BalanceItem', {'balance': Decimal, 'usd value': Decimal})
+TokenBalances = Dict[TokenAddress, BalanceItem]
+CategoryBalances = Dict[str, TokenBalances]
+StakedTokenBalances = Dict[ProtocolLabel, Dict[TokenAddress, BalanceItem]]
+
+# these are flexible for now until structure ossifies
+WalletBalances = Dict[Address, CategoryBalances]
+PortfolioBalances = Dict[Address, WalletBalances]

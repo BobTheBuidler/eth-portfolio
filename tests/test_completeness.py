@@ -13,7 +13,7 @@ Test sync-async completeness.
 
 exposed_classes = [Portfolio, Ledger, PortfolioAddress]
 exposed_classes.extend(obj for submodule in [eth_portfolio.lending, eth_portfolio.staking] for _, obj in submodule.__dict__.items() if isinstance(obj, type) and obj.__module__.startswith("eth_portfolio."))
-functions = [(cls, name) for cls in exposed_classes for name, obj in cls.__dict__.items() if isinstance(obj, Callable)]
+functions = [(cls, name) for cls in exposed_classes for name, obj in cls.__dict__.items() if callable(obj)]
 
 user_facing_functions = [(cls, method_name) for cls, method_name in functions if not method_name.startswith("_")]
 

@@ -1,12 +1,12 @@
 import asyncio
 import logging
-from typing import Set
+from typing import Optional, Set
 
 from async_lru import alru_cache
 from brownie import chain
 from y.constants import STABLECOINS, WRAPPED_GAS_COIN
 from y.contracts import Contract
-from y.datatypes import Address
+from y.datatypes import Address, AnyAddressType
 from y.prices.lending.aave import aave
 from y.prices.lending.compound import CToken, compound
 from y.prices.stable_swap.curve import CurvePool, curve
@@ -20,7 +20,7 @@ OTHER_LONG_TERM_ASSETS: Set[Address] = {
 }.get(chain.id, set())
 
 
-async def get_token_bucket(token) -> str:
+async def get_token_bucket(token: AnyAddressType) -> str:
     token = str(token)
     try:
         token = str(await _unwrap_token(token))
@@ -39,7 +39,6 @@ async def get_token_bucket(token) -> str:
         return 'Other long term assets'
     return 'Other short term assets'
 
-#@memory.cache()
 @alru_cache
 async def _unwrap_token(token) -> str:
     '''
@@ -55,7 +54,8 @@ async def _unwrap_token(token) -> str:
         pool_tokens = set(
             str(_token) for _token in await asyncio.gather(*[_unwrap_token(coin) for coin in await CurvePool(pool).get_coins_async])
         )
-        return _pool_bucket(pool_tokens)
+        if pool_bucket := _pool_bucket(pool_tokens):
+            return pool_bucket
     if aave and token in aave:
         return await aave.underlying_async(token)
     if compound and await compound.is_compound_market_async(token):
@@ -65,7 +65,7 @@ async def _unwrap_token(token) -> str:
             return WRAPPED_GAS_COIN
     return token
 
-def _pool_bucket(pool_tokens: set) -> str:
+def _pool_bucket(pool_tokens: set) -> Optional[str]:
     logger.warn(f'Pool tokens: {pool_tokens}')
     if pool_tokens < BTC_LIKE:
         return list(BTC_LIKE)[0]
@@ -75,10 +75,10 @@ def _pool_bucket(pool_tokens: set) -> str:
         return list(STABLECOINS.keys())[0]
     if pool_tokens < INTL_STABLECOINS:
         return list(INTL_STABLECOINS)[0]
+    raise NotImplementedError()
 
 def _is_stable(token: Address) -> bool:
     return any([
         token in STABLECOINS,
         token in INTL_STABLECOINS,
-        #(fixed_forex and token in fixed_forex),
     ])
