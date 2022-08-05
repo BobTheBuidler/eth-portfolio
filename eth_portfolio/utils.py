@@ -9,7 +9,7 @@ from types import ModuleType
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 from brownie import chain, convert
-from pandas import DataFrame # type: ignore
+from pandas import DataFrame  # type: ignore
 from y import Contract
 from y.classes.common import ERC20
 from y.datatypes import Address, Block
@@ -19,6 +19,7 @@ from y.prices.magic import get_price_async
 from y.utils.dank_mids import dank_w3
 
 from eth_portfolio import _config
+from eth_portfolio.typing import _T
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +50,7 @@ class ChecksumAddressDict(dict):
         return super().__setitem__(convert.to_address(key), value)
 
 
-class PandableList(List):
+class PandableList(List[_T]):
     def __init__(self):
         super().__init__()
     
@@ -150,7 +151,7 @@ def get_class_defs_from_module(module: ModuleType) -> List[type]:
     """
     return [obj for obj in module.__dict__.values() if isinstance(obj, type) and obj.__module__ == module.__name__]
 
-def get_protocols_for_submodule(asynchronous: bool) -> List[type]:
+def _get_protocols_for_submodule(asynchronous: bool) -> List[type]:
     """
     Used to initialize a submodule's class object.
     Returns a list of initialized protocol objects.
@@ -160,7 +161,7 @@ def get_protocols_for_submodule(asynchronous: bool) -> List[type]:
     components = [module for module in get_submodules_for_module(called_from_module) if not module.__name__.endswith('.base')]
     return [cls(asynchronous) for component in components for cls in get_class_defs_from_module(component) if cls]
 
-def import_submodules() -> Dict[str, ModuleType]:
+def _import_submodules() -> Dict[str, ModuleType]:
     """ 
     Import all submodules of the module from which this was called, recursively.
     Ignores submodules named `"base"`.
