@@ -319,7 +319,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
             transfer['gasUsed'] = int(transfer['gasUsed'], 16) if transfer['gasUsed'] else None
 
         if self.load_prices:
-            prices = await asyncio.gather(*[get_price_async(EEE_ADDRESS, transfer['blockNumber']) for transfer in new_internal_transfers])
+            prices = await asyncio.gather(*[_get_price(EEE_ADDRESS, transfer['blockNumber']) for transfer in new_internal_transfers])
             for transfer, price in zip(new_internal_transfers, prices):
                 price = round(Decimal(price), 18)
                 transfer['price'] = price
