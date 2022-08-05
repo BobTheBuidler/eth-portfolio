@@ -408,7 +408,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
 
         for i, token_transfer in enumerate(new_token_transfers):
             sender, receiver, value = token_transfer.values()
-            amount = Decimal(value) / Decimal(scales[i])
+            value = Decimal(value) / Decimal(scales[i])
             token_transfer = {
                 'chainId': chain.id,
                 'blockNumber': token_transfer.block_number,
@@ -419,7 +419,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
                 'token_address': token_transfer.address,
                 'from': sender,
                 'to': receiver,
-                'value': amount,
+                'value': value,
             }
             if self.load_prices:
                 price = round(Decimal(prices[i]), 18) if prices[i] else None
