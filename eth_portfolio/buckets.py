@@ -75,6 +75,7 @@ def _pool_bucket(pool_tokens: set) -> Optional[str]:
         return list(STABLECOINS.keys())[0]
     if pool_tokens < INTL_STABLECOINS:
         return list(INTL_STABLECOINS)[0]
+    return None
 
 def _is_stable(token: Address) -> bool:
     return any([
