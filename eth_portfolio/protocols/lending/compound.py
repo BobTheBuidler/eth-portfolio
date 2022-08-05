@@ -4,18 +4,19 @@ from typing import Optional
 
 from brownie import ZERO_ADDRESS, Contract
 from eth_portfolio._decorators import await_if_sync
-from eth_portfolio.lending._base import LendingProtocol
-from eth_portfolio.typing import Address, TokenBalances
+from eth_portfolio.protocols.lending._base import LendingProtocol
+from eth_portfolio.typing import Address, TokenBalances, _BalanceItem
 from y import fetch_multicall, get_prices_async, weth
 from y.classes.common import ERC20
 from y.datatypes import Block
 from y.prices.lending.compound import compound
 
+from eth_portfolio.utils import Decimal
+
 
 class Compound(LendingProtocol):
     def __init__(self, asynchronous: bool = False) -> None:
-        self.asynchronous = bool(asynchronous)
-
+        self.asynchronous = asynchronous
         markets = [market.contract for comp in compound.trollers.values() for market in comp.markets if hasattr(market.contract, 'borrowBalanceStored')] # this last part takes out xinv
         gas_token_markets = [market for market in markets if not hasattr(market,'underlying')]
         other_markets = [market for market in markets if hasattr(market,'underlying')]
@@ -37,7 +38,7 @@ class Compound(LendingProtocol):
     
     async def _debt_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         if len(compound.trollers) == 0: # if ypricemagic doesn't support any Compound forks on current chain
-            return {}
+            return TokenBalances()
 
         address = str(address)
         debt_data, underlying_scale = await asyncio.gather(
@@ -45,9 +46,12 @@ class Compound(LendingProtocol):
             asyncio.gather(*[underlying.scale for underlying in self.underlyings]),
         )
 
-        debts = {underlying: debt / scale for underlying, scale, debt in zip(self.underlyings, underlying_scale, debt_data) if debt}
+        debts = {underlying: Decimal(debt) / scale for underlying, scale, debt in zip(self.underlyings, underlying_scale, debt_data) if debt}
         prices = await get_prices_async(debts.keys(), block=block)
-        return {str(underlying): {'balance': debt, 'usd value': debt * price} for (underlying, debt), price in zip(debts.items(), prices)}
+        balances: TokenBalances = TokenBalances()
+        for (underlying, debt), price in zip(debts.items(), prices):
+            balances[underlying] += _BalanceItem(debt, debt * Decimal(price))
+        return balances
 
 async def _borrow_balance_stored(market: Contract, address: Address, block: Optional[Block] = None) -> Optional[int]:
     try:

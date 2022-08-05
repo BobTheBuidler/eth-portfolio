@@ -34,22 +34,6 @@ async def get_buffered_chain_height() -> int:
     return await dank_w3.eth.get_block_number() - _config.REORG_BUFFER
 
 
-class ChecksumAddressDict(dict):
-    """
-    A dict that maps addresses to PortfolioAddress objects.
-    Will automatically checksum your provided address key when setting and getting.
-    """
-    def __init__(self):
-        super().__init__()
-        self.__dict__ = self
-    
-    def __getitem__(self, key: Address) -> Any:
-        return super().__getitem__(convert.to_address(key))
-    
-    def __setitem__(self, key: Address, value: Any) -> None:
-        return super().__setitem__(convert.to_address(key), value)
-
-
 class PandableList(List[_T]):
     def __init__(self):
         super().__init__()

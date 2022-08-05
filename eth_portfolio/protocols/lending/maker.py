@@ -6,44 +6,41 @@ from async_lru import alru_cache
 from brownie import chain
 from eth_abi import encode_single
 from eth_portfolio._decorators import await_if_sync
-from eth_portfolio.lending._base import LendingProtocolWithLockedCollateral
-from eth_portfolio.typing import TokenBalances
+from eth_portfolio.protocols.lending._base import \
+    LendingProtocolWithLockedCollateral
+from eth_portfolio.typing import TokenBalances, _BalanceItem
 from y import Network, get_price_async
 from y.constants import dai
 from y.contracts import Contract
 from y.datatypes import Address, Block
 
+from eth_portfolio.utils import Decimal
+
 yfi = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
 
 class Maker(LendingProtocolWithLockedCollateral):
     def __init__(self, asynchronous: bool = False) -> None:
-        self.asynchronous = bool(asynchronous)
+        self.asynchronous = asynchronous
         self.proxy_registry = Contract('0x4678f0a6958e4D2Bc4F1BAF7Bc52E8F3564f3fE4')
         self.cdp_manager = Contract('0x5ef30b9986345249bc32d8928B7ee64DE9435E39')
         self.vat = Contract('0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B')
     
-    @await_if_sync 
-    def collateral(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        return self._collateral_async(address, block) # type: ignore
-    
-    async def _collateral_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+    async def _balances_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        balances: TokenBalances = TokenBalances()
         ilk = encode_single('bytes32', b'YFI-A')
         urn = await self._urn(address)
         ink = (await self.vat.urns.coroutine(ilk, urn, block_identifier=block)).dict()["ink"]
         if ink:
-            return {
-                yfi: {
-                    'balance': ink / 1e18,
-                    'usd value': ink / 1e18 * await get_price_async(yfi, block) if ink > 0 else 0,
-                }
-            }
-        return {}
+            balance = ink / Decimal(1e18)
+            value = round(balance * Decimal(await get_price_async(yfi, block)), 18)
+            balances[yfi] = _BalanceItem(balance, value)
+        return balances
     
     @await_if_sync
     def debt(self, address: Address, block: int = None) -> TokenBalances:
         return self._debt_async(address, block=block) # type: ignore
     
-    async def _debt_async(self, address: Address, block: int = None) -> TokenBalances:
+    async def _debt_async(self, address: Address, block: Optional[int] = None) -> TokenBalances:
         ilk = encode_single('bytes32', b'YFI-A')
         urn = await self._urn(address)
         urns, ilks = await asyncio.gather(
@@ -52,8 +49,10 @@ class Maker(LendingProtocolWithLockedCollateral):
         )
         art = urns.dict()["art"]
         rate = ilks.dict()["rate"]
-        debt = art * rate / 1e45
-        return {dai.address: {'balance': debt, 'usd value': debt}}
+        debt = art * rate / Decimal(1e45)
+        balances: TokenBalances = TokenBalances()
+        balances[dai] += _BalanceItem(debt, debt)
+        return balances
 
     @alru_cache
     async def _proxy(self, address: Address) -> Address:

@@ -1,14 +1,13 @@
 import asyncio
 import logging
 from functools import cached_property
-from typing import Dict, Iterable, List
+from types import MethodType
+from typing import Any, Dict, Iterable, List, Optional, Type
 
 from async_property import async_property
 from brownie import web3
-from eth_abi import encode_single
 from pandas import DataFrame, concat  # type: ignore
 from web3 import Web3
-from y import Contract, Network, get_price_async
 from y.datatypes import Address, Block
 
 from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
@@ -17,17 +16,19 @@ from eth_portfolio._ledgers.portfolio import (PortfolioInternalTransfersLedger,
                                               PortfolioTokenTransfersLedger,
                                               PortfolioTransactionsLedger)
 from eth_portfolio.address import PortfolioAddress
+from eth_portfolio.argspec import get_return_type
 from eth_portfolio.constants import ADDRESSES
-from eth_portfolio.typing import (Addresses, PortfolioBalances,
-                                  StakedTokenBalances)
-from eth_portfolio.utils import ChecksumAddressDict
+from eth_portfolio.typing import (Addresses, ChecksumAddressDict,
+                                  PortfolioBalances)
 
 logger = logging.getLogger(__name__)
 
 
 class Portfolio:
     '''
-    Used to export financial reports
+    Used to export information about a group of ``PortfolioAddress`` objects.
+    - Has all attributes of a PortfolioAddress.
+    - All calls to ``function(*args, **kwargs)`` will return ``{address: PortfolioAddress(Address).function(*args, **kwargs)}``
     '''
 
     def __init__(
@@ -63,6 +64,7 @@ class Portfolio:
         self.ledger = PortfolioLedger(self)
 
         self.w3: Web3 = web3
+        self._import_address_functions()
     
     @cached_property
     def chain_id(self) -> int:
@@ -79,122 +81,7 @@ class Portfolio:
     @property
     def token_transfers(self) -> PortfolioTokenTransfersLedger:
         return self.ledger.token_transfers
-
-    # descriptive functions
-    # assets
-
-    @await_if_sync
-    def assets(self, block: int = None) -> PortfolioBalances:
-        return self._assets_async(block=block) # type: ignore
     
-    async def _assets_async(self, block: int = None) -> PortfolioBalances:
-        assets = await asyncio.gather(*[address._assets_async(block=block) for address in self.addresses.values()])
-        return {address: data for address, data in zip(self.addresses, assets)}
-
-    @await_if_sync
-    def held_assets(self, block: int = None) -> PortfolioBalances:
-        return self._held_assets_async(block=block) # type: ignore
-    
-    async def _held_assets_async(self, block: int = None) -> PortfolioBalances:
-        assets = await asyncio.gather(*[address._balances_async(block=block) for address in self.addresses.values()])
-        return {address: data for address, data in zip(self.addresses, assets)}
-
-    @await_if_sync
-    def collateral(self, block: int = None) -> PortfolioBalances:
-        return self._collateral_async(block=block) # type: ignore
-    
-    async def _collateral_async(self, block: int = None) -> PortfolioBalances:
-        collateral = {}
-
-        maker_collateral, unit_collateral = await asyncio.gather(
-            self._maker_collateral_async(block=block),
-            self._unit_collateral_async(block=block)
-        )
-
-        if maker_collateral:
-            for address, data in maker_collateral.items():
-                collateral[f'{address} Maker CDP'] = data
-
-        if unit_collateral:
-            for address, data in unit_collateral.items():
-                collateral[f'{address} Unit CDP'] = data
-
-        collateral = {key: value for key, value in collateral.items() if len(value)}
-        return collateral
-
-    @await_if_sync
-    def maker_collateral(self, block: int = None) -> PortfolioBalances:
-        return self._maker_collateral_async(block=block) # type: ignore
-    
-    async def _maker_collateral_async(self, block: int = None) -> PortfolioBalances:
-        if self.chain_id != Network.Mainnet:
-            return {}
-        proxy_registry = Contract('0x4678f0a6958e4D2Bc4F1BAF7Bc52E8F3564f3fE4')
-        cdp_manager = Contract('0x5ef30b9986345249bc32d8928B7ee64DE9435E39')
-        vat = Contract('0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B')
-        yfi = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
-        ilk = encode_single('bytes32', b'YFI-A')
-        collateral = {}
-        for address in self.addresses:
-            proxy = await proxy_registry.proxies.coroutine(address)
-            cdp = await cdp_manager.first.coroutine(proxy)
-            urn = await cdp_manager.urns.coroutine(cdp)
-            ink = (await vat.urns.coroutine(ilk, urn, block_identifier=block)).dict()["ink"]
-            if ink:
-                collateral[address] = {
-                    yfi: {
-                        'balance': ink / 1e18,
-                        'usd value': ink / 1e18 * await get_price_async(yfi, block) if ink > 0 else 0,
-                    }
-                }
-        return collateral
-    
-    @await_if_sync
-    def unit_collateral(self, block: int = None) -> PortfolioBalances:
-        return self._unit_collateral_async(block=block) # type: ignore
-    
-    async def _unit_collateral_async(self, block: int = None) -> PortfolioBalances:
-        if self.chain_id != Network.Mainnet:
-            return {}
-        if block and block < 11315910:
-            return {}
-        
-        # NOTE: This only works for YFI collateral, must extend before using for other collaterals
-        unitVault = Contract("0xb1cff81b9305166ff1efc49a129ad2afcd7bcf19")
-        yfi = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
-        collateral = {}
-        
-        for address in self.addresses:
-            bal = await unitVault.collaterals.coroutine(yfi, address, block_identifier=block)
-            if bal:
-                collateral[address] = {
-                    yfi: {
-                        'balance': bal / 1e18,
-                        'usd value': bal / 1e18 * await get_price_async(yfi, block),
-                    }
-                }
-        return collateral
-    
-    @await_if_sync
-    def staked_assets(self, block: int = None) -> Dict[PortfolioAddress, StakedTokenBalances]:
-        return self._staked_assets_async(block=block) # type: ignore
-    
-    async def _staked_assets_async(self, block: int = None) -> Dict[PortfolioAddress, StakedTokenBalances]:
-        staked_assets = await asyncio.gather(*[address._staking_async(block=block) for address in self.addresses.values()])
-        return {address: data for address, data in zip(self.addresses, staked_assets)}
-    
-    # descriptive functions
-    # debt
-
-    @await_if_sync
-    def debt(self, block: int = None) -> PortfolioBalances:
-        return self._debt_async(block=block) # type: ignore
-    
-    async def _debt_async(self, block: int = None) -> PortfolioBalances:
-        debt = await asyncio.gather(*[address._debt_async(block=block) for address in self.addresses.values()])
-        return {address: data for address, data in zip(self.addresses, debt)}
-
-    # export functions
     @await_if_sync
     def describe(self, block: int) -> Dict[str, PortfolioBalances]:
         return self._describe_async(block=block) # type: ignore
@@ -203,6 +90,33 @@ class Portfolio:
         assert block
         assets, debt = await asyncio.gather(*[self._assets_async(block), self._debt_async(block)])
         return {'assets': assets, 'debt': debt}
+    
+    def _import_address_functions(self) -> None:
+        if self.addresses:
+            async_functions = [name for name in dir(PortfolioAddress) if name.startswith("_") and name.endswith("_async")]
+            for async_name in async_functions:
+                if not callable(getattr(PortfolioAddress, async_name)):
+                    raise RuntimeError(f"A PortfolioAddress object should not have a non-callable attribute suffixed with '_async'")
+                sync_name = async_name[1:-6]
+                if hasattr(self, sync_name):
+                    logger.debug(f"Portfolio already has an attribute `{sync_name}`. Will not porting {sync_name} from PortfolioAddress to Portfolio")
+                    continue
+                self.__new_sync_func(sync_name)
+                self.__new_async_func(async_name)
+                logger.debug(f"Ported {sync_name} from PortfolioAddress to Portfolio")
+    
+    def __new_sync_func(self, sync_name: str) -> None:
+        @await_if_sync
+        def sync_func(self: Portfolio, *args, **kwargs) -> get_return_type(getattr(PortfolioAddress, sync_name)):
+            async_func = getattr(self, f"_{sync_name}_async")
+            return async_func(*args, **kwargs)
+        setattr(self, sync_name, MethodType(sync_func, self))
+    
+    def __new_async_func(self, async_name: str) -> None:
+        async def async_func(self: Portfolio, *args: Any, **kwargs: Any) -> get_return_type(getattr(PortfolioAddress, async_name)):
+            vals = await asyncio.gather(*[getattr(address, async_name)(*args, **kwargs) for address in self.addresses.values()])
+            return {address: data for address, data in zip(self.addresses, vals)}
+        setattr(self, async_name, MethodType(async_func, self))
 
 
 def _get_missing_cols_from_KeyError(e: KeyError) -> List[str]:

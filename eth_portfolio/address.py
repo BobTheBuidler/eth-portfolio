@@ -5,7 +5,7 @@ import logging
 from typing import TYPE_CHECKING, Dict, Optional
 
 from y import convert, get_price_async
-from y.constants import weth
+from y.constants import EEE_ADDRESS, weth
 from y.datatypes import Address, Block
 from y.utils.dank_mids import dank_w3
 
@@ -14,9 +14,9 @@ from eth_portfolio._ledgers.address import (AddressInternalTransfersLedger,
                                             AddressTokenTransfersLedger,
                                             AddressTransactionsLedger,
                                             PandableLedgerEntryList)
-from eth_portfolio.lending import _lending
-from eth_portfolio.staking import _staking
-from eth_portfolio.typing import BalanceItem, TokenBalances
+from eth_portfolio.protocols.lending import _lending
+from eth_portfolio.protocols.staking import _staking
+from eth_portfolio.typing import RemoteTokenBalances, TokenBalances, _BalanceItem
 from eth_portfolio.utils import Decimal, _get_price
 
 if TYPE_CHECKING:
@@ -75,7 +75,7 @@ class PortfolioAddress:
         )
         for token, _balances in collateral.items():
             balances[token]['balance'] += _balances['balance']
-            balances[token]['usd value'] += _balances['usd value']
+            balances[token]['usd_value'] += _balances['usd_value']
         balances.update(collateral)
         return balances
 
@@ -97,20 +97,20 @@ class PortfolioAddress:
             self._eth_balance_async(block),
             self._token_balances_async(block),
         )
-        balances = token_balances
-        balances['ETH'] = eth_balance
-        return {token: balance for token, balance in balances.items() if balance['balance'] != 0 and balance['usd value'] != 0}
+        token_balances[EEE_ADDRESS] = eth_balance
+        return token_balances
     
     @await_if_sync
-    def eth_balance(self, block: Optional[Block]) -> BalanceItem:
+    def eth_balance(self, block: Optional[Block]) -> _BalanceItem:
         return self._eth_balance_async(block) # type: ignore
 
-    async def _eth_balance_async(self, block: Optional[Block]) -> BalanceItem:
+    async def _eth_balance_async(self, block: Optional[Block]) -> _BalanceItem:
         balance, price = await asyncio.gather(
             _get_eth_balance(self.address, block),
             get_price_async(weth, block),
         )
-        return {'balance': balance, 'usd value': balance * Decimal(price)}
+        value = round(balance * Decimal(price), 18)
+        return _BalanceItem(balance, value)
     
     @await_if_sync
     def token_balances(self, block: Optional[Block]) -> TokenBalances:
@@ -123,10 +123,10 @@ class PortfolioAddress:
             asyncio.gather(*[_get_price(token, block) for token in tokens]),
         )
         token_balances = [
-            {'balance': balance, 'usd value': None if price is None else balance * price}
+            _BalanceItem(Decimal(balance), Decimal(0) if price is None else round(Decimal(balance) * Decimal(price), 18))
             for balance, price in zip(token_balances, token_prices)
         ]
-        return dict(zip(tokens, token_balances))
+        return TokenBalances(zip(tokens, token_balances))
     
     @await_if_sync
     def collateral(self, block: Optional[Block] = None) -> TokenBalances:
@@ -136,10 +136,10 @@ class PortfolioAddress:
         return await _lending._collateral_async(self.address, block=block)
     
     @await_if_sync
-    def staking(self, block: Optional[Block] = None) -> Dict[str, TokenBalances]:
+    def staking(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         return self._staking_async(block) # type: ignore
     
-    async def _staking_async(self, block: Optional[Block] = None) -> Dict[str, TokenBalances]:
+    async def _staking_async(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         return await _staking._balances_async(self.address, block=block)
     
     # Ledger Entries
