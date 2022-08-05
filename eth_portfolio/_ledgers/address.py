@@ -422,7 +422,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
             if self.load_prices:
                 price = round(Decimal(prices[i]), 18) if prices[i] else None
                 token_transfer['price'] = price
-                token_transfer['value_usd'] = round(Decimal(value) * price, 18) if price else None
+                token_transfer['value_usd'] = round(value * price, 18) if price else None
             new_token_transfers[i] = token_transfer
         
         self.objects.extend(new_token_transfers)
