@@ -158,7 +158,7 @@ def _get_protocols_for_submodule(asynchronous: bool) -> List[type]:
     """
     called_from_module = inspect.getmodule(inspect.stack()[1][0])
     assert called_from_module, "You can only call this function from a module"
-    components = [module for module in get_submodules_for_module(called_from_module) if not module.__name__.endswith('.base')]
+    components = [module for module in get_submodules_for_module(called_from_module) if not module.__name__.endswith('._base')]
     return [cls(asynchronous) for component in components for cls in get_class_defs_from_module(component) if cls]
 
 def _import_submodules() -> Dict[str, ModuleType]:

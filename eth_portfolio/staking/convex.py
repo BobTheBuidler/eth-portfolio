@@ -2,8 +2,8 @@
 import asyncio
 from typing import Optional
 
-from eth_portfolio.decorators import await_if_sync
-from eth_portfolio.staking.base import StakingPool
+from eth_portfolio._decorators import await_if_sync
+from eth_portfolio.staking._base import StakingPool
 from eth_portfolio.typing import TokenBalances
 from eth_portfolio.utils import Decimal
 from y import Contract

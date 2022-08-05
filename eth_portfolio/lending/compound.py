@@ -3,8 +3,8 @@ import asyncio
 from typing import Optional
 
 from brownie import ZERO_ADDRESS, Contract
-from eth_portfolio.decorators import await_if_sync
-from eth_portfolio.lending.base import LendingProtocol
+from eth_portfolio._decorators import await_if_sync
+from eth_portfolio.lending._base import LendingProtocol
 from eth_portfolio.typing import Address, TokenBalances
 from y import fetch_multicall, get_prices_async, weth
 from y.classes.common import ERC20

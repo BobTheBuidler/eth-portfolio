@@ -1,7 +1,7 @@
 
 from typing import Optional
 
-from eth_portfolio.decorators import await_if_sync
+from eth_portfolio._decorators import await_if_sync
 from eth_portfolio.typing import TokenBalances
 from y.datatypes import Address, Block
 

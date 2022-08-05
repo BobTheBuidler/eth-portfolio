@@ -11,13 +11,13 @@ from web3 import Web3
 from y import Contract, Network, get_price_async
 from y.datatypes import Address, Block
 
+from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
 from eth_portfolio._ledgers.address import PandableLedgerEntryList
 from eth_portfolio._ledgers.portfolio import (PortfolioInternalTransfersLedger,
                                               PortfolioTokenTransfersLedger,
                                               PortfolioTransactionsLedger)
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.constants import ADDRESSES
-from eth_portfolio.decorators import await_if_sync, set_end_block_if_none
 from eth_portfolio.typing import (Addresses, PortfolioBalances,
                                   StakedTokenBalances)
 from eth_portfolio.utils import ChecksumAddressDict

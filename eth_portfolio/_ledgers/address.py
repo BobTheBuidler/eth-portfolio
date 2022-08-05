@@ -1,32 +1,30 @@
 import asyncio
 import logging
-from typing import  Generic, List, Optional, Tuple, Type, TypeVar, Union
+from typing import (TYPE_CHECKING, Generic, List, Optional, Tuple, Type,
+                    TypeVar, Union)
 
 from aiohttp import ClientError
 from async_lru import alru_cache
 from brownie import chain
 from brownie.network.event import _EventItem
 from eth_abi import encode_single
+from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
+from eth_portfolio._shitcoins import SHITCOINS
+from eth_portfolio.constants import TRANSFER_SIGS
+from eth_portfolio.typing import (InternalTransferData, TokenTransferData,
+                                  TransactionData)
+from eth_portfolio.utils import (Decimal, PandableList, _get_price,
+                                 _unpack_indicies, get_buffered_chain_height)
 from eth_utils import encode_hex
 from pandas import DataFrame  # type: ignore
 from web3.types import BlockData, TxData
-from y import Contract,  get_price_async
+from y import Contract, get_price_async
 from y.classes.common import ERC20
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
 from y.exceptions import ContractNotVerified, NonStandardERC20
 from y.utils.dank_mids import dank_w3
 from y.utils.events import decode_logs
-
-from eth_portfolio.constants import TRANSFER_SIGS
-from eth_portfolio.decorators import await_if_sync, set_end_block_if_none
-from eth_portfolio.shitcoins import SHITCOINS
-from eth_portfolio.typing import ( InternalTransferData,
-                                   TokenTransferData,
-                                  TransactionData)
-from eth_portfolio.utils import (Decimal, PandableList, _get_price,
-                                 _unpack_indicies, get_buffered_chain_height)
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from eth_portfolio.address import PortfolioAddress

@@ -5,8 +5,8 @@ from typing import Optional
 from async_lru import alru_cache
 from brownie import chain
 from eth_abi import encode_single
-from eth_portfolio.decorators import await_if_sync
-from eth_portfolio.lending.base import LendingProtocolWithLockedCollateral
+from eth_portfolio._decorators import await_if_sync
+from eth_portfolio.lending._base import LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import TokenBalances
 from y import Network, get_price_async
 from y.constants import dai

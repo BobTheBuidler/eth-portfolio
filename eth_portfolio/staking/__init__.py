@@ -2,19 +2,20 @@
 import asyncio
 from typing import Dict, List, Optional
 
-from eth_portfolio.decorators import await_if_sync
-from eth_portfolio.staking.base import StakingPool
+from eth_portfolio._decorators import await_if_sync
+from eth_portfolio.staking._base import StakingPool
 from eth_portfolio.typing import StakedTokenBalances, TokenBalances
-from eth_portfolio.utils import get_protocols_for_submodule, import_submodules
+from eth_portfolio.utils import (_get_protocols_for_submodule,
+                                 _import_submodules)
 from y.datatypes import Address, Block
 
-import_submodules()
+_import_submodules()
 
 
 class Staking:
     def __init__(self, asynchronous: bool) -> None:
         self.asynchronous = asynchronous
-        self.protocols: List[StakingPool] = get_protocols_for_submodule(asynchronous)
+        self.protocols: List[StakingPool] = _get_protocols_for_submodule(asynchronous)
     
     @await_if_sync
     def balances(self, address: Address, block: Optional[Block] = None) -> Dict[str, TokenBalances]:
