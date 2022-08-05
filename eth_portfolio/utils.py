@@ -19,7 +19,6 @@ from y.prices.magic import get_price_async
 from y.utils.dank_mids import dank_w3
 
 from eth_portfolio import _config
-from eth_portfolio.typing import _T
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +49,7 @@ class ChecksumAddressDict(dict):
         return super().__setitem__(convert.to_address(key), value)
 
 
-class PandableList(List[_T]):
+class PandableList(List):
     def __init__(self):
         super().__init__()
     
@@ -151,7 +150,7 @@ def get_class_defs_from_module(module: ModuleType) -> List[type]:
     """
     return [obj for obj in module.__dict__.values() if isinstance(obj, type) and obj.__module__ == module.__name__]
 
-def get_protocols_for_submodule(asynchronous: bool) -> List[_T]:
+def get_protocols_for_submodule(asynchronous: bool) -> List[type]:
     """
     Used to initialize a submodule's class object.
     Returns a list of initialized protocol objects.
