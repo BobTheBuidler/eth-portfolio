@@ -184,6 +184,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
         end_block_nonce = await self._get_nonce_at_block(end_block)
         nonces = range(self.cached_thru_nonce + 1, end_block_nonce + 1)
         new_transactions = await asyncio.gather(*[self._get_transaction_by_nonce(nonce, end_block) for nonce in nonces])
+        new_transactions = [tx for tx in new_transactions if tx]
         for i, transaction in enumerate(new_transactions):
             transaction = dict(transaction)
             transaction['chainId'] = int(transaction['chainId'], 16)
@@ -213,7 +214,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
         elif end_block > self.cached_thru:
             self.cached_thru = end_block
 
-    async def _get_transaction_by_nonce(self, nonce: int, height: Block) -> dict:
+    async def _get_transaction_by_nonce(self, nonce: int, height: Block) -> Optional[dict]:
         lo = 0
         hi = height
         while True:
@@ -226,12 +227,13 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                 prev_block_nonce = await self._get_nonce_at_block(lo - 1)
                 if prev_block_nonce < nonce:
                     logger.debug(f"Found nonce {nonce} at block {lo}")
-                    return dict(await self._get_transaction_by_nonce_and_block(nonce, lo))
+                    tx = await self._get_transaction_by_nonce_and_block(nonce, lo)
+                    return dict(tx) if tx else None
                 hi = lo
                 lo = int(lo / 2)
                 logger.debug(f"Nonce at {hi} is {_nonce}, checking lower block {lo}")
     
-    async def _get_transaction_by_nonce_and_block(self, nonce: int, block: Block) -> TxData:
+    async def _get_transaction_by_nonce_and_block(self, nonce: int, block: Block) -> Optional[TxData]:
         block = await _get_block(block)
         for tx in block.transactions:
             if tx['from'] == self.address and tx['nonce'] == nonce:
@@ -244,7 +246,9 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                 events = chain.get_transaction(tx['hash']).events
                 if "SafeSetup" in events and "ProxyCreation" in events and any(event['proxy'] == self.address for event in events['ProxyCreation']):
                     return tx
-        raise ValueError(f"No transaction with nonce {nonce} in block {block.number} for {self.address}")
+        # NOTE Are we sure this is the correct way to handle this scenario?
+        logger.warning(f"No transaction with nonce {nonce} in block {block.number} for {self.address}")
+        return None
     
     @alru_cache(maxsize=None)
     async def _get_nonce_at_block(self, block: Block) -> int:
