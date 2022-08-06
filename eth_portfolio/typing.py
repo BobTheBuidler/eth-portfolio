@@ -1,14 +1,13 @@
 
 import abc
-from collections import defaultdict
 from dataclasses import dataclass, field
 from decimal import Decimal
 from functools import cached_property
-from typing import (Any, Callable, DefaultDict, Dict, Iterable, Literal,
-                    Optional, Tuple, TypedDict, TypeVar, Union)
+from typing import (DefaultDict, Dict, Iterable, Literal, Optional, Tuple,
+                    TypedDict, TypeVar, Union)
 
-from brownie import convert
-from y.datatypes import Address, AddressOrContract, Block
+from checksum_dict import DefaultChecksumDict
+from y.datatypes import Address, Block
 
 _T = TypeVar('_T')
 
@@ -32,52 +31,6 @@ ProtocolLabel = str
 
 Addresses = Union[Address, Iterable[Address]]
 TokenAddress = TypeVar('TokenAddress', bound=Address)
-
-
-_CSDSeed = Union[Dict[Address, _T], Iterable[Tuple[Address, _T]]]
-
-
-class ChecksumAddressDict(Dict[str, _T]):
-    """
-    A dict that maps addresses to objects.
-    Will automatically checksum your provided address key when setting and getting values.
-    If you pass in a `seed` dictionary, the keys will be checksummed and the values will be set.
-    """
-    def __init__(self, seed: _CSDSeed = None) -> None:
-        super().__init__()
-        self.__dict__ = self
-        if isinstance(seed, dict):
-            seed = seed.items()
-        if isinstance(seed, Iterable):
-            for key, value in seed:
-                self[key] = value
-    
-    def __getitem__(self, key: AddressOrContract) -> _T:
-        return super().__getitem__(convert.to_address(key))
-    
-    def __setitem__(self, key: AddressOrContract, value: Any) -> None:
-        return super().__setitem__(convert.to_address(key), value)
-
-
-class DefaultChecksumDict(defaultdict, ChecksumAddressDict[_T]):
-    """
-    A defaultdict that maps addresses to objects.
-    Will automatically checksum your provided address key when setting and getting values.
-    """
-    def __init__(self, default: Callable[[], _T], seed: _CSDSeed = None) -> None:
-        super().__init__(default)
-        self.__dict__ = self
-        if isinstance(seed, dict):
-            seed = seed.items()
-        if isinstance(seed, Iterable):
-            for key, value in seed:
-                self[key] = value
-    
-    def __getitem__(self, key: Address) -> _T:
-        return super().__getitem__(convert.to_address(key))
-    
-    def __setitem__(self, key: Address, value: Any) -> None:
-        return super().__setitem__(convert.to_address(key), value)
 
 
 class _SummableNonNumeric(metaclass=abc.ABCMeta):

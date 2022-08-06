@@ -6,6 +6,7 @@ from typing import Any, Dict, Iterable, List
 
 from async_property import async_property
 from brownie import web3
+from checksum_dict import ChecksumAddressDict
 from pandas import DataFrame, concat  # type: ignore
 from web3 import Web3
 from y.datatypes import Address, Block
@@ -18,8 +19,7 @@ from eth_portfolio._ledgers.portfolio import (PortfolioInternalTransfersLedger,
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.argspec import get_return_type
 from eth_portfolio.constants import ADDRESSES
-from eth_portfolio.typing import (Addresses, ChecksumAddressDict,
-                                  PortfolioBalances)
+from eth_portfolio.typing import Addresses, PortfolioBalances
 
 logger = logging.getLogger(__name__)
 
