@@ -11,6 +11,7 @@ shitcoins = {
         "0x9Ee582c42F88CAA5e7BCDE2e86e69Af3Cf5FCe40",
         "0xFD1860C9d602236214652a21753731F9acD2C362",
         "0x0Fd23DaB8723b1Fd5e7c3d74Baa624B443423b6B",
+        "0xe0736F3F455F1DBD29Bf6F8346EAd22f5CF78d08",
         # Tagged as phishing on Etherscan
         "0xCf39B7793512F03f2893C16459fd72E65D2Ed00c",
         "0x89532890c2959e836C1Bca52309356841238b8B7",
@@ -18,6 +19,7 @@ shitcoins = {
         "0x17a10104CBC1eD155D083eaD9FCF5C3440bb50e8",
         # Generally looks like shit
         "0xdb83eC9EEAC2b3CF8Eb282f91c73C38159578697",
+        "0x2F30E0F6B484eF6Be57b6435e34687018ff8Cb4D",
         "0x242a705E8AF8A24B7EB30f3DbAF899eB25E3D76A",
         "0x0795619E02716a81ac9EF6E55363D538DA104e57",
         # Tagged as well known address scam on Etherscan
