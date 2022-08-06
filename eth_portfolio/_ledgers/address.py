@@ -244,7 +244,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                 events = chain.get_transaction(tx['hash']).events
                 if "SafeSetup" in events and "ProxyCreation" in events and any(event['proxy'] == self.address for event in events['ProxyCreation']):
                     return tx
-        raise ValueError(f"No transaction with nonce {nonce} in block {block.number}")
+        raise ValueError(f"No transaction with nonce {nonce} in block {block.number} for {self.address}")
     
     @alru_cache(maxsize=None)
     async def _get_nonce_at_block(self, block: Block) -> int:
