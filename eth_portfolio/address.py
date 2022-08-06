@@ -16,7 +16,8 @@ from eth_portfolio._ledgers.address import (AddressInternalTransfersLedger,
                                             PandableLedgerEntryList)
 from eth_portfolio.protocols.lending import _lending
 from eth_portfolio.protocols.staking import _staking
-from eth_portfolio.typing import RemoteTokenBalances, TokenBalances, _BalanceItem
+from eth_portfolio.typing import (Balance, RemoteTokenBalances, TokenBalances,
+                                  WalletBalances)
 from eth_portfolio.utils import Decimal, _get_price
 
 if TYPE_CHECKING:
@@ -65,6 +66,20 @@ class PortfolioAddress:
     # Primary functions
 
     @await_if_sync
+    def describe(self, block: int) -> WalletBalances:
+        return self._describe_async(block=block) # type: ignore
+    
+    async def _describe_async(self, block: int) -> WalletBalances:
+        assert block
+        assets: TokenBalances
+        debt: TokenBalances
+        balances = WalletBalances()
+        assets, debt = await asyncio.gather(*[self._assets_async(block), self._debt_async(block)])
+        balances['assets'] = assets
+        balances['debt'] = debt
+        return balances
+    
+    @await_if_sync
     def assets(self, block: Optional[Block] = None) -> TokenBalances:
         return self._assets_async(block) # type: ignore
     
@@ -101,16 +116,16 @@ class PortfolioAddress:
         return token_balances
     
     @await_if_sync
-    def eth_balance(self, block: Optional[Block]) -> _BalanceItem:
+    def eth_balance(self, block: Optional[Block]) -> Balance:
         return self._eth_balance_async(block) # type: ignore
 
-    async def _eth_balance_async(self, block: Optional[Block]) -> _BalanceItem:
+    async def _eth_balance_async(self, block: Optional[Block]) -> Balance:
         balance, price = await asyncio.gather(
             _get_eth_balance(self.address, block),
             get_price_async(weth, block),
         )
         value = round(balance * Decimal(price), 18)
-        return _BalanceItem(balance, value)
+        return Balance(balance, value)
     
     @await_if_sync
     def token_balances(self, block: Optional[Block]) -> TokenBalances:
@@ -123,7 +138,7 @@ class PortfolioAddress:
             asyncio.gather(*[_get_price(token, block) for token in tokens]),
         )
         token_balances = [
-            _BalanceItem(Decimal(balance), Decimal(0) if price is None else round(Decimal(balance) * Decimal(price), 18))
+            Balance(Decimal(balance), Decimal(0) if price is None else round(Decimal(balance) * Decimal(price), 18))
             for balance, price in zip(token_balances, token_prices)
         ]
         return TokenBalances(zip(tokens, token_balances))

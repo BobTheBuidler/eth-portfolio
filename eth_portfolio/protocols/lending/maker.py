@@ -8,13 +8,12 @@ from eth_abi import encode_single
 from eth_portfolio._decorators import await_if_sync
 from eth_portfolio.protocols.lending._base import \
     LendingProtocolWithLockedCollateral
-from eth_portfolio.typing import TokenBalances, _BalanceItem
+from eth_portfolio.typing import Balance, TokenBalances
+from eth_portfolio.utils import Decimal
 from y import Network, get_price_async
 from y.constants import dai
 from y.contracts import Contract
 from y.datatypes import Address, Block
-
-from eth_portfolio.utils import Decimal
 
 yfi = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
 
@@ -33,7 +32,7 @@ class Maker(LendingProtocolWithLockedCollateral):
         if ink:
             balance = ink / Decimal(1e18)
             value = round(balance * Decimal(await get_price_async(yfi, block)), 18)
-            balances[yfi] = _BalanceItem(balance, value)
+            balances[yfi] = Balance(balance, value)
         return balances
     
     @await_if_sync
@@ -51,7 +50,7 @@ class Maker(LendingProtocolWithLockedCollateral):
         rate = ilks.dict()["rate"]
         debt = art * rate / Decimal(1e45)
         balances: TokenBalances = TokenBalances()
-        balances[dai] += _BalanceItem(debt, debt)
+        balances[dai] += Balance(debt, debt)
         return balances
 
     @alru_cache

@@ -5,7 +5,7 @@ from typing import Any, Awaitable, Callable, Coroutine, List, Optional
 
 from brownie.network.contract import ContractCall
 from eth_portfolio._decorators import await_if_sync
-from eth_portfolio.typing import TokenBalances, _BalanceItem
+from eth_portfolio.typing import Balance, TokenBalances
 from eth_portfolio.utils import Decimal
 from y import Contract
 from y.classes.common import ERC20
@@ -89,5 +89,5 @@ class SingleTokenStakingPoolABC(StakingPoolABC, metaclass=abc.ABCMeta):
             if balance:
                 scale, price = await asyncio.gather(self.scale, self.price(block))
                 balance /= scale  # type: ignore
-                balances[self.token.address] = _BalanceItem(balance, balance * Decimal(price))
+                balances[self.token.address] = Balance(balance, balance * Decimal(price))
         return balances

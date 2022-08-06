@@ -2,7 +2,7 @@ import asyncio
 import logging
 from functools import cached_property
 from types import MethodType
-from typing import Any, Dict, Iterable, List, Optional, Type
+from typing import Any, Dict, Iterable, List
 
 from async_property import async_property
 from brownie import web3
@@ -25,12 +25,12 @@ logger = logging.getLogger(__name__)
 
 
 class Portfolio:
-    '''
+    addresses: ChecksumAddressDict[PortfolioAddress]
+    """
     Used to export information about a group of ``PortfolioAddress`` objects.
     - Has all attributes of a PortfolioAddress.
     - All calls to ``function(*args, **kwargs)`` will return ``{address: PortfolioAddress(Address).function(*args, **kwargs)}``
-    '''
-
+    """
     def __init__(
         self,
         addresses: Addresses,
@@ -40,13 +40,11 @@ class Portfolio:
         load_prices: bool = True,
     ) -> None:
 
-        self.addresses: Dict[Address, PortfolioAddress]
         assert isinstance(addresses, Iterable), f"`addresses` must be an iterable, not {type(addresses)}"
         if isinstance(addresses, str):
             addresses = [addresses]
-        self.addresses = ChecksumAddressDict()
-        for address in addresses:
-            self.addresses[address] = PortfolioAddress(address = address, portfolio = portfolio)
+
+        self.addresses = ChecksumAddressDict({address: PortfolioAddress(address, self) for address in addresses})
 
         assert isinstance(start_block, int), f"`start_block` must be an integer, not {type(start_block)}"
         assert start_block >= 0, "`start_block` must be >= 0"
@@ -64,11 +62,10 @@ class Portfolio:
         self.ledger = PortfolioLedger(self)
 
         self.w3: Web3 = web3
-        self._import_address_functions()
+        self.__import_address_functions()
     
-    @cached_property
-    def chain_id(self) -> int:
-        return self.w3.eth.chainId
+    def __getitem__(self, key: Address) -> PortfolioAddress:
+        return self.addresses[key]
     
     @property
     def transactions(self) -> PortfolioTransactionsLedger:
@@ -82,16 +79,19 @@ class Portfolio:
     def token_transfers(self) -> PortfolioTokenTransfersLedger:
         return self.ledger.token_transfers
     
+    @cached_property
+    def chain_id(self) -> int:
+        return self.w3.eth.chainId
+    
     @await_if_sync
-    def describe(self, block: int) -> Dict[str, PortfolioBalances]:
+    def describe(self, block: int) -> PortfolioBalances:
         return self._describe_async(block=block) # type: ignore
     
-    async def _describe_async(self, block: int) -> Dict[str, PortfolioBalances]:
+    async def _describe_async(self, block: int) -> PortfolioBalances:
         assert block
-        assets, debt = await asyncio.gather(*[self._assets_async(block), self._debt_async(block)])
-        return {'assets': assets, 'debt': debt}
+        return PortfolioBalances(await asyncio.gather(*[address._describe_async(block) for address in self.addresses.values()]))
     
-    def _import_address_functions(self) -> None:
+    def __import_address_functions(self) -> None:
         if self.addresses:
             async_functions = [name for name in dir(PortfolioAddress) if name.startswith("_") and name.endswith("_async")]
             for async_name in async_functions:
@@ -107,13 +107,13 @@ class Portfolio:
     
     def __new_sync_func(self, sync_name: str) -> None:
         @await_if_sync
-        def sync_func(self: Portfolio, *args, **kwargs) -> get_return_type(getattr(PortfolioAddress, sync_name)):
+        def sync_func(self: Portfolio, *args, **kwargs) -> get_return_type(getattr(PortfolioAddress, sync_name)):  # type: ignore
             async_func = getattr(self, f"_{sync_name}_async")
             return async_func(*args, **kwargs)
         setattr(self, sync_name, MethodType(sync_func, self))
     
     def __new_async_func(self, async_name: str) -> None:
-        async def async_func(self: Portfolio, *args: Any, **kwargs: Any) -> get_return_type(getattr(PortfolioAddress, async_name)):
+        async def async_func(self: Portfolio, *args: Any, **kwargs: Any) -> get_return_type(getattr(PortfolioAddress, async_name)):  # type: ignore
             vals = await asyncio.gather(*[getattr(address, async_name)(*args, **kwargs) for address in self.addresses.values()])
             return {address: data for address, data in zip(self.addresses, vals)}
         setattr(self, async_name, MethodType(async_func, self))

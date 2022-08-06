@@ -5,7 +5,7 @@ from brownie import chain
 from eth_portfolio._decorators import await_if_sync
 from eth_portfolio.protocols.lending._base import \
     LendingProtocolWithLockedCollateral
-from eth_portfolio.typing import TokenBalances, _BalanceItem
+from eth_portfolio.typing import Balance, TokenBalances
 from y import Contract, Network, get_price_async
 from y.datatypes import Address, Block
 
@@ -26,7 +26,7 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
         bal = await self.unitVault.collaterals.coroutine(yfi, address, block_identifier=block)
         if bal:
             bal /= 1e18
-            balances[yfi] = _BalanceItem(bal, bal * await get_price_async(yfi, block))
+            balances[yfi] = Balance(bal, bal * await get_price_async(yfi, block))
         return balances
 
     @await_if_sync
@@ -40,7 +40,7 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
         # NOTE: This only works for YFI based debt, must extend before using for other collaterals
         debt = await self.unitVault.getTotalDebt.coroutine(yfi, address, block_identifier=block) / 1e18
         if debt:
-            balances[usdp] = _BalanceItem(debt, debt)
+            balances[usdp] = Balance(debt, debt)
         return balances
 
 unit = UnitXyz(asynchronous=True) if chain.id == Network.Mainnet else None
