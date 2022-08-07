@@ -89,7 +89,8 @@ class Portfolio:
     
     async def _describe_async(self, block: int) -> PortfolioBalances:
         assert block
-        return PortfolioBalances(await asyncio.gather(*[address._describe_async(block) for address in self.addresses.values()]))
+        data = await asyncio.gather(*[address._describe_async(block) for address in self.addresses.values()])
+        return PortfolioBalances({address: balances for address, balances in zip(self.addresses, data)})
     
     def __import_address_functions(self) -> None:
         if self.addresses:
