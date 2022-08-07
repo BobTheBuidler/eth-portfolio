@@ -71,12 +71,8 @@ class PortfolioAddress:
     
     async def _describe_async(self, block: int) -> WalletBalances:
         assert block
-        assets: TokenBalances
-        debt: TokenBalances
         balances = WalletBalances()
-        assets, debt = await asyncio.gather(*[self._assets_async(block), self._debt_async(block)])
-        balances['assets'] = assets
-        balances['debt'] = debt
+        balances['assets'], balances['debt'] = await asyncio.gather(*[self._assets_async(block), self._debt_async(block)])
         return balances
     
     @await_if_sync
