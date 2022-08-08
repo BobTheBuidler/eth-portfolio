@@ -114,10 +114,13 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumeric):
         combined: TokenBalances = TokenBalances()
         for token, balance in self.items():
             if balance:
-                combined[token] += balance
+                combined._setattr_nochecksum(token, Balance(balance.balance, balance.usd_value))
         for token, balance in other.items():
             if balance:
-                combined[token] += balance
+                if token in combined:
+                    combined._setattr_nochecksum(token, combined.__getattr_nochecksum(token) + balance)
+                else:
+                    combined._setattr_nochecksum(token, Balance(balance.balance, balance.usd_value))
         return combined
     
     def __sub__(self, other: Union['TokenBalances', Literal[0]]) -> 'TokenBalances':
@@ -246,12 +249,12 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         assert isinstance(other, PortfolioBalances), f"{other} is not a WalletBalances object"
         # NOTE We need a new object to avoid mutating the inputs
         combined: PortfolioBalances = PortfolioBalances()
-        for protocol, balances in self.items():
-            if balances:
-                combined[protocol] += balances
-        for protocol, balances in other.items():
-            if balances:
-                combined[protocol] += balances
+        for wallet, balance in self.items():
+            if balance:
+                combined._setattr_nochecksum(wallet, combined.__getattr_nochecksum(wallet) + balance)
+        for wallet, balance in other.items():
+            if balance:
+                combined._setattr_nochecksum(wallet, combined.__getattr_nochecksum(wallet) + balance)
         return combined
     
     def __sub__(self, other: Union['PortfolioBalances', Literal[0]]) -> 'PortfolioBalances':
@@ -298,12 +301,12 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumeric)
         assert isinstance(other, WalletBalancesRaw), f"{other} is not a WalletBalancesRaw object"
         # NOTE We need a new object to avoid mutating the inputs
         combined: WalletBalancesRaw = WalletBalancesRaw()
-        for wallet, balances in self.items():
-            if balances:
-                combined[wallet] += balances
-        for wallet, balances in other.items():
-            if balances:
-                combined[wallet] += balances
+        for wallet, balance in self.items():
+            if balance:
+                combined._setattr_nochecksum(wallet, combined.__getattr_nochecksum(wallet) + balance)
+        for wallet, balance in other.items():
+            if balance:
+                combined._setattr_nochecksum(wallet, combined.__getattr_nochecksum(wallet) + balance)
         return combined
     
     def __sub__(self, other: Union['WalletBalancesRaw', Literal[0]]) -> 'WalletBalancesRaw':
