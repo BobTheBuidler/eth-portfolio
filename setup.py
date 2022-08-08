@@ -14,6 +14,7 @@ setup(
     author_email='bobthebuidlerdefi@gmail.com',
     url='https://github.com/BobTheBuidler/eth-portfolio',
     install_requires=[
+        "checksum_dict>=1.1.2",
         "pandas>=1.4.3,<1.5",
         "ypricemagic>=1.1.1.dev73,<1.1.3",
     ],
