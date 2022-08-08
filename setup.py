@@ -14,9 +14,8 @@ setup(
     author_email='bobthebuidlerdefi@gmail.com',
     url='https://github.com/BobTheBuidler/eth-portfolio',
     install_requires=[
-        "checksum_dict>=1.0.6",
         "pandas>=1.4.3,<1.5",
-        "ypricemagic>=1.1.1.dev71,<1.1.3",
+        "ypricemagic>=1.1.1.dev73,<1.1.3",
     ],
     setup_requires=[
         'setuptools_scm',

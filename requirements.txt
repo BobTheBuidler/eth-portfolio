@@ -1,3 +1,2 @@
-checksum_dict>=1.0.6
 pandas>=1.4.3,<1.5
-ypricemagic>=1.1.1.dev71,<1.1.3
+ypricemagic>=1.1.1.dev73,<1.1.3
