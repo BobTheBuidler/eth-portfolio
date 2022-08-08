@@ -114,13 +114,13 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumeric):
         combined: TokenBalances = TokenBalances()
         for token, balance in self.items():
             if balance:
-                combined._setattr_nochecksum(token, Balance(balance.balance, balance.usd_value))
+                combined._setitem_nochecksum(token, Balance(balance.balance, balance.usd_value))
         for token, balance in other.items():
             if balance:
                 if token in combined:
-                    combined._setattr_nochecksum(token, combined.__getattr_nochecksum(token) + balance)
+                    combined._setitem_nochecksum(token, combined._getitem_nochecksum(token) + balance)
                 else:
-                    combined._setattr_nochecksum(token, Balance(balance.balance, balance.usd_value))
+                    combined._setitem_nochecksum(token, Balance(balance.balance, balance.usd_value))
         return combined
     
     def __sub__(self, other: Union['TokenBalances', Literal[0]]) -> 'TokenBalances':
@@ -251,10 +251,10 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         combined: PortfolioBalances = PortfolioBalances()
         for wallet, balance in self.items():
             if balance:
-                combined._setattr_nochecksum(wallet, combined.__getattr_nochecksum(wallet) + balance)
+                combined._setitem_nochecksum(wallet, combined._getitem_nochecksum(wallet) + balance)
         for wallet, balance in other.items():
             if balance:
-                combined._setattr_nochecksum(wallet, combined.__getattr_nochecksum(wallet) + balance)
+                combined._setitem_nochecksum(wallet, combined._getitem_nochecksum(wallet) + balance)
         return combined
     
     def __sub__(self, other: Union['PortfolioBalances', Literal[0]]) -> 'PortfolioBalances':
@@ -303,10 +303,10 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumeric)
         combined: WalletBalancesRaw = WalletBalancesRaw()
         for wallet, balance in self.items():
             if balance:
-                combined._setattr_nochecksum(wallet, combined.__getattr_nochecksum(wallet) + balance)
+                combined._setitem_nochecksum(wallet, combined._getitem_nochecksum(wallet) + balance)
         for wallet, balance in other.items():
             if balance:
-                combined._setattr_nochecksum(wallet, combined.__getattr_nochecksum(wallet) + balance)
+                combined._setitem_nochecksum(wallet, combined._getitem_nochecksum(wallet) + balance)
         return combined
     
     def __sub__(self, other: Union['WalletBalancesRaw', Literal[0]]) -> 'WalletBalancesRaw':
