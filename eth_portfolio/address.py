@@ -25,8 +25,6 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
-debug_semaphore = asyncio.Semaphore(value=100)
-
 
 async def _get_eth_balance(address: Address, block: Optional[Block]) -> decimal.Decimal:
     return Decimal(await dank_w3.eth.get_balance(address, block_identifier=block)) / Decimal(1e18)
