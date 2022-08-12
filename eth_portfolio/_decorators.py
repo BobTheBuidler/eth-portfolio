@@ -5,6 +5,7 @@ import logging
 from typing import Any, Callable, Coroutine, overload
 
 from brownie import chain
+from multicall.utils import get_event_loop
 from y.datatypes import Block
 
 from eth_portfolio import _config
@@ -48,7 +49,7 @@ def await_if_sync(func):
         if obj.asynchronous:
             return coro
         try:
-            return asyncio.get_event_loop().run_until_complete(coro)
+            return get_event_loop().run_until_complete(coro)
         except RuntimeError as e:
             e.args = tuple(list(e.args) + ["Perhaps you want to set `Portfolio(..., asynchronous=True)`?"])
             raise e
