@@ -202,6 +202,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                 price = round(Decimal(price), 18)
                 transaction['price'] = price
                 transaction['value_usd'] = transaction['value'] * price
+                new_transactions[i] = transaction
             
         for transaction in new_transactions:
             self.objects.append(transaction)
