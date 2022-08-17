@@ -301,7 +301,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
         
         for transfer in new_internal_transfers:
             # Tx reverted -> skip
-            receipt = await dank_w3.eth.getTransactionReceipt(transfer['transactionHash'])
+            receipt = await dank_w3.eth.get_transaction_receipt(transfer['transactionHash'])
             if receipt.status == 0:
                 continue
 
