@@ -300,6 +300,11 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
         new_internal_transfers = [transfer for transfer in to_traces + from_traces if 'error' not in transfer or transfer['error'] != "Reverted"]
         
         for transfer in new_internal_transfers:
+            # Tx reverted -> skip
+            receipt = await dank_w3.eth.getTransactionReceipt(transfer['transactionHash'])
+            if receipt.status == 0:
+                continue
+
             # Un-nest the action dict
             if 'action' in transfer and transfer['action'] is not None:
                 for k in list(transfer['action'].keys()):
