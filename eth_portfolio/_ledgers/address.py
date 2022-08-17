@@ -298,10 +298,10 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
         from_traces = from_traces['result'] if "result" in from_traces else []
 
         new_internal_transfers = [transfer for transfer in to_traces + from_traces if 'error' not in transfer or transfer['error'] != "Reverted"]
+        receipts = await asyncio.gather(*[dank_w3.eth.get_transaction_receipt(tx['transactionHash']) for tx in new_internal_transfers])
         
-        for transfer in new_internal_transfers:
+        for transfer, receipt in zip(new_internal_transfers, receipts):
             # Tx reverted -> skip
-            receipt = await dank_w3.eth.get_transaction_receipt(transfer['transactionHash'])
             if receipt.status == 0:
                 continue
 
