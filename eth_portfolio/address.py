@@ -15,7 +15,7 @@ from eth_portfolio._ledgers.address import (AddressInternalTransfersLedger,
                                             AddressTransactionsLedger,
                                             PandableLedgerEntryList)
 from eth_portfolio.protocols.lending import _lending
-from eth_portfolio.protocols.staking import _staking
+from eth_portfolio.protocols import _external
 from eth_portfolio.typing import (Balance, RemoteTokenBalances, TokenBalances,
                                   WalletBalances)
 from eth_portfolio.utils import Decimal, _get_price
@@ -149,7 +149,7 @@ class PortfolioAddress:
         return self._staking_async(block) # type: ignore
     
     async def _staking_async(self, block: Optional[Block] = None) -> RemoteTokenBalances:
-        return await _staking._balances_async(self.address, block=block)
+        return await _external._balances_async(self.address, block=block)
     
     # Ledger Entries
 

@@ -15,6 +15,8 @@ from y.datatypes import Address, Block
 
 class ProtocolABC(metaclass=abc.ABCMeta):
     asynchronous: bool
+    def __init__(self, asynchronous: bool) -> None:
+        self.asynchronous = asynchronous
 
     @await_if_sync
     def balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
@@ -29,7 +31,7 @@ class ProtocolWithStakingABC(ProtocolABC, metaclass=abc.ABCMeta):
     pools: List["StakingPoolABC"]
     
     async def _balances_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        return sum(await asyncio.gather(*[protocol._balances_async(address, block) for protocol in self.pools]))  # type: ignore
+        return sum(await asyncio.gather(*[pool._balances_async(address, block) for pool in self.pools]))  # type: ignore
 
 
 class StakingPoolABC(ProtocolABC, metaclass=abc.ABCMeta):
@@ -56,7 +58,7 @@ class StakingPoolABC(ProtocolABC, metaclass=abc.ABCMeta):
         return contract_creation_block(self.contract_address)
     
     def should_check(self, block: Optional[Block]) -> bool:
-        return block or block >= self.deploy_block
+        return block is None or block >= self.deploy_block
 
 
 class SingleTokenStakingPoolABC(StakingPoolABC, metaclass=abc.ABCMeta):
@@ -85,7 +87,7 @@ class SingleTokenStakingPoolABC(StakingPoolABC, metaclass=abc.ABCMeta):
     async def _balances_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         balances: TokenBalances = TokenBalances()
         if self.should_check(block):
-            balance = Decimal(await self(address, block_identifier=block))  # type: ignore
+            balance = Decimal(await self(address, block=block))  # type: ignore
             if balance:
                 scale, price = await asyncio.gather(self.scale, self.price(block))
                 balance /= scale  # type: ignore
