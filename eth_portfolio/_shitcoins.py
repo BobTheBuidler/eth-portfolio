@@ -3,7 +3,11 @@ from y import Network, convert
 
 shitcoins = {
     Network.Mainnet: [
+        # Tagged as fake on Etherscan
+        "0x471c3A7f132bc94938516CB2Bf6f02C7521D2797",
         # Tagged as spam on Etherscan
+        "0xAF0b2fBeDd5d1Fda457580FB3DAbAD1F5C8bBC36",
+        "0x7841479c5976b8184DBcde9a7a5113901b233EfB",
         "0x1e4A0ADFC2e9bf2Dfd041Bc89405538d0D5A077a",
         "0xb07de4b2989E180F8907B8C7e617637C26cE2776",
         "0xa9517B2E61a57350D6555665292dBC632C76adFe",
@@ -13,6 +17,7 @@ shitcoins = {
         "0x0Fd23DaB8723b1Fd5e7c3d74Baa624B443423b6B",
         "0xe0736F3F455F1DBD29Bf6F8346EAd22f5CF78d08",
         # Tagged as phishing on Etherscan
+        "0xb0B1d4732eFE32AEA466ED6BC3c79181eD4810c4",
         "0xCf39B7793512F03f2893C16459fd72E65D2Ed00c",
         "0x89532890c2959e836C1Bca52309356841238b8B7",
         "0xD1B0c350f73E6f7Cd5c9978b82B46a59aE9aD524",
