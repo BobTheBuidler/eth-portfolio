@@ -301,8 +301,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
         from_traces = from_traces['result'] if "result" in from_traces else []
 
         # Remove reverts
-        new_internal_transfers = [transfer for transfer in to_traces + from_traces if 'error' not in transfer or transfer['error'] != "Reverted"]
-        logger.warning(new_internal_transfers)
+        new_internal_transfers = [transfer for transfer in to_traces + from_traces if 'error' not in transfer]
         receipts = await asyncio.gather(*[dank_w3.eth.get_transaction_receipt(tx['transactionHash']) for tx in new_internal_transfers])
         new_internal_transfers = [transfer for transfer, receipt in zip(new_internal_transfers, receipts) if receipt.status != 0]
         
