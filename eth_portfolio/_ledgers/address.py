@@ -205,6 +205,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                 new_transactions[i] = transaction
             
         for transaction in new_transactions:
+            if transaction['price'] is None:
+                raise transaction
             self.objects.append(transaction)
             self.cached_thru_nonce = transaction['nonce']
         
@@ -300,6 +302,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
 
         # Remove reverts
         new_internal_transfers = [transfer for transfer in to_traces + from_traces if 'error' not in transfer or transfer['error'] != "Reverted"]
+        logger.warning(new_internal_transfers)
         receipts = await asyncio.gather(*[dank_w3.eth.get_transaction_receipt(tx['transactionHash']) for tx in new_internal_transfers])
         new_internal_transfers = [transfer for transfer, receipt in zip(new_internal_transfers, receipts) if receipt.status != 0]
         
