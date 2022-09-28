@@ -5,6 +5,7 @@ shitcoins = {
     Network.Mainnet: [
         # Tagged as fake on Etherscan
         "0x471c3A7f132bc94938516CB2Bf6f02C7521D2797",
+        "0x106EebF11F34ECCcaD59c1CA9398d828765f64f8",
         # Tagged as spam on Etherscan
         "0xAF0b2fBeDd5d1Fda457580FB3DAbAD1F5C8bBC36",
         "0xbadb4170Cd3309680477Fc81D527101cbB4000EE",
