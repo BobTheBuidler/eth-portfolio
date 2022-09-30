@@ -59,7 +59,7 @@ class Balance(Dict[Literal["balance", "usd_value"], Decimal], _SummableNonNumeri
         return self.usd_value
 
     def __repr__(self) -> str:
-        return f"_BalanceItem{str(dict(self))}"
+        return f"Balance{str(dict(self))}"
     
     def __add__(self, other: Union['Balance', Literal[0]]) -> 'Balance':
         """ It is on you to ensure the two BalanceItems are for the same token. """
