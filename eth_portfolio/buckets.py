@@ -39,7 +39,7 @@ async def get_token_bucket(token: AnyAddressType) -> str:
         return 'Other long term assets'
     return 'Other short term assets'
 
-@alru_cache
+@alru_cache(maxsize=None)
 async def _unwrap_token(token) -> str:
     '''
     Unwraps the base
