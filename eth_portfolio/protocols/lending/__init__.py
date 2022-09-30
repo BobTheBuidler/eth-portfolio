@@ -24,7 +24,8 @@ class Lending:
 
     async def _collateral_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         protocols = [protocol for protocol in self.protocols if isinstance(protocol, LendingProtocolWithLockedCollateral)]
-        return sum(await asyncio.gather(*[protocol._balances_async(address, block) for protocol in protocols])) # type: ignore
+        balances = await asyncio.gather(*[protocol._balances_async(address, block) for protocol in protocols])
+        return sum(balance for balance in balances if balance is not None) # type: ignore
 
     @await_if_sync
     def debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
