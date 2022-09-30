@@ -20,8 +20,4 @@ class LendingProtocol(metaclass=abc.ABCMeta):
         ...
 
 class LendingProtocolWithLockedCollateral(LendingProtocol, ProtocolABC, metaclass = abc.ABCMeta):
-    """ Locked collateral would be like Maker, not Aave, because Aave gives you atokens. """
-
-    #@abc.abstractmethod TODO enable this decorator when the lib is more ossified
-    async def _collateral_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        ...
+    """ Locked collateral would be like Maker, not Aave, because Aave gives you atokens that you hold in your wallet. """
