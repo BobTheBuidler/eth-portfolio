@@ -31,6 +31,7 @@ class Lending:
         return self._debt_async(address, block) # type: ignore
     
     async def _debt_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        return sum(await asyncio.gather(*[protocol._debt_async(address, block) for protocol in self.protocols])) # type: ignore
+        balances = await asyncio.gather(*[protocol._debt_async(address, block) for protocol in self.protocols])
+        return sum(balance for balance in balances if balance is not None) # type: ignore
 
 _lending = Lending(asynchronous=True)
