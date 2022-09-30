@@ -19,5 +19,5 @@ class LendingProtocol(metaclass=abc.ABCMeta):
     async def _debt_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         ...
 
-class LendingProtocolWithLockedCollateral(LendingProtocol, ProtocolABC, metaclass = abc.ABCMeta):
+class LendingProtocolWithLockedCollateral(LendingProtocol, ProtocolABC):
     """ Locked collateral would be like Maker, not Aave, because Aave gives you atokens that you hold in your wallet. """
