@@ -22,10 +22,7 @@ class ExternalBalances:
         return self._balances_async(address, block) # type: ignore
     
     async def _balances_async(self, address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
-        print('started')
-        print(self.protocols)
         balances = await asyncio.gather(*[protocol._balances_async(address, block) for protocol in self.protocols])
-        print(balances)
         return {type(protocol).__name__: protocol_balances for protocol, protocol_balances in zip(self.protocols, balances)}
 
 _external = ExternalBalances(asynchronous=True)
