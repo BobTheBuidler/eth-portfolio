@@ -17,7 +17,7 @@ setup(
         "checksum_dict>=1.1.2",
         "pandas>=1.4.3,<1.5",
         "web3!=5.29.*,!=5.30.*",
-        "ypricemagic>=1.2.4",
+        "ypricemagic>=1.3.0",
     ],
     setup_requires=[
         'setuptools_scm',
