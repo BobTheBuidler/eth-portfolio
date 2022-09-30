@@ -16,6 +16,7 @@ setup(
     install_requires=[
         "checksum_dict>=1.1.2",
         "pandas>=1.4.3,<1.5",
+        "web3!=5.29.*,!=5.30.*",
         "ypricemagic>=1.2.2",
     ],
     setup_requires=[
