@@ -3,7 +3,7 @@ import abc
 from dataclasses import dataclass, field
 from decimal import Decimal
 from functools import cached_property
-from typing import (DefaultDict, Dict, Iterable, Literal, Optional, Tuple,
+from typing import (Any, DefaultDict, Dict, Iterable, Literal, Optional, Tuple,
                     TypedDict, TypeVar, Union)
 
 from checksum_dict import DefaultChecksumDict
@@ -187,26 +187,26 @@ CategoryLabel = Literal["assets", "debt", "external"]
 
 _WBSeed = Union[Dict[CategoryLabel, TokenBalances], Iterable[Tuple[CategoryLabel, TokenBalances]]]
 
-class WalletBalances(DefaultDict[CategoryLabel, TokenBalances], _SummableNonNumeric):
+class WalletBalances(Dict[CategoryLabel, TokenBalances], _SummableNonNumeric):
     """
     Keyed: ``category -> token -> balance``
     """
     def __init__(self, seed: Optional[_WBSeed] = None) -> None:
-        super().__init__(TokenBalances)
-        self.categories = 'assets', 'debt', 'external'
+        super().__init__()
+        self._keys = 'assets', 'debt', 'external'
+        self['assets'] = TokenBalances()
+        self['debt'] = RemoteTokenBalances()
+        self['external'] = RemoteTokenBalances()
+
         if seed is None:
             return
         if isinstance(seed, dict):
             seed = seed.items()
-        if isinstance(seed, Iterable):
-            for key, balances in seed:  # type: ignore
-                self.__validateitem(key)
-                self[key] += balances
-        else:
+        if not isinstance(seed, Iterable):
             raise TypeError(f"{seed} is not a valid input for WalletBalances")
-        for key in self.categories:
-            if key not in self:
-                self[key]
+        for key, balances in seed:  # type: ignore
+            self.__validateitem(key)
+            self[key] += balances            
         
     @property
     def assets(self) -> TokenBalances:
@@ -260,9 +260,17 @@ class WalletBalances(DefaultDict[CategoryLabel, TokenBalances], _SummableNonNume
         self.__validateitem(key)
         return super().__setitem__(key, value)
     
-    def __validateitem(self, key: CategoryLabel) -> None:
-        if key not in self.categories:
-            raise KeyError(f"{key} is not a valid key for WalletBalances. Valid keys are: {self.categories}")
+    def __validateitem(self, key: CategoryLabel, item: Any) -> None:
+        if key == 'assets':
+            if not isinstance(item, TokenBalances):
+                raise TypeError(f'{item} is not a valid value for "{key}". Must be a TokenBalances object.')
+        elif key in ['debt', 'external']:
+            if not isinstance(item, RemoteTokenBalances):
+                raise TypeError(f'{item} is not a valid value for "{key}". Must be a RemoteTokenBalances object.')
+        elif key not in self._keys:
+            raise KeyError(f"{key} is not a valid key for WalletBalances. Valid keys are: {self._keys}")
+        else:
+            raise NotImplementedError(f'key {key} is not yet implemented.')
 
 
 _PBSeed = Union[Dict[Address, WalletBalances], Iterable[Tuple[Address, WalletBalances]]]
