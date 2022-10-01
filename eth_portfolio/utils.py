@@ -10,12 +10,12 @@ from typing import Dict, List, Optional, Tuple, Union
 
 from async_lru import alru_cache
 from brownie import chain
+from brownie.exceptions import ContractNotFound
 from pandas import DataFrame  # type: ignore
 from y import Contract
 from y.classes.common import ERC20
 from y.datatypes import Address, Block
-from y.exceptions import (ContractNotFound, ContractNotVerified,
-                          NonStandardERC20, PriceError)
+from y.exceptions import ContractNotVerified, NonStandardERC20, PriceError
 from y.networks import Network
 from y.prices.magic import get_price_async
 from y.utils.dank_mids import dank_w3
