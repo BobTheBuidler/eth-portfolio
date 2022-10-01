@@ -134,7 +134,56 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumeric):
                 del subtracted[token]
         return subtracted
 
-CategoryLabel = Literal["assets", "debt"]
+
+_RTBSeed = Dict[ProtocolLabel, TokenBalances]
+
+class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNonNumeric):
+    def __init__(self, seed: Optional[_RTBSeed] = None) -> None:
+        super().__init__(TokenBalances)
+        if seed is None:
+            return
+        if isinstance(seed, dict):
+            seed = seed.items()
+        if isinstance(seed, Iterable):
+            for remote, token_balances in seed:
+                self[remote] += token_balances # type: ignore
+        else:
+            raise TypeError(f"{seed} is not a valid input for TokenBalances")
+    
+    def sum_usd(self) -> Decimal:
+        return Decimal(sum(balance.sum_usd() for balance in self.values()))
+    
+    def __bool__(self) -> bool:
+        return any(self.values())
+
+    def __repr__(self) -> str:
+        return f"RemoteTokenBalances{str(dict(self))}"
+    
+    def __add__(self, other: Union['RemoteTokenBalances', Literal[0]]) -> 'RemoteTokenBalances':
+        assert isinstance(other, RemoteTokenBalances), f"{other} is not a RemoteTokenBalances object"
+        # NOTE We need a new object to avoid mutating the inputs
+        combined: RemoteTokenBalances = RemoteTokenBalances()
+        for protocol, token_balances in self.items():
+            if token_balances:
+                combined[protocol] += token_balances
+        for protocol, token_balances in other.items():
+            if token_balances:
+                combined[protocol] += token_balances
+        return combined
+    
+    def __sub__(self, other: Union['RemoteTokenBalances', Literal[0]]) -> 'RemoteTokenBalances':
+        assert isinstance(other, RemoteTokenBalances), f"{other} is not a RemoteTokenBalances object"
+        # We need a new object to avoid mutating the inputs
+        subtracted: RemoteTokenBalances = RemoteTokenBalances(self)
+        for protocol, token_balances in other.items():
+            subtracted[protocol] -= token_balances
+        for protocol, token_balances in subtracted.items():
+            if not token_balances:
+                del subtracted[protocol]
+        return subtracted
+
+
+CategoryLabel = Literal["assets", "debt", "external"]
 
 _WBSeed = Union[Dict[CategoryLabel, TokenBalances], Iterable[Tuple[CategoryLabel, TokenBalances]]]
 
@@ -144,26 +193,35 @@ class WalletBalances(DefaultDict[CategoryLabel, TokenBalances], _SummableNonNume
     """
     def __init__(self, seed: Optional[_WBSeed] = None) -> None:
         super().__init__(TokenBalances)
+        self.categories = 'assets', 'debt', 'external'
         if seed is None:
             return
         if isinstance(seed, dict):
             seed = seed.items()
         if isinstance(seed, Iterable):
-            for category, balances in seed:  # type: ignore
-                self[category] += balances
+            for key, balances in seed:  # type: ignore
+                self.__validateitem(key)
+                self[key] += balances
         else:
             raise TypeError(f"{seed} is not a valid input for WalletBalances")
+        for key in self.categories:
+            if key not in self:
+                self[key]
         
     @property
     def assets(self) -> TokenBalances:
         return self['assets']
     
     @property
-    def debt(self) -> TokenBalances:
+    def debt(self) -> RemoteTokenBalances:
         return self['debt']
     
+    @property
+    def external(self) -> RemoteTokenBalances:
+        return self['external']
+    
     def sum_usd(self) -> Decimal:
-        return self.assets.sum_usd() - self.debt.sum_usd()
+        return self.assets.sum_usd() - self.debt.sum_usd() + self.external.sum_usd()
     
     def __bool__(self) -> bool:
         return any(self.values())
@@ -203,11 +261,9 @@ class WalletBalances(DefaultDict[CategoryLabel, TokenBalances], _SummableNonNume
         return super().__setitem__(key, value)
     
     def __validateitem(self, key: CategoryLabel) -> None:
-        if key not in ['assets', 'debt']:
-            raise KeyError(f"{key} is not a valid key for WalletBalances. Valid keys are 'assets' and 'debt'")
+        if key not in self.categories:
+            raise KeyError(f"{key} is not a valid key for WalletBalances. Valid keys are: {self.categories}")
 
-
-RemoteTokenBalances = Dict[ProtocolLabel, TokenBalances]
 
 _PBSeed = Union[Dict[Address, WalletBalances], Iterable[Tuple[Address, WalletBalances]]]
 

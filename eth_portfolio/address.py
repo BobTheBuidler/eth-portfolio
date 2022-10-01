@@ -14,8 +14,8 @@ from eth_portfolio._ledgers.address import (AddressInternalTransfersLedger,
                                             AddressTokenTransfersLedger,
                                             AddressTransactionsLedger,
                                             PandableLedgerEntryList)
-from eth_portfolio.protocols.lending import _lending
 from eth_portfolio.protocols import _external
+from eth_portfolio.protocols.lending import _lending
 from eth_portfolio.typing import (Balance, RemoteTokenBalances, TokenBalances,
                                   WalletBalances)
 from eth_portfolio.utils import Decimal, _get_price
@@ -69,8 +69,9 @@ class PortfolioAddress:
     
     async def _describe_async(self, block: int) -> WalletBalances:
         assert block
+        fns = [self._assets_async, self._debt_async, self._external_balances_async]
         balances = WalletBalances()
-        balances['assets'], balances['debt'] = await asyncio.gather(*[self._assets_async(block), self._debt_async(block)])
+        balances['assets'], balances['debt'], balances['external'] = await asyncio.gather(*[fn(block) for fn in fns])
         return balances
     
     @await_if_sync
@@ -78,22 +79,25 @@ class PortfolioAddress:
         return self._assets_async(block) # type: ignore
     
     async def _assets_async(self, block: Optional[Block] = None) -> TokenBalances:
-        balances, collateral = await asyncio.gather(
-            self._balances_async(block=block),
-            self._collateral_async(block=block),
-        )
-        for token, _balances in collateral.items():
-            balances[token]['balance'] += _balances['balance']
-            balances[token]['usd_value'] += _balances['usd_value']
-        balances.update(collateral)
-        return balances
+        return await self._balances_async(block=block)
 
     @await_if_sync
-    def debt(self, block: Optional[Block] = None) -> TokenBalances:
+    def debt(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         return self._debt_async(block) # type: ignore
     
-    async def _debt_async(self, block: Optional[Block] = None) -> TokenBalances:
+    async def _debt_async(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         return await _lending._debt_async(self.address, block=block)
+    
+    @await_if_sync
+    def external_balances(self, block: Optional[Block] = None) -> RemoteTokenBalances:
+        return self._external_balances_async(block) # type: ignore
+    
+    async def _external_balances_async(self, block: Optional[Block] = None) -> RemoteTokenBalances:
+        staked, collateral = asyncio.gather(
+            self._staking_async(block),
+            self._collateral_async(block)
+        )
+        return staked + collateral
 
     # Assets
 
@@ -138,10 +142,10 @@ class PortfolioAddress:
         return TokenBalances(zip(tokens, token_balances))
     
     @await_if_sync
-    def collateral(self, block: Optional[Block] = None) -> TokenBalances:
+    def collateral(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         return self._collateral_async(block) # type: ignore
     
-    async def _collateral_async(self, block: Optional[Block] = None) -> TokenBalances:
+    async def _collateral_async(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         return await _lending._collateral_async(self.address, block=block)
     
     @await_if_sync

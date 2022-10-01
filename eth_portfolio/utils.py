@@ -160,7 +160,7 @@ def _import_submodules() -> Dict[str, ModuleType]:
         return {}
     return {
         name: importlib.import_module(called_from_module.__name__ + '.' + name)
-        for loader, name, is_pkg in pkgutil.walk_packages(called_from_module.__path__)
+        for loader, name, is_pkg in pkgutil.walk_packages(called_from_module.__path__)  # type: ignore
         if name != 'base'
     }
 

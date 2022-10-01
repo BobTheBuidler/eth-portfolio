@@ -55,7 +55,7 @@ async def _unwrap_token(token) -> str:
             str(_token) for _token in await asyncio.gather(*[_unwrap_token(coin) for coin in await CurvePool(pool).get_coins_async])
         )
         if pool_bucket := _pool_bucket(pool_tokens):
-            return pool_bucket
+            return pool_bucket  # type: ignore
     if aave and token in aave:
         return await aave.underlying_async(token)
     if compound and await compound.is_compound_market_async(token):
