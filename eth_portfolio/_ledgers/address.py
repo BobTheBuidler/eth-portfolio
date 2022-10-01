@@ -56,6 +56,7 @@ class AddressLedgerBase(Generic[_LedgerEntryList]):
         # The following two properties will both be ints once the cache has contents
         self.cached_from: int = None # type: ignore
         self.cached_thru: int = None # type: ignore
+        self._semaphore = asyncio.Semaphore(1)
     
     @property
     def address(self) -> Address:
@@ -105,8 +106,12 @@ class AddressLedgerBase(Generic[_LedgerEntryList]):
         end_block = await get_buffered_chain_height()
         return self[start_block, end_block]
     
-    @set_end_block_if_none
     async def _load_new_objects(self, start_block: Block, end_block: Block) -> None:
+        async with self._semaphore:
+            await self.__load_new_objects(self, start_block, end_block)
+    
+    @set_end_block_if_none
+    async def __load_new_objects(self, start_block: Block, end_block: Block) -> None:
         raise NotImplementedError()
     
     def _check_blocks_against_cache(self, start_block: Block, end_block: Block) -> Tuple[Block, Block]:
@@ -176,7 +181,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
         self.cached_thru_nonce = -1
 
     @set_end_block_if_none
-    async def _load_new_objects(self, _: Block, end_block: Block) -> None:
+    async def __load_new_objects(self, _: Block, end_block: Block) -> None:
         if end_block is None:
             end_block = await get_buffered_chain_height()
         if self.cached_thru and end_block < self.cached_thru:
@@ -278,7 +283,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
     list_type = InternalTransfersList
     
     @set_end_block_if_none
-    async def _load_new_objects(self, start_block: Block, end_block: Block) -> None:
+    async def __load_new_objects(self, start_block: Block, end_block: Block) -> None:
         if start_block == 0:
             start_block = 1
 
@@ -288,8 +293,8 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
             return
         except BlockRangeOutOfBounds:
             await asyncio.gather(
-                self._load_new_objects(start_block, self.cached_thru - 1),
-                self._load_new_objects(self.cached_from + 1, end_block)
+                self.__load_new_objects(start_block, self.cached_thru - 1),
+                self.__load_new_objects(self.cached_from + 1, end_block)
             )
             return
         
@@ -388,15 +393,15 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
         return list({ERC20(transfer['token_address']) for transfer in await self._get_async(0, block)})
     
     @set_end_block_if_none
-    async def _load_new_objects(self, start_block: Block, end_block: Block) -> None:
+    async def __load_new_objects(self, start_block: Block, end_block: Block) -> None:
         try:
             start_block, end_block = self._check_blocks_against_cache(start_block, end_block)
         except BlockRangeIsCached:
             return
         except BlockRangeOutOfBounds:
             await asyncio.gather(
-                self._load_new_objects(start_block, self.cached_thru - 1),
-                self._load_new_objects(self.cached_from + 1, end_block)
+                self.__load_new_objects(start_block, self.cached_thru - 1),
+                self.__load_new_objects(self.cached_from + 1, end_block)
             )
             return
         
