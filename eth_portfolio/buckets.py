@@ -48,7 +48,9 @@ async def _unwrap_token(token) -> str:
         return token
 
     if await is_yearn_vault_async(token):
-        return await _unwrap_token(Contract(token).token())
+        contract = await Contract.coroutine(token)
+        underlying = await contract.token.coroutine()
+        return await _unwrap_token(underlying)
     if token in curve:
         pool = curve.get_pool(token)
         pool_tokens = set(
