@@ -253,22 +253,25 @@ class WalletBalances(Dict[CategoryLabel, TokenBalances], _SummableNonNumeric):
         return subtracted
     
     def __getitem__(self, key: CategoryLabel) -> TokenBalances:
-        self.__validateitem(key)
+        self.__validatekey(key)
         return super().__getitem__(key)
 
     def __setitem__(self, key: CategoryLabel, value: TokenBalances) -> None:
-        self.__validateitem(key)
+        self.__validateitem(key, value)
         return super().__setitem__(key, value)
     
+    def __validatekey(self, key: CategoryLabel) -> None:
+        if key not in self._keys:
+            raise KeyError(f"{key} is not a valid key for WalletBalances. Valid keys are: {self._keys}")
+
     def __validateitem(self, key: CategoryLabel, item: Any) -> None:
+        self.__validatekey(key)
         if key == 'assets':
             if not isinstance(item, TokenBalances):
                 raise TypeError(f'{item} is not a valid value for "{key}". Must be a TokenBalances object.')
         elif key in ['debt', 'external']:
             if not isinstance(item, RemoteTokenBalances):
                 raise TypeError(f'{item} is not a valid value for "{key}". Must be a RemoteTokenBalances object.')
-        elif key not in self._keys:
-            raise KeyError(f"{key} is not a valid key for WalletBalances. Valid keys are: {self._keys}")
         else:
             raise NotImplementedError(f'key {key} is not yet implemented.')
 
