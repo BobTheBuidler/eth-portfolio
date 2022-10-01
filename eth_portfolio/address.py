@@ -93,7 +93,7 @@ class PortfolioAddress:
         return self._external_balances_async(block) # type: ignore
     
     async def _external_balances_async(self, block: Optional[Block] = None) -> RemoteTokenBalances:
-        staked, collateral = asyncio.gather(
+        staked, collateral = await asyncio.gather(
             self._staking_async(block),
             self._collateral_async(block)
         )
