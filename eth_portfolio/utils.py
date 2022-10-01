@@ -6,14 +6,16 @@ import pkgutil
 from decimal import Decimal as _Decimal
 from functools import cached_property
 from types import ModuleType
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union
 
-from brownie import chain, convert
+from async_lru import alru_cache
+from brownie import chain
 from pandas import DataFrame  # type: ignore
 from y import Contract
 from y.classes.common import ERC20
 from y.datatypes import Address, Block
-from y.exceptions import ContractNotVerified, NonStandardERC20, PriceError
+from y.exceptions import (ContractNotFound, ContractNotVerified,
+                          NonStandardERC20, PriceError)
 from y.networks import Network
 from y.prices.magic import get_price_async
 from y.utils.dank_mids import dank_w3
@@ -76,25 +78,6 @@ async def _describe_err(token: Address, block: Optional[Block]) -> str:
     return f"malformed token {token} on {Network.name()} at {block}"
 
 async def _get_price(token: Address, block: int = None) -> float:
-    # TODO put these somewhere else
-    """
-    SKIP_PRICE = [  # shitcoins
-        "0xa9517B2E61a57350D6555665292dBC632C76adFe",
-        "0xb07de4b2989E180F8907B8C7e617637C26cE2776",
-        "0x1368452Bfb5Cd127971C8DE22C58fBE89D35A6BF",
-        "0x5cB5e2d7Ab9Fd32021dF8F1D3E5269bD437Ec3Bf",
-        "0x11068577AE36897fFaB0024F010247B9129459E6",
-        "0x9694EED198C1b7aB81ADdaf36255Ea58acf13Fab",
-        "0x830Cbe766EE470B67F77ea62a56246863F75f376",
-        "0x8F49cB69ee13974D6396FC26B0c0D78044FCb3A7",
-        "0x53d345839E7dF5a6c8Cf590C5c703AE255E44816",
-        "0xcdBb37f84bf94492b44e26d1F990285401e5423e",
-        "0xE256CF1C7caEff4383DabafEe6Dd53910F97213D",
-        "0x528Ff33Bf5bf96B5392c10bc4748d9E9Fb5386B2",
-    ]
-    if token in SKIP_PRICE:
-        return 0
-    """
     try:
         if await is_erc721(token):
             return 0
@@ -113,11 +96,12 @@ async def _get_price(token: Address, block: int = None) -> float:
         logger.critical(f'{type(e).__name__} while fetching price for {desc_str} | {e}')
     return 0
 
+@alru_cache(maxsize=None)
 async def is_erc721(token: Address) -> bool:
     # This can probably be improved
     try:
-        contract = Contract(token)
-    except ContractNotVerified:
+        contract = await Contract.coroutine(token)
+    except (ContractNotFound, ContractNotVerified):
         return False
     attrs = 'setApprovalForAll','getApproved','isApprovedForAll'
     if all(hasattr(contract, attr) for attr in attrs):
