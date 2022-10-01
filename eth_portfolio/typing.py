@@ -143,10 +143,10 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         if seed is None:
             return
         if isinstance(seed, dict):
-            seed = seed.items()
+            seed = seed.items()  # type: ignore
         if isinstance(seed, Iterable):
             for remote, token_balances in seed:
-                self[remote] += token_balances # type: ignore
+                self[remote] += token_balances  # type: ignore
         else:
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
     
@@ -187,11 +187,11 @@ CategoryLabel = Literal["assets", "debt", "external"]
 
 _WBSeed = Union[Dict[CategoryLabel, TokenBalances], Iterable[Tuple[CategoryLabel, TokenBalances]]]
 
-class WalletBalances(Dict[CategoryLabel, TokenBalances], _SummableNonNumeric):
+class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalances]], _SummableNonNumeric):
     """
     Keyed: ``category -> token -> balance``
     """
-    def __init__(self, seed: Optional[_WBSeed] = None) -> None:
+    def __init__(self, seed: Optional[Union["WalletBalances", _WBSeed]] = None) -> None:
         super().__init__()
         self._keys = 'assets', 'debt', 'external'
         self['assets'] = TokenBalances()
@@ -201,16 +201,16 @@ class WalletBalances(Dict[CategoryLabel, TokenBalances], _SummableNonNumeric):
         if seed is None:
             return
         if isinstance(seed, dict):
-            seed = seed.items()
+            seed = seed.items()  # type: ignore
         if not isinstance(seed, Iterable):
             raise TypeError(f"{seed} is not a valid input for WalletBalances")
         for key, balances in seed:  # type: ignore
-            self.__validateitem(key)
+            self.__validateitem(key, balances)
             self[key] += balances            
         
     @property
     def assets(self) -> TokenBalances:
-        return self['assets']
+        return self['assets']  # type: ignore
     
     @property
     def debt(self) -> RemoteTokenBalances:
@@ -246,17 +246,17 @@ class WalletBalances(Dict[CategoryLabel, TokenBalances], _SummableNonNumeric):
         # We need a new object to avoid mutating the inputs
         subtracted: WalletBalances = WalletBalances(self)
         for category, balances in other.items():
-            subtracted[category] -= balances
+            subtracted[category] -= balances  # type: ignore
         for category, balances in subtracted.items():
             if not balances:
                 del subtracted[category]
         return subtracted
     
-    def __getitem__(self, key: CategoryLabel) -> TokenBalances:
+    def __getitem__(self, key: CategoryLabel) -> Union[TokenBalances, RemoteTokenBalances]:
         self.__validatekey(key)
         return super().__getitem__(key)
 
-    def __setitem__(self, key: CategoryLabel, value: TokenBalances) -> None:
+    def __setitem__(self, key: CategoryLabel, value: Union[TokenBalances, RemoteTokenBalances]) -> None:
         self.__validateitem(key, value)
         return super().__setitem__(key, value)
     
