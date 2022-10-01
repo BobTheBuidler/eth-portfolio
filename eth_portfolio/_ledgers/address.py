@@ -106,6 +106,7 @@ class AddressLedgerBase(Generic[_LedgerEntryList]):
         end_block = await get_buffered_chain_height()
         return self[start_block, end_block]
     
+    @set_end_block_if_none
     async def _load_new_objects(self, start_block: Block, end_block: Block) -> None:
         async with self._semaphore:
             await self.__load_new_objects(start_block, end_block)
