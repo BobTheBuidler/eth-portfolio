@@ -1,3 +1,4 @@
+import abc
 import asyncio
 import logging
 from typing import (TYPE_CHECKING, Generic, List, Optional, Tuple, Type,
@@ -41,7 +42,7 @@ _LedgerEntryList = TypeVar("_LedgerEntryList", "TransactionsList", "InternalTran
 PandableLedgerEntryList = Union["TransactionsList", "InternalTransfersList", "TokenTransfersList"]
 
 
-class AddressLedgerBase(Generic[_LedgerEntryList]):
+class AddressLedgerBase(Generic[_LedgerEntryList], metaclass=abc.ABCMeta):
     list_type: Type[_LedgerEntryList]
 
     def __init__(self, portfolio_address: "PortfolioAddress") -> None:
@@ -111,10 +112,10 @@ class AddressLedgerBase(Generic[_LedgerEntryList]):
         async with self._semaphore:
             await self.__load_new_objects(start_block, end_block)
     
-    @set_end_block_if_none
+    @abc.abstractmethod
     async def __load_new_objects(self, start_block: Block, end_block: Block) -> None:
-        raise NotImplementedError()
-    
+        ...
+
     def _check_blocks_against_cache(self, start_block: Block, end_block: Block) -> Tuple[Block, Block]:
         if start_block > end_block:
             raise ValueError(f"Start block {start_block} is after end block {end_block}")
