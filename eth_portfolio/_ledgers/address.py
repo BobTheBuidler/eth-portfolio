@@ -413,7 +413,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
             for topics in self._topics
         ]
 
-        filter_entries = await asyncio.gather(*[self._decode_token_transfers(transfer_filter.get_all_entries()) for entries in filter_entries])
+        filter_entries = await asyncio.gather(*[self._decode_token_transfers(transfer_filter.get_all_entries()) for transfer_filter in transfer_filters])
         new_token_transfers = [tx for txs in filter_entries for tx in txs]
 
         scales_coros = asyncio.gather(*[ERC20(token_transfer.address).scale for token_transfer in new_token_transfers])
