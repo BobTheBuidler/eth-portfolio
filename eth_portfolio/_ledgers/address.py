@@ -261,13 +261,13 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
         return None
     
     @alru_cache(maxsize=None)
+    @eth_retry.auto_retry
     async def _get_nonce_at_block(self, block: Block) -> int:
         while True:
             try:
                 return await dank_w3.eth.get_transaction_count(self.address, block_identifier = block) - 1
             except ValueError as e:
-                if "parse error" not in str(e):
-                    raise ValueError(f"For {self.address} at {block}: {e}")
+                raise ValueError(f"For {self.address} at {block}: {e}")
             except ClientError:
                 pass
 
