@@ -413,7 +413,8 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
             for topics in self._topics
         ]
 
-        new_token_transfers = [tx for transfer_filter in transfer_filters for tx in self._decode_token_transfers(transfer_filter.get_all_entries())]
+        filter_entries = await asyncio.gather(*[self._decode_token_transfers(transfer_filter.get_all_entries()) for entries in filter_entries])
+        new_token_transfers = [tx for txs in filter_entries for tx in txs]
 
         scales_coros = asyncio.gather(*[ERC20(token_transfer.address).scale for token_transfer in new_token_transfers])
         symbols_coros = asyncio.gather(*[_get_symbol(token_transfer.address) for token_transfer in new_token_transfers])
@@ -454,7 +455,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
 
 
     async def _decode_token_transfers(self, logs: List) -> List[_EventItem]:
-        token_transfers = asyncio.gather(*[_decode_token_transfer(log) for log in logs if log.address not in shitcoins])
+        token_transfers = await asyncio.gather(*[_decode_token_transfer(log) for log in logs if log.address not in shitcoins])
         return [transfer for transfer in token_transfers if transfer is not None]
    
     async def _decode_token_transfer(self, log) -> _EventItem:
