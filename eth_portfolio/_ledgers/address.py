@@ -4,6 +4,7 @@ import logging
 from typing import (TYPE_CHECKING, Generic, List, Optional, Tuple, Type,
                     TypeVar, Union)
 
+import eth_retry
 from aiohttp import ClientError
 from async_lru import alru_cache
 from brownie import chain
@@ -18,7 +19,7 @@ from eth_portfolio.utils import (Decimal, PandableList, _get_price,
                                  _unpack_indicies, get_buffered_chain_height)
 from eth_utils import encode_hex
 from pandas import DataFrame  # type: ignore
-from web3.types import BlockData, TxData
+from web3.types import BlockData, TxData, TxReceipt
 from y import Contract, get_price_async
 from y.classes.common import ERC20
 from y.constants import EEE_ADDRESS
@@ -38,9 +39,13 @@ class BlockRangeIsCached(Exception):
 class BlockRangeOutOfBounds(Exception):
     pass
 
+
+@eth_retry.auto_retry
+async def _get_transaction_receipt(txhash: str) -> TxReceipt:
+    return await dank_w3.eth.get_transaction_receipt(txhash)
+
 _LedgerEntryList = TypeVar("_LedgerEntryList", "TransactionsList", "InternalTransfersList", "TokenTransfersList")
 PandableLedgerEntryList = Union["TransactionsList", "InternalTransfersList", "TokenTransfersList"]
-
 
 class AddressLedgerBase(Generic[_LedgerEntryList], metaclass=abc.ABCMeta):
     list_type: Type[_LedgerEntryList]
@@ -310,7 +315,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
 
         # Remove reverts
         new_internal_transfers = [transfer for transfer in to_traces + from_traces if 'error' not in transfer]
-        receipts = await asyncio.gather(*[dank_w3.eth.get_transaction_receipt(tx['transactionHash']) for tx in new_internal_transfers])
+        receipts = await asyncio.gather(*[_get_transaction_receipt(tx['transactionHash']) for tx in new_internal_transfers])
         new_internal_transfers = [transfer for transfer, receipt in zip(new_internal_transfers, receipts) if receipt.status != 0]
         
         for transfer in new_internal_transfers:
@@ -450,7 +455,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
 
         scales_coros = asyncio.gather(*[ERC20(token_transfer.address).scale for token_transfer in new_token_transfers])
         symbols_coros = asyncio.gather(*[_get_symbol(token_transfer.address) for token_transfer in new_token_transfers])
-        receipts_coros = asyncio.gather(*[dank_w3.eth.get_transaction_receipt(token_transfer.transaction_hash) for token_transfer in new_token_transfers])
+        receipts_coros = asyncio.gather(*[_get_transaction_receipt(token_transfer.transaction_hash) for token_transfer in new_token_transfers])
         if self.load_prices:
             prices_coros = asyncio.gather(*[_get_price(token_transfer.address, token_transfer.block_number) for token_transfer in new_token_transfers])
             scales, symbols, receipts, prices = await asyncio.gather(scales_coros, symbols_coros, receipts_coros, prices_coros)
