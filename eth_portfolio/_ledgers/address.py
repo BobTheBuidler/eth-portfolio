@@ -369,6 +369,38 @@ async def _get_symbol(token) -> Optional[str]:
     except NonStandardERC20:
         return None
 
+async def _decode_token_transfers(logs: List) -> List[_EventItem]:
+    token_transfers = await asyncio.gather(*[_decode_token_transfer(log) for log in logs if log.address not in shitcoins])
+    return [transfer for transfer in token_transfers if transfer is not None]
+
+async def _decode_token_transfer(log) -> _EventItem:
+    try:
+        await Contract.coroutine(log.address)
+    except ContractNotVerified:
+        logger.warning(f"Token {log.address} is not verified and is most likely a shitcoin. Skipping. Please submit a PR at github.com/BobTheBuidler/eth-portfolio if this is not a shitcoin and should be included.")
+        return
+    try:
+        try:
+            event = decode_logs(
+                [log]
+            )  # NOTE: We have to decode logs here because NFTs prevent us from batch decoding logs
+        except Exception as e:
+            raise e
+        try:
+            events = event['Transfer']
+        except Exception as e:
+            logger.error(event)
+            raise e
+        try:
+            return events[0]
+        except Exception as e:
+            logger.error(event)
+            raise e
+    except Exception as e:
+        logger.error('unable to decode logs, dev figure out why')
+        logger.error(e)
+        logger.error(log)
+
 class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
     list_type = TokenTransfersList
 
@@ -413,7 +445,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
             for topics in self._topics
         ]
 
-        filter_entries = await asyncio.gather(*[self._decode_token_transfers(transfer_filter.get_all_entries()) for transfer_filter in transfer_filters])
+        filter_entries = await asyncio.gather(*[_decode_token_transfers(transfer_filter.get_all_entries()) for transfer_filter in transfer_filters])
         new_token_transfers = [tx for txs in filter_entries for tx in txs]
 
         scales_coros = asyncio.gather(*[ERC20(token_transfer.address).scale for token_transfer in new_token_transfers])
@@ -452,36 +484,3 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
             self.cached_from = start_block
         if self.cached_thru is None or end_block > self.cached_thru:
             self.cached_thru = end_block
-
-
-    async def _decode_token_transfers(self, logs: List) -> List[_EventItem]:
-        token_transfers = await asyncio.gather(*[_decode_token_transfer(log) for log in logs if log.address not in shitcoins])
-        return [transfer for transfer in token_transfers if transfer is not None]
-   
-    async def _decode_token_transfer(self, log) -> _EventItem:
-        try:
-            await Contract.coroutine(log.address)
-        except ContractNotVerified:
-            logger.warning(f"Token {log.address} is not verified and is most likely a shitcoin. Skipping. Please submit a PR at github.com/BobTheBuidler/eth-portfolio if this is not a shitcoin and should be included.")
-            return
-        try:
-            try:
-                event = decode_logs(
-                    [log]
-                )  # NOTE: We have to decode logs here because NFTs prevent us from batch decoding logs
-            except Exception as e:
-                raise e
-            try:
-                events = event['Transfer']
-            except Exception as e:
-                logger.error(event)
-                raise e
-            try:
-                return events[0]
-            except Exception as e:
-                logger.error(event)
-                raise e
-        except Exception as e:
-            logger.error('unable to decode logs, dev figure out why')
-            logger.error(e)
-            logger.error(log)
