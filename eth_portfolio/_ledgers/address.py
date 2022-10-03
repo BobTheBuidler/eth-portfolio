@@ -453,35 +453,34 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
             self.cached_thru = end_block
 
 
-    def _decode_token_transfers(self, logs: List) -> List[_EventItem]:
-        token_transfers = []
-        for log in logs:
-            if log.address in shitcoins:
-                continue
+    async def _decode_token_transfers(self, logs: List) -> List[_EventItem]:
+        token_transfers = asyncio.gather(*[_decode_token_transfer(log) for log in logs if log.address not in shitcoins])
+        return [transfer for transfer in token_transfers if transfer is not None]
+   
+    async def _decode_token_transfer(self, log) -> _EventItem:
+        try:
+            await Contract.coroutine(log.address)
+        except ContractNotVerified:
+            logger.warning(f"Token {log.address} is not verified and is most likely a shitcoin. Skipping. Please submit a PR at github.com/BobTheBuidler/eth-portfolio if this is not a shitcoin and should be included.")
+            return
+        try:
             try:
-                Contract(log.address)
-            except ContractNotVerified:
-                logger.warning(f"Token {log.address} is not verified and is most likely a shitcoin. Skipping. Please submit a PR at github.com/BobTheBuidler/eth-portfolio if this is not a shitcoin and should be included.")
-                continue
-            try:
-                try:
-                    event = decode_logs(
-                        [log]
-                    )  # NOTE: We have to decode logs here because NFTs prevent us from batch decoding logs
-                except Exception as e:
-                    raise e
-                try:
-                    events = event['Transfer']
-                except Exception as e:
-                    logger.error(event)
-                    raise e
-                try:
-                    token_transfers.append(events[0])
-                except Exception as e:
-                    logger.error(event)
-                    raise e
+                event = decode_logs(
+                    [log]
+                )  # NOTE: We have to decode logs here because NFTs prevent us from batch decoding logs
             except Exception as e:
-                logger.error('unable to decode logs, dev figure out why')
-                logger.error(e)
-                logger.error(log)
-        return token_transfers
+                raise e
+            try:
+                events = event['Transfer']
+            except Exception as e:
+                logger.error(event)
+                raise e
+            try:
+                return events[0]
+            except Exception as e:
+                logger.error(event)
+                raise e
+        except Exception as e:
+            logger.error('unable to decode logs, dev figure out why')
+            logger.error(e)
+            logger.error(log)
