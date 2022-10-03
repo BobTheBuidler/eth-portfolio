@@ -266,7 +266,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
             try:
                 return await dank_w3.eth.get_transaction_count(self.address, block_identifier = block) - 1
             except ValueError as e:
-                raise ValueError(f"For {self.address} at {block}: {e}")
+                if "parse error" not in str(e):
+                    raise ValueError(f"For {self.address} at {block}: {e}")
             except ClientError:
                 pass
 
