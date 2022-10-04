@@ -248,6 +248,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                 lo = int(lo / 2)
                 logger.debug(f"Nonce at {hi} is {_nonce}, checking lower block {lo}")
     
+    @eth_retry.auto_retry
     async def _get_transaction_by_nonce_and_block(self, nonce: int, block: Block) -> Optional[TxData]:
         block = await _get_block(block)
         for tx in block.transactions:
