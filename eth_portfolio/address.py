@@ -4,6 +4,7 @@ import decimal
 import logging
 from typing import TYPE_CHECKING, Dict, Optional
 
+import eth_retry
 from y import convert, get_price_async
 from y.constants import EEE_ADDRESS, weth
 from y.datatypes import Address, Block
@@ -26,6 +27,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
+@eth_retry.auto_retry
 async def _get_eth_balance(address: Address, block: Optional[Block]) -> decimal.Decimal:
     return Decimal(await dank_w3.eth.get_balance(address, block_identifier=block)) / Decimal(1e18)
 
