@@ -158,6 +158,7 @@ class AddressLedgerBase(Generic[_LedgerEntryList], metaclass=abc.ABCMeta):
             start_block: {start_block} end_block: {end_block} cached_from: {self.cached_from} cached_thru: {self.cached_thru}""")
     
 
+@eth_retry.auto_retry
 async def _get_block(block: Block) -> BlockData:
     while True:
         try:
