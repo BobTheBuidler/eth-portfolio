@@ -237,6 +237,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
             self.cached_thru = end_block
 
     @cache_to_disk
+    @eth_retry.auto_retry
     async def _get_transaction_by_nonce(self, nonce: int) -> Optional[dict]:
         lo = 0
         hi = await dank_w3.eth.block_number
