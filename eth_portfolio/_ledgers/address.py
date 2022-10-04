@@ -10,6 +10,7 @@ from async_lru import alru_cache
 from brownie import chain
 from brownie.network.event import _EventItem
 from eth_abi import encode_single
+from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
 from eth_portfolio._shitcoins import SHITCOINS
 from eth_portfolio.constants import TRANSFER_SIGS
@@ -19,6 +20,7 @@ from eth_portfolio.utils import (Decimal, PandableList, _get_price,
                                  _unpack_indicies, get_buffered_chain_height)
 from eth_utils import encode_hex
 from pandas import DataFrame  # type: ignore
+from tqdm.asyncio import tqdm_asyncio
 from web3.types import BlockData, TxData, TxReceipt
 from y import Contract, get_price_async
 from y.classes.common import ERC20
@@ -40,6 +42,7 @@ class BlockRangeOutOfBounds(Exception):
     pass
 
 
+@cache_to_disk
 @eth_retry.auto_retry
 async def _get_transaction_receipt(txhash: str) -> TxReceipt:
     return await dank_w3.eth.get_transaction_receipt(txhash)
@@ -63,6 +66,9 @@ class AddressLedgerBase(Generic[_LedgerEntryList], metaclass=abc.ABCMeta):
         self.cached_from: int = None # type: ignore
         self.cached_thru: int = None # type: ignore
         self._semaphore = asyncio.Semaphore(1)
+    
+    def __hash__(self) -> int:
+        return hash(self.address)
     
     @property
     def address(self) -> Address:
@@ -196,7 +202,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
             return
         end_block_nonce = await self._get_nonce_at_block(end_block)
         nonces = range(self.cached_thru_nonce + 1, end_block_nonce + 1)
-        new_transactions = await asyncio.gather(*[self._get_transaction_by_nonce(nonce, end_block) for nonce in nonces])
+        new_transactions = await tqdm_asyncio.gather(*[self._get_transaction_by_nonce(nonce) for nonce in nonces])
         new_transactions = [tx for tx in new_transactions if tx]
         for i, transaction in enumerate(new_transactions):
             transaction = dict(transaction)
@@ -230,9 +236,10 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
         elif end_block > self.cached_thru:
             self.cached_thru = end_block
 
-    async def _get_transaction_by_nonce(self, nonce: int, height: Block) -> Optional[dict]:
+    @cache_to_disk
+    async def _get_transaction_by_nonce(self, nonce: int) -> Optional[dict]:
         lo = 0
-        hi = height
+        hi = await dank_w3.eth.block_number
         while True:
             _nonce = await self._get_nonce_at_block(lo)
             if _nonce < nonce:
@@ -249,6 +256,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                 lo = int(lo / 2)
                 logger.debug(f"Nonce at {hi} is {_nonce}, checking lower block {lo}")
     
+    @cache_to_disk
     @eth_retry.auto_retry
     async def _get_transaction_by_nonce_and_block(self, nonce: int, block: Block) -> Optional[TxData]:
         block = await _get_block(block)
