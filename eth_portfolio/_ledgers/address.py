@@ -8,6 +8,7 @@ import eth_retry
 from aiohttp import ClientError
 from async_lru import alru_cache
 from brownie import chain
+from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem
 from eth_abi import encode_single
 from eth_portfolio._cache import cache_to_disk
@@ -371,7 +372,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
             self.cached_thru = end_block
 
 
-shitcoins = SHITCOINS.get(chain.id, [])
+shitcoins = SHITCOINS.get(chain.id, set())
 
 class TokenTransfersList(PandableList[TokenTransferData]):
     def __init__(self):
@@ -393,6 +394,8 @@ async def _decode_token_transfers(logs: List) -> List[_EventItem]:
 async def _decode_token_transfer(log) -> _EventItem:
     try:
         await Contract.coroutine(log.address)
+    except ContractNotFound:
+        logger.warning(f"Token {log.address} cannot be found. Skipping. If the contract has been self-destructed, eth-portfolio will not support it.")
     except ContractNotVerified:
         logger.warning(f"Token {log.address} is not verified and is most likely a shitcoin. Skipping. Please submit a PR at github.com/BobTheBuidler/eth-portfolio if this is not a shitcoin and should be included.")
         return

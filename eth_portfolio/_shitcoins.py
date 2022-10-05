@@ -83,4 +83,4 @@ shitcoins = {
     ],
 }
 
-SHITCOINS = {chain: [convert.to_address(token) for token in tokens] for chain, tokens in shitcoins.items()}
+SHITCOINS = {chain: {convert.to_address(token) for token in tokens} for chain, tokens in shitcoins.items()}
