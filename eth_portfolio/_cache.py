@@ -13,8 +13,7 @@ cache_base_path = f'./cache/{chain.id}/'
 
 def cache_to_disk(fn: Callable[..., T]) -> Callable[..., T]:
     module = fn.__module__.replace('.','/')
-    name = fn.__name__
-    cache_path_for_fn = cache_base_path + module + '/' + name
+    cache_path_for_fn = cache_base_path + module + '/' + fn.__name__
 
     # Ensure the cache dir exists
     os.makedirs(cache_path_for_fn, exist_ok=True)
