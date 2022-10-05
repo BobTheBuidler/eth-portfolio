@@ -84,8 +84,6 @@ async def _get_price(token: Address, block: int = None) -> float:
         return await get_price_async(token, block)
     except PriceError:
         desc_str = await _describe_err(token, block)
-        if desc_str.startswith('yv'):
-            raise
         logger.critical(f'PriceError while fetching price for {desc_str}')
     except NonStandardERC20:
         logger.critical(f'NonStandardERC20 while fetching price for {token}')
