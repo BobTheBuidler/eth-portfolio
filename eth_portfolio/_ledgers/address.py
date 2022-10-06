@@ -472,22 +472,22 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
     async def _load_transfer(self, transfer_log) -> Optional[Dict[str, Any]]:
         if transfer_log.address in shitcoins:
             return None
-        transfer_event = await _decode_token_transfer(transfer_log)
-        if transfer_event is None:
+        decoded = await _decode_token_transfer(transfer_log)
+        if decoded is None:
             return None
-        token = ERC20(transfer_event.address)
+        token = ERC20(decoded.address)
         coros = [
             token.scale,
             _get_symbol(token),
-            _get_transaction_receipt(transfer_event.transaction_hash)
+            _get_transaction_receipt(decoded.transaction_hash)
         ]
         if self.load_prices:
-            coros.append(_get_price(token.address, transfer_event.block_number))
+            coros.append(_get_price(token.address, decoded.block_number))
             scale, symbol, receipt, price = await asyncio.gather(*coros)
         else:
             scale, symbol, receipt = await asyncio.gather(*coros)
         
-        sender, receiver, value = token_transfer.values()
+        sender, receiver, value = decoded.values()
         value = Decimal(value) / Decimal(scale)
         token_transfer = {
             'chainId': chain.id,
