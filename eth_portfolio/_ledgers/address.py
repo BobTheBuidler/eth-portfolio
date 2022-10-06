@@ -465,7 +465,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
         if self.cached_thru is None or end_block > self.cached_thru:
             self.cached_thru = end_block
     
-    async def _load_transfer(self, transfer_log) -> Dict[str, Any]:
+    async def _load_transfer(self, transfer_log) -> Optional[Dict[str, Any]]:
         if transfer_log.address in shitcoins:
             return None
         transfer_event = await _decode_token_transfer(transfer_log)
