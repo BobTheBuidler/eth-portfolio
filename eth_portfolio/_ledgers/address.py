@@ -380,10 +380,6 @@ async def _get_symbol(token: ERC20) -> Optional[str]:
     except NonStandardERC20:
         return None
 
-async def _decode_token_transfers(logs: List) -> List[_EventItem]:
-    token_transfers = await asyncio.gather(*[_decode_token_transfer(log) for log in logs])
-    return [transfer for transfer in token_transfers if transfer is not None]
-
 async def _decode_token_transfer(log) -> _EventItem:
     try:
         await Contract.coroutine(log.address)
