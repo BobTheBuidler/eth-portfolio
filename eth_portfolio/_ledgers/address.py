@@ -473,6 +473,8 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
         if transfer_log.address in shitcoins:
             return None
         transfer_event = await _decode_token_transfer(transfer_log)
+        if transfer_event is None:
+            return None
         token = ERC20(transfer_event.address)
         coros = [
             token.scale,
