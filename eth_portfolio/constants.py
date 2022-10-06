@@ -1,5 +1,7 @@
 
 
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
 import os
 
 from brownie import chain
@@ -60,3 +62,6 @@ INTL_STABLECOINS = {
         '0x269895a3dF4D73b077Fc823dD6dA1B95f72Aaf9B',  # sKRW
     },
 }.get(chain.id, set())
+
+node_semaphore = asyncio.Semaphore(20)
+sync_threads = ThreadPoolExecutor(8)

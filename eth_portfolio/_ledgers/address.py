@@ -1,11 +1,10 @@
 import abc
 import asyncio
 import logging
-from typing import (TYPE_CHECKING, Generic, List, Optional, Tuple, Type,
-                    TypeVar, Union)
+from typing import (TYPE_CHECKING, Any, Dict, Generic, List, Optional, Tuple,
+                    Type, TypeVar, Union)
 
 import eth_retry
-from aiohttp import ClientError
 from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
@@ -14,7 +13,7 @@ from eth_abi import encode_single
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
 from eth_portfolio._shitcoins import SHITCOINS
-from eth_portfolio.constants import TRANSFER_SIGS
+from eth_portfolio.constants import TRANSFER_SIGS, node_semaphore, sync_threads
 from eth_portfolio.typing import (InternalTransferData, TokenTransferData,
                                   TransactionData)
 from eth_portfolio.utils import (Decimal, PandableList, _get_price,
@@ -46,7 +45,8 @@ class BlockRangeOutOfBounds(Exception):
 @cache_to_disk
 @eth_retry.auto_retry
 async def _get_transaction_receipt(txhash: str) -> TxReceipt:
-    return await dank_w3.eth.get_transaction_receipt(txhash)
+    async with node_semaphore:
+        return await dank_w3.eth.get_transaction_receipt(txhash)
 
 _LedgerEntryList = TypeVar("_LedgerEntryList", "TransactionsList", "InternalTransfersList", "TokenTransfersList")
 PandableLedgerEntryList = Union["TransactionsList", "InternalTransfersList", "TokenTransfersList"]
@@ -167,11 +167,8 @@ class AddressLedgerBase(Generic[_LedgerEntryList], metaclass=abc.ABCMeta):
 
 @eth_retry.auto_retry
 async def _get_block(block: Block) -> BlockData:
-    while True:
-        try:
-            return await dank_w3.eth.get_block(block, full_transactions=True)
-        except ClientError:
-            pass
+    async with node_semaphore:
+        return await dank_w3.eth.get_block(block, full_transactions=True)
 
 class TransactionsList(PandableList[TransactionData]):
     def __init__(self):
@@ -203,7 +200,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
             return
         end_block_nonce = await self._get_nonce_at_block(end_block)
         nonces = range(self.cached_thru_nonce + 1, end_block_nonce + 1)
-        new_transactions = await tqdm_asyncio.gather(*[self._get_transaction_by_nonce(nonce) for nonce in nonces])
+        new_transactions = await tqdm_asyncio.gather(*[self._get_transaction_by_nonce(nonce) for nonce in nonces], desc='Transactions')
         new_transactions = [tx for tx in new_transactions if tx]
         for i, transaction in enumerate(new_transactions):
             transaction = dict(transaction)
@@ -279,14 +276,10 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
     @alru_cache(maxsize=None)
     @eth_retry.auto_retry
     async def _get_nonce_at_block(self, block: Block) -> int:
-        while True:
-            try:
-                return await dank_w3.eth.get_transaction_count(self.address, block_identifier = block) - 1
-            except ValueError as e:
-                raise ValueError(f"For {self.address} at {block}: {e}")
-            except ClientError:
-                pass
-
+        try:
+            return await dank_w3.eth.get_transaction_count(self.address, block_identifier = block) - 1
+        except ValueError as e:
+            raise ValueError(f"For {self.address} at {block}: {e}")
 
 class InternalTransfersList(PandableList[InternalTransferData]):
     def __init__(self):
@@ -381,14 +374,14 @@ class TokenTransfersList(PandableList[TokenTransferData]):
     def _df(self) -> DataFrame:
         return DataFrame(self)
 
-async def _get_symbol(token) -> Optional[str]:
+async def _get_symbol(token: ERC20) -> Optional[str]:
     try:
-        return await ERC20(token).symbol_async
+        return await token.symbol_async
     except NonStandardERC20:
         return None
 
 async def _decode_token_transfers(logs: List) -> List[_EventItem]:
-    token_transfers = await asyncio.gather(*[_decode_token_transfer(log) for log in logs if log.address not in shitcoins])
+    token_transfers = await asyncio.gather(*[_decode_token_transfer(log) for log in logs])
     return [transfer for transfer in token_transfers if transfer is not None]
 
 async def _decode_token_transfer(log) -> _EventItem:
@@ -465,38 +458,9 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
             for topics in self._topics
         ]
 
-        filter_entries = await asyncio.gather(*[_decode_token_transfers(transfer_filter.get_all_entries()) for transfer_filter in transfer_filters])
-        new_token_transfers = [tx for txs in filter_entries for tx in txs]
-
-        scales_coros = asyncio.gather(*[ERC20(token_transfer.address).scale for token_transfer in new_token_transfers])
-        symbols_coros = asyncio.gather(*[_get_symbol(token_transfer.address) for token_transfer in new_token_transfers])
-        receipts_coros = asyncio.gather(*[_get_transaction_receipt(token_transfer.transaction_hash) for token_transfer in new_token_transfers])
-        if self.load_prices:
-            prices_coros = asyncio.gather(*[_get_price(token_transfer.address, token_transfer.block_number) for token_transfer in new_token_transfers])
-            scales, symbols, receipts, prices = await asyncio.gather(scales_coros, symbols_coros, receipts_coros, prices_coros)
-        else:
-            scales, symbols, receipts = await asyncio.gather(scales_coros, symbols_coros, receipts_coros)
-
-        for i, token_transfer in enumerate(new_token_transfers):
-            sender, receiver, value = token_transfer.values()
-            value = Decimal(value) / Decimal(scales[i])
-            token_transfer = {
-                'chainId': chain.id,
-                'blockNumber': token_transfer.block_number,
-                'transactionIndex': receipts[i].transactionIndex,
-                'hash': token_transfer.transaction_hash.hex(),
-                'log_index': token_transfer.log_index,
-                'token': symbols[i],
-                'token_address': token_transfer.address,
-                'from': sender,
-                'to': receiver,
-                'value': value,
-            }
-            if self.load_prices:
-                price = round(Decimal(prices[i]), 18) if prices[i] else None
-                token_transfer['price'] = price
-                token_transfer['value_usd'] = round(value * price, 18) if price else None
-            new_token_transfers[i] = token_transfer
+        filter_entries = await asyncio.gather(*[asyncio.get_event_loop().run_in_executor(sync_threads, transfer_filter.get_all_entries) for transfer_filter in transfer_filters])
+        new_token_transfers = await tqdm_asyncio.gather(*[self._load_transfer(log) for logs in filter_entries for log in logs], desc="Token Transfers")
+        new_token_transfers = [transfer for transfer in new_token_transfers if transfer is not None]
         
         self.objects.extend(new_token_transfers)
         self.objects.sort(key=lambda x: (x["blockNumber"], x['transactionIndex'], x['log_index']))
@@ -504,3 +468,40 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
             self.cached_from = start_block
         if self.cached_thru is None or end_block > self.cached_thru:
             self.cached_thru = end_block
+    
+    async def _load_transfer(self, transfer_log) -> Dict[str, Any]:
+        if transfer_log.address in shitcoins:
+            return None
+        transfer_event = await _decode_token_transfer(transfer_log)
+        token = ERC20(transfer_event.address)
+        coros = [
+            token.scale,
+            _get_symbol(token),
+            _get_transaction_receipt(transfer_event.transaction_hash)
+        ]
+        if self.load_prices:
+            coros.append(_get_price(token.address, transfer_event.block_number))
+            scale, symbol, receipt, price = await asyncio.gather(*coros)
+        else:
+            scale, symbol, receipt = await asyncio.gather(*coros)
+        
+        sender, receiver, value = token_transfer.values()
+        value = Decimal(value) / Decimal(scale)
+        token_transfer = {
+            'chainId': chain.id,
+            'blockNumber': token_transfer.block_number,
+            'transactionIndex': receipt.transactionIndex,
+            'hash': token_transfer.transaction_hash.hex(),
+            'log_index': token_transfer.log_index,
+            'token': symbol,
+            'token_address': token_transfer.address,
+            'from': sender,
+            'to': receiver,
+            'value': value,
+        }
+        if self.load_prices:
+            price = round(Decimal(price), 18) if price else None
+            token_transfer['price'] = price
+            token_transfer['value_usd'] = round(value * price, 18) if price else None
+        return token_transfer
+
