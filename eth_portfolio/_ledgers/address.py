@@ -199,33 +199,35 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
         if self.cached_thru and end_block < self.cached_thru:
             return
         end_block_nonce = await self._get_nonce_at_block(end_block)
-        nonces = range(self.cached_thru_nonce + 1, end_block_nonce + 1)
-        new_transactions = await tqdm_asyncio.gather(*[self._get_transaction_by_nonce(nonce) for nonce in nonces], desc='Transactions')
-        new_transactions = [tx for tx in new_transactions if tx]
-        for i, transaction in enumerate(new_transactions):
-            transaction = dict(transaction)
-            transaction['chainId'] = int(transaction['chainId'], 16)
-            transaction['blockHash'] = transaction['blockHash'].hex()
-            transaction['hash'] = transaction['hash'].hex()
-            transaction['value'] = Decimal(transaction['value']) / Decimal(1e18)
-            transaction['type'] = int(transaction['type'], 16)
-            transaction['r'] = transaction['r'].hex()
-            transaction['s'] = transaction['s'].hex()
-            new_transactions[i] = transaction
+        nonces = list(range(self.cached_thru_nonce + 1, end_block_nonce + 1))
 
-        if self.load_prices:
-            prices = await asyncio.gather(*[get_price_async(EEE_ADDRESS, block = transaction['blockNumber']) for transaction in new_transactions])
-            for transaction, price in zip(new_transactions, prices):
-                price = round(Decimal(price), 18)
-                transaction['price'] = price
-                transaction['value_usd'] = transaction['value'] * price
+        if nonces:
+            new_transactions = await tqdm_asyncio.gather(*[self._get_transaction_by_nonce(nonce) for nonce in nonces], desc='Transactions')
+            new_transactions = [tx for tx in new_transactions if tx]
+            for i, transaction in enumerate(new_transactions):
+                transaction = dict(transaction)
+                transaction['chainId'] = int(transaction['chainId'], 16)
+                transaction['blockHash'] = transaction['blockHash'].hex()
+                transaction['hash'] = transaction['hash'].hex()
+                transaction['value'] = Decimal(transaction['value']) / Decimal(1e18)
+                transaction['type'] = int(transaction['type'], 16)
+                transaction['r'] = transaction['r'].hex()
+                transaction['s'] = transaction['s'].hex()
                 new_transactions[i] = transaction
-            
-        for transaction in new_transactions:
-            if transaction['price'] is None:
-                raise transaction
-            self.objects.append(transaction)
-            self.cached_thru_nonce = transaction['nonce']
+
+            if self.load_prices:
+                prices = await asyncio.gather(*[get_price_async(EEE_ADDRESS, block = transaction['blockNumber']) for transaction in new_transactions])
+                for transaction, price in zip(new_transactions, prices):
+                    price = round(Decimal(price), 18)
+                    transaction['price'] = price
+                    transaction['value_usd'] = transaction['value'] * price
+                    new_transactions[i] = transaction
+                
+            for transaction in new_transactions:
+                if transaction['price'] is None:
+                    raise transaction
+                self.objects.append(transaction)
+                self.cached_thru_nonce = transaction['nonce']
         
         if self.cached_from is None:
             self.cached_from = 0
@@ -321,11 +323,13 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
 
         # Remove reverts
         new_internal_transfers = [transfer for transfer in to_traces + from_traces if 'error' not in transfer]
-        new_internal_transfers = await tqdm_asyncio.gather(*[self._load_internal_transfer(tx) for tx in new_internal_transfers], desc="Internal Transfers")
-        new_internal_transfers = [transfer for transfer in new_internal_transfers if transfer is not None]
 
-        self.objects.extend(new_internal_transfers)
-        self.objects.sort(key=lambda x: (x['blockNumber'], x['transactionPosition'], x['traceAddress'], x['subtraces']))
+        if new_internal_transfers:
+            new_internal_transfers = await tqdm_asyncio.gather(*[self._load_internal_transfer(tx) for tx in new_internal_transfers], desc="Internal Transfers")
+            new_internal_transfers = [transfer for transfer in new_internal_transfers if transfer is not None]
+
+            self.objects.extend(new_internal_transfers)
+            self.objects.sort(key=lambda x: (x['blockNumber'], x['transactionPosition'], x['traceAddress'], x['subtraces']))
 
         if self.cached_from is None or start_block < self.cached_from:
             self.cached_from = start_block
@@ -459,11 +463,14 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
         ]
 
         filter_entries = await asyncio.gather(*[asyncio.get_event_loop().run_in_executor(sync_threads, transfer_filter.get_all_entries) for transfer_filter in transfer_filters])
-        new_token_transfers = await tqdm_asyncio.gather(*[self._load_transfer(log) for logs in filter_entries for log in logs], desc="Token Transfers")
-        new_token_transfers = [transfer for transfer in new_token_transfers if transfer is not None]
-        
-        self.objects.extend(new_token_transfers)
-        self.objects.sort(key=lambda x: (x["blockNumber"], x['transactionIndex'], x['log_index']))
+
+        if any(filter_entries):
+            new_token_transfers = await tqdm_asyncio.gather(*[self._load_transfer(log) for logs in filter_entries for log in logs], desc="Token Transfers")
+            new_token_transfers = [transfer for transfer in new_token_transfers if transfer is not None]
+            
+            self.objects.extend(new_token_transfers)
+            self.objects.sort(key=lambda x: (x["blockNumber"], x['transactionIndex'], x['log_index']))
+            
         if self.cached_from is None or start_block < self.cached_from:
             self.cached_from = start_block
         if self.cached_thru is None or end_block > self.cached_thru:
