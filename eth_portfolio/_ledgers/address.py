@@ -491,12 +491,12 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
         value = Decimal(value) / Decimal(scale)
         token_transfer = {
             'chainId': chain.id,
-            'blockNumber': token_transfer.block_number,
+            'blockNumber': decoded.block_number,
             'transactionIndex': receipt.transactionIndex,
-            'hash': token_transfer.transaction_hash.hex(),
-            'log_index': token_transfer.log_index,
+            'hash': decoded.transaction_hash.hex(),
+            'log_index': decoded.log_index,
             'token': symbol,
-            'token_address': token_transfer.address,
+            'token_address': decoded.address,
             'from': sender,
             'to': receiver,
             'value': value,
