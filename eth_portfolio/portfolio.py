@@ -177,6 +177,7 @@ class PortfolioLedger:
                 if full:
                     df = df[[
                         'chainId',
+                        'blockNumber'
                         'blockHash',
                         'transactionIndex',
                         'hash',
@@ -211,6 +212,7 @@ class PortfolioLedger:
                 else:
                     df = df[[
                         'chainId',
+                        'blockNumber',
                         'hash',
                         'from',
                         'to',
@@ -237,7 +239,11 @@ class PortfolioLedger:
             except KeyError as e:
                 for column in _get_missing_cols_from_KeyError(e):
                     df[column] = None
-        return df.sort_index()
+        
+        if full:
+            return df.sort_values(["blockNumber", "transactionIndex", "log_index"]).reset_index()
+        else:
+            return df.sort_values(['blockNumber','hash']).reset_index()
 
 
 # Use this var for a convenient way to set up your portfolio using env vars.

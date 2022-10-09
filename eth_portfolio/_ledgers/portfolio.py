@@ -70,7 +70,7 @@ class PortfolioLedgerBase(Generic[_LedgerEntryList]):
     
     def _cleanup_df(self, df: DataFrame) -> DataFrame:
         df = self._deduplicate_df(df)
-        return df.set_index('blockNumber')
+        return df.sort_values(['blockNumber']).reset_index()
 
 
 class PortfolioTransactionsLedger(PortfolioLedgerBase[TransactionsList]):
