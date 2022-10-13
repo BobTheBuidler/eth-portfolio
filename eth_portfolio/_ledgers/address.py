@@ -166,9 +166,10 @@ class AddressLedgerBase(Generic[_LedgerEntryList], metaclass=abc.ABCMeta):
     
 
 @eth_retry.auto_retry
-async def _get_block(block: Block) -> BlockData:
+async def _get_block_transactions(block: Block) -> List[TxData]:
     async with node_semaphore:
-        return await dank_w3.eth.get_block(block, full_transactions=True)
+        block = await dank_w3.eth.get_block(block, full_transactions=True)
+        return block.transactions
 
 class TransactionsList(PandableList[TransactionData]):
     def __init__(self):
@@ -259,8 +260,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
     
     @eth_retry.auto_retry
     async def _get_transaction_by_nonce_and_block(self, nonce: int, block: Block) -> Optional[TxData]:
-        block = await _get_block(block)
-        for tx in block.transactions:
+        txs = await _get_block_transactions(block)
+        for tx in txs:
             if tx['from'] == self.address and tx['nonce'] == nonce:
                 return tx
             # Special handler for contract creation transactions
@@ -279,7 +280,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
     @eth_retry.auto_retry
     async def _get_nonce_at_block(self, block: Block) -> int:
         try:
-            return await dank_w3.eth.get_transaction_count(self.address, block_identifier = block) - 1
+            async with node_semaphore:
+                return await dank_w3.eth.get_transaction_count(self.address, block_identifier = block) - 1
         except ValueError as e:
             raise ValueError(f"For {self.address} at {block}: {e}")
 
@@ -323,6 +325,8 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
 
         # Remove reverts
         new_internal_transfers = [transfer for transfer in to_traces + from_traces if 'error' not in transfer]
+        del to_traces
+        del from_traces
 
         if new_internal_transfers:
             new_internal_transfers = await tqdm_asyncio.gather(*[self._load_internal_transfer(tx) for tx in new_internal_transfers], desc="Internal Transfers")
@@ -340,6 +344,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
         receipt = await _get_transaction_receipt(transfer['transactionHash'])
         if receipt.status == 0:
             return None
+        del receipt
 
         # Un-nest the action dict
         if 'action' in transfer and transfer['action'] is not None:
