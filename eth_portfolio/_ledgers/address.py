@@ -272,8 +272,9 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                 events = chain.get_transaction(tx['hash']).events
                 if "SafeSetup" in events and "ProxyCreation" in events and any(event['proxy'] == self.address for event in events['ProxyCreation']):
                     return tx
+                    
         # NOTE Are we sure this is the correct way to handle this scenario?
-        logger.warning(f"No transaction with nonce {nonce} in block {block.number} for {self.address}")
+        logger.warning(f"No transaction with nonce {nonce} in block {block} for {self.address}")
         return None
     
     @alru_cache(maxsize=None)
