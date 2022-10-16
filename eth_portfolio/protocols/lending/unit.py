@@ -14,6 +14,8 @@ yfi = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
 usdp = '0x1456688345527bE1f37E9e627DA0837D6f08C925'
 
 class UnitXyz(LendingProtocolWithLockedCollateral):
+    networks = [Network.Mainnet]
+    
     def __init__(self, asynchronous: bool = False) -> None:
         self.asynchronous = asynchronous
         self.unitVault = Contract("0xb1cff81b9305166ff1efc49a129ad2afcd7bcf19")

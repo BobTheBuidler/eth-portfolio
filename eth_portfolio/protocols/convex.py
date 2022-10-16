@@ -1,3 +1,4 @@
+from y import Network
 from eth_portfolio.protocols._base import (ProtocolWithStakingABC,
                                            SingleTokenStakingPoolABC)
 from y.classes.common import ERC20
@@ -9,6 +10,8 @@ class _CvxLockerV2(SingleTokenStakingPoolABC):
     token = ERC20("0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B")
 
 class Convex(ProtocolWithStakingABC):
+    networks = [Network.Mainnet]
+    
     def __init__(self, asynchronous: bool) -> None:
         super().__init__(asynchronous)
         self.pools = [
