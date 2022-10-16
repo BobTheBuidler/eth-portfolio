@@ -16,7 +16,7 @@ setup(
     install_requires=[
         "checksum_dict>=1.1.2",
         "pandas>=1.4.3,<1.5",
-        "ypricemagic>=1.5.2",
+        "ypricemagic>=1.6.0",
     ],
     setup_requires=[
         'setuptools_scm',

@@ -7,16 +7,24 @@ from eth_portfolio._decorators import await_if_sync
 from eth_portfolio.protocols.lending._base import LendingProtocol
 from eth_portfolio.typing import Address, Balance, TokenBalances
 from eth_portfolio.utils import Decimal
-from y import fetch_multicall, get_prices_async, weth
+from y import Contract, fetch_multicall, get_prices_async, weth
 from y.classes.common import ERC20
 from y.datatypes import Block
-from y.prices.lending.compound import compound
+from y.exceptions import ContractNotVerified
+from y.prices.lending.compound import CToken, compound
 
+
+def _get_contract(market: CToken) -> Optional[Contract]:
+    try:
+        return market.contract
+    except ContractNotVerified:
+        # We will skip these for now. Might consider supporting them later if necessary.
+        return None
 
 class Compound(LendingProtocol):
     def __init__(self, asynchronous: bool = False) -> None:
         self.asynchronous = asynchronous
-        markets = [market.contract for comp in compound.trollers.values() for market in comp.markets if hasattr(market.contract, 'borrowBalanceStored')] # this last part takes out xinv
+        markets = [market.contract for comp in compound.trollers.values() for market in comp.markets if hasattr(_get_contract(market), 'borrowBalanceStored')] # this last part takes out xinv
         gas_token_markets = [market for market in markets if not hasattr(market,'underlying')]
         other_markets = [market for market in markets if hasattr(market,'underlying')]
 
