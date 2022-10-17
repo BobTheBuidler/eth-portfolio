@@ -18,8 +18,8 @@ from y.datatypes import Address, Block
 yfi = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
 
 class Maker(LendingProtocolWithLockedCollateral):
-    chains = [Network.Mainnet]
-    
+    networks = [Network.Mainnet]
+
     def __init__(self, asynchronous: bool = False) -> None:
         self.asynchronous = asynchronous
         self.proxy_registry = Contract('0x4678f0a6958e4D2Bc4F1BAF7Bc52E8F3564f3fE4')
