@@ -207,7 +207,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
             new_transactions = [tx for tx in new_transactions if tx]
             for i, transaction in enumerate(new_transactions):
                 transaction = dict(transaction)
-                transaction['chainId'] = int(transaction['chainId'], 16)
+                transaction['chainId'] = int(transaction['chainId'], 16) if 'chainId' in transaction else chain.id
                 transaction['blockHash'] = transaction['blockHash'].hex()
                 transaction['hash'] = transaction['hash'].hex()
                 transaction['value'] = Decimal(transaction['value']) / Decimal(1e18)
