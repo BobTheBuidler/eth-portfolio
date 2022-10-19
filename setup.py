@@ -15,8 +15,10 @@ setup(
     url='https://github.com/BobTheBuidler/eth-portfolio',
     install_requires=[
         "checksum_dict>=1.1.2",
+        "dank_mids>=4.20.9",
+        "eth_retry>=0.1.12,<1",
         "pandas>=1.4.3,<1.5",
-        "ypricemagic>=1.8.1",
+        "ypricemagic>=1.8.5",
     ],
     setup_requires=[
         'setuptools_scm',
