@@ -9,6 +9,13 @@ from y.datatypes import Address, Block
 
 
 class LendingProtocol(metaclass=abc.ABCMeta):
+    """
+    Subclass this class for any protocol that maintains a debt balance for a user but doesn't maintain collateral internally.
+    Example: Aave, because the user holds on to their collateral in the form of erc-20 aTokens.
+
+    You must define the following async method:
+        `_debt_async(self, address: Address, block: Optional[Block] = None)`
+    """ 
     asynchronous: bool
     
     @await_if_sync
@@ -20,4 +27,11 @@ class LendingProtocol(metaclass=abc.ABCMeta):
         ...
 
 class LendingProtocolWithLockedCollateral(LendingProtocol, ProtocolABC):
-    """ Locked collateral would be like Maker, not Aave, because Aave gives you atokens that you hold in your wallet. """
+    """
+    Subclass this class for any protocol that maintains a debt balance for a user AND holds collateral internally.
+    Example: Maker, because collateral is locked up inside of Maker's smart contracts.
+
+    You must define the following async methods:
+        - `_debt_async(self, address: Address, block: Optional[Block] = None)`
+        - `_balances_async(self, address: Address, block: Optional[Block] = None)`
+    """
