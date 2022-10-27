@@ -7,8 +7,7 @@ from brownie.network.contract import ContractCall
 from eth_portfolio._decorators import await_if_sync
 from eth_portfolio.typing import Balance, TokenBalances
 from eth_portfolio.utils import Decimal
-from y import Contract
-from y.classes.common import ERC20
+from y import ERC20, Contract
 from y.contracts import contract_creation_block
 from y.datatypes import Address, Block
 

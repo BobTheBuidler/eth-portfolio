@@ -22,8 +22,7 @@ from eth_utils import encode_hex
 from pandas import DataFrame  # type: ignore
 from tqdm.asyncio import tqdm_asyncio
 from web3.types import BlockData, TxData, TxReceipt
-from y import Contract, get_price_async
-from y.classes.common import ERC20
+from y import ERC20, Contract, get_price_async
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
 from y.exceptions import ContractNotVerified, NonStandardERC20

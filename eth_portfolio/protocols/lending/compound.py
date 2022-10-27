@@ -7,8 +7,7 @@ from eth_portfolio._decorators import await_if_sync
 from eth_portfolio.protocols.lending._base import LendingProtocol
 from eth_portfolio.typing import Address, Balance, TokenBalances
 from eth_portfolio.utils import Decimal
-from y import Contract, fetch_multicall, get_prices_async, weth
-from y.classes.common import ERC20
+from y import ERC20, Contract, fetch_multicall, get_prices_async, weth
 from y.datatypes import Block
 from y.exceptions import ContractNotVerified
 from y.prices.lending.compound import CToken, compound
