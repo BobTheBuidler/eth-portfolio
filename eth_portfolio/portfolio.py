@@ -242,10 +242,15 @@ class PortfolioLedger:
                 for column in _get_missing_cols_from_KeyError(e):
                     df[column] = None
         
-        if full:
-            return df.sort_values(["blockNumber", "transactionIndex", "log_index"]).reset_index()
-        else:
-            return df.sort_values(['blockNumber','hash']).reset_index()
+        try:
+            if full:
+                return df.sort_values(["blockNumber", "transactionIndex", "log_index"]).reset_index()
+            else:
+                return df.sort_values(['blockNumber','hash']).reset_index()
+        except KeyError:
+            logger.error(df)
+            logger.error(df.columns)
+            raise
 
 
 # Use this var for a convenient way to set up your portfolio using env vars.
