@@ -11,11 +11,11 @@ from typing import Dict, List, Optional, Tuple, Union
 from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
+from eth_abi.exceptions import InsufficientDataBytes
 from pandas import DataFrame  # type: ignore
-from y import ERC20, Contract
+from y import ERC20, Contract, Network
 from y.datatypes import Address, Block
 from y.exceptions import ContractNotVerified, NonStandardERC20, PriceError
-from y import Network
 from y.prices.magic import get_price_async
 from y.utils.dank_mids import dank_w3
 
@@ -81,6 +81,10 @@ async def _get_price(token: Address, block: int = None) -> float:
         if await is_erc721(token):
             return 0
         return await get_price_async(token, block)
+    # Raise these exceptions
+    except InsufficientDataBytes:
+        raise
+    # Accept these exceptions
     except PriceError:
         desc_str = await _describe_err(token, block)
         logger.critical(f'PriceError while fetching price for {desc_str}')
