@@ -80,19 +80,19 @@ async def _get_price(token: Address, block: int = None) -> float:
     try:
         if await is_erc721(token):
             return 0
-        return await get_price_async(token, block)
+        return await get_price_async(token, block, silent=True)
     # Raise these exceptions
     except InsufficientDataBytes:
         raise
     # Accept these exceptions
     except PriceError:
         desc_str = await _describe_err(token, block)
-        logger.critical(f'PriceError while fetching price for {desc_str}')
+        logger.error(f'PriceError while fetching price for {desc_str}')
     except NonStandardERC20:
-        logger.critical(f'NonStandardERC20 while fetching price for {token}')
+        logger.error(f'NonStandardERC20 while fetching price for {token}')
     except Exception as e:
         desc_str = await _describe_err(token, block)
-        logger.critical(f'{type(e).__name__} while fetching price for {desc_str} | {e}')
+        logger.error(f'{e.__class__.__name__} while fetching price for {desc_str} | {e}')
     return 0
 
 @alru_cache(maxsize=None)
