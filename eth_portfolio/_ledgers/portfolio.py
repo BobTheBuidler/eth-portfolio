@@ -66,7 +66,8 @@ class PortfolioLedgerBase(Generic[_LedgerEntryList]):
         return df
     
     def _deduplicate_df(self, df: DataFrame) -> DataFrame:
-        return df.drop_duplicates(inplace=False)
+        # If there is a value of list type in the DataFrame, it must be converted to a string for comparison.
+        return df.loc[df.astype(str).drop_duplicates().index]
     
     def _cleanup_df(self, df: DataFrame) -> DataFrame:
         df = self._deduplicate_df(df)
