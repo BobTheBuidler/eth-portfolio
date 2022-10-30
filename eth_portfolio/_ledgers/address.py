@@ -202,7 +202,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
         nonces = list(range(self.cached_thru_nonce + 1, end_block_nonce + 1))
 
         if nonces:
-            new_transactions = await tqdm_asyncio.gather(*[self._get_transaction_by_nonce(nonce) for nonce in nonces], desc=f'Transactions {self.address}')
+            new_transactions = await tqdm_asyncio.gather(*[self._get_transaction_by_nonce(nonce) for nonce in nonces], desc=f"Transactions        {self.address}")
             new_transactions = [tx for tx in new_transactions if tx]
             for i, transaction in enumerate(new_transactions):
                 transaction = dict(transaction)
@@ -334,7 +334,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
         del from_traces
 
         if new_internal_transfers:
-            new_internal_transfers = await tqdm_asyncio.gather(*[self._load_internal_transfer(tx) for tx in new_internal_transfers], desc=f"Internal Transfers {self.address}")
+            new_internal_transfers = await tqdm_asyncio.gather(*[self._load_internal_transfer(tx) for tx in new_internal_transfers], desc=f"Internal Transfers  {self.address}")
             new_internal_transfers = [transfer for transfer in new_internal_transfers if transfer is not None]
 
             self.objects.extend(new_internal_transfers)
@@ -475,7 +475,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
         filter_entries = await asyncio.gather(*[asyncio.get_event_loop().run_in_executor(sync_threads, transfer_filter.get_all_entries) for transfer_filter in transfer_filters])
 
         if any(filter_entries):
-            new_token_transfers = await tqdm_asyncio.gather(*[self._load_transfer(log) for logs in filter_entries for log in logs], desc=f"Token Transfers {self.address}")
+            new_token_transfers = await tqdm_asyncio.gather(*[self._load_transfer(log) for logs in filter_entries for log in logs], desc=f"Token Transfers     {self.address}")
             new_token_transfers = [transfer for transfer in new_token_transfers if transfer is not None]
             
             self.objects.extend(new_token_transfers)
