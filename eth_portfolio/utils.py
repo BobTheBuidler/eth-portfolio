@@ -136,7 +136,7 @@ def _get_protocols_for_submodule(asynchronous: bool) -> List[type]:
         for cls in get_class_defs_from_module(component)
         if cls and not cls.__name__.startswith("_") and
         not cls.__name__ == "Lending" and
-        (not hasattr(cls, 'networks') or chain.id in cls.networks)
+        (not hasattr(cls, 'networks') or chain.id in cls.networks)  # type: ignore
     ]
 
 def _import_submodules() -> Dict[str, ModuleType]:

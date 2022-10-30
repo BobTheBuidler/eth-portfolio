@@ -44,7 +44,7 @@ class Liquity(LendingProtocolWithLockedCollateral):
     async def _debt_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         balances: TokenBalances = TokenBalances()
         if block and block < self.start_block:
-            return 
+            return balances
         data = await self.get_trove(address, block)
         lusd_debt = data[0]
         if lusd_debt:
