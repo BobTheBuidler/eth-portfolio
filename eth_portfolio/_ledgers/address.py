@@ -272,8 +272,13 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                 if "SafeSetup" in events and "ProxyCreation" in events and any(event['proxy'] == self.address for event in events['ProxyCreation']):
                     return tx
                     
-        # NOTE Are we sure this is the correct way to handle this scenario?
-        logger.warning(f"No transaction with nonce {nonce} in block {block} for {self.address}")
+        if nonce == 0 and self.cached_thru_nonce == -1:
+            # Gnosis safes
+            self.cached_thru_nonce = 0
+        else:
+            # NOTE Are we sure this is the correct way to handle this scenario? Are we sure it will ever even occur with the new gnosis handling?
+            logger.warning(f"No transaction with nonce {nonce} in block {block} for {self.address}")
+            
         return None
     
     @alru_cache(maxsize=None)
