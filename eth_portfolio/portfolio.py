@@ -177,7 +177,7 @@ class PortfolioLedger:
                 if full:
                     df = df[[
                         'chainId',
-                        'blockNumber'
+                        'blockNumber',
                         'blockHash',
                         'transactionIndex',
                         'hash',
@@ -208,7 +208,7 @@ class PortfolioLedger:
                         'r',
                         's',
                         'v',
-                        'input'
+                        'input',
                     ]]
                 else:
                     df = df[[
