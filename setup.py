@@ -18,7 +18,7 @@ setup(
         "dank_mids>=4.20.12",
         "eth_retry>=0.1.13,<1",
         "pandas>=1.4.3,<1.6",
-        "ypricemagic>=1.8.16",
+        "ypricemagic>=1.8.19",
     ],
     setup_requires=[
         'setuptools_scm',
