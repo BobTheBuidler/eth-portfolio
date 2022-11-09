@@ -288,6 +288,9 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
             async with node_semaphore:
                 return await dank_w3.eth.get_transaction_count(self.address, block_identifier = block) - 1
         except ValueError as e:
+            # NOTE this is known to occur on arbitrum
+            if 'error creating execution cursor' in str(e) and block == 0:
+                return -1
             raise ValueError(f"For {self.address} at {block}: {e}")
 
 class InternalTransfersList(PandableList[InternalTransferData]):
