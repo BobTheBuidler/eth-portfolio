@@ -68,7 +68,7 @@ async def _unwrap_token(token) -> str:
     return token
 
 def _pool_bucket(pool_tokens: set) -> Optional[str]:
-    logger.warn(f'Pool tokens: {pool_tokens}')
+    logger.debug(f'Pool tokens: {pool_tokens}')
     if pool_tokens < BTC_LIKE:
         return list(BTC_LIKE)[0]
     if pool_tokens < ETH_LIKE:
