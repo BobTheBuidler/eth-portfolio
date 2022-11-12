@@ -244,9 +244,9 @@ class PortfolioLedger:
         
         try:
             if full:
-                return df.sort_values(["blockNumber", "transactionIndex", "log_index"]).reset_index()
+                return df.sort_values(["blockNumber", "transactionIndex", "log_index"]).reset_index(drop=True)
             else:
-                return df.sort_values(['blockNumber','hash']).reset_index()
+                return df.sort_values(['blockNumber','hash']).reset_index(drop=True)
         except KeyError:
             logger.error(df)
             logger.error(df.columns)

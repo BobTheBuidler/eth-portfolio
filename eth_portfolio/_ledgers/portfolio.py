@@ -71,7 +71,7 @@ class PortfolioLedgerBase(Generic[_LedgerEntryList]):
     
     def _cleanup_df(self, df: DataFrame) -> DataFrame:
         df = self._deduplicate_df(df)
-        return df.sort_values(['blockNumber']).reset_index()
+        return df.sort_values(['blockNumber']).reset_index(drop=True)
 
 
 class PortfolioTransactionsLedger(PortfolioLedgerBase[TransactionsList]):
@@ -96,5 +96,5 @@ class PortfolioInternalTransfersLedger(PortfolioLedgerBase[InternalTransfersList
         We cant use drop_duplicates when one of the columns, `traceAddress`, contains lists.
         We must first convert the lists to strings
         """
-        df = df.reset_index()
+        df = df.reset_index(drop=True)
         return df.loc[df.astype(str).drop_duplicates().index]
