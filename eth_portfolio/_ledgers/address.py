@@ -9,6 +9,7 @@ from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem
+
 from eth_abi import encode_single
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
@@ -18,10 +19,11 @@ from eth_portfolio.typing import (InternalTransferData, TokenTransferData,
                                   TransactionData)
 from eth_portfolio.utils import (Decimal, PandableList, _get_price,
                                  _unpack_indicies, get_buffered_chain_height)
-from eth_utils import encode_hex
+from eth_utils import encode_hex, to_checksum_address
 from pandas import DataFrame  # type: ignore
 from tqdm.asyncio import tqdm_asyncio
 from web3.types import TxData, TxReceipt
+from eth_abi import 
 from y import ERC20, Contract, get_price_async
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
@@ -353,6 +355,11 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
         if receipt.status == 0:
             return None
         del receipt
+        # Checksum the addresses
+        transfer['from'] = to_checksum_address(transfer['from'])
+        transfer['to'] = to_checksum_address(transfer['to'])
+        transfer['address'] = to_checksum_address(transfer['address'])
+
 
         # Un-nest the action dict
         if 'action' in transfer and transfer['action'] is not None:
