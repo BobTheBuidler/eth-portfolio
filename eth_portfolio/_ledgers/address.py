@@ -23,7 +23,6 @@ from eth_utils import encode_hex, to_checksum_address
 from pandas import DataFrame  # type: ignore
 from tqdm.asyncio import tqdm_asyncio
 from web3.types import TxData, TxReceipt
-from eth_abi import 
 from y import ERC20, Contract, get_price_async
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
