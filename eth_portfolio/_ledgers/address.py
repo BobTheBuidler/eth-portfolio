@@ -355,9 +355,12 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
             return None
         del receipt
         # Checksum the addresses
-        transfer['from'] = to_checksum_address(transfer['from'])
-        transfer['to'] = to_checksum_address(transfer['to'])
-        transfer['address'] = to_checksum_address(transfer['address'])
+        if "from" in transfer:
+            transfer['from'] = to_checksum_address(transfer['from'])
+        if "to" in transfer:
+            transfer['to'] = to_checksum_address(transfer['to'])
+        if "address" in transfer:
+            transfer['address'] = to_checksum_address(transfer['address'])
 
 
         # Un-nest the action dict
