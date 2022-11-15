@@ -15,7 +15,7 @@ setup(
     url='https://github.com/BobTheBuidler/eth-portfolio',
     install_requires=[
         "checksum_dict>=1.1.2",
-        "dank_mids>=4.20.13",
+        "dank_mids>=4.20.15",
         "eth_retry>=0.1.14,<1",
         "pandas>=1.4.3,<1.6",
         "ypricemagic>=1.8.19",
