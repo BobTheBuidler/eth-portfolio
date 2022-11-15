@@ -14,7 +14,7 @@ from eth_abi import encode_single
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
 from eth_portfolio._shitcoins import SHITCOINS
-from eth_portfolio.constants import TRANSFER_SIGS, node_semaphore, sync_threads
+from eth_portfolio.constants import TRANSFER_SIGS, sync_threads
 from eth_portfolio.typing import (InternalTransferData, TokenTransferData,
                                   TransactionData)
 from eth_portfolio.utils import (Decimal, PandableList, _get_price,
@@ -45,8 +45,7 @@ class BlockRangeOutOfBounds(Exception):
 @cache_to_disk
 @eth_retry.auto_retry
 async def _get_transaction_receipt(txhash: str) -> TxReceipt:
-    async with node_semaphore:
-        return await dank_w3.eth.get_transaction_receipt(txhash)
+    return await dank_w3.eth.get_transaction_receipt(txhash)
 
 _LedgerEntryList = TypeVar("_LedgerEntryList", "TransactionsList", "InternalTransfersList", "TokenTransfersList")
 PandableLedgerEntryList = Union["TransactionsList", "InternalTransfersList", "TokenTransfersList"]
@@ -167,9 +166,8 @@ class AddressLedgerBase(Generic[_LedgerEntryList], metaclass=abc.ABCMeta):
 
 @eth_retry.auto_retry
 async def _get_block_transactions(block: Block) -> List[TxData]:
-    async with node_semaphore:
-        block = await dank_w3.eth.get_block(block, full_transactions=True)
-        return block.transactions
+    block = await dank_w3.eth.get_block(block, full_transactions=True)
+    return block.transactions
 
 class TransactionsList(PandableList[TransactionData]):
     def __init__(self):
@@ -286,8 +284,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
     @eth_retry.auto_retry
     async def _get_nonce_at_block(self, block: Block) -> int:
         try:
-            async with node_semaphore:
-                return await dank_w3.eth.get_transaction_count(self.address, block_identifier = block) - 1
+            return await dank_w3.eth.get_transaction_count(self.address, block_identifier = block) - 1
         except ValueError as e:
             # NOTE this is known to occur on arbitrum
             if 'error creating execution cursor' in str(e) and block == 0:

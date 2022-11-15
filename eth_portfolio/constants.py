@@ -1,6 +1,4 @@
 
-
-import asyncio
 from concurrent.futures import ThreadPoolExecutor
 import os
 
@@ -63,5 +61,4 @@ INTL_STABLECOINS = {
     },
 }.get(chain.id, set())
 
-node_semaphore = asyncio.Semaphore(20)
 sync_threads = ThreadPoolExecutor(8)
