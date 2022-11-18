@@ -82,7 +82,7 @@ async def _get_price(token: Address, block: int = None) -> float:
             return 0
         return await get_price_async(token, block, silent=True)
     # Raise these exceptions
-    except InsufficientDataBytes:
+    except (InsufficientDataBytes, UnboundLocalError):
         raise
     # Accept these exceptions
     except PriceError:
