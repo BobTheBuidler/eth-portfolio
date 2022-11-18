@@ -51,8 +51,7 @@ async def _unwrap_token(token) -> str:
         contract = await Contract.coroutine(token)
         underlying = await contract.token.coroutine()
         return await _unwrap_token(underlying)
-    if token in curve:
-        pool = curve.get_pool(token)
+    if pool := await curve.get_pool(token):
         pool_tokens = set(
             str(_token) for _token in await asyncio.gather(*[_unwrap_token(coin) for coin in await CurvePool(pool).get_coins_async])
         )
