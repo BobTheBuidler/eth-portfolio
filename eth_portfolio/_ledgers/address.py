@@ -209,7 +209,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                 transaction['blockHash'] = transaction['blockHash'].hex()
                 transaction['hash'] = transaction['hash'].hex()
                 transaction['value'] = Decimal(transaction['value']) / Decimal(1e18)
-                transaction['type'] = int(transaction['type'], 16)
+                transaction['type'] = int(transaction['type'], 16) if "type" in transaction else None
                 transaction['r'] = transaction['r'].hex()
                 transaction['s'] = transaction['s'].hex()
                 new_transactions[i] = transaction
