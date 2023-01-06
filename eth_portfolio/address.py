@@ -70,7 +70,8 @@ class PortfolioAddress:
         return self._describe_async(block=block) # type: ignore
     
     async def _describe_async(self, block: int) -> WalletBalances:
-        assert block
+        assert block, "You must provide a valid block number"
+        assert isinstance(block, int), f"Block must be an integer. You passed {type(block)} {block}"
         fns = [self._assets_async, self._debt_async, self._external_balances_async]
         balances = WalletBalances()
         balances['assets'], balances['debt'], balances['external'] = await asyncio.gather(*[fn(block) for fn in fns])
