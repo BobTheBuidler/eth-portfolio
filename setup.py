@@ -1,5 +1,8 @@
 from setuptools import find_packages, setup # type: ignore
 
+with open("requirements.txt", "r") as f:
+    requirements = list(map(str.strip, f.read().split("\n")))[:-1]
+
 setup(
     name='eth-portfolio',
     packages=find_packages(),
@@ -13,13 +16,7 @@ setup(
     author='BobTheBuidler',
     author_email='bobthebuidlerdefi@gmail.com',
     url='https://github.com/BobTheBuidler/eth-portfolio',
-    install_requires=[
-        "checksum_dict>=1.1.2",
-        "dank_mids>=4.20.15",
-        "eth_retry>=0.1.14,<1",
-        "pandas>=1.4.3,<1.6",
-        "ypricemagic>=1.10.0",
-    ],
+    install_requires=requirements,
     setup_requires=[
         'setuptools_scm',
     ],
