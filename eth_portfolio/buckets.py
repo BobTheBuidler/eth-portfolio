@@ -5,12 +5,11 @@ from typing import Optional, Set
 from async_lru import alru_cache
 from brownie import chain
 from y.constants import STABLECOINS, WRAPPED_GAS_COIN
-from y.contracts import Contract
 from y.datatypes import Address, AnyAddressType
 from y.prices.lending.aave import aave
 from y.prices.lending.compound import CToken, compound
-from y.prices.stable_swap.curve import CurvePool, curve
-from y.prices.yearn import is_yearn_vault_async
+from y.prices.stable_swap.curve import curve
+from y.prices.yearn import YearnInspiredVault, is_yearn_vault_async
 
 from eth_portfolio.constants import BTC_LIKE, ETH_LIKE, INTL_STABLECOINS
 
@@ -48,8 +47,9 @@ async def _unwrap_token(token) -> str:
         return token
 
     if await is_yearn_vault_async(token):
-        contract = await Contract.coroutine(token)
-        underlying = await contract.token.coroutine()
+        #contract = await Contract.coroutine(token)
+        #underlying = await contract.token.coroutine()
+        underlying = await YearnInspiredVault(token).underlying_async
         return await _unwrap_token(underlying)
     if pool := await curve.get_pool(token):
         pool_tokens = set(
