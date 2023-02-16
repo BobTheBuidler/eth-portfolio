@@ -31,6 +31,16 @@ logger = logging.getLogger(__name__)
 async def _get_eth_balance(address: Address, block: Optional[Block]) -> decimal.Decimal:
     return Decimal(await dank_w3.eth.get_balance(address, block_identifier=block)) / Decimal(1e18)
 
+def _calc_value(balance, price) -> Decimal:
+    if price is None:
+        return Decimal(0)
+    # NOTE If balance * price returns a Decimal with precision < 18, rounding is both impossible and unnecessary.
+    value = Decimal(balance) * Decimal(price)
+    try:
+        return round(value, 18)
+    except decimal.InvalidOperation:
+        return value
+
 class PortfolioAddress:
     def __init__(self, address: Address, portfolio: "Portfolio") -> None: # type: ignore
         self.address = convert.to_address(address)
@@ -139,7 +149,7 @@ class PortfolioAddress:
             asyncio.gather(*[_get_price(token, block) for token in tokens]),
         )
         token_balances = [
-            Balance(Decimal(balance), Decimal(0) if price is None else round(Decimal(balance) * Decimal(price), 18))
+            Balance(Decimal(balance), _calc_value(balance, price))
             for balance, price in zip(token_balances, token_prices)
         ]
         return TokenBalances(zip(tokens, token_balances))
