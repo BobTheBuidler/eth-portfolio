@@ -528,7 +528,11 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
             'value': value,
         }
         if self.load_prices:
-            price = round(Decimal(price), 18) if price else None
+            try:
+                price = round(Decimal(price), 18) if price else None
+            except Exception as e:
+                logger.error(f"{e.__class__.__name__} {e} for {symbol} {decoded.address} at block {decoded.block_number}.")
+                price = None
             token_transfer['price'] = price
             token_transfer['value_usd'] = round(value * price, 18) if price else None
         return token_transfer
