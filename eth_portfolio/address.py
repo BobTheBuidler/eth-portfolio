@@ -5,7 +5,7 @@ import logging
 from typing import TYPE_CHECKING, Dict, Optional
 
 import eth_retry
-from y import convert, get_price_async
+from y import convert, get_price
 from y.constants import EEE_ADDRESS, weth
 from y.datatypes import Address, Block
 from y.utils.dank_mids import dank_w3
@@ -133,7 +133,7 @@ class PortfolioAddress:
     async def _eth_balance_async(self, block: Optional[Block]) -> Balance:
         balance, price = await asyncio.gather(
             _get_eth_balance(self.address, block),
-            get_price_async(weth, block),
+            get_price(weth, block, sync=False),
         )
         value = round(balance * Decimal(price), 18)
         return Balance(balance, value)
@@ -145,7 +145,7 @@ class PortfolioAddress:
     async def _token_balances_async(self, block) -> TokenBalances:
         tokens = await self.token_transfers._list_tokens_at_block_async(block=block)
         token_balances, token_prices = await asyncio.gather(
-            asyncio.gather(*[token.balance_of_readable_async(self.address, block) for token in tokens]),
+            asyncio.gather(*[token.balance_of_readable(self.address, block, sync=False) for token in tokens]),
             asyncio.gather(*[_get_price(token, block) for token in tokens]),
         )
         token_balances = [

@@ -10,7 +10,7 @@ from eth_portfolio.protocols.lending._base import \
     LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import Balance, TokenBalances
 from eth_portfolio.utils import Decimal
-from y import Network, get_price_async
+from y import Network, get_price
 from y.constants import dai
 from y.contracts import Contract
 from y.datatypes import Address, Block
@@ -33,7 +33,7 @@ class Maker(LendingProtocolWithLockedCollateral):
         ink = (await self.vat.urns.coroutine(ilk, urn, block_identifier=block)).dict()["ink"]
         if ink:
             balance = ink / Decimal(1e18)
-            value = round(balance * Decimal(await get_price_async(yfi, block)), 18)
+            value = round(balance * Decimal(await get_price(yfi, block, sync=False)), 18)
             balances[yfi] = Balance(balance, value)
         return balances
     

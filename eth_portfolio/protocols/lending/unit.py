@@ -6,7 +6,7 @@ from eth_portfolio._decorators import await_if_sync
 from eth_portfolio.protocols.lending._base import \
     LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import Balance, TokenBalances
-from y import Contract, Network, get_price_async
+from y import Contract, Network, get_price
 from y.datatypes import Address, Block
 
 # NOTE: This only works for YFI collateral, must extend before using for other collaterals
@@ -28,7 +28,7 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
         bal = await self.unitVault.collaterals.coroutine(yfi, address, block_identifier=block)
         if bal:
             bal /= 1e18
-            balances[yfi] = Balance(bal, bal * await get_price_async(yfi, block))
+            balances[yfi] = Balance(bal, bal * await get_price(yfi, block, sync=False))
         return balances
 
     @await_if_sync

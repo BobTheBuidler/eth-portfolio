@@ -7,7 +7,7 @@ from eth_portfolio._decorators import await_if_sync
 from eth_portfolio.protocols.lending._base import \
     LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import Balance, TokenBalances
-from y import Contract, Network, get_price_async
+from y import Contract, Network, get_price
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
 
@@ -33,7 +33,7 @@ class Liquity(LendingProtocolWithLockedCollateral):
         eth_collateral_balance = data[1]
         if eth_collateral_balance:
             eth_collateral_balance /= 1e18
-            value = eth_collateral_balance * await get_price_async(EEE_ADDRESS, block)
+            value = eth_collateral_balance * await get_price(EEE_ADDRESS, block, sync=False)
             balances[EEE_ADDRESS] = Balance(eth_collateral_balance, value)
         return balances
 
@@ -49,7 +49,7 @@ class Liquity(LendingProtocolWithLockedCollateral):
         lusd_debt = data[0]
         if lusd_debt:
             lusd_debt /= 1e18
-            value = lusd_debt * await get_price_async(lusd, block)
+            value = lusd_debt * await get_price(lusd, block, sync=False)
             balances[lusd] = Balance(lusd_debt, value)
         return balances
 

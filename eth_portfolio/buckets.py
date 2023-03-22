@@ -9,7 +9,7 @@ from y.datatypes import Address, AnyAddressType
 from y.prices.lending.aave import aave
 from y.prices.lending.compound import CToken, compound
 from y.prices.stable_swap.curve import curve
-from y.prices.yearn import YearnInspiredVault, is_yearn_vault_async
+from y.prices.yearn import YearnInspiredVault, is_yearn_vault
 
 from eth_portfolio.constants import BTC_LIKE, ETH_LIKE, INTL_STABLECOINS
 
@@ -46,22 +46,22 @@ async def _unwrap_token(token) -> str:
     if str(token) in ["ETH", "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"]:
         return token
 
-    if await is_yearn_vault_async(token):
+    if await is_yearn_vault(token, sync=False):
         #contract = await Contract.coroutine(token)
         #underlying = await contract.token.coroutine()
-        underlying = await YearnInspiredVault(token).underlying_async
+        underlying = await YearnInspiredVault(token, asynchronous=True).underlying
         return await _unwrap_token(underlying)
     if pool := await curve.get_pool(token):
         pool_tokens = set(
-            str(_token) for _token in await asyncio.gather(*[_unwrap_token(coin) for coin in await pool.get_coins_async])
+            str(_token) for _token in await asyncio.gather(*[_unwrap_token(coin) for coin in await pool.get_coins])
         )
         if pool_bucket := _pool_bucket(pool_tokens):
             return pool_bucket  # type: ignore
     if aave and token in aave:
-        return await aave.underlying_async(token)
-    if compound and await compound.is_compound_market_async(token):
+        return await aave.underlying(token)
+    if compound and await compound.is_compound_market(token):
         try:
-            return await CToken(token).underlying_async
+            return await CToken(token, asynchronous=True).underlying
         except AttributeError:
             return WRAPPED_GAS_COIN
     return token

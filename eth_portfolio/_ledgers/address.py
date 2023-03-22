@@ -23,7 +23,7 @@ from eth_utils import encode_hex, to_checksum_address
 from pandas import DataFrame  # type: ignore
 from tqdm.asyncio import tqdm_asyncio
 from web3.types import TxData, TxReceipt
-from y import ERC20, Contract, get_price_async
+from y import ERC20, Contract, get_price
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
 from y.exceptions import ContractNotVerified, NonStandardERC20
@@ -215,7 +215,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                 new_transactions[i] = transaction
 
             if self.load_prices:
-                prices = await asyncio.gather(*[get_price_async(EEE_ADDRESS, block = transaction['blockNumber']) for transaction in new_transactions])
+                prices = await asyncio.gather(*[get_price(EEE_ADDRESS, block = transaction['blockNumber'], sync=False) for transaction in new_transactions])
                 for transaction, price in zip(new_transactions, prices):
                     price = round(Decimal(price), 18)
                     transaction['price'] = price
@@ -403,7 +403,7 @@ class TokenTransfersList(PandableList[TokenTransferData]):
 
 async def _get_symbol(token: ERC20) -> Optional[str]:
     try:
-        return await token.symbol_async
+        return await token.__symbol__(sync=False)
     except NonStandardERC20:
         return None
 
@@ -501,7 +501,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
         decoded = await _decode_token_transfer(transfer_log)
         if decoded is None:
             return None
-        token = ERC20(decoded.address)
+        token = ERC20(decoded.address, asynchronous=True)
         coros = [
             token.scale,
             _get_symbol(token),

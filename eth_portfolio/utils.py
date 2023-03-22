@@ -16,7 +16,7 @@ from pandas import DataFrame  # type: ignore
 from y import ERC20, Contract, Network
 from y.datatypes import Address, Block
 from y.exceptions import ContractNotVerified, NonStandardERC20, PriceError
-from y.prices.magic import get_price_async
+from y.prices.magic import get_price
 from y.utils.dank_mids import dank_w3
 
 from eth_portfolio import _config
@@ -61,7 +61,7 @@ async def _describe_err(token: Address, block: Optional[Block]) -> str:
     Assembles a string used to provide as much useful information as possible in PriceError messages
     '''
     try:
-        symbol = await ERC20(token).symbol_async
+        symbol = await ERC20(token, asynchronous=True).symbol
     except NonStandardERC20:
         symbol = None
 
@@ -80,7 +80,7 @@ async def _get_price(token: Address, block: int = None) -> float:
     try:
         if await is_erc721(token):
             return 0
-        return await get_price_async(token, block, silent=True)
+        return await get_price(token, block, silent=True, sync=False)
     # Raise these exceptions
     except (InsufficientDataBytes, UnboundLocalError):
         raise

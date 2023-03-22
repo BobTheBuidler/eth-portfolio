@@ -1,16 +1,18 @@
 
 import asyncio
-from typing import Optional
+from typing import List, Optional
 
+from async_lru import alru_cache
 from brownie import ZERO_ADDRESS, Contract
+from y import ERC20, Contract, fetch_multicall, get_prices, weth
+from y.datatypes import Block
+from y.exceptions import ContractNotVerified
+from y.prices.lending.compound import CToken, compound
+
 from eth_portfolio._decorators import await_if_sync
 from eth_portfolio.protocols.lending._base import LendingProtocol
 from eth_portfolio.typing import Address, Balance, TokenBalances
 from eth_portfolio.utils import Decimal
-from y import ERC20, Contract, fetch_multicall, get_prices_async, weth
-from y.datatypes import Block
-from y.exceptions import ContractNotVerified
-from y.prices.lending.compound import CToken, compound
 
 
 def _get_contract(market: CToken) -> Optional[Contract]:
@@ -23,7 +25,15 @@ def _get_contract(market: CToken) -> Optional[Contract]:
 class Compound(LendingProtocol):
     def __init__(self, asynchronous: bool = False) -> None:
         self.asynchronous = asynchronous
-        markets = [market.contract for comp in compound.trollers.values() for market in comp.markets if hasattr(_get_contract(market), 'borrowBalanceStored')] # this last part takes out xinv
+    
+    @await_if_sync
+    def underlyings(self) -> List[ERC20]:
+        return self._underlyings_async()
+    
+    @alru_cache
+    async def _underlyings_async(self) -> List[ERC20]:
+        markets = await asyncio.gather(*[comp.markets for comp in compound.trollers.values()])
+        markets = [market.contract for troller in markets for market in troller if hasattr(_get_contract(market), 'borrowBalanceStored')] # this last part takes out xinv
         gas_token_markets = [market for market in markets if not hasattr(market,'underlying')]
         other_markets = [market for market in markets if hasattr(market,'underlying')]
 
@@ -31,12 +41,20 @@ class Compound(LendingProtocol):
         underlyings = [weth for market in gas_token_markets] + fetch_multicall(*[[market,'underlying'] for market in other_markets])
 
         markets_zip = zip(markets,underlyings)
-        self.markets, underlyings = [], []
+        self._markets, underlyings = [], []
         for contract, underlying in markets_zip:
             if underlying != ZERO_ADDRESS:
-                self.markets.append(contract)
+                self._markets.append(contract)
                 underlyings.append(underlying)
-        self.underlyings = [ERC20(underlying) for underlying in underlyings]
+        return [ERC20(underlying, asynchronous=self.asynchronous) for underlying in underlyings]
+
+    @await_if_sync
+    def markets(self):
+        return self._markets_async()
+        
+    async def _markets_async(self) -> List[Contract]:
+        await self.underlying
+        return self._markets
 
     @await_if_sync
     def debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
@@ -47,13 +65,14 @@ class Compound(LendingProtocol):
             return TokenBalances()
 
         address = str(address)
+        markets, underlyings = await asyncio.gather(*[self._markets_async(), self._underlyings_async()])
         debt_data, underlying_scale = await asyncio.gather(
-            asyncio.gather(*[_borrow_balance_stored(market, address, block) for market in self.markets]),
-            asyncio.gather(*[underlying.scale for underlying in self.underlyings]),
+            asyncio.gather(*[_borrow_balance_stored(market, address, block) for market in markets]),
+            asyncio.gather(*[underlying.__scale__(sync=False) for underlying in underlyings]),
         )
 
-        debts = {underlying: Decimal(debt) / scale for underlying, scale, debt in zip(self.underlyings, underlying_scale, debt_data) if debt}
-        prices = await get_prices_async(debts.keys(), block=block)
+        debts = {underlying: Decimal(debt) / scale for underlying, scale, debt in zip(underlyings, underlying_scale, debt_data) if debt}
+        prices = await get_prices(debts.keys(), block=block, sync=False)
         balances: TokenBalances = TokenBalances()
         for (underlying, debt), price in zip(debts.items(), prices):
             balances[underlying] += Balance(debt, debt * Decimal(price))

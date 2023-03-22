@@ -77,18 +77,18 @@ class SingleTokenStakingPoolABC(StakingPoolABC, metaclass=abc.ABCMeta):
 
     @property
     def price(self) -> Callable[[Block], Coroutine[Any, Any, Decimal]]:
-        return self.token.price_async
+        return self.token.price
     
     @property
     def scale(self) -> Awaitable[int]:
-        return self.token.scale
+        return self.token.__scale__(sync=False)
     
     async def _balances_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         balances: TokenBalances = TokenBalances()
         if self.should_check(block):
             balance = Decimal(await self(address, block=block))  # type: ignore
             if balance:
-                scale, price = await asyncio.gather(self.scale, self.price(block))
+                scale, price = await asyncio.gather(self.scale, self.price(block, sync=False))
                 balance /= scale  # type: ignore
                 balances[self.token.address] = Balance(balance, balance * Decimal(price))
         return balances
