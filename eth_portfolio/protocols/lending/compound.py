@@ -53,7 +53,7 @@ class Compound(LendingProtocol):
         return self._markets_async()
         
     async def _markets_async(self) -> List[Contract]:
-        await self.underlying
+        await self._underlyings_async()
         return self._markets
 
     @await_if_sync
