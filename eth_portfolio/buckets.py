@@ -53,7 +53,7 @@ async def _unwrap_token(token) -> str:
         return await _unwrap_token(underlying)
     if pool := await curve.get_pool(token):
         pool_tokens = set(
-            str(_token) for _token in await asyncio.gather(*[_unwrap_token(coin) for coin in await pool.get_coins])
+            str(_token) for _token in await asyncio.gather(*[_unwrap_token(coin) for coin in await pool.coins])
         )
         if pool_bucket := _pool_bucket(pool_tokens):
             return pool_bucket  # type: ignore
