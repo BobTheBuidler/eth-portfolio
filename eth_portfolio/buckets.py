@@ -57,7 +57,7 @@ async def _unwrap_token(token) -> str:
         )
         if pool_bucket := _pool_bucket(pool_tokens):
             return pool_bucket  # type: ignore
-    if aave and token in aave:
+    if aave and await aave.is_atoken(token):
         return await aave.underlying(token)
     if compound and await compound.is_compound_market(token):
         try:
