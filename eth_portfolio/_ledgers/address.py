@@ -9,7 +9,7 @@ from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem
-from dank_mids.config import semaphore_envs
+from dank_mids._config import semaphore_envs
 
 from eth_abi import encode_single
 from eth_portfolio._cache import cache_to_disk
