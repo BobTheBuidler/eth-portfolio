@@ -9,6 +9,7 @@ from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem
+from dank_mids.config import semaphore_envs
 
 from eth_abi import encode_single
 from eth_portfolio._cache import cache_to_disk
@@ -41,11 +42,13 @@ class BlockRangeIsCached(Exception):
 class BlockRangeOutOfBounds(Exception):
     pass
 
+receipt_semaphore = asyncio.Semaphore(semaphore_envs["eth_getTransaction"])
 
 @cache_to_disk
 @eth_retry.auto_retry
 async def _get_transaction_receipt(txhash: str) -> TxReceipt:
-    return await dank_w3.eth.get_transaction_receipt(txhash)
+    async with receipt_semaphore:
+        return await dank_w3.eth.get_transaction_receipt(txhash)
 
 _LedgerEntryList = TypeVar("_LedgerEntryList", "TransactionsList", "InternalTransfersList", "TokenTransfersList")
 PandableLedgerEntryList = Union["TransactionsList", "InternalTransfersList", "TokenTransfersList"]
