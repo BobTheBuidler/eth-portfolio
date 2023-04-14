@@ -1,8 +1,8 @@
 
-from concurrent.futures import ThreadPoolExecutor
 import os
 
 from brownie import chain
+from dank_mids.executor import PruningThreadPoolExecutor
 from y import Network, convert, weth
 
 ERC20_TRANSFER_EVENT_HASH  = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
@@ -61,4 +61,4 @@ INTL_STABLECOINS = {
     },
 }.get(chain.id, set())
 
-sync_threads = ThreadPoolExecutor(8)
+sync_threads = PruningThreadPoolExecutor(8)
