@@ -1,5 +1,5 @@
 checksum_dict>=1.1.2
-dank_mids>=4.20.31
+dank_mids>=4.20.35
 eth_retry>=0.1.15,<1
 pandas>=1.4.3,<1.6
-ypricemagic>=2.0.9
+ypricemagic>=2.1.5
