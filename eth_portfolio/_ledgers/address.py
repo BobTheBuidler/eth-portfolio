@@ -266,7 +266,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
             if tx['from'] == self.address and tx['nonce'] == nonce:
                 return tx
             # Special handler for contract creation transactions
-            elif tx['to'] == None and chain.get_transaction(tx['hash']).contract_address == self.address:
+            elif tx['to'] == None and (await _get_transaction_receipt(tx['hash']))['contractAddress'] == self.address:
                 return tx
             # Special handler for Gnosis Safe deployments
             elif tx['to'] == "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2":
