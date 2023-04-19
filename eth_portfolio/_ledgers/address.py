@@ -241,17 +241,16 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                     tx = await self._get_transaction_by_nonce_and_block(nonce, lo)
                     if tx is None:
                         return None
-                    tx['chainId'] = int(tx['chainId'], 16) if 'chainId' in transaction else chain.id
+                    tx['chainId'] = int(tx['chainId'], 16) if 'chainId' in tx else chain.id
                     tx['blockHash'] = tx['blockHash'].hex()
                     tx['hash'] = tx['hash'].hex()
                     tx['value'] = Decimal(tx['value']) / Decimal(1e18)
-                    tx['type'] = int(tx['type'], 16) if "type" in transaction else None
+                    tx['type'] = int(tx['type'], 16) if "type" in tx else None
                     tx['r'] = tx['r'].hex()
                     tx['s'] = tx['s'].hex()
                     if self.load_prices:
-                        price = round(Decimal(await get_price(EEE_ADDRESS, block = tx['blockNumber'], sync=False)), 18)
-                        tx['price'] = price
-                        tx['value_usd'] = tx['value'] * price
+                        tx['price'] = round(Decimal(await get_price(EEE_ADDRESS, block = tx['blockNumber'], sync=False)), 18)
+                        tx['value_usd'] = tx['value'] * tx['price']
                     return tx
                 hi = lo
                 lo = int(lo / 2)
