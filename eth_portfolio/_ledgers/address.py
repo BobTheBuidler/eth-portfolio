@@ -499,7 +499,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
     
     async def _get_futs(self, start_block, end_block, topics) -> List:
         futs = []
-        async for logs in get_logs_asap_generator(from_block=start_block, to_block=end_block, topics=topics, chronological=False):
+        async for logs in get_logs_asap_generator(address=None, from_block=start_block, to_block=end_block, topics=topics, chronological=False):
             futs.extend(asyncio.ensure_future(self._load_transfer(log)) for log in logs)
         return futs
     
