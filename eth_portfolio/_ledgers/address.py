@@ -439,6 +439,10 @@ async def _decode_token_transfer(log) -> _EventItem:
         logger.error(e)
         logger.error(log)
 
+async def _get_transaction_index(hash: str) -> int:
+    receipt = await _get_transaction_receipt(hash)
+    return receipt.transaction_index
+  
 class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
     list_type = TokenTransfersList
 
@@ -509,20 +513,20 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
         coros = [
             token.scale,
             _get_symbol(token),
-            _get_transaction_receipt(decoded.transaction_hash)
+            _get_transaction_index(decoded.transaction_hash)
         ]
         if self.load_prices:
             coros.append(_get_price(token.address, decoded.block_number))
-            scale, symbol, receipt, price = await asyncio.gather(*coros)
+            scale, symbol, transaction_index, price = await asyncio.gather(*coros)
         else:
-            scale, symbol, receipt = await asyncio.gather(*coros)
+            scale, symbol, transaction_index = await asyncio.gather(*coros)
         
         sender, receiver, value = decoded.values()
         value = Decimal(value) / Decimal(scale)
         token_transfer = {
             'chainId': chain.id,
             'blockNumber': decoded.block_number,
-            'transactionIndex': receipt.transactionIndex,
+            'transactionIndex': transaction_index,
             'hash': decoded.transaction_hash.hex(),
             'log_index': decoded.log_index,
             'token': symbol,
