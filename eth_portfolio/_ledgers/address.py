@@ -238,9 +238,10 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                 prev_block_nonce = await self._get_nonce_at_block(lo - 1)
                 if prev_block_nonce < nonce:
                     logger.debug(f"Found nonce {nonce} at block {lo}")
-                    tx = dict(await self._get_transaction_by_nonce_and_block(nonce, lo))
+                    tx = await self._get_transaction_by_nonce_and_block(nonce, lo)
                     if tx is None:
                         return None
+                    tx = dict(tx)
                     tx['chainId'] = int(tx['chainId'], 16) if 'chainId' in tx else chain.id
                     tx['blockHash'] = tx['blockHash'].hex()
                     tx['hash'] = tx['hash'].hex()
