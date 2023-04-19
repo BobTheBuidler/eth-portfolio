@@ -441,7 +441,7 @@ async def _decode_token_transfer(log) -> _EventItem:
 
 async def _get_transaction_index(hash: str) -> int:
     receipt = await _get_transaction_receipt(hash)
-    return receipt.transaction_index
+    return receipt.transactionIndex
   
 class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
     list_type = TokenTransfersList
