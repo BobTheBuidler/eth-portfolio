@@ -29,7 +29,7 @@ from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
 from y.exceptions import ContractNotVerified, NonStandardERC20
 from y.utils.dank_mids import dank_w3
-from y.utils.events import decode_logs
+from y.utils.events import decode_logs, get_logs_asap_generator
 
 if TYPE_CHECKING:
     from eth_portfolio.address import PortfolioAddress
