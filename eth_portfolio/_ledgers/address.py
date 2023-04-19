@@ -482,7 +482,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
             )
             return
         
-        futs = [fut for futs in await asyncio.gather(*[self._get_futs(start_block, to_block, topics) for topics in self._topics]) for fut in futs]
+        futs = [fut for futs in await asyncio.gather(*[self._get_futs(start_block, end_block, topics) for topics in self._topics]) for fut in futs]
         
         if futs:
             for fut in tqdm_asyncio.as_completed(futs, desc=f"Token Transfers     {self.address}"):
@@ -497,9 +497,9 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
         if self.cached_thru is None or end_block > self.cached_thru:
             self.cached_thru = end_block
     
-    async def _get_futs(self, start_block, to_block, topics) -> List:
+    async def _get_futs(self, start_block, end_block, topics) -> List:
         futs = []
-        async for logs in get_logs_asap_generator(from_block=start_block, to_block=to_block, topics=topics, chronological=False):
+        async for logs in get_logs_asap_generator(from_block=start_block, to_block=end_block, topics=topics, chronological=False):
             futs.extend(asyncio.ensure_future(self._load_transfer(log)) for log in logs)
         return futs
     
