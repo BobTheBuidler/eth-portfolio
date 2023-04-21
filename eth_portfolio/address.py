@@ -1,7 +1,7 @@
 
 import asyncio
-import decimal
 import logging
+from decimal import Decimal, InvalidOperation
 from typing import TYPE_CHECKING, Dict, Optional
 
 import eth_retry
@@ -19,7 +19,7 @@ from eth_portfolio.protocols import _external
 from eth_portfolio.protocols.lending import _lending
 from eth_portfolio.typing import (Balance, RemoteTokenBalances, TokenBalances,
                                   WalletBalances)
-from eth_portfolio.utils import Decimal, _get_price
+from eth_portfolio.utils import _get_price
 
 if TYPE_CHECKING:
     from eth_portfolio.portfolio import Portfolio
@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 @eth_retry.auto_retry
-async def _get_eth_balance(address: Address, block: Optional[Block]) -> decimal.Decimal:
+async def _get_eth_balance(address: Address, block: Optional[Block]) -> Decimal:
     return Decimal(await dank_w3.eth.get_balance(address, block_identifier=block)) / Decimal(1e18)
 
 def _calc_value(balance, price) -> Decimal:
@@ -38,7 +38,7 @@ def _calc_value(balance, price) -> Decimal:
     value = Decimal(balance) * Decimal(price)
     try:
         return round(value, 18)
-    except decimal.InvalidOperation:
+    except InvalidOperation:
         return value
 
 class PortfolioAddress:
