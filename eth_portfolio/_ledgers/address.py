@@ -323,20 +323,17 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
         
         make_request = eth_retry.auto_retry(dank_w3.provider.make_request)
         
-        to_traces, from_traces = await asyncio.gather(
+        futs = []
+        for traces in asyncio.as_completed(
             make_request('trace_filter', [{"toAddress": [self.address],"fromBlock": hex(start_block), "toBlock": hex(end_block)}]),
             make_request('trace_filter', [{"fromAddress": [self.address],"fromBlock": hex(start_block), "toBlock": hex(end_block)}]),
-        )
-        to_traces = to_traces['result'] if "result" in to_traces else []
-        from_traces = from_traces['result'] if "result" in from_traces else []
+        ):
+            for trace in await traces:
+                if "result" in trace and "error" not in trace:
+                    futs.append(self._load_internal_transfer(trace))
 
-        # Remove reverts
-        new_internal_transfers = [transfer for transfer in to_traces + from_traces if 'error' not in transfer]
-        del to_traces
-        del from_traces
-
-        if new_internal_transfers:
-            for fut in tqdm_asyncio.as_completed([self._load_internal_transfer(tx) for tx in new_internal_transfers], desc=f"Internal Transfers  {self.address}"):
+        if futs:
+            for fut in tqdm_asyncio.as_completed(futs, desc=f"Internal Transfers  {self.address}"):
                 transfer = await fut
                 if transfer is not None:
                     self.objects.append(transfer)
