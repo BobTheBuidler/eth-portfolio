@@ -1,6 +1,8 @@
 import abc
 import asyncio
 import logging
+from functools import partial
+from itertools import product
 from typing import (TYPE_CHECKING, Any, Dict, Generic, List, Optional, Tuple,
                     Type, TypeVar, Union)
 
@@ -10,16 +12,7 @@ from brownie import chain
 from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem
 from dank_mids._config import semaphore_envs
-
 from eth_abi import encode_single
-from eth_portfolio._cache import cache_to_disk
-from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
-from eth_portfolio._shitcoins import SHITCOINS
-from eth_portfolio.constants import TRANSFER_SIGS, sync_threads
-from eth_portfolio.typing import (InternalTransferData, TokenTransferData,
-                                  TransactionData)
-from eth_portfolio.utils import (Decimal, PandableList, _get_price,
-                                 _unpack_indicies, get_buffered_chain_height)
 from eth_utils import encode_hex, to_checksum_address
 from pandas import DataFrame  # type: ignore
 from tqdm.asyncio import tqdm_asyncio
@@ -29,7 +22,16 @@ from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
 from y.exceptions import ContractNotVerified, NonStandardERC20
 from y.utils.dank_mids import dank_w3
-from y.utils.events import decode_logs, get_logs_asap_generator
+from y.utils.events import BATCH_SIZE, decode_logs, get_logs_asap_generator
+
+from eth_portfolio._cache import cache_to_disk
+from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
+from eth_portfolio._shitcoins import SHITCOINS
+from eth_portfolio.constants import TRANSFER_SIGS, sync_threads
+from eth_portfolio.typing import (InternalTransferData, TokenTransferData,
+                                  TransactionData)
+from eth_portfolio.utils import (Decimal, PandableList, _get_price,
+                                 _unpack_indicies, get_buffered_chain_height)
 
 if TYPE_CHECKING:
     from eth_portfolio.address import PortfolioAddress
@@ -302,6 +304,14 @@ class InternalTransfersList(PandableList[InternalTransferData]):
             df['chainId'] = chain.id
         return df
 
+
+trace_semaphore = asyncio.Semaphore(32)
+
+@eth_retry.auto_retry
+async def get_traces(params: list) -> List[dict]:
+    async with trace_semaphore:
+        return await dank_w3.provider.make_request("trace_filter", params)
+    
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
     list_type = InternalTransfersList
     
@@ -321,13 +331,13 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
             )
             return
         
-        make_request = eth_retry.auto_retry(dank_w3.provider.make_request)
+        block_ranges = [[i, i + BATCH_SIZE - 1] for i in range(start_block, end_block, BATCH_SIZE)]
         
         futs = []
-        for traces in asyncio.as_completed(
-            make_request('trace_filter', [{"toAddress": [self.address],"fromBlock": hex(start_block), "toBlock": hex(end_block)}]),
-            make_request('trace_filter', [{"fromAddress": [self.address],"fromBlock": hex(start_block), "toBlock": hex(end_block)}]),
-        ):
+        for traces in asyncio.as_completed([
+            get_traces([{direction: [self.address],"fromBlock": hex(start), "toBlock": hex(end)}])
+            for direction, (start, end) in product(["toAddress", "fromAddress"], block_ranges)
+        ]):
             for trace in await traces:
                 if "result" in trace and "error" not in trace:
                     futs.append(self._load_internal_transfer(trace))
