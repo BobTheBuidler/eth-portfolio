@@ -330,18 +330,17 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
                 self._load_new_objects(self.cached_from + 1, end_block)
             )
             return
-        
+
         block_ranges = [[i, i + BATCH_SIZE - 1] for i in range(start_block, end_block, BATCH_SIZE)]
-        
+
         futs = []
         for traces in asyncio.as_completed([
             get_traces([{direction: [self.address],"fromBlock": hex(start), "toBlock": hex(end)}])
             for direction, (start, end) in product(["toAddress", "fromAddress"], block_ranges)
         ]):
-            for trace in await traces:
-                if "result" in trace and "error" not in trace:
-                    futs.append(self._load_internal_transfer(trace))
-
+            if "result" in (traces := await traces):
+                futs.extend(self._load_internal_transfer(trace) for trace in traces if "error" not in trace)
+                
         if futs:
             for fut in tqdm_asyncio.as_completed(futs, desc=f"Internal Transfers  {self.address}"):
                 transfer = await fut
