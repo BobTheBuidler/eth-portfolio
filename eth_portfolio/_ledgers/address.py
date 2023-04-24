@@ -339,7 +339,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
             for direction, (start, end) in product(["toAddress", "fromAddress"], block_ranges)
         ]):
             if "result" in (traces := await traces):
-                futs.extend(self._load_internal_transfer(trace) for trace in traces if "error" not in trace)
+                futs.extend(self._load_internal_transfer(trace) for trace in traces["result"] if "error" not in trace)
                 
         if futs:
             for fut in tqdm_asyncio.as_completed(futs, desc=f"Internal Transfers  {self.address}"):
