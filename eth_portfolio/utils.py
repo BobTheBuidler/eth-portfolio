@@ -8,6 +8,7 @@ from functools import cached_property
 from types import ModuleType
 from typing import Dict, List, Optional, Tuple, Union
 
+import sqlite3
 from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
@@ -82,7 +83,7 @@ async def _get_price(token: Address, block: int = None) -> float:
             return 0
         return await get_price(token, block, silent=True, sync=False)
     # Raise these exceptions
-    except (InsufficientDataBytes, UnboundLocalError):
+    except (sqlite3.OperationalError, InsufficientDataBytes, UnboundLocalError):
         raise
     # Accept these exceptions
     except PriceError:
