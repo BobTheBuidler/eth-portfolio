@@ -312,6 +312,16 @@ async def get_traces(params: list) -> List[dict]:
     async with trace_semaphore:
         return await dank_w3.provider.make_request("trace_filter", params)
     
+checksums = {}
+
+def checksum(addr: str) -> str:
+    """We keep a mapping here to save cpu cycles, checksumming is arduous."""
+    try:
+        return checksums[addr]
+    except KeyError:
+        checksummed = checksums[addr] = to_checksum_address(addr)
+        return checksummed    
+
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
     list_type = InternalTransfersList
     
@@ -361,11 +371,11 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
         del receipt
         # Checksum the addresses
         if "from" in transfer:
-            transfer['from'] = to_checksum_address(transfer['from'])
+            transfer['from'] = checksum(transfer['from'])
         if "to" in transfer:
-            transfer['to'] = to_checksum_address(transfer['to'])
+            transfer['to'] = checksum(transfer['to'])
         if "address" in transfer:
-            transfer['address'] = to_checksum_address(transfer['address'])
+            transfer['address'] = checksum(transfer['address'])
 
 
         # Un-nest the action dict
