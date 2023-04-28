@@ -83,7 +83,7 @@ async def _get_price(token: Address, block: int = None) -> float:
             return 0
         return await get_price(token, block, silent=True, sync=False)
     # Raise these exceptions
-    except (OSError, FileNotFoundError, sqlite3.OperationalError, InsufficientDataBytes, UnboundLocalError):
+    except (OSError, FileNotFoundError, NotImplementedError, sqlite3.OperationalError, InsufficientDataBytes, UnboundLocalError):
         raise
     # Accept these exceptions
     except PriceError:
