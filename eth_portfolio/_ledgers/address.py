@@ -307,6 +307,7 @@ class InternalTransfersList(PandableList[InternalTransferData]):
 
 trace_semaphore = asyncio.Semaphore(32)
 
+@cache_to_disk
 @eth_retry.auto_retry
 async def get_traces(params: list) -> List[dict]:
     async with trace_semaphore:
