@@ -12,6 +12,7 @@ from brownie import chain
 from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem
 from dank_mids._config import semaphore_envs
+from dank_mids.requests import BadResponse
 from eth_abi import encode_single
 from eth_utils import encode_hex, to_checksum_address
 from pandas import DataFrame  # type: ignore
@@ -311,7 +312,10 @@ trace_semaphore = asyncio.Semaphore(32)
 @eth_retry.auto_retry
 async def get_traces(params: list) -> List[dict]:
     async with trace_semaphore:
-        return await dank_w3.provider.make_request("trace_filter", params)
+        traces = await dank_w3.provider.make_request("trace_filter", params)
+        if 'result' not in traces:
+            raise BadResponse(traces)
+        return [trace for trace in traces['result'] if "error" not in trace]
     
 checksums = {}
 
@@ -351,8 +355,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
 
         futs = []
         for traces in tqdm_asyncio.as_completed(trace_filter_coros, desc=f"Trace Filters       {self.address}"):
-            if "result" in (traces := await traces):
-                futs.extend(self._load_internal_transfer(trace) for trace in traces["result"] if "error" not in trace)
+            futs.extend(asyncio.ensure_future(self._load_internal_transfer(trace)) for trace in await traces)
                 
         if futs:
             for fut in tqdm_asyncio.as_completed(futs, desc=f"Internal Transfers  {self.address}"):
