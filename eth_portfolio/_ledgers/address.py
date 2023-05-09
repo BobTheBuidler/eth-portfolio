@@ -12,7 +12,6 @@ from brownie import chain
 from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem
 from dank_mids._config import semaphore_envs
-from dank_mids.requests import BadResponse
 from eth_abi import encode_single
 from eth_utils import encode_hex, to_checksum_address
 from pandas import DataFrame  # type: ignore
@@ -39,6 +38,9 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
+class BadResponse(Exception):
+    pass
+  
 class BlockRangeIsCached(Exception):
     pass
 
