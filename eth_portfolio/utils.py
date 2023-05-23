@@ -16,7 +16,7 @@ from eth_abi.exceptions import InsufficientDataBytes
 from pandas import DataFrame  # type: ignore
 from y import ERC20, Contract, Network
 from y.datatypes import Address, Block
-from y.exceptions import ContractNotVerified, NonStandardERC20, PriceError
+from y.exceptions import ContractNotVerified, NodeNotSynced, NonStandardERC20, PriceError
 from y.prices.magic import get_price
 from y.utils.dank_mids import dank_w3
 
@@ -83,7 +83,7 @@ async def _get_price(token: Address, block: int = None) -> float:
             return 0
         return await get_price(token, block, silent=True, sync=False)
     # Raise these exceptions
-    except (OSError, FileNotFoundError, NotImplementedError, sqlite3.OperationalError, InsufficientDataBytes, UnboundLocalError):
+    except (OSError, FileNotFoundError, NodeNotSynced, NotImplementedError, sqlite3.OperationalError, InsufficientDataBytes, UnboundLocalError):
         raise
     # Accept these exceptions
     except PriceError:
