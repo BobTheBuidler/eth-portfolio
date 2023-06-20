@@ -355,8 +355,11 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
             for direction, (start, end) in product(["toAddress", "fromAddress"], block_ranges)
         ]
 
+        # NOTE: We only want tqdm progress bar when there is a lot of work to do
+        generator_function = partial(tqdm_asyncio.as_completed, desc=f"Trace Filters       {self.address}") if len(block_ranges) > 1 else asyncio.
+
         futs = []
-        for traces in tqdm_asyncio.as_completed(trace_filter_coros, desc=f"Trace Filters       {self.address}"):
+        for traces in generator_function(trace_filter_coros):
             futs.extend(asyncio.ensure_future(self._load_internal_transfer(trace)) for trace in await traces)
                 
         if futs:
