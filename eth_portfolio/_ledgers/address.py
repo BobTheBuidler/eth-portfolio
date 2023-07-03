@@ -6,12 +6,12 @@ from itertools import product
 from typing import (TYPE_CHECKING, Any, Dict, Generic, List, Optional, Tuple,
                     Type, TypeVar, Union)
 
+import a_sync
 import eth_retry
 from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem
-from dank_mids._config import semaphore_envs
 from eth_abi import encode_single
 from eth_utils import encode_hex, to_checksum_address
 from pandas import DataFrame  # type: ignore
@@ -47,7 +47,7 @@ class BlockRangeIsCached(Exception):
 class BlockRangeOutOfBounds(Exception):
     pass
 
-receipt_semaphore = asyncio.Semaphore(semaphore_envs["eth_getTransaction"])
+receipt_semaphore = a_sync.Semaphore(300)
 
 @cache_to_disk
 @eth_retry.auto_retry
