@@ -3,4 +3,4 @@ dank_mids>=4.20.36
 eth_retry>=0.1.15,<1
 ez-a-sync>=0.5.1
 pandas>=1.4.3,<1.6
-ypricemagic>=2.1.6
+ypricemagic>=2.5.6
