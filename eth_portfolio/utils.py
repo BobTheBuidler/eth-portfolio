@@ -16,7 +16,7 @@ from eth_abi.exceptions import InsufficientDataBytes
 from pandas import DataFrame  # type: ignore
 from y import ERC20, Contract, Network
 from y.datatypes import Address, Block
-from y.exceptions import ContractNotVerified, NodeNotSynced, NonStandardERC20, PriceError
+from y.exceptions import ContractNotVerified, NodeNotSynced, NonStandardERC20, PriceError, yPriceMagicError
 from y.prices.magic import get_price
 from y.utils.dank_mids import dank_w3
 
@@ -77,24 +77,36 @@ async def _describe_err(token: Address, block: Optional[Block]) -> str:
 
     return f"malformed token {token} on {Network.name()} at {block}"
 
+_to_raise = (
+    OSError,
+    FileNotFoundError,
+    NodeNotSynced,
+    NotImplementedError,
+    sqlite3.OperationalError,
+    InsufficientDataBytes,
+    UnboundLocalError,
+    RuntimeError,
+)
+
 async def _get_price(token: Address, block: int = None) -> float:
     try:
         if await is_erc721(token):
             return 0
         return await get_price(token, block, silent=True, sync=False)
-    # Raise these exceptions
-    except (OSError, FileNotFoundError, NodeNotSynced, NotImplementedError, sqlite3.OperationalError, InsufficientDataBytes, UnboundLocalError, RuntimeError):
-        raise
-    # Accept these exceptions
-    except PriceError:
-        desc_str = await _describe_err(token, block)
-        logger.error(f'PriceError while fetching price for {desc_str}')
-    except NonStandardERC20:
-        logger.error(f'NonStandardERC20 while fetching price for {token}')
-    except Exception as e:
-        desc_str = await _describe_err(token, block)
-        logger.error(f'{e.__class__.__name__} while fetching price for {desc_str} | {e}')
-    return 0
+    except yPriceMagicError as e:
+        # Raise these exceptions
+        if isinstance(e.exception, _to_raise):
+            raise e.exception
+        # The exceptions below are acceptable enough
+        elif isinstance(e.exception, NonStandardERC20):
+            # Can't get symbol for handling like other excs
+            logger.warning(f'NonStandardERC20 while fetching price for {token}')
+        elif isinstance(e.exception, PriceError):
+            logger.warning(f'PriceError while fetching price for {await _describe_err(token, block)}')
+        else:
+            logger.warning(f'{e} while fetching price for {await _describe_err(token, block)}')
+            logger.warning(e, exc_info=True)
+        return 0
 
 @alru_cache(maxsize=None)
 async def is_erc721(token: Address) -> bool:
