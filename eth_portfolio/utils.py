@@ -95,7 +95,7 @@ async def _get_price(token: Address, block: int = None) -> float:
         return await get_price(token, block, silent=True, sync=False)
     except yPriceMagicError as e:
         # Raise these exceptions
-        if isinstance(e.exception, _to_raise):
+        if isinstance(e.exception, _to_raise) and not isinstance(e.exception, RecursionError):
             raise e.exception
         # The exceptions below are acceptable enough
         elif isinstance(e.exception, NonStandardERC20):
