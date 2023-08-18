@@ -38,7 +38,7 @@ class Compound(LendingProtocol):
         other_markets = [market for market in markets if hasattr(market,'underlying')]
 
         markets = gas_token_markets + other_markets
-        underlyings = [weth for market in gas_token_markets] + fetch_multicall(*[[market,'underlying'] for market in other_markets])
+        underlyings = [weth for market in gas_token_markets] + await asyncio.gather(*[market.underlying.coroutine() for market in other_markets])
 
         markets_zip = zip(markets,underlyings)
         self._markets, underlyings = [], []
