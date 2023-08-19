@@ -125,6 +125,10 @@ shitcoins = {
         "0xa51a8578052EdEB4Ced5333A5e058860d9E7a35b",
         "0x7a6b87D7a874Fce4c2d923b09C0E09e4936bcF57",
     ],
+    Network.Fantom: [
+        # generally looks like shit
+        "0x630277E37fd2Ddf81e4683f3692dD817aa6225Cb",
+    ],
 }
 
 SHITCOINS = {chain: {convert.to_address(token) for token in tokens} for chain, tokens in shitcoins.items()}
