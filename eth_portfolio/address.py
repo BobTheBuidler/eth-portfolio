@@ -131,11 +131,8 @@ class PortfolioAddress:
         return self._eth_balance_async(block) # type: ignore
 
     async def _eth_balance_async(self, block: Optional[Block]) -> Balance:
-        balance, price = await asyncio.gather(
-            _get_eth_balance(self.address, block),
-            get_price(weth, block, sync=False),
-        )
-        value = round(balance * Decimal(price), 18)
+        balance = await _get_eth_balance(self.address, block)
+        value = round(balance * Decimal(await get_price(weth, block, sync=False)), 18)
         return Balance(balance, value)
     
     @await_if_sync
@@ -144,10 +141,10 @@ class PortfolioAddress:
     
     async def _token_balances_async(self, block) -> TokenBalances:
         tokens = await self.token_transfers._list_tokens_at_block_async(block=block)
-        token_balances, token_prices = await asyncio.gather(
-            asyncio.gather(*[token.balance_of_readable(self.address, block, sync=False) for token in tokens]),
-            asyncio.gather(*[_get_price(token, block) for token in tokens]),
-        )
+        token_balances = await asyncio.gather(*[token.balance_of_readable(self.address, block, sync=False) for token in tokens])
+        tokens = [token for token, balance in zip(tokens, token_balances) if balance]
+        token_balances = [balance for balance in token_balances if balance]
+      , token_prices = await asyncio.gather(*[_get_price(token, block) for token in tokens])
         token_balances = [
             Balance(Decimal(balance), _calc_value(balance, price))
             for balance, price in zip(token_balances, token_prices)
