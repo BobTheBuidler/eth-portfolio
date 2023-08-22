@@ -132,7 +132,7 @@ class PortfolioAddress:
 
     async def _eth_balance_async(self, block: Optional[Block]) -> Balance:
         balance = await _get_eth_balance(self.address, block)
-        value = round(balance * Decimal(await get_price(weth, block, sync=False)), 18)
+        value = round(balance * Decimal(await get_price(weth, block, sync=False) if balance else 0), 18)
         return Balance(balance, value)
     
     @await_if_sync
