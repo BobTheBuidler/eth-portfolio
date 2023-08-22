@@ -144,7 +144,7 @@ class PortfolioAddress:
         token_balances = await asyncio.gather(*[token.balance_of_readable(self.address, block, sync=False) for token in tokens])
         tokens = [token for token, balance in zip(tokens, token_balances) if balance]
         token_balances = [balance for balance in token_balances if balance]
-      , token_prices = await asyncio.gather(*[_get_price(token, block) for token in tokens])
+        token_prices = await asyncio.gather(*[_get_price(token, block) for token in tokens])
         token_balances = [
             Balance(Decimal(balance), _calc_value(balance, price))
             for balance, price in zip(token_balances, token_prices)
