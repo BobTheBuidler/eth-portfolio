@@ -12,6 +12,7 @@ from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem
+from dank_mids.semaphores import BlockSemaphore
 from eth_abi import encode_single
 from eth_utils import encode_hex, to_checksum_address
 from pandas import DataFrame  # type: ignore
@@ -37,6 +38,8 @@ if TYPE_CHECKING:
     from eth_portfolio.address import PortfolioAddress
 
 logger = logging.getLogger(__name__)
+
+semaphore = BlockSemaphore(5_000, name='eth_portfolio')  # Some arbitrary number
 
 class BadResponse(Exception):
     pass
@@ -234,33 +237,34 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
         lo = 0
         hi = await dank_w3.eth.block_number
         while True:
-            _nonce = await self._get_nonce_at_block(lo)
-            if _nonce < nonce:
-                old_lo = lo
-                lo += int((hi - lo) / 2) or 1
-                logger.debug(f"Nonce at {old_lo} is {_nonce}, checking higher block {lo}")
-            elif _nonce >= nonce:
-                prev_block_nonce = await self._get_nonce_at_block(lo - 1)
-                if prev_block_nonce < nonce:
-                    logger.debug(f"Found nonce {nonce} at block {lo}")
-                    tx = await self._get_transaction_by_nonce_and_block(nonce, lo)
-                    if tx is None:
-                        return None
-                    tx = dict(tx)
-                    tx['chainId'] = int(tx['chainId'], 16) if 'chainId' in tx else chain.id
-                    tx['blockHash'] = tx['blockHash'].hex()
-                    tx['hash'] = tx['hash'].hex()
-                    tx['value'] = Decimal(tx['value']) / Decimal(1e18)
-                    tx['type'] = int(tx['type'], 16) if "type" in tx else None
-                    tx['r'] = tx['r'].hex()
-                    tx['s'] = tx['s'].hex()
-                    if self.load_prices:
-                        tx['price'] = round(Decimal(await get_price(EEE_ADDRESS, block = tx['blockNumber'], sync=False)), 18)
-                        tx['value_usd'] = tx['value'] * tx['price']
-                    return tx
-                hi = lo
-                lo = int(lo / 2)
-                logger.debug(f"Nonce at {hi} is {_nonce}, checking lower block {lo}")
+            async with semaphore[lo]:
+                _nonce = await self._get_nonce_at_block(lo)
+                if _nonce < nonce:
+                    old_lo = lo
+                    lo += int((hi - lo) / 2) or 1
+                    logger.debug(f"Nonce at {old_lo} is {_nonce}, checking higher block {lo}")
+                elif _nonce >= nonce:
+                    prev_block_nonce = await self._get_nonce_at_block(lo - 1)
+                    if prev_block_nonce < nonce:
+                        logger.debug(f"Found nonce {nonce} at block {lo}")
+                        tx = await self._get_transaction_by_nonce_and_block(nonce, lo)
+                        if tx is None:
+                            return None
+                        tx = dict(tx)
+                        tx['chainId'] = int(tx['chainId'], 16) if 'chainId' in tx else chain.id
+                        tx['blockHash'] = tx['blockHash'].hex()
+                        tx['hash'] = tx['hash'].hex()
+                        tx['value'] = Decimal(tx['value']) / Decimal(1e18)
+                        tx['type'] = int(tx['type'], 16) if "type" in tx else None
+                        tx['r'] = tx['r'].hex()
+                        tx['s'] = tx['s'].hex()
+                        if self.load_prices:
+                            tx['price'] = round(Decimal(await get_price(EEE_ADDRESS, block = tx['blockNumber'], sync=False)), 18)
+                            tx['value_usd'] = tx['value'] * tx['price']
+                        return tx
+                    hi = lo
+                    lo = int(lo / 2)
+                    logger.debug(f"Nonce at {hi} is {_nonce}, checking lower block {lo}")
     
     @eth_retry.auto_retry
     async def _get_transaction_by_nonce_and_block(self, nonce: int, block: Block) -> Optional[TxData]:
@@ -376,49 +380,50 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
             self.cached_thru = end_block
     
     async def _load_internal_transfer(self, transfer) -> Optional[Dict[str, Any]]:
-        receipt = await _get_transaction_receipt(transfer['transactionHash'])
-        if receipt.status == 0:
-            return None
-        del receipt
-        # Checksum the addresses
-        if "from" in transfer:
-            transfer['from'] = checksum(transfer['from'])
-        if "to" in transfer:
-            transfer['to'] = checksum(transfer['to'])
-        if "address" in transfer:
-            transfer['address'] = checksum(transfer['address'])
-
-
-        # Un-nest the action dict
-        if 'action' in transfer and transfer['action'] is not None:
-            for k in list(transfer['action'].keys()):
-                assert k not in transfer
-                transfer[k] = transfer['action'][k]
-                del transfer['action'][k]
-            if transfer['action']:
-                raise ValueError(transfer['action'])
-            del transfer['action']
-
-        # Un-nest the result dict
-        if 'result' in transfer and transfer['result'] is not None:
-            for k in list(transfer['result'].keys()):
-                assert k not in transfer
-                transfer[k] = transfer['result'][k]
-                del transfer['result'][k]
-            if transfer['result']:
-                raise ValueError(transfer['result'])
-            del transfer['result']
+        async with semaphore[transfer['blockNumber']]:
+            receipt = await _get_transaction_receipt(transfer['transactionHash'])
+            if receipt.status == 0:
+                return None
+            del receipt
+            # Checksum the addresses
+            if "from" in transfer:
+                transfer['from'] = checksum(transfer['from'])
+            if "to" in transfer:
+                transfer['to'] = checksum(transfer['to'])
+            if "address" in transfer:
+                transfer['address'] = checksum(transfer['address'])
     
-        transfer['value'] = Decimal(int(transfer['value'], 16)) / Decimal(1e18)
-        transfer['gas'] = int(transfer['gas'], 16)
-        transfer['gasUsed'] = int(transfer['gasUsed'], 16) if transfer['gasUsed'] else None
-
-        if self.load_prices:
-            price = await _get_price(EEE_ADDRESS, transfer['blockNumber'])
-            price = round(Decimal(price), 18)
-            transfer['price'] = price
-            transfer['value_usd'] = round(transfer['value'] * price, 18)
-        return transfer
+    
+            # Un-nest the action dict
+            if 'action' in transfer and transfer['action'] is not None:
+                for k in list(transfer['action'].keys()):
+                    assert k not in transfer
+                    transfer[k] = transfer['action'][k]
+                    del transfer['action'][k]
+                if transfer['action']:
+                    raise ValueError(transfer['action'])
+                del transfer['action']
+    
+            # Un-nest the result dict
+            if 'result' in transfer and transfer['result'] is not None:
+                for k in list(transfer['result'].keys()):
+                    assert k not in transfer
+                    transfer[k] = transfer['result'][k]
+                    del transfer['result'][k]
+                if transfer['result']:
+                    raise ValueError(transfer['result'])
+                del transfer['result']
+        
+            transfer['value'] = Decimal(int(transfer['value'], 16)) / Decimal(1e18)
+            transfer['gas'] = int(transfer['gas'], 16)
+            transfer['gasUsed'] = int(transfer['gasUsed'], 16) if transfer['gasUsed'] else None
+    
+            if self.load_prices:
+                price = await _get_price(EEE_ADDRESS, transfer['blockNumber'])
+                price = round(Decimal(price), 18)
+                transfer['price'] = price
+                transfer['value_usd'] = round(transfer['value'] * price, 18)
+            return transfer
 
 
 shitcoins = SHITCOINS.get(chain.id, set())
@@ -533,42 +538,43 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
     async def _load_transfer(self, transfer_log) -> Optional[Dict[str, Any]]:
         if transfer_log.address in shitcoins:
             return None
-        decoded = await _decode_token_transfer(transfer_log)
-        if decoded is None:
-            return None
-        token = ERC20(decoded.address, asynchronous=True)
-        coros = [
-            token.scale,
-            _get_symbol(token),
-            _get_transaction_index(decoded.transaction_hash)
-        ]
-        if self.load_prices:
-            coros.append(_get_price(token.address, decoded.block_number))
-            scale, symbol, transaction_index, price = await asyncio.gather(*coros)
-        else:
-            scale, symbol, transaction_index = await asyncio.gather(*coros)
-        
-        sender, receiver, value = decoded.values()
-        value = Decimal(value) / Decimal(scale)
-        token_transfer = {
-            'chainId': chain.id,
-            'blockNumber': decoded.block_number,
-            'transactionIndex': transaction_index,
-            'hash': decoded.transaction_hash.hex(),
-            'log_index': decoded.log_index,
-            'token': symbol,
-            'token_address': decoded.address,
-            'from': sender,
-            'to': receiver,
-            'value': value,
-        }
-        if self.load_prices:
-            try:
-                price = round(Decimal(price), 18) if price else None
-            except Exception as e:
-                logger.error(f"{e.__class__.__name__} {e} for {symbol} {decoded.address} at block {decoded.block_number}.")
-                price = None
-            token_transfer['price'] = price
-            token_transfer['value_usd'] = round(value * price, 18) if price else None
-        return token_transfer
+        async with semaphore[transfer_log["blockNumber"]]:
+            decoded = await _decode_token_transfer(transfer_log)
+            if decoded is None:
+                return None
+            token = ERC20(decoded.address, asynchronous=True)
+            coros = [
+                token.scale,
+                _get_symbol(token),
+                _get_transaction_index(decoded.transaction_hash)
+            ]
+            if self.load_prices:
+                coros.append(_get_price(token.address, decoded.block_number))
+                scale, symbol, transaction_index, price = await asyncio.gather(*coros)
+            else:
+                scale, symbol, transaction_index = await asyncio.gather(*coros)
+            
+            sender, receiver, value = decoded.values()
+            value = Decimal(value) / Decimal(scale)
+            token_transfer = {
+                'chainId': chain.id,
+                'blockNumber': decoded.block_number,
+                'transactionIndex': transaction_index,
+                'hash': decoded.transaction_hash.hex(),
+                'log_index': decoded.log_index,
+                'token': symbol,
+                'token_address': decoded.address,
+                'from': sender,
+                'to': receiver,
+                'value': value,
+            }
+            if self.load_prices:
+                try:
+                    price = round(Decimal(price), 18) if price else None
+                except Exception as e:
+                    logger.error(f"{e.__class__.__name__} {e} for {symbol} {decoded.address} at block {decoded.block_number}.")
+                    price = None
+                token_transfer['price'] = price
+                token_transfer['value_usd'] = round(value * price, 18) if price else None
+            return token_transfer
 
