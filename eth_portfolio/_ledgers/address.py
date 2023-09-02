@@ -39,7 +39,7 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
-semaphore = BlockSemaphore(5_000, name='eth_portfolio')  # Some arbitrary number
+semaphore = BlockSemaphore(500, name='eth_portfolio')  # Some arbitrary number
 
 class BadResponse(Exception):
     pass
@@ -50,7 +50,7 @@ class BlockRangeIsCached(Exception):
 class BlockRangeOutOfBounds(Exception):
     pass
 
-receipt_semaphore = a_sync.Semaphore(300)
+receipt_semaphore = a_sync.Semaphore(50)
 
 @cache_to_disk
 @eth_retry.auto_retry
