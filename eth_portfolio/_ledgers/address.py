@@ -175,10 +175,13 @@ class AddressLedgerBase(Generic[_LedgerEntryList], metaclass=abc.ABCMeta):
             start_block: {start_block} end_block: {end_block} cached_from: {self.cached_from} cached_thru: {self.cached_thru}""")
     
 
+full_block_semaphore = asyncio.Semaphore(10)
+
 @eth_retry.auto_retry
 async def _get_block_transactions(block: Block) -> List[TxData]:
-    block = await dank_w3.eth.get_block(block, full_transactions=True)
-    return block.transactions
+    async with full_block_semaphore:
+        block = await dank_w3.eth.get_block(block, full_transactions=True)
+        return block.transactions
 
 class TransactionsList(PandableList[TransactionData]):
     def __init__(self):
