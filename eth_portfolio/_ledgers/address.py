@@ -39,7 +39,9 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
-semaphore = BlockSemaphore(500, name='eth_portfolio')  # Some arbitrary number
+transaction_semaphore = BlockSemaphore(100, name='eth_portfolio.transactions')  # Some arbitrary number
+internal_transfer_semaphore = BlockSemaphore(2_000, name='eth_portfolio.internal_transfers')  # Some arbitrary number
+token_transfer_semaphore = BlockSemaphore(5_000, name='eth_portfolio.token_transfers')  # Some arbitrary number
 
 class BadResponse(Exception):
     pass
@@ -52,8 +54,8 @@ class BlockRangeOutOfBounds(Exception):
 
 receipt_semaphore = a_sync.Semaphore(50)
 
-@cache_to_disk
 @eth_retry.auto_retry
+@cache_to_disk
 async def _get_transaction_receipt(txhash: str) -> TxReceipt:
     async with receipt_semaphore:
         return await dank_w3.eth.get_transaction_receipt(txhash)
@@ -240,7 +242,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
         lo = 0
         hi = await dank_w3.eth.block_number
         while True:
-            async with semaphore[lo]:
+            async with transaction_semaphore[lo]:
                 _nonce = await self._get_nonce_at_block(lo)
                 if _nonce < nonce:
                     old_lo = lo
@@ -383,7 +385,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
             self.cached_thru = end_block
     
     async def _load_internal_transfer(self, transfer) -> Optional[Dict[str, Any]]:
-        async with semaphore[transfer['blockNumber']]:
+        async with internal_transfer_semaphore[transfer['blockNumber']]:
             receipt = await _get_transaction_receipt(transfer['transactionHash'])
             if receipt.status == 0:
                 return None
@@ -541,7 +543,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
     async def _load_transfer(self, transfer_log) -> Optional[Dict[str, Any]]:
         if transfer_log.address in shitcoins:
             return None
-        async with semaphore[transfer_log["blockNumber"]]:
+        async with token_transfer_semaphore[transfer_log["blockNumber"]]:
             decoded = await _decode_token_transfer(transfer_log)
             if decoded is None:
                 return None
