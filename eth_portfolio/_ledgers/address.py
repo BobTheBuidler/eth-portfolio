@@ -40,7 +40,6 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 transaction_semaphore = BlockSemaphore(100, name='eth_portfolio.transactions')  # Some arbitrary number
-internal_transfer_semaphore = BlockSemaphore(2_000, name='eth_portfolio.internal_transfers')  # Some arbitrary number
 token_transfer_semaphore = BlockSemaphore(5_000, name='eth_portfolio.token_transfers')  # Some arbitrary number
 
 class BadResponse(Exception):
@@ -385,51 +384,49 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
             self.cached_thru = end_block
     
     async def _load_internal_transfer(self, transfer) -> Optional[Dict[str, Any]]:
-        async with internal_transfer_semaphore[transfer['blockNumber']]:
-            receipt = await _get_transaction_receipt(transfer['transactionHash'])
-            if receipt.status == 0:
-                return None
-            del receipt
-            # Checksum the addresses
-            if "from" in transfer:
-                transfer['from'] = checksum(transfer['from'])
-            if "to" in transfer:
-                transfer['to'] = checksum(transfer['to'])
-            if "address" in transfer:
-                transfer['address'] = checksum(transfer['address'])
-    
-    
-            # Un-nest the action dict
-            if 'action' in transfer and transfer['action'] is not None:
-                for k in list(transfer['action'].keys()):
-                    assert k not in transfer
-                    transfer[k] = transfer['action'][k]
-                    del transfer['action'][k]
-                if transfer['action']:
-                    raise ValueError(transfer['action'])
-                del transfer['action']
-    
-            # Un-nest the result dict
-            if 'result' in transfer and transfer['result'] is not None:
-                for k in list(transfer['result'].keys()):
-                    assert k not in transfer
-                    transfer[k] = transfer['result'][k]
-                    del transfer['result'][k]
-                if transfer['result']:
-                    raise ValueError(transfer['result'])
-                del transfer['result']
-        
-            transfer['value'] = Decimal(int(transfer['value'], 16)) / Decimal(1e18)
-            transfer['gas'] = int(transfer['gas'], 16)
-            transfer['gasUsed'] = int(transfer['gasUsed'], 16) if transfer['gasUsed'] else None
-    
-            if self.load_prices:
-                price = await _get_price(EEE_ADDRESS, transfer['blockNumber'])
-                price = round(Decimal(price), 18)
-                transfer['price'] = price
-                transfer['value_usd'] = round(transfer['value'] * price, 18)
-            return transfer
+        receipt = await _get_transaction_receipt(transfer['transactionHash'])
+        if receipt.status == 0:
+            return None
+        del receipt
+        # Checksum the addresses
+        if "from" in transfer:
+            transfer['from'] = checksum(transfer['from'])
+        if "to" in transfer:
+            transfer['to'] = checksum(transfer['to'])
+        if "address" in transfer:
+            transfer['address'] = checksum(transfer['address'])
 
+
+        # Un-nest the action dict
+        if 'action' in transfer and transfer['action'] is not None:
+            for k in list(transfer['action'].keys()):
+                assert k not in transfer
+                transfer[k] = transfer['action'][k]
+                del transfer['action'][k]
+            if transfer['action']:
+                raise ValueError(transfer['action'])
+            del transfer['action']
+
+        # Un-nest the result dict
+        if 'result' in transfer and transfer['result'] is not None:
+            for k in list(transfer['result'].keys()):
+                assert k not in transfer
+                transfer[k] = transfer['result'][k]
+                del transfer['result'][k]
+            if transfer['result']:
+                raise ValueError(transfer['result'])
+            del transfer['result']
+    
+        transfer['value'] = Decimal(int(transfer['value'], 16)) / Decimal(1e18)
+        transfer['gas'] = int(transfer['gas'], 16)
+        transfer['gasUsed'] = int(transfer['gasUsed'], 16) if transfer['gasUsed'] else None
+
+        if self.load_prices:
+            price = await _get_price(EEE_ADDRESS, transfer['blockNumber'])
+            price = round(Decimal(price), 18)
+            transfer['price'] = price
+            transfer['value_usd'] = round(transfer['value'] * price, 18)
+        return transfer
 
 shitcoins = SHITCOINS.get(chain.id, set())
 
