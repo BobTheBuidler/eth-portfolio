@@ -113,7 +113,7 @@ class AddressLedgerBase(Generic[_LedgerEntryList], metaclass=abc.ABCMeta):
         await self._get_new_objects(start_block, end_block)
         objects = self.list_type()
         for obj in self.objects:
-            block = obj['blockNumber']
+            block = obj.block_number
             if block < start_block:
                 continue
             elif block > end_block:
