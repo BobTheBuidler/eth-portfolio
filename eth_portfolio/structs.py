@@ -14,8 +14,8 @@ class _LedgerEntryBase(Struct, kw_only=True):
     from_address: Optional[Address]
     to_address: Optional[Address]
     value: Decimal
-    price: Optional[Decimal]
-    value_usd: Optional[Decimal]
+    price: Optional[Decimal] = None
+    value_usd: Optional[Decimal] = None
 
 class Transaction(_LedgerEntryBase, kw_only=True):
     block_hash: str
