@@ -1,12 +1,18 @@
 from decimal import Decimal
-from typing import Optional
+from typing import Any, Iterator, Optional
 
 from msgspec import Struct
 from y import Network
 from y.datatypes import Address, Block
 
 
-class _LedgerEntryBase(Struct, kw_only=True):
+class _DictStruct(Struct):
+    def keys(self) -> Iterator[str]:
+        return iter(self.__struct_fields__)
+    def __getitem__(self, item: str) -> Any:
+        return getattr(self, item)
+    
+class _LedgerEntryBase(_DictStruct, kw_only=True):
     chainid: Network
     block_number: Block
     transaction_index: int
@@ -16,6 +22,7 @@ class _LedgerEntryBase(Struct, kw_only=True):
     value: Decimal
     price: Optional[Decimal] = None
     value_usd: Optional[Decimal] = None
+    
 
 class Transaction(_LedgerEntryBase, kw_only=True):
     block_hash: str
@@ -28,6 +35,7 @@ class Transaction(_LedgerEntryBase, kw_only=True):
     s: str
     v: str
 
+
 class InternalTransfer(_LedgerEntryBase, kw_only=True):
     block_hash: str
     type: str
@@ -39,6 +47,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True):
     output: str
     subtraces: int
     address: Address = None
+
 
 class TokenTransfer(_LedgerEntryBase, kw_only=True):
     log_index: int
