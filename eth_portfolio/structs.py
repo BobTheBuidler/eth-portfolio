@@ -1,3 +1,4 @@
+import logging
 from decimal import Decimal
 from typing import Any, Iterator, Optional
 
@@ -5,6 +6,7 @@ from msgspec import Struct
 from y import Network
 from y.datatypes import Address, Block
 
+logger = logging.getLogger(__name__)
 
 class _DictStruct(Struct):
     def keys(self) -> Iterator[str]:
@@ -46,7 +48,12 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True):
     input: str
     output: str
     subtraces: int
+    init: Optional[str] = None
     address: Address = None
+    # TEMP
+    def __post_init__(self) -> None:
+        logger.info(self.init)
+        logger.info(type(self.init))
 
 
 class TokenTransfer(_LedgerEntryBase, kw_only=True):
