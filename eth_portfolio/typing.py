@@ -22,13 +22,12 @@ class _SummableNonNumeric(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def __add__(self: _T, other: Union[_T, Literal[0]]) -> _T:
         ...
-    def __radd__(self: _T, other: Union[_T, Literal[0]]) -> _T:
+    def __radd__(self, other: Union[_T, Literal[0]]) -> _T:
         if other == 0:
             return self
         return self.__add__(other)  # type: ignore
 
-
-class Balance(Struct, _SummableNonNumeric):
+class Balance(Struct):
     balance: Decimal = Decimal(0)
     usd_value: Decimal = Decimal(0)
     
@@ -45,6 +44,11 @@ class Balance(Struct, _SummableNonNumeric):
             return Balance(balance = self.balance + other.balance, usd_value = self.usd_value + other.usd_value)
         except Exception as e:
             raise e.__class__(f"Cannot add {self} and {other}: {e}") from e
+    
+    def __radd__(self, other: Union['Balance', Literal[0]]) -> 'Balance':
+        if other == 0:
+            return self
+        return self.__add__(other)  # type: ignore
     
     def __sub__(self, other: Union['Balance', Literal[0]]) -> 'Balance':
         """ It is on you to ensure the two BalanceItems are for the same token. """
