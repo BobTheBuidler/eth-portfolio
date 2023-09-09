@@ -197,7 +197,7 @@ def insert_token_transfer(token_transfer: TokenTransfer) -> None:
         transaction_index = token_transfer.transaction_index,
         log_index = token_transfer.log_index,
         hash = token_transfer.hash,
-        token = get_token_extended(token_transfer.token_address, sync=True),
+        token = get_token(token_transfer.token_address, sync=True),
         from_address = get_address(token_transfer.from_address, sync=True),
         to_address = get_address(token_transfer.to_address, sync=True),
         value = token_transfer.value,
