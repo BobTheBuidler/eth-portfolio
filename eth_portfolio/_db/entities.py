@@ -6,22 +6,22 @@ from y._db.entities import Address, Block, Token, db
 
 
 class BlockExtended(Block):
-    transactions = Set("Transaction")
-    internal_transfers = Set("InternalTransfer")
-    token_transfers = Set("TokenTransfer")
+    transactions = Set("Transaction", reverse='block')
+    internal_transfers = Set("InternalTransfer", reverse='block')
+    token_transfers = Set("TokenTransfer", reverse='block')
 
 class TokenExtended(Token):
-    transfers = Set("TokenTransfer")
+    transfers = Set("TokenTransfer", reverse='token')
 
 class AddressExtended(Address):
-    transactions_sent = Set("Transaction")
-    transactions_received = Set("Transaction")
-    internal_transfers_sent = Set("InternalTransfer")
-    internal_transfers_received = Set("InternalTransfer")
-    token_transfers_sent = Set("TokenTransfer")
-    token_transfers_received = Set("TokenTransfer")
-    traces = Set("InternalTransfer")
-    _not_sure_what_this_field_is = Set("InternalTransfer")
+    transactions_sent = Set("Transaction", reverse='from_address')
+    transactions_received = Set("Transaction", reverse='to_address')
+    internal_transfers_sent = Set("InternalTransfer", reverse='from_address')
+    internal_transfers_received = Set("InternalTransfer", reverse='to_address')
+    token_transfers_sent = Set("TokenTransfer", reverse='from_address')
+    token_transfers_received = Set("TokenTransfer", reverse='to_address')
+    traces = Set("InternalTransfer", reverse='trace_address')
+    _not_sure_what_this_field_is = Set("InternalTransfer", reverse='address')
 
 class Transaction(db.Entity):
     _id = PrimaryKey(int, auto=True)
