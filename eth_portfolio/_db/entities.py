@@ -21,7 +21,7 @@ class AddressExtended(Address):
     token_transfers_sent = Set("TokenTransfer")
     token_transfers_received = Set("TokenTransfer")
     traces = Set("InternalTransfer")
-    _ = Set("InternalTransfer")
+    _not_sure_what_this_field_is = Set("InternalTransfer")
 
 class Transaction(db.Entity):
     _id = PrimaryKey(int, auto=True)
@@ -70,7 +70,7 @@ class InternalTransfer(db.Entity, kw_only=True):
     input = Required(str)
     output = Required(str)
     subtraces = Required(int)
-    address = Required(Address, reverse='_')
+    address = Required(Address, reverse='_not_sure_what_this_field_is')
     
     composite_key(block, transaction_index, trace_address)
     
