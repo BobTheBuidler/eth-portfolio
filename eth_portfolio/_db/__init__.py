@@ -1,11 +1,11 @@
-from pony.orm import OperationalError
+from pony.orm import BindingError, OperationalError
 from y._db.config import connection_settings
 
 from eth_portfolio._db.entities import db
 
 try:
     db.bind(**connection_settings, create_db=True)
-except TypeError as e:
+except BindingError as e:
     if not str(e).startswith('Database object was already bound to'):
         raise e
 try:
