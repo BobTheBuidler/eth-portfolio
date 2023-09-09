@@ -537,9 +537,9 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
         if transfer_log.address in shitcoins:
             return None
         
-        if transfer := await get_token_transfer():
+        if transfer := await get_token_transfer(transfer_log):
             if self.load_prices and transfer.price is None:
-                await delete_token_transfer()
+                await delete_token_transfer(transfer)
             else:
                 return transfer
         
