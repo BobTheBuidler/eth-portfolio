@@ -25,11 +25,11 @@ class AddressExtended(Address):
 
 class Transaction(db.Entity):
     _id = PrimaryKey(int, auto=True)
-    block = Required(Block, lazy=True, reverse='transactions')
+    block = Required(BlockExtended, lazy=True, reverse='transactions')
     transaction_index = Required(int, lazy=True)
     hash = Required(str, index=True, lazy=True)
-    from_address = Optional(Address, index=True, lazy=True, reverse='transactions_sent')
-    to_address = Optional(Address, index=True, lazy=True, reverse='transactions_received')
+    from_address = Optional(AddressExtended, index=True, lazy=True, reverse='transactions_sent')
+    to_address = Optional(AddressExtended, index=True, lazy=True, reverse='transactions_received')
     value = Required(Decimal, 38, 18, lazy=True)
     price = Optional(Decimal, 38, 18, lazy=True)
     value_usd = Optional(Decimal, 38, 18, lazy=True)
@@ -52,11 +52,11 @@ class InternalTransfer(db.Entity):
     _id = PrimaryKey(int, auto=True)
     
     # common
-    block = Required(Block, lazy=True, reverse='internal_transfers')
+    block = Required(BlockExtended, lazy=True, reverse='internal_transfers')
     transaction_index = Required(int, lazy=True)
     hash = Required(str, lazy=True)
-    from_address = Optional(Address, index=True, lazy=True, reverse='internal_transfers_sent')
-    to_address = Optional(Address, index=True, lazy=True, reverse='internal_transfers_received')
+    from_address = Optional(AddressExtended, index=True, lazy=True, reverse='internal_transfers_sent')
+    to_address = Optional(AddressExtended, index=True, lazy=True, reverse='internal_transfers_received')
     value = Required(Decimal, 38, 18, lazy=True)
     price = Optional(Decimal, 38, 18, lazy=True)
     value_usd = Optional(Decimal, 38, 18, lazy=True)
@@ -64,13 +64,13 @@ class InternalTransfer(db.Entity):
     # unique
     type = Required(str, lazy=True)
     call_type = Required(str, lazy=True)
-    trace_address = Required(Address, lazy=True, reverse='traces')
+    trace_address = Required(AddressExtended, lazy=True, reverse='traces')
     gas = Required(int, lazy=True)
     gas_used = Optional(int, lazy=True)
     input = Required(str, lazy=True)
     output = Required(str, lazy=True)
     subtraces = Required(int, lazy=True)
-    address = Required(Address, lazy=True, reverse='_not_sure_what_this_field_is')
+    address = Required(AddressExtended, lazy=True, reverse='_not_sure_what_this_field_is')
     
     composite_key(block, transaction_index, trace_address)
     
@@ -80,18 +80,18 @@ class TokenTransfer(db.Entity):
     _id = PrimaryKey(int, auto=True)
     
     # common
-    block = Required(Block, lazy=True, reverse='token_transfers')
+    block = Required(BlockExtended, lazy=True, reverse='token_transfers')
     transaction_index = Required(int, lazy=True)
     hash = Required(str, lazy=True)
-    from_address = Optional(Address, index=True, lazy=True, reverse='token_transfers_sent')
-    to_address = Optional(Address, index=True, lazy=True, reverse='token_transfers_received')
+    from_address = Optional(AddressExtended, index=True, lazy=True, reverse='token_transfers_sent')
+    to_address = Optional(AddressExtended, index=True, lazy=True, reverse='token_transfers_received')
     value = Required(Decimal, 38, 18, lazy=True)
     price = Optional(Decimal, 38, 18, lazy=True)
     value_usd = Optional(Decimal, 38, 18, lazy=True)
     
     # unique
     log_index = Required(int, lazy=True)
-    token = Optional(Token, index=True, lazy=True, reverse='transfers')
+    token = Optional(TokenExtended, index=True, lazy=True, reverse='transfers')
     
     composite_key(block, transaction_index, log_index)
     
