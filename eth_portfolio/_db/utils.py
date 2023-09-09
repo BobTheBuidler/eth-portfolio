@@ -65,7 +65,7 @@ def get_address(address: str) -> entities.Block:
     elif isinstance(entity, Contract):
         entity_type = entities.ContractExtended
     if entity:
-        del entity
+        entity.delete()
             
     with suppress(TransactionIntegrityError):
         entity_type(chain=chain, address=address)
