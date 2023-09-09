@@ -27,12 +27,11 @@ from y.exceptions import ContractNotVerified, NonStandardERC20
 from y.utils.dank_mids import dank_w3
 from y.utils.events import BATCH_SIZE, decode_logs, get_logs_asap_generator
 
+import eth_portfolio._db.utils as db
 from eth_portfolio._cache import cache_to_disk
-from eth_portfolio._db import entities
 from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
 from eth_portfolio._shitcoins import SHITCOINS
-from eth_portfolio.constants import TRANSFER_SIGS, sync_threads
-from eth_portfolio._db.utils import get_token_transfer, insert_token_transfer, delete_token_transfer
+from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 from eth_portfolio.utils import (Decimal, PandableList, _get_price,
                                  _unpack_indicies, get_buffered_chain_height)
@@ -239,6 +238,11 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
     @cache_to_disk
     @eth_retry.auto_retry
     async def _get_transaction_by_nonce(self, nonce: int) -> Optional[Transaction]:
+        if transaction := await db.get_transaction(self.address, nonce):
+            if self.load_prices and transaction.price is None:
+                await db.delete_transaction(transaction)
+            else:
+                return transaction
         lo = 0
         hi = await dank_w3.eth.block_number
         while True:
@@ -268,7 +272,9 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                         if self.load_prices:
                             tx['price'] = round(Decimal(await get_price(EEE_ADDRESS, block = tx['blockNumber'], sync=False)), 18)
                             tx['value_usd'] = tx['value'] * tx['price']
-                        return Transaction(**{inflection.underscore(k): v for k, v in tx.items()})
+                        transaction = Transaction(**{inflection.underscore(k): v for k, v in tx.items()})
+                        await db.insert_transaction(transaction)
+                        return transaction
                     hi = lo
                     lo = int(lo / 2)
                     logger.debug(f"Nonce at {hi} is {_nonce}, checking lower block {lo}")
@@ -537,9 +543,9 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
         if transfer_log.address in shitcoins:
             return None
         
-        if transfer := await get_token_transfer(transfer_log):
+        if transfer := await db.get_token_transfer(transfer_log):
             if self.load_prices and transfer.price is None:
-                await delete_token_transfer(transfer)
+                await db.delete_token_transfer(transfer)
             else:
                 return transfer
         
@@ -584,6 +590,6 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
                 token_transfer['value_usd'] = round(value * price, 18) if price else None
             
             transfer = TokenTransfer(**token_transfer)
-            await insert_token_transfer(transfer)
+            await db.insert_token_transfer(transfer)
             return transfer
 
