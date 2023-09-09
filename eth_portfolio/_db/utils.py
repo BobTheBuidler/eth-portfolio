@@ -6,9 +6,7 @@ from a_sync import a_sync
 from msgspec import json
 from pony.orm import (BindingError, OperationalError,
                       TransactionIntegrityError, commit, db_session)
-from y._db.config import connection_settings
-from y._db.entities import Contract, Token
-from y.contracts import is_contract
+import y._db.config as config
 
 from eth_portfolio._db import entities
 from eth_portfolio._db.entities import db
@@ -17,7 +15,7 @@ from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 logger = logging.getLogger(__name__)
 
 try:
-    db.bind(**connection_settings, create_db=True)
+    db.bind(**config.connection_settings, create_db=True)
 except BindingError as e:
     if not str(e).startswith('Database object was already bound to'):
         raise e
@@ -29,6 +27,8 @@ except OperationalError as e:
         raise e
     raise OperationalError("Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script")
 
+from y._db.entities import Contract, Token
+from y.contracts import is_contract
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
 from y._db.utils import *
 
