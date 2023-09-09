@@ -8,6 +8,7 @@ from typing import (TYPE_CHECKING, Any, Dict, Generic, List, Optional, Tuple,
 
 import a_sync
 import eth_retry
+import inflection
 from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
@@ -29,8 +30,7 @@ from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
 from eth_portfolio._shitcoins import SHITCOINS
 from eth_portfolio.constants import TRANSFER_SIGS, sync_threads
-from eth_portfolio.typing import (InternalTransferData, TokenTransferData,
-                                  TransactionData)
+from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 from eth_portfolio.utils import (Decimal, PandableList, _get_price,
                                  _unpack_indicies, get_buffered_chain_height)
 
@@ -113,7 +113,7 @@ class AddressLedgerBase(Generic[_LedgerEntryList], metaclass=abc.ABCMeta):
         await self._get_new_objects(start_block, end_block)
         objects = self.list_type()
         for obj in self.objects:
-            block = obj['blockNumber']
+            block = obj.block_number
             if block < start_block:
                 continue
             elif block > end_block:
@@ -184,7 +184,7 @@ async def _get_block_transactions(block: Block) -> List[TxData]:
         block = await dank_w3.eth.get_block(block, full_transactions=True)
         return block.transactions
 
-class TransactionsList(PandableList[TransactionData]):
+class TransactionsList(PandableList[Transaction]):
     def __init__(self):
         super().__init__()
     
@@ -216,17 +216,15 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
         nonces = list(range(self.cached_thru_nonce + 1, end_block_nonce + 1))
 
         if nonces:
+            transaction: Transaction
             for fut in tqdm_asyncio.as_completed([self._get_transaction_by_nonce(nonce) for nonce in nonces], desc=f"Transactions        {self.address}"):
                 transaction = await fut
                 if transaction is not None:
-                    # Not sure what this does, it might just be an old debugging thing but lets leave it here to be safe
-                    if transaction['price'] is None:
-                        raise transaction
                     self.objects.append(transaction)
             
             if self.objects:
-                self.objects.sort(key=lambda x: x['nonce'])
-                self.cached_thru_nonce = self.objects[-1]['nonce']
+                self.objects.sort(key=lambda t: t.nonce)
+                self.cached_thru_nonce = self.objects[-1].nonce
         
         if self.cached_from is None:
             self.cached_from = 0
@@ -237,7 +235,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
 
     @cache_to_disk
     @eth_retry.auto_retry
-    async def _get_transaction_by_nonce(self, nonce: int) -> Optional[dict]:
+    async def _get_transaction_by_nonce(self, nonce: int) -> Optional[Transaction]:
         lo = 0
         hi = await dank_w3.eth.block_number
         while True:
@@ -255,9 +253,11 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                         if tx is None:
                             return None
                         tx = dict(tx)
-                        tx['chainId'] = int(tx['chainId'], 16) if 'chainId' in tx else chain.id
-                        tx['blockHash'] = tx['blockHash'].hex()
+                        tx['chainid'] = int(tx.pop('chainId'), 16) if 'chainId' in tx else chain.id
+                        tx['block_hash'] = tx.pop('blockHash').hex()
                         tx['hash'] = tx['hash'].hex()
+                        tx['from_address'] = tx.pop('from')
+                        tx['to_address'] = tx.pop('to')
                         tx['value'] = Decimal(tx['value']) / Decimal(1e18)
                         tx['type'] = int(tx['type'], 16) if "type" in tx else None
                         tx['r'] = tx['r'].hex()
@@ -265,7 +265,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                         if self.load_prices:
                             tx['price'] = round(Decimal(await get_price(EEE_ADDRESS, block = tx['blockNumber'], sync=False)), 18)
                             tx['value_usd'] = tx['value'] * tx['price']
-                        return tx
+                        return Transaction(**{inflection.underscore(k): v for k, v in tx.items()})
                     hi = lo
                     lo = int(lo / 2)
                     logger.debug(f"Nonce at {hi} is {_nonce}, checking lower block {lo}")
@@ -305,16 +305,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                 return -1
             raise ValueError(f"For {self.address} at {block}: {e}")
 
-class InternalTransfersList(PandableList[InternalTransferData]):
-    def __init__(self):
-        super().__init__()
-    
-    def _df(self) -> DataFrame:
-        df = DataFrame(self)
-        if len(df) > 0:
-            df['chainId'] = chain.id
-        return df
-
+class InternalTransfersList(PandableList[InternalTransfer]):
+    pass
 
 trace_semaphore = asyncio.Semaphore(32)
 
@@ -368,41 +360,32 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
 
         futs = []
         for traces in generator_function(trace_filter_coros):
-            futs.extend(asyncio.ensure_future(self._load_internal_transfer(trace)) for trace in await traces)
+            futs.extend(asyncio.create_task(self._load_internal_transfer(trace)) for trace in await traces)
                 
         if futs:
+            transfer: InternalTransfer
             for fut in tqdm_asyncio.as_completed(futs, desc=f"Internal Transfers  {self.address}"):
                 transfer = await fut
                 if transfer is not None:
                     self.objects.append(transfer)
 
-            self.objects.sort(key=lambda x: (x['blockNumber'], x['transactionPosition'], x['traceAddress'], x['subtraces']))
+            self.objects.sort(key=lambda t: (t.block_number, t.transaction_index, t.trace_address, t.subtraces))
 
         if self.cached_from is None or start_block < self.cached_from:
             self.cached_from = start_block
         if self.cached_thru is None or end_block > self.cached_thru:
             self.cached_thru = end_block
     
-    async def _load_internal_transfer(self, transfer) -> Optional[Dict[str, Any]]:
+    async def _load_internal_transfer(self, transfer) -> Optional[InternalTransfer]:
         receipt = await _get_transaction_receipt(transfer['transactionHash'])
         if receipt.status == 0:
             return None
         del receipt
-        # Checksum the addresses
-        if "from" in transfer:
-            transfer['from'] = checksum(transfer['from'])
-        if "to" in transfer:
-            transfer['to'] = checksum(transfer['to'])
-        if "address" in transfer:
-            transfer['address'] = checksum(transfer['address'])
-
 
         # Un-nest the action dict
         if 'action' in transfer and transfer['action'] is not None:
             for k in list(transfer['action'].keys()):
-                assert k not in transfer
-                transfer[k] = transfer['action'][k]
-                del transfer['action'][k]
+                transfer[k] = transfer['action'].pop(k)
             if transfer['action']:
                 raise ValueError(transfer['action'])
             del transfer['action']
@@ -410,13 +393,19 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
         # Un-nest the result dict
         if 'result' in transfer and transfer['result'] is not None:
             for k in list(transfer['result'].keys()):
-                assert k not in transfer
-                transfer[k] = transfer['result'][k]
-                del transfer['result'][k]
+                transfer[k] = transfer['result'].pop(k)
             if transfer['result']:
                 raise ValueError(transfer['result'])
             del transfer['result']
     
+        # Checksum the addresses
+        if "from" in transfer:
+            transfer['from_address'] = checksum(transfer.pop('from'))
+        if "to" in transfer:
+            transfer['to_address'] = checksum(transfer.pop('to'))
+        if "address" in transfer:
+            transfer['address'] = checksum(transfer.pop('address'))
+            
         transfer['value'] = Decimal(int(transfer['value'], 16)) / Decimal(1e18)
         transfer['gas'] = int(transfer['gas'], 16)
         transfer['gasUsed'] = int(transfer['gasUsed'], 16) if transfer['gasUsed'] else None
@@ -426,16 +415,18 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
             price = round(Decimal(price), 18)
             transfer['price'] = price
             transfer['value_usd'] = round(transfer['value'] * price, 18)
-        return transfer
+            
+        transfer['hash'] = transfer.pop('transactionHash')
+        transfer['transaction_index'] = transfer.pop('transactionPosition')
+        transfer['chainid'] = chain.id
+        
+        return InternalTransfer(**{inflection.underscore(k): v for k, v in transfer.items()})
+
 
 shitcoins = SHITCOINS.get(chain.id, set())
 
-class TokenTransfersList(PandableList[TokenTransferData]):
-    def __init__(self):
-        super().__init__()
-    
-    def _df(self) -> DataFrame:
-        return DataFrame(self)
+class TokenTransfersList(PandableList[TokenTransfer]):
+    pass
 
 async def _get_symbol(token: ERC20) -> Optional[str]:
     try:
@@ -501,7 +492,8 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
         return self._list_tokens_at_block_async(block) # type: ignore
     
     async def _list_tokens_at_block_async(self, block: Optional[int] = None) -> List[ERC20]:
-        return list({ERC20(transfer['token_address']) for transfer in await self._get_async(0, block)})
+        tokens = {transfer.token_address for transfer in await self._get_async(0, block)}
+        return [ERC20(address) for address in tokens]
     
     @set_end_block_if_none
     async def _load_new_objects(self, start_block: Block, end_block: Block) -> None:
@@ -516,28 +508,29 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
             )
             return
         
-        futs = [fut for futs in await asyncio.gather(*[self._get_futs(start_block, end_block, topics) for topics in self._topics]) for fut in futs]
+        futs = [fut for futs in await asyncio.gather(*[self._get_tasks(start_block, end_block, topics) for topics in self._topics]) for fut in futs]
         
         if futs:
+            transfer: TokenTransfer
             for fut in tqdm_asyncio.as_completed(futs, desc=f"Token Transfers     {self.address}"):
                 transfer = await fut
                 if transfer is not None:
                     self.objects.append(transfer)
                     
-            self.objects.sort(key=lambda x: (x["blockNumber"], x['transactionIndex'], x['log_index']))
+            self.objects.sort(key=lambda t: (t.block_number, t.transaction_index, t.log_index))
             
         if self.cached_from is None or start_block < self.cached_from:
             self.cached_from = start_block
         if self.cached_thru is None or end_block > self.cached_thru:
             self.cached_thru = end_block
     
-    async def _get_futs(self, start_block, end_block, topics) -> List:
+    async def _get_tasks(self, start_block, end_block, topics) -> List[asyncio.Task]:
         futs = []
         async for logs in get_logs_asap_generator(address=None, from_block=start_block, to_block=end_block, topics=topics, chronological=False):
-            futs.extend(asyncio.ensure_future(self._load_transfer(log)) for log in logs)
+            futs.extend(asyncio.create_task(self._load_transfer(log)) for log in logs)
         return futs
     
-    async def _load_transfer(self, transfer_log) -> Optional[Dict[str, Any]]:
+    async def _load_transfer(self, transfer_log) -> Optional[TokenTransfer]:
         if transfer_log.address in shitcoins:
             return None
         async with token_transfer_semaphore[transfer_log["blockNumber"]]:
@@ -558,16 +551,17 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
             
             sender, receiver, value = decoded.values()
             value = Decimal(value) / Decimal(scale)
+            
             token_transfer = {
-                'chainId': chain.id,
-                'blockNumber': decoded.block_number,
-                'transactionIndex': transaction_index,
+                'chainid': chain.id,
+                'block_number': decoded.block_number,
+                'transaction_index': transaction_index,
                 'hash': decoded.transaction_hash.hex(),
                 'log_index': decoded.log_index,
                 'token': symbol,
                 'token_address': decoded.address,
-                'from': sender,
-                'to': receiver,
+                'from_address': sender,
+                'to_address': receiver,
                 'value': value,
             }
             if self.load_prices:
@@ -578,5 +572,6 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
                     price = None
                 token_transfer['price'] = price
                 token_transfer['value_usd'] = round(value * price, 18) if price else None
-            return token_transfer
+                
+            return TokenTransfer(**token_transfer)
 

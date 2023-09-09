@@ -1,7 +1,7 @@
 
 import abc
-from dataclasses import dataclass, field
 from decimal import Decimal
+from msgspec import Struct, field
 from functools import cached_property
 from typing import (Any, DefaultDict, Dict, Iterable, Literal, Optional, Tuple,
                     TypedDict, TypeVar, Union)
@@ -11,21 +11,6 @@ from y.datatypes import Address, Block
 
 _T = TypeVar('_T')
 
-TransactionData = Dict # TODO define TypedDict
-InternalTransferData = Dict # TODO define TypedDict
-
-TokenTransferData = TypedDict('TokenTransferData', {
-    'chainId': int,
-    'blockNumber': Block,
-    'transactionIndex': int,
-    'hash': str,
-    'log_index': int,
-    'token': Optional[str],
-    'token_address': Address,
-    'from': Address,
-    'to': Address,
-    'value': Decimal,
-})
 
 ProtocolLabel = str
 
@@ -37,45 +22,41 @@ class _SummableNonNumeric(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def __add__(self: _T, other: Union[_T, Literal[0]]) -> _T:
         ...
-    def __radd__(self: _T, other: Union[_T, Literal[0]]) -> _T:
+    def __radd__(self, other: Union[_T, Literal[0]]) -> _T:
         if other == 0:
             return self
         return self.__add__(other)  # type: ignore
 
-
-@dataclass
-class Balance(Dict[Literal["balance", "usd_value"], Decimal], _SummableNonNumeric):
-    balance: Decimal = field(default=Decimal())
-    usd_value: Decimal = field(default=Decimal())
-    
-    def __post_init__(self):
-        """ This just supports legacy code that uses key lookup and will eventually be removed. """
-        self['balance'] = self.balance
-        self['usd_value'] = self.usd_value
+class Balance(Struct):
+    balance: Decimal = Decimal(0)
+    usd_value: Decimal = Decimal(0)
     
     @property
     def usd(self) -> Decimal:
         ''' An alias for usd_value. ''' 
         return self.usd_value
-
-    def __repr__(self) -> str:
-        return f"Balance{str(dict(self))}"
     
     def __add__(self, other: Union['Balance', Literal[0]]) -> 'Balance':
         """ It is on you to ensure the two BalanceItems are for the same token. """
-        assert isinstance(other, Balance), f"{other} is not a BalanceItem"
+        if not isinstance(other, Balance):
+            raise TypeError(f"{other} is not a BalanceItem")
         try:
-            return Balance(self['balance'] + other['balance'], self['usd_value'] + other['usd_value'])
+            return Balance(balance = self.balance + other.balance, usd_value = self.usd_value + other.usd_value)
         except Exception as e:
-            raise e.__class__(f"Cannot add {self} and {other}: {e}")
+            raise e.__class__(f"Cannot add {self} and {other}: {e}") from e
+    
+    def __radd__(self, other: Union['Balance', Literal[0]]) -> 'Balance':
+        if other == 0:
+            return self
+        return self.__add__(other)  # type: ignore
     
     def __sub__(self, other: Union['Balance', Literal[0]]) -> 'Balance':
         """ It is on you to ensure the two BalanceItems are for the same token. """
         assert isinstance(other, Balance), f"{other} is not a BalanceItem"
         try:
-            return Balance(self['balance'] - other['balance'], self['usd_value'] - other['usd_value'])
+            return Balance(balance = self.balance - other.balance, usd_value = self.usd_value - other.usd_value)
         except Exception as e:
-            raise e.__class__(f"Cannot subtract {self} and {other}: {e}")
+            raise e.__class__(f"Cannot subtract {self} and {other}: {e}") from e
     
     def __bool__(self) -> bool:
         return self.balance != 0 or self.usd_value != 0

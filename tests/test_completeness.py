@@ -1,8 +1,8 @@
 
 from typing import Callable
 
-import eth_portfolio.lending
-import eth_portfolio.staking
+import eth_portfolio.protocols.lending
+import eth_portfolio.protocols.staking
 import pytest
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.portfolio import PortfolioLedger, Portfolio
