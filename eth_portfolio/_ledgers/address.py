@@ -3,8 +3,8 @@ import asyncio
 import logging
 from functools import partial
 from itertools import product
-from typing import (TYPE_CHECKING, Any, Dict, Generic, List, Optional, Tuple,
-                    Type, TypeVar, Union)
+from typing import (TYPE_CHECKING, Generic, List, Optional, Tuple, Type,
+                    TypeVar, Union)
 
 import a_sync
 import eth_retry
@@ -16,6 +16,7 @@ from brownie.network.event import _EventItem
 from dank_mids.semaphores import BlockSemaphore
 from eth_abi import encode_single
 from eth_utils import encode_hex, to_checksum_address
+from msgspec import json
 from pandas import DataFrame  # type: ignore
 from tqdm.asyncio import tqdm_asyncio
 from web3.types import TxData, TxReceipt
@@ -27,9 +28,11 @@ from y.utils.dank_mids import dank_w3
 from y.utils.events import BATCH_SIZE, decode_logs, get_logs_asap_generator
 
 from eth_portfolio._cache import cache_to_disk
+from eth_portfolio._db import entities
 from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
 from eth_portfolio._shitcoins import SHITCOINS
 from eth_portfolio.constants import TRANSFER_SIGS, sync_threads
+from eth_portfolio._db.utils import get_token_transfer, insert_token_transfer, delete_token_transfer
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 from eth_portfolio.utils import (Decimal, PandableList, _get_price,
                                  _unpack_indicies, get_buffered_chain_height)
@@ -533,6 +536,13 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
     async def _load_transfer(self, transfer_log) -> Optional[TokenTransfer]:
         if transfer_log.address in shitcoins:
             return None
+        
+        if transfer := await get_token_transfer():
+            if self.load_prices and transfer.price is None:
+                await delete_token_transfer()
+            else:
+                return transfer
+        
         async with token_transfer_semaphore[transfer_log["blockNumber"]]:
             decoded = await _decode_token_transfer(transfer_log)
             if decoded is None:
@@ -572,6 +582,8 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
                     price = None
                 token_transfer['price'] = price
                 token_transfer['value_usd'] = round(value * price, 18) if price else None
-                
-            return TokenTransfer(**token_transfer)
+            
+            transfer = TokenTransfer(**token_transfer)
+            await insert_token_transfer(transfer)
+            return transfer
 
