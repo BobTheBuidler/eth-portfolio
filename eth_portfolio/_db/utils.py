@@ -7,6 +7,7 @@ from msgspec import json
 from pony.orm import (BindingError, OperationalError,
                       TransactionIntegrityError, commit, db_session)
 from y._db.config import connection_settings
+from y._db.entities import Contract, Token
 from y.contracts import is_contract
 
 from eth_portfolio._db import entities
@@ -49,6 +50,7 @@ def get_block(block: int) -> entities.Block:
 @db_session
 def get_address(address: str) -> entities.Block:
     chain = get_chain(sync=True)
+    # TODO: this should live in ypm
     if is_contract(address):
         entity_type = entities.ContractExtended
     else:
@@ -57,18 +59,18 @@ def get_address(address: str) -> entities.Block:
     if a := entity_type.get(chain=chain, address=address):
         return a
     
-    try:
+    entity = entities.Address.get(chain=get_chain(sync=True), address=address)
+    if isinstance(entity, Token):
+        entity_type = entities.TokenExtended
+    elif isinstance(entity, Contract):
+        entity_type = entities.ContractExtended
+    if entity:
+        del entity
+            
+    with suppress(TransactionIntegrityError):
         entity_type(chain=chain, address=address)
         commit()
         logger.debug('address %s added to ydb', address)
-    except TransactionIntegrityError:
-        entity = entities.Address.get(chain=get_chain(sync=True), address=address)
-        if not isinstance(entity, entity_type):
-            del entity
-            with suppress(TransactionIntegrityError):
-                entity_type(chain=chain, address=address)
-                commit()
-                logger.debug('address %s added to ydb', address)
     return entity_type.get(chain=get_chain(sync=True), address=address)
 
 
