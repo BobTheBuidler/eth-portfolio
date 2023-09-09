@@ -2,16 +2,13 @@
 from decimal import Decimal
 
 from pony.orm import Set, Required, Optional, PrimaryKey, composite_key
-from y._db.entities import Address, Block, Token, db
+from y._db.entities import Address, Block, Token, db, Token, Contract
 
 
 class BlockExtended(Block):
     transactions = Set("Transaction", reverse='block')
     internal_transfers = Set("InternalTransfer", reverse='block')
     token_transfers = Set("TokenTransfer", reverse='block')
-
-class TokenExtended(Token):
-    transfers = Set("TokenTransfer", reverse='token')
 
 class AddressExtended(Address):
     transactions_sent = Set("Transaction", reverse='from_address')
@@ -22,6 +19,12 @@ class AddressExtended(Address):
     token_transfers_received = Set("TokenTransfer", reverse='to_address')
     traces = Set("InternalTransfer", reverse='trace_address')
     _not_sure_what_this_field_is = Set("InternalTransfer", reverse='address')
+
+class ContractExtended(Contract, AddressExtended):
+    pass
+
+class TokenExtended(Token, AddressExtended):
+    transfers = Set("TokenTransfer", reverse='token')
 
 class Transaction(db.Entity):
     _id = PrimaryKey(int, auto=True)

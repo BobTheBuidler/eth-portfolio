@@ -7,10 +7,11 @@ from msgspec import json
 from pony.orm import (BindingError, OperationalError,
                       TransactionIntegrityError, commit, db_session)
 from y._db.config import connection_settings
+from y.contracts import is_contract
 
 from eth_portfolio._db import entities
 from eth_portfolio._db.entities import db
-from eth_portfolio.structs import TokenTransfer, Transaction
+from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 
 logger = logging.getLogger(__name__)
 
@@ -48,13 +49,27 @@ def get_block(block: int) -> entities.Block:
 @db_session
 def get_address(address: str) -> entities.Block:
     chain = get_chain(sync=True)
-    if a := entities.AddressExtended.get(chain=chain, address=address):
+    if is_contract(address):
+        entity_type = entities.ContractExtended
+    else:
+        entity_type = entities.AddressExtended
+        
+    if a := entity_type.get(chain=chain, address=address):
         return a
-    with suppress(TransactionIntegrityError):
-        entities.AddressExtended(chain=chain, address=address)
+    
+    try:
+        entity_type(chain=chain, address=address)
         commit()
         logger.debug('address %s added to ydb', address)
-    return entities.AddressExtended.get(chain=get_chain(sync=True), address=address)
+    except TransactionIntegrityError:
+        entity = entities.Address.get(chain=get_chain(sync=True), address=address)
+        if not isinstance(entity, entity_type):
+            del entity
+            with suppress(TransactionIntegrityError):
+                entity_type(chain=chain, address=address)
+                commit()
+                logger.debug('address %s added to ydb', address)
+    return entity_type.get(chain=get_chain(sync=True), address=address)
 
 
 @a_sync(default='async')
@@ -114,6 +129,40 @@ def insert_transaction(transaction: Transaction) -> None:
         raw = json.encode(transaction),    
     )
     
+    
+@a_sync(default='async')
+@db_session
+def get_internal_transfer(transfer_log) -> Optional[InternalTransfer]:
+    ...
+    
+@a_sync(default='async')
+@db_session
+def delete_internal_transfer(transfer: InternalTransfer) -> None:
+    ...
+    
+@a_sync(default='async')
+@db_session
+def insert_internal_transfer(transfer: InternalTransfer) -> None:
+    entities.InternalTransfer(
+        block = get_block(transfer.block_number, sync=True),
+        transaction_index = transfer.transaction_index,
+        hash = transfer.hash,
+        type = transfer.type,
+        call_type = transfer.call_type,
+        from_address = get_address(transfer.from_address, sync=True),
+        to_address = get_address(transfer.to_address, sync=True),
+        value = transfer.value,
+        price = transfer.price,
+        value_usd = transfer.value_usd,
+        trace_address = get_address(transfer.trace_address, sync=True),
+        gas = transfer.gas,
+        gas_used = transfer.gas_used,
+        input = transfer.input,
+        output = transfer.output,
+        subtraces = transfer.subtraces,
+        address = get_address(transfer.address, sync=True),
+        raw = json.encode(transfer),
+    )
     
 @a_sync(default='async')
 @db_session
