@@ -25,26 +25,39 @@ from y._db.utils import *
 @db_session
 def get_block(block: int) -> entities.Block:
     chain = get_chain(sync=True)
-    if b := entities.Block.get(chain=chain, number=block):
+    if b := entities.BlockExtended.get(chain=chain, number=block):
         return b
     with suppress(TransactionIntegrityError):
-        entities.Block(chain=chain, number=block)
+        entities.BlockExtended(chain=chain, number=block)
         commit()
         logger.debug('block %s added to ydb', block)
-    return entities.Block.get(chain=get_chain(sync=True), number=block)
+    return entities.BlockExtended.get(chain=get_chain(sync=True), number=block)
 
 
 @a_sync(default='async')
 @db_session
 def get_address(address: str) -> entities.Block:
     chain = get_chain(sync=True)
-    if a := entities.Address.get(chain=chain, address=address):
+    if a := entities.AddressExtended.get(chain=chain, address=address):
         return a
     with suppress(TransactionIntegrityError):
-        entities.Address(chain=chain, address=address)
+        entities.AddressExtended(chain=chain, address=address)
         commit()
         logger.debug('address %s added to ydb', address)
-    return entities.Address.get(chain=get_chain(sync=True), address=address)
+    return entities.AddressExtended.get(chain=get_chain(sync=True), address=address)
+
+
+@a_sync(default='async')
+@db_session
+def get_token(address: str) -> entities.Block:
+    chain = get_chain(sync=True)
+    if a := entities.TokenExtended.get(chain=chain, address=address):
+        return a
+    with suppress(TransactionIntegrityError):
+        entities.TokenExtended(chain=chain, address=address)
+        commit()
+        logger.debug('address %s added to ydb', address)
+    return entities.TokenExtended.get(chain=get_chain(sync=True), address=address)
         
     
 @a_sync(default='async')
@@ -123,7 +136,7 @@ def insert_token_transfer(token_transfer: TokenTransfer) -> None:
         transaction_index = token_transfer.transaction_index,
         log_index = token_transfer.log_index,
         hash = token_transfer.hash,
-        token = get_token(token_transfer.token_address, sync=True),
+        token = get_token_extended(token_transfer.token_address, sync=True),
         from_address = get_address(token_transfer.from_address, sync=True),
         to_address = get_address(token_transfer.to_address, sync=True),
         value = token_transfer.value,
