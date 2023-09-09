@@ -11,6 +11,7 @@ import eth_retry
 import inflection
 from async_lru import alru_cache
 from brownie import chain
+from brownie.convert import EthAddress
 from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem
 from dank_mids.semaphores import BlockSemaphore
@@ -576,8 +577,8 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
                 'log_index': decoded.log_index,
                 'token': symbol,
                 'token_address': decoded.address,
-                'from_address': sender,
-                'to_address': receiver,
+                'from_address': str(sender),
+                'to_address': str(receiver),
                 'value': value,
             }
             if self.load_prices:
@@ -588,6 +589,10 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
                     price = None
                 token_transfer['price'] = price
                 token_transfer['value_usd'] = round(value * price, 18) if price else None
+            
+            for k, v in token_transfer.items():
+                if isinstance(v, EthAddress):
+                    token_transfer[k] = str(v)
             
             transfer = TokenTransfer(**token_transfer)
             await db.insert_token_transfer(transfer)
