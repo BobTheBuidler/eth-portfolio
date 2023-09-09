@@ -3,7 +3,11 @@ from y._db.config import connection_settings
 
 from eth_portfolio._db.entities import db
 
-db.bind(**connection_settings, create_db=True)
+try:
+    db.bind(**connection_settings, create_db=True)
+except TypeError as e:
+    if not str(e).startswith('Database object was already bound to'):
+        raise e
 try:
     db.generate_mapping(create_tables=True)
 except OperationalError as e:
