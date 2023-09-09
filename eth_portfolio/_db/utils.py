@@ -66,9 +66,10 @@ def get_address(address: str) -> entities.Block:
         entity_type = entities.ContractExtended
     if entity:
         entity.delete()
+        commit()
             
     with suppress(TransactionIntegrityError):
-        entity_type(chain=chain, address=address)
+        entity_type(chain=get_chain(sync=True), address=address)
         commit()
         logger.debug('address %s added to ydb', address)
     return entity_type.get(chain=get_chain(sync=True), address=address)
