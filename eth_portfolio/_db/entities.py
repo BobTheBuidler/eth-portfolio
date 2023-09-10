@@ -36,7 +36,7 @@ class Transaction(db.Entity):
     value = Required(Decimal, 38, 18, lazy=True)
     price = Optional(Decimal, 38, 18, lazy=True)
     value_usd = Optional(Decimal, 38, 18, lazy=True)
-    access_list = Optional(bytes, lazy=True, reverse='access_listed')
+    access_list = Optional(bytes, lazy=True)
     
     nonce = Required(int, lazy=True)
     type = Required(int, lazy=True)
