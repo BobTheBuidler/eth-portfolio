@@ -150,7 +150,6 @@ class PortfolioLedger:
     def all_entries(self, start_block: Block = 0, end_block: Block = None) -> Dict[PortfolioAddress, Dict[str, PandableLedgerEntryList]]:
         return self._all_entries_async(start_block, end_block)
     
-    @async_property
     async def _all_entries_async(self, start_block: Block, end_block: Block) -> Dict[PortfolioAddress, Dict[str, PandableLedgerEntryList]]:
         all_transactions = await asyncio.gather(*[address._all_async(start_block, end_block) for address in self.portfolio.addresses.values()])
         return {address: data for address, data in zip(self.portfolio.addresses, all_transactions)}
