@@ -1,16 +1,15 @@
 import logging
 from contextlib import suppress
-from typing import Optional, TypeVar
+from typing import Optional
 
 import y._db.config as config
 from a_sync import a_sync
 from msgspec import json
 from pony.orm import (BindingError, OperationalError,
                       TransactionIntegrityError, commit, db_session)
-from typing_extensions import ParamSpec
 
 from eth_portfolio._db import entities
-from eth_portfolio._db.decorators import break_locks
+from eth_portfolio._db.decorators import break_locks, requery_objs_on_diff_tx_err
 from eth_portfolio._db.entities import db
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 
@@ -120,6 +119,7 @@ def delete_transaction(transaction: Transaction) -> None:
     
     
 @a_sync(default='async')
+@requery_objs_on_diff_tx_err
 @robust_db_session
 def insert_transaction(transaction: Transaction) -> None:
     # Make sure these are in the db so below we can call them and use the results all in one transaction
@@ -160,6 +160,7 @@ def delete_internal_transfer(transfer: InternalTransfer) -> None:
     ...
     
 @a_sync(default='async')
+@requery_objs_on_diff_tx_err
 @robust_db_session
 def insert_internal_transfer(transfer: InternalTransfer) -> None:
     entities.InternalTransfer(
@@ -206,6 +207,7 @@ def delete_token_transfer(token_transfer: TokenTransfer) -> None:
 
 
 @a_sync(default='async')
+@requery_objs_on_diff_tx_err
 @robust_db_session
 def insert_token_transfer(token_transfer: TokenTransfer) -> None:
     # Make sure these are in the db so below we can call them and use the results all in one transaction
