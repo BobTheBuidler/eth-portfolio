@@ -70,6 +70,7 @@ class InternalTransfer(db.Entity):
     trace_address = Required(AddressExtended, lazy=True, reverse='traces')
     gas = Required(Decimal, 38, 1, lazy=True)
     gas_used = Optional(Decimal, 38, 1, lazy=True)
+    code = Optional(str, lazy=True)
     input = Required(str, lazy=True)
     output = Required(str, lazy=True)
     subtraces = Required(int, lazy=True)

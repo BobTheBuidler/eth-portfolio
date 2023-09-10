@@ -51,7 +51,8 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True):
     output: str
     subtraces: int
     init: Optional[str] = None
-    address: str = None
+    address: Optional[str] = None
+    code: Optional[str] = None
 
 
 class TokenTransfer(_LedgerEntryBase, kw_only=True):
