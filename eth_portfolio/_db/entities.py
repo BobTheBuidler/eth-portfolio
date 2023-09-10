@@ -1,30 +1,30 @@
 
 from decimal import Decimal
 
-from pony.orm import Set, Required, Optional, PrimaryKey, composite_key
-from y._db.entities import Address, Block, Token, db, Token, Contract
+from pony.orm import Json, Optional, PrimaryKey, Required, Set, composite_key
+from y._db.entities import Address, Block, Contract, Token, db
 
 
 class BlockExtended(Block):
-    transactions = Set("Transaction", reverse='block')
-    internal_transfers = Set("InternalTransfer", reverse='block')
-    token_transfers = Set("TokenTransfer", reverse='block')
+    transactions = Set("Transaction", lazy=True, reverse='block')
+    internal_transfers = Set("InternalTransfer", lazy=True, reverse='block')
+    token_transfers = Set("TokenTransfer", lazy=True, reverse='block')
 
 class AddressExtended(Address):
-    transactions_sent = Set("Transaction", reverse='from_address')
-    transactions_received = Set("Transaction", reverse='to_address')
-    internal_transfers_sent = Set("InternalTransfer", reverse='from_address')
-    internal_transfers_received = Set("InternalTransfer", reverse='to_address')
-    token_transfers_sent = Set("TokenTransfer", reverse='from_address')
-    token_transfers_received = Set("TokenTransfer", reverse='to_address')
-    traces = Set("InternalTransfer", reverse='trace_address')
-    _not_sure_what_this_field_is = Set("InternalTransfer", reverse='address')
+    transactions_sent = Set("Transaction", lazy=True, reverse='from_address')
+    transactions_received = Set("Transaction", lazy=True, reverse='to_address')
+    internal_transfers_sent = Set("InternalTransfer", lazy=True, reverse='from_address')
+    internal_transfers_received = Set("InternalTransfer", lazy=True, reverse='to_address')
+    token_transfers_sent = Set("TokenTransfer", lazy=True, reverse='from_address')
+    token_transfers_received = Set("TokenTransfer", lazy=True, reverse='to_address')
+    traces = Set("InternalTransfer", lazy=True, reverse='trace_address')
+    _not_sure_what_this_field_is = Set("InternalTransfer", lazy=True, reverse='address')
 
 class ContractExtended(Contract, AddressExtended):
     pass
 
 class TokenExtended(Token, AddressExtended):
-    transfers = Set("TokenTransfer", reverse='token')
+    transfers = Set("TokenTransfer", lazy=True, reverse='token')
 
 class Transaction(db.Entity):
     _id = PrimaryKey(int, auto=True)
@@ -36,6 +36,7 @@ class Transaction(db.Entity):
     value = Required(Decimal, 38, 18, lazy=True)
     price = Optional(Decimal, 38, 18, lazy=True)
     value_usd = Optional(Decimal, 38, 18, lazy=True)
+    access_list = Optional(bytes, lazy=True, reverse='access_listed')
     
     nonce = Required(int, lazy=True)
     type = Required(int, lazy=True)

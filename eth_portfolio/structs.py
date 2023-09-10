@@ -1,10 +1,10 @@
 import logging
 from decimal import Decimal
-from typing import Any, ClassVar, Iterator, Literal, Optional
+from typing import Any, ClassVar, Iterator, List, Literal, Optional
 
 from msgspec import Struct
 from y import Network
-from y.datatypes import Address, Block
+from y.datatypes import Block
 
 logger = logging.getLogger(__name__)
 
@@ -26,6 +26,10 @@ class _LedgerEntryBase(_DictStruct, kw_only=True):
     value_usd: Optional[Decimal] = None
     
 
+class _AccessListEntry(Struct):
+    address: str
+    storage_keys: list[bytes]
+    
 class Transaction(_LedgerEntryBase, kw_only=True):
     entry_type: ClassVar[Literal['transaction']] = 'transaction'
     block_hash: str
@@ -39,6 +43,7 @@ class Transaction(_LedgerEntryBase, kw_only=True):
     r: str
     s: str
     v: int
+    access_list: Optional[List[_AccessListEntry]] = None
 
 
 class InternalTransfer(_LedgerEntryBase, kw_only=True):
