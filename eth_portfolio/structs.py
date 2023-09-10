@@ -43,7 +43,6 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True):
     entry_type: ClassVar[Literal['internal_transfer']] = 'internal_transfer'
     block_hash: str
     type: str
-    call_type: str
     trace_address: str
     gas: int
     gas_used: Optional[int]
@@ -52,6 +51,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True):
     subtraces: int
     init: Optional[str] = None
     address: Optional[str] = None
+    call_type: Optional[str] = None
     code: Optional[str] = None
 
 
