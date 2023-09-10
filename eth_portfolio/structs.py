@@ -19,8 +19,8 @@ class _LedgerEntryBase(_DictStruct, kw_only=True):
     block_number: Block
     transaction_index: int
     hash: str
-    from_address: Optional[Address]
-    to_address: Optional[Address]
+    from_address: Optional[str]
+    to_address: Optional[str]
     value: Decimal
     price: Optional[Decimal] = None
     value_usd: Optional[Decimal] = None
@@ -36,7 +36,7 @@ class Transaction(_LedgerEntryBase, kw_only=True):
     input: str
     r: str
     s: str
-    v: str
+    v: int
 
 
 class InternalTransfer(_LedgerEntryBase, kw_only=True):
@@ -44,19 +44,19 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True):
     block_hash: str
     type: str
     call_type: str
-    trace_address: Address
+    trace_address: str
     gas: int
     gas_used: Optional[int]
     input: str
     output: str
     subtraces: int
     init: Optional[str] = None
-    address: Address = None
+    address: str = None
 
 
 class TokenTransfer(_LedgerEntryBase, kw_only=True):
     entry_type: ClassVar[Literal['token_transfer']] = 'token_transfer'
     log_index: int
     token: Optional[str]
-    token_address: Address
+    token_address: str
     value: Decimal

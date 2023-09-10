@@ -39,12 +39,12 @@ class Transaction(db.Entity):
     
     nonce = Required(int, lazy=True)
     type = Required(int, lazy=True)
-    gas = Required(int, lazy=True)
-    gas_price = Required(int, lazy=True)
+    gas = Required(Decimal, 38, 1, lazy=True)
+    gas_price = Required(Decimal, 38, 1, lazy=True)
     input = Required(str, lazy=True)
     r = Required(str, lazy=True)
     s = Required(str, lazy=True)
-    v = Required(str, lazy=True)
+    v = Required(int, lazy=True)
     
     composite_key(block, transaction_index)
     
@@ -68,8 +68,8 @@ class InternalTransfer(db.Entity):
     type = Required(str, lazy=True)
     call_type = Required(str, lazy=True)
     trace_address = Required(AddressExtended, lazy=True, reverse='traces')
-    gas = Required(int, lazy=True)
-    gas_used = Optional(int, lazy=True)
+    gas = Required(Decimal, 38, 1, lazy=True)
+    gas_used = Optional(Decimal, 38, 1, lazy=True)
     input = Required(str, lazy=True)
     output = Required(str, lazy=True)
     subtraces = Required(int, lazy=True)
