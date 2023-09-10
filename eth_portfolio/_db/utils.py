@@ -1,15 +1,16 @@
 import logging
 from contextlib import suppress
-from typing import Optional
+from typing import Optional, TypeVar
 
 import y._db.config as config
 from a_sync import a_sync
-from a_sync.primitives.executor import PruningThreadPoolExecutor
 from msgspec import json
 from pony.orm import (BindingError, OperationalError,
                       TransactionIntegrityError, commit, db_session)
+from typing_extensions import ParamSpec
 
 from eth_portfolio._db import entities
+from eth_portfolio._db.decorators import break_locks
 from eth_portfolio._db.entities import db
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 
@@ -28,14 +29,15 @@ except OperationalError as e:
         raise e
     raise OperationalError("Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script")
 
-from y._db.entities import Contract, Token, Address
+from y._db.entities import Address, Contract, Token
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
 from y._db.utils import get_chain
 from y.contracts import is_contract
 
+robust_db_session = lambda callable: break_locks(db_session(callable))
 
 @a_sync(default='async')
-@db_session
+@robust_db_session
 def get_block(block: int) -> entities.Block:
     chain = get_chain(sync=True)
     if b := entities.BlockExtended.get(chain=chain, number=block):
@@ -48,7 +50,7 @@ def get_block(block: int) -> entities.Block:
 
 
 @a_sync(default='async')
-@db_session
+@robust_db_session
 def get_address(address: str) -> entities.Block:
     chain = get_chain(sync=True)
     
@@ -82,7 +84,7 @@ def get_address(address: str) -> entities.Block:
 
 
 @a_sync(default='async')
-@db_session
+@robust_db_session
 def get_token(address: str) -> entities.Block:
     chain = get_chain(sync=True)
     if t := entities.TokenExtended.get(chain=chain, address=address):
@@ -98,7 +100,7 @@ def get_token(address: str) -> entities.Block:
         
     
 @a_sync(default='async')
-@db_session
+@robust_db_session
 def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
     entity: entities.Transaction
     if entity := entities.Transaction.get(
@@ -109,7 +111,7 @@ def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
     
     
 @a_sync(default='async')
-@db_session
+@robust_db_session
 def delete_transaction(transaction: Transaction) -> None:
     entities.Transaction.get(
         from_address = get_address(transaction.from_address, sync=True),
@@ -118,7 +120,7 @@ def delete_transaction(transaction: Transaction) -> None:
     
     
 @a_sync(default='async')
-@db_session
+@robust_db_session
 def insert_transaction(transaction: Transaction) -> None:
     # Make sure these are in the db so below we can call them and use the results all in one transaction
     block = get_block(transaction.block_number, sync=True)
@@ -148,17 +150,17 @@ def insert_transaction(transaction: Transaction) -> None:
     
     
 @a_sync(default='async')
-@db_session
+@robust_db_session
 def get_internal_transfer(transfer_log) -> Optional[InternalTransfer]:
     ...
     
 @a_sync(default='async')
-@db_session
+@robust_db_session
 def delete_internal_transfer(transfer: InternalTransfer) -> None:
     ...
     
 @a_sync(default='async')
-@db_session
+@robust_db_session
 def insert_internal_transfer(transfer: InternalTransfer) -> None:
     entities.InternalTransfer(
         block = get_block(transfer.block_number, sync=True),
@@ -182,7 +184,7 @@ def insert_internal_transfer(transfer: InternalTransfer) -> None:
     )
     
 @a_sync(default='async')
-@db_session
+@robust_db_session
 def get_token_transfer(transfer_log) -> Optional[TokenTransfer]:
     entity: entities.TokenTransfer
     if entity := entities.TokenTransfer.get(
@@ -194,7 +196,7 @@ def get_token_transfer(transfer_log) -> Optional[TokenTransfer]:
    
     
 @a_sync(default='async')
-@db_session
+@robust_db_session
 def delete_token_transfer(token_transfer: TokenTransfer) -> None:
     entities.TokenTransfer.get(
         block = get_block(token_transfer.block_number, sync=True), 
@@ -204,7 +206,7 @@ def delete_token_transfer(token_transfer: TokenTransfer) -> None:
 
 
 @a_sync(default='async')
-@db_session
+@robust_db_session
 def insert_token_transfer(token_transfer: TokenTransfer) -> None:
     # Make sure these are in the db so below we can call them and use the results all in one transaction
     block = get_block(token_transfer.block_number, sync=True)
@@ -228,3 +230,4 @@ def insert_token_transfer(token_transfer: TokenTransfer) -> None:
         raw = json.encode(token_transfer),
     )
 
+            
