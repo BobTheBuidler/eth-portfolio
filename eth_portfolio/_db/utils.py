@@ -30,11 +30,11 @@ except OperationalError as e:
 
 from y._db.entities import Contract, Token, Address
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
-from y._db.utils import executor, get_chain
+from y._db.utils import get_chain
 from y.contracts import is_contract
 
 
-@a_sync(default='async', executor=executor)
+@a_sync(default='async')
 @db_session
 def get_block(block: int) -> entities.Block:
     chain = get_chain(sync=True)
@@ -47,7 +47,7 @@ def get_block(block: int) -> entities.Block:
     return entities.BlockExtended.get(chain=get_chain(sync=True), number=block)
 
 
-@a_sync(default='async', executor=executor)
+@a_sync(default='async')
 @db_session
 def get_address(address: str) -> entities.Block:
     chain = get_chain(sync=True)
@@ -81,7 +81,7 @@ def get_address(address: str) -> entities.Block:
     return entity_type.get(chain=get_chain(sync=True), address=address)
 
 
-@a_sync(default='async', executor=executor)
+@a_sync(default='async')
 @db_session
 def get_token(address: str) -> entities.Block:
     chain = get_chain(sync=True)
@@ -97,7 +97,7 @@ def get_token(address: str) -> entities.Block:
     return entities.TokenExtended.get(chain=get_chain(sync=True), address=address)
         
     
-@a_sync(default='async', executor=executor)
+@a_sync(default='async')
 @db_session
 def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
     entity: entities.Transaction
@@ -108,7 +108,7 @@ def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
         return json.decode(entity.raw, type=Transaction)
     
     
-@a_sync(default='async', executor=executor)
+@a_sync(default='async')
 @db_session
 def delete_transaction(transaction: Transaction) -> None:
     entities.Transaction.get(
@@ -117,7 +117,7 @@ def delete_transaction(transaction: Transaction) -> None:
     ).delete()
     
     
-@a_sync(default='async', executor=executor)
+@a_sync(default='async')
 @db_session
 def insert_transaction(transaction: Transaction) -> None:
     # Make sure these are in the db so below we can call them and use the results all in one transaction
@@ -147,17 +147,17 @@ def insert_transaction(transaction: Transaction) -> None:
     )
     
     
-@a_sync(default='async', executor=executor)
+@a_sync(default='async')
 @db_session
 def get_internal_transfer(transfer_log) -> Optional[InternalTransfer]:
     ...
     
-@a_sync(default='async', executor=executor)
+@a_sync(default='async')
 @db_session
 def delete_internal_transfer(transfer: InternalTransfer) -> None:
     ...
     
-@a_sync(default='async', executor=executor)
+@a_sync(default='async')
 @db_session
 def insert_internal_transfer(transfer: InternalTransfer) -> None:
     entities.InternalTransfer(
@@ -181,7 +181,7 @@ def insert_internal_transfer(transfer: InternalTransfer) -> None:
         raw = json.encode(transfer),
     )
     
-@a_sync(default='async', executor=executor)
+@a_sync(default='async')
 @db_session
 def get_token_transfer(transfer_log) -> Optional[TokenTransfer]:
     entity: entities.TokenTransfer
@@ -193,7 +193,7 @@ def get_token_transfer(transfer_log) -> Optional[TokenTransfer]:
         return json.decode(entity.raw, type=TokenTransfer)
    
     
-@a_sync(default='async', executor=executor)
+@a_sync(default='async')
 @db_session
 def delete_token_transfer(token_transfer: TokenTransfer) -> None:
     entities.TokenTransfer.get(
@@ -203,7 +203,7 @@ def delete_token_transfer(token_transfer: TokenTransfer) -> None:
     ).delete()
 
 
-@a_sync(default='async', executor=executor)
+@a_sync(default='async')
 @db_session
 def insert_token_transfer(token_transfer: TokenTransfer) -> None:
     # Make sure these are in the db so below we can call them and use the results all in one transaction
