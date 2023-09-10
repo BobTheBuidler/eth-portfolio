@@ -1,6 +1,8 @@
 import abc
 import asyncio
+import decimal
 import logging
+from contextlib import suppress
 from functools import partial
 from itertools import product
 from typing import (TYPE_CHECKING, Generic, List, Optional, Tuple, Type,
@@ -591,6 +593,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
                 token_transfer['value_usd'] = round(value * price, 18) if price else None
             
             transfer = TokenTransfer(**token_transfer)
-            await db.insert_token_transfer(transfer)
+            with suppress(decimal.InvalidOperation):  # Not entirely sure why this happens, probably some crazy uint value
+                await db.insert_token_transfer(transfer)
             return transfer
 
