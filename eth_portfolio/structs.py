@@ -1,6 +1,6 @@
 import logging
 from decimal import Decimal
-from typing import Any, Iterator, Optional
+from typing import Any, ClassVar, Iterator, Literal, Optional
 
 from msgspec import Struct
 from y import Network
@@ -19,45 +19,46 @@ class _LedgerEntryBase(_DictStruct, kw_only=True):
     block_number: Block
     transaction_index: int
     hash: str
-    from_address: Optional[Address]
-    to_address: Optional[Address]
+    from_address: Optional[str]
     value: Decimal
+    to_address: Optional[str] = None
     price: Optional[Decimal] = None
     value_usd: Optional[Decimal] = None
     
 
 class Transaction(_LedgerEntryBase, kw_only=True):
+    entry_type: ClassVar[Literal['transaction']] = 'transaction'
     block_hash: str
     nonce: int
     type: int
     gas: int
     gas_price: int
+    max_priority_fee_per_gas: Optional[int] = None
     input: str
     r: str
     s: str
-    v: str
+    v: int
 
 
 class InternalTransfer(_LedgerEntryBase, kw_only=True):
+    entry_type: ClassVar[Literal['internal_transfer']] = 'internal_transfer'
     block_hash: str
     type: str
-    call_type: str
-    trace_address: Address
+    trace_address: str
     gas: int
     gas_used: Optional[int]
-    input: str
-    output: str
     subtraces: int
+    call_type: Optional[str] = None
+    input: Optional[str] = None
+    output: Optional[str] = None
     init: Optional[str] = None
-    address: Address = None
-    # TEMP
-    def __post_init__(self) -> None:
-        logger.info(self.init)
-        logger.info(type(self.init))
+    address: Optional[str] = None
+    code: Optional[str] = None
 
 
 class TokenTransfer(_LedgerEntryBase, kw_only=True):
+    entry_type: ClassVar[Literal['token_transfer']] = 'token_transfer'
     log_index: int
     token: Optional[str]
-    token_address: Address
+    token_address: str
     value: Decimal
