@@ -71,8 +71,8 @@ class InternalTransfer(db.Entity):
     gas = Required(Decimal, 38, 1, lazy=True)
     gas_used = Optional(Decimal, 38, 1, lazy=True)
     code = Optional(str, lazy=True)
-    input = Required(str, lazy=True)
-    output = Required(str, lazy=True)
+    input = Optional(str, lazy=True)
+    output = Optional(str, lazy=True)
     subtraces = Required(int, lazy=True)
     address = Required(AddressExtended, lazy=True, reverse='_not_sure_what_this_field_is')
     
