@@ -33,6 +33,7 @@ class Transaction(_LedgerEntryBase, kw_only=True):
     type: int
     gas: int
     gas_price: int
+    max_priority_fee_per_gas: Optional[int] = None
     input: str
     r: str
     s: str
