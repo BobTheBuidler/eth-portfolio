@@ -112,10 +112,11 @@ def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
 @a_sync(default='async')
 @robust_db_session
 def delete_transaction(transaction: Transaction) -> None:
-    entities.Transaction.get(
+    if entity := entities.Transaction.get(
         from_address = get_address(transaction.from_address, sync=True),
         nonce = transaction.nonce,
-    ).delete()
+    ):
+        entity.delete()
     
     
 @a_sync(default='async')
@@ -157,7 +158,8 @@ def get_internal_transfer(transfer_log) -> Optional[InternalTransfer]:
 @a_sync(default='async')
 @robust_db_session
 def delete_internal_transfer(transfer: InternalTransfer) -> None:
-    ...
+    if entity := entities.InternalTransfer.get(...):
+        entity.delete()
     
 @a_sync(default='async')
 @requery_objs_on_diff_tx_err
@@ -199,11 +201,12 @@ def get_token_transfer(transfer_log) -> Optional[TokenTransfer]:
 @a_sync(default='async')
 @robust_db_session
 def delete_token_transfer(token_transfer: TokenTransfer) -> None:
-    entities.TokenTransfer.get(
+    if entity := entities.TokenTransfer.get(
         block = get_block(token_transfer.block_number, sync=True), 
         transaction_index = token_transfer.transaction_index,
         log_index = token_transfer.log_index,
-    ).delete()
+    ):
+        entity.delete()
 
 
 @a_sync(default='async')
