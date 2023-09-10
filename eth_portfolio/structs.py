@@ -46,12 +46,12 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True):
     trace_address: str
     gas: int
     gas_used: Optional[int]
-    input: str
     output: str
     subtraces: int
+    call_type: Optional[str] = None
+    input: Optional[str] = None
     init: Optional[str] = None
     address: Optional[str] = None
-    call_type: Optional[str] = None
     code: Optional[str] = None
 
 
