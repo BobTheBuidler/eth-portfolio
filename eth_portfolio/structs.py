@@ -20,8 +20,8 @@ class _LedgerEntryBase(_DictStruct, kw_only=True):
     transaction_index: int
     hash: str
     from_address: Optional[str]
-    to_address: Optional[str]
     value: Decimal
+    to_address: Optional[str] = None
     price: Optional[Decimal] = None
     value_usd: Optional[Decimal] = None
     
