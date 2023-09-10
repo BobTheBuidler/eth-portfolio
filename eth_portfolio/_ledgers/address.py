@@ -44,7 +44,6 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
-transaction_semaphore = BlockSemaphore(100, name='eth_portfolio.transactions')  # Some arbitrary number
 token_transfer_semaphore = BlockSemaphore(5_000, name='eth_portfolio.token_transfers')  # Some arbitrary number
 
 class BadResponse(Exception):
@@ -249,43 +248,42 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
         lo = 0
         hi = await dank_w3.eth.block_number
         while True:
-            async with transaction_semaphore[lo]:
-                _nonce = await self._get_nonce_at_block(lo)
-                if _nonce < nonce:
-                    old_lo = lo
-                    lo += int((hi - lo) / 2) or 1
-                    logger.debug(f"Nonce at {old_lo} is {_nonce}, checking higher block {lo}")
-                elif _nonce >= nonce:
-                    prev_block_nonce = await self._get_nonce_at_block(lo - 1)
-                    if prev_block_nonce < nonce:
-                        logger.debug(f"Found nonce {nonce} at block {lo}")
-                        tx = await self._get_transaction_by_nonce_and_block(nonce, lo)
-                        if tx is None:
-                            return None
-                        tx = dict(tx)
-                        tx['chainid'] = int(tx.pop('chainId'), 16) if 'chainId' in tx else chain.id
-                        tx['block_hash'] = tx.pop('blockHash').hex()
-                        tx['hash'] = tx['hash'].hex()
-                        tx['from_address'] = tx.pop('from')
-                        tx['to_address'] = tx.pop('to')
-                        tx['value'] = Decimal(tx['value']) / Decimal(1e18)
-                        tx['type'] = int(tx['type'], 16) if "type" in tx else None
-                        tx['r'] = tx['r'].hex()
-                        tx['s'] = tx['s'].hex()
+            _nonce = await self._get_nonce_at_block(lo)
+            if _nonce < nonce:
+                old_lo = lo
+                lo += int((hi - lo) / 2) or 1
+                logger.debug(f"Nonce at {old_lo} is {_nonce}, checking higher block {lo}")
+            elif _nonce >= nonce:
+                prev_block_nonce = await self._get_nonce_at_block(lo - 1)
+                if prev_block_nonce < nonce:
+                    logger.debug(f"Found nonce {nonce} at block {lo}")
+                    tx = await self._get_transaction_by_nonce_and_block(nonce, lo)
+                    if tx is None:
+                        return None
+                    tx = dict(tx)
+                    tx['chainid'] = int(tx.pop('chainId'), 16) if 'chainId' in tx else chain.id
+                    tx['block_hash'] = tx.pop('blockHash').hex()
+                    tx['hash'] = tx['hash'].hex()
+                    tx['from_address'] = tx.pop('from')
+                    tx['to_address'] = tx.pop('to')
+                    tx['value'] = Decimal(tx['value']) / Decimal(1e18)
+                    tx['type'] = int(tx['type'], 16) if "type" in tx else None
+                    tx['r'] = tx['r'].hex()
+                    tx['s'] = tx['s'].hex()
+                    if self.load_prices:
+                        tx['price'] = round(Decimal(await get_price(EEE_ADDRESS, block = tx['blockNumber'], sync=False)), 18)
+                        tx['value_usd'] = tx['value'] * tx['price']
+                    transaction = Transaction(**{inflection.underscore(k): v for k, v in tx.items()})
+                    try:
+                        await db.insert_transaction(transaction)
+                    except TransactionIntegrityError:
                         if self.load_prices:
-                            tx['price'] = round(Decimal(await get_price(EEE_ADDRESS, block = tx['blockNumber'], sync=False)), 18)
-                            tx['value_usd'] = tx['value'] * tx['price']
-                        transaction = Transaction(**{inflection.underscore(k): v for k, v in tx.items()})
-                        try:
+                            await db.delete_transaction(transaction)
                             await db.insert_transaction(transaction)
-                        except TransactionIntegrityError:
-                            if self.load_prices:
-                                await db.delete_transaction(transaction)
-                                await db.insert_transaction(transaction)
-                        return transaction
-                    hi = lo
-                    lo = int(lo / 2)
-                    logger.debug(f"Nonce at {hi} is {_nonce}, checking lower block {lo}")
+                    return transaction
+                hi = lo
+                lo = int(lo / 2)
+                logger.debug(f"Nonce at {hi} is {_nonce}, checking lower block {lo}")
     
     @eth_retry.auto_retry
     async def _get_transaction_by_nonce_and_block(self, nonce: int, block: Block) -> Optional[TxData]:
