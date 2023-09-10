@@ -2,17 +2,19 @@ import logging
 from contextlib import suppress
 from typing import Optional
 
+import y._db.config as config
 from a_sync import a_sync
+from a_sync.primitives.executor import PruningThreadPoolExecutor
 from msgspec import json
 from pony.orm import (BindingError, OperationalError,
                       TransactionIntegrityError, commit, db_session)
-import y._db.config as config
 
 from eth_portfolio._db import entities
 from eth_portfolio._db.entities import db
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 
 logger = logging.getLogger(__name__)
+executor = PruningThreadPoolExecutor(16)
 
 try:
     db.bind(**config.connection_settings, create_db=True)
@@ -27,13 +29,13 @@ except OperationalError as e:
         raise e
     raise OperationalError("Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script")
 
-from y._db.entities import Contract, Token
-from y.contracts import is_contract
+from y._db.entities import Contract, Token, Address
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
 from y._db.utils import *
+from y.contracts import is_contract
 
 
-@a_sync(default='async')
+@a_sync(default='async', executor=executor)
 @db_session
 def get_block(block: int) -> entities.Block:
     chain = get_chain(sync=True)
@@ -46,49 +48,57 @@ def get_block(block: int) -> entities.Block:
     return entities.BlockExtended.get(chain=get_chain(sync=True), number=block)
 
 
-@a_sync(default='async')
+@a_sync(default='async', executor=executor)
 @db_session
 def get_address(address: str) -> entities.Block:
     chain = get_chain(sync=True)
-    # TODO: this should live in ypm
-    if is_contract(address):
-        entity_type = entities.ContractExtended
-    else:
-        entity_type = entities.AddressExtended
-        
-    if a := entity_type.get(chain=chain, address=address):
-        return a
     
-    entity = entities.Address.get(chain=get_chain(sync=True), address=address)
+    entity = entities.Address.get(chain=chain, address=address)
     if isinstance(entity, Token):
         entity_type = entities.TokenExtended
     elif isinstance(entity, Contract):
         entity_type = entities.ContractExtended
-    if entity:
+    elif isinstance(entity, Address):
+        entity_type = entities.AddressExtended
+    elif entity is None:
+        # TODO: this should live in ypm
+        if is_contract(address):
+            entity_type = entities.ContractExtended
+        else:
+            entity_type = entities.AddressExtended
+    else:
+        raise NotImplementedError(entity, entity_type)
+            
+    if isinstance(entity, entity_type):
+        return entity
+    elif entity:
         entity.delete()
         commit()
             
     with suppress(TransactionIntegrityError):
         entity_type(chain=get_chain(sync=True), address=address)
         commit()
-        logger.debug('address %s added to ydb', address)
+        logger.debug('%s %s added to ydb', entity_type.__name__, address)
     return entity_type.get(chain=get_chain(sync=True), address=address)
 
 
-@a_sync(default='async')
+@a_sync(default='async', executor=executor)
 @db_session
 def get_token(address: str) -> entities.Block:
     chain = get_chain(sync=True)
-    if a := entities.TokenExtended.get(chain=chain, address=address):
-        return a
-    with suppress(TransactionIntegrityError):
-        entities.TokenExtended(chain=chain, address=address)
+    if t := entities.TokenExtended.get(chain=chain, address=address):
+        return t
+    elif t := Address.get(chain=chain, address=address):
+        t.delete()
         commit()
-        logger.debug('address %s added to ydb', address)
+    with suppress(TransactionIntegrityError):
+        entities.TokenExtended(chain=get_chain(sync=True), address=address)
+        commit()
+        logger.debug('token %s added to ydb', address)
     return entities.TokenExtended.get(chain=get_chain(sync=True), address=address)
         
     
-@a_sync(default='async')
+@a_sync(default='async', executor=executor)
 @db_session
 def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
     entity: entities.Transaction
@@ -99,19 +109,24 @@ def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
         return json.decode(entity.raw, type=Transaction)
     
     
-@a_sync(default='async')
+@a_sync(default='async', executor=executor)
 @db_session
 def delete_transaction(transaction: Transaction) -> None:
-    entity = entities.Transaction.get(
+    entities.Transaction.get(
         from_address = get_address(transaction.from_address, sync=True),
         nonce = transaction.nonce,
-    )
-    del entity
+    ).delete()
     
     
-@a_sync(default='async')
+@a_sync(default='async', executor=executor)
 @db_session
 def insert_transaction(transaction: Transaction) -> None:
+    # Make sure these are in the db so below we can call them and use the results all in one transaction
+    block = get_block(transaction.block_number, sync=True)
+    from_address = get_address(transaction.from_address, sync=True)
+    to_address = get_address(transaction.to_address, sync=True)
+    
+    # Now requery and use the values
     entities.Transaction(
         block = get_block(transaction.block_number, sync=True),
         transaction_index = transaction.transaction_index,
@@ -133,17 +148,17 @@ def insert_transaction(transaction: Transaction) -> None:
     )
     
     
-@a_sync(default='async')
+@a_sync(default='async', executor=executor)
 @db_session
 def get_internal_transfer(transfer_log) -> Optional[InternalTransfer]:
     ...
     
-@a_sync(default='async')
+@a_sync(default='async', executor=executor)
 @db_session
 def delete_internal_transfer(transfer: InternalTransfer) -> None:
     ...
     
-@a_sync(default='async')
+@a_sync(default='async', executor=executor)
 @db_session
 def insert_internal_transfer(transfer: InternalTransfer) -> None:
     entities.InternalTransfer(
@@ -167,7 +182,7 @@ def insert_internal_transfer(transfer: InternalTransfer) -> None:
         raw = json.encode(transfer),
     )
     
-@a_sync(default='async')
+@a_sync(default='async', executor=executor)
 @db_session
 def get_token_transfer(transfer_log) -> Optional[TokenTransfer]:
     entity: entities.TokenTransfer
@@ -179,22 +194,29 @@ def get_token_transfer(transfer_log) -> Optional[TokenTransfer]:
         return json.decode(entity.raw, type=TokenTransfer)
    
     
-@a_sync(default='async')
+@a_sync(default='async', executor=executor)
 @db_session
 def delete_token_transfer(token_transfer: TokenTransfer) -> None:
-    entity = entities.TokenTransfer.get(
+    entities.TokenTransfer.get(
         block = get_block(token_transfer.block_number, sync=True), 
         transaction_index = token_transfer.transaction_index,
         log_index = token_transfer.log_index,
-    )
-    del entity
+    ).delete()
 
 
-@a_sync(default='async')
+@a_sync(default='async', executor=executor)
 @db_session
 def insert_token_transfer(token_transfer: TokenTransfer) -> None:
+    # Make sure these are in the db so below we can call them and use the results all in one transaction
+    block = get_block(token_transfer.block_number, sync=True)
+    token = get_token(token_transfer.token_address, sync=True)
+    from_address = get_address(token_transfer.from_address, sync=True)
+    to_address = get_address(token_transfer.to_address, sync=True)
+    commit()
+    
+    # Now requery and use the values
     entities.TokenTransfer(
-        block = get_block(token_transfer.block_number), 
+        block = get_block(token_transfer.block_number, sync=True), 
         transaction_index = token_transfer.transaction_index,
         log_index = token_transfer.log_index,
         hash = token_transfer.hash,

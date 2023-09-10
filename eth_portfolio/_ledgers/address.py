@@ -590,10 +590,6 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
                 token_transfer['price'] = price
                 token_transfer['value_usd'] = round(value * price, 18) if price else None
             
-            for k, v in token_transfer.items():
-                if isinstance(v, EthAddress):
-                    token_transfer[k] = str(v)
-            
             transfer = TokenTransfer(**token_transfer)
             await db.insert_token_transfer(transfer)
             return transfer
