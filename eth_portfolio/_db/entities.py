@@ -41,6 +41,7 @@ class Transaction(db.Entity):
     type = Required(int, lazy=True)
     gas = Required(Decimal, 38, 1, lazy=True)
     gas_price = Required(Decimal, 38, 1, lazy=True)
+    max_fee_per_gas = Optional(Decimal, 38, 1, lazy=True)
     max_priority_fee_per_gas = Optional(Decimal, 38, 1, lazy=True)
     input = Required(str, lazy=True)
     r = Required(str, lazy=True)
