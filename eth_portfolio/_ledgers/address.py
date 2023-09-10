@@ -13,7 +13,7 @@ import eth_retry
 import inflection
 from async_lru import alru_cache
 from brownie import chain
-from brownie.convert import EthAddress
+from pony.orm import TransactionIntegrityError
 from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem
 from dank_mids.semaphores import BlockSemaphore
@@ -276,7 +276,12 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
                             tx['price'] = round(Decimal(await get_price(EEE_ADDRESS, block = tx['blockNumber'], sync=False)), 18)
                             tx['value_usd'] = tx['value'] * tx['price']
                         transaction = Transaction(**{inflection.underscore(k): v for k, v in tx.items()})
-                        await db.insert_transaction(transaction)
+                        try:
+                            await db.insert_transaction(transaction)
+                        except TransactionIntegrityError:
+                            if self.load_prices:
+                                await db.delete_transaction(transaction)
+                                await db.insert_transaction(transaction)
                         return transaction
                     hi = lo
                     lo = int(lo / 2)
@@ -594,6 +599,11 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
             
             transfer = TokenTransfer(**token_transfer)
             with suppress(decimal.InvalidOperation):  # Not entirely sure why this happens, probably some crazy uint value
-                await db.insert_token_transfer(transfer)
+                try:
+                    await db.insert_token_transfer(transfer)
+                except TransactionIntegrityError:
+                    if self.load_prices:
+                        await db.delete_token_transfer(transfer)
+                        await db.insert_token_transfer(transfer)
             return transfer
 
