@@ -14,7 +14,6 @@ from eth_portfolio._db.entities import db
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 
 logger = logging.getLogger(__name__)
-executor = PruningThreadPoolExecutor(16)
 
 try:
     db.bind(**config.connection_settings, create_db=True)
@@ -31,7 +30,7 @@ except OperationalError as e:
 
 from y._db.entities import Contract, Token, Address
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
-from y._db.utils import *
+from y._db.utils import executor, get_chain
 from y.contracts import is_contract
 
 
