@@ -136,7 +136,7 @@ class PortfolioAddress:
     async def _token_balances_async(self, block) -> TokenBalances:
         futs = []
         async for token in self.token_transfers._yield_tokens_at_block_async(block=block):
-            futs.append(asyncio.create_task(balances.load_token_balance(token)))
+            futs.append(asyncio.create_task(balances.load_token_balance(token, self.address, block)))
         return TokenBalances((token, balance) for token, balance in await asyncio.gather(*futs) if balance)
     
     @await_if_sync
