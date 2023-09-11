@@ -33,13 +33,13 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
     lo = 0
     hi = await dank_w3.eth.block_number
     while True:
-        _nonce = await get_nonce_at_block(lo)
+        _nonce = await get_nonce_at_block(address, lo)
         if _nonce < nonce:
             old_lo = lo
             lo += int((hi - lo) / 2) or 1
             logger.debug(f"Nonce at {old_lo} is {_nonce}, checking higher block {lo}")
         elif _nonce >= nonce:
-            prev_block_nonce = await get_nonce_at_block(lo - 1)
+            prev_block_nonce = await get_nonce_at_block(address, lo - 1)
             if prev_block_nonce < nonce:
                 logger.debug(f"Found nonce {nonce} at block {lo}")
                 tx = await get_transaction_by_nonce_and_block(address, nonce, lo)

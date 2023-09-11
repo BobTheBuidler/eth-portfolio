@@ -181,7 +181,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             end_block = await get_buffered_chain_height()
         if self.cached_thru and end_block < self.cached_thru:
             return
-        end_block_nonce = await get_nonce_at_block(end_block)
+        end_block_nonce = await get_nonce_at_block(self.address, end_block)
         nonces = list(range(self.cached_thru_nonce + 1, end_block_nonce + 1))
 
         if nonces:
