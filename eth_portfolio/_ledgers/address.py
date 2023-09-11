@@ -5,7 +5,7 @@ import logging
 from contextlib import suppress
 from functools import partial
 from itertools import product
-from typing import (TYPE_CHECKING, Generic, List, Optional, Tuple, Type,
+from typing import (TYPE_CHECKING, AsyncIterator, List, Optional, Tuple, Type,
                     TypeVar, Union)
 
 import a_sync
@@ -63,10 +63,12 @@ async def _get_transaction_receipt(txhash: str) -> TxReceipt:
     async with receipt_semaphore:
         return await dank_w3.eth.get_transaction_receipt(txhash)
 
+T = TypeVar('T')
+
 _LedgerEntryList = TypeVar("_LedgerEntryList", "TransactionsList", "InternalTransfersList", "TokenTransfersList")
 PandableLedgerEntryList = Union["TransactionsList", "InternalTransfersList", "TokenTransfersList"]
 
-class AddressLedgerBase(Generic[_LedgerEntryList], metaclass=abc.ABCMeta):
+class AddressLedgerBase(_LedgerEntryList[T], metaclass=abc.ABCMeta):
     list_type: Type[_LedgerEntryList]
 
     def __init__(self, portfolio_address: "PortfolioAddress") -> None:
@@ -107,6 +109,14 @@ class AddressLedgerBase(Generic[_LedgerEntryList], metaclass=abc.ABCMeta):
         if asyncio.get_event_loop().is_running():
             return self._get_async(start_block, end_block) #type: ignore
         return self.get(start_block, end_block)
+    
+    def __aiter__(self) -> AsyncIterator[T]:
+        return self._get_and_yield(self.address.portfolio.start_block or 0, None).__aiter__()
+
+    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncIterator[T]:
+        # TODO: make this an actual generator
+        for entry in await self._get_async(start_block, end_block):
+            yield entry
     
     @await_if_sync
     def get(self, start_block: Block, end_block: Block) -> _LedgerEntryList:

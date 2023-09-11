@@ -2,9 +2,9 @@ import asyncio
 import logging
 from functools import cached_property
 from types import MethodType
-from typing import Any, Dict, Iterable, List
+from typing import Any, AsyncIterator, Dict, Iterable, List, Union
 
-from async_property import async_property
+import a_sync
 from brownie import web3
 from checksum_dict import ChecksumAddressDict
 from pandas import DataFrame, concat  # type: ignore
@@ -19,6 +19,7 @@ from eth_portfolio._ledgers.portfolio import (PortfolioInternalTransfersLedger,
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.argspec import get_return_type
 from eth_portfolio.constants import ADDRESSES
+from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 from eth_portfolio.typing import Addresses, PortfolioBalances
 
 logger = logging.getLogger(__name__)
@@ -143,6 +144,14 @@ class PortfolioLedger:
     @property
     def w3(self) -> Web3:
         return self.portfolio.w3
+    
+    def __aiter__(self) -> AsyncIterator[Union[Transaction, InternalTransfer, TokenTransfer]]:
+        return self._get_and_yield(self.portfolio.start_block or 0, None).__aiter__()
+
+    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncIterator[Union[Transaction, InternalTransfer, TokenTransfer]]:
+        # TODO: make this an actual generator
+        async for entry in a_sync.as_yielded(*[address._get_and_yield(start_block, end_block) for address in self.portfolio.addresses.values()]):
+            yield entry
     
     # All Ledger entries
     
