@@ -158,6 +158,9 @@ class PortfolioLedger:
             self.internal_transfers._get_and_yield(start_block, end_block),
             self.token_transfers._get_and_yield(start_block, end_block),
         ):
+            # TODO: debug why we need this
+            while isinstance(entry, list) and len(entry) == 1:
+                entry = entry[0]
             assert not isinstance(entry, list)
             yield entry
     
