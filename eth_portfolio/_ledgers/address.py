@@ -3,8 +3,8 @@ import asyncio
 import logging
 from functools import partial
 from itertools import product
-from typing import (TYPE_CHECKING, AsyncIterator, List, Optional, Tuple, Type,
-                    TypeVar, Union)
+from typing import (TYPE_CHECKING, AsyncIterator, Generic, List, Optional,
+                    Tuple, Type, TypeVar, Union)
 
 import eth_retry
 from eth_abi import encode_single
@@ -43,7 +43,7 @@ T = TypeVar('T')
 _LedgerEntryList = TypeVar("_LedgerEntryList", "TransactionsList", "InternalTransfersList", "TokenTransfersList")
 PandableLedgerEntryList = Union["TransactionsList", "InternalTransfersList", "TokenTransfersList"]
 
-class AddressLedgerBase(_LedgerEntryList[T], metaclass=abc.ABCMeta):
+class AddressLedgerBase(Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
     list_type: Type[_LedgerEntryList]
 
     def __init__(self, portfolio_address: "PortfolioAddress") -> None:
@@ -180,7 +180,7 @@ class TransactionsList(PandableList[Transaction]):
             df.gasPrice = df.gasPrice.apply(int)
         return df
 
-class AddressTransactionsLedger(AddressLedgerBase[TransactionsList]):
+class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]):
     list_type = TransactionsList
 
     def __init__(self, portfolio_address: "PortfolioAddress"):
@@ -235,7 +235,7 @@ async def get_traces(params: list) -> List[dict]:
             raise BadResponse(traces)
         return [trace for trace in traces['result'] if "error" not in trace]
     
-class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
+class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
     list_type = InternalTransfersList
     
     @set_end_block_if_none
@@ -286,7 +286,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList]):
 class TokenTransfersList(PandableList[TokenTransfer]):
     pass
   
-class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList]):
+class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTransfer]):
     list_type = TokenTransfersList
 
     def __init__(self, portfolio_address: "PortfolioAddress"):

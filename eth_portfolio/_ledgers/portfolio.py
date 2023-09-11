@@ -1,6 +1,7 @@
 import asyncio
 import logging
-from typing import TYPE_CHECKING, AsyncIterator, Dict, Tuple, TypeVar, Union
+from typing import (TYPE_CHECKING, AsyncIterator, Dict, Generic, Tuple,
+                    TypeVar, Union)
 
 import a_sync
 from pandas import DataFrame, concat  # type: ignore
@@ -20,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 T = TypeVar('T')
 
-class PortfolioLedgerBase(_LedgerEntryList[T]):
+class PortfolioLedgerBase(Generic[_LedgerEntryList, T]):
     property_name: str
 
     def __init__(self, portfolio: "Portfolio"): # type: ignore
@@ -86,13 +87,13 @@ class PortfolioLedgerBase(_LedgerEntryList[T]):
         return df.sort_values(['blockNumber']).reset_index(drop=True)
 
 
-class PortfolioTransactionsLedger(PortfolioLedgerBase[TransactionsList]):
+class PortfolioTransactionsLedger(PortfolioLedgerBase[TransactionsList, Transaction]):
     property_name = "transactions"
 
-class PortfolioTokenTransfersLedger(PortfolioLedgerBase[TokenTransfersList]):
+class PortfolioTokenTransfersLedger(PortfolioLedgerBase[TokenTransfersList, TokenTransfer]):
     property_name = "token_transfers"
 
-class PortfolioInternalTransfersLedger(PortfolioLedgerBase[InternalTransfersList]):
+class PortfolioInternalTransfersLedger(PortfolioLedgerBase[InternalTransfersList, InternalTransfer]):
     property_name = "internal_transfers"
 
     @set_end_block_if_none
