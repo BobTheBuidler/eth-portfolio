@@ -303,8 +303,14 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         return self._list_tokens_at_block_async(block) # type: ignore
     
     async def _list_tokens_at_block_async(self, block: Optional[int] = None) -> List[ERC20]:
-        tokens = {transfer.token_address for transfer in await self._get_async(0, block)}
-        return [ERC20(address) for address in tokens]
+        return [token async for token in self._yield_tokens_at_block_async(block)]
+    
+    async def _yield_tokens_at_block_async(self, block: Optional[int] = None) -> AsyncIterator[ERC20]:
+        yielded = set()
+        async for transfer in self._get_and_yield(0, block):
+            if transfer.token_address not in yielded:
+                yielded.add(transfer.token_address)
+                yield ERC20(transfer.token_address, asynchronous=self.asynchronous)
     
     @set_end_block_if_none
     async def _load_new_objects(self, start_block: Block, end_block: Block) -> None:

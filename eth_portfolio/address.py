@@ -1,47 +1,29 @@
 
 import asyncio
 import logging
-from decimal import Decimal, InvalidOperation
 from typing import TYPE_CHECKING, AsyncIterator, Dict, Optional
 
 import a_sync
-import eth_retry
-from y import convert, get_price
-from y.constants import EEE_ADDRESS, weth
+from y import convert
+from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
-from y.utils.dank_mids import dank_w3
 
 from eth_portfolio._decorators import await_if_sync
 from eth_portfolio._ledgers.address import (AddressInternalTransfersLedger,
                                             AddressTokenTransfersLedger,
                                             AddressTransactionsLedger,
                                             PandableLedgerEntryList)
+from eth_portfolio._loaders import balances
 from eth_portfolio.protocols import _external
 from eth_portfolio.protocols.lending import _lending
 from eth_portfolio.structs import LedgerEntry
 from eth_portfolio.typing import (Balance, RemoteTokenBalances, TokenBalances,
                                   WalletBalances)
-from eth_portfolio.utils import _get_price
 
 if TYPE_CHECKING:
     from eth_portfolio.portfolio import Portfolio
 
 logger = logging.getLogger(__name__)
-
-
-@eth_retry.auto_retry
-async def _get_eth_balance(address: Address, block: Optional[Block]) -> Decimal:
-    return Decimal(await dank_w3.eth.get_balance(address, block_identifier=block)) / Decimal(1e18)
-
-def _calc_value(balance, price) -> Decimal:
-    if price is None:
-        return Decimal(0)
-    # NOTE If balance * price returns a Decimal with precision < 18, rounding is both impossible and unnecessary.
-    value = Decimal(balance) * Decimal(price)
-    try:
-        return round(value, 18)
-    except InvalidOperation:
-        return value
 
 class PortfolioAddress:
     def __init__(self, address: Address, portfolio: "Portfolio") -> None: # type: ignore
@@ -145,25 +127,17 @@ class PortfolioAddress:
         return self._eth_balance_async(block) # type: ignore
 
     async def _eth_balance_async(self, block: Optional[Block]) -> Balance:
-        balance = await _get_eth_balance(self.address, block)
-        value = round(balance * Decimal(await get_price(weth, block, sync=False) if balance else 0), 18)
-        return Balance(balance, value)
+        return await balances.load_eth_balance(self.address, block)
     
     @await_if_sync
     def token_balances(self, block: Optional[Block]) -> TokenBalances:
         return self._token_balances_async(block) # type: ignore
     
     async def _token_balances_async(self, block) -> TokenBalances:
-        tokens = await self.token_transfers._list_tokens_at_block_async(block=block)
-        token_balances = await asyncio.gather(*[token.balance_of_readable(self.address, block, sync=False) for token in tokens])
-        tokens = [token for token, balance in zip(tokens, token_balances) if balance]
-        token_balances = [balance for balance in token_balances if balance]
-        token_prices = await asyncio.gather(*[_get_price(token, block) for token in tokens])
-        token_balances = [
-            Balance(Decimal(balance), _calc_value(balance, price))
-            for balance, price in zip(token_balances, token_prices)
-        ]
-        return TokenBalances(zip(tokens, token_balances))
+        futs = []
+        async for token in self.token_transfers._yield_tokens_at_block_async(block=block):
+            futs.append(asyncio.create_task(balances.load_token_balance(token)))
+        return TokenBalances((token, balance) for token, balance in await asyncio.gather(*futs) if balance)
     
     @await_if_sync
     def collateral(self, block: Optional[Block] = None) -> RemoteTokenBalances:
