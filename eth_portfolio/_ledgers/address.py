@@ -1,7 +1,7 @@
 import abc
 import asyncio
 import logging
-from functools import partial
+from functools import cached_property, partial
 from itertools import product
 from typing import (TYPE_CHECKING, AsyncIterator, Generic, List, Optional,
                     Tuple, Type, TypeVar, Union)
@@ -54,30 +54,17 @@ class AddressLedgerBase(Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
         # assert isinstance(portfolio_address, PortfolioAddress), f"address must be a PortfolioAddress. try passing in PortfolioAddress({portfolio_address}) instead."
 
         self.portfolio_address = portfolio_address
+        self.address = self.portfolio_address.address
+        self.asynchronous = self.portfolio_address.portfolio.asynchronous
+        self.load_prices = self.portfolio_address.portfolio.load_prices
         self.objects: _LedgerEntryList = self.list_type()
         # The following two properties will both be ints once the cache has contents
         self.cached_from: int = None # type: ignore
         self.cached_thru: int = None # type: ignore
-        self._semaphore = asyncio.Semaphore(1)
+        self._lock = asyncio.Lock()
     
     def __hash__(self) -> int:
         return hash(self.address)
-    
-    @property
-    def address(self) -> Address:
-        return self.portfolio_address.address
-    
-    @property
-    def asynchronous(self) -> bool:
-        return self.portfolio.asynchronous
-    
-    @property
-    def load_prices(self) -> bool:
-        return self.portfolio.load_prices
-    
-    @property
-    def portfolio(self) -> "Portfolio": # type: ignore
-        return self.portfolio_address.portfolio
     
     def __getitem__(self, indicies: Union[Block,Tuple[Block,Block]]) -> _LedgerEntryList:
         start_block, end_block = _unpack_indicies(indicies)
@@ -90,8 +77,14 @@ class AddressLedgerBase(Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
 
     async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncIterator[T]:
         # TODO: make this an actual generator
-        for entry in await self._get_async(start_block, end_block):
-            yield entry
+        await self._get_new_objects(start_block, end_block)
+        for obj in self.objects:
+            block = obj.block_number
+            if block < start_block:
+                continue
+            elif block > end_block:
+                break
+            yield obj
     
     @await_if_sync
     def get(self, start_block: Block, end_block: Block) -> _LedgerEntryList:
@@ -99,14 +92,8 @@ class AddressLedgerBase(Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
     
     @set_end_block_if_none
     async def _get_async(self, start_block: Block, end_block: Block) -> _LedgerEntryList:
-        await self._get_new_objects(start_block, end_block)
         objects = self.list_type()
-        for obj in self.objects:
-            block = obj.block_number
-            if block < start_block:
-                continue
-            elif block > end_block:
-                break
+        async for obj in self._get_and_yield(start_block, end_block):
             objects.append(obj)
         return objects
     
@@ -121,7 +108,7 @@ class AddressLedgerBase(Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
     
     @set_end_block_if_none
     async def _get_new_objects(self, start_block: Block, end_block: Block) -> None:
-        async with self._semaphore:
+        async with self._lock:
             await self._load_new_objects(start_block, end_block)
     
     @abc.abstractmethod
