@@ -41,12 +41,6 @@ class Portfolio:
         load_prices: bool = True,
     ) -> None:
 
-        assert isinstance(addresses, Iterable), f"`addresses` must be an iterable, not {type(addresses)}"
-        if isinstance(addresses, str):
-            addresses = [addresses]
-
-        self.addresses = ChecksumAddressDict({address: PortfolioAddress(address, self) for address in addresses})
-
         assert isinstance(start_block, int), f"`start_block` must be an integer, not {type(start_block)}"
         assert start_block >= 0, "`start_block` must be >= 0"
         self._start_block = start_block
@@ -59,6 +53,12 @@ class Portfolio:
 
         assert isinstance(load_prices, bool), f"`load_prices` must be a boolean, you passed {type(load_prices)}"
         self.load_prices: bool = load_prices
+        
+        assert isinstance(addresses, Iterable), f"`addresses` must be an iterable, not {type(addresses)}"
+        if isinstance(addresses, str):
+            addresses = [addresses]
+
+        self.addresses = ChecksumAddressDict({address: PortfolioAddress(address, self) for address in addresses})
 
         self.ledger = PortfolioLedger(self)
 
