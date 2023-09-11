@@ -126,7 +126,7 @@ def insert_transaction(transaction: Transaction) -> None:
     # Make sure these are in the db so below we can call them and use the results all in one transaction
     block = get_block(transaction.block_number, sync=True)
     from_address = get_address(transaction.from_address, sync=True)
-    to_address = get_address(transaction.to_address, sync=True)
+    to_address = get_address(transaction.to_address, sync=True) if transaction.to_address else None
     
     # Now requery and use the values
     entities.Transaction(
@@ -135,7 +135,7 @@ def insert_transaction(transaction: Transaction) -> None:
         hash = transaction.hash,
         nonce = transaction.nonce,
         from_address = get_address(transaction.from_address, sync=True),
-        to_address = get_address(transaction.to_address, sync=True),
+        to_address = get_address(transaction.to_address, sync=True) if transaction.to_address else None,
         value = transaction.value,
         price = transaction.price,
         value_usd = transaction.value_usd,
