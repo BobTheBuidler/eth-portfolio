@@ -23,7 +23,7 @@ async def load_token_balance(token: ERC20, address: Address, block: Block) -> Tu
     if not balance:
         return
     price = await _get_price(token, block)
-    return token, Balance(decimal.Decimal(balance), _calc_value(balance, price))
+    return token, Balance(round(decimal.Decimal(balance), 18), _calc_value(balance, price))
 
 def _calc_value(balance, price) -> decimal.Decimal:
     if price is None:
