@@ -2,7 +2,7 @@ import asyncio
 import logging
 from functools import cached_property
 from types import MethodType
-from typing import Any, AsyncIterator, Dict, Iterable, List
+from typing import Any, AsyncIterator, Dict, Iterable, Iterator, List
 
 import a_sync
 from brownie import web3
