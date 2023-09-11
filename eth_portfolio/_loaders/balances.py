@@ -18,10 +18,10 @@ async def load_eth_balance(address: Address, block: Optional[Block]) -> Balance:
     value = round(balance * decimal.Decimal(await get_price(WRAPPED_GAS_COIN, block, sync=False) if balance else 0), 18)
     return Balance(balance, value)
 
-async def load_token_balance(token: ERC20, address: Address, block: Block) -> Tuple[ERC20, Optional[Balance]]:
+async def load_token_balance(token: ERC20, address: Address, block: Block) -> Tuple[ERC20, Balance]:
     balance = await token.balance_of_readable(address, block, sync=False)
     if not balance:
-        return
+        return token, Balance()
     price = await _get_price(token, block)
     return token, Balance(round(decimal.Decimal(balance), 18), _calc_value(balance, price))
 
