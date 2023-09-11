@@ -21,13 +21,15 @@ from eth_portfolio.structs import Transaction
 
 logger = logging.getLogger(__name__)
 
+Nonce = int
+
 @eth_retry.auto_retry
-async def load_transaction(address: Address, nonce: int, load_prices: bool) -> Tuple[int, Optional[Transaction]]:
+async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) -> Tuple[Nonce, Optional[Transaction]]:
     if transaction := await db.get_transaction(address, nonce):
         if load_prices and transaction.price is None:
             await db.delete_transaction(transaction)
         else:
-            return transaction
+            return nonce, transaction
     lo = 0
     hi = await dank_w3.eth.block_number
     while True:

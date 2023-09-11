@@ -19,6 +19,7 @@ from y.utils.events import BATCH_SIZE, get_logs_asap_generator
 from eth_portfolio import _loaders
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
+from eth_portfolio._loaders.transaction import get_nonce_at_block
 from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 from eth_portfolio.utils import (PandableList, _unpack_indicies,
@@ -180,12 +181,12 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             end_block = await get_buffered_chain_height()
         if self.cached_thru and end_block < self.cached_thru:
             return
-        end_block_nonce = await self._get_nonce_at_block(end_block)
+        end_block_nonce = await get_nonce_at_block(end_block)
         nonces = list(range(self.cached_thru_nonce + 1, end_block_nonce + 1))
 
         if nonces:
             transaction: Transaction
-            for fut in tqdm_asyncio.as_completed([_loaders.load_transaction(nonce, self.load_prices) for nonce in nonces], desc=f"Transactions        {self.address}"):
+            for fut in tqdm_asyncio.as_completed([_loaders.load_transaction(self.address, nonce, self.load_prices) for nonce in nonces], desc=f"Transactions        {self.address}"):
                 nonce, transaction = await fut
                 if nonce == 0 and self.cached_thru_nonce == -1:
                     # Gnosis safes
