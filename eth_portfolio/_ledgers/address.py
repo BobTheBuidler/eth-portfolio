@@ -85,6 +85,7 @@ class AddressLedgerBase(Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
                 continue
             elif block > end_block:
                 break
+            assert not isinstance(obj, list)
             yield obj
     
     @await_if_sync
@@ -188,14 +189,15 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             transaction: Transaction
             for fut in tqdm_asyncio.as_completed([_loaders.load_transaction(self.address, nonce, self.load_prices) for nonce in nonces], desc=f"Transactions        {self.address}"):
                 nonce, transaction = await fut
-                if nonce == 0 and self.cached_thru_nonce == -1:
+                if transaction:
+                    assert not isinstance(transaction, list)
+                    self.objects.append(transaction)
+                elif nonce == 0 and self.cached_thru_nonce == -1:
                     # Gnosis safes
                     self.cached_thru_nonce = 0
                 else:
                     # NOTE Are we sure this is the correct way to handle this scenario? Are we sure it will ever even occur with the new gnosis handling?
                     logger.warning("No transaction with nonce %s for %s", nonce, self.address)
-                if transaction is not None:
-                    self.objects.append(transaction)
             
             if self.objects:
                 self.objects.sort(key=lambda t: t.nonce)

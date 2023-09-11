@@ -43,6 +43,7 @@ class PortfolioLedgerBase(Generic[_LedgerEntryList, T]):
         async for entry in a_sync.as_yielded(*[
             getattr(address, self.property_name)._get_and_yield(start_block, end_block) for address in self.portfolio
         ]):
+            assert not isinstance(entry, list)
             yield entry
     
     @property

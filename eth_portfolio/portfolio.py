@@ -158,6 +158,7 @@ class PortfolioLedger:
             self.internal_transfers._get_and_yield(start_block, end_block),
             self.token_transfers._get_and_yield(start_block, end_block),
         ):
+            assert not isinstance(entry, list)
             yield entry
     
     # All Ledger entries
