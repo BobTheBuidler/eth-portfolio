@@ -14,7 +14,7 @@ class _DictStruct(Struct):
     def __getitem__(self, item: str) -> Any:
         return getattr(self, item)
     
-class _LedgerEntryBase(_DictStruct, kw_only=True):
+class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
     chainid: Network
     block_number: Block
     transaction_index: int
@@ -26,11 +26,11 @@ class _LedgerEntryBase(_DictStruct, kw_only=True):
     value_usd: Optional[Decimal] = None
     
 
-class _AccessListEntry(Struct):
+class _AccessListEntry(Struct, frozen=True):
     address: str
     storage_keys: list[bytes]
     
-class Transaction(_LedgerEntryBase, kw_only=True):
+class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     entry_type: ClassVar[Literal['transaction']] = 'transaction'
     block_hash: str
     nonce: int
@@ -46,7 +46,7 @@ class Transaction(_LedgerEntryBase, kw_only=True):
     access_list: Optional[List[_AccessListEntry]] = None
 
 
-class InternalTransfer(_LedgerEntryBase, kw_only=True):
+class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
     entry_type: ClassVar[Literal['internal_transfer']] = 'internal_transfer'
     block_hash: str
     type: str
@@ -62,7 +62,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True):
     code: Optional[str] = None
 
 
-class TokenTransfer(_LedgerEntryBase, kw_only=True):
+class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
     entry_type: ClassVar[Literal['token_transfer']] = 'token_transfer'
     log_index: int
     token: Optional[str]
