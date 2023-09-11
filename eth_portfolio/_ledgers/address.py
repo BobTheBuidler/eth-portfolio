@@ -74,7 +74,7 @@ class AddressLedgerBase(Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
         return self.get(start_block, end_block)
     
     def __aiter__(self) -> AsyncIterator[T]:
-        return self._get_and_yield(self.address.portfolio.start_block or 0, None).__aiter__()
+        return self._get_and_yield(self.portfolio_address.portfolio._start_block or 0, None).__aiter__()
 
     async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncIterator[T]:
         # TODO: make this an actual generator
