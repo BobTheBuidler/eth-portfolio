@@ -1,6 +1,6 @@
 import logging
 from decimal import Decimal
-from typing import Any, ClassVar, Iterator, List, Literal, Optional
+from typing import Any, ClassVar, Iterator, List, Literal, Optional, Union
 
 from msgspec import Struct
 from y import Network
@@ -68,3 +68,6 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True):
     token: Optional[str]
     token_address: str
     value: Decimal
+
+
+LedgerEntry = Union[Transaction, InternalTransfer, TokenTransfer]

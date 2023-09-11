@@ -1,6 +1,10 @@
 import asyncio
 import logging
-from typing import TYPE_CHECKING, Dict, Generic, Tuple, Union
+from typing import TYPE_CHECKING, AsyncIterator, Dict, Tuple, TypeVar, Union
+
+import a_sync
+from pandas import DataFrame, concat  # type: ignore
+from y.datatypes import Address, Block
 
 from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
 from eth_portfolio._ledgers.address import (AddressLedgerBase,
@@ -8,28 +12,36 @@ from eth_portfolio._ledgers.address import (AddressLedgerBase,
                                             TokenTransfersList,
                                             TransactionsList, _LedgerEntryList)
 from eth_portfolio.utils import _unpack_indicies
-from pandas import DataFrame, concat  # type: ignore
-from y.datatypes import Address, Block
 
 if TYPE_CHECKING:
     from eth_portfolio.portfolio import Portfolio
 
 logger = logging.getLogger(__name__)
 
+T = TypeVar('T')
 
-class PortfolioLedgerBase(Generic[_LedgerEntryList]):
+class PortfolioLedgerBase(_LedgerEntryList[T]):
     property_name: str
 
     def __init__(self, portfolio: "Portfolio"): # type: ignore
         assert hasattr(self, "property_name"), "Subclasses must define a property_name"
-        self.object_caches: Dict[Address, AddressLedgerBase[_LedgerEntryList]] = {address.address: getattr(address, self.property_name) for address in portfolio.addresses.values()}
+        self.object_caches: Dict[Address, AddressLedgerBase[_LedgerEntryList]] = {address.address: getattr(address, self.property_name) for address in portfolio}
         self.portfolio = portfolio
     
-    def __getitem__(self, indicies: Union[Block,Tuple[Block,Block]]) -> Dict[Address, _LedgerEntryList]:
+    def __getitem__(self, indicies: Union[Block, Tuple[Block, Block]]) -> Dict[Address, _LedgerEntryList]:
         start_block, end_block = _unpack_indicies(indicies)
         if asyncio.get_event_loop().is_running():
             return self._get_async(start_block, end_block) # type: ignore
         return self.get(start_block, end_block)
+    
+    def __aiter__(self) -> AsyncIterator[T]:
+        return self._get_and_yield(self.portfolio.start_block or 0, None).__aiter__()
+    
+    async def _get_and_yield(self, start_block: int, end_block: int) -> AsyncIterator[T]:
+        async for entry in a_sync.as_yielded(*[
+            getattr(address, self.property_name)._get_and_yield(start_block, end_block) for address in self.portfolio
+        ]):
+            yield entry
     
     @property
     def asynchronous(self) -> bool:

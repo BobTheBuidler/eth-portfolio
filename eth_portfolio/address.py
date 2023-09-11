@@ -2,7 +2,7 @@
 import asyncio
 import logging
 from decimal import Decimal, InvalidOperation
-from typing import TYPE_CHECKING, AsyncIterator, Dict, Optional, Union
+from typing import TYPE_CHECKING, AsyncIterator, Dict, Optional
 
 import a_sync
 import eth_retry
@@ -18,7 +18,7 @@ from eth_portfolio._ledgers.address import (AddressInternalTransfersLedger,
                                             PandableLedgerEntryList)
 from eth_portfolio.protocols import _external
 from eth_portfolio.protocols.lending import _lending
-from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
+from eth_portfolio.structs import LedgerEntry
 from eth_portfolio.typing import (Balance, RemoteTokenBalances, TokenBalances,
                                   WalletBalances)
 from eth_portfolio.utils import _get_price
@@ -75,10 +75,10 @@ class PortfolioAddress:
     def __hash__(self) -> int:
         return hash(self.address)
     
-    def __aiter__(self) -> AsyncIterator[Union[Transaction, InternalTransfer, TokenTransfer]]:
+    def __aiter__(self) -> AsyncIterator[LedgerEntry]:
         return self._get_and_yield(self.portfolio.start_block or 0, None).__aiter__()
 
-    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncIterator[T]:
+    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncIterator[LedgerEntry]:
         # TODO: make this an actual generator
         async for entry in a_sync.as_yielded(
             self.transactions._get_and_yield(start_block, end_block),

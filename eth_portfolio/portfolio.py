@@ -2,7 +2,7 @@ import asyncio
 import logging
 from functools import cached_property
 from types import MethodType
-from typing import Any, AsyncIterator, Dict, Iterable, List, Union
+from typing import Any, AsyncIterator, Dict, Iterable, List
 
 import a_sync
 from brownie import web3
@@ -19,7 +19,7 @@ from eth_portfolio._ledgers.portfolio import (PortfolioInternalTransfersLedger,
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.argspec import get_return_type
 from eth_portfolio.constants import ADDRESSES
-from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
+from eth_portfolio.structs import LedgerEntry
 from eth_portfolio.typing import Addresses, PortfolioBalances
 
 logger = logging.getLogger(__name__)
@@ -68,6 +68,9 @@ class Portfolio:
     def __getitem__(self, key: Address) -> PortfolioAddress:
         return self.addresses[key]
     
+    def __iter__(self) -> Iterator[PortfolioAddress]:
+        return iter(self.addresses.values())
+    
     @property
     def transactions(self) -> PortfolioTransactionsLedger:
         return self.ledger.transactions
@@ -90,7 +93,7 @@ class Portfolio:
     
     async def _describe_async(self, block: int) -> PortfolioBalances:
         assert block
-        data = await asyncio.gather(*[address._describe_async(block) for address in self.addresses.values()])
+        data = await asyncio.gather(*[address._describe_async(block) for address in self])
         return PortfolioBalances({address: balances for address, balances in zip(self.addresses, data)})
     
     def __import_address_functions(self) -> None:
@@ -116,7 +119,7 @@ class Portfolio:
     
     def __new_async_func(self, async_name: str) -> None:
         async def async_func(self: Portfolio, *args: Any, **kwargs: Any) -> get_return_type(getattr(PortfolioAddress, async_name)):  # type: ignore
-            vals = await asyncio.gather(*[getattr(address, async_name)(*args, **kwargs) for address in self.addresses.values()])
+            vals = await asyncio.gather(*[getattr(address, async_name)(*args, **kwargs) for address in self])
             return {address: data for address, data in zip(self.addresses, vals)}
         setattr(self, async_name, MethodType(async_func, self))
 
@@ -145,12 +148,16 @@ class PortfolioLedger:
     def w3(self) -> Web3:
         return self.portfolio.w3
     
-    def __aiter__(self) -> AsyncIterator[Union[Transaction, InternalTransfer, TokenTransfer]]:
+    def __aiter__(self) -> AsyncIterator[LedgerEntry]:
         return self._get_and_yield(self.portfolio.start_block or 0, None).__aiter__()
 
-    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncIterator[Union[Transaction, InternalTransfer, TokenTransfer]]:
+    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncIterator[LedgerEntry]:
         # TODO: make this an actual generator
-        async for entry in a_sync.as_yielded(*[address._get_and_yield(start_block, end_block) for address in self.portfolio.addresses.values()]):
+        async for entry in a_sync.as_yielded(
+            self.transactions._get_and_yield(start_block, end_block),
+            self.internal_transfers._get_and_yield(start_block, end_block),
+            self.token_transfers._get_and_yield(start_block, end_block),
+        ):
             yield entry
     
     # All Ledger entries
@@ -160,7 +167,7 @@ class PortfolioLedger:
         return self._all_entries_async(start_block, end_block)
     
     async def _all_entries_async(self, start_block: Block, end_block: Block) -> Dict[PortfolioAddress, Dict[str, PandableLedgerEntryList]]:
-        all_transactions = await asyncio.gather(*[address._all_async(start_block, end_block) for address in self.portfolio.addresses.values()])
+        all_transactions = await asyncio.gather(*[address._all_async(start_block, end_block) for address in self.portfolio])
         return {address: data for address, data in zip(self.portfolio.addresses, all_transactions)}
 
     # Pandas
