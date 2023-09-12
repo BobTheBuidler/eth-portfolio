@@ -12,32 +12,33 @@ from eth_portfolio.utils import _get_price
 
 
 async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[InternalTransfer]:
+    if "to" in transfer and transfer["to"] == "0xd9db270c1b5e3bd161e8c8503c55ceabee709552": #"0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":  # Gnosis Safe Singleton 1.3.0
+        # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
+        # that actually transmitted value to the singleton even though they appear to.
+        return None
     receipt = await get_transaction_receipt(transfer['transactionHash'])
     if receipt.status == 0:
         return None
-    del receipt
 
     # Un-nest the action dict
     if 'action' in transfer and transfer['action'] is not None:
-        for k in list(transfer['action'].keys()):
-            transfer[k] = transfer['action'].pop(k)
-        if transfer['action']:
-            raise ValueError(transfer['action'])
-        del transfer['action']
-
+        for key in transfer.pop('action'):
+            transfer[key] = transfer['action'][key]
+            
     # Un-nest the result dict
     if 'result' in transfer and transfer['result'] is not None:
-        for k in list(transfer['result'].keys()):
-            transfer[k] = transfer['result'].pop(k)
-        if transfer['result']:
-            raise ValueError(transfer['result'])
-        del transfer['result']
+        for key in transfer.pop('result'):
+            transfer[key] = transfer['result'][key]
 
     # Checksum the addresses
     if "from" in transfer:
-        transfer['from_address'] = checksum(transfer.pop('from'))
+        # When we get the address from the receipt we can skip the checksum
+        transfer['from_address'] = receipt['from']
+        transfer.pop('from')
     if "to" in transfer:
-        transfer['to_address'] = checksum(transfer.pop('to'))
+        # When we get the address from the receipt we can skip the checksum
+        transfer['to_address'] = receipt.to
+        transfer.pop('to')
     if "address" in transfer:
         transfer['address'] = checksum(transfer.pop('address'))
         
@@ -46,6 +47,7 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
     transfer['gasUsed'] = int(transfer['gasUsed'], 16) if transfer['gasUsed'] else None
 
     if load_prices:
+        del receipt
         price = await _get_price(EEE_ADDRESS, transfer['blockNumber'])
         price = round(Decimal(price), 18)
         transfer['price'] = price
