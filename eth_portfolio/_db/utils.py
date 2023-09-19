@@ -1,5 +1,6 @@
 import logging
 from contextlib import suppress
+from decimal import Decimal
 from typing import Optional
 
 import y._db.config as config
@@ -9,7 +10,8 @@ from pony.orm import (BindingError, OperationalError,
                       TransactionIntegrityError, commit, db_session)
 
 from eth_portfolio._db import entities
-from eth_portfolio._db.decorators import break_locks, requery_objs_on_diff_tx_err
+from eth_portfolio._db.decorators import (break_locks,
+                                          requery_objs_on_diff_tx_err)
 from eth_portfolio._db.entities import db
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 
@@ -155,13 +157,47 @@ def insert_transaction(transaction: Transaction) -> None:
     
 @a_sync(default='async')
 @robust_db_session
-def get_internal_transfer(transfer_log) -> Optional[InternalTransfer]:
-    ...
+def get_internal_transfer(trace: dict) -> Optional[InternalTransfer]:
+    
+    if entity := entities.InternalTransfer.get(
+        block = get_block(trace['blockNumber'], sync=True),
+        transaction_index = trace['transactionPosition'],
+        hash = trace['transactionHash'],
+        type = trace['type'],
+        call_type = trace['call_type'],
+        from_address = get_address(trace['from'], sync=True),
+        to_address = get_address(trace['to'], sync=True),
+        value = Decimal(int(trace['value'], 16)) / Decimal(1e18),
+        trace_address = get_address(trace['trace_address'], sync=True),
+        gas = int(trace['gas'], 16),
+        gas_used = int(trace['gas_used'], 16) if 'gas_used' in trace else None,
+        input = trace['input'],
+        output = trace['output'],
+        subtraces = trace['subtraces'],
+        address = get_address(trace['address'], sync=True),
+    ):
+        return json.decode(entity.raw, type=InternalTransfer)
     
 @a_sync(default='async')
 @robust_db_session
 def delete_internal_transfer(transfer: InternalTransfer) -> None:
-    if entity := entities.InternalTransfer.get(...):
+    if entity := entities.InternalTransfer.get(
+        block = get_block(transfer.block_number, sync=True),
+        transaction_index = transfer.transaction_index,
+        hash = transfer.hash,
+        type = transfer.type,
+        call_type = transfer.call_type,
+        from_address = get_address(transfer.from_address, sync=True),
+        to_address = get_address(transfer.to_address, sync=True),
+        value = transfer.value,
+        trace_address = get_address(transfer.trace_address, sync=True),
+        gas = transfer.gas,
+        gas_used = transfer.gas_used,
+        input = transfer.input,
+        output = transfer.output,
+        subtraces = transfer.subtraces,
+        address = get_address(transfer.address, sync=True),
+    ):
         entity.delete()
     
 @a_sync(default='async')

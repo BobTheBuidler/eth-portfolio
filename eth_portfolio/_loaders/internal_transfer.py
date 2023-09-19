@@ -32,13 +32,9 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
 
     # Checksum the addresses
     if "from" in transfer:
-        # When we get the address from the receipt we can skip the checksum
-        transfer['from_address'] = receipt['from']
-        transfer.pop('from')
+        transfer['from_address'] = checksum(transfer.pop('from'))
     if "to" in transfer:
-        # When we get the address from the receipt we can skip the checksum
-        transfer['to_address'] = receipt.to
-        transfer.pop('to')
+        transfer['to_address'] = checksum(transfer.pop('to'))
     if "address" in transfer:
         transfer['address'] = checksum(transfer.pop('address'))
         
