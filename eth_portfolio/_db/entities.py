@@ -79,7 +79,7 @@ class InternalTransfer(db.Entity):
     subtraces = Required(int, lazy=True)
     address = Required(AddressExtended, lazy=True, reverse='_not_sure_what_this_field_is')
     
-    composite_key(block, transaction_index, trace_address)
+    composite_key(block, transaction_index, hash, from_address, to_address, value, type, call_type, trace_address, gas, gas_used, code, input, output, subtraces, address)
     
     raw = Required(bytes, lazy=True)
 
