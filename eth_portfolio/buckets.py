@@ -51,7 +51,7 @@ async def _unwrap_token(token) -> str:
         #underlying = await contract.token.coroutine()
         underlying = await YearnInspiredVault(token, asynchronous=True).underlying
         return await _unwrap_token(underlying)
-    if pool := await curve.get_pool(token):
+    if curve and (pool := await curve.get_pool(token)):
         pool_tokens = set(
             str(_token) for _token in await asyncio.gather(*[_unwrap_token(coin) for coin in await pool.coins])
         )
