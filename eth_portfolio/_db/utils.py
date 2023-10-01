@@ -41,7 +41,7 @@ robust_db_session = lambda callable: break_locks(db_session(callable))
 @robust_db_session
 def get_block(block: int) -> entities.BlockExtended:
     chain = get_chain(sync=True)
-    if b := BlockExtended.get(chain=chain, number=block):
+    if b := entities.BlockExtended.get(chain=chain, number=block):
         return b
     elif b := Block.get(chain=chain, number=block):
         if isinstance(b, entities.BlockExtended):
