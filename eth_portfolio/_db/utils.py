@@ -30,7 +30,7 @@ except OperationalError as e:
         raise e
     raise OperationalError("Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script")
 
-from y._db.entities import Address, Contract, Token
+from y._db.entities import Address, Block, Contract, Token
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
 from y._db.utils import get_chain
 from y.contracts import is_contract
@@ -39,10 +39,13 @@ robust_db_session = lambda callable: break_locks(db_session(callable))
 
 @a_sync(default='async')
 @robust_db_session
-def get_block(block: int) -> entities.Block:
+def get_block(block: int) -> entities.BlockExtended:
     chain = get_chain(sync=True)
-    if b := entities.BlockExtended.get(chain=chain, number=block):
-        return b
+    if b := Block.get(chain=chain, number=block):
+        if isinstance(b, entities.BlockExtended):
+            return b
+        b.delete()
+        commit()
     with suppress(TransactionIntegrityError):
         entities.BlockExtended(chain=chain, number=block)
         commit()
