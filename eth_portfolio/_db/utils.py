@@ -41,15 +41,24 @@ robust_db_session = lambda callable: break_locks(db_session(callable))
 @robust_db_session
 def get_block(block: int) -> entities.BlockExtended:
     chain = get_chain(sync=True)
-    if b := Block.get(chain=chain, number=block):
+    if b := BlockExtended.get(chain=chain, number=block):
+        return b
+    elif b := Block.get(chain=chain, number=block)
         if isinstance(b, entities.BlockExtended):
             return b
+        hash = b.hash
+        ts = b.timestamp
         b.delete()
         commit()
-    with suppress(TransactionIntegrityError):
-        entities.BlockExtended(chain=chain, number=block)
-        commit()
-        logger.debug('block %s added to ydb', block)
+        with suppress(TransactionIntegrityError):
+            entities.BlockExtended(chain=chain, number=block, hash=hash, timestamp=ts)
+            commit()
+            logger.debug('block %s added to ydb', block)
+    else:
+        with suppress(TransactionIntegrityError):
+            entities.BlockExtended(chain=chain, number=block)
+            commit()
+            logger.debug('block %s added to ydb', block)
     return entities.BlockExtended.get(chain=get_chain(sync=True), number=block)
 
 
@@ -93,11 +102,29 @@ def get_token(address: str) -> entities.Block:
     chain = get_chain(sync=True)
     if t := entities.TokenExtended.get(chain=chain, address=address):
         return t
+    notes, deployer, deploy_block, symbol, name, bucket = None, None, None, None, None, None
     elif t := Address.get(chain=chain, address=address):
+        notes = t.notes
+        if isinstance(t, Contract):
+            deployer = t.deployer
+            deploy_block = t.deploy_block
+        if isinstance(t, Token):
+            symbol = t.symbol
+            name = t.name
+            bucket = t.bucket
         t.delete()
         commit()
     with suppress(TransactionIntegrityError):
-        entities.TokenExtended(chain=get_chain(sync=True), address=address)
+        entities.TokenExtended(
+            chain=get_chain(sync=True), 
+            address=address,
+            notes=notes,
+            deployer=deployer,
+            deploy_block=deploy_block,
+            symbol=symbol,
+            name=name,
+            bucket=bucket,
+        )
         commit()
         logger.debug('token %s added to ydb', address)
     return entities.TokenExtended.get(chain=get_chain(sync=True), address=address)
