@@ -53,7 +53,7 @@ def get_block(block: int) -> entities.BlockExtended:
         with suppress(TransactionIntegrityError):
             entities.BlockExtended(chain=chain, number=block, hash=hash, timestamp=ts)
             commit()
-            logger.debug('block %s added to ydb', block)
+            logger.debug('block %s extended in ydb', block)
     else:
         with suppress(TransactionIntegrityError):
             entities.BlockExtended(chain=chain, number=block)
