@@ -103,7 +103,7 @@ def get_token(address: str) -> entities.Block:
     if t := entities.TokenExtended.get(chain=chain, address=address):
         return t
     notes, deployer, deploy_block, symbol, name, bucket = None, None, None, None, None, None
-    elif t := Address.get(chain=chain, address=address):
+    if t := Address.get(chain=chain, address=address):
         notes = t.notes
         if isinstance(t, Contract):
             deployer = t.deployer
