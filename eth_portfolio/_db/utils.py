@@ -30,7 +30,7 @@ except OperationalError as e:
         raise e
     raise OperationalError("Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script")
 
-from y._db.entities import Address, Block, Contract, Token
+from y._db.entities import Address, Block, Contract, Token, insert
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
 from y._db.utils import get_chain
 from y._db.utils.logs import insert_log
@@ -65,6 +65,7 @@ def get_block(block: int) -> entities.BlockExtended:
         flush()
         b.delete()
         commit()
+        b = insert(type=BlockExtended, chain=get_chain(sync=True), number=block, hash=hash, timestamp=ts)
         try:
             for log in logs:
                 insert_log(log)
@@ -74,15 +75,8 @@ def get_block(block: int) -> entities.BlockExtended:
             raise e.__class__("This is really bad. Might need to nuke your db if you value your logs/traces", *e.args)
         for token, price in prices:
             _set_price(token, price, sync=True)
-        with suppress(TransactionIntegrityError):
-            entities.BlockExtended(chain=chain, number=block, hash=hash, timestamp=ts)
-            commit()
-            logger.debug('block %s extended in ydb', block)
-    else:
-        with suppress(TransactionIntegrityError):
-            entities.BlockExtended(chain=chain, number=block)
-            commit()
-            logger.debug('block %s added to ydb', block)
+    elif b := insert(type=BlockExtended, chain=get_chain(sync=True), number=block, hash=hash, timestamp=ts):
+        return b
     return entities.BlockExtended.get(chain=get_chain(sync=True), number=block)
 
 
@@ -112,12 +106,8 @@ def get_address(address: str) -> entities.Block:
     elif entity:
         entity.delete()
         commit()
-            
-    with suppress(TransactionIntegrityError):
-        entity_type(chain=get_chain(sync=True), address=address)
-        commit()
-        logger.debug('%s %s added to ydb', entity_type.__name__, address)
-    return entity_type.get(chain=get_chain(sync=True), address=address)
+    
+    return insert(type=entity_type, chain=get_chain(sync=True), address=address) or entity_type.get(chain=get_chain(sync=True), address=address)
 
 
 @a_sync(default='async')
