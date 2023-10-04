@@ -62,13 +62,16 @@ def get_block(block: int) -> entities.BlockExtended:
         for t in b.traces:
             t.delete()
         b.delete()
-        for log in logs:
-            insert_log(log)
-        for trace in traces:
-            insert_trace(trace)
+        commit()
+        try:
+            for log in logs:
+                insert_log(log)
+            for trace in traces:
+                insert_trace(trace)
+        except Exception as e:
+            raise e.__class__("This is really bad. Might need to nuke your db if you value your logs/traces", *e.args)
         for token, price in prices:
             set_price(token, price)
-        commit()
         with suppress(TransactionIntegrityError):
             entities.BlockExtended(chain=chain, number=block, hash=hash, timestamp=ts)
             commit()
