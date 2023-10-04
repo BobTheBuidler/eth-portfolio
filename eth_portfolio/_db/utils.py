@@ -7,7 +7,7 @@ import y._db.config as config
 from a_sync import a_sync
 from msgspec import json
 from pony.orm import (BindingError, OperationalError,
-                      TransactionIntegrityError, commit, db_session)
+                      TransactionIntegrityError, commit, db_session, select)
 
 from eth_portfolio._db import entities
 from eth_portfolio._db.decorators import (break_locks,
@@ -33,6 +33,9 @@ except OperationalError as e:
 from y._db.entities import Address, Block, Contract, Token
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
 from y._db.utils import get_chain
+from y._db.utils.logs import insert_log
+from y._db.utils.traces import insert_trace
+from y._db.utils.price import set_price
 from y.contracts import is_contract
 
 robust_db_session = lambda callable: break_locks(db_session(callable))
@@ -45,10 +48,26 @@ def get_block(block: int) -> entities.BlockExtended:
         return b
     elif b := Block.get(chain=chain, number=block):
         if isinstance(b, entities.BlockExtended):
+            # in case of race cndtn
             return b
         hash = b.hash
         ts = b.timestamp
+        prices = [(price.token.address, price.price) for price in b.prices))
+        logs = [json.decode(log.raw) for log in b.logs]
+        traces = [json.decode(trace.raw) for trace in b.traces]
+        for p in b.prices:
+            p.delete()
+        for l in b.logs:
+            l.delete()
+        for t in b.traces:
+            t.delete()
         b.delete()
+        for log in logs:
+            insert_log(log)
+        for trace in traces:
+            insert_trace(trace)
+        for token, price in prices:
+            set_price(token, price)
         commit()
         with suppress(TransactionIntegrityError):
             entities.BlockExtended(chain=chain, number=block, hash=hash, timestamp=ts)
