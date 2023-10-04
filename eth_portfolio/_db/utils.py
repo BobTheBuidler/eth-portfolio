@@ -7,7 +7,7 @@ import y._db.config as config
 from a_sync import a_sync
 from msgspec import json
 from pony.orm import (BindingError, OperationalError,
-                      TransactionIntegrityError, commit, db_session, select)
+                      TransactionIntegrityError, commit, db_session, flush, select)
 
 from eth_portfolio._db import entities
 from eth_portfolio._db.decorators import (break_locks,
@@ -35,7 +35,7 @@ from y._db.entities import Address, Block, Contract, Token
 from y._db.utils import get_chain
 from y._db.utils.logs import insert_log
 from y._db.utils.traces import insert_trace
-from y._db.utils.price import set_price
+from y._db.utils.price import _set_price
 from y.contracts import is_contract
 
 robust_db_session = lambda callable: break_locks(db_session(callable))
@@ -61,6 +61,7 @@ def get_block(block: int) -> entities.BlockExtended:
             l.delete()
         for t in b.traces:
             t.delete()
+        flush()
         b.delete()
         commit()
         try:
@@ -71,7 +72,7 @@ def get_block(block: int) -> entities.BlockExtended:
         except Exception as e:
             raise e.__class__("This is really bad. Might need to nuke your db if you value your logs/traces", *e.args)
         for token, price in prices:
-            set_price(token, price)
+            _set_price(token, price, sync=True)
         with suppress(TransactionIntegrityError):
             entities.BlockExtended(chain=chain, number=block, hash=hash, timestamp=ts)
             commit()
