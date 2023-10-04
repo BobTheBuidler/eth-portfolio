@@ -23,7 +23,7 @@ def break_locks(fn: Callable[P, T]) -> Callable[P, T]:
                 try:
                     return await fn(*args, **kwargs)
                 except OperationalError as e:
-                    logger.debug("%s.%s %s", fn.__module__.__name__, fn.__name__, e)
+                    logger.debug("%s.%s %s", fn.__module__, fn.__name__, e)
                     if str(e) != "database is locked":
                         raise e
                     sleep = tries * random()
@@ -40,7 +40,7 @@ def break_locks(fn: Callable[P, T]) -> Callable[P, T]:
                 try:
                     return fn(*args, **kwargs)
                 except OperationalError as e:
-                    logger.debug("%s.%s %s", fn.__module__.__name__, fn.__name__, e)
+                    logger.debug("%s.%s %s", fn.__module__, fn.__name__, e)
                     if str(e) != "database is locked":
                         raise e
                     sleep = tries * random()
