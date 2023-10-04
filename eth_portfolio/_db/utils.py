@@ -50,6 +50,7 @@ def get_block(block: int) -> entities.BlockExtended:
         if isinstance(b, entities.BlockExtended):
             # in case of race cndtn
             return b
+        raise ValueError(b, b.number, b.chain.id)
         hash = b.hash
         ts = b.timestamp
         prices = [(price.token.address, price.price) for price in b.prices]
