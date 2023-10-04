@@ -52,7 +52,7 @@ def get_block(block: int) -> entities.BlockExtended:
             return b
         hash = b.hash
         ts = b.timestamp
-        prices = [(price.token.address, price.price) for price in b.prices))
+        prices = [(price.token.address, price.price) for price in b.prices)]
         logs = [json.decode(log.raw) for log in b.logs]
         traces = [json.decode(trace.raw) for trace in b.traces]
         for p in b.prices:
