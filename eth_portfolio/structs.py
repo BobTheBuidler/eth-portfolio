@@ -28,7 +28,7 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
 
 class _AccessListEntry(Struct, frozen=True):
     address: str
-    storage_keys: list[bytes]
+    storage_keys: List[bytes]
     
 class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     entry_type: ClassVar[Literal['transaction']] = 'transaction'
