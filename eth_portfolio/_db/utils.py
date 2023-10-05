@@ -30,7 +30,7 @@ except OperationalError as e:
         raise e
     raise OperationalError("Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script")
 
-from y._db.entities import Address, Block, Contract, Token, insert
+from y._db.entities import Address, Block, Contract, Token, insert, retry_locked
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
 from y._db.utils import get_chain
 from y._db.utils.logs import insert_log
@@ -167,6 +167,7 @@ def delete_transaction(transaction: Transaction) -> None:
 @a_sync(default='async')
 @requery_objs_on_diff_tx_err
 @robust_db_session
+@retry_locked
 def insert_transaction(transaction: Transaction) -> None:
     # Make sure these are in the db so below we can call them and use the results all in one transaction
     block = get_block(transaction.block_number, sync=True)
@@ -246,6 +247,7 @@ def delete_internal_transfer(transfer: InternalTransfer) -> None:
 @a_sync(default='async')
 @requery_objs_on_diff_tx_err
 @robust_db_session
+@retry_locked
 def insert_internal_transfer(transfer: InternalTransfer) -> None:
     entities.InternalTransfer(
         block = get_block(transfer.block_number, sync=True),
@@ -294,6 +296,7 @@ def delete_token_transfer(token_transfer: TokenTransfer) -> None:
 @a_sync(default='async')
 @requery_objs_on_diff_tx_err
 @robust_db_session
+@retry_locked
 def insert_token_transfer(token_transfer: TokenTransfer) -> None:
     # Make sure these are in the db so below we can call them and use the results all in one transaction
     block = get_block(token_transfer.block_number, sync=True)
