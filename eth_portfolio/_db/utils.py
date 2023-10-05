@@ -75,7 +75,7 @@ def get_block(block: int) -> entities.BlockExtended:
             raise e.__class__("This is really bad. Might need to nuke your db if you value your logs/traces", *e.args)
         for token, price in prices:
             _set_price(token, price, sync=True)
-    elif b := insert(type=BlockExtended, chain=get_chain(sync=True), number=block, hash=hash, timestamp=ts):
+    elif b := insert(type=entities.BlockExtended, chain=get_chain(sync=True), number=block, hash=hash, timestamp=ts):
         return b
     return entities.BlockExtended.get(chain=get_chain(sync=True), number=block)
 
