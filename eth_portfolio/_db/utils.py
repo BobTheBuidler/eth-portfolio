@@ -117,20 +117,26 @@ def get_token(address: str) -> entities.Block:
         return t
     kwargs = {}
     if t := Address.get(chain=chain, address=address):
-        if t.notes:
-            kwargs['notes'] = t.notes
+        with suppress(TypeError):
+            if t.notes:
+                kwargs['notes'] = t.notes
         if isinstance(t, Contract):
-            if t.deployer:
-                kwargs['deployer'] = t.deployer
-            if t.deploy_block:
-                kwargs['deploy_block'] = t.deploy_block
+            with suppress(TypeError):
+                if t.deployer:
+                    kwargs['deployer'] = t.deployer
+            with suppress(TypeError):
+                if t.deploy_block:
+                    kwargs['deploy_block'] = t.deploy_block
         if isinstance(t, Token):
-            if t.symbol:
-                kwargs['symbol'] = t.symbol
-            if t.name:
-                kwargs['name'] = t.name
-            if t.bucket:
-                kwargs['bucket'] = t.bucket
+            with suppress(TypeError):
+                if t.symbol:
+                    kwargs['symbol'] = t.symbol
+            with suppress(TypeError):
+                if t.name:
+                    kwargs['name'] = t.name
+            with suppress(TypeError):
+                if t.bucket:
+                    kwargs['bucket'] = t.bucket
         t.delete()
         commit()
     
