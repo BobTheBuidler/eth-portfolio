@@ -133,8 +133,8 @@ def get_token(address: str) -> entities.Block:
                 kwargs['bucket'] = t.bucket
         t.delete()
         commit()
-
-  return insert(type=entities.TokenExtended, chain=get_chain(sync=True), address=address, **kwargs) or entities.TokenExtended.get(chain=get_chain(sync=True), address=address)
+    
+    return insert(type=entities.TokenExtended, chain=get_chain(sync=True), address=address, **kwargs) or entities.TokenExtended.get(chain=get_chain(sync=True), address=address)
         
     
 @a_sync(default='async')
