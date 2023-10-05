@@ -140,6 +140,7 @@ def get_token(address: str) -> entities.Block:
                     kwargs['bucket'] = t.bucket
         """
         #with suppress(KeyError):
+        flush()
         t.delete()
         commit()
     
