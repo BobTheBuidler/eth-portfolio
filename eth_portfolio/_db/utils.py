@@ -117,6 +117,7 @@ def get_token(address: str) -> entities.Block:
         return t
     kwargs = {}
     if t := Address.get(chain=chain, address=address):
+        """
         with suppress(TypeError):
             if t.notes:
                 kwargs['notes'] = t.notes
@@ -137,10 +138,10 @@ def get_token(address: str) -> entities.Block:
             with suppress(TypeError):
                 if t.bucket:
                     kwargs['bucket'] = t.bucket
-                  
-        with suppress(KeyError):
-            t.delete()
-            commit()
+        """
+        #with suppress(KeyError):
+        t.delete()
+        commit()
     
     return insert(type=entities.TokenExtended, chain=get_chain(sync=True), address=address, **kwargs) or entities.TokenExtended.get(chain=get_chain(sync=True), address=address)
         
