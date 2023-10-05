@@ -109,7 +109,6 @@ def get_address(address: str) -> entities.Block:
     
     return insert(type=entity_type, chain=get_chain(sync=True), address=address) or entity_type.get(chain=get_chain(sync=True), address=address)
 
-
 @a_sync(default='async')
 @robust_db_session
 def get_token(address: str) -> entities.Block:
