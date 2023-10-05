@@ -116,32 +116,26 @@ def get_token(address: str) -> entities.Block:
     chain = get_chain(sync=True)
     if t := entities.TokenExtended.get(chain=chain, address=address):
         return t
-    notes, deployer, deploy_block, symbol, name, bucket = None, None, None, None, None, None
+    kwargs = {}
     if t := Address.get(chain=chain, address=address):
-        notes = t.notes
+        if t.notes:
+            kwargs['notes'] = t.notes
         if isinstance(t, Contract):
-            deployer = t.deployer
-            deploy_block = t.deploy_block
+            if t.deployer:
+                kwargs['deployer'] = t.deployer
+            if t.deploy_block:
+                kwargs['deploy_block'] = t.deploy_block
         if isinstance(t, Token):
-            symbol = t.symbol
-            name = t.name
-            bucket = t.bucket
+            if t.symbol:
+                kwargs['symbol'] = t.symbol
+            if t.name:
+                kwargs['name'] = t.name
+            if t.bucket:
+                kwargs['bucket'] = t.bucket
         t.delete()
         commit()
-    with suppress(TransactionIntegrityError):
-        entities.TokenExtended(
-            chain=get_chain(sync=True), 
-            address=address,
-            notes=notes,
-            deployer=deployer,
-            deploy_block=deploy_block,
-            symbol=symbol,
-            name=name,
-            bucket=bucket,
-        )
-        commit()
-        logger.debug('token %s added to ydb', address)
-    return entities.TokenExtended.get(chain=get_chain(sync=True), address=address)
+
+  return insert(type=entities.TokenExtended, chain=get_chain(sync=True), address=address, **kwargs) or entities.TokenExtended.get(chain=get_chain(sync=True), address=address)
         
     
 @a_sync(default='async')
