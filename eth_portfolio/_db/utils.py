@@ -9,7 +9,7 @@ from a_sync import a_sync
 from a_sync.primitives.executor import AsyncProcessPoolExecutor
 from msgspec import json
 from multicall.utils import get_event_loop
-from pony.orm import BindingError, OperationalError, commit, db_session, flush, ProgrammingError
+from pony.orm import BindingError, OperationalError, commit, db_session, flush
 from y import ERC20
 from y.constants import EEE_ADDRESS
 from y.exceptions import NonStandardERC20
@@ -24,11 +24,11 @@ logger = logging.getLogger(__name__)
 
 def __bind(create_db: bool = True):
     try:
-        db.bind(**config.connection_settings, create_db=True)
+        db.bind(**config.connection_settings, create_db=create_db)
     except BindingError as e:
         if not str(e).startswith('Database object was already bound to'):
             raise e
-    except ProgrammingError as e:
+    except Exception as e:
         if 'invalid connection option "create_db"' not in str(e):
             raise e
         __bind(create_db=False)
