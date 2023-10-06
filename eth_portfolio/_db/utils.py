@@ -28,9 +28,6 @@ def __bind():
     except BindingError as e:
         if not str(e).startswith('Database object was already bound to'):
             raise e
-    except Exception as e:
-        if 'invalid connection option "create_db"' not in str(e):
-            raise e
 
 __bind()
 
