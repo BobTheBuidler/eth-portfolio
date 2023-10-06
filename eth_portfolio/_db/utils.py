@@ -1,3 +1,4 @@
+import asyncio
 import logging
 from contextlib import suppress
 from decimal import Decimal
@@ -91,14 +92,18 @@ def is_token(address) -> bool:
     
 async def _is_token(address) -> bool:
     # just breaking a weird lock, dont mind me
-    return await process.run(__is_token(address))
-
+    if retval := await process.run(__is_token(address)):
+        logger.debug("%s is token")
+    else:
+        logger.debug("%s is not token")
+    return retval
+    
 def __is_token(address) -> bool:
     with suppress(NonStandardERC20):
-        if all([(e := ERC20(address)).symbol, e.name, e.total_supply_readable()]):
-            logger.debug("%s is token")
+        if all(get_event_loop().run_until_complete(
+            asyncio.gather(*[(e := ERC20(address, asynchronous=True))._symbol(), e._name(), e.total_supply(), e._scale()])
+        )):
             return True
-    logger.debug("%s is not token")
     return False
     
 
