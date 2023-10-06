@@ -127,15 +127,8 @@ def get_address(address: str) -> entities.Block:
     elif isinstance(entity, (Address, entities.AddressExtended)):
         entity_type = entities.AddressExtended
     elif entity is None:
-        # TODO: this should live in ypm
-        if is_contract(address):
-            try:
-                if is_token(address):
-                    entity_type = entities.TokenExtended
-            except NonStandardERC20:
-                entity_type = entities.ContractExtended
-        else:
-            entity_type = entities.AddressExtended
+        # TODO: this logic should live in ypm, prob
+        entity_type = entities.AddressExtended if not is_contract(address) else entities.TokenExtended if is_token(address) else entities.ContractExtended
     else:
         raise NotImplementedError(entity, entity_type)
             
