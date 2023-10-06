@@ -101,7 +101,7 @@ def is_token(address) -> bool:
     
 async def _is_token(address) -> bool:
     # just breaking a weird lock, dont mind me
-    if retval := await process.run(__is_token(address)):
+    if retval := await process.run(__is_token, address):
         logger.debug("%s is token")
     else:
         logger.debug("%s is not token")
