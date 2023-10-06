@@ -90,7 +90,8 @@ process = AsyncProcessPoolExecutor(1)
 def is_token(address) -> bool:
     with suppress(NonStandardERC20):
         erc = ERC20(address)
-        if all(erc._symbol(), erc._name(), erc.total_supply(), erc._scale()):
+        if all(erc.symbol, erc.name, erc.total_supply(), erc.scale):
+        #if all(erc._symbol(), erc._name(), erc.total_supply(), erc._scale()):
             return True
     return False
     return get_event_loop().run_until_complete(_is_token(address))
