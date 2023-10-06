@@ -44,7 +44,7 @@ from y._db.utils.price import _set_price
 from y._db.utils.traces import insert_trace
 from y.contracts import is_contract
 
-robust_db_session = lambda callable: break_locks(db_session(callable))
+robust_db_session = lambda callable: retry_locked(break_locks(db_session(callable)))
 
 @a_sync(default='async')
 @robust_db_session
@@ -207,7 +207,6 @@ def delete_transaction(transaction: Transaction) -> None:
 @a_sync(default='async')
 @requery_objs_on_diff_tx_err
 @robust_db_session
-@retry_locked
 def insert_transaction(transaction: Transaction) -> None:
     # Make sure these are in the db so below we can call them and use the results all in one transaction
     block = get_block(transaction.block_number, sync=True)
@@ -287,7 +286,6 @@ def delete_internal_transfer(transfer: InternalTransfer) -> None:
 @a_sync(default='async')
 @requery_objs_on_diff_tx_err
 @robust_db_session
-@retry_locked
 def insert_internal_transfer(transfer: InternalTransfer) -> None:
     entities.InternalTransfer(
         block = get_block(transfer.block_number, sync=True),
@@ -336,7 +334,6 @@ def delete_token_transfer(token_transfer: TokenTransfer) -> None:
 @a_sync(default='async')
 @requery_objs_on_diff_tx_err
 @robust_db_session
-@retry_locked
 def insert_token_transfer(token_transfer: TokenTransfer) -> None:
     # Make sure these are in the db so below we can call them and use the results all in one transaction
     block = get_block(token_transfer.block_number, sync=True)
