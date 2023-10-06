@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 def __bind():
     try:
-        db.bind(**config.connection_settings, create_db="filename" in config.connection_settings)
+        db.bind(**config.connection_settings)
     except BindingError as e:
         if not str(e).startswith('Database object was already bound to'):
             raise e
