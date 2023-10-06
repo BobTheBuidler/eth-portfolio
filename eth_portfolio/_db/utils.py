@@ -100,8 +100,9 @@ async def _is_token(address) -> bool:
     
 def __is_token(address) -> bool:
     with suppress(NonStandardERC20):
+        erc = ERC20(address, asynchronous=True)
         if all(get_event_loop().run_until_complete(
-            asyncio.gather(*[(e := ERC20(address, asynchronous=True))._symbol(), e._name(), e.total_supply(), e._scale()])
+            asyncio.gather(erc._symbol(), erc._name(), erc.total_supply(), erc._scale())
         )):
             return True
     return False
