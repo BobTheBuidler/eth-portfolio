@@ -6,8 +6,9 @@ from typing import Optional
 import y._db.config as config
 from a_sync import a_sync
 from msgspec import json
-from pony.orm import (BindingError, OperationalError,
-                      TransactionIntegrityError, commit, db_session, flush, select)
+from pony.orm import BindingError, OperationalError, commit, db_session, flush
+from y import ERC20
+from y.exceptions import NonStandardERC20
 
 from eth_portfolio._db import entities
 from eth_portfolio._db.decorators import (break_locks,
@@ -30,12 +31,13 @@ except OperationalError as e:
         raise e
     raise OperationalError("Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script")
 
-from y._db.entities import Address, Block, Contract, Token, insert, retry_locked
+from y._db.entities import (Address, Block, Contract, Token, insert,
+                            retry_locked)
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
 from y._db.utils import get_chain
 from y._db.utils.logs import insert_log
-from y._db.utils.traces import insert_trace
 from y._db.utils.price import _set_price
+from y._db.utils.traces import insert_trace
 from y.contracts import is_contract
 
 robust_db_session = lambda callable: break_locks(db_session(callable))
@@ -86,16 +88,20 @@ def get_address(address: str) -> entities.Block:
     chain = get_chain(sync=True)
     
     entity = entities.Address.get(chain=chain, address=address)
-    if isinstance(entity, Token):
+    if isinstance(entity, (Token, entities.TokenExtended)):
         entity_type = entities.TokenExtended
-    elif isinstance(entity, Contract):
+    elif isinstance(entity, (Contract, entities.ContractExtended)):
         entity_type = entities.ContractExtended
-    elif isinstance(entity, Address):
+    elif isinstance(entity, (Address, entities.AddressExtended)):
         entity_type = entities.AddressExtended
     elif entity is None:
         # TODO: this should live in ypm
         if is_contract(address):
-            entity_type = entities.ContractExtended
+            try:
+                if all([(e := ERC20(address)).symbol, e.name, e.total_supply_readable()]):
+                    entity_type = entities.TokenExtended
+            except NonStandardERC20:
+                entity_type = entities.ContractExtended
         else:
             entity_type = entities.AddressExtended
     else:
