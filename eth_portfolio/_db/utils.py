@@ -182,10 +182,14 @@ def get_token(address: str) -> entities.Block:
                 if t.bucket:
                     kwargs['bucket'] = t.bucket
         """
-        #with suppress(KeyError):
-        flush()
-        t.delete()
-        commit()
+        
+        try:
+            flush()
+            t.delete()
+            commit()
+        except KeyError as e:
+            raise KeyError(f"cant delete {t}") from e
+        
     
     return insert(type=entities.TokenExtended, chain=get_chain(sync=True), address=address, **kwargs) or entities.TokenExtended.get(chain=get_chain(sync=True), address=address)
         
