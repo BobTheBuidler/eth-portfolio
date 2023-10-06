@@ -5,9 +5,9 @@ from typing import Optional
 
 import y._db.config as config
 from a_sync import a_sync
-from multicall.utils import get_event_loop
 from a_sync.primitives.executor import AsyncProcessPoolExecutor
 from msgspec import json
+from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush
 from y import ERC20
 from y.exceptions import NonStandardERC20
@@ -94,7 +94,13 @@ async def _is_token(address) -> bool:
     return await process.run(__is_token(address))
 
 def __is_token(address) -> bool:
-    return all([(e := ERC20(address)).symbol, e.name, e.total_supply_readable()])
+    with suppress(NonStandardERC20):
+        if all([(e := ERC20(address)).symbol, e.name, e.total_supply_readable()]):
+            logger.debug("%s is token")
+            return True
+    logger.debug("%s is not token")
+    return False
+    
 
 @a_sync(default='async')
 @robust_db_session
@@ -123,7 +129,9 @@ def get_address(address: str) -> entities.Block:
             
     if isinstance(entity, entity_type):
         return entity
+    
     elif entity:
+        logger.debug("deleting %s", entity)
         entity.delete()
         commit()
     
