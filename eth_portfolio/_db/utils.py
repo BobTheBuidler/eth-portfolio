@@ -5,6 +5,8 @@ from typing import Optional
 
 import y._db.config as config
 from a_sync import a_sync
+from multicall.utils import get_event_loop
+from a_sync.primitives.executor import AsyncProcessPoolExecutor
 from msgspec import json
 from pony.orm import BindingError, OperationalError, commit, db_session, flush
 from y import ERC20
@@ -82,6 +84,18 @@ def get_block(block: int) -> entities.BlockExtended:
     return entities.BlockExtended.get(chain=get_chain(sync=True), number=block)
 
 
+process = AsyncProcessPoolExecutor(1)
+
+def is_token(address) -> bool:
+    return get_event_loop().run_until_complete(_is_token(address))
+    
+async def _is_token(address) -> bool:
+    # just breaking a weird lock, dont mind me
+    return await process.run(__is_token(address))
+
+def __is_token(address) -> bool:
+    return all([(e := ERC20(address)).symbol, e.name, e.total_supply_readable()])
+
 @a_sync(default='async')
 @robust_db_session
 def get_address(address: str) -> entities.Block:
@@ -98,7 +112,7 @@ def get_address(address: str) -> entities.Block:
         # TODO: this should live in ypm
         if is_contract(address):
             try:
-                if all([(e := ERC20(address)).symbol, e.name, e.total_supply_readable()]):
+                if is_token(address):
                     entity_type = entities.TokenExtended
             except NonStandardERC20:
                 entity_type = entities.ContractExtended
