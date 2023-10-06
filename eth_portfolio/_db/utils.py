@@ -11,6 +11,7 @@ from msgspec import json
 from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush
 from y import ERC20
+from y.constants import EEE_ADDRESS
 from y.exceptions import NonStandardERC20
 
 from eth_portfolio._db import entities
@@ -88,12 +89,14 @@ def get_block(block: int) -> entities.BlockExtended:
 process = AsyncProcessPoolExecutor(1)
 
 def is_token(address) -> bool:
-    with suppress(NonStandardERC20):
-        erc = ERC20(address)
-        if all(erc.symbol, erc.name, erc.total_supply(), erc.scale):
-        #if all(erc._symbol(), erc._name(), erc.total_supply(), erc._scale()):
-            return True
-    return False
+    if address == EEE_ADDRESS:
+        return False
+    #with suppress(NonStandardERC20):
+    #    erc = ERC20(address)
+    #    if all(erc.symbol, erc.name, erc.total_supply(), erc.scale):
+    #    #if all(erc._symbol(), erc._name(), erc.total_supply(), erc._scale()):
+    #        return True
+    #return False
     return get_event_loop().run_until_complete(_is_token(address))
     
 async def _is_token(address) -> bool:
@@ -103,12 +106,12 @@ async def _is_token(address) -> bool:
     else:
         logger.debug("%s is not token")
     return retval
-    
+
 def __is_token(address) -> bool:
     with suppress(NonStandardERC20):
         erc = ERC20(address, asynchronous=True)
         if all(get_event_loop().run_until_complete(
-            asyncio.gather(erc._symbol(), erc._name(), erc.total_supply(), erc._scale())
+            asyncio.gather(erc._symbol(), erc._name(), erc.total_supply_readable())
         )):
             return True
     return False
