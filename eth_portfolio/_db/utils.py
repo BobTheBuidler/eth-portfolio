@@ -22,16 +22,15 @@ from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 
 logger = logging.getLogger(__name__)
 
-def __bind(create_db: bool = True):
+def __bind():
     try:
-        db.bind(**config.connection_settings, create_db=create_db)
+        db.bind(**config.connection_settings, create_db="filename" in config.connection_settings)
     except BindingError as e:
         if not str(e).startswith('Database object was already bound to'):
             raise e
     except Exception as e:
         if 'invalid connection option "create_db"' not in str(e):
             raise e
-        __bind(create_db=False)
 
 __bind()
 
