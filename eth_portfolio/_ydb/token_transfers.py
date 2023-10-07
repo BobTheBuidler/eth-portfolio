@@ -21,9 +21,9 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
     def __init__(self, address: Address, from_block: int, load_prices: bool = False):
         self.address = address
         self._load_prices = load_prices
-        super().__init__(topics=self.topics, from_block=from_block)
+        super().__init__(topics=self._topics, from_block=from_block)
     @abc.abstractproperty
-    def topics(self) -> List:
+    def _topics(self) -> List:
         ...
     async def yield_thru_block(self, block) -> AsyncIterator["asyncio.Task[TokenTransfer]"]:
         async for task in self._objects_thru(block=block):
@@ -44,13 +44,13 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
 class InboundTokenTransfers(_TokenTransfers):
     """Transfers into Portfolio wallets"""
     @property
-    def topics(self) -> List:
+    def _topics(self) -> List:
         return [[TRANSFER_SIGS], None, [encode_hex(encode_single('address', str(self.address)))]]
 
 class OutboundTokenTransfers(_TokenTransfers):
     """Transfers out of Portfolio wallets"""
     @property
-    def topics(self) -> List:
+    def _topics(self) -> List:
         return [[TRANSFER_SIGS], [encode_hex(encode_single('address', str(self.address)))]]
     
 class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
