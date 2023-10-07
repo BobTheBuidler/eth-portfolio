@@ -21,7 +21,7 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
     def __init__(self, address: Address, from_block: int, load_prices: bool = False):
         self.address = address
         self._load_prices = load_prices
-        super().__init__(addresses=None, topics=self._topics, from_block=from_block)
+        super().__init__(topics=self._topics, from_block=from_block)
     @abc.abstractproperty
     def _topics(self) -> List:
         ...
@@ -45,13 +45,13 @@ class InboundTokenTransfers(_TokenTransfers):
     """Transfers into Portfolio wallets"""
     @property
     def _topics(self) -> List:
-        return [[TRANSFER_SIGS], None, [encode_hex(encode_single('address', str(self.address)))]]
+        return [TRANSFER_SIGS, None, [encode_hex(encode_single('address', str(self.address)))]]
 
 class OutboundTokenTransfers(_TokenTransfers):
     """Transfers out of Portfolio wallets"""
     @property
     def _topics(self) -> List:
-        return [[TRANSFER_SIGS], [encode_hex(encode_single('address', str(self.address)))]]
+        return [TRANSFER_SIGS, [encode_hex(encode_single('address', str(self.address)))]]
     
 class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
     """NOTE: These do not come back in numeric block order"""
