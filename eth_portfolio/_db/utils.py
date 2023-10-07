@@ -1,12 +1,12 @@
 import asyncio
 import logging
+from concurrent.futures import ProcessPoolExecutor
 from contextlib import suppress
 from decimal import Decimal
 from typing import Optional
 
 import y._db.config as config
 from a_sync import a_sync
-from a_sync.primitives.executor import AsyncProcessPoolExecutor
 from msgspec import json
 from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush
@@ -88,8 +88,8 @@ def get_block(block: int) -> entities.BlockExtended:
         return b
     return entities.BlockExtended.get(chain=get_chain(sync=True), number=block)
 
-
-process = AsyncProcessPoolExecutor(1)
+# TODO refactor this out, async is annoying sometimes
+process = ProcessPoolExecutor(1)
 
 def is_token(address) -> bool:
     if address == EEE_ADDRESS:
@@ -104,7 +104,7 @@ def is_token(address) -> bool:
     
 async def _is_token(address) -> bool:
     # just breaking a weird lock, dont mind me
-    if retval := await process.run(__is_token, address):
+    if retval := await asyncio.get_event_loop().run_in_executor(process, __is_token, address):
         logger.debug("%s is token")
     else:
         logger.debug("%s is not token")
