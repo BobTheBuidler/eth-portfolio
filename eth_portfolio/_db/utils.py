@@ -379,5 +379,3 @@ def insert_token_transfer(token_transfer: TokenTransfer) -> None:
         if "numeric field overflow" not in str(e):
             raise e
         # NOTE: We can just leave this out of the db for now, figure out how to better handle before we start loading ranges from db
-
-            

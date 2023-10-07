@@ -1,26 +1,24 @@
 import abc
 import asyncio
 import logging
-from functools import cached_property, partial
+from functools import partial
 from itertools import product
 from typing import (TYPE_CHECKING, AsyncIterator, Generic, List, Optional,
                     Tuple, Type, TypeVar, Union)
 
 import eth_retry
-from eth_abi import encode_single
-from eth_utils import encode_hex
 from pandas import DataFrame  # type: ignore
 from tqdm.asyncio import tqdm_asyncio
 from y import ERC20
-from y.datatypes import Address, Block
+from y.datatypes import Block
 from y.utils.dank_mids import dank_w3
-from y.utils.events import BATCH_SIZE, get_logs_asap_generator
+from y.utils.events import BATCH_SIZE
 
 from eth_portfolio import _loaders
+from eth_portfolio._ydb import TokenTransfers
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
 from eth_portfolio._loaders.transaction import get_nonce_at_block
-from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 from eth_portfolio.utils import (PandableList, _unpack_indicies,
                                  get_buffered_chain_height)
@@ -46,7 +44,7 @@ PandableLedgerEntryList = Union["TransactionsList", "InternalTransfersList", "To
 
 class AddressLedgerBase(Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
     list_type: Type[_LedgerEntryList]
-
+    __slots__ = "address", "asynchronous", "cached_from", "cached_thru", "load_prices", "objects", "portfolio_address", "_lock"
     def __init__(self, portfolio_address: "PortfolioAddress") -> None:
         assert hasattr(self.__class__, 'list_type'), f"{self.__class__.__name__} must have a list_type attribute."
         assert hasattr(self, 'list_type'), f"{self.__class__.__name__} must have a list_type attribute."
@@ -171,7 +169,7 @@ class TransactionsList(PandableList[Transaction]):
 
 class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]):
     list_type = TransactionsList
-
+    __slots__ = "cached_thru_nonce", 
     def __init__(self, portfolio_address: "PortfolioAddress"):
         super().__init__(portfolio_address)
         self.cached_thru_nonce = -1
@@ -278,16 +276,11 @@ class TokenTransfersList(PandableList[TokenTransfer]):
   
 class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTransfer]):
     list_type = TokenTransfersList
-
+    __slots__ = "_transfers",
     def __init__(self, portfolio_address: "PortfolioAddress"):
         super().__init__(portfolio_address)
-
-        # define transfer signatures for Transfer events from ERC-20 and ERC-677 contracts
-        self._topics = [
-            [TRANSFER_SIGS, None, [encode_hex(encode_single('address', str(self.address)))]], # Transfers into Portfolio wallets
-            [TRANSFER_SIGS, [encode_hex(encode_single('address', str(self.address)))]], # Transfers out of Portfolio wallets
-        ]
-
+        self._transfers = TokenTransfers(self.address, self.portfolio_address.portfolio._start_block, load_prices=self.load_prices)
+        
     @await_if_sync
     def list_tokens_at_block(self, block: Optional[int] = None) -> List[ERC20]:
         return self._list_tokens_at_block_async(block) # type: ignore
@@ -315,11 +308,11 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
             )
             return
         
-        futs = [fut for futs in await asyncio.gather(*[self._get_tasks(start_block, end_block, topics) for topics in self._topics]) for fut in futs]
-        
-        if futs:
+        tasks = [task async for task in self._transfers.yield_thru_block(end_block) if start_block <= transfer.block_number <= end_block]
+                
+        if tasks:
             transfer: TokenTransfer
-            for fut in tqdm_asyncio.as_completed(futs, desc=f"Token Transfers     {self.address}"):
+            for fut in tqdm_asyncio.as_completed(tasks, desc=f"Token Transfers     {self.address}"):
                 transfer = await fut
                 if transfer is not None:
                     self.objects.append(transfer)
@@ -330,9 +323,3 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
             self.cached_from = start_block
         if self.cached_thru is None or end_block > self.cached_thru:
             self.cached_thru = end_block
-    
-    async def _get_tasks(self, start_block, end_block, topics) -> List[asyncio.Task]:
-        futs = []
-        async for logs in get_logs_asap_generator(address=None, from_block=start_block, to_block=end_block, topics=topics, chronological=False):
-            futs.extend(asyncio.create_task(_loaders.load_token_transfer(log, self.load_prices)) for log in logs)
-        return futs
