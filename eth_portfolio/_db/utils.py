@@ -125,6 +125,9 @@ def __is_token(address) -> bool:
 def get_address(address: str) -> entities.Block:
     chain = get_chain(sync=True)
     
+    entity_type = entities.TokenExtended
+    entity = entities.Address.get(chain=chain, address=address)
+    """ TODO: fix this later
     entity = entities.Address.get(chain=chain, address=address)
     if isinstance(entity, (Token, entities.TokenExtended)):
         entity_type = entities.TokenExtended
@@ -137,7 +140,7 @@ def get_address(address: str) -> entities.Block:
         entity_type = entities.AddressExtended if not is_contract(address) else entities.TokenExtended if is_token(address) else entities.ContractExtended
     else:
         raise NotImplementedError(entity, entity_type)
-            
+        
     if isinstance(entity, entity_type):
         return entity
     
@@ -145,6 +148,10 @@ def get_address(address: str) -> entities.Block:
         logger.debug("deleting %s", entity)
         entity.delete()
         commit()
+    """
+    entity = entities.Address.get(chain=chain, address=address)
+    if entity:
+        return entity
     
     return insert(type=entity_type, chain=get_chain(sync=True), address=address) or entity_type.get(chain=get_chain(sync=True), address=address)
 
