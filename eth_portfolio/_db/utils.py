@@ -374,6 +374,7 @@ def insert_token_transfer(token_transfer: TokenTransfer) -> None:
             value_usd = token_transfer.value_usd,
             raw = json.encode(token_transfer),
         )
+        commit()
     except Exception as e:
         if "numeric field overflow" not in str(e):
             raise e
