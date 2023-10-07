@@ -359,19 +359,24 @@ def insert_token_transfer(token_transfer: TokenTransfer) -> None:
     to_address = get_address(token_transfer.to_address, sync=True)
     commit()
     
-    # Now requery and use the values
-    entities.TokenTransfer(
-        block = get_block(token_transfer.block_number, sync=True), 
-        transaction_index = token_transfer.transaction_index,
-        log_index = token_transfer.log_index,
-        hash = token_transfer.hash,
-        token = get_token(token_transfer.token_address, sync=True),
-        from_address = get_address(token_transfer.from_address, sync=True),
-        to_address = get_address(token_transfer.to_address, sync=True),
-        value = token_transfer.value,
-        price = token_transfer.price,
-        value_usd = token_transfer.value_usd,
-        raw = json.encode(token_transfer),
-    )
+    try:
+        # Now requery and use the values
+        entities.TokenTransfer(
+            block = get_block(token_transfer.block_number, sync=True), 
+            transaction_index = token_transfer.transaction_index,
+            log_index = token_transfer.log_index,
+            hash = token_transfer.hash,
+            token = get_token(token_transfer.token_address, sync=True),
+            from_address = get_address(token_transfer.from_address, sync=True),
+            to_address = get_address(token_transfer.to_address, sync=True),
+            value = token_transfer.value,
+            price = token_transfer.price,
+            value_usd = token_transfer.value_usd,
+            raw = json.encode(token_transfer),
+        )
+    except Exception as e:
+        if "numeric field overflow" not in str(e):
+            raise e
+        # NOTE: We can just leave this out of the db for now, figure out how to better handle before we start loading ranges from db
 
             
