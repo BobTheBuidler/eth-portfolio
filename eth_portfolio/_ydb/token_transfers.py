@@ -21,6 +21,8 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
         self.address = address
         self._load_prices = load_prices
         super().__init__(topics=self._topics, from_block=from_block)
+    def __repr__(self) -> str:
+        return f"<{self.__class__.__module__}.{self.__class__.__name__} address={self.address}>"
     @abc.abstractproperty
     def _topics(self) -> List:
         ...
