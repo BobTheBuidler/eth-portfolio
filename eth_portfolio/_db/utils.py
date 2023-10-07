@@ -163,6 +163,9 @@ def get_token(address: str) -> entities.Block:
         return t
     kwargs = {}
     if t := Address.get(chain=chain, address=address):
+        if isinstance(t, entities.TokenExtended):
+            # double check due to possible race cntdn
+            return t
         """
         with suppress(TypeError):
             if t.notes:
