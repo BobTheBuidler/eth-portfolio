@@ -4,7 +4,6 @@ import asyncio
 from typing import AsyncIterator, List
 
 import a_sync
-from a_sync.iter import ASyncWrappedIterator
 from brownie import chain
 from eth_abi import encode_single
 from eth_utils import encode_hex
@@ -36,8 +35,6 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
             tasks.append(task)
     def _get_obj_block(self, task: "asyncio.Task[TokenTransfer]") -> int:
         return task.block
-    def _include_event(self, task: "asyncio.Task[TokenTransfer]") -> bool:
-        return True
     def _process_event(self, task: "asyncio.Task[TokenTransfer]") -> "asyncio.Task[TokenTransfer]":
         return task
 
@@ -62,7 +59,7 @@ class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
     def __aiter__(self):
         return self.yield_thru_block(chain.height)
     
-    async def yield_thru_block(self, block) -> AsyncIterator["asyncio.Task[TokenTransfer]"]:
-        #return WrappedASyncIterator(task async for task in a_sync.as_yielded(self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block)))
-        async for task in a_sync.as_yielded(self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block)):
-            yield task
+    async def yield_thru_block(self, block) -> a_sync.ASyncIterator["asyncio.Task[TokenTransfer]"]:
+        return a_sync.ASyncIterator.wrap(
+            a_sync.as_yielded(self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block))
+        )
