@@ -21,7 +21,7 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
     def __init__(self, address: Address, from_block: int, load_prices: bool = False):
         self.address = address
         self._load_prices = load_prices
-        super().__init__(topics=self._topics, from_block=from_block)
+        super().__init__(addresses=None, topics=self._topics, from_block=from_block)
     @abc.abstractproperty
     def _topics(self) -> List:
         ...
