@@ -4,7 +4,7 @@ import asyncio
 from typing import AsyncIterator, List
 
 import a_sync
-from a_sync.iter import WrappedASyncIterator
+from a_sync.iter import ASyncWrappedIterator
 from brownie import chain
 from eth_abi import encode_single
 from eth_utils import encode_hex
