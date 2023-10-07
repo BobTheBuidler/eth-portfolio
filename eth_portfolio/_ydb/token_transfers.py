@@ -63,4 +63,6 @@ class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
         return self.yield_thru_block(chain.height)
     
     async def yield_thru_block(self, block) -> AsyncIterator["asyncio.Task[TokenTransfer]"]:
-        return WrappedASyncIterator(task async for task in a_sync.as_yielded(self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block)))
+        #return WrappedASyncIterator(task async for task in a_sync.as_yielded(self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block)))
+        async for task in a_sync.as_yielded(self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block)):
+            yield task
