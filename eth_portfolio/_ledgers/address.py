@@ -15,10 +15,10 @@ from y.utils.dank_mids import dank_w3
 from y.utils.events import BATCH_SIZE
 
 from eth_portfolio import _loaders
-from eth_portfolio._ydb import TokenTransfers
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
 from eth_portfolio._loaders.transaction import get_nonce_at_block
+from eth_portfolio._ydb.token_transfers import TokenTransfers
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 from eth_portfolio.utils import (PandableList, _unpack_indicies,
                                  get_buffered_chain_height)
