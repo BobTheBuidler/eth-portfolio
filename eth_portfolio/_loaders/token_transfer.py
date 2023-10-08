@@ -27,7 +27,7 @@ token_transfer_semaphore = BlockSemaphore(5_000, name='eth_portfolio.token_trans
 shitcoins = SHITCOINS.get(chain.id, set())
 
 async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional[TokenTransfer]:
-    if transfer_log.address in shitcoins:
+    if transfer_log['address'] in shitcoins:
         return None
     
     if transfer := await db.get_token_transfer(transfer_log):
@@ -55,7 +55,8 @@ async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional
             'chainid': chain.id,
             'block_number': decoded.block_number,
             'transaction_index': transaction_index,
-            'hash': decoded.transaction_hash.hex(),
+            # TODO figure out why it comes in both ways
+            'hash': hash.hex() if isinstance((hash := decoded.transaction_hash), bytes) else hash,
             'log_index': decoded.log_index,
             'token': symbol,
             'token_address': decoded.address,
@@ -94,11 +95,11 @@ async def get_transaction_index(hash: str) -> int:
 
 async def _decode_token_transfer(log) -> _EventItem:
     try:
-        await Contract.coroutine(log.address)
+        await Contract.coroutine(log['address'])
     except ContractNotFound:
-        logger.warning(f"Token {log.address} cannot be found. Skipping. If the contract has been self-destructed, eth-portfolio will not support it.")
+        logger.warning(f"Token {log['address']} cannot be found. Skipping. If the contract has been self-destructed, eth-portfolio will not support it.")
     except ContractNotVerified:
-        logger.warning(f"Token {log.address} is not verified and is most likely a shitcoin. Skipping. Please submit a PR at github.com/BobTheBuidler/eth-portfolio if this is not a shitcoin and should be included.")
+        logger.warning(f"Token {log['address']} is not verified and is most likely a shitcoin. Skipping. Please submit a PR at github.com/BobTheBuidler/eth-portfolio if this is not a shitcoin and should be included.")
         return
     try:
         try:
