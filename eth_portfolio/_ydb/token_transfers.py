@@ -76,6 +76,11 @@ class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
         return self.yield_thru_block(chain.height).__aiter__()
     
     def yield_thru_block(self, block: int) -> a_sync.ASyncIterable["asyncio.Task[TokenTransfer]"]:
-        return a_sync.ASyncIterable.wrap(
-            a_sync.as_yielded(self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block))
-        )
+        return a_sync.ASyncIterable.wrap(self._yield_thru_block(block))
+    
+    async def _yield_thru_block(self, block: int) -> AsyncIterator["asyncio.Task[TokenTransfer]"]:
+        async for transfer in a_sync.as_yielded(self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block)):
+            while isinstance(transfer, list) and len(transfer) == 1:
+                logger.debug("%s is a list, wtf? unwrapping", transfer)
+                transfer = transfer[0]
+            yield transfer
