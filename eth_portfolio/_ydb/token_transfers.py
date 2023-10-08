@@ -1,6 +1,7 @@
 
 import abc
 import asyncio
+import logging
 from typing import AsyncIterator, List
 
 import a_sync
@@ -14,8 +15,10 @@ from eth_portfolio import _loaders
 from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.structs import TokenTransfer
 
+logger = logging.getLogger(__name__)
 
 class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
+    """A helper mixin that contains all logic for fetching token transfers for a particular wallet address"""
     __slots__ = "address", "_load_prices"
     def __init__(self, address: Address, from_block: int, load_prices: bool = False):
         self.address = address
@@ -39,21 +42,29 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
         return task.block
     def _process_event(self, task: "asyncio.Task[TokenTransfer]") -> "asyncio.Task[TokenTransfer]":
         return task
+    def _done_callback(self, task: asyncio.Task) -> None:
+        if e := task.exception():
+            self._exc = e
+            logger.exception(e)
+            raise e
 
 class InboundTokenTransfers(_TokenTransfers):
-    """Transfers into Portfolio wallets"""
+    """A container that fetches and iterates over all inbound token transfers for a particular wallet address"""
     @property
     def _topics(self) -> List:
         return [TRANSFER_SIGS, None, [encode_hex(encode_single('address', str(self.address)))]]
 
 class OutboundTokenTransfers(_TokenTransfers):
-    """Transfers out of Portfolio wallets"""
+    """A container that fetches and iterates over all outbound token transfers for a particular wallet address"""
     @property
     def _topics(self) -> List:
         return [TRANSFER_SIGS, [encode_hex(encode_single('address', str(self.address)))]]
     
 class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
-    """NOTE: These do not come back in numeric block order"""
+    """
+    A container that fetches and iterates over all token transfers for a particular wallet address.
+    NOTE: These do not come back in chronologcal order.
+    """
     def __init__(self, address: Address, from_block: int, load_prices: bool = False):
         self.transfers_in = InboundTokenTransfers(address, from_block, load_prices=load_prices)
         self.transfers_out = OutboundTokenTransfers(address, from_block, load_prices=load_prices)
@@ -61,7 +72,7 @@ class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
     def __aiter__(self):
         return self.yield_thru_block(chain.height)
     
-    def yield_thru_block(self, block: int) -> a_sync.ASyncIterator["asyncio.Task[TokenTransfer]"]:
-        #return a_sync.ASyncIterator.wrap(
-        return a_sync.as_yielded(self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block))
-        #)
+    def yield_thru_block(self, block: int) -> a_sync.ASyncIterable["asyncio.Task[TokenTransfer]"]:
+        return a_sync.ASyncIterable.wrap(
+            a_sync.as_yielded(self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block))
+        )
