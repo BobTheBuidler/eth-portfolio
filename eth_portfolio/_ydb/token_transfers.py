@@ -36,11 +36,10 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
             yield task
         logger.debug("%s yield thru %s complete", self, block)
     def _extend(self, objs: List[dict]) -> None:
-        tasks = []
         for log in objs:
             task = asyncio.create_task(_loaders.load_token_transfer(log, self._load_prices))
             task.block = log["blockNumber"]
-            tasks.append(task)
+            self._objects.append(task)
     def _get_obj_block(self, task: "asyncio.Task[TokenTransfer]") -> int:
         return task.block
     def _process_event(self, task: "asyncio.Task[TokenTransfer]") -> "asyncio.Task[TokenTransfer]":
@@ -73,7 +72,7 @@ class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
         self.transfers_out = OutboundTokenTransfers(address, from_block, load_prices=load_prices)
     
     def __aiter__(self):
-        return self.yield_thru_block(chain.height)
+        return self.yield_thru_block(chain.height).__aiter__()
     
     def yield_thru_block(self, block: int) -> a_sync.ASyncIterable["asyncio.Task[TokenTransfer]"]:
         return a_sync.ASyncIterable.wrap(
