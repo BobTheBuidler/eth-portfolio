@@ -8,6 +8,7 @@ import a_sync
 from brownie import chain
 from eth_abi import encode_single
 from eth_utils import encode_hex
+from web3.types import LogReceipt
 from y.datatypes import Address
 from y.utils.events import ProcessedEvents
 
@@ -35,12 +36,12 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
             logger.debug("yielding %s at block %s [thru: %s, lock: %s]", task, task.block, block, self._lock.value)
             yield task
         logger.debug("%s yield thru %s complete", self, block)
-    def _extend(self, objs: List[dict]) -> None:
+    def _extend(self, objs: List[LogReceipt]) -> None:
         for log in objs:
             task = asyncio.create_task(_loaders.load_token_transfer(log, self._load_prices))
             task.block = log["blockNumber"]
             self._objects.append(task)
-    def _get_obj_block(self, task: "asyncio.Task[TokenTransfer]") -> int:
+    def _get_block_for_obj(self, task: "asyncio.Task[TokenTransfer]") -> int:
         return task.block
     def _process_event(self, task: "asyncio.Task[TokenTransfer]") -> "asyncio.Task[TokenTransfer]":
         return task
