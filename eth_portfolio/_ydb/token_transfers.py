@@ -31,7 +31,9 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
         ...
     async def yield_thru_block(self, block) -> AsyncIterator["asyncio.Task[TokenTransfer]"]:
         async for task in self._objects_thru(block=block):
+            logger.debug("yielding %s at block %s [thru: %s, lock: %s]", task, task.block, block, self._lock.value)
             yield task
+        logger.debug("%s yield thru %s complete", self, block)
     def _extend(self, objs: List[dict]) -> None:
         tasks = []
         for log in objs:
