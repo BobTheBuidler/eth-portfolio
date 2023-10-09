@@ -6,11 +6,13 @@ from itertools import product
 from typing import (TYPE_CHECKING, AsyncIterator, Generic, List, Optional,
                     Tuple, Type, TypeVar, Union)
 
+import a_sync
 import eth_retry
 from pandas import DataFrame  # type: ignore
 from tqdm.asyncio import tqdm_asyncio
 from y import ERC20
 from y.datatypes import Block
+from y.decorators import stuck_coro_debugger
 from y.utils.dank_mids import dank_w3
 from y.utils.events import BATCH_SIZE
 
@@ -91,6 +93,7 @@ class AddressLedgerBase(Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
         return self._get_async(start_block, end_block) # type: ignore
     
     @set_end_block_if_none
+    @stuck_coro_debugger
     async def _get_async(self, start_block: Block, end_block: Block) -> _LedgerEntryList:
         objects = self.list_type()
         async for obj in self._get_and_yield(start_block, end_block):
@@ -101,12 +104,14 @@ class AddressLedgerBase(Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
     def new(self) -> _LedgerEntryList:
         return self._new_async() # type: ignore
     
+    @stuck_coro_debugger
     async def _new_async(self) -> _LedgerEntryList:
         start_block = 0 if self.cached_thru is None else self.cached_thru + 1
         end_block = await get_buffered_chain_height()
         return self[start_block, end_block]
     
     @set_end_block_if_none
+    @stuck_coro_debugger
     async def _get_new_objects(self, start_block: Block, end_block: Block) -> None:
         async with self._lock:
             await self._load_new_objects(start_block, end_block)
@@ -175,6 +180,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         self.cached_thru_nonce = -1
 
     @set_end_block_if_none
+    @stuck_coro_debugger
     async def _load_new_objects(self, _: Block, end_block: Block) -> None:
         if end_block is None:
             end_block = await get_buffered_chain_height()
@@ -216,6 +222,7 @@ trace_semaphore = asyncio.Semaphore(32)
 
 @cache_to_disk
 @eth_retry.auto_retry
+@stuck_coro_debugger
 async def get_traces(params: list) -> List[dict]:
     async with trace_semaphore:
         traces = await dank_w3.provider.make_request("trace_filter", params)
@@ -227,6 +234,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
     list_type = InternalTransfersList
     
     @set_end_block_if_none
+    @stuck_coro_debugger
     async def _load_new_objects(self, start_block: Block, end_block: Block) -> None:
         if start_block == 0:
             start_block = 1
@@ -285,6 +293,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
     def list_tokens_at_block(self, block: Optional[int] = None) -> List[ERC20]:
         return self._list_tokens_at_block_async(block) # type: ignore
     
+    @stuck_coro_debugger
     async def _list_tokens_at_block_async(self, block: Optional[int] = None) -> List[ERC20]:
         return [token async for token in self._yield_tokens_at_block_async(block)]
     
@@ -296,6 +305,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
                 yield ERC20(transfer.token_address, asynchronous=self.asynchronous)
     
     @set_end_block_if_none
+    @stuck_coro_debugger
     async def _load_new_objects(self, start_block: Block, end_block: Block) -> None:
         try:
             start_block, end_block = self._check_blocks_against_cache(start_block, end_block)
@@ -315,11 +325,12 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
                 if transfer is not None:
                     self.objects.append(transfer)
             
-            self.objects.extend([
-                transfer
-                async for transfer in a_sync.as_completed(tasks, aiter=True, tqdm=True, desc=f"Token Transfers     {self.address}")
-                if transfer is not None
-            ])
+            # TODO: extend a_sync so you can do this
+            #self.objects.extend([
+            #    transfer
+            #    async for transfer in a_sync.as_completed(tasks, aiter=True, tqdm=True, desc=f"Token Transfers     {self.address}")
+            #    if transfer is not None
+            #])
                     
             self.objects.sort(key=lambda t: (t.block_number, t.transaction_index, t.log_index))
             
