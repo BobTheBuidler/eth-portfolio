@@ -13,6 +13,7 @@ from web3.types import TxData
 from y import get_price
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
+from y.decorators import stuck_coro_debugger
 from y.utils.dank_mids import dank_w3
 
 from eth_portfolio._db import utils as db
@@ -24,6 +25,7 @@ logger = logging.getLogger(__name__)
 Nonce = int
 
 @eth_retry.auto_retry
+@stuck_coro_debugger
 async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) -> Tuple[Nonce, Optional[Transaction]]:
     if transaction := await db.get_transaction(address, nonce):
         assert not isinstance(transaction, list)
@@ -72,6 +74,7 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
             logger.debug(f"Nonce at {hi} is {_nonce}, checking lower block {lo}")
 
 @eth_retry.auto_retry
+@stuck_coro_debugger
 async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block: Block) -> Optional[TxData]:
     txs = await get_block_transactions(block)
     for tx in txs:
@@ -89,6 +92,7 @@ async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block
 
 @alru_cache(maxsize=None)
 @eth_retry.auto_retry
+@stuck_coro_debugger
 async def get_nonce_at_block(address: Address, block: Block) -> int:
     try:
         return await dank_w3.eth.get_transaction_count(address, block_identifier = block) - 1
@@ -99,6 +103,7 @@ async def get_nonce_at_block(address: Address, block: Block) -> int:
         raise ValueError(f"For {address} at {block}: {e}")
 
 @eth_retry.auto_retry
+@stuck_coro_debugger
 async def get_block_transactions(block: Block) -> List[TxData]:
     async with _full_block_semaphore:
         block = await dank_w3.eth.get_block(block, full_transactions=True)

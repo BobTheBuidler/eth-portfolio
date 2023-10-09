@@ -5,12 +5,14 @@ from typing import Optional
 import inflection
 from brownie import chain
 from y.constants import EEE_ADDRESS
+from y.decorators import stuck_coro_debugger
 
 from eth_portfolio._loaders.utils import checksum, get_transaction_receipt
 from eth_portfolio.structs import InternalTransfer
 from eth_portfolio.utils import _get_price
 
 
+@stuck_coro_debugger
 async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[InternalTransfer]:
     if "to" in transfer and transfer["to"] == "0xd9db270c1b5e3bd161e8c8503c55ceabee709552": #"0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":  # Gnosis Safe Singleton 1.3.0
         # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
