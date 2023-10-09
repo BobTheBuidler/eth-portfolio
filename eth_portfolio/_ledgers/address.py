@@ -252,11 +252,11 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
         # NOTE: We only want tqdm progress bar when there is a lot of work to do
         generator_function = partial(tqdm_asyncio.as_completed, desc=f"Trace Filters       {self.address}") if len(block_ranges) > 1 else asyncio.as_completed
 
-        futs = []
-        for traces in generator_function(trace_filter_coros):
-            futs.extend(asyncio.create_task(_loaders.load_internal_transfer(trace, self.load_prices)) for trace in await traces)
-                
-        if futs:
+        if futs := [
+            asyncio.create_task(coro=_loaders.load_internal_transfer(trace, self.load_prices), name="load_internal_transfer")
+            for traces in generator_function(trace_filter_coros)
+            for trace in await traces
+        ]:
             transfer: InternalTransfer
             for fut in tqdm_asyncio.as_completed(futs, desc=f"Internal Transfers  {self.address}"):
                 transfer = await fut
@@ -307,19 +307,21 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
                 self._load_new_objects(self.cached_from + 1, end_block)
             )
             return
-        
-        tasks = [task async for task in self._transfers.yield_thru_block(end_block) if start_block <= task.block]
-                
-        if tasks:
+                        
+        if tasks := [task async for task in self._transfers.yield_thru_block(end_block) if start_block <= task.block]:
             transfer: TokenTransfer
             for fut in tqdm_asyncio.as_completed(tasks, desc=f"Token Transfers     {self.address}"):
                 transfer = await fut
                 if transfer is not None:
                     self.objects.append(transfer)
+            
+            self.objects.extend([
+                transfer
+                async for transfer in a_sync.as_completed(tasks, aiter=True, tqdm=True, desc=f"Token Transfers     {self.address}")
+                if transfer is not None
+            ])
                     
             self.objects.sort(key=lambda t: (t.block_number, t.transaction_index, t.log_index))
-        
-        
             
         if self.cached_from is None or start_block < self.cached_from:
             self.cached_from = start_block

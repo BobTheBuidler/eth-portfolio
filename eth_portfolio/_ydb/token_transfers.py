@@ -38,7 +38,10 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
         logger.debug("%s yield thru %s complete", self, block)
     def _extend(self, objs: List[LogReceipt]) -> None:
         for log in objs:
-            task = asyncio.create_task(_loaders.load_token_transfer(log, self._load_prices))
+            task = asyncio.create_task(
+                coro=_loaders.load_token_transfer(log, self._load_prices), 
+                name="load_token_transfer",
+            )
             task.block = log["blockNumber"]
             self._objects.append(task)
     def _get_block_for_obj(self, task: "asyncio.Task[TokenTransfer]") -> int:
