@@ -28,7 +28,6 @@ Nonce = int
 @stuck_coro_debugger
 async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) -> Tuple[Nonce, Optional[Transaction]]:
     if transaction := await db.get_transaction(address, nonce):
-        assert not isinstance(transaction, list)
         if load_prices and transaction.price is None:
             await db.delete_transaction(transaction)
         else:

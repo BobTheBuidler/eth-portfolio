@@ -85,7 +85,6 @@ class AddressLedgerBase(Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
                 continue
             elif block > end_block:
                 break
-            assert not isinstance(obj, list)
             yield obj
     
     @await_if_sync
@@ -194,7 +193,6 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             for fut in tqdm_asyncio.as_completed([_loaders.load_transaction(self.address, nonce, self.load_prices) for nonce in nonces], desc=f"Transactions        {self.address}"):
                 nonce, transaction = await fut
                 if transaction:
-                    assert not isinstance(transaction, list)
                     self.objects.append(transaction)
                 elif nonce == 0 and self.cached_thru_nonce == -1:
                     # Gnosis safes
