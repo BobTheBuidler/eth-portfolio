@@ -3,46 +3,41 @@ import abc
 import asyncio
 from typing import Any, Awaitable, Callable, Coroutine, List, Optional
 
+import a_sync
 from brownie.network.contract import ContractCall
-from eth_portfolio._decorators import await_if_sync
 from eth_portfolio.typing import Balance, TokenBalances
 from eth_portfolio.utils import Decimal
 from y import ERC20, Contract
 from y.contracts import contract_creation_block
 from y.datatypes import Address, Block
+from y.decorators import stuck_coro_debugger
 
 
 class ProtocolABC(metaclass=abc.ABCMeta):
-    asynchronous: bool
-    def __init__(self, asynchronous: bool) -> None:
-        self.asynchronous = asynchronous
-
-    @await_if_sync
-    def balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        return self._balances_async(address, block) # type: ignore
-    
+    @a_sync.future
+    async def balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        return await self._balances(address, block=block)
     @abc.abstractmethod
-    async def _balances_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        """ This is the method you must override when implementing any new protocol. """
+    async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        ...
 
 
 class ProtocolWithStakingABC(ProtocolABC, metaclass=abc.ABCMeta):
     pools: List["StakingPoolABC"]
+    @stuck_coro_debugger
+    async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        return sum(await asyncio.gather(*[pool.balances(address, block) for pool in self.pools]))  # type: ignore
     
-    async def _balances_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        return sum(await asyncio.gather(*[pool._balances_async(address, block) for pool in self.pools]))  # type: ignore
-
 
 class StakingPoolABC(ProtocolABC, metaclass=abc.ABCMeta):
     contract_address: Address
     balance_method_name: str
 
-    def __call__(self, *args, block: Optional[Block] = None, **_) -> int:
+    @a_sync.future
+    async def __call__(self, *args, block: Optional[Block] = None, **_) -> int:
         if _:
             raise ValueError("SingleTokenStakingPoolABC.__call__ does not support keyword arguments")
-        if self.asynchronous or asyncio.get_event_loop().is_running():
-            return self.contract_call.coroutine(*args, block_identifier=block)
-        return self.contract_call(*args, block_identifier=block)
+        return await self.contract_call.coroutine(*args, block_identifier=block)
 
     @property
     def contract(self) -> Contract:
@@ -83,7 +78,8 @@ class SingleTokenStakingPoolABC(StakingPoolABC, metaclass=abc.ABCMeta):
     def scale(self) -> Awaitable[int]:
         return self.token.__scale__(sync=False)
     
-    async def _balances_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+    @stuck_coro_debugger
+    async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         balances: TokenBalances = TokenBalances()
         if self.should_check(block):
             balance = Decimal(await self(address, block=block))  # type: ignore

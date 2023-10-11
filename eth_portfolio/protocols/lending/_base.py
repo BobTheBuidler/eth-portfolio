@@ -2,10 +2,13 @@
 import abc
 from typing import Optional
 
+import a_sync
+from y.datatypes import Address, Block
+from y.decorators import stuck_coro_debugger
+
 from eth_portfolio._decorators import await_if_sync
 from eth_portfolio.protocols._base import ProtocolABC
 from eth_portfolio.typing import TokenBalances
-from y.datatypes import Address, Block
 
 
 class LendingProtocol(metaclass=abc.ABCMeta):
@@ -16,14 +19,11 @@ class LendingProtocol(metaclass=abc.ABCMeta):
     You must define the following async method:
         `_debt_async(self, address: Address, block: Optional[Block] = None)`
     """ 
-    asynchronous: bool
-    
-    @await_if_sync
-    def debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        return self._debt_async(address, block)  # type: ignore
-    
+    @a_sync.future
+    async def debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        return await self._debt(address, block)  # type: ignore
     @abc.abstractmethod
-    async def _debt_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+    async def _debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         ...
 
 class LendingProtocolWithLockedCollateral(LendingProtocol, ProtocolABC):

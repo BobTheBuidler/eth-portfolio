@@ -11,9 +11,9 @@ class _CvxLockerV2(SingleTokenStakingPoolABC):
 class Convex(ProtocolWithStakingABC):
     networks = [Network.Mainnet]
     
-    def __init__(self, asynchronous: bool) -> None:
-        super().__init__(asynchronous)
+    def __init__(self) -> None:
+        super().__init__()
         self.pools = [
-            _CvxLockerV2(self.asynchronous)
+            _CvxLockerV2()
         ]
     
