@@ -16,7 +16,7 @@ from eth_abi.exceptions import InsufficientDataBytes
 from pandas import DataFrame  # type: ignore
 from y import ERC20, Contract, Network
 from y.datatypes import Address, Block
-from y.exceptions import ContractNotVerified, NodeNotSynced, NonStandardERC20, PriceError, yPriceMagicError
+from y.exceptions import CantFetchParam, ContractNotVerified, NodeNotSynced, NonStandardERC20, PriceError, yPriceMagicError
 from y.prices.magic import get_price
 from y.utils.dank_mids import dank_w3
 
@@ -93,6 +93,8 @@ async def _get_price(token: Address, block: int = None) -> float:
         if await is_erc721(token):
             return 0
         return await get_price(token, block, silent=True, sync=False)
+    except CantFetchParam as e:
+        logger.warning('CantFetchParam %s', e)
     except yPriceMagicError as e:
         # Raise these exceptions
         if isinstance(e.exception, _to_raise) and not isinstance(e.exception, RecursionError):
@@ -106,7 +108,7 @@ async def _get_price(token: Address, block: int = None) -> float:
         else:
             logger.warning(f'{e} while fetching price for {await _describe_err(token, block)}')
             logger.warning(e, exc_info=True)
-        return 0
+    return 0
 
 @alru_cache(maxsize=None)
 async def is_erc721(token: Address) -> bool:

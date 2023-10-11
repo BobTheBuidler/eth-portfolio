@@ -3,6 +3,7 @@ import asyncio
 import logging
 import time
 from functools import wraps
+from random import random
 from typing import Callable, TypeVar
 
 from pony.orm import OperationalError, TransactionError
@@ -22,9 +23,11 @@ def break_locks(fn: Callable[P, T]) -> Callable[P, T]:
                 try:
                     return await fn(*args, **kwargs)
                 except OperationalError as e:
+                    logger.debug("%s.%s %s", fn.__module__, fn.__name__, e)
                     if str(e) != "database is locked":
                         raise e
-                    await asyncio.sleep(tries)
+                    sleep = tries * random()
+                    await asyncio.sleep(sleep)
                     tries += 1
                     if tries > 5:
                         logger.warning("%s caught in err loop with %s", fn, e)
@@ -37,9 +40,11 @@ def break_locks(fn: Callable[P, T]) -> Callable[P, T]:
                 try:
                     return fn(*args, **kwargs)
                 except OperationalError as e:
+                    logger.debug("%s.%s %s", fn.__module__, fn.__name__, e)
                     if str(e) != "database is locked":
                         raise e
-                    time.sleep(tries)
+                    sleep = tries * random()
+                    time.sleep(sleep)
                     tries += 1
                     if tries > 5:
                         logger.warning("%s caught in err loop with %s", fn, e)

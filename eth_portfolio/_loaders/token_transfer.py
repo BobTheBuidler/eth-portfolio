@@ -11,6 +11,7 @@ from brownie.network.event import _EventItem
 from dank_mids.semaphores import BlockSemaphore
 from pony.orm import TransactionIntegrityError
 from y import ERC20, Contract
+from y.decorators import stuck_coro_debugger
 from y.exceptions import ContractNotVerified, NonStandardERC20
 from y.utils.events import decode_logs
 
@@ -26,8 +27,9 @@ token_transfer_semaphore = BlockSemaphore(5_000, name='eth_portfolio.token_trans
 
 shitcoins = SHITCOINS.get(chain.id, set())
 
+@stuck_coro_debugger
 async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional[TokenTransfer]:
-    if transfer_log.address in shitcoins:
+    if transfer_log['address'] in shitcoins:
         return None
     
     if transfer := await db.get_token_transfer(transfer_log):
@@ -55,7 +57,8 @@ async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional
             'chainid': chain.id,
             'block_number': decoded.block_number,
             'transaction_index': transaction_index,
-            'hash': decoded.transaction_hash.hex(),
+            # TODO figure out why it comes in both ways
+            'hash': hash.hex() if isinstance((hash := decoded.transaction_hash), bytes) else hash,
             'log_index': decoded.log_index,
             'token': symbol,
             'token_address': decoded.address,
@@ -82,23 +85,26 @@ async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional
                     await db.insert_token_transfer(transfer)
         return transfer
 
+@stuck_coro_debugger
 async def get_symbol(token: ERC20) -> Optional[str]:
     try:
         return await token.__symbol__(sync=False)
     except NonStandardERC20:
         return None
 
+@stuck_coro_debugger
 async def get_transaction_index(hash: str) -> int:
     receipt = await get_transaction_receipt(hash)
     return receipt.transactionIndex
 
+@stuck_coro_debugger
 async def _decode_token_transfer(log) -> _EventItem:
     try:
-        await Contract.coroutine(log.address)
+        await Contract.coroutine(log['address'])
     except ContractNotFound:
-        logger.warning(f"Token {log.address} cannot be found. Skipping. If the contract has been self-destructed, eth-portfolio will not support it.")
+        logger.warning(f"Token {log['address']} cannot be found. Skipping. If the contract has been self-destructed, eth-portfolio will not support it.")
     except ContractNotVerified:
-        logger.warning(f"Token {log.address} is not verified and is most likely a shitcoin. Skipping. Please submit a PR at github.com/BobTheBuidler/eth-portfolio if this is not a shitcoin and should be included.")
+        logger.warning(f"Token {log['address']} is not verified and is most likely a shitcoin. Skipping. Please submit a PR at github.com/BobTheBuidler/eth-portfolio if this is not a shitcoin and should be included.")
         return
     try:
         try:

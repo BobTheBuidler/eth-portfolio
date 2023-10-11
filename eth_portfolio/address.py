@@ -7,6 +7,7 @@ import a_sync
 from y import convert
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
+from y.decorators import stuck_coro_debugger
 
 from eth_portfolio._decorators import await_if_sync
 from eth_portfolio._ledgers.address import (AddressInternalTransfersLedger,
@@ -75,6 +76,7 @@ class PortfolioAddress:
     def describe(self, block: int) -> WalletBalances:
         return self._describe_async(block=block) # type: ignore
     
+    @stuck_coro_debugger
     async def _describe_async(self, block: int) -> WalletBalances:
         assert block, "You must provide a valid block number"
         assert isinstance(block, int), f"Block must be an integer. You passed {type(block)} {block}"
@@ -87,6 +89,7 @@ class PortfolioAddress:
     def assets(self, block: Optional[Block] = None) -> TokenBalances:
         return self._assets_async(block) # type: ignore
     
+    @stuck_coro_debugger
     async def _assets_async(self, block: Optional[Block] = None) -> TokenBalances:
         return await self._balances_async(block=block)
 
@@ -94,13 +97,15 @@ class PortfolioAddress:
     def debt(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         return self._debt_async(block) # type: ignore
     
+    @stuck_coro_debugger
     async def _debt_async(self, block: Optional[Block] = None) -> RemoteTokenBalances:
-        return await _lending._debt_async(self.address, block=block)
+        return await _lending.debt(self.address, block=block)
     
     @await_if_sync
     def external_balances(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         return self._external_balances_async(block) # type: ignore
     
+    @stuck_coro_debugger
     async def _external_balances_async(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         staked, collateral = await asyncio.gather(
             self._staking_async(block),
@@ -114,6 +119,7 @@ class PortfolioAddress:
     def balances(self, block: Optional[Block]) -> TokenBalances:
         return self._balances_async(block) # type: ignore
     
+    @stuck_coro_debugger
     async def _balances_async(self, block: Optional[Block]) -> TokenBalances:
         eth_balance, token_balances = await asyncio.gather(
             self._eth_balance_async(block),
@@ -126,6 +132,7 @@ class PortfolioAddress:
     def eth_balance(self, block: Optional[Block]) -> Balance:
         return self._eth_balance_async(block) # type: ignore
 
+    @stuck_coro_debugger
     async def _eth_balance_async(self, block: Optional[Block]) -> Balance:
         return await balances.load_eth_balance(self.address, block)
     
@@ -133,23 +140,26 @@ class PortfolioAddress:
     def token_balances(self, block: Optional[Block]) -> TokenBalances:
         return self._token_balances_async(block) # type: ignore
     
+    @stuck_coro_debugger
     async def _token_balances_async(self, block) -> TokenBalances:
         futs = []
         async for token in self.token_transfers._yield_tokens_at_block_async(block=block):
-            futs.append(asyncio.create_task(balances.load_token_balance(token, self.address, block)))
+            futs.append(asyncio.create_task(coro=balances.load_token_balance(token, self.address, block), name=f"load_token_balance {self.address} at block {block}"))
         return TokenBalances((token, balance) for token, balance in await asyncio.gather(*futs) if balance)
     
     @await_if_sync
     def collateral(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         return self._collateral_async(block) # type: ignore
-    
+   
+    @stuck_coro_debugger 
     async def _collateral_async(self, block: Optional[Block] = None) -> RemoteTokenBalances:
-        return await _lending._collateral_async(self.address, block=block)
+        return await _lending.collateral(self.address, block=block)
     
     @await_if_sync
     def staking(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         return self._staking_async(block) # type: ignore
     
+    @stuck_coro_debugger
     async def _staking_async(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         return await _external._balances_async(self.address, block=block)
     
@@ -159,6 +169,7 @@ class PortfolioAddress:
     def all(self, load_prices: bool = False) -> Dict[str, PandableLedgerEntryList]:
         return self._all_async(load_prices=load_prices) # type: ignore
     
+    @stuck_coro_debugger
     async def _all_async(self, start_block: Block, end_block: Block) -> Dict[str, PandableLedgerEntryList]:
         transactions, internal_transactions, token_transfers = await asyncio.gather(
             self.transactions._get_async(start_block, end_block),
