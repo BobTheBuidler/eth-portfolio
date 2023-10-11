@@ -2,31 +2,33 @@
 import asyncio
 from typing import Optional
 
+import a_sync
 from async_lru import alru_cache
 from brownie import chain
 from eth_abi import encode_single
-from eth_portfolio._decorators import await_if_sync
-from eth_portfolio.protocols.lending._base import \
-    LendingProtocolWithLockedCollateral
-from eth_portfolio.typing import Balance, TokenBalances
-from eth_portfolio.utils import Decimal
 from y import Network, get_price
 from y.constants import dai
 from y.contracts import Contract
 from y.datatypes import Address, Block
+from y.decorators import stuck_coro_debugger
+
+from eth_portfolio.protocols.lending._base import \
+    LendingProtocolWithLockedCollateral
+from eth_portfolio.typing import Balance, TokenBalances
+from eth_portfolio.utils import Decimal
 
 yfi = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
 
 class Maker(LendingProtocolWithLockedCollateral):
     networks = [Network.Mainnet]
 
-    def __init__(self, asynchronous: bool = False) -> None:
-        self.asynchronous = asynchronous
+    def __init__(self) -> None:
         self.proxy_registry = Contract('0x4678f0a6958e4D2Bc4F1BAF7Bc52E8F3564f3fE4')
         self.cdp_manager = Contract('0x5ef30b9986345249bc32d8928B7ee64DE9435E39')
         self.vat = Contract('0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B')
     
-    async def _balances_async(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+    @stuck_coro_debugger
+    async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         balances: TokenBalances = TokenBalances()
         ilk = encode_single('bytes32', b'YFI-A')
         urn = await self._urn(address)
@@ -37,11 +39,8 @@ class Maker(LendingProtocolWithLockedCollateral):
             balances[yfi] = Balance(balance, value)
         return balances
     
-    @await_if_sync
-    def debt(self, address: Address, block: int = None) -> TokenBalances:
-        return self._debt_async(address, block=block) # type: ignore
-    
-    async def _debt_async(self, address: Address, block: Optional[int] = None) -> TokenBalances:
+    @stuck_coro_debugger
+    async def _debt(self, address: Address, block: Optional[int] = None) -> TokenBalances:
         ilk = encode_single('bytes32', b'YFI-A')
         urn = await self._urn(address)
         urns, ilks = await asyncio.gather(
@@ -68,5 +67,3 @@ class Maker(LendingProtocolWithLockedCollateral):
     async def _urn(self, address: Address) -> Address:
         cdp = await self._cdp(address)
         return await self.cdp_manager.urns.coroutine(cdp)
-
-maker = Maker(asynchronous=True) if chain.id == Network.Mainnet else None

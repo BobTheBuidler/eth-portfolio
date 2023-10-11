@@ -137,7 +137,7 @@ def get_class_defs_from_module(module: ModuleType) -> List[type]:
     """
     return [obj for obj in module.__dict__.values() if isinstance(obj, type) and obj.__module__ == module.__name__]
 
-def _get_protocols_for_submodule(asynchronous: bool) -> List[type]:
+def _get_protocols_for_submodule() -> List[type]:
     """
     Used to initialize a submodule's class object.
     Returns a list of initialized protocol objects.
@@ -146,7 +146,7 @@ def _get_protocols_for_submodule(asynchronous: bool) -> List[type]:
     assert called_from_module, "You can only call this function from a module"
     components = [module for module in get_submodules_for_module(called_from_module) if not module.__name__.endswith('._base')]
     return [
-        cls(asynchronous)
+        cls()
         for component in components
         for cls in get_class_defs_from_module(component)
         if cls and not cls.__name__.startswith("_") and

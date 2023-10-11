@@ -161,7 +161,7 @@ class PortfolioAddress:
     
     @stuck_coro_debugger
     async def _staking_async(self, block: Optional[Block] = None) -> RemoteTokenBalances:
-        return await _external._balances_async(self.address, block=block)
+        return await _external.balances(self.address, block=block)
     
     # Ledger Entries
 
