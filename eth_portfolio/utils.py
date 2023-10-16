@@ -54,7 +54,7 @@ class Decimal(_Decimal):
     I'm in the process of moving from floats to decimals, this will help be as I buidl.
     """
     def __init__(self, v) -> None:
-        assert not isinstance(v, _Decimal)
+        #assert not isinstance(v, _Decimal)
         super().__init__()
 
 async def _describe_err(token: Address, block: Optional[Block]) -> str:
