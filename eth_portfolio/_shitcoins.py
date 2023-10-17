@@ -110,6 +110,7 @@ shitcoins = {
         "0x53d345839E7dF5a6c8Cf590C5c703AE255E44816",
         "0xCCCCee7d9B0f18ab16b217A794D2671549F1A895",
         "0xc6a76f7ad66d0e6Ccd1AaAd6e7568c9bd55Dce62",
+        "0xB4d4334eB5a251cbE5cC7Afb0Ba26119aCE62281",
         # Tagged as well known address scam on Etherscan
         "0xEea2fEf22353282fb760d27EA7A1E2f06B3F442d",
         "0x218Ae209BEc57eeFa9149789aE09388459bC91d1",
