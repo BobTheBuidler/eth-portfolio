@@ -2,9 +2,7 @@
 import asyncio
 from typing import Optional
 
-import a_sync
 from async_lru import alru_cache
-from brownie import chain
 from eth_abi import encode_single
 from y import Network, get_price
 from y.constants import dai
