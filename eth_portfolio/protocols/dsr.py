@@ -27,4 +27,4 @@ class MakerDSR(ProtocolABC):
         return balances
     
     async def _exchange_rate(self, block: Optional[Block] = None) -> Decimal:
-        return Decimal(await self.pot.chi.coroutine(block_identifier=block)) / 10 ** 18
+        return Decimal(await self.pot.chi.coroutine(block_identifier=block)) / 10 ** 27
