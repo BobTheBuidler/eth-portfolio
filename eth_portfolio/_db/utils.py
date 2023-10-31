@@ -90,11 +90,11 @@ def get_block(block: int) -> entities.BlockExtended:
     return entities.BlockExtended.get(chain=get_chain(sync=True), number=block)
 
 # TODO refactor this out, async is annoying sometimes
-process = ProcessPoolExecutor(
-  1, 
-  # NOTE: come on apple, what are you dooooin?
-  mp_context=get_context('fork'),
-)
+#process = ProcessPoolExecutor(
+#  1, 
+#  # NOTE: come on apple, what are you dooooin?
+#  mp_context=get_context('fork'),
+#)
 
 def is_token(address) -> bool:
     if address == EEE_ADDRESS:
