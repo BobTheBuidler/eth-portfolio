@@ -3,6 +3,7 @@ import logging
 from concurrent.futures import ProcessPoolExecutor
 from contextlib import suppress
 from decimal import Decimal
+from multiprocessing import get_context
 from typing import Optional
 
 import y._db.config as config
@@ -89,7 +90,11 @@ def get_block(block: int) -> entities.BlockExtended:
     return entities.BlockExtended.get(chain=get_chain(sync=True), number=block)
 
 # TODO refactor this out, async is annoying sometimes
-process = ProcessPoolExecutor(1)
+process = ProcessPoolExecutor(
+  1, 
+  # NOTE: come on apple, what are you dooooin?
+  mp_context=get_context('fork'),
+)
 
 def is_token(address) -> bool:
     if address == EEE_ADDRESS:
