@@ -1,7 +1,6 @@
 
 import abc
 from decimal import Decimal
-from msgspec import Struct, field
 from functools import cached_property
 from typing import (Any, DefaultDict, Dict, Iterable, Literal, Optional, Tuple,
                     TypedDict, TypeVar, Union)
@@ -9,25 +8,11 @@ from typing import (Any, DefaultDict, Dict, Iterable, Literal, Optional, Tuple,
 from checksum_dict import DefaultChecksumDict
 from y.datatypes import Address, Block
 
+from eth_portfolio.structs import _DictStruct
+
 _T = TypeVar('_T')
 
-
-ProtocolLabel = str
-
-Addresses = Union[Address, Iterable[Address]]
-TokenAddress = TypeVar('TokenAddress', bound=Address)
-
-
-class _SummableNonNumeric(metaclass=abc.ABCMeta):
-    @abc.abstractmethod
-    def __add__(self: _T, other: Union[_T, Literal[0]]) -> _T:
-        ...
-    def __radd__(self, other: Union[_T, Literal[0]]) -> _T:
-        if other == 0:
-            return self
-        return self.__add__(other)  # type: ignore
-
-class Balance(Struct):
+class Balance(_DictStruct):
     balance: Decimal = Decimal(0)
     usd_value: Decimal = Decimal(0)
     
@@ -60,6 +45,22 @@ class Balance(Struct):
     
     def __bool__(self) -> bool:
         return self.balance != 0 or self.usd_value != 0
+
+
+ProtocolLabel = str
+
+Addresses = Union[Address, Iterable[Address]]
+TokenAddress = TypeVar('TokenAddress', bound=Address)
+
+
+class _SummableNonNumeric(metaclass=abc.ABCMeta):
+    @abc.abstractmethod
+    def __add__(self: _T, other: Union[_T, Literal[0]]) -> _T:
+        ...
+    def __radd__(self, other: Union[_T, Literal[0]]) -> _T:
+        if other == 0:
+            return self
+        return self.__add__(other)  # type: ignore
 
 
 _TBSeed = Union[Dict[Address, Balance], Iterable[Tuple[Address, Balance]]]
