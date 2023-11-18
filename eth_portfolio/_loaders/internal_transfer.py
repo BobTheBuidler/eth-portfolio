@@ -18,9 +18,11 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
         # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
         # that actually transmitted value to the singleton even though they appear to.
         return None
-    receipt = await get_transaction_receipt(transfer['transactionHash'])
-    if receipt.status == 0:
-        return None
+    if not (transfer['type'] == "reward" and transfer['action']['rewardType'] == "block"):
+        # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
+        receipt = await get_transaction_receipt(transfer['transactionHash'])
+        if receipt.status == 0:
+            return None
 
     # Un-nest the action dict
     if 'action' in transfer and transfer['action'] is not None:
