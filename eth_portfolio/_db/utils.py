@@ -10,7 +10,7 @@ import y._db.config as config
 from a_sync import a_sync
 from msgspec import json
 from multicall.utils import get_event_loop
-from pony.orm import BindingError, OperationalError, commit, db_session, flush
+from pony.orm import BindingError, OperationalError, TransactionIntegrityError, commit, db_session, flush
 from y import ERC20
 from y.constants import EEE_ADDRESS
 from y.exceptions import NonStandardERC20
@@ -380,6 +380,8 @@ def insert_token_transfer(token_transfer: TokenTransfer) -> None:
             raw = json.encode(token_transfer),
         )
         commit()
+    except TransactionIntegrityError:
+        pass
     except Exception as e:
         if "numeric field overflow" not in str(e):
             raise e
