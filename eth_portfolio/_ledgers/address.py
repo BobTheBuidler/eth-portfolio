@@ -219,6 +219,8 @@ class InternalTransfersList(PandableList[InternalTransfer]):
 trace_semaphore = asyncio.Semaphore(32)
 
 @cache_to_disk
+# we double stack these because high-volume wallets will likely need it
+@eth_retry.auto_retry
 @eth_retry.auto_retry
 @stuck_coro_debugger
 async def get_traces(params: list) -> List[dict]:
