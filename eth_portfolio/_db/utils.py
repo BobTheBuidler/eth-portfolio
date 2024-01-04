@@ -12,9 +12,6 @@ from brownie import chain
 from msgspec import json
 from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush
-from y import ERC20
-from y.constants import EEE_ADDRESS
-from y.exceptions import NonStandardERC20
 
 from eth_portfolio._db import entities
 from eth_portfolio._db.decorators import (break_locks,
@@ -47,6 +44,9 @@ from y._db.utils import ensure_chain
 from y._db.utils.logs import insert_log
 from y._db.utils.price import _set_price
 from y._db.utils.traces import insert_trace
+from y import ERC20
+from y.constants import EEE_ADDRESS
+from y.exceptions import NonStandardERC20
 from y.contracts import is_contract
 
 robust_db_session = lambda callable: retry_locked(break_locks(db_session(callable)))
