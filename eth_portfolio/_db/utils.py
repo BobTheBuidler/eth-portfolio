@@ -8,6 +8,7 @@ from typing import Optional
 
 import y._db.config as config
 from a_sync import a_sync
+from brownie import chain
 from msgspec import json
 from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush
@@ -42,7 +43,7 @@ except OperationalError as e:
 from y._db.entities import (Address, Block, Contract, Token, insert,
                             retry_locked)
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
-from y._db.utils import get_chain
+from y._db.utils import ensure_chain
 from y._db.utils.logs import insert_log
 from y._db.utils.price import _set_price
 from y._db.utils.traces import insert_trace
@@ -53,10 +54,10 @@ robust_db_session = lambda callable: retry_locked(break_locks(db_session(callabl
 @a_sync(default='async')
 @robust_db_session
 def get_block(block: int) -> entities.BlockExtended:
-    chain = get_chain(sync=True)
-    if b := entities.BlockExtended.get(chain=chain, number=block):
+    ensure_chain()
+    if b := entities.BlockExtended.get(chain=chain.id, number=block):
         return b
-    elif b := Block.get(chain=chain, number=block):
+    elif b := Block.get(chain=chain.id, number=block):
         if isinstance(b, entities.BlockExtended):
             # in case of race cndtn
             return b
@@ -85,9 +86,9 @@ def get_block(block: int) -> entities.BlockExtended:
             raise e.__class__("This is really bad. Might need to nuke your db if you value your logs/traces", *e.args)
         for token, price in prices:
             _set_price(token, price, sync=True)
-    elif b := insert(type=entities.BlockExtended, chain=get_chain(sync=True), number=block):
+    elif b := insert(type=entities.BlockExtended, chain=chain.id, number=block):
         return b
-    return entities.BlockExtended.get(chain=get_chain(sync=True), number=block)
+    return entities.BlockExtended.get(chain=chain.id, number=block)
 
 # TODO refactor this out, async is annoying sometimes
 #process = ProcessPoolExecutor(
@@ -128,10 +129,10 @@ def __is_token(address) -> bool:
 @a_sync(default='async')
 @robust_db_session
 def get_address(address: str) -> entities.Block:
-    chain = get_chain(sync=True)
+    ensure_chain()
     
     entity_type = entities.TokenExtended
-    entity = entities.Address.get(chain=chain, address=address)
+    entity = entities.Address.get(chain=chain.id, address=address)
     """ TODO: fix this later
     entity = entities.Address.get(chain=chain, address=address)
     if isinstance(entity, (Token, entities.TokenExtended)):
@@ -158,16 +159,16 @@ def get_address(address: str) -> entities.Block:
     if entity:
         return entity
     
-    return insert(type=entity_type, chain=get_chain(sync=True), address=address) or entity_type.get(chain=get_chain(sync=True), address=address)
+    return insert(type=entity_type, chain=chain.id, address=address) or entity_type.get(chain=chain.id, address=address)
 
 @a_sync(default='async')
 @robust_db_session
 def get_token(address: str) -> entities.Block:
-    chain = get_chain(sync=True)
-    if t := entities.TokenExtended.get(chain=chain, address=address):
+    ensure_chain()
+    if t := entities.TokenExtended.get(chain=chain.id, address=address):
         return t
     kwargs = {}
-    if t := Address.get(chain=chain, address=address):
+    if t := Address.get(chain=chain.id, address=address):
         if isinstance(t, entities.TokenExtended):
             # double check due to possible race cntdn
             return t
@@ -202,7 +203,7 @@ def get_token(address: str) -> entities.Block:
             raise KeyError(f"cant delete {t}") from e
         
     
-    return insert(type=entities.TokenExtended, chain=get_chain(sync=True), address=address, **kwargs) or entities.TokenExtended.get(chain=get_chain(sync=True), address=address)
+    return insert(type=entities.TokenExtended, chain=chain.id, address=address, **kwargs) or entities.TokenExtended.get(chain=chain.id, address=address)
         
     
 @a_sync(default='async')
