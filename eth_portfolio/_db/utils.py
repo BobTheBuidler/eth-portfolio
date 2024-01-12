@@ -155,7 +155,7 @@ def get_address(address: str) -> entities.Block:
         entity.delete()
         commit()
     """
-    entity = entities.Address.get(chain=chain, address=address)
+    entity = entities.Address.get(chain=chain.id, address=address)
     if entity:
         return entity
     
