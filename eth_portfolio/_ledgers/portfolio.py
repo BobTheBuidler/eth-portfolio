@@ -12,7 +12,7 @@ from eth_portfolio._ledgers.address import (AddressLedgerBase,
                                             InternalTransfersList,
                                             TokenTransfersList,
                                             TransactionsList, _LedgerEntryList)
-from eth_portfolio.utils import _unpack_indicies
+from eth_portfolio.utils import _AiterMixin, _unpack_indicies
 from eth_portfolio.structs import Transaction, InternalTransfer, TokenTransfer
 
 if TYPE_CHECKING:
@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 T = TypeVar('T')
 
-class PortfolioLedgerBase(Generic[_LedgerEntryList, T]):
+class PortfolioLedgerBase(_AiterMixin[T], Generic[_LedgerEntryList, T]):
     property_name: str
 
     def __init__(self, portfolio: "Portfolio"): # type: ignore
@@ -35,9 +35,10 @@ class PortfolioLedgerBase(Generic[_LedgerEntryList, T]):
         if asyncio.get_event_loop().is_running():
             return self._get_async(start_block, end_block) # type: ignore
         return self.get(start_block, end_block)
-    
-    def __aiter__(self) -> AsyncIterator[T]:
-        return self._get_and_yield(self.portfolio.start_block or 0, None).__aiter__()
+
+    @property
+    def _start_block(self) -> int:
+        return self.portfolio._start_block
     
     async def _get_and_yield(self, start_block: int, end_block: int) -> AsyncIterator[T]:
         async for entry in a_sync.as_yielded(*[

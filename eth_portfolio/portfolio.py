@@ -2,7 +2,7 @@ import asyncio
 import logging
 from functools import cached_property
 from types import MethodType
-from typing import Any, AsyncIterator, Dict, Iterable, Iterator, List
+from typing import Any, AsyncGenerator, Dict, Iterable, Iterator, List
 
 import a_sync
 from brownie import web3
@@ -21,6 +21,7 @@ from eth_portfolio.argspec import get_return_type
 from eth_portfolio.constants import ADDRESSES
 from eth_portfolio.structs import LedgerEntry
 from eth_portfolio.typing import Addresses, PortfolioBalances
+from eth_portfolio.utils import _AiterMixin
 
 logger = logging.getLogger(__name__)
 
@@ -128,7 +129,7 @@ def _get_missing_cols_from_KeyError(e: KeyError) -> List[str]:
     split = str(e).split("'")
     return [split[i * 2 + 1] for i in range(len(split)//2)]
 
-class PortfolioLedger:
+class PortfolioLedger(_AiterMixin[LedgerEntry]):
     def __init__(self, portfolio: "Portfolio") -> None:
         self.portfolio = portfolio
 
@@ -147,11 +148,12 @@ class PortfolioLedger:
     @property
     def w3(self) -> Web3:
         return self.portfolio.w3
-    
-    def __aiter__(self) -> AsyncIterator[LedgerEntry]:
-        return self._get_and_yield(self.portfolio.start_block or 0, None).__aiter__()
 
-    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncIterator[LedgerEntry]:
+    @property
+    def _start_block(self) -> int:
+        return self.portfolio._start_block
+
+    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[LedgerEntry, None]:
         # TODO: make this an actual generator
         async for entry in a_sync.as_yielded(
             self.transactions._get_and_yield(start_block, end_block),
