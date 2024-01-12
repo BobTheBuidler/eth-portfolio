@@ -84,7 +84,7 @@ class AddressLedgerBase(_AiterMixin[T], Generic[_LedgerEntryList, T], metaclass=
             block = obj.block_number
             if block < start_block:
                 continue
-            elif block > end_block:
+            elif end_block and block > end_block:
                 break
             yield obj
     
