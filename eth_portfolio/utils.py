@@ -3,11 +3,13 @@ import importlib
 import inspect
 import logging
 import pkgutil
+from abc import abstractmethod, abstractproperty
 from decimal import Decimal as _Decimal
 from functools import cached_property
 from types import ModuleType
-from typing import Dict, List, Optional, Tuple, Union
+from typing import AsyncGenerator, AsyncIterator, Dict, List, Optional, Tuple, Union
 
+import a_sync
 import sqlite3
 from async_lru import alru_cache
 from brownie import chain
@@ -21,6 +23,7 @@ from y.prices.magic import get_price
 from y.utils.dank_mids import dank_w3
 
 from eth_portfolio import _config
+from eth_portfolio.structs import LedgerEntry
 from eth_portfolio.typing import _T
 
 logger = logging.getLogger(__name__)
@@ -177,3 +180,17 @@ def _unpack_indicies(indicies: Union[Block,Tuple[Block,Block]]) -> Tuple[Block,B
         start_block = 0
         end_block = indicies
     return start_block, end_block
+
+
+class _AiterMixin(a_sync.ASyncIterable[_T]):
+    __doc__ = a_sync.ASyncIterable.__doc__
+    async def __aiter__(self) -> AsyncIterator[_T]:
+        return self._get_and_yield(self._start_block, await dank_w3.eth.block_number).__aiter__()
+    def yield_forever(self) -> AsyncIterator[_T]:
+        return self._get_and_yield(self._start_block, None).__aiter__()
+    @abstractmethod
+    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[_T, None]:
+        yield
+    @abstractproperty
+    def _start_block(self) -> int:
+        ...

@@ -3,7 +3,7 @@ import asyncio
 import logging
 from functools import partial
 from itertools import product
-from typing import (TYPE_CHECKING, AsyncIterator, Generic, List, Optional,
+from typing import (TYPE_CHECKING, AsyncGenerator, AsyncIterator, Generic, List, Optional,
                     Tuple, Type, TypeVar, Union)
 
 import a_sync
@@ -22,7 +22,7 @@ from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
 from eth_portfolio._loaders.transaction import get_nonce_at_block
 from eth_portfolio._ydb.token_transfers import TokenTransfers
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
-from eth_portfolio.utils import (PandableList, _unpack_indicies,
+from eth_portfolio.utils import (_AiterMixin, PandableList, _unpack_indicies,
                                  get_buffered_chain_height)
 
 if TYPE_CHECKING:
@@ -44,7 +44,7 @@ T = TypeVar('T')
 _LedgerEntryList = TypeVar("_LedgerEntryList", "TransactionsList", "InternalTransfersList", "TokenTransfersList")
 PandableLedgerEntryList = Union["TransactionsList", "InternalTransfersList", "TokenTransfersList"]
 
-class AddressLedgerBase(Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
+class AddressLedgerBase(_AiterMixin[T], Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
     list_type: Type[_LedgerEntryList]
     __slots__ = "address", "asynchronous", "cached_from", "cached_thru", "load_prices", "objects", "portfolio_address", "_lock"
     def __init__(self, portfolio_address: "PortfolioAddress") -> None:
@@ -72,11 +72,12 @@ class AddressLedgerBase(Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
         if asyncio.get_event_loop().is_running():
             return self._get_async(start_block, end_block) #type: ignore
         return self.get(start_block, end_block)
-    
-    def __aiter__(self) -> AsyncIterator[T]:
-        return self._get_and_yield(self.portfolio_address.portfolio._start_block or 0, None).__aiter__()
 
-    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncIterator[T]:
+    @property
+    def _start_block(self) -> int:
+        return self.portfolio_address.portfolio._start_block
+
+    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[T, None]:
         # TODO: make this an actual generator
         await self._get_new_objects(start_block, end_block)
         for obj in self.objects:

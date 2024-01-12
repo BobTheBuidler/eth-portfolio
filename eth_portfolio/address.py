@@ -1,7 +1,7 @@
 
 import asyncio
 import logging
-from typing import TYPE_CHECKING, AsyncIterator, Dict, Optional
+from typing import TYPE_CHECKING, AsyncGenerator, Dict, Optional
 
 import a_sync
 from y import convert
@@ -20,13 +20,14 @@ from eth_portfolio.protocols.lending import _lending
 from eth_portfolio.structs import LedgerEntry
 from eth_portfolio.typing import (Balance, RemoteTokenBalances, TokenBalances,
                                   WalletBalances)
+from eth_portfolio.utils import _AiterMixin
 
 if TYPE_CHECKING:
     from eth_portfolio.portfolio import Portfolio
 
 logger = logging.getLogger(__name__)
 
-class PortfolioAddress:
+class PortfolioAddress(_AiterMixin[LedgerEntry]):
     def __init__(self, address: Address, portfolio: "Portfolio") -> None: # type: ignore
         self.address = convert.to_address(address)
         self.portfolio = portfolio
@@ -58,10 +59,11 @@ class PortfolioAddress:
     def __hash__(self) -> int:
         return hash(self.address)
     
-    def __aiter__(self) -> AsyncIterator[LedgerEntry]:
-        return self._get_and_yield(self.portfolio.start_block or 0, None).__aiter__()
+    @property
+    def _start_block(self) -> int:
+        return self.portfolio._start_block
 
-    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncIterator[LedgerEntry]:
+    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[LedgerEntry, None]:
         # TODO: make this an actual generator
         async for entry in a_sync.as_yielded(
             self.transactions._get_and_yield(start_block, end_block),
