@@ -37,8 +37,8 @@ except OperationalError as e:
         raise e
     raise OperationalError("Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script")
 
-from y._db.entities import (Address, Block, Contract, Token, insert,
-                            retry_locked)
+from y._db.decorators import retry_locked
+from y._db.entities import Address, Block, Contract, Token, insert
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
 from y._db.utils import ensure_chain
 from y._db.utils.logs import insert_log
@@ -155,7 +155,7 @@ def get_address(address: str) -> entities.Block:
         entity.delete()
         commit()
     """
-    entity = entities.Address.get(chain=chain, address=address)
+    entity = entities.Address.get(chain=chain.id, address=address)
     if entity:
         return entity
     
