@@ -18,7 +18,7 @@ from y.utils.events import BATCH_SIZE
 
 from eth_portfolio import _loaders
 from eth_portfolio._cache import cache_to_disk
-from eth_portfolio._decorators import await_if_sync, set_end_block_if_none
+from eth_portfolio._decorators import set_end_block_if_none
 from eth_portfolio._loaders.transaction import get_nonce_at_block
 from eth_portfolio._ydb.token_transfers import TokenTransfers
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
@@ -44,12 +44,9 @@ T = TypeVar('T')
 _LedgerEntryList = TypeVar("_LedgerEntryList", "TransactionsList", "InternalTransfersList", "TokenTransfersList")
 PandableLedgerEntryList = Union["TransactionsList", "InternalTransfersList", "TokenTransfersList"]
 
-class AddressLedgerBase(_AiterMixin[T], Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
-    list_type: Type[_LedgerEntryList]
+class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
     __slots__ = "address", "asynchronous", "cached_from", "cached_thru", "load_prices", "objects", "portfolio_address", "_lock"
     def __init__(self, portfolio_address: "PortfolioAddress") -> None:
-        assert hasattr(self.__class__, 'list_type'), f"{self.__class__.__name__} must have a list_type attribute."
-        assert hasattr(self, 'list_type'), f"{self.__class__.__name__} must have a list_type attribute."
 
         # TODO replace the following line with an abc implementation.
         # assert isinstance(portfolio_address, PortfolioAddress), f"address must be a PortfolioAddress. try passing in PortfolioAddress({portfolio_address}) instead."
@@ -58,7 +55,7 @@ class AddressLedgerBase(_AiterMixin[T], Generic[_LedgerEntryList, T], metaclass=
         self.address = self.portfolio_address.address
         self.asynchronous = self.portfolio_address.portfolio.asynchronous
         self.load_prices = self.portfolio_address.portfolio.load_prices
-        self.objects: _LedgerEntryList = self.list_type()
+        self.objects: _LedgerEntryList = self._list_type()
         # The following two properties will both be ints once the cache has contents
         self.cached_from: int = None # type: ignore
         self.cached_thru: int = None # type: ignore
@@ -72,6 +69,10 @@ class AddressLedgerBase(_AiterMixin[T], Generic[_LedgerEntryList, T], metaclass=
         if asyncio.get_event_loop().is_running():
             return self._get_async(start_block, end_block) #type: ignore
         return self.get(start_block, end_block)
+
+    @abc.abstractproperty
+    def _list_type(self) -> Type[_LedgerEntryList]:
+        ...
 
     @property
     def _start_block(self) -> int:
@@ -88,24 +89,16 @@ class AddressLedgerBase(_AiterMixin[T], Generic[_LedgerEntryList, T], metaclass=
                 break
             yield obj
     
-    @await_if_sync
-    def get(self, start_block: Block, end_block: Block) -> _LedgerEntryList:
-        return self._get_async(start_block, end_block) # type: ignore
-    
     @set_end_block_if_none
     @stuck_coro_debugger
-    async def _get_async(self, start_block: Block, end_block: Block) -> _LedgerEntryList:
-        objects = self.list_type()
+    async def get(self, start_block: Block, end_block: Block) -> _LedgerEntryList:
+        objects = self._list_type()
         async for obj in self._get_and_yield(start_block, end_block):
             objects.append(obj)
         return objects
     
-    @await_if_sync
-    def new(self) -> _LedgerEntryList:
-        return self._new_async() # type: ignore
-    
     @stuck_coro_debugger
-    async def _new_async(self) -> _LedgerEntryList:
+    async def new(self) -> _LedgerEntryList:
         start_block = 0 if self.cached_thru is None else self.cached_thru + 1
         end_block = await get_buffered_chain_height()
         return self[start_block, end_block]
@@ -173,7 +166,7 @@ class TransactionsList(PandableList[Transaction]):
         return df
 
 class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]):
-    list_type = TransactionsList
+    _list_type = TransactionsList
     __slots__ = "cached_thru_nonce", 
     def __init__(self, portfolio_address: "PortfolioAddress"):
         super().__init__(portfolio_address)
@@ -232,7 +225,7 @@ async def get_traces(params: list) -> List[dict]:
         return [trace for trace in traces['result'] if "error" not in trace]
     
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
-    list_type = InternalTransfersList
+    _list_type = InternalTransfersList
     
     @set_end_block_if_none
     @stuck_coro_debugger
@@ -284,18 +277,14 @@ class TokenTransfersList(PandableList[TokenTransfer]):
     pass
   
 class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTransfer]):
-    list_type = TokenTransfersList
+    _list_type = TokenTransfersList
     __slots__ = "_transfers",
     def __init__(self, portfolio_address: "PortfolioAddress"):
         super().__init__(portfolio_address)
         self._transfers = TokenTransfers(self.address, self.portfolio_address.portfolio._start_block, load_prices=self.load_prices)
-        
-    @await_if_sync
-    def list_tokens_at_block(self, block: Optional[int] = None) -> List[ERC20]:
-        return self._list_tokens_at_block_async(block) # type: ignore
     
     @stuck_coro_debugger
-    async def _list_tokens_at_block_async(self, block: Optional[int] = None) -> List[ERC20]:
+    async def list_tokens_at_block(self, block: Optional[int] = None) -> List[ERC20]:
         return [token async for token in self._yield_tokens_at_block_async(block)]
     
     async def _yield_tokens_at_block_async(self, block: Optional[int] = None) -> AsyncIterator[ERC20]:

@@ -4,9 +4,7 @@ from typing import Optional
 
 import a_sync
 from y.datatypes import Address, Block
-from y.decorators import stuck_coro_debugger
 
-from eth_portfolio._decorators import await_if_sync
 from eth_portfolio.protocols._base import ProtocolABC
 from eth_portfolio.typing import TokenBalances
 
