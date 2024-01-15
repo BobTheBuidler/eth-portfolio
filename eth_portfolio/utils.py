@@ -184,8 +184,8 @@ def _unpack_indicies(indicies: Union[Block,Tuple[Block,Block]]) -> Tuple[Block,B
 
 class _AiterMixin(a_sync.ASyncIterable[_T]):
     __doc__ = a_sync.ASyncIterable.__doc__
-    async def __aiter__(self) -> AsyncIterator[_T]:
-        return self._get_and_yield(self._start_block, await dank_w3.eth.block_number).__aiter__()
+    def __aiter__(self) -> AsyncIterator[_T]:
+        return self._get_and_yield(self._start_block, chain.height).__aiter__()
     def yield_forever(self) -> AsyncIterator[_T]:
         return self._get_and_yield(self._start_block, None).__aiter__()
     @abstractmethod
