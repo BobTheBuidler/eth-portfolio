@@ -10,6 +10,26 @@ Use `eth-portfolio` to output information about your portfolio in a streamlined,
 ```
 pip install eth_portfolio
 ```
+**Cloning**  
+If pip install through pypi did not work for you, you can do it yourself locally. first you'll want to clone the repos
+```
+git clone https://github.com/BobTheBuidler/eth-portfolio.git
+```
+Then you'll want to
+```
+cd eth-portfolio
+pip install .
+```
+
+**Known Issues**  
+Make sure you are using Python >= 3.8 and < 3.11  
+If you have a PyYaml Issue with 3.4.1 not installing due to an issue with cython, try the following:  
+```
+pip install wheel
+pip install --no-build-isolation "Cython<3" "pyyaml==5.4.1"
+```
+then again `pip install .` while inside the module directory
+
 
 ### USE:
 For basic use, input each of your addresses as environment variables using the following pattern:
