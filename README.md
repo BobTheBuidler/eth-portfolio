@@ -8,7 +8,7 @@ Use `eth-portfolio` to output information about your portfolio in a streamlined,
 
 ### INSTALLATION:
 ```
-pip install eth_portfolio
+pip install git+https://github.com/BobTheBuidler/eth-portfolio
 ```
 **Cloning**  
 If pip install through pypi did not work for you, you can do it yourself locally. first you'll want to clone the repos
