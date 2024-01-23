@@ -58,7 +58,7 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
         transfer['value_usd'] = round(transfer['value'] * price, 18)
         
     transfer['hash'] = transfer.pop('transactionHash')
-    transfer['transaction_index'] = transfer.pop('transactionPosition')
+    transfer['transaction_index'] = transfer.pop('transactionPosition', None)
     transfer['chainid'] = chain.id
     
     return InternalTransfer(**{inflection.underscore(k): v for k, v in transfer.items()})
