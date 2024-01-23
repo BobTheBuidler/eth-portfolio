@@ -26,6 +26,7 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
         transfer['transactionHash'] = 'uncle reward'
     else:
         # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
+        # In all other cases, we need to confirm the transaction didn't revert
         receipt = await get_transaction_receipt(transfer['transactionHash'])
         if receipt.status == 0:
             return None
