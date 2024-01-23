@@ -60,7 +60,10 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                 if load_prices:
                     tx['price'] = round(Decimal(await get_price(EEE_ADDRESS, block = tx['blockNumber'], sync=False)), 18)
                     tx['value_usd'] = tx['value'] * tx['price']
-                transaction = Transaction(**{inflection.underscore(k): v for k, v in tx.items()})
+                try:
+                    transaction = Transaction(**{inflection.underscore(k): v for k, v in tx.items()})
+                except TypeError as e:
+                    raise TypeError(str(e), tx) from e
                 try:
                     await db.insert_transaction(transaction)
                 except TransactionIntegrityError:

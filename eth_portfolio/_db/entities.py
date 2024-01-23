@@ -48,6 +48,7 @@ class Transaction(db.Entity):
     r = Required(str, lazy=True)
     s = Required(str, lazy=True)
     v = Required(int, lazy=True)
+    y_parity = Optional(int, lazy=True)
     
     composite_key(block, transaction_index)
     

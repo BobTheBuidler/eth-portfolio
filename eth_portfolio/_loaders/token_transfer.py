@@ -73,14 +73,18 @@ async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional
             token_transfer['price'] = price
             token_transfer['value_usd'] = round(value * price, 18) if price else None
         
-        transfer = TokenTransfer(**token_transfer)
-        with suppress(decimal.InvalidOperation):  # Not entirely sure why this happens, probably some crazy uint value
-            try:
+        try:
+            transfer = TokenTransfer(**token_transfer)
+            await db.insert_token_transfer(transfer)
+        except decimal.InvalidOperation:
+        # Not entirely sure why this happens, probably some crazy uint value
+            return None
+        except TransactionIntegrityError:
+            if load_prices:
+                await db.delete_token_transfer(transfer)
                 await db.insert_token_transfer(transfer)
-            except TransactionIntegrityError:
-                if load_prices:
-                    await db.delete_token_transfer(transfer)
-                    await db.insert_token_transfer(transfer)
+        except TypeError as e:
+            raise TypeError(str(e), token_transfer) from e
         return transfer
 
 @stuck_coro_debugger

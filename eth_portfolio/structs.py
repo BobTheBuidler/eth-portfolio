@@ -44,6 +44,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     s: str
     v: int
     access_list: Optional[List[_AccessListEntry]] = None
+    y_parity: Optional[int] = None
 
 
 class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
