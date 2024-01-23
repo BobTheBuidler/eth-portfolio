@@ -37,9 +37,6 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
             if key == 'author':
                 # for block reward transfers, the recipient is 'author'
                 transfer['to'] = value
-            elif key == 'rewardType':
-                # We include this data in the hash field
-                continue
             else:
                 transfer[key] = value
             
@@ -69,6 +66,9 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
     transfer['hash'] = transfer.pop('transactionHash')
     transfer['transaction_index'] = transfer.pop('transactionPosition', None)
     transfer['chainid'] = chain.id
+
+    # We include this data in the hash field, we don't need it anymore
+    transfer.pop('rewardType', None)
     
     return InternalTransfer(**{inflection.underscore(k): v for k, v in transfer.items()})
 
