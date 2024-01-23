@@ -17,7 +17,7 @@ class _DictStruct(Struct):
 class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
     chainid: Network
     block_number: Block
-    transaction_index: int
+    transaction_index: Optional[int] = None
     hash: str
     from_address: str
     value: Decimal
