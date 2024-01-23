@@ -25,11 +25,9 @@ logger = logging.getLogger(__name__)
 
 token_transfer_semaphore = BlockSemaphore(5_000, name='eth_portfolio.token_transfers')  # Some arbitrary number
 
-shitcoins = SHITCOINS.get(chain.id, set())
-
 @stuck_coro_debugger
 async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional[TokenTransfer]:
-    if transfer_log['address'] in shitcoins:
+    if transfer_log['address'] in SHITCOINS.get(chain.id, set()):
         return None
     
     if transfer := await db.get_token_transfer(transfer_log):
