@@ -71,6 +71,6 @@ def is_uncle_reward(transfer: dict) -> bool:
 
 def get_reward_type(transfer: dict) -> str:
     try:
-        return transfer('rewardType') or transfer['action']['rewardType']
+        return transfer.get('rewardType') or transfer['action']['rewardType']
     except KeyError:
         raise ValueError('transfer is not reward type') from None
