@@ -34,7 +34,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     entry_type: ClassVar[Literal['transaction']] = 'transaction'
     block_hash: str
     nonce: int
-    type: int
+    type: Optional[int]
     gas: int
     gas_price: int
     max_fee_per_gas: Optional[int] = None
