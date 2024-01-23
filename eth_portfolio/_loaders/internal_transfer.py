@@ -37,6 +37,9 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
             if key == 'author':
                 # for block reward transfers, the recipient is 'author'
                 transfer['to'] = value
+            elif key == 'rewardType':
+                # We include this data in the hash field
+                continue
             else:
                 transfer[key] = value
             
