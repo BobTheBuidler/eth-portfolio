@@ -19,7 +19,7 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
     block_number: Block
     transaction_index: Optional[int] = None
     hash: str
-    from_address: str
+    from_address: Optional[str] = None
     value: Decimal
     to_address: Optional[str] = None
     price: Optional[Decimal] = None
