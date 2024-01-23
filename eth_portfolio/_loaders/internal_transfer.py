@@ -18,7 +18,7 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
         # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
         # that actually transmitted value to the singleton even though they appear to.
         return None
-    if not (transfer['type'] == "reward" and transfer['action']['rewardType'] == "block"):
+    if not is_block_reward(transfer):
         # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
         receipt = await get_transaction_receipt(transfer['transactionHash'])
         if receipt.status == 0:
@@ -43,8 +43,8 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
         transfer['address'] = checksum(transfer.pop('address'))
         
     transfer['value'] = Decimal(int(transfer['value'], 16)) / Decimal(1e18)
-    transfer['gas'] = int(transfer['gas'], 16)
-    transfer['gasUsed'] = int(transfer['gasUsed'], 16) if transfer['gasUsed'] else None
+    transfer['gas'] = 0 if is_block_reward(transfer) else int(transfer['gas'], 16)
+    transfer['gasUsed'] = int(transfer['gasUsed'], 16) if transfer.get('gasUsed') else None
 
     if load_prices:
         del receipt
@@ -58,3 +58,6 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
     transfer['chainid'] = chain.id
     
     return InternalTransfer(**{inflection.underscore(k): v for k, v in transfer.items()})
+
+def is_block_reward(transfer: dict) -> bool:
+    return transfer['type'] == 'reward' and transfer['action']['rewardType'] == 'block'
