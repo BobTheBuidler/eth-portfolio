@@ -39,7 +39,7 @@ class Transaction(db.Entity):
     access_list = Optional(bytes, lazy=True)
     
     nonce = Required(int, lazy=True)
-    type = Required(int, lazy=True)
+    type = Optional(int, lazy=True)
     gas = Required(Decimal, 38, 1, lazy=True)
     gas_price = Required(Decimal, 38, 1, lazy=True)
     max_fee_per_gas = Optional(Decimal, 38, 1, lazy=True)
