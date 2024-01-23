@@ -39,7 +39,7 @@ class Transaction(db.Entity):
     access_list = Optional(bytes, lazy=True)
     
     nonce = Required(int, lazy=True)
-    type = Required(int, lazy=True)
+    type = Optional(int, lazy=True)
     gas = Required(Decimal, 38, 1, lazy=True)
     gas_price = Required(Decimal, 38, 1, lazy=True)
     max_fee_per_gas = Optional(Decimal, 38, 1, lazy=True)
@@ -48,6 +48,7 @@ class Transaction(db.Entity):
     r = Required(str, lazy=True)
     s = Required(str, lazy=True)
     v = Required(int, lazy=True)
+    y_parity = Optional(int, lazy=True)
     
     composite_key(block, transaction_index)
     

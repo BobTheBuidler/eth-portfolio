@@ -17,9 +17,9 @@ class _DictStruct(Struct):
 class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
     chainid: Network
     block_number: Block
-    transaction_index: int
+    transaction_index: Optional[int] = None
     hash: str
-    from_address: str
+    from_address: Optional[str] = None
     value: Decimal
     to_address: Optional[str] = None
     price: Optional[Decimal] = None
@@ -34,7 +34,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     entry_type: ClassVar[Literal['transaction']] = 'transaction'
     block_hash: str
     nonce: int
-    type: int
+    type: Optional[int]
     gas: int
     gas_price: int
     max_fee_per_gas: Optional[int] = None
@@ -44,6 +44,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     s: str
     v: int
     access_list: Optional[List[_AccessListEntry]] = None
+    y_parity: Optional[int] = None
 
 
 class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True):

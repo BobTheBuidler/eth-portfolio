@@ -265,7 +265,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
                 if transfer is not None:
                     self.objects.append(transfer)
 
-            self.objects.sort(key=lambda t: (t.block_number, t.transaction_index, t.trace_address, t.subtraces))
+            self.objects.sort(key=lambda t: (t.block_number, t.transaction_index or -1, t.trace_address, t.subtraces))
 
         if self.cached_from is None or start_block < self.cached_from:
             self.cached_from = start_block
