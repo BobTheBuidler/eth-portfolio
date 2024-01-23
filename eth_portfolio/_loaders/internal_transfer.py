@@ -64,7 +64,7 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
     return InternalTransfer(**{inflection.underscore(k): v for k, v in transfer.items()})
 
 def is_block_reward(transfer: dict) -> bool:
-    return transfer['type'] == 'reward' and (transfer.get('rewardType') == 'block' or transfer['action']['rewardType'] == 'block')
+    return transfer['type'] == 'reward' and (transfer.get('rewardType') == 'block' or transfer.get('action', {}).get('rewardType') == 'block')
 
 def is_uncle_reward(transfer: dict) -> bool:
-    return transfer['type'] == 'reward' and (transfer.get('rewardType') == 'uncle' or transfer['action']['rewardType'] == 'uncle')
+    return transfer['type'] == 'reward' and (transfer.get('rewardType') == 'uncle' or transfer.get('action', {}).get('rewardType') == 'uncle')
