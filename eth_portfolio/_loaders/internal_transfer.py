@@ -50,7 +50,6 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
     transfer['gasUsed'] = int(transfer['gasUsed'], 16) if transfer.get('gasUsed') else None
 
     if load_prices:
-        del receipt
         price = await _get_price(EEE_ADDRESS, transfer['blockNumber'])
         price = round(Decimal(price), 18)
         transfer['price'] = price
