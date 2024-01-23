@@ -34,7 +34,11 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
     # Un-nest the action dict
     if action := transfer.pop('action', None):
         for key, value in action.items():
-            transfer[key] = value
+            if key == 'author':
+                # for block reward transfers, the recipient is 'author'
+                transfer['to'] = value
+            else:
+                transfer[key] = value
             
     # Un-nest the result dict
     if result := transfer.pop('result', None):
