@@ -30,13 +30,13 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
             return None
 
     # Un-nest the action dict
-    if 'action' in transfer and transfer['action'] is not None:
-        for key, value in transfer.pop('action').items():
+    if action := transfer.pop('action', None):
+        for key, value in action.items():
             transfer[key] = value
             
     # Un-nest the result dict
-    if 'result' in transfer and transfer['result'] is not None:
-        for key, value in transfer.pop('result').items():
+    if result := transfer.pop('result', None):
+        for key, value in result.items():
             transfer[key] = value
 
     # Checksum the addresses
