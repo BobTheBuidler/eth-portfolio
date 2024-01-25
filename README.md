@@ -8,8 +8,21 @@ Use `eth-portfolio` to output information about your portfolio in a streamlined,
 
 ### INSTALLATION:
 ```
-pip install eth_portfolio
+pip install git+https://github.com/BobTheBuidler/eth-portfolio
 ```
+
+**Known Issues**  
+Make sure you are using Python >= 3.8 and < 3.11  
+If you have a PyYaml Issue with 3.4.1 not installing due to an issue with cython, try the following:  
+```
+pip install wheel
+pip install --no-build-isolation "Cython<3" "pyyaml==5.4.1"
+```
+then try again
+`
+pip install git+https://github.com/BobTheBuidler/eth-portfolio
+`
+
 
 ### USE:
 For basic use, input each of your addresses as environment variables using the following pattern:
