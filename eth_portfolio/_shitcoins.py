@@ -1,4 +1,6 @@
 
+from collections import defaultdict
+
 from y import Network, convert
 
 shitcoins = {
@@ -133,4 +135,4 @@ shitcoins = {
     ],
 }
 
-SHITCOINS = {chain: {convert.to_address(token) for token in tokens} for chain, tokens in shitcoins.items()}
+SHITCOINS = defaultdict({chain: {convert.to_address(token) for token in tokens} for chain, tokens in shitcoins.items()})
