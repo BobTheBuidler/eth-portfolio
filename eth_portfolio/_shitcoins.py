@@ -135,4 +135,6 @@ shitcoins = {
     ],
 }
 
-SHITCOINS = defaultdict({chain: {convert.to_address(token) for token in tokens} for chain, tokens in shitcoins.items()})
+SHITCOINS = defaultdict(set)
+for chain, tokens in shitcoins.items():
+    SHITCOINS[chain].update(convert.to_address(token) for token in tokens)
