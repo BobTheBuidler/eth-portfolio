@@ -21,12 +21,16 @@ async def load_eth_balance(address: Address, block: Optional[Block]) -> Balance:
     return Balance(balance, value)
 
 @stuck_coro_debugger
-async def load_token_balance(token: ERC20, address: Address, block: Block) -> Tuple[ERC20, Balance]:
-    balance = await token.balance_of_readable(address, block, sync=False)
+async def load_token_balance(token: ERC20, address: Address, block: Block) -> Balance:
+    try:
+        balance = await token.balance_of_readable(address, block, sync=False)
+    except NonStandardERC20:
+        logger.warning("NonStandardERC20 exc for %s", token)
+        balance = 0
     if not balance:
-        return token, Balance()
+        return Balance()
     price = await _get_price(token, block)
-    return token, Balance(round(decimal.Decimal(balance), 18), _calc_value(balance, price))
+    return Balance(round(decimal.Decimal(balance), 18), _calc_value(balance, price))
 
 def _calc_value(balance, price) -> decimal.Decimal:
     if price is None:
