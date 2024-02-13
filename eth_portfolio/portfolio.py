@@ -88,8 +88,7 @@ class Portfolio(a_sync.ASyncGenericBase):
     
     async def describe(self, block: int) -> PortfolioBalances:
         assert block
-        data = await asyncio.gather(*[address.describe(block, sync=False) for address in self])
-        return PortfolioBalances({address: balances for address, balances in zip(self.addresses, data)})
+        return PortfolioBalances(await a_sync.map(lambda address: address.describe(block, sync=False), self))
     
     def __import_address_functions(self) -> None:
         if self.addresses:
@@ -101,16 +100,8 @@ class Portfolio(a_sync.ASyncGenericBase):
                 if hasattr(self, sync_name):
                     logger.debug(f"Portfolio already has an attribute `{sync_name}`. Will not porting {sync_name} from PortfolioAddress to Portfolio")
                     continue
-                #self.__new_sync_func(sync_name)
                 self.__new_async_func(async_name)
                 logger.debug(f"Ported {sync_name} from PortfolioAddress to Portfolio")
-    
-    #def __new_sync_func(self, sync_name: str) -> None:
-    #    @await_if_sync
-    #    def sync_func(self: Portfolio, *args, **kwargs) -> get_return_type(getattr(PortfolioAddress, sync_name)):  # type: ignore
-    #        async_func = getattr(self, f"_{sync_name}_async")
-    #        return async_func(*args, **kwargs)
-    #    setattr(self, sync_name, MethodType(sync_func, self))
     
     def __new_async_func(self, async_name: str) -> None:
         a_sync.a_sync
@@ -148,14 +139,12 @@ class PortfolioLedger(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry]):
     def _start_block(self) -> int:
         return self.portfolio._start_block
 
-    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[LedgerEntry, None]:
-        # TODO: make this an actual generator
-        async for entry in a_sync.as_yielded(
+    def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[LedgerEntry, None]:
+        return a_sync.as_yielded(
             self.transactions._get_and_yield(start_block, end_block),
             self.internal_transfers._get_and_yield(start_block, end_block),
             self.token_transfers._get_and_yield(start_block, end_block),
-        ):
-            yield entry
+        )
     
     # All Ledger entries
     
