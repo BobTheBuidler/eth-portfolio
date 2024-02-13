@@ -50,9 +50,6 @@ class Portfolio(a_sync.ASyncGenericBase):
         assert isinstance(label, str), f"`label` must be a string, you passed {type(label)}"
         self.label = label
 
-        assert isinstance(asynchronous, bool), f"`asynchronous` must be a boolean, you passed {type(asynchronous)}"
-        self.asynchronous: bool = asynchronous
-
         assert isinstance(load_prices, bool), f"`load_prices` must be a boolean, you passed {type(load_prices)}"
         self.load_prices: bool = load_prices
         
@@ -60,7 +57,7 @@ class Portfolio(a_sync.ASyncGenericBase):
         if isinstance(addresses, str):
             addresses = [addresses]
 
-        self.addresses = ChecksumAddressDict({address: PortfolioAddress(address, self) for address in addresses})
+        self.addresses = ChecksumAddressDict({address: PortfolioAddress(address, self, asynchronous=self.asynchronous) for address in addresses})
 
         self.ledger = PortfolioLedger(self)
 
