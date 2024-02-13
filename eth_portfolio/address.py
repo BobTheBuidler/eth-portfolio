@@ -62,14 +62,12 @@ class PortfolioAddress(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry]):
     def _start_block(self) -> int:
         return self.portfolio._start_block
 
-    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[LedgerEntry, None]:
-        # TODO: make this an actual generator
-        async for entry in a_sync.as_yielded(
+    def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[LedgerEntry, None]:
+        return a_sync.as_yielded(
             self.transactions._get_and_yield(start_block, end_block),
             self.internal_transfers._get_and_yield(start_block, end_block),
             self.token_transfers._get_and_yield(start_block, end_block),
-        ):
-            yield entry
+        )
     
     # Primary functions
     
