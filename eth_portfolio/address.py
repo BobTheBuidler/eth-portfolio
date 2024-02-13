@@ -28,16 +28,13 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 class PortfolioAddress(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry]):
-    def __init__(self, address: Address, portfolio: "Portfolio") -> None: # type: ignore
+    def __init__(self, address: Address, portfolio: "Portfolio", asynchronous: bool = False) -> None: # type: ignore
         self.address = convert.to_address(address)
         self.portfolio = portfolio
         self.transactions = AddressTransactionsLedger(self)
         self.internal_transfers = AddressInternalTransfersLedger(self)
         self.token_transfers = AddressTokenTransfersLedger(self)
-
-    @property
-    def asynchronous(self) -> bool:
-        return self.portfolio.asynchronous
+        self.asynchronous = asynchronous
 
     @property
     def load_prices(self) -> bool:
