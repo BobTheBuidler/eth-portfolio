@@ -1,6 +1,7 @@
 
 import asyncio
 import logging
+from functools import partial
 from typing import TYPE_CHECKING, AsyncGenerator, Dict, Optional
 
 import a_sync
@@ -115,10 +116,8 @@ class PortfolioAddress(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry]):
     
     @stuck_coro_debugger
     async def token_balances(self, block) -> TokenBalances:
-        futs = []
-        async for token in self.token_transfers._yield_tokens_at_block_async(block=block):
-            futs.append(asyncio.create_task(coro=balances.load_token_balance(token, self.address, block), name=f"load_token_balance {self.address} at block {block}"))
-        return TokenBalances((token, balance) for token, balance in await asyncio.gather(*futs) if balance)
+        load_balance = partial(balances.load_token_balance, address=self.address, block=block)
+        return TokenBalances({token: balance async for token, balance in a_sync.map(load_balance, self.token_transfers._yield_tokens_at_block_async(block=block))})
    
     @stuck_coro_debugger 
     async def collateral(self, block: Optional[Block] = None) -> RemoteTokenBalances:
