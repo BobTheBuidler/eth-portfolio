@@ -116,8 +116,13 @@ class PortfolioAddress(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry]):
     
     @stuck_coro_debugger
     async def token_balances(self, block) -> TokenBalances:
-        load_balance = partial(balances.load_token_balance, address=self.address, block=block)
-        return TokenBalances({token: balance async for token, balance in a_sync.map(load_balance, self.token_transfers._yield_tokens_at_block_async(block=block))})
+        data = await a_sync.map(
+            balances.load_token_balance, 
+            self.token_transfers._yield_tokens_at_block_async(block=block)),
+            address=self.address, 
+            block=block
+        )
+        return TokenBalances(data)
    
     @stuck_coro_debugger 
     async def collateral(self, block: Optional[Block] = None) -> RemoteTokenBalances:
