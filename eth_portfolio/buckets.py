@@ -52,16 +52,14 @@ async def _unwrap_token(token) -> str:
         underlying = await YearnInspiredVault(token, asynchronous=True).underlying
         return await _unwrap_token(underlying)
     if curve and (pool := await curve.get_pool(token)):
-        pool_tokens = set(
-            str(_token) for _token in await asyncio.gather(*[_unwrap_token(coin) for coin in await pool.coins])
-        )
+        pool_tokens = set(await asyncio.gather(*[_unwrap_token(coin) for coin in await pool.coins]))
         if pool_bucket := _pool_bucket(pool_tokens):
             return pool_bucket  # type: ignore
     if aave and await aave.is_atoken(token):
-        return await aave.underlying(token)
+        return str(await aave.underlying(token))
     if compound and await compound.is_compound_market(token):
         try:
-            return await CToken(token, asynchronous=True).underlying
+            return str(await CToken(token, asynchronous=True).underlying)
         except AttributeError:
             return WRAPPED_GAS_COIN
     return token
