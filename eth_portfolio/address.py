@@ -34,6 +34,8 @@ class PortfolioAddress(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry]):
         self.transactions = AddressTransactionsLedger(self)
         self.internal_transfers = AddressInternalTransfersLedger(self)
         self.token_transfers = AddressTokenTransfersLedger(self)
+        if not isinstance(asynchronous, bool):
+            raise TypeError(f"`asynchronous` must be a boolean, you passed {type(asynchronous)}")
         self.asynchronous = asynchronous
 
     @property
