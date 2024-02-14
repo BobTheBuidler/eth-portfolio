@@ -53,7 +53,7 @@ class Portfolio(a_sync.ASyncGenericBase):
         assert isinstance(load_prices, bool), f"`load_prices` must be a boolean, you passed {type(load_prices)}"
         self.load_prices: bool = load_prices
 
-        assert asynchronous(load_prices, bool), f"`asynchronous` must be a boolean, you passed {type(load_prices)}"
+        assert isinstance(asynchronous, bool), f"`asynchronous` must be a boolean, you passed {type(load_prices)}"
         self.asynchronous: bool = asynchronous
         
         assert isinstance(addresses, Iterable), f"`addresses` must be an iterable, not {type(addresses)}"
