@@ -115,9 +115,9 @@ class PortfolioAddress(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry]):
     async def token_balances(self, block) -> TokenBalances:
         data = await a_sync.map(
             balances.load_token_balance, 
-            self.token_transfers._yield_tokens_at_block_async(block=block)),
+            self.token_transfers._yield_tokens_at_block_async(block=block),
             address=self.address, 
-            block=block
+            block=block,
         )
         return TokenBalances(data)
    
