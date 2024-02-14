@@ -258,7 +258,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             for traces in generator_function(trace_filter_coros)
             for trace in await traces
         ]:
-            self.objects.extend(await a_sync.gather(*tasks, exclude_if=lambda t: t is None, tqdm=True, desc=f"Internal Transfers  {self.address}")
+            self.objects.extend(await a_sync.gather(*tasks, exclude_if=lambda t: t is None, tqdm=True, desc=f"Internal Transfers  {self.address}"))
 
         if self.cached_from is None or start_block < self.cached_from:
             self.cached_from = start_block
