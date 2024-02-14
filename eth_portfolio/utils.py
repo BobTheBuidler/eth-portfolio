@@ -111,6 +111,12 @@ async def _get_price(token: Address, block: int = None) -> float:
         else:
             logger.warning(f'{e} while fetching price for {await _describe_err(token, block)}')
             logger.warning(e, exc_info=True)
+    except Exception as e:
+        try:
+            raise e.__class__(str(e)), token, block)
+        #failsafe
+        except:
+            raise e
     return 0
 
 @alru_cache(maxsize=None)
