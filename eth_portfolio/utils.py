@@ -113,7 +113,7 @@ async def _get_price(token: Address, block: int = None) -> float:
             logger.warning(e, exc_info=True)
     except Exception as e:
         try:
-            raise e.__class__(str(e)), token, block)
+            raise e.__class__(str(e), token, block)
         #failsafe
         except:
             raise e
