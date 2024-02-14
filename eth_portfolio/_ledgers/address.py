@@ -302,7 +302,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
             return
                         
         if tasks := [task async for task in self._transfers.yield_thru_block(end_block) if start_block <= task.block]:
-            self.objects.extend(await a_sync.gather(*tasks, aiter=True, exclude_if=lambda t: t is None, tqdm=True, desc=f"Token Transfers     {self.address}"))
+            self.objects.extend(await a_sync.gather(*tasks, aiter=True, exclude_if=lambda t: t is None)) # TODO FIX, tqdm=True, desc=f"Token Transfers     {self.address}"))
             self.objects.sort(key=lambda t: (t.block_number, t.transaction_index, t.log_index))
             
         if self.cached_from is None or start_block < self.cached_from:
