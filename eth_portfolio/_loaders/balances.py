@@ -3,7 +3,7 @@ import decimal
 from typing import Optional, Tuple
 
 import eth_retry
-from y import ERC20, get_price
+from y import ERC20, NonStandardERC20, get_price
 from y.constants import WRAPPED_GAS_COIN
 from y.datatypes import Address, Block
 from y.decorators import stuck_coro_debugger
