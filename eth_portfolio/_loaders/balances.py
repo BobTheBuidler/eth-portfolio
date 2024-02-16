@@ -1,5 +1,6 @@
 
 import decimal
+import logging
 from typing import Optional, Tuple
 
 import eth_retry
@@ -12,6 +13,8 @@ from y.utils.dank_mids import dank_w3
 from eth_portfolio.typing import Balance
 from eth_portfolio.utils import _get_price
 
+
+logger = logging.getLogger(__name__)
 
 @eth_retry.auto_retry
 @stuck_coro_debugger
