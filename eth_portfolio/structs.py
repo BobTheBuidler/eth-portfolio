@@ -1,6 +1,6 @@
 import logging
 from decimal import Decimal
-from typing import Any, ClassVar, Iterator, List, Literal, Optional, Union
+from typing import Any, ClassVar, Dict, Iterator, List, Literal, Optional, Union
 
 from msgspec import Struct
 from y import Network
@@ -8,7 +8,7 @@ from y.datatypes import Block
 
 logger = logging.getLogger(__name__)
 
-class _DictStruct(Struct):
+class _DictStruct(Struct, Dict):
     def keys(self) -> Iterator[str]:
         return iter(self.__struct_fields__)
     def __getitem__(self, item: str) -> Any:
