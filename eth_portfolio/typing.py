@@ -6,6 +6,7 @@ from typing import (Any, DefaultDict, Dict, Iterable, Literal, Optional, Tuple,
                     TypedDict, TypeVar, Union)
 
 from checksum_dict import DefaultChecksumDict
+from pandas import DataFrame, concat
 from y.datatypes import Address, Block
 
 from eth_portfolio.structs import _DictStruct
@@ -81,6 +82,12 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumeric):
         else:
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
     
+    @property
+    def dataframe(self) -> DataFrame:
+        df = DataFrame({token: {**balance} for token, balance in self.items()}).T
+        df.rename(columns = {'index': 'token'}, inplace = True)
+        return df
+    
     def sum_usd(self) -> Decimal:
         return Decimal(sum(balance.usd for balance in self.values()))
     
@@ -132,6 +139,14 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         else:
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
     
+    @property
+    def dataframe(self) -> DataFrame:
+        dfs: List[DataFrame] = []
+        for protocol, balances in self.items():
+            df = balances.dataframe
+            df['protocol'] = protocol
+        return concat(dfs)
+
     def sum_usd(self) -> Decimal:
         return Decimal(sum(balance.sum_usd() for balance in self.values()))
     
@@ -201,6 +216,15 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
     @property
     def external(self) -> RemoteTokenBalances:
         return self['external']
+    
+    @property
+    def dataframe(self) -> DataFrame:
+        dfs: List[DataFrame] = []
+        for category, category_bals in self.items():
+            df = category_bals.dataframe
+            df['category'] = category
+            dfs.append(df)
+        return concat(dfs)
     
     def sum_usd(self) -> Decimal:
         return self.assets.sum_usd() - self.debt.sum_usd() + self.external.sum_usd()
@@ -275,6 +299,15 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
                 self[wallet] += balances
         else:
             raise TypeError(f"{seed} is not a valid input for PortfolioBalances")
+    
+    @property
+    def dataframe(self) -> DataFrame:
+        dfs: List[DataFrame] = []
+        for wallet, balances in self.items():
+            df = balances.dataframe
+            df['wallet'] = wallet
+            dfs.append(df)
+        return concat(dfs)
     
     def sum_usd(self) -> Decimal:
         return sum(balances.sum_usd() for balances in self.values())  # type: ignore
