@@ -86,6 +86,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumeric):
     def dataframe(self) -> DataFrame:
         df = DataFrame({token: {**balance} for token, balance in self.items()}).T
         df.rename(columns = {'index': 'token'}, inplace = True)
+        df.reset_index(inplace=True)
         return df
     
     def sum_usd(self) -> Decimal:
