@@ -53,7 +53,6 @@ robust_db_session = lambda callable: retry_locked(break_locks(db_session(callabl
 @a_sync(default='async')
 @robust_db_session
 def get_block(block: int) -> entities.BlockExtended:
-    ensure_chain()
     if b := entities.BlockExtended.get(chain=chain.id, number=block):
         return b
     elif b := Block.get(chain=chain.id, number=block):
@@ -85,7 +84,8 @@ def get_block(block: int) -> entities.BlockExtended:
             raise e.__class__("This is really bad. Might need to nuke your db if you value your logs/traces", *e.args)
         for token, price in prices:
             _set_price(token, price, sync=True)
-    elif b := insert(type=entities.BlockExtended, chain=chain.id, number=block):
+    ensure_chain()
+    if b := insert(type=entities.BlockExtended, chain=chain.id, number=block):
         return b
     return entities.BlockExtended.get(chain=chain.id, number=block)
 
@@ -132,8 +132,6 @@ def __is_token(address) -> bool:
 @a_sync(default='async')
 @robust_db_session
 def get_address(address: str) -> entities.AddressExtended:
-    ensure_chain()
-    
     entity_type = entities.TokenExtended
     entity = entities.Address.get(chain=chain.id, address=address)
     """ TODO: fix this later
@@ -162,6 +160,7 @@ def get_address(address: str) -> entities.AddressExtended:
     if entity:
         return entity
     
+    ensure_chain()
     return insert(type=entity_type, chain=chain.id, address=address) or entity_type.get(chain=chain.id, address=address)
 
 @lru_cache(maxsize=None)
@@ -171,7 +170,6 @@ def ensure_address(address: str) -> None:
 @a_sync(default='async')
 @robust_db_session
 def get_token(address: str) -> entities.TokenExtended:
-    ensure_chain()
     if t := entities.TokenExtended.get(chain=chain.id, address=address):
         return t
     kwargs = {}
@@ -209,7 +207,7 @@ def get_token(address: str) -> entities.TokenExtended:
         except KeyError as e:
             raise KeyError(f"cant delete {t}") from e
         
-    
+    ensure_chain()
     return insert(type=entities.TokenExtended, chain=chain.id, address=address, **kwargs) or entities.TokenExtended.get(chain=chain.id, address=address)
 
 @lru_cache(maxsize=None)
@@ -415,7 +413,6 @@ def delete_token_transfer(token_transfer: TokenTransfer) -> None:
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def insert_token_transfer(token_transfer: TokenTransfer) -> None:
-    # Make sure these are in the db so below we can call them and use the results all in one transaction
     ensure_block(token_transfer.block_number)
     ensure_token(token_transfer.token_address)
     ensure_address(token_transfer.from_address)
