@@ -1,7 +1,7 @@
 
 from decimal import Decimal
 
-from pony.orm import Json, Optional, PrimaryKey, Required, Set, composite_key
+from pony.orm import Optional, PrimaryKey, Required, Set, composite_key
 from y._db.entities import Address, Block, Contract, Token, db
 
 

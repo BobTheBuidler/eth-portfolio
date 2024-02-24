@@ -1,9 +1,8 @@
 import asyncio
 import logging
-from concurrent.futures import ProcessPoolExecutor
 from contextlib import suppress
 from decimal import Decimal
-from multiprocessing import get_context
+from functools import lru_cache
 from typing import Optional
 
 import y._db.config as config
@@ -90,6 +89,10 @@ def get_block(block: int) -> entities.BlockExtended:
         return b
     return entities.BlockExtended.get(chain=chain.id, number=block)
 
+@lru_cache(maxsize=None)
+def ensure_block(block: int) -> None:
+    get_block(block, sync=True)
+
 # TODO refactor this out, async is annoying sometimes
 #process = ProcessPoolExecutor(
 #  1, 
@@ -128,7 +131,7 @@ def __is_token(address) -> bool:
 
 @a_sync(default='async')
 @robust_db_session
-def get_address(address: str) -> entities.Block:
+def get_address(address: str) -> entities.AddressExtended:
     ensure_chain()
     
     entity_type = entities.TokenExtended
@@ -161,9 +164,13 @@ def get_address(address: str) -> entities.Block:
     
     return insert(type=entity_type, chain=chain.id, address=address) or entity_type.get(chain=chain.id, address=address)
 
+@lru_cache(maxsize=None)
+def ensure_address(address: str) -> None:
+    get_address(address, sync=True)
+
 @a_sync(default='async')
 @robust_db_session
-def get_token(address: str) -> entities.Block:
+def get_token(address: str) -> entities.TokenExtended:
     ensure_chain()
     if t := entities.TokenExtended.get(chain=chain.id, address=address):
         return t
@@ -204,14 +211,18 @@ def get_token(address: str) -> entities.Block:
         
     
     return insert(type=entities.TokenExtended, chain=chain.id, address=address, **kwargs) or entities.TokenExtended.get(chain=chain.id, address=address)
-        
+
+@lru_cache(maxsize=None)
+def ensure_token(token_address: str) -> None:
+    get_token(token_address, sync=True)
     
 @a_sync(default='async')
 @robust_db_session
 def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
+    ensure_address(sender)
     entity: entities.Transaction
     if entity := entities.Transaction.get(
-        from_address = get_address(sender, sync=True),
+        from_address = (chain.id, sender),
         nonce = nonce
     ):
         return json.decode(entity.raw, type=Transaction)
@@ -220,8 +231,9 @@ def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
 @a_sync(default='async')
 @robust_db_session
 def delete_transaction(transaction: Transaction) -> None:
+    ensure_address(transaction.from_address)
     if entity := entities.Transaction.get(
-        from_address = get_address(transaction.from_address, sync=True),
+        from_address = (chain.id, transaction.from_address),
         nonce = transaction.nonce,
     ):
         entity.delete()
@@ -232,18 +244,19 @@ def delete_transaction(transaction: Transaction) -> None:
 @robust_db_session
 def insert_transaction(transaction: Transaction) -> None:
     # Make sure these are in the db so below we can call them and use the results all in one transaction
-    block = get_block(transaction.block_number, sync=True)
-    from_address = get_address(transaction.from_address, sync=True)
-    to_address = get_address(transaction.to_address, sync=True) if transaction.to_address else None
+    ensure_block(transaction.block_number)
+    ensure_address(transaction.from_address)
+    if transaction.to_address:
+        ensure_address(transaction.to_address)
     
     # Now requery and use the values
     entities.Transaction(
-        block = get_block(transaction.block_number, sync=True),
+        block = (chain.id, transaction.block_number),
         transaction_index = transaction.transaction_index,
         hash = transaction.hash,
         nonce = transaction.nonce,
-        from_address = get_address(transaction.from_address, sync=True),
-        to_address = get_address(transaction.to_address, sync=True) if transaction.to_address else None,
+        from_address = (chain.id, transaction.from_address),
+        to_address = (chain.id, transaction.to_address) if transaction.to_address else None,
         value = transaction.value,
         price = transaction.price,
         value_usd = transaction.value_usd,
@@ -264,45 +277,55 @@ def insert_transaction(transaction: Transaction) -> None:
 @a_sync(default='async')
 @robust_db_session
 def get_internal_transfer(trace: dict) -> Optional[InternalTransfer]:
-    
+    block = trace['blockNumber']
+    ensure_block(block)
+    ensure_address(trace['from'])
+    ensure_address(trace['to'])
+    ensure_address(trace['trace_address'])
+    ensure_address(trace['address'])
     if entity := entities.InternalTransfer.get(
-        block = get_block(trace['blockNumber'], sync=True),
+        block = (chain.id, block),
         transaction_index = trace['transactionPosition'],
         hash = trace['transactionHash'],
         type = trace['type'],
         call_type = trace['call_type'],
-        from_address = get_address(trace['from'], sync=True),
-        to_address = get_address(trace['to'], sync=True),
+        from_address = (chain.id, trace['from']),
+        to_address = (chain.id, trace['to']),
         value = Decimal(int(trace['value'], 16)) / Decimal(1e18),
-        trace_address = get_address(trace['trace_address'], sync=True),
+        trace_address = (chain.id, trace['trace_address']),
         gas = int(trace['gas'], 16),
         gas_used = int(trace['gas_used'], 16) if 'gas_used' in trace else None,
         input = trace['input'],
         output = trace['output'],
         subtraces = trace['subtraces'],
-        address = get_address(trace['address'], sync=True),
+        address = (chain.id, trace['address']),
     ):
         return json.decode(entity.raw, type=InternalTransfer)
     
 @a_sync(default='async')
 @robust_db_session
 def delete_internal_transfer(transfer: InternalTransfer) -> None:
+    ensure_block(transfer.block_number)
+    ensure_address(transfer.from_address)
+    ensure_address(transfer.to_address)
+    ensure_address(transfer.trace_address)
+    ensure_address(transfer.address)
     if entity := entities.InternalTransfer.get(
-        block = get_block(transfer.block_number, sync=True),
+        block = (chain.id, transfer.block_number),
         transaction_index = transfer.transaction_index,
         hash = transfer.hash,
         type = transfer.type,
         call_type = transfer.call_type,
-        from_address = get_address(transfer.from_address, sync=True),
-        to_address = get_address(transfer.to_address, sync=True),
+        from_address = (chain.id, transfer.from_address),
+        to_address = (chain.id, transfer.to_address),
         value = transfer.value,
-        trace_address = get_address(transfer.trace_address, sync=True),
+        trace_address = (chain.id, transfer.trace_address),
         gas = transfer.gas,
         gas_used = transfer.gas_used,
         input = transfer.input,
         output = transfer.output,
         subtraces = transfer.subtraces,
-        address = get_address(transfer.address, sync=True),
+        address = (chain.id, transfer.address),
     ):
         entity.delete()
     
@@ -310,33 +333,40 @@ def delete_internal_transfer(transfer: InternalTransfer) -> None:
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def insert_internal_transfer(transfer: InternalTransfer) -> None:
+    ensure_block(transfer.block_number)
+    ensure_address(transfer.from_address)
+    ensure_address(transfer.to_address)
+    ensure_address(transfer.trace_address)
+    ensure_address(transfer.address)
     entities.InternalTransfer(
-        block = get_block(transfer.block_number, sync=True),
+        block = (chain.id, transfer.block_number),
         transaction_index = transfer.transaction_index,
         hash = transfer.hash,
         type = transfer.type,
         call_type = transfer.call_type,
-        from_address = get_address(transfer.from_address, sync=True),
-        to_address = get_address(transfer.to_address, sync=True),
+        from_address = (chain.id, transfer.from_address),
+        to_address = (chain.id, transfer.to_address),
         value = transfer.value,
         price = transfer.price,
         value_usd = transfer.value_usd,
-        trace_address = get_address(transfer.trace_address, sync=True),
+        trace_address = (chain.id, transfer.trace_address),
         gas = transfer.gas,
         gas_used = transfer.gas_used,
         input = transfer.input,
         output = transfer.output,
         subtraces = transfer.subtraces,
-        address = get_address(transfer.address, sync=True),
+        address = (chain.id, transfer.address),
         raw = json.encode(transfer),
     )
     
 @a_sync(default='async')
 @robust_db_session
 def get_token_transfer(transfer_log) -> Optional[TokenTransfer]:
+    block = transfer_log["blockNumber"]
+    ensure_block(block)
     entity: entities.TokenTransfer
     if entity := entities.TokenTransfer.get(
-        block = get_block(transfer_log["blockNumber"], sync=True), 
+        block = (chain.id, block), 
         transaction_index = transfer_log["transactionIndex"],
         log_index = transfer_log["logIndex"],
     ):
@@ -346,8 +376,9 @@ def get_token_transfer(transfer_log) -> Optional[TokenTransfer]:
 @a_sync(default='async')
 @robust_db_session
 def delete_token_transfer(token_transfer: TokenTransfer) -> None:
+    ensure_block(token_transfer.block_number)
     if entity := entities.TokenTransfer.get(
-        block = get_block(token_transfer.block_number, sync=True), 
+        block = (chain.id, token_transfer.block_number), 
         transaction_index = token_transfer.transaction_index,
         log_index = token_transfer.log_index,
     ):
@@ -359,22 +390,22 @@ def delete_token_transfer(token_transfer: TokenTransfer) -> None:
 @robust_db_session
 def insert_token_transfer(token_transfer: TokenTransfer) -> None:
     # Make sure these are in the db so below we can call them and use the results all in one transaction
-    block = get_block(token_transfer.block_number, sync=True)
-    token = get_token(token_transfer.token_address, sync=True)
-    from_address = get_address(token_transfer.from_address, sync=True)
-    to_address = get_address(token_transfer.to_address, sync=True)
+    ensure_block(token_transfer.block_number)
+    ensure_token(token_transfer.token_address)
+    ensure_address(token_transfer.from_address)
+    ensure_address(token_transfer.to_address)
     commit()
     
     try:
         # Now requery and use the values
         entities.TokenTransfer(
-            block = get_block(token_transfer.block_number, sync=True), 
+            block = (chain.id, token_transfer.block_number), 
             transaction_index = token_transfer.transaction_index,
             log_index = token_transfer.log_index,
             hash = token_transfer.hash,
-            token = get_token(token_transfer.token_address, sync=True),
-            from_address = get_address(token_transfer.from_address, sync=True),
-            to_address = get_address(token_transfer.to_address, sync=True),
+            token = (chain.id, token_transfer.token_address),
+            from_address = (chain.id, token_transfer.from_address),
+            to_address = (chain.id, token_transfer.to_address),
             value = token_transfer.value,
             price = token_transfer.price,
             value_usd = token_transfer.value_usd,
