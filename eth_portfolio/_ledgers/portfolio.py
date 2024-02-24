@@ -47,8 +47,10 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
     
     @set_end_block_if_none
     async def get(self, start_block: Block, end_block: Block) -> Dict[Address, _LedgerEntryList]:
-        token_transfers = await asyncio.gather(*[cache.get(start_block, end_block, sync=False) for cache in self.object_caches.values()])
-        return {address: transfers for address, transfers in zip(self.portfolio.addresses, token_transfers)}
+        return await a_sync.gather({
+            address: cache.get(start_block, end_block, sync=False)
+            for address, cache in self.object_caches.items()
+        })
     
     @set_end_block_if_none
     async def df(self, start_block: Block, end_block: Block) -> DataFrame:
