@@ -29,7 +29,7 @@ def checksum(addr: str) -> str:
 
 @lru_cache(maxsize=None)
 def underscore(string: str) -> str:
-    """a helper fn to conserve cpu cycles"""
+    """cached to conserve cpu cycles\n\n""" + inflection.underscore.__doc__
     return inflection.underscore(string)   
 
 __checksums = {}
