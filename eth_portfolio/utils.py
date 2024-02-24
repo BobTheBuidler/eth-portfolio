@@ -4,12 +4,14 @@ import inspect
 import logging
 import pkgutil
 from abc import abstractmethod, abstractproperty
+from datetime import datetime
 from decimal import Decimal as _Decimal
 from functools import cached_property
 from types import ModuleType
 from typing import AsyncGenerator, AsyncIterator, Dict, List, Optional, Tuple, Union
 
 import a_sync
+import dank_mids
 import sqlite3
 from async_lru import alru_cache
 from brownie import chain
@@ -20,7 +22,6 @@ from y import ERC20, Contract, Network
 from y.datatypes import Address, Block
 from y.exceptions import CantFetchParam, ContractNotVerified, NodeNotSynced, NonStandardERC20, PriceError, yPriceMagicError
 from y.prices.magic import get_price
-from y.utils.dank_mids import dank_w3
 
 from eth_portfolio import _config
 from eth_portfolio.structs import LedgerEntry
@@ -36,7 +37,7 @@ NON_STANDARD_ERC721 = {
 
 async def get_buffered_chain_height() -> int:
     ''' Returns an int equal to the current height of the chain minus `_config.REORG_BUFFER`.'''
-    return await dank_w3.eth.get_block_number() - _config.REORG_BUFFER
+    return await dank_mids.eth.get_block_number() - _config.REORG_BUFFER
 
 
 class PandableList(List[_T]):
@@ -191,9 +192,17 @@ def _unpack_indicies(indicies: Union[Block,Tuple[Block,Block]]) -> Tuple[Block,B
 class _AiterMixin(a_sync.ASyncIterable[_T]):
     __doc__ = a_sync.ASyncIterable.__doc__
     def __aiter__(self) -> AsyncIterator[_T]:
-        return self._get_and_yield(self._start_block, chain.height).__aiter__()
-    def yield_forever(self) -> AsyncIterator[_T]:
-        return self._get_and_yield(self._start_block, None).__aiter__()
+        return self[self._start_block: chain.height].__aiter__()
+    def __getitem__(self, slice: slice) -> a_sync.ASyncIterator[LedgerEntry]:
+        if not isinstance(slice.start, (int, datetime)):
+            raise TypeError(f"start must be int or datetime. you passed {slice.start}")
+        if slice.stop and not isinstance(slice.stop, (int, datetime)):
+            raise TypeError(f"start must be int or datetime. you passed {slice.start}")
+        if slice.step is not None:
+            raise ValueError("You cannot use a step here.")
+        return a_sync.ASyncIterator.wrap(self._get_and_yield(slice.start, slice.stop))
+    def yield_forever(self) -> a_sync.ASyncIterator[_T]:
+        return self[self._start_block: None]
     @abstractmethod
     async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[_T, None]:
         yield

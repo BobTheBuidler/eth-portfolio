@@ -5,10 +5,10 @@ from contextlib import suppress
 from decimal import Decimal
 from typing import Optional
 
+import dank_mids
 from brownie import chain
 from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem
-from dank_mids.semaphores import BlockSemaphore
 from pony.orm import TransactionIntegrityError
 from y import ERC20, Contract
 from y.decorators import stuck_coro_debugger
@@ -23,7 +23,7 @@ from eth_portfolio.utils import _get_price
 
 logger = logging.getLogger(__name__)
 
-token_transfer_semaphore = BlockSemaphore(5_000, name='eth_portfolio.token_transfers')  # Some arbitrary number
+token_transfer_semaphore = dank_mids.BlockSemaphore(5_000, name='eth_portfolio.token_transfers')  # Some arbitrary number
 
 @stuck_coro_debugger
 async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional[TokenTransfer]:

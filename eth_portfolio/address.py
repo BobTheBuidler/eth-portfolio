@@ -2,7 +2,7 @@
 import asyncio
 import logging
 from functools import partial
-from typing import TYPE_CHECKING, AsyncGenerator, Dict, Optional
+from typing import TYPE_CHECKING, AsyncGenerator, Dict, Iterator, Optional
 
 import a_sync
 from y import convert
@@ -11,6 +11,7 @@ from y.datatypes import Address, Block
 from y.decorators import stuck_coro_debugger
 
 from eth_portfolio._ledgers.address import (AddressInternalTransfersLedger,
+                                            AddressLedgerBase,
                                             AddressTokenTransfersLedger,
                                             AddressTransactionsLedger,
                                             PandableLedgerEntryList)
@@ -41,6 +42,10 @@ class PortfolioAddress(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry]):
     @property
     def load_prices(self) -> bool:
         return self.portfolio.load_prices
+
+    @property
+    def _ledgers(self) -> Iterator[AddressLedgerBase]:
+        yield from (self.transactions, self.internal_transfers, self.token_transfers)
     
     def __str__(self) -> str:
         return self.address
@@ -63,11 +68,7 @@ class PortfolioAddress(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry]):
         return self.portfolio._start_block
 
     def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[LedgerEntry, None]:
-        return a_sync.as_yielded(
-            self.transactions._get_and_yield(start_block, end_block),
-            self.internal_transfers._get_and_yield(start_block, end_block),
-            self.token_transfers._get_and_yield(start_block, end_block),
-        )
+        return a_sync.as_yielded(*(ledger[start_block, end_block] for ledger in self._ledgers))
     
     # Primary functions
     

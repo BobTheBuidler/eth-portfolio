@@ -15,6 +15,7 @@ from y.datatypes import Address, Block
 from eth_portfolio._decorators import set_end_block_if_none
 from eth_portfolio._ledgers.address import PandableLedgerEntryList
 from eth_portfolio._ledgers.portfolio import (PortfolioInternalTransfersLedger,
+                                              PortfolioLedgerBase,
                                               PortfolioTokenTransfersLedger,
                                               PortfolioTransactionsLedger)
 from eth_portfolio.address import PortfolioAddress
@@ -137,17 +138,17 @@ class PortfolioLedger(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry]):
     @property
     def w3(self) -> Web3:
         return self.portfolio.w3
+    
+    @property
+    def _ledgers(self) -> Iterator[PortfolioLedgerBase]:
+        yield from (self.transactions, self.internal_transfers, self.token_transfers)
 
     @property
     def _start_block(self) -> int:
         return self.portfolio._start_block
 
     def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[LedgerEntry, None]:
-        return a_sync.as_yielded(
-            self.transactions._get_and_yield(start_block, end_block),
-            self.internal_transfers._get_and_yield(start_block, end_block),
-            self.token_transfers._get_and_yield(start_block, end_block),
-        )
+        return a_sync.as_yielded(*(ledger[start_block: end_block] for ledger in self._ledgers))
     
     # All Ledger entries
     

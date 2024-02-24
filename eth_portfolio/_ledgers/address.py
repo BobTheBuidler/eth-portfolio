@@ -7,13 +7,13 @@ from typing import (TYPE_CHECKING, AsyncGenerator, AsyncIterator, Generic, List,
                     Tuple, Type, TypeVar, Union)
 
 import a_sync
+import dank_mids
 import eth_retry
 from pandas import DataFrame  # type: ignore
 from tqdm.asyncio import tqdm_asyncio
 from y import ERC20
 from y.datatypes import Block
 from y.decorators import stuck_coro_debugger
-from y.utils.dank_mids import dank_w3
 from y.utils.events import BATCH_SIZE
 
 from eth_portfolio import _loaders
@@ -93,7 +93,7 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
     @stuck_coro_debugger
     async def get(self, start_block: Block, end_block: Block) -> _LedgerEntryList:
         objects = self._list_type()
-        async for obj in self._get_and_yield(start_block, end_block):
+        async for obj in self[start_block: end_block]:
             objects.append(obj)
         return objects
     
@@ -218,7 +218,7 @@ trace_semaphore = asyncio.Semaphore(32)
 @stuck_coro_debugger
 async def get_traces(params: list) -> List[dict]:
     async with trace_semaphore:
-        traces = await dank_w3.provider.make_request("trace_filter", params)
+        traces = await dank_mids.web3.provider.make_request("trace_filter", params)
         if 'result' not in traces:
             raise BadResponse(traces)
         return [trace for trace in traces['result'] if "error" not in trace]
@@ -282,7 +282,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
     
     async def _yield_tokens_at_block_async(self, block: Optional[int] = None) -> AsyncIterator[ERC20]:
         yielded = set()
-        async for transfer in self._get_and_yield(0, block):
+        async for transfer in self[0, block]:
             if transfer.token_address not in yielded:
                 yielded.add(transfer.token_address)
                 yield ERC20(transfer.token_address, asynchronous=self.asynchronous)

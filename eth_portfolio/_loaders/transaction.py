@@ -4,6 +4,7 @@ import logging
 from decimal import Decimal
 from typing import List, Optional, Tuple
 
+import dank_mids
 import eth_retry
 from async_lru import alru_cache
 from brownie import chain
@@ -13,7 +14,6 @@ from y import get_price
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
 from y.decorators import stuck_coro_debugger
-from y.utils.dank_mids import dank_w3
 
 from eth_portfolio._db import utils as db
 from eth_portfolio._loaders.utils import get_transaction_receipt, underscore
@@ -32,7 +32,7 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
         else:
             return nonce, transaction
     lo = 0
-    hi = await dank_w3.eth.block_number
+    hi = await dank_mids.eth.block_number
     while True:
         _nonce = await get_nonce_at_block(address, lo)
         if _nonce < nonce:
@@ -96,7 +96,7 @@ async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block
 @stuck_coro_debugger
 async def get_nonce_at_block(address: Address, block: Block) -> int:
     try:
-        return await dank_w3.eth.get_transaction_count(address, block_identifier = block) - 1
+        return await dank_mids.eth.get_transaction_count(address, block_identifier = block) - 1
     except ValueError as e:
         # NOTE this is known to occur on arbitrum
         if 'error creating execution cursor' in str(e) and block == 0:
@@ -107,7 +107,7 @@ async def get_nonce_at_block(address: Address, block: Block) -> int:
 @stuck_coro_debugger
 async def get_block_transactions(block: Block) -> List[TxData]:
     async with _full_block_semaphore:
-        block = await dank_w3.eth.get_block(block, full_transactions=True)
+        block = await dank_mids.eth.get_block(block, full_transactions=True)
         return block.transactions
 
 _full_block_semaphore = asyncio.Semaphore(100)

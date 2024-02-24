@@ -41,7 +41,7 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
         return self.portfolio._start_block
     
     def _get_and_yield(self, start_block: int, end_block: int) -> AsyncIterator[T]:
-        return a_sync.as_yielded(*[getattr(address, self.property_name)._get_and_yield(start_block, end_block) for address in self.portfolio])
+        return a_sync.as_yielded(*[getattr(address, self.property_name)[start_block: end_block] for address in self.portfolio])
     
     @property
     def asynchronous(self) -> bool:

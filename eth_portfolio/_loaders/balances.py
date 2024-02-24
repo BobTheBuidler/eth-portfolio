@@ -1,14 +1,14 @@
 
 import decimal
 import logging
-from typing import Optional, Tuple
+from typing import Optional
 
+import dank_mids
 import eth_retry
 from y import ERC20, NonStandardERC20, get_price
 from y.constants import WRAPPED_GAS_COIN
 from y.datatypes import Address, Block
 from y.decorators import stuck_coro_debugger
-from y.utils.dank_mids import dank_w3
 
 from eth_portfolio.typing import Balance
 from eth_portfolio.utils import _get_price
@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 @eth_retry.auto_retry
 @stuck_coro_debugger
 async def load_eth_balance(address: Address, block: Optional[Block]) -> Balance:
-    balance = decimal.Decimal(await dank_w3.eth.get_balance(address, block_identifier=block)) / decimal.Decimal(1e18)
+    balance = decimal.Decimal(await dank_mids.eth.get_balance(address, block_identifier=block)) / decimal.Decimal(1e18)
     value = round(balance * decimal.Decimal(await get_price(WRAPPED_GAS_COIN, block, sync=False) if balance else 0), 18)
     return Balance(balance, value)
 

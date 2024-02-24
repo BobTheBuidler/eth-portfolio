@@ -2,13 +2,13 @@
 from functools import lru_cache
 
 import a_sync
+import dank_mids
 import eth_retry
 import inflection
 from async_lru import alru_cache
 from eth_utils import to_checksum_address
 from web3.types import TxReceipt
 from y.decorators import stuck_coro_debugger
-from y.utils.dank_mids import dank_w3
 
 receipt_semaphore = a_sync.Semaphore(100)
 
@@ -17,7 +17,7 @@ receipt_semaphore = a_sync.Semaphore(100)
 @stuck_coro_debugger
 async def get_transaction_receipt(txhash: str) -> TxReceipt:
     async with receipt_semaphore:
-        return await dank_w3.eth.get_transaction_receipt(txhash)
+        return await dank_mids.eth.get_transaction_receipt(txhash)
 
 def checksum(addr: str) -> str:
     """We keep a mapping here to save cpu cycles, checksumming is arduous."""
