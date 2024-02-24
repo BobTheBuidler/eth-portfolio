@@ -73,12 +73,6 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
     
     def __hash__(self) -> int:
         return hash(self.address)
-    
-    def __getitem__(self, indicies: Union[Block,Tuple[Block,Block]]) -> _LedgerEntryList:
-        start_block, end_block = _unpack_indicies(indicies)
-        if asyncio.get_event_loop().is_running():
-            return self._get_async(start_block, end_block) #type: ignore
-        return self.get(start_block, end_block)
 
     @abc.abstractproperty
     def _list_type(self) -> Type[_LedgerEntryList]:

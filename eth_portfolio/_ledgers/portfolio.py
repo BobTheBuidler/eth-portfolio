@@ -29,12 +29,6 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
         assert hasattr(self, "property_name"), "Subclasses must define a property_name"
         self.object_caches: Dict[Address, AddressLedgerBase[_LedgerEntryList]] = {address.address: getattr(address, self.property_name) for address in portfolio}
         self.portfolio = portfolio
-    
-    def __getitem__(self, indicies: Union[Block, Tuple[Block, Block]]) -> Dict[Address, _LedgerEntryList]:
-        start_block, end_block = _unpack_indicies(indicies)
-        if asyncio.get_event_loop().is_running():
-            return self.get(start_block, end_block, sync=False) # type: ignore
-        return self.get(start_block, end_block)
 
     @property
     def _start_block(self) -> int:
