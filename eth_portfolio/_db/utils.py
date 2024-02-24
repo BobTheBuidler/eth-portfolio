@@ -3,14 +3,14 @@ import logging
 from contextlib import suppress
 from decimal import Decimal
 from functools import lru_cache
-from typing import Optional
+from typing import Dict, Optional, Tuple
 
 import y._db.config as config
 from a_sync import a_sync
 from brownie import chain
 from msgspec import json
 from multicall.utils import get_event_loop
-from pony.orm import BindingError, OperationalError, commit, db_session, flush
+from pony.orm import BindingError, OperationalError, commit, db_session, flush, select
 
 from eth_portfolio._db import entities
 from eth_portfolio._db.decorators import (break_locks,
@@ -219,6 +219,10 @@ def ensure_token(token_address: str) -> None:
 @a_sync(default='async')
 @robust_db_session
 def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
+    transactions = transactions_known_at_startup()
+    pk = ((chain.id, sender), nonce)
+    if pk in transactions:
+        return json.decode(transactions[pk], type=Transaction)
     ensure_address(sender)
     entity: entities.Transaction
     if entity := entities.Transaction.get(
@@ -283,6 +287,7 @@ def get_internal_transfer(trace: dict) -> Optional[InternalTransfer]:
     ensure_address(trace['to'])
     ensure_address(trace['trace_address'])
     ensure_address(trace['address'])
+    entity: entities.InternalTransfer
     if entity := entities.InternalTransfer.get(
         block = (chain.id, block),
         transaction_index = trace['transactionPosition'],
@@ -361,8 +366,12 @@ def insert_internal_transfer(transfer: InternalTransfer) -> None:
     
 @a_sync(default='async')
 @robust_db_session
-def get_token_transfer(transfer_log) -> Optional[TokenTransfer]:
+def get_token_transfer(transfer_log: dict) -> Optional[TokenTransfer]:
     block = transfer_log["blockNumber"]
+    transfers = token_transfers_known_at_startup()
+    pk = ((chain.id, block), transfer_log["transactionIndex"], transfer_log["logIndex"])
+    if pk in transfers:
+        return json.decode(transfers[pk], type=TokenTransfer)
     ensure_block(block)
     entity: entities.TokenTransfer
     if entity := entities.TokenTransfer.get(
@@ -371,6 +380,38 @@ def get_token_transfer(transfer_log) -> Optional[TokenTransfer]:
         log_index = transfer_log["logIndex"],
     ):
         return json.decode(entity.raw, type=TokenTransfer)
+
+_TPK = Tuple[Tuple[int, str], int]
+
+@lru_cache(maxsize=None)
+def transactions_known_at_startup() -> Dict[_TPK, bytes]:
+    transfers = {}
+    for obj in select(
+        (t.from_address.chain.id, t.from_address.address, t.nonce, t.raw)
+        for t in entities.Transaction
+        if t.from_address.chain.id == chain.id
+    ):
+        obj: Tuple[int, str, int, bytes]
+        chainid, from_address, nonce, raw = obj
+        pk = ((chainid, from_address), nonce)
+        transfers[pk] = raw
+    return transfers
+
+_TTPK = Tuple[Tuple[int, int], int, int]
+
+@lru_cache(maxsize=None)
+def token_transfers_known_at_startup() -> Dict[_TTPK, bytes]:
+    transfers = {}
+    for obj in select(
+        (t.block.chain.id, t.block.number, t.transaction_index, t.log_index, t.raw)
+        for t in entities.TokenTransfer
+        if t.block.chain.id == chain.id
+    ):
+        obj: Tuple[int, int, int, int, bytes]
+        chainid, block, tx_index, log_index, raw = obj
+        pk = ((chainid, block), tx_index, log_index)
+        transfers[pk] = raw
+    return transfers
    
     
 @a_sync(default='async')
