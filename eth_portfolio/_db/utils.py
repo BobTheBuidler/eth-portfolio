@@ -251,7 +251,6 @@ def insert_transaction(transaction: Transaction) -> None:
     if transaction.to_address:
         ensure_address(transaction.to_address)
     
-    # Now requery and use the values
     entities.Transaction(
         block = (chain.id, transaction.block_number),
         transaction_index = transaction.transaction_index,

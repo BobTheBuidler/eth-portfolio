@@ -1,6 +1,9 @@
 
+from functools import lru_cache
+
 import a_sync
 import eth_retry
+import inflection
 from async_lru import alru_cache
 from eth_utils import to_checksum_address
 from web3.types import TxReceipt
@@ -22,6 +25,11 @@ def checksum(addr: str) -> str:
         return __checksums[addr]
     except KeyError:
         checksummed = __checksums[addr] = to_checksum_address(addr)
-        return checksummed    
+        return checksummed 
+
+@lru_cache(maxsize=None)
+def underscore(string: str) -> str:
+    """a helper fn to conserve cpu cycles"""
+    return inflection.underscore(string)   
 
 __checksums = {}

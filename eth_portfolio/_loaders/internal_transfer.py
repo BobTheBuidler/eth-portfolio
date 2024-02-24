@@ -2,12 +2,11 @@
 from decimal import Decimal
 from typing import Optional
 
-import inflection
 from brownie import chain
 from y.constants import EEE_ADDRESS
 from y.decorators import stuck_coro_debugger
 
-from eth_portfolio._loaders.utils import checksum, get_transaction_receipt
+from eth_portfolio._loaders.utils import checksum, get_transaction_receipt, underscore
 from eth_portfolio.structs import InternalTransfer
 from eth_portfolio.utils import _get_price
 
@@ -70,7 +69,7 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
     # We include this data in the hash field, we don't need it anymore
     transfer.pop('rewardType', None)
     
-    return InternalTransfer(**{inflection.underscore(k): v for k, v in transfer.items()})
+    return InternalTransfer(**{underscore(k): v for k, v in transfer.items()})
 
 def is_block_reward(transfer: dict) -> bool:
     return transfer['type'] == 'reward' and get_reward_type(transfer) == 'block'

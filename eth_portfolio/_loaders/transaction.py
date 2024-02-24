@@ -5,7 +5,6 @@ from decimal import Decimal
 from typing import List, Optional, Tuple
 
 import eth_retry
-import inflection
 from async_lru import alru_cache
 from brownie import chain
 from pony.orm import TransactionIntegrityError
@@ -17,7 +16,7 @@ from y.decorators import stuck_coro_debugger
 from y.utils.dank_mids import dank_w3
 
 from eth_portfolio._db import utils as db
-from eth_portfolio._loaders.utils import get_transaction_receipt
+from eth_portfolio._loaders.utils import get_transaction_receipt, underscore
 from eth_portfolio.structs import Transaction
 
 logger = logging.getLogger(__name__)
@@ -61,7 +60,7 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                     tx['price'] = round(Decimal(await get_price(EEE_ADDRESS, block = tx['blockNumber'], sync=False)), 18)
                     tx['value_usd'] = tx['value'] * tx['price']
                 try:
-                    transaction = Transaction(**{inflection.underscore(k): v for k, v in tx.items()})
+                    transaction = Transaction(**{underscore(k): v for k, v in tx.items()})
                 except TypeError as e:
                     raise TypeError(str(e), tx) from e
                 try:
