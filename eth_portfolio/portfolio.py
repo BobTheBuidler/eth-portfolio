@@ -2,7 +2,7 @@ import asyncio
 import logging
 from functools import cached_property
 from types import MethodType
-from typing import Any, AsyncGenerator, Dict, Iterable, Iterator, List
+from typing import Any, Dict, Iterable, Iterator, List
 
 import a_sync
 import a_sync.modified
@@ -21,9 +21,8 @@ from eth_portfolio._ledgers.portfolio import (PortfolioInternalTransfersLedger,
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.argspec import get_return_type
 from eth_portfolio.constants import ADDRESSES
-from eth_portfolio.structs import LedgerEntry
 from eth_portfolio.typing import Addresses, PortfolioBalances
-from eth_portfolio.utils import _AiterMixin
+from eth_portfolio.utils import _LedgeredBase
 
 logger = logging.getLogger(__name__)
 
@@ -119,10 +118,9 @@ def _get_missing_cols_from_KeyError(e: KeyError) -> List[str]:
     split = str(e).split("'")
     return [split[i * 2 + 1] for i in range(len(split)//2)]
 
-class PortfolioLedger(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry]):
+class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
     def __init__(self, portfolio: "Portfolio") -> None:
-        self.portfolio = portfolio
-
+        super().__init__(portfolio)
         self.transactions = PortfolioTransactionsLedger(portfolio)
         self.internal_transfers = PortfolioInternalTransfersLedger(portfolio)
         self.token_transfers = PortfolioTokenTransfersLedger(portfolio)
@@ -130,25 +128,10 @@ class PortfolioLedger(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry]):
     @property
     def asynchronous(self) -> bool:
         return self.portfolio.asynchronous
-        
-    @property
-    def load_prices(self) -> bool:
-        return self.portfolio.load_prices
     
     @property
     def w3(self) -> Web3:
         return self.portfolio.w3
-    
-    @property
-    def _ledgers(self) -> Iterator[PortfolioLedgerBase]:
-        yield from (self.transactions, self.internal_transfers, self.token_transfers)
-
-    @property
-    def _start_block(self) -> int:
-        return self.portfolio._start_block
-
-    def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[LedgerEntry, None]:
-        return a_sync.as_yielded(*(ledger[start_block: end_block] for ledger in self._ledgers))
     
     # All Ledger entries
     
@@ -160,13 +143,7 @@ class PortfolioLedger(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry]):
     
     @set_end_block_if_none
     async def df(self, start_block: Block, end_block: Block, full: bool = False) -> DataFrame:
-        df = concat(
-            await asyncio.gather(
-                self.portfolio.transactions.df(start_block, end_block, sync=False),
-                self.portfolio.internal_transfers.df(start_block, end_block, sync=False),
-                self.portfolio.token_transfers.df(start_block, end_block, sync=False),
-            )
-        )
+        df = concat(await asyncio.gather(*(ledger.df(start_block, end_block, sync=False) for ledger in self._ledgers)))
         
         # Reorder columns
         while True:

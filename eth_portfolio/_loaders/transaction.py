@@ -1,9 +1,9 @@
 
-import asyncio
 import logging
 from decimal import Decimal
 from typing import List, Optional, Tuple
 
+import a_sync
 import dank_mids
 import eth_retry
 from async_lru import alru_cache
@@ -110,4 +110,4 @@ async def get_block_transactions(block: Block) -> List[TxData]:
         block = await dank_mids.eth.get_block(block, full_transactions=True)
         return block.transactions
 
-_full_block_semaphore = asyncio.Semaphore(100)
+_full_block_semaphore = a_sync.Semaphore(100, name = __name__ + "._full_block_semaphore")

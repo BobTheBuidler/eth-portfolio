@@ -37,7 +37,17 @@ class BlockRangeIsCached(Exception):
     pass
 
 class BlockRangeOutOfBounds(Exception):
-    pass
+    def __init__(self, start_block: Block, end_block: Block, ledger: "AddressLedgerBase") -> None:
+        self.ledger = ledger
+        self.start_block = start_block
+        self.end_block = end_block
+    async def load_remaining(self) -> None:
+        return await asyncio.gather(
+            self.ledger._load_new_objects(self.start_block, self.ledger.cached_thru - 1),
+            self.ledger._load_new_objects(self.ledger.cached_from + 1, self.end_block)
+        )
+
+
 
 T = TypeVar('T')
 
@@ -143,7 +153,7 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
             
         # Beginning and end both outside bounds of cache, split
         elif start_block < self.cached_from and end_block > self.cached_thru:
-            raise BlockRangeOutOfBounds()
+            raise BlockRangeOutOfBounds(start_block, end_block, self)
         
         raise NotImplementedError(
             f"""This is a work in progress and we still need code for this specific case. Feel free to create an issue on our github if you need this.
@@ -209,7 +219,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
 class InternalTransfersList(PandableList[InternalTransfer]):
     pass
 
-trace_semaphore = asyncio.Semaphore(32)
+trace_semaphore = a_sync.Semaphore(32, __name__ + ".trace_semaphore")
 
 @cache_to_disk
 # we double stack these because high-volume wallets will likely need it
@@ -236,11 +246,8 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             start_block, end_block = self._check_blocks_against_cache(start_block, end_block)
         except BlockRangeIsCached:
             return
-        except BlockRangeOutOfBounds:
-            await asyncio.gather(
-                self._load_new_objects(start_block, self.cached_thru - 1),
-                self._load_new_objects(self.cached_from + 1, end_block)
-            )
+        except BlockRangeOutOfBounds as e:
+            await e.load_remaining()
             return
 
         block_ranges = [[hex(i), hex(i + BATCH_SIZE - 1)] for i in range(start_block, end_block, BATCH_SIZE)]
@@ -250,8 +257,10 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             for direction, (start, end) in product(["toAddress", "fromAddress"], block_ranges)
         ]
 
-        # NOTE: We only want tqdm progress bar when there is a lot of work to do
-        generator_function = partial(tqdm_asyncio.as_completed, desc=f"Trace Filters       {self.address}") if len(block_ranges) > 1 else asyncio.as_completed
+        generator_function = a_sync.as_completed
+        # NOTE: We only want tqdm progress bar when there is work to do
+        if len(block_ranges) > 1:
+            generator_function = partial(generator_function, tqdm=True, desc=f"Trace Filters       {self.address}")
 
         if tasks := [
             asyncio.create_task(coro=_loaders.load_internal_transfer(trace, self.load_prices), name="load_internal_transfer")
@@ -294,11 +303,8 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
             start_block, end_block = self._check_blocks_against_cache(start_block, end_block)
         except BlockRangeIsCached:
             return
-        except BlockRangeOutOfBounds:
-            await asyncio.gather(
-                self._load_new_objects(start_block, self.cached_thru - 1),
-                self._load_new_objects(self.cached_from + 1, end_block)
-            )
+        except BlockRangeOutOfBounds as e:
+            await e.load_remaining()
             return
                         
         if tasks := [task async for task in self._transfers.yield_thru_block(end_block) if start_block <= task.block]:

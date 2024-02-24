@@ -21,21 +21,19 @@ class Lending:
     @a_sync.future
     @stuck_coro_debugger
     async def collateral(self, address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
-        protocols = [protocol for protocol in self.protocols if isinstance(protocol, LendingProtocolWithLockedCollateral)]
-        balances = await asyncio.gather(*[protocol.balances(address, block) for protocol in protocols])
+        protocols = (protocol for protocol in self.protocols if isinstance(protocol, LendingProtocolWithLockedCollateral))
         return RemoteTokenBalances({
             type(protocol).__name__: token_balances
-            for protocol, token_balances in zip(protocols, balances)
+            async for protocol, token_balances in a_sync.map(lambda p: p.balances(address, block), protocols)
             if token_balances is not None
         })
 
     @a_sync.future
     @stuck_coro_debugger
     async def debt(self, address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
-        balances = await asyncio.gather(*[protocol.debt(address, block) for protocol in self.protocols])
         return RemoteTokenBalances({
             type(protocol).__name__: token_balances
-            for protocol, token_balances in zip(self.protocols, balances)
+            async for protocol, token_balances in a_sync.map(lambda p: p.debt(address, block), self.protocols)
             if token_balances is not None
         })
 

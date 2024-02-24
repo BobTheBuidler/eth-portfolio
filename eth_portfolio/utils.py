@@ -8,7 +8,7 @@ from datetime import datetime
 from decimal import Decimal as _Decimal
 from functools import cached_property
 from types import ModuleType
-from typing import AsyncGenerator, AsyncIterator, Dict, List, Optional, Tuple, Union
+from typing import TYPE_CHECKING, AsyncGenerator, AsyncIterator, Dict, Generic, Iterator, List, Optional, Tuple, Union
 
 import a_sync
 import dank_mids
@@ -26,6 +26,9 @@ from y.prices.magic import get_price
 from eth_portfolio import _config
 from eth_portfolio.structs import LedgerEntry
 from eth_portfolio.typing import _T
+
+if TYPE_CHECKING:
+    from eth_portfolio import Portfolio
 
 logger = logging.getLogger(__name__)
 
@@ -209,3 +212,22 @@ class _AiterMixin(a_sync.ASyncIterable[_T]):
     @abstractproperty
     def _start_block(self) -> int:
         ...
+
+
+class _LedgeredBase(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry], Generic[_T]):
+    transactions: _T
+    internal_transfers: _T
+    token_transfers: _T
+    def __init__(self, portfolio: "Portfolio") -> None:
+        self.portfolio = portfolio
+    @property
+    def load_prices(self) -> bool:
+        return self.portfolio.load_prices
+    @property
+    def _ledgers(self) -> Iterator[_T]:
+        yield from (self.transactions, self.internal_transfers, self.token_transfers)
+    @property
+    def _start_block(self) -> int:
+        return self.portfolio._start_block
+    def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[LedgerEntry, None]:
+        return a_sync.as_yielded(*(ledger[start_block: end_block] for ledger in self._ledgers))
