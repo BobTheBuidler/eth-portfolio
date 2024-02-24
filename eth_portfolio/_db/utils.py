@@ -223,7 +223,6 @@ def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
     pk = ((chain.id, sender), nonce)
     if pk in transactions:
         return json.decode(transactions[pk], type=Transaction)
-    ensure_address(sender)
     entity: entities.Transaction
     if entity := entities.Transaction.get(
         from_address = (chain.id, sender),
@@ -235,7 +234,6 @@ def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
 @a_sync(default='async')
 @robust_db_session
 def delete_transaction(transaction: Transaction) -> None:
-    ensure_address(transaction.from_address)
     if entity := entities.Transaction.get(
         from_address = (chain.id, transaction.from_address),
         nonce = transaction.nonce,
@@ -282,11 +280,6 @@ def insert_transaction(transaction: Transaction) -> None:
 @robust_db_session
 def get_internal_transfer(trace: dict) -> Optional[InternalTransfer]:
     block = trace['blockNumber']
-    ensure_block(block)
-    ensure_address(trace['from'])
-    ensure_address(trace['to'])
-    ensure_address(trace['trace_address'])
-    ensure_address(trace['address'])
     entity: entities.InternalTransfer
     if entity := entities.InternalTransfer.get(
         block = (chain.id, block),
@@ -310,11 +303,6 @@ def get_internal_transfer(trace: dict) -> Optional[InternalTransfer]:
 @a_sync(default='async')
 @robust_db_session
 def delete_internal_transfer(transfer: InternalTransfer) -> None:
-    ensure_block(transfer.block_number)
-    ensure_address(transfer.from_address)
-    ensure_address(transfer.to_address)
-    ensure_address(transfer.trace_address)
-    ensure_address(transfer.address)
     if entity := entities.InternalTransfer.get(
         block = (chain.id, transfer.block_number),
         transaction_index = transfer.transaction_index,
@@ -372,7 +360,6 @@ def get_token_transfer(transfer_log: dict) -> Optional[TokenTransfer]:
     pk = ((chain.id, block), transfer_log["transactionIndex"], transfer_log["logIndex"])
     if pk in transfers:
         return json.decode(transfers[pk], type=TokenTransfer)
-    ensure_block(block)
     entity: entities.TokenTransfer
     if entity := entities.TokenTransfer.get(
         block = (chain.id, block), 
@@ -417,7 +404,6 @@ def token_transfers_known_at_startup() -> Dict[_TTPK, bytes]:
 @a_sync(default='async')
 @robust_db_session
 def delete_token_transfer(token_transfer: TokenTransfer) -> None:
-    ensure_block(token_transfer.block_number)
     if entity := entities.TokenTransfer.get(
         block = (chain.id, token_transfer.block_number), 
         transaction_index = token_transfer.transaction_index,
