@@ -40,7 +40,6 @@ from y._db.decorators import retry_locked
 from y._db.entities import Address, Block, Contract, Token, insert
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
 from y._db.utils import ensure_chain
-from y._db.utils.logs import insert_log
 from y._db.utils.price import _set_price
 from y._db.utils.traces import insert_trace
 from y import ERC20
@@ -76,8 +75,8 @@ def get_block(block: int) -> entities.BlockExtended:
         commit()
         b = insert(type=BlockExtended, chain=get_chain(sync=True), number=block, hash=hash, timestamp=ts)
         try:
-            for log in logs:
-                insert_log(log)
+            #for log in logs:
+            #    insert_log(log)
             for trace in traces:
                 insert_trace(trace)
         except Exception as e:
