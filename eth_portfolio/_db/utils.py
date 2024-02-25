@@ -246,7 +246,7 @@ async def insert_transaction(transaction: Transaction) -> None:
     coros = [ensure_block(transaction.block_number), ensure_address(transaction.from_address)]
     if transaction.to_address:
         coros.append(ensure_address(transaction.to_address))
-    await asyncio.gather(coros)
+    await asyncio.gather(*coros)
     await _insert_transaction(transaction)
 
 @a_sync(default='async')
