@@ -83,7 +83,7 @@ def get_block(block: int) -> entities.BlockExtended:
             raise e.__class__("This is really bad. Might need to nuke your db if you value your logs/traces", *e.args)
         for token, price in prices:
             _set_price(token, price, sync=True)
-    asdasd  = get_chain(sync=True)
+    asdasd = get_chain(sync=True)
     if not isinstance(asdasd, entities.Chain):
         raise TypeError(asdasd)
     commit()
@@ -210,6 +210,7 @@ def get_token(address: str) -> entities.TokenExtended:
             raise KeyError(f"cant delete {t}") from e
         
     ensure_chain()
+    commit()
     return insert(type=entities.TokenExtended, chain=chain.id, address=address, **kwargs) or entities.TokenExtended.get(chain=chain.id, address=address)
 
 @a_sync_write_db_session_cached
