@@ -37,9 +37,9 @@ except OperationalError as e:
     raise OperationalError("Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script")
 
 from y._db.decorators import retry_locked
-from y._db.entities import Address, Block, Contract, Token, insert
+from y._db.entities import Address, Block, Chain, Contract, Token, insert
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
-from y._db.utils import ensure_chain
+from y._db.utils import ensure_chain, get_chain
 from y._db.utils.price import _set_price
 from y._db.utils.traces import insert_trace
 from y import ERC20
@@ -83,7 +83,9 @@ def get_block(block: int) -> entities.BlockExtended:
             raise e.__class__("This is really bad. Might need to nuke your db if you value your logs/traces", *e.args)
         for token, price in prices:
             _set_price(token, price, sync=True)
-    ensure_chain()
+    asdasd  = get_chain(sync=True)
+    if not isinstance(asdasd, entities.Chain):
+        raise TypeError(asdasd)
     commit()
     if b := insert(type=entities.BlockExtended, chain=chain.id, number=block):
         return b
