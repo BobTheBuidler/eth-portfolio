@@ -36,7 +36,7 @@ except OperationalError as e:
         raise e
     raise OperationalError("Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script")
 
-from y._db.decorators import retry_locked
+from y._db.decorators import a_sync_write_db_session_cached, retry_locked
 from y._db.entities import Address, Block, Chain, Contract, Token, insert
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
 from y._db.utils import ensure_chain, get_chain
@@ -91,7 +91,7 @@ def get_block(block: int) -> entities.BlockExtended:
         return b
     return entities.BlockExtended.get(chain=chain.id, number=block)
 
-@lru_cache(maxsize=None)
+@a_sync_write_db_session_cached
 def ensure_block(block: int) -> None:
     get_block(block, sync=True)
 
@@ -165,7 +165,7 @@ def get_address(address: str) -> entities.AddressExtended:
     ensure_chain()
     return insert(type=entity_type, chain=chain.id, address=address) or entity_type.get(chain=chain.id, address=address)
 
-@lru_cache(maxsize=None)
+@a_sync_write_db_session_cached
 def ensure_address(address: str) -> None:
     get_address(address, sync=True)
 
@@ -212,7 +212,7 @@ def get_token(address: str) -> entities.TokenExtended:
     ensure_chain()
     return insert(type=entities.TokenExtended, chain=chain.id, address=address, **kwargs) or entities.TokenExtended.get(chain=chain.id, address=address)
 
-@lru_cache(maxsize=None)
+@a_sync_write_db_session_cached
 def ensure_token(token_address: str) -> None:
     get_token(token_address, sync=True)
     
@@ -240,17 +240,18 @@ def delete_transaction(transaction: Transaction) -> None:
     ):
         entity.delete()
     
-    
+async def insert_transaction(transaction: Transaction) -> None:
+    # Make sure these are in the db so below we can call them and use the results all in one transaction
+    coros = [ensure_block(transaction.block_number), ensure_address(transaction.from_address)]
+    if transaction.to_address:
+        coros.append(ensure_address(transaction.to_address))
+    await asyncio.gather(coros)
+    await _insert_transaction(transaction)
+
 @a_sync(default='async')
 @requery_objs_on_diff_tx_err
 @robust_db_session
-def insert_transaction(transaction: Transaction) -> None:
-    # Make sure these are in the db so below we can call them and use the results all in one transaction
-    ensure_block(transaction.block_number)
-    ensure_address(transaction.from_address)
-    if transaction.to_address:
-        ensure_address(transaction.to_address)
-    
+def _insert_transaction(transaction: Transaction) -> None:
     entities.Transaction(
         block = (chain.id, transaction.block_number),
         transaction_index = transaction.transaction_index,
@@ -320,16 +321,20 @@ def delete_internal_transfer(transfer: InternalTransfer) -> None:
         address = (chain.id, transfer.address),
     ):
         entity.delete()
-    
+
+async def insert_internal_transfer(transfer: InternalTransfer) -> None:
+    await asyncio.gather(*[
+        ensure_block(transfer.block_number),
+        ensure_address(transfer.from_address),
+        ensure_address(transfer.to_address),
+        ensure_address(transfer.trace_address),
+        ensure_address(transfer.address),
+    ])
+    await _insert_internal_transfer(transfer)
+
 @a_sync(default='async')
-@requery_objs_on_diff_tx_err
 @robust_db_session
-def insert_internal_transfer(transfer: InternalTransfer) -> None:
-    ensure_block(transfer.block_number)
-    ensure_address(transfer.from_address)
-    ensure_address(transfer.to_address)
-    ensure_address(transfer.trace_address)
-    ensure_address(transfer.address)
+def _insert_internal_transfer(transfer: InternalTransfer) -> None:
     entities.InternalTransfer(
         block = (chain.id, transfer.block_number),
         transaction_index = transfer.transaction_index,
@@ -411,16 +416,19 @@ def delete_token_transfer(token_transfer: TokenTransfer) -> None:
         entity.delete()
 
 
+async def insert_token_transfer(token_transfer: TokenTransfer) -> None:
+    await asyncio.gather(*[
+        ensure_block(token_transfer.block_number),
+        ensure_token(token_transfer.token_address),
+        ensure_address(token_transfer.from_address),
+        ensure_address(token_transfer.to_address),
+    ])
+    await _insert_token_transfer(token_transfer)
+
 @a_sync(default='async')
 @requery_objs_on_diff_tx_err
 @robust_db_session
-def insert_token_transfer(token_transfer: TokenTransfer) -> None:
-    ensure_block(token_transfer.block_number)
-    ensure_token(token_transfer.token_address)
-    ensure_address(token_transfer.from_address)
-    ensure_address(token_transfer.to_address)
-    commit()
-    
+def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
     try:
         # Now requery and use the values
         entities.TokenTransfer(
