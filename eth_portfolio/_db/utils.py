@@ -84,7 +84,7 @@ def get_block(block: int) -> entities.BlockExtended:
         for token, price in prices:
             _set_price(token, price, sync=True)
     asdasd = get_chain(sync=True)
-    if not isinstance(asdasd, entities.Chain):
+    if not isinstance(asdasd, Chain):
         raise TypeError(asdasd)
     commit()
     if b := insert(type=entities.BlockExtended, chain=chain.id, number=block):
