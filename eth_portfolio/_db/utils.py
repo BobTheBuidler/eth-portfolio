@@ -87,7 +87,7 @@ def get_block(block: int) -> entities.BlockExtended:
     if not isinstance(asdasd, Chain):
         raise TypeError(asdasd)
     commit()
-    if b := insert(type=entities.BlockExtended, chain=chain.id, number=block):
+    if b := insert(type=entities.BlockExtended, chain=asdasd, number=block):
         return b
     return entities.BlockExtended.get(chain=chain.id, number=block)
 
