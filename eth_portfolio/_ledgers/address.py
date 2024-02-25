@@ -285,7 +285,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
     
     async def _yield_tokens_at_block_async(self, block: Optional[int] = None) -> AsyncIterator[ERC20]:
         yielded = set()
-        async for transfer in self[0, block]:
+        async for transfer in self[0: block]:
             if transfer.token_address not in yielded:
                 yielded.add(transfer.token_address)
                 yield ERC20(transfer.token_address, asynchronous=self.asynchronous)
