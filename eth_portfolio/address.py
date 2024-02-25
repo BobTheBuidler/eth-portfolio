@@ -96,7 +96,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     @stuck_coro_debugger
     async def token_balances(self, block) -> TokenBalances:
         try:
-            data = await a_sync.map(
+            data = a_sync.map(
                 balances.load_token_balance, 
                 self.token_transfers._yield_tokens_at_block_async(block=block),
                 address=self.address, 
