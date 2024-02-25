@@ -84,6 +84,7 @@ def get_block(block: int) -> entities.BlockExtended:
         for token, price in prices:
             _set_price(token, price, sync=True)
     ensure_chain()
+    commit()
     if b := insert(type=entities.BlockExtended, chain=chain.id, number=block):
         return b
     return entities.BlockExtended.get(chain=chain.id, number=block)
