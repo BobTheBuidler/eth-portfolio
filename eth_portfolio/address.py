@@ -4,6 +4,7 @@ import logging
 from typing import TYPE_CHECKING, Dict, Optional
 
 import a_sync
+from a_sync.exceptions import MappingIsEmptyError
 from y import convert
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
@@ -94,13 +95,16 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     
     @stuck_coro_debugger
     async def token_balances(self, block) -> TokenBalances:
-        return TokenBalances(await a_sync.map(
-            balances.load_token_balance, 
-            self.token_transfers._yield_tokens_at_block_async(block=block),
-            address=self.address, 
-            block=block,
-        ))
-        return TokenBalances(await data)
+        try:
+            data = await a_sync.map(
+                balances.load_token_balance, 
+                self.token_transfers._yield_tokens_at_block_async(block=block),
+                address=self.address, 
+                block=block,
+            )
+            return TokenBalances(await data)
+        except MappingIsEmptyError:
+            return TokenBalances()
    
     @stuck_coro_debugger 
     async def collateral(self, block: Optional[Block] = None) -> RemoteTokenBalances:
