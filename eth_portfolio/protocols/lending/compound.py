@@ -24,17 +24,19 @@ def _get_contract(market: CToken) -> Optional[Contract]:
         return None
 
 class Compound(LendingProtocol):
+    _markets: List[Contract]
+
     @a_sync.future
     @alru_cache(ttl=300)
     @stuck_coro_debugger
     async def underlyings(self) -> List[ERC20]:
-        markets = await asyncio.gather(*[comp.markets for comp in compound.trollers.values()])
-        markets = [market.contract for troller in markets for market in troller if hasattr(_get_contract(market), 'borrowBalanceStored')] # this last part takes out xinv
+        all_markets = await asyncio.gather(*[comp.markets for comp in compound.trollers.values()])
+        markets: List[CToken] = [market.contract for troller in all_markets for market in troller if hasattr(_get_contract(market), 'borrowBalanceStored')] # this last part takes out xinv
         gas_token_markets = [market for market in markets if not hasattr(market,'underlying')]
         other_markets = [market for market in markets if hasattr(market,'underlying')]
 
         markets = gas_token_markets + other_markets
-        underlyings = [weth for market in gas_token_markets] + await asyncio.gather(*[market.underlying.coroutine() for market in other_markets])
+        underlyings = [weth for market in gas_token_markets] + await asyncio.gather(*[market.underlying for market in other_markets])
 
         markets_zip = zip(markets,underlyings)
         self._markets, underlyings = [], []
@@ -46,7 +48,7 @@ class Compound(LendingProtocol):
 
     @a_sync.future
     @stuck_coro_debugger
-    async def markets(self):
+    async def markets(self) -> List[Contract]:
         await self.underlyings()
         return self._markets
     
@@ -55,10 +57,12 @@ class Compound(LendingProtocol):
             return TokenBalances()
 
         address = str(address)
+        markets: List[Contract]
+        underlyings: List[ERC20]
         markets, underlyings = await asyncio.gather(*[self.markets(), self.underlyings()])
         debt_data, underlying_scale = await asyncio.gather(
             asyncio.gather(*[_borrow_balance_stored(market, address, block) for market in markets]),
-            asyncio.gather(*[underlying.__scale__(sync=False) for underlying in underlyings]),
+            asyncio.gather(*[underlying.__scale__ for underlying in underlyings]),
         )
 
         debts = {underlying: Decimal(debt) / scale for underlying, scale, debt in zip(underlyings, underlying_scale, debt_data) if debt}

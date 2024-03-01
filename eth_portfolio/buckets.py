@@ -47,8 +47,6 @@ async def _unwrap_token(token) -> str:
         return token
 
     if await is_yearn_vault(token, sync=False):
-        #contract = await Contract.coroutine(token)
-        #underlying = await contract.token.coroutine()
         underlying = await YearnInspiredVault(token, asynchronous=True).underlying
         return await _unwrap_token(underlying)
     if curve and (pool := await curve.get_pool(token)):

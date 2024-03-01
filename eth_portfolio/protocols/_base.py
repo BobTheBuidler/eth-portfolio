@@ -1,9 +1,11 @@
 
 import abc
 import asyncio
-from typing import Any, Awaitable, Callable, Coroutine, List, Optional
+from typing import List, Optional
 
 import a_sync
+from a_sync.modified import ASyncFunctionSyncDefault
+from a_sync.property import HiddenMethod
 from brownie.network.contract import ContractCall
 from eth_portfolio.typing import Balance, TokenBalances
 from eth_portfolio.utils import Decimal
@@ -71,12 +73,12 @@ class SingleTokenStakingPoolABC(StakingPoolABC, metaclass=abc.ABCMeta):
     """
 
     @property
-    def price(self) -> Callable[[Block], Coroutine[Any, Any, Decimal]]:
+    def price(self) -> ASyncFunctionSyncDefault[Block, Decimal]:
         return self.token.price
     
     @property
-    def scale(self) -> Awaitable[int]:
-        return self.token.__scale__(sync=False)
+    def scale(self) -> HiddenMethod[ERC20, int]:
+        return self.token.__scale__
     
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:

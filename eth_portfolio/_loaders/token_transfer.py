@@ -90,7 +90,7 @@ async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional
 @stuck_coro_debugger
 async def get_symbol(token: ERC20) -> Optional[str]:
     try:
-        return await token.__symbol__(sync=False)
+        return await token.__symbol__
     except NonStandardERC20:
         return None
 
