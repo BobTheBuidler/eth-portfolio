@@ -77,5 +77,5 @@ class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
         self.transfers_out = OutboundTokenTransfers(address, from_block, load_prices=load_prices)
     def __aiter__(self):
         return self.yield_thru_block(chain.height).__aiter__()
-    async def yield_thru_block(self, block: int) -> a_sync.ASyncIterator["asyncio.Task[TokenTransfer]"]:
+    def yield_thru_block(self, block: int) -> a_sync.ASyncIterator["asyncio.Task[TokenTransfer]"]:
         return a_sync.ASyncIterator(a_sync.as_yielded(self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block)))
