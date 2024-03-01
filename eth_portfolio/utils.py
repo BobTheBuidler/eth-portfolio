@@ -203,7 +203,7 @@ class _AiterMixin(a_sync.ASyncIterable[_T]):
             raise TypeError(f"start must be int or datetime. you passed {slice.start}")
         if slice.step is not None:
             raise ValueError("You cannot use a step here.")
-        return a_sync.ASyncIterator.wrap(self._get_and_yield(slice.start, slice.stop))
+        return a_sync.ASyncIterator(self._get_and_yield(slice.start, slice.stop))
     def yield_forever(self) -> a_sync.ASyncIterator[_T]:
         return self[self._start_block: None]
     @abstractmethod
