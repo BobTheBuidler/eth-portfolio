@@ -102,9 +102,12 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
                 continue
             elif end_block and block > end_block:
                 break
-            if obj not in yielded:
-                yield obj
-                yielded.add(obj)
+            try:
+                if obj not in yielded:
+                    yield obj
+                    yielded.add(obj)
+            except TypeError as e:
+                raise TypeError(e, obj) from None
         
     
     @set_end_block_if_none
