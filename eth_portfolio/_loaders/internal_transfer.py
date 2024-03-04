@@ -55,6 +55,9 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
     transfer['value'] = Decimal(int(transfer['value'], 16)) / Decimal(1e18)
     transfer['gas'] = 0 if is_block_reward(transfer) or is_uncle_reward(transfer) else int(transfer['gas'], 16)
     transfer['gasUsed'] = int(transfer['gasUsed'], 16) if transfer.get('gasUsed') else None
+    
+    if trace_address := transfer.pop('trace_address'):
+        transfer['trace_address'] = str(trace_address)
 
     if load_prices:
         price = await _get_price(EEE_ADDRESS, transfer['blockNumber'])
