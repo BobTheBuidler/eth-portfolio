@@ -83,14 +83,14 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
         return self.portfolio_address.portfolio._start_block
 
     async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[T, None]:
-        # TODO: make this an actual generator
-        await self._get_new_objects(start_block, end_block)
         for obj in self.objects:
             block = obj.block_number
             if block < start_block:
                 continue
             elif end_block and block > end_block:
                 break
+            yield obj
+        async for obj in self._get_new_objects(start_block, end_block):
             yield obj
     
     @set_end_block_if_none
