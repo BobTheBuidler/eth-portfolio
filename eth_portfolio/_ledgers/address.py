@@ -186,10 +186,11 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         nonces = list(range(self.cached_thru_nonce + 1, end_block_nonce + 1))
 
         if nonces:
+            objects = []
             transaction: Transaction
             async for nonce, transaction in a_sync.as_completed([_loaders.load_transaction(self.address, nonce, self.load_prices) for nonce in nonces], aiter=True, tqdm=True, desc=f"Transactions        {self.address}"):
                 if transaction:
-                    self.objects.append(transaction)
+                    objects.append(transaction)
                     yield transaction
                 elif nonce == 0 and self.cached_thru_nonce == -1:
                     # Gnosis safes
@@ -198,6 +199,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
                     # NOTE Are we sure this is the correct way to handle this scenario? Are we sure it will ever even occur with the new gnosis handling?
                     logger.warning("No transaction with nonce %s for %s", nonce, self.address)
             
+            if objects:
+                self.objects.extend(objects)
             if self.objects:
                 self.objects.sort(key=lambda t: t.nonce)
                 self.cached_thru_nonce = self.objects[-1].nonce
@@ -261,10 +264,14 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             for traces in generator_function(trace_filter_coros)
             for trace in await traces
         ]:
+            objects = []
             async for obj in a_sync.as_completed(tasks, aiter=True, tqdm=True, desc=f"Internal Transfers  {self.address}"):
                 if obj:
-                    self.objects.append(obj)
+                    objects.append(obj)
                     yield obj
+            if objects:
+                self.objects.extend(objects)
+            self.objects.sort(key=lambda t: (t.block_number, t.transaction_index))
 
         if self.cached_from is None or start_block < self.cached_from:
             self.cached_from = start_block
@@ -305,10 +312,13 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
             return
                         
         if tasks := [task async for task in self._transfers.yield_thru_block(end_block) if start_block <= task.block]:
+            objects = []
             async for obj in a_sync.as_completed(tasks, aiter=True, tqdm=True, desc=f"Token Transfers     {self.address}"):
                 if obj:
-                    self.objects.append(obj)
+                    objects.append(obj)
                     yield obj
+            if objects:
+                self.objects.extend(objects)
             self.objects.sort(key=lambda t: (t.block_number, t.transaction_index, t.log_index))
             
         if self.cached_from is None or start_block < self.cached_from:
