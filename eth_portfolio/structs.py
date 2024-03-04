@@ -28,7 +28,7 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
 
 class _AccessListEntry(Struct, frozen=True):
     address: str
-    storage_keys: Tuple[bytes]
+    storage_keys: Tuple[bytes, ...]
     
 class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     entry_type: ClassVar[Literal['transaction']] = 'transaction'
@@ -43,7 +43,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     r: str
     s: str
     v: int
-    access_list: Optional[Tuple[_AccessListEntry]] = None
+    access_list: Optional[Tuple[_AccessListEntry, ...]] = None
     y_parity: Optional[int] = None
 
 
