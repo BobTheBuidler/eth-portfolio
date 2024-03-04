@@ -73,7 +73,7 @@ def get_block(block: int) -> entities.BlockExtended:
         flush()
         b.delete()
         commit()
-        b = insert(type=BlockExtended, chain=get_chain(sync=True), number=block, hash=hash, timestamp=ts)
+        b = insert(type=entities.BlockExtended, chain=get_chain(sync=True), number=block, hash=hash, timestamp=ts)
         try:
             #for log in logs:
             #    insert_log(log)

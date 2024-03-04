@@ -24,7 +24,7 @@ from y.exceptions import CantFetchParam, ContractNotVerified, NodeNotSynced, Non
 from y.prices.magic import get_price
 
 from eth_portfolio import _config
-from eth_portfolio.structs import LedgerEntry
+from eth_portfolio.structs import _LE, LedgerEntry
 from eth_portfolio.typing import _T
 
 if TYPE_CHECKING:
@@ -196,7 +196,7 @@ class _AiterMixin(a_sync.ASyncIterable[_T]):
     __doc__ = a_sync.ASyncIterable.__doc__
     def __aiter__(self) -> AsyncIterator[_T]:
         return self[self._start_block: chain.height].__aiter__()
-    def __getitem__(self, slice: slice) -> a_sync.ASyncIterator[LedgerEntry]:
+    def __getitem__(self, slice: slice) -> a_sync.ASyncIterator[_T]:
         if not isinstance(slice.start, (int, datetime)):
             raise TypeError(f"start must be int or datetime. you passed {slice.start}")
         if slice.stop and not isinstance(slice.stop, (int, datetime)):
@@ -213,18 +213,20 @@ class _AiterMixin(a_sync.ASyncIterable[_T]):
     def _start_block(self) -> int:
         ...
 
+from typing import TypeVar
+_LT = TypeVar("_LT")
 
-class _LedgeredBase(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry], Generic[_T]):
-    transactions: _T
-    internal_transfers: _T
-    token_transfers: _T
+class _LedgeredBase(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry], Generic[_LT]):
+    transactions: _LT
+    internal_transfers: _LT
+    token_transfers: _LT
     def __init__(self, portfolio: "Portfolio") -> None:
         self.portfolio = portfolio
     @property
     def load_prices(self) -> bool:
         return self.portfolio.load_prices
     @property
-    def _ledgers(self) -> Iterator[_T]:
+    def _ledgers(self) -> Iterator[_LT]:
         yield from (self.transactions, self.internal_transfers, self.token_transfers)
     @property
     def _start_block(self) -> int:

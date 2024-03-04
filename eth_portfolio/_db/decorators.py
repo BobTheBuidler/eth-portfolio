@@ -9,12 +9,14 @@ from typing import Callable, TypeVar
 from pony.orm import OperationalError, TransactionError
 from typing_extensions import ParamSpec
 
+from a_sync._typing import AnyFn
+
 P = ParamSpec('P')
 T = TypeVar('T')
 
 logger = logging.getLogger(__name__)
 
-def break_locks(fn: Callable[P, T]) -> Callable[P, T]:
+def break_locks(fn: AnyFn[P, T]) -> AnyFn[P, T]:
     if asyncio.iscoroutinefunction(fn):
         @wraps(fn)
         async def break_locks_wrap(*args: P.args, **kwargs: P.kwargs) -> T:
@@ -38,7 +40,7 @@ def break_locks(fn: Callable[P, T]) -> Callable[P, T]:
             tries = 0
             while True:
                 try:
-                    return fn(*args, **kwargs)
+                    return fn(*args, **kwargs)  # type: ignore [return-value]
                 except OperationalError as e:
                     logger.debug("%s.%s %s", fn.__module__, fn.__name__, e)
                     if str(e) != "database is locked":

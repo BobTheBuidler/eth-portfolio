@@ -27,7 +27,7 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
 
     def __init__(self, portfolio: "Portfolio"): # type: ignore
         assert hasattr(self, "property_name"), "Subclasses must define a property_name"
-        self.object_caches: Dict[Address, AddressLedgerBase[_LedgerEntryList]] = {address.address: getattr(address, self.property_name) for address in portfolio}
+        self.object_caches: Dict[Address, AddressLedgerBase[_LedgerEntryList, T]] = {address.address: getattr(address, self.property_name) for address in portfolio}
         self.portfolio = portfolio
 
     @property

@@ -98,7 +98,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         try:
             data = a_sync.map(
                 balances.load_token_balance, 
-                self.token_transfers._yield_tokens_at_block_async(block=block),
+                self.token_transfers._yield_tokens_at_block(block=block),
                 address=self.address, 
                 block=block,
             )
