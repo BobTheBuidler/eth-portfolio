@@ -83,8 +83,7 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
         return self.portfolio_address.portfolio._start_block
 
     async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[T, None]:
-        # TODO: make this an actual generator
-        await self._get_new_objects(start_block, end_block)
+        yielded = set()
         for obj in self.objects:
             block = obj.block_number
             if block < start_block:
@@ -92,6 +91,24 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
             elif end_block and block > end_block:
                 break
             yield obj
+            yielded.add(obj)
+        async for obj in self._get_new_objects(start_block, end_block):
+            try:
+                if obj not in yielded:
+                    yield obj
+                    yielded.add(obj)
+            except TypeError as e:
+                raise TypeError(e, obj) from None
+        for obj in self.objects:
+            block = obj.block_number
+            if block < start_block:
+                continue
+            elif end_block and block > end_block:
+                break
+            if obj not in yielded:
+                yield obj
+                yielded.add(obj)
+        
     
     @set_end_block_if_none
     @stuck_coro_debugger
@@ -109,13 +126,14 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
     
     @set_end_block_if_none
     @stuck_coro_debugger
-    async def _get_new_objects(self, start_block: Block, end_block: Block) -> None:
+    async def _get_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[T]:
         async with self._lock:
-            await self._load_new_objects(start_block, end_block)
+            async for obj in self._load_new_objects(start_block, end_block):
+                yield obj
     
     @abc.abstractmethod
-    async def _load_new_objects(self, start_block: Block, end_block: Block) -> None:
-        ...
+    async def _load_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[T]:
+        yield
 
     def _check_blocks_against_cache(self, start_block: Block, end_block: Block) -> Tuple[Block, Block]:
         if start_block > end_block:
@@ -178,19 +196,19 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
 
     @set_end_block_if_none
     @stuck_coro_debugger
-    async def _load_new_objects(self, _: Block, end_block: Block) -> None:
-        if end_block is None:
-            end_block = await get_buffered_chain_height()
+    async def _load_new_objects(self, _: Block, end_block: Block) -> AsyncIterator[Transaction]:
         if self.cached_thru and end_block < self.cached_thru:
             return
         end_block_nonce = await get_nonce_at_block(self.address, end_block)
         nonces = list(range(self.cached_thru_nonce + 1, end_block_nonce + 1))
 
         if nonces:
+            objects = []
             transaction: Transaction
             async for nonce, transaction in a_sync.as_completed([_loaders.load_transaction(self.address, nonce, self.load_prices) for nonce in nonces], aiter=True, tqdm=True, desc=f"Transactions        {self.address}"):
                 if transaction:
-                    self.objects.append(transaction)
+                    objects.append(transaction)
+                    yield transaction
                 elif nonce == 0 and self.cached_thru_nonce == -1:
                     # Gnosis safes
                     self.cached_thru_nonce = 0
@@ -198,6 +216,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
                     # NOTE Are we sure this is the correct way to handle this scenario? Are we sure it will ever even occur with the new gnosis handling?
                     logger.warning("No transaction with nonce %s for %s", nonce, self.address)
             
+            if objects:
+                self.objects.extend(objects)
             if self.objects:
                 self.objects.sort(key=lambda t: t.nonce)
                 self.cached_thru_nonce = self.objects[-1].nonce
@@ -222,7 +242,7 @@ trace_semaphore = a_sync.Semaphore(32, __name__ + ".trace_semaphore")
 @stuck_coro_debugger
 async def get_traces(params: list) -> List[dict]:
     async with trace_semaphore:
-        traces = await dank_mids.web3.provider.make_request("trace_filter", params)
+        traces = await dank_mids.web3.provider.make_request("trace_filter", params)  # type: ignore [arg-type, misc]
         if 'result' not in traces:
             raise BadResponse(traces)
         return [trace for trace in traces['result'] if "error" not in trace]
@@ -232,7 +252,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
     
     @set_end_block_if_none
     @stuck_coro_debugger
-    async def _load_new_objects(self, start_block: Block, end_block: Block) -> None:
+    async def _load_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[InternalTransfer]:
         if start_block == 0:
             start_block = 1
 
@@ -261,7 +281,14 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             for traces in generator_function(trace_filter_coros)
             for trace in await traces
         ]:
-            self.objects.extend(await a_sync.gather(*tasks, exclude_if=lambda t: t is None, tqdm=True, desc=f"Internal Transfers  {self.address}"))
+            objects = []
+            async for obj in a_sync.as_completed(tasks, aiter=True, tqdm=True, desc=f"Internal Transfers  {self.address}"):
+                if obj:
+                    objects.append(obj)
+                    yield obj
+            if objects:
+                self.objects.extend(objects)
+            self.objects.sort(key=lambda t: (t.block_number, t.transaction_index))
 
         if self.cached_from is None or start_block < self.cached_from:
             self.cached_from = start_block
@@ -281,9 +308,9 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
     
     @stuck_coro_debugger
     async def list_tokens_at_block(self, block: Optional[int] = None) -> List[ERC20]:
-        return [token async for token in self._yield_tokens_at_block_async(block)]
+        return [token async for token in self._yield_tokens_at_block(block)]
     
-    async def _yield_tokens_at_block_async(self, block: Optional[int] = None) -> AsyncIterator[ERC20]:
+    async def _yield_tokens_at_block(self, block: Optional[int] = None) -> AsyncIterator[ERC20]:
         yielded = set()
         async for transfer in self[0: block]:
             if transfer.token_address not in yielded:
@@ -292,7 +319,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
     
     @set_end_block_if_none
     @stuck_coro_debugger
-    async def _load_new_objects(self, start_block: Block, end_block: Block) -> None:
+    async def _load_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[TokenTransfer]:
         try:
             start_block, end_block = self._check_blocks_against_cache(start_block, end_block)
         except BlockRangeIsCached:
@@ -302,7 +329,13 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
             return
                         
         if tasks := [task async for task in self._transfers.yield_thru_block(end_block) if start_block <= task.block]:
-            self.objects.extend(await a_sync.gather(*tasks, exclude_if=lambda t: t is None, tqdm=True, desc=f"Token Transfers     {self.address}"))
+            objects = []
+            async for obj in a_sync.as_completed(tasks, aiter=True, tqdm=True, desc=f"Token Transfers     {self.address}"):
+                if obj:
+                    objects.append(obj)
+                    yield obj
+            if objects:
+                self.objects.extend(objects)
             self.objects.sort(key=lambda t: (t.block_number, t.transaction_index, t.log_index))
             
         if self.cached_from is None or start_block < self.cached_from:

@@ -1,6 +1,6 @@
 import logging
 from decimal import Decimal
-from typing import Any, ClassVar, Iterator, List, Literal, Optional, Union
+from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
 
 from msgspec import Struct
 from y import Network
@@ -28,7 +28,7 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
 
 class _AccessListEntry(Struct, frozen=True):
     address: str
-    storage_keys: List[bytes]
+    storage_keys: Tuple[bytes, ...]
     
 class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     entry_type: ClassVar[Literal['transaction']] = 'transaction'
@@ -43,7 +43,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     r: str
     s: str
     v: int
-    access_list: Optional[List[_AccessListEntry]] = None
+    access_list: Optional[Tuple[_AccessListEntry, ...]] = None
     y_parity: Optional[int] = None
 
 
@@ -72,3 +72,4 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
 
 
 LedgerEntry = Union[Transaction, InternalTransfer, TokenTransfer]
+_LE = TypeVar("_LE", Transaction, InternalTransfer, TokenTransfer)

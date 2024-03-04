@@ -21,6 +21,7 @@ from eth_portfolio._ledgers.portfolio import (PortfolioInternalTransfersLedger,
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.argspec import get_return_type
 from eth_portfolio.constants import ADDRESSES
+from eth_portfolio.structs import _LE
 from eth_portfolio.typing import Addresses, PortfolioBalances
 from eth_portfolio.utils import _LedgeredBase
 

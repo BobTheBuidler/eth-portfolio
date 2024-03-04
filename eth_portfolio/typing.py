@@ -7,11 +7,14 @@ from typing import (Any, DefaultDict, Dict, Iterable, List, Literal, Optional,
 
 from checksum_dict import DefaultChecksumDict
 from pandas import DataFrame, concat
+from typing_extensions import ParamSpec
 from y.datatypes import Address, Block
 
 from eth_portfolio.structs import _DictStruct
 
 _T = TypeVar('_T')
+_I = TypeVar('_I')
+_P = ParamSpec('_P')
 
 class Balance(_DictStruct):
     balance: Decimal = Decimal(0)
