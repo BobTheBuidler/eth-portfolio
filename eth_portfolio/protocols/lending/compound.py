@@ -30,13 +30,13 @@ class Compound(LendingProtocol):
     @alru_cache(ttl=300)
     @stuck_coro_debugger
     async def underlyings(self) -> List[ERC20]:
-        all_markets = await asyncio.gather(*[comp.markets for comp in compound.trollers.values()])
-        markets: List[CToken] = [market.contract for troller in all_markets for market in troller if hasattr(_get_contract(market), 'borrowBalanceStored')] # this last part takes out xinv
+        all_markets: List[List[CToken]] = await asyncio.gather(*[comp.markets for comp in compound.trollers.values()])
+        markets: List[Contract] = [market.contract for troller in all_markets for market in troller if hasattr(_get_contract(market), 'borrowBalanceStored')] # this last part takes out xinv
         gas_token_markets = [market for market in markets if not hasattr(market,'underlying')]
         other_markets = [market for market in markets if hasattr(market,'underlying')]
 
         markets = gas_token_markets + other_markets
-        underlyings = [weth for market in gas_token_markets] + await asyncio.gather(*[market.underlying for market in other_markets])
+        underlyings = [weth for market in gas_token_markets] + await asyncio.gather(*[market.underlying.coroutine() for market in other_markets])
 
         markets_zip = zip(markets,underlyings)
         self._markets, underlyings = [], []

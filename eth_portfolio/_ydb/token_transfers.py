@@ -30,6 +30,7 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
     @abc.abstractproperty
     def _topics(self) -> List:
         ...
+    @a_sync.ASyncIterator.wrap
     async def yield_thru_block(self, block) -> AsyncIterator["asyncio.Task[TokenTransfer]"]:
         logger.debug("%s yielding all objects thru block %s", self, block)
         async for task in self._objects_thru(block=block):
@@ -42,10 +43,10 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
                 coro=_loaders.load_token_transfer(log, self._load_prices), 
                 name="load_token_transfer",
             )
-            task.block = log["blockNumber"]
+            task.block = log["blockNumber"]  # type: ignore [attr-defined]
             self._objects.append(task)
     def _get_block_for_obj(self, task: "asyncio.Task[TokenTransfer]") -> int:
-        return task.block
+        return task.block  # type: ignore [attr-defined]
     def _process_event(self, task: "asyncio.Task[TokenTransfer]") -> "asyncio.Task[TokenTransfer]":
         return task
     def _done_callback(self, task: asyncio.Task) -> None:
@@ -74,11 +75,7 @@ class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
     def __init__(self, address: Address, from_block: int, load_prices: bool = False):
         self.transfers_in = InboundTokenTransfers(address, from_block, load_prices=load_prices)
         self.transfers_out = OutboundTokenTransfers(address, from_block, load_prices=load_prices)
-    
     def __aiter__(self):
         return self.yield_thru_block(chain.height).__aiter__()
-    
-    def yield_thru_block(self, block: int) -> a_sync.ASyncIterable["asyncio.Task[TokenTransfer]"]:
-        return a_sync.ASyncIterable.wrap(
-            a_sync.as_yielded(self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block))
-        )
+    def yield_thru_block(self, block: int) -> a_sync.ASyncIterator["asyncio.Task[TokenTransfer]"]:
+        return a_sync.ASyncIterator(a_sync.as_yielded(self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block)))
