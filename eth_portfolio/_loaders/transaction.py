@@ -112,4 +112,4 @@ async def get_block_transactions(block: Block) -> List[TxData]:
         block = await dank_mids.eth.get_block(block, full_transactions=True)
         return block.transactions
 
-_full_block_semaphore = a_sync.Semaphore(100, name = __name__ + "._full_block_semaphore")
+_full_block_semaphore = a_sync.Semaphore(1_000, name = __name__ + "._full_block_semaphore")

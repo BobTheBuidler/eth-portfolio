@@ -10,7 +10,7 @@ from eth_utils import to_checksum_address
 from web3.types import TxReceipt
 from y.decorators import stuck_coro_debugger
 
-receipt_semaphore = a_sync.Semaphore(100)
+receipt_semaphore = a_sync.Semaphore(1_000)
 
 @eth_retry.auto_retry
 @alru_cache

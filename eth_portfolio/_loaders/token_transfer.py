@@ -23,7 +23,7 @@ from eth_portfolio.utils import _get_price
 
 logger = logging.getLogger(__name__)
 
-token_transfer_semaphore = dank_mids.BlockSemaphore(5_000, name='eth_portfolio.token_transfers')  # Some arbitrary number
+token_transfer_semaphore = dank_mids.BlockSemaphore(10_000, name='eth_portfolio.token_transfers')  # Some arbitrary number
 
 @stuck_coro_debugger
 async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional[TokenTransfer]:
