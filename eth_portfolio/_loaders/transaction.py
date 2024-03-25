@@ -59,7 +59,7 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                 if load_prices:
                     tx['price'] = round(Decimal(await get_price(EEE_ADDRESS, block = tx['blockNumber'], sync=False)), 18)
                     tx['value_usd'] = tx['value'] * tx['price']
-                if access := tx.pop('accessList'):
+                if access := tx.pop('accessList', None):
                     tx['access_list'] = tuple(_AccessListEntry(address=obj["address"], storage_keys=obj["storageKeys"]) for obj in access)
                 try:
                     transaction = Transaction(**{underscore(k): v for k, v in tx.items()})
