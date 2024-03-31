@@ -1,0 +1,45 @@
+eth\_portfolio.protocols package
+================================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   eth_portfolio.protocols.lending
+
+Submodules
+----------
+
+eth\_portfolio.protocols.convex module
+--------------------------------------
+
+.. automodule:: eth_portfolio.protocols.convex
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+eth\_portfolio.protocols.dsr module
+-----------------------------------
+
+.. automodule:: eth_portfolio.protocols.dsr
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+eth\_portfolio.protocols.liquity module
+---------------------------------------
+
+.. automodule:: eth_portfolio.protocols.liquity
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: eth_portfolio.protocols
+   :members:
+   :undoc-members:
+   :show-inheritance:
