@@ -19,12 +19,17 @@ author = 'BobTheBuidler'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
+    'sphinx.ext.intersphinx',
 ]
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-
+# Looks for objects in documentation of external libraries
+intersphinx_mapping = {
+    'a_sync': ('https://bobthebuidler.github.io/ez-a-sync', None),
+    'y': ('https://bobthebuidler.github.io/ypricemagic', None),
+}
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
