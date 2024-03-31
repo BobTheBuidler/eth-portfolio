@@ -43,7 +43,7 @@ jobs:
       - name: Build documentation
         run: |
           cd docs
-          make html
+          BROWNIE_NETWORK_ID=mainnet make html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
