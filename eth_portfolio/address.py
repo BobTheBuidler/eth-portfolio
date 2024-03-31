@@ -30,13 +30,14 @@ logger = logging.getLogger(__name__)
 class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     def __init__(self, address: Address, portfolio: "Portfolio", asynchronous: bool = False) -> None: # type: ignore
         self.address = convert.to_address(address)
-        super().__init__(portfolio)
+        super().__init__(portfolio._start_block)
         self.transactions = AddressTransactionsLedger(self)
         self.internal_transfers = AddressInternalTransfersLedger(self)
         self.token_transfers = AddressTokenTransfersLedger(self)
         if not isinstance(asynchronous, bool):
             raise TypeError(f"`asynchronous` must be a boolean, you passed {type(asynchronous)}")
         self.asynchronous = asynchronous
+        self.load_prices = portfolio.load_prices
     
     def __str__(self) -> str:
         return self.address
@@ -58,8 +59,8 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     
     @stuck_coro_debugger
     async def describe(self, block: int) -> WalletBalances:
-        assert block, "You must provide a valid block number"
-        assert isinstance(block, int), f"Block must be an integer. You passed {type(block)} {block}"
+        if not isinstance(block, int):
+            raise TypeError(f"Block must be an integer. You passed {type(block)} {block}")
         return WalletBalances(await a_sync.gather({
             "assets": self.assets(block, sync=False), 
             "debt": self.debt(block, sync=False), 

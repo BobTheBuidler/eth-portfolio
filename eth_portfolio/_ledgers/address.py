@@ -63,12 +63,14 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
 
         self.portfolio_address = portfolio_address
         self.address = self.portfolio_address.address
-        self.asynchronous = self.portfolio_address.portfolio.asynchronous
-        self.load_prices = self.portfolio_address.portfolio.load_prices
+        self.asynchronous = self.portfolio_address.asynchronous
+        self.load_prices = self.portfolio_address.load_prices
         self.objects: _LedgerEntryList = self._list_type()
         # The following two properties will both be ints once the cache has contents
         self.cached_from: int = None # type: ignore
+        """The block from which all entries for this ledger have been loaded into memory"""
         self.cached_thru: int = None # type: ignore
+        """The block thru which all entries for this ledger have been loaded into memory"""
         self._lock = asyncio.Lock()
     
     def __hash__(self) -> int:
@@ -80,7 +82,7 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
 
     @property
     def _start_block(self) -> int:
-        return self.portfolio_address.portfolio._start_block
+        return self.portfolio_address._start_block
 
     async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[T, None]:
         yielded = set()
@@ -304,7 +306,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
     __slots__ = "_transfers",
     def __init__(self, portfolio_address: "PortfolioAddress"):
         super().__init__(portfolio_address)
-        self._transfers = TokenTransfers(self.address, self.portfolio_address.portfolio._start_block, load_prices=self.load_prices)
+        self._transfers = TokenTransfers(self.address, self.portfolio_address._start_block, load_prices=self.load_prices)
     
     @stuck_coro_debugger
     async def list_tokens_at_block(self, block: Optional[int] = None) -> List[ERC20]:
