@@ -30,6 +30,11 @@ jobs:
           pip install -r requirements.txt
           pip install sphinx sphinx-rtd-theme
 
+      - name: Setup brownie networks
+        run: |
+          brownie networks modify mainnet host=${{ secrets[WEB3_PROVIDER] }}
+        continue-on-error: true
+        
       - name: Build documentation config
         run: |
           pip install .
