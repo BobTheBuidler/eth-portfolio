@@ -41,6 +41,7 @@ autodoc_default_options = {
     'private-members': True,
     'special-members': '__init__,__call__,__getitem__,__iter__,__aiter__,__next__,__anext__',
     'inherited-members': True,
+    'undoc-members': True,
     'member-order': 'groupwise',
     # hide private methods that aren't relevant to us here
     'exclude-members': '_abc_impl,_fget,_fset,_fdel,_ASyncSingletonMeta__instances,_ASyncSingletonMeta__lock'
