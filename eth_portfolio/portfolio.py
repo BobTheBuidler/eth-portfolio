@@ -2,7 +2,6 @@
 import asyncio
 import logging
 from functools import cached_property, wraps
-from types import MethodType
 from typing import Any, Dict, Iterable, Iterator, List, Tuple
 
 import a_sync
