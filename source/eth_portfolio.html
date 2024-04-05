@@ -2634,11 +2634,16 @@ ascending or descending, according to their function values.</p>
 <dt class="sig sig-object py" id="eth_portfolio.utils._AiterMixin">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.utils.</span></span><span class="sig-name descname"><span class="pre">_AiterMixin</span></span><a class="headerlink" href="#eth_portfolio.utils._AiterMixin" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://bobthebuidler.github.io/ez-a-sync/source/a_sync.html#a_sync.iter.ASyncIterable" title="(in ez-a-sync)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">_T</span></code>]</p>
-<p>A hybrid Iterable/AsyncIterable implementation that can be used in both a <cite>for</cite> loop and an <cite>async for</cite> loop.</p>
+<dl>
+<dt>Description:</dt><dd><p>A hybrid Iterable/AsyncIterable implementation designed to offer dual compatibility with both synchronous and asynchronous iteration protocols. This class allows objects to be iterated over using either a standard <cite>for</cite> loop or an <cite>async for</cite> loop, making it versatile in scenarios where the mode of iteration (synchronous or asynchronous) needs to be flexible or is determined at runtime.</p>
+<p>The class achieves this by implementing both <cite>__iter__</cite> and <cite>__aiter__</cite> methods, enabling it to return appropriate iterator objects that can handle synchronous and asynchronous iteration, respectively. This dual functionality is particularly useful in codebases that are transitioning between synchronous and asynchronous code, or in libraries that aim to support both synchronous and asynchronous usage patterns without requiring the user to manage different types of iterable objects.</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.utils._AiterMixin.__aiter__">
 <span class="sig-name descname"><span class="pre">__aiter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.utils._AiterMixin.__aiter__" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Returns an async iterator for the wrapped async iterable.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AsyncIterator" title="(in Python v3.12)"><em>AsyncIterator</em></a>[<em>_T</em>]</p>
 </dd>
@@ -2661,7 +2666,8 @@ ascending or descending, according to their function values.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.utils._AiterMixin.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">async_iterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.utils._AiterMixin.__init__" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Initializes the ASyncIterable with an async iterable.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>async_iterable</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AsyncIterable" title="(in Python v3.12)"><em>AsyncIterable</em></a><em>[</em><em>T</em><em>]</em>) – </p>
 </dd>
@@ -2671,7 +2677,8 @@ ascending or descending, according to their function values.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.utils._AiterMixin.__iter__">
 <span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.utils._AiterMixin.__iter__" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Returns an iterator for the wrapped async iterable.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.12)"><em>Iterator</em></a>[<em>T</em>]</p>
 </dd>
@@ -2697,7 +2704,8 @@ ascending or descending, according to their function values.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.utils._AiterMixin.wrap">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wrapped</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.utils._AiterMixin.wrap" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Class method to wrap an AsyncIterable for backward compatibility.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>wrapped</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AsyncIterable" title="(in Python v3.12)"><em>AsyncIterable</em></a><em>[</em><em>T</em><em>]</em>) – </p>
 </dd>
@@ -2737,7 +2745,8 @@ ascending or descending, according to their function values.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.utils._LedgeredBase.__aiter__">
 <span class="sig-name descname"><span class="pre">__aiter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.utils._LedgeredBase.__aiter__" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Returns an async iterator for the wrapped async iterable.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AsyncIterator" title="(in Python v3.12)"><em>AsyncIterator</em></a>[<em>_T</em>]</p>
 </dd>
@@ -2773,7 +2782,8 @@ ascending or descending, according to their function values.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.utils._LedgeredBase.__iter__">
 <span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.utils._LedgeredBase.__iter__" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Returns an iterator for the wrapped async iterable.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.12)"><em>Iterator</em></a>[<em>T</em>]</p>
 </dd>
@@ -2799,7 +2809,8 @@ ascending or descending, according to their function values.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.utils._LedgeredBase.wrap">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wrapped</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.utils._LedgeredBase.wrap" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Class method to wrap an AsyncIterable for backward compatibility.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>wrapped</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AsyncIterable" title="(in Python v3.12)"><em>AsyncIterable</em></a><em>[</em><em>T</em><em>]</em>) – </p>
 </dd>
