@@ -10,7 +10,7 @@ Welcome to eth-portfolio's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+   source/modules.rst
 
 Indices and tables
 ==================
