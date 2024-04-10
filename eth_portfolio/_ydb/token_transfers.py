@@ -7,6 +7,7 @@ from typing import AsyncIterator, List
 import a_sync
 from brownie import chain
 try:
+    # this is only available in 4.0.0+
     from eth_abi import encode
 except ImportError:
     from eth_abi import encode_single as encode
