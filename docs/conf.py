@@ -28,10 +28,13 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # Looks for objects in documentation of external libraries
 intersphinx_mapping = {
     'a_sync': ('https://bobthebuidler.github.io/ez-a-sync', None),
-    'brownie': ('https://eth-brownie.readthedocs.io/en/stable/', None),
+    'brownie': ('https://eth-brownie.readthedocs.io/', None),
     'checksum_dict': ('https://bobthebuidler.github.io/checksum_dict', None),
+    'msgspec': ('https://jcristharif.com/msgspec/', None),
+    'pandas': ('https://pandas.pydata.org/pandas-docs/', None),
+    'pony': ('https://docs.ponyorm.org/', None),
     'python': ('https://docs.python.org/3', None),
-    'web3': ('https://web3py.readthedocs.io/en/stable/', None),
+    'web3': ('https://web3py.readthedocs.io/', None),
     'y': ('https://bobthebuidler.github.io/ypricemagic', None),
 }
 
