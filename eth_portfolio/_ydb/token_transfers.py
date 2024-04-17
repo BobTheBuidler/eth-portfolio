@@ -6,11 +6,6 @@ from typing import AsyncIterator, List
 
 import a_sync
 from brownie import chain
-try:
-    # this is only available in 4.0.0+
-    from eth_abi import encode
-except ImportError:
-    from eth_abi import encode_single as encode
 from eth_utils import encode_hex
 from web3.types import LogReceipt
 from y.datatypes import Address
@@ -19,6 +14,14 @@ from y.utils.events import ProcessedEvents
 from eth_portfolio import _loaders
 from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.structs import TokenTransfer
+
+try:
+    # this is only available in 4.0.0+
+    from eth_abi import encode
+    encode_address = lambda address: encode_hex(encode(["address"], str(address)))
+except ImportError:
+    from eth_abi import encode_single
+    encode_address = lambda address: encode_hex(encode_single("address", str(address)))
 
 logger = logging.getLogger(__name__)
 
@@ -63,13 +66,13 @@ class InboundTokenTransfers(_TokenTransfers):
     """A container that fetches and iterates over all inbound token transfers for a particular wallet address"""
     @property
     def _topics(self) -> List:
-        return [TRANSFER_SIGS, None, [encode_hex(encode(['address'], str(self.address)))]]
+        return [TRANSFER_SIGS, None, [encode_address(self.address)]]
 
 class OutboundTokenTransfers(_TokenTransfers):
     """A container that fetches and iterates over all outbound token transfers for a particular wallet address"""
     @property
     def _topics(self) -> List:
-        return [TRANSFER_SIGS, [encode_hex(encode(['address'], str(self.address)))]]
+        return [TRANSFER_SIGS, [encode_address(self.address)]]
     
 class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
     """
