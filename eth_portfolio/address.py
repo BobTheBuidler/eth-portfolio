@@ -30,14 +30,14 @@ logger = logging.getLogger(__name__)
 class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     def __init__(self, address: Address, portfolio: "Portfolio", asynchronous: bool = False) -> None: # type: ignore
         self.address = convert.to_address(address)
-        super().__init__(portfolio._start_block)
-        self.transactions = AddressTransactionsLedger(self)
-        self.internal_transfers = AddressInternalTransfersLedger(self)
-        self.token_transfers = AddressTokenTransfersLedger(self)
         if not isinstance(asynchronous, bool):
             raise TypeError(f"`asynchronous` must be a boolean, you passed {type(asynchronous)}")
         self.asynchronous = asynchronous
         self.load_prices = portfolio.load_prices
+        super().__init__(portfolio._start_block)
+        self.transactions = AddressTransactionsLedger(self)
+        self.internal_transfers = AddressInternalTransfersLedger(self)
+        self.token_transfers = AddressTokenTransfersLedger(self)
     
     def __str__(self) -> str:
         return self.address
