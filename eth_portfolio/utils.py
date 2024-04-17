@@ -217,19 +217,19 @@ from typing import TypeVar
 _LT = TypeVar("_LT")
 
 class _LedgeredBase(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry], Generic[_LT]):
+    """A mixin class for things with ledgers"""
     transactions: _LT
     internal_transfers: _LT
     token_transfers: _LT
-    def __init__(self, portfolio: "Portfolio") -> None:
-        self.portfolio = portfolio
-    @property
-    def load_prices(self) -> bool:
-        return self.portfolio.load_prices
-    @property
-    def _ledgers(self) -> Iterator[_LT]:
-        yield from (self.transactions, self.internal_transfers, self.token_transfers)
+    def __init__(self, start_block: int) -> None:
+        self.start_block = start_block
     @property
     def _start_block(self) -> int:
-        return self.portfolio._start_block
+        # in the middle of refactoring this
+        return self.start_block
+    @property
+    def _ledgers(self) -> Iterator[_LT]:
+        """An iterator with the 3 ledgers (transactions, internal transfers, token transfers)"""
+        yield from (self.transactions, self.internal_transfers, self.token_transfers)
     def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[LedgerEntry, None]:
-        return a_sync.as_yielded(*(ledger[start_block: end_block] for ledger in self._ledgers))
+        return a_sync.as_yielded(*(ledger[start_block: end_block] for ledger in self._ledgers))  # type: ignore [return-value,index]

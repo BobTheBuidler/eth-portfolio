@@ -39,11 +39,8 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
     
     @property
     def asynchronous(self) -> bool:
+        """Returns `True` if the portfolio associated with this ledger is asynchronous, `False` if not."""
         return self.portfolio.asynchronous
-    
-    @property
-    def load_prices(self) -> bool:
-        return self.portfolio.load_prices
     
     @set_end_block_if_none
     async def get(self, start_block: Block, end_block: Block) -> Dict[Address, _LedgerEntryList]:
@@ -54,7 +51,10 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
     
     @set_end_block_if_none
     async def df(self, start_block: Block, end_block: Block) -> DataFrame:
-        """ Override this method if you want to do something special with the dataframe """
+        """
+        Returns a DataFrame with all entries for this ledger.
+        NOTE: Override this method if you want to do something special with the dataframe
+        """
         df = await self._df_base(start_block, end_block)
         if len(df) > 0:
             df = self._cleanup_df(df)
@@ -64,16 +64,21 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
         data: Dict[Address, _LedgerEntryList] = await self.get(start_block, end_block, sync=False)
         df = concat(pandable.df for pandable in data.values())
         return df
-    
-    def _deduplicate_df(self, df: DataFrame) -> DataFrame:
+
+    @classmethod
+    def _deduplicate_df(cls, df: DataFrame) -> DataFrame:
+        """
+        Deduplicate the dataframe so transfers sending crypto to yourself are not double counted
+        NOTE: This can be overridden if needed.
+        """
         # If there is a value of list type in the DataFrame, it must be converted to a string for comparison.
         return df.loc[df.astype(str).drop_duplicates().index]
-    
-    def _cleanup_df(self, df: DataFrame) -> DataFrame:
-        df = self._deduplicate_df(df)
+
+    @classmethod
+    def _cleanup_df(cls, df: DataFrame) -> DataFrame:
+        df = cls._deduplicate_df(df)
         return df.sort_values(['blockNumber']).reset_index(drop=True)
-
-
+    
 class PortfolioTransactionsLedger(PortfolioLedgerBase[TransactionsList, Transaction]):
     property_name = "transactions"
 
@@ -85,13 +90,15 @@ class PortfolioInternalTransfersLedger(PortfolioLedgerBase[InternalTransfersList
 
     @set_end_block_if_none
     async def df(self, start_block: Block, end_block: Block) -> DataFrame:
+        """Returns a DataFrame containing all internal transfers to or from any of the wallets in your portfolio."""
         df = await self._df_base(start_block, end_block)
         if len(df) > 0:
             df.rename(columns={'transactionHash': 'hash', 'transactionPosition': 'transactionIndex'}, inplace=True)
             df = self._cleanup_df(df)
         return df
 
-    def _deduplicate_df(self, df: DataFrame) -> DataFrame:
+    @classmethod
+    def _deduplicate_df(cls, df: DataFrame) -> DataFrame:
         """
         We cant use drop_duplicates when one of the columns, `traceAddress`, contains lists.
         We must first convert the lists to strings
