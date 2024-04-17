@@ -3,7 +3,11 @@ import asyncio
 from typing import Optional
 
 from async_lru import alru_cache
-from eth_abi import encode_single
+try:
+    # this is only available in 4.0.0+
+    from eth_abi import encode
+except ImportError:
+    from eth_abi import encode_single as encode
 from y import Network, get_price
 from y.constants import dai
 from y.contracts import Contract
@@ -28,7 +32,7 @@ class Maker(LendingProtocolWithLockedCollateral):
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         balances: TokenBalances = TokenBalances()
-        ilk = encode_single('bytes32', b'YFI-A')
+        ilk = encode(['bytes32'], b'YFI-A')
         urn = await self._urn(address)
         ink = (await self.vat.urns.coroutine(ilk, urn, block_identifier=block)).dict()["ink"]
         if ink:
@@ -39,7 +43,7 @@ class Maker(LendingProtocolWithLockedCollateral):
     
     @stuck_coro_debugger
     async def _debt(self, address: Address, block: Optional[int] = None) -> TokenBalances:
-        ilk = encode_single('bytes32', b'YFI-A')
+        ilk = encode(['bytes32'], b'YFI-A')
         urn = await self._urn(address)
         urns, ilks = await asyncio.gather(
             self.vat.urns.coroutine(ilk, urn, block_identifier=block),
