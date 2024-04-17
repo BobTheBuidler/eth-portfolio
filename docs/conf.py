@@ -20,6 +20,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.intersphinx',
+    'a_sync.sphinx.ext',
 ]
 
 templates_path = ['_templates']
