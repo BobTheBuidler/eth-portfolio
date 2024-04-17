@@ -1,17 +1,16 @@
 import functools
 import os
 from inspect import iscoroutinefunction
-from typing import Callable, TypeVar
 
 import toolcache
+from a_sync._typing import AnyFn, P, T
 from brownie import chain
 
-T = TypeVar('T')
 
 cache_base_path = f'./cache/{chain.id}/'
 
 
-def cache_to_disk(fn: Callable[..., T]) -> Callable[..., T]:
+def cache_to_disk(fn: AnyFn[P, T]) -> AnyFn[P, T]:
     module = fn.__module__.replace('.','/')
     cache_path_for_fn = cache_base_path + module + '/' + fn.__name__
 
@@ -29,5 +28,5 @@ def cache_to_disk(fn: Callable[..., T]) -> Callable[..., T]:
         @cache_decorator
         @functools.wraps(fn)
         def disk_cache_wrap(*args, **kwargs) -> T:
-            return fn(*args, **kwargs)
+            return fn(*args, **kwargs)  # type: ignore [return-value]
     return disk_cache_wrap
