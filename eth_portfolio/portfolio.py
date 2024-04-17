@@ -130,7 +130,7 @@ class Portfolio(a_sync.ASyncGenericBase):
     async def describe(self, block: int) -> PortfolioBalances:
         """Returns a full snapshot of your portfolio at `block`"""
         assert block
-        return PortfolioBalances(await a_sync.map(lambda address: address.describe(block, sync=False), self))
+        return PortfolioBalances(await a_sync.gather({address: address.describe(block, sync=False) for address in self}))
     
     
 async_functions = {name: obj for name, obj in PortfolioAddress.__dict__.items() if isinstance(obj, a_sync.modified.ASyncFunction)}
