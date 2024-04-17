@@ -18,7 +18,7 @@ from eth_portfolio.structs import TokenTransfer
 try:
     # this is only available in 4.0.0+
     from eth_abi import encode
-    encode_address = lambda address: encode_hex(encode(["address"], str(address)))
+    encode_address = lambda address: encode_hex(encode(["address"], [str(address)]))
 except ImportError:
     from eth_abi import encode_single
     encode_address = lambda address: encode_hex(encode_single("address", str(address)))
