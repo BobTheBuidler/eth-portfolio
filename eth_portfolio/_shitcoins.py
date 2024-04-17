@@ -1,6 +1,8 @@
 
 from collections import defaultdict
+from typing import DefaultDict, Set
 
+from brownie.convert import EthAddress
 from y import Network, convert
 
 shitcoins = {
@@ -152,6 +154,7 @@ shitcoins = {
     ],
 }
 
-SHITCOINS = defaultdict(set)
+SHITCOINS: DefaultDict[Network, Set[EthAddress]] = defaultdict(set)
+"""A dictionary that contains, for each chain, a set of shitcoins that will be fully ignored by eth_portfolio. Add your own shitcoins to this object to boost eth_portfolio's performance."""
 for chain, tokens in shitcoins.items():
     SHITCOINS[chain].update(convert.to_address(token) for token in tokens)
