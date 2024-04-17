@@ -4,4 +4,4 @@ eth-brownie>=1.19.3,<1.20
 eth_retry>=0.1.15,<1
 ez-a-sync>=0.18.4,<0.20
 pandas>=1.4.3,<1.6
-ypricemagic>=3.1.9,<4
+ypricemagic>=3.3.0,<4
