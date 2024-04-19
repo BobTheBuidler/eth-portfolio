@@ -3,11 +3,6 @@ import asyncio
 from typing import Optional
 
 from async_lru import alru_cache
-try:
-    # this is only available in 4.0.0+
-    from eth_abi import encode
-except ImportError:
-    from eth_abi import encode_single as encode
 from y import Network, get_price
 from y.constants import dai
 from y.contracts import Contract
@@ -19,6 +14,14 @@ from eth_portfolio.protocols.lending._base import \
 from eth_portfolio.typing import Balance, TokenBalances
 from eth_portfolio.utils import Decimal
 
+try:
+    # this is only available in 4.0.0+
+    from eth_abi import encode
+    encode_bytes = lambda bytestring: encode(['bytes32'], [bytestring])
+except ImportError:
+    from eth_abi import encode_single
+    encode_bytes = lambda bytestring: encode_single('bytes32', bytestring)
+    
 yfi = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
 
 class Maker(LendingProtocolWithLockedCollateral):
@@ -32,7 +35,7 @@ class Maker(LendingProtocolWithLockedCollateral):
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         balances: TokenBalances = TokenBalances()
-        ilk = encode(['bytes32'], b'YFI-A')
+        ilk = encode_bytes(b'YFI-A')
         urn = await self._urn(address)
         ink = (await self.vat.urns.coroutine(ilk, urn, block_identifier=block)).dict()["ink"]
         if ink:
