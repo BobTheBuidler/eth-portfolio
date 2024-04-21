@@ -46,7 +46,7 @@ class Maker(LendingProtocolWithLockedCollateral):
     
     @stuck_coro_debugger
     async def _debt(self, address: Address, block: Optional[int] = None) -> TokenBalances:
-        ilk = encode(['bytes32'], b'YFI-A')
+        ilk = encode_bytes(b'YFI-A')
         urn = await self._urn(address)
         urns, ilks = await asyncio.gather(
             self.vat.urns.coroutine(ilk, urn, block_identifier=block),
