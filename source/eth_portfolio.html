@@ -2400,10 +2400,22 @@ ascending or descending, according to their function values.</p>
 <span class="sig-name descname"><span class="pre">_is_protocol</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#eth_portfolio.utils._AiterMixin._is_protocol" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.utils._AiterMixin._materialized">
+<span class="sig-name descname"><span class="pre">_materialized</span></span><a class="headerlink" href="#eth_portfolio.utils._AiterMixin._materialized" title="Link to this definition"></a></dt>
+<dd><p>Asynchronously iterates through all contents of <code class="docutils literal notranslate"><span class="pre">Self</span></code> and returns a <code class="docutils literal notranslate"><span class="pre">list</span></code> containing the results.</p>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.utils._AiterMixin._start_block">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_start_block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#eth_portfolio.utils._AiterMixin._start_block" title="Link to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="eth_portfolio.utils._AiterMixin.materialized">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">materialized</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.utils._AiterMixin.materialized" title="Link to this definition"></a></dt>
+<dd><p>Iterates through all contents of <code class="docutils literal notranslate"><span class="pre">Self</span></code> and returns a <code class="docutils literal notranslate"><span class="pre">list</span></code> containing the results.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -2511,6 +2523,12 @@ ascending or descending, according to their function values.</p>
 <dd><p>An iterator with the 3 ledgers (transactions, internal transfers, token transfers)</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.utils._LedgeredBase._materialized">
+<span class="sig-name descname"><span class="pre">_materialized</span></span><a class="headerlink" href="#eth_portfolio.utils._LedgeredBase._materialized" title="Link to this definition"></a></dt>
+<dd><p>Asynchronously iterates through all contents of <code class="docutils literal notranslate"><span class="pre">Self</span></code> and returns a <code class="docutils literal notranslate"><span class="pre">list</span></code> containing the results.</p>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.utils._LedgeredBase._start_block">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_start_block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#eth_portfolio.utils._LedgeredBase._start_block" title="Link to this definition"></a></dt>
@@ -2520,6 +2538,12 @@ ascending or descending, according to their function values.</p>
 <dt class="sig sig-object py" id="eth_portfolio.utils._LedgeredBase.internal_transfers">
 <span class="sig-name descname"><span class="pre">internal_transfers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">_LT</span></em><a class="headerlink" href="#eth_portfolio.utils._LedgeredBase.internal_transfers" title="Link to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="eth_portfolio.utils._LedgeredBase.materialized">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">materialized</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.utils._LedgeredBase.materialized" title="Link to this definition"></a></dt>
+<dd><p>Iterates through all contents of <code class="docutils literal notranslate"><span class="pre">Self</span></code> and returns a <code class="docutils literal notranslate"><span class="pre">list</span></code> containing the results.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.utils._LedgeredBase.token_transfers">
