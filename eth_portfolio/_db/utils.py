@@ -380,7 +380,7 @@ def transactions_known_at_startup() -> Dict[_TPK, bytes]:
     transfers = {}
     for obj in select(
         (t.from_address.chain.id, t.from_address.address, t.nonce, t.raw)
-        for t in entities.Transaction
+        for t in entities.Transaction  # type: ignore [attr-defined]
         if t.from_address.chain.id == chain.id
     ):
         obj: Tuple[int, str, int, bytes]

@@ -1,14 +1,13 @@
 import asyncio
 import decimal
 import logging
-from contextlib import suppress
 from decimal import Decimal
-from typing import Optional
+from typing import Optional, Union
 
 import dank_mids
 from brownie import chain
 from brownie.exceptions import ContractNotFound
-from brownie.network.event import _EventItem
+from brownie.network.event import _EventItem as brownie_EventItem
 from pony.orm import TransactionIntegrityError
 from y import ERC20, Contract
 from y.decorators import stuck_coro_debugger
@@ -56,7 +55,7 @@ async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional
             'block_number': decoded.block_number,
             'transaction_index': transaction_index,
             # TODO figure out why it comes in both ways
-            'hash': hash.hex() if isinstance((hash := decoded.transaction_hash), bytes) else hash,
+            'hash': hash.hex() if isinstance((hash := decoded.transaction_hash), bytes) else hash,  # type: ignore [attr-defined]
             'log_index': decoded.log_index,
             'token': symbol,
             'token_address': decoded.address,
@@ -99,15 +98,21 @@ async def get_transaction_index(hash: str) -> int:
     receipt = await get_transaction_receipt(hash)
     return receipt.transactionIndex
 
+class _EventItem(brownie_EventItem):
+    """A helper for mypy only. You will not run into any actual instances of this class.\n\n""" + brownie_EventItem.__doc__
+    block_number: int
+    log_index: int
+    transaction_hash: Union[str, bytes]  # TODO figure out why it comes in both ways
+
 @stuck_coro_debugger
-async def _decode_token_transfer(log) -> _EventItem:
+async def _decode_token_transfer(log) -> Optional[_EventItem]:
     try:
         await Contract.coroutine(log['address'])
     except ContractNotFound:
         logger.warning(f"Token {log['address']} cannot be found. Skipping. If the contract has been self-destructed, eth-portfolio will not support it.")
     except ContractNotVerified:
         logger.warning(f"Token {log['address']} is not verified and is most likely a shitcoin. Skipping. Please submit a PR at github.com/BobTheBuidler/eth-portfolio if this is not a shitcoin and should be included.")
-        return
+        return None
     try:
         try:
             event = decode_logs(
