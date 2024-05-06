@@ -19,6 +19,8 @@ class ExternalBalances:
     
     @a_sync.future
     async def balances(self, address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
+        if not self.protocols:
+            return RemoteTokenBalances()
         return RemoteTokenBalances({
             type(protocol).__name__: protocol_balances
             async for protocol, protocol_balances

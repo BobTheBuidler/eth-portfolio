@@ -31,6 +31,8 @@ class Lending:
     @a_sync.future
     @stuck_coro_debugger
     async def debt(self, address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
+        if not self.protocols:
+            return RemoteTokenBalances()
         return RemoteTokenBalances({
             type(protocol).__name__: token_balances
             async for protocol, token_balances in a_sync.map(lambda p: p.debt(address, block), self.protocols)
