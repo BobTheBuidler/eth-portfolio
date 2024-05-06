@@ -27,7 +27,7 @@ from eth_portfolio.utils import _LedgeredBase
 logger = logging.getLogger(__name__)
 
 
-class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddress]):
+class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddress]):  # type: ignore [misc]
     """
     A container that holds all `PortfolioAddress` objects for a specific `Portfolio`.
     Works like a `Dict[Address, PortfolioAddress]` except when you iterate you get the values instead of the keys.
@@ -49,11 +49,11 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         return len(self._wallets)
     def __bool__(self) -> bool:
         return bool(self._wallets)
-    def keys(self) -> Iterator[Address]:
+    def keys(self) -> Iterable[Address]:
         return self._wallets.keys()
-    def values(self) -> Iterator[PortfolioAddress]:
+    def values(self) -> Iterable[PortfolioAddress]:
         return self._wallets.values()
-    def items(self) -> Iterator[Tuple[Address, PortfolioAddress]]:
+    def items(self) -> Iterable[Tuple[Address, PortfolioAddress]]:
         return self._wallets.items()
 
 
