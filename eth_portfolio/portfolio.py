@@ -5,7 +5,7 @@ from functools import cached_property, wraps
 from typing import Any, Dict, Iterable, Iterator, List, Tuple
 
 import a_sync
-import a_sync.modified
+from a_sync.a_sync import ASyncFunction
 from brownie import web3
 from checksum_dict import ChecksumAddressDict
 from pandas import DataFrame, concat  # type: ignore
@@ -133,7 +133,7 @@ class Portfolio(a_sync.ASyncGenericBase):
         return PortfolioBalances(await a_sync.gather({address: address.describe(block, sync=False) for address in self}))
     
     
-async_functions = {name: obj for name, obj in PortfolioAddress.__dict__.items() if isinstance(obj, a_sync.modified.ASyncFunction)}
+async_functions = {name: obj for name, obj in PortfolioAddress.__dict__.items() if isinstance(obj, ASyncFunction)}
 for func_name, func in async_functions.items():
     if not callable(getattr(PortfolioAddress, func_name)):
         raise RuntimeError(f"A PortfolioAddress object should not have a non-callable attribute suffixed with '_async'")

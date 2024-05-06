@@ -1,8 +1,7 @@
 
-from a_sync import _smart
-from a_sync.a_sync import _helpers
+import a_sync._smart
 
-_smart.set_smart_task_factory(_helpers.get_event_loop())
+a_sync._smart.set_smart_task_factory()
 
 
 from eth_portfolio.portfolio import Portfolio, portfolio
