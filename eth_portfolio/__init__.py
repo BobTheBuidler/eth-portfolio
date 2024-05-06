@@ -1,5 +1,5 @@
 
-from a_sync import _smart, _helpers
+from a_sync.a_sync import _smart, _helpers
 
 _smart.set_smart_task_factory(_helpers.get_event_loop())
 

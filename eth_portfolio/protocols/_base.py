@@ -4,7 +4,7 @@ import asyncio
 from typing import List, Optional
 
 import a_sync
-from a_sync.modified import ASyncFunctionSyncDefault
+from a_sync.a_sync.function import ASyncFunctionSyncDefault
 from a_sync.property import HiddenMethod
 from brownie.network.contract import ContractCall
 from eth_portfolio.typing import Balance, TokenBalances
