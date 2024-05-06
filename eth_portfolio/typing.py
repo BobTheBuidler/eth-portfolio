@@ -149,7 +149,10 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         for protocol, balances in self.items():
             df = balances.dataframe
             df['protocol'] = protocol
-        return concat(dfs).reset_index(drop=True)
+        if dfs:
+            return concat(dfs).reset_index(drop=True)
+        else:
+            return DataFrame()
 
     def sum_usd(self) -> Decimal:
         return Decimal(sum(balance.sum_usd() for balance in self.values()))
@@ -228,7 +231,10 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
             df = category_bals.dataframe
             df['category'] = category
             dfs.append(df)
-        return concat(dfs).reset_index(drop=True)
+        if dfs:
+            return concat(dfs).reset_index(drop=True)
+        else:
+            return DataFrame()
     
     def sum_usd(self) -> Decimal:
         return self.assets.sum_usd() - self.debt.sum_usd() + self.external.sum_usd()
@@ -311,7 +317,10 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             df = balances.dataframe
             df['wallet'] = wallet
             dfs.append(df)
-        return concat(dfs).reset_index(drop=True)
+        if dfs:
+            return concat(dfs).reset_index(drop=True)
+        else:
+            return DataFrame()
     
     def sum_usd(self) -> Decimal:
         return sum(balances.sum_usd() for balances in self.values())  # type: ignore
