@@ -10,7 +10,7 @@ from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem as brownie_EventItem
 from pony.orm import TransactionIntegrityError
 from y import ERC20, Contract
-from y.decorators import stuck_coro_debugger
+from y._decorators import stuck_coro_debugger
 from y.exceptions import ContractNotVerified, NonStandardERC20
 from y.utils.events import decode_logs
 

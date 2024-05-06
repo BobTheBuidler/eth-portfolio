@@ -12,8 +12,8 @@ import eth_retry
 from pandas import DataFrame  # type: ignore
 from tqdm.asyncio import tqdm_asyncio
 from y import ERC20
+from y._decorators import stuck_coro_debugger
 from y.datatypes import Block
-from y.decorators import stuck_coro_debugger
 from y.utils.events import BATCH_SIZE
 
 from eth_portfolio import _loaders

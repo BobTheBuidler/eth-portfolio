@@ -6,9 +6,9 @@ from typing import Optional
 import dank_mids
 import eth_retry
 from y import ERC20, NonStandardERC20, get_price
+from y._decorators import stuck_coro_debugger
 from y.constants import WRAPPED_GAS_COIN
 from y.datatypes import Address, Block
-from y.decorators import stuck_coro_debugger
 
 from eth_portfolio.typing import Balance
 from eth_portfolio.utils import _get_price

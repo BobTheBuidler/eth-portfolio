@@ -10,9 +10,9 @@ from brownie.network.contract import ContractCall
 from eth_portfolio.typing import Balance, TokenBalances
 from eth_portfolio.utils import Decimal
 from y import ERC20, Contract
+from y._decorators import stuck_coro_debugger
 from y.contracts import contract_creation_block
 from y.datatypes import Address, Block
-from y.decorators import stuck_coro_debugger
 
 
 class ProtocolABC(metaclass=abc.ABCMeta):

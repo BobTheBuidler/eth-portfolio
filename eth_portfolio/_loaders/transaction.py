@@ -11,9 +11,9 @@ from brownie import chain
 from pony.orm import TransactionIntegrityError
 from web3.types import TxData
 from y import get_price
+from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
-from y.decorators import stuck_coro_debugger
 
 from eth_portfolio._db import utils as db
 from eth_portfolio._loaders.utils import get_transaction_receipt, underscore

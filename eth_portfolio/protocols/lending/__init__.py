@@ -8,8 +8,8 @@ from eth_portfolio.protocols.lending._base import (
 from eth_portfolio.typing import RemoteTokenBalances
 from eth_portfolio.utils import (_get_protocols_for_submodule,
                                  _import_submodules)
+from y._decorators import stuck_coro_debugger
 from y.datatypes import Address, Block
-from y.decorators import stuck_coro_debugger
 
 _import_submodules()
 

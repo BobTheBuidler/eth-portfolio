@@ -4,10 +4,10 @@ from typing import Optional
 
 from async_lru import alru_cache
 from y import Network, get_price
+from y._decorators import stuck_coro_debugger
 from y.constants import dai
 from y.contracts import Contract
 from y.datatypes import Address, Block
-from y.decorators import stuck_coro_debugger
 
 from eth_portfolio.protocols.lending._base import \
     LendingProtocolWithLockedCollateral

@@ -6,8 +6,8 @@ import a_sync
 from async_lru import alru_cache
 from brownie import ZERO_ADDRESS, Contract
 from y import ERC20, Contract, get_prices, weth
+from y._decorators import stuck_coro_debugger
 from y.datatypes import Block
-from y.decorators import stuck_coro_debugger
 from y.exceptions import ContractNotVerified
 from y.prices.lending.compound import CToken, compound
 
