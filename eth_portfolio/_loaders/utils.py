@@ -8,7 +8,7 @@ import inflection
 from async_lru import alru_cache
 from eth_utils import to_checksum_address
 from web3.types import TxReceipt
-from y.decorators import stuck_coro_debugger
+from y._decorators import stuck_coro_debugger
 
 
 @eth_retry.auto_retry

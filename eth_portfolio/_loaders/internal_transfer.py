@@ -3,8 +3,8 @@ from decimal import Decimal
 from typing import Optional
 
 from brownie import chain
+from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
-from y.decorators import stuck_coro_debugger
 
 from eth_portfolio._loaders.utils import checksum, get_transaction_receipt, underscore
 from eth_portfolio.structs import InternalTransfer

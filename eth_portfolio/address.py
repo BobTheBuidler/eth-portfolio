@@ -6,9 +6,9 @@ from typing import TYPE_CHECKING, Dict, Optional
 import a_sync
 from a_sync.exceptions import MappingIsEmptyError
 from y import convert
+from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
-from y.decorators import stuck_coro_debugger
 
 from eth_portfolio._ledgers.address import (AddressInternalTransfersLedger,
                                             AddressLedgerBase,
