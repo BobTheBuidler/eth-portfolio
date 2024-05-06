@@ -235,19 +235,18 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
 class InternalTransfersList(PandableList[InternalTransfer]):
     pass
 
-trace_semaphore = a_sync.Semaphore(32, __name__ + ".trace_semaphore")
 
 @cache_to_disk
 # we double stack these because high-volume wallets will likely need it
 @eth_retry.auto_retry
-@eth_retry.auto_retry
 @stuck_coro_debugger
+@a_sync.Semaphore(32, __name__ + ".trace_semaphore")
+@eth_retry.auto_retry
 async def get_traces(params: list) -> List[dict]:
-    async with trace_semaphore:
-        traces = await dank_mids.web3.provider.make_request("trace_filter", params)  # type: ignore [arg-type, misc]
-        if 'result' not in traces:
-            raise BadResponse(traces)
-        return [trace for trace in traces['result'] if "error" not in trace]
+    traces = await dank_mids.web3.provider.make_request("trace_filter", params)  # type: ignore [arg-type, misc]
+    if 'result' not in traces:
+        raise BadResponse(traces)
+    return [trace for trace in traces['result'] if "error" not in trace]
     
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
     _list_type = InternalTransfersList

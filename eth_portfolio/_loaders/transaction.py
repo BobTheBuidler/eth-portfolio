@@ -105,11 +105,15 @@ async def get_nonce_at_block(address: Address, block: Block) -> int:
             return -1
         raise ValueError(f"For {address} at {block}: {e}")
 
+@alru_cache(ttl=60*60)
 @eth_retry.auto_retry
 @stuck_coro_debugger
-async def get_block_transactions(block: Block) -> List[TxData]:
-    async with _full_block_semaphore:
-        block = await dank_mids.eth.get_block(block, full_transactions=True)
-        return block.transactions
+async def _get_block_transactions(block: Block) -> List[TxData]:
+    block = await dank_mids.eth.get_block(block, full_transactions=True)
+    return block.transactions
 
-_full_block_semaphore = a_sync.Semaphore(1_000, name = __name__ + "._full_block_semaphore")
+get_block_transactions = a_sync.SmartProcessingQueue(
+    _get_block_transactions, 
+    num_workers=1_000, 
+    name=__name__ + ".get_block_transactions",
+)
