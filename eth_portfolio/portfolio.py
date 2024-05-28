@@ -2,7 +2,7 @@
 import asyncio
 import logging
 from functools import cached_property, wraps
-from typing import Any, Dict, Iterable, Iterator, List, Tuple
+from typing import Any, Dict, Iterable, Iterator, List, Tuple, Union
 
 import a_sync
 from a_sync.a_sync import ASyncFunction
