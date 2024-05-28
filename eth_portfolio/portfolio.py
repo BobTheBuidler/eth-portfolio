@@ -41,6 +41,8 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         })
     def __repr__(self) -> str:
         return f"<{type(self).__name__} wallets={list(self._wallets.values())}>"
+    def __contains__(self, address: Union[Address, PortfolioAddress]) -> bool:
+        return address in self._wallets
     def __getitem__(self, address: Address) -> PortfolioAddress:
         return self._wallets[address]
     def __iter__(self) -> Iterator[PortfolioAddress]:
