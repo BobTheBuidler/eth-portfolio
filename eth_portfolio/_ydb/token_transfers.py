@@ -41,7 +41,12 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
     async def yield_thru_block(self, block) -> AsyncIterator["asyncio.Task[TokenTransfer]"]:
         logger.debug("%s yielding all objects thru block %s", self, block)
         async for task in self._objects_thru(block=block):
-            logger.debug("yielding %s at block %s [thru: %s, lock: %s]", task, task.block, block, self._lock.value)
+            
+            if self.address == "0x93A62dA5a14C80f265DAbC077fCEE437B1a0Efde":
+                logger.info("yielding %s at block %s [thru: %s, lock: %s]", task, task.block, block, self._lock.value)
+            else:
+                logger.debug("yielding %s at block %s [thru: %s, lock: %s]", task, task.block, block, self._lock.value)
+                
             yield task
         logger.debug("%s yield thru %s complete", self, block)
     async def _extend(self, objs: List[LogReceipt]) -> None:
