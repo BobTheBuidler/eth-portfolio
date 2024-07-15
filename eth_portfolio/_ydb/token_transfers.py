@@ -66,13 +66,13 @@ class InboundTokenTransfers(_TokenTransfers):
     """A container that fetches and iterates over all inbound token transfers for a particular wallet address"""
     @property
     def _topics(self) -> List:
-        return [TRANSFER_SIGS, None, [encode_address(self.address)]]
+        return [TRANSFER_SIGS, None, encode_address(self.address)]
 
 class OutboundTokenTransfers(_TokenTransfers):
     """A container that fetches and iterates over all outbound token transfers for a particular wallet address"""
     @property
     def _topics(self) -> List:
-        return [TRANSFER_SIGS, [encode_address(self.address)]]
+        return [TRANSFER_SIGS, encode_address(self.address)]
     
 class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
     """
