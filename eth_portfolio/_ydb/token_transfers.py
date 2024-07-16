@@ -25,6 +25,8 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
+logged = set()
+
 class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
     """A helper mixin that contains all logic for fetching token transfers for a particular wallet address"""
     __slots__ = "address", "_load_prices"
@@ -42,8 +44,9 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
         logger.debug("%s yielding all objects thru block %s", self, block)
         async for task in self._objects_thru(block=block):
             
-            if self.address == "0x93A62dA5a14C80f265DAbC077fCEE437B1a0Efde":
+            if self.address == "0x93A62dA5a14C80f265DAbC077fCEE437B1a0Efde" and task not in logged:
                 logger.info("yielding %s at block %s [thru: %s, lock: %s]", task, task.block, block, self._lock.value)
+                logged.add(task)
             else:
                 logger.debug("yielding %s at block %s [thru: %s, lock: %s]", task, task.block, block, self._lock.value)
                 
