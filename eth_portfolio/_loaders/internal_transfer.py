@@ -14,7 +14,7 @@ from eth_portfolio.utils import _get_price
 
 @cache_to_disk
 async def _get_status(txhash: str) -> int:
-    receipt = await get_transaction_receipt(transfer['transactionHash'])
+    receipt = await get_transaction_receipt(txhash)
     return receipt.status
     
 @stuck_coro_debugger
