@@ -18,8 +18,8 @@ from eth_portfolio._ledgers.portfolio import (PortfolioInternalTransfersLedger,
                                               PortfolioLedgerBase,
                                               PortfolioTokenTransfersLedger,
                                               PortfolioTransactionsLedger)
+from eth_portfolio import _argspec
 from eth_portfolio.address import PortfolioAddress
-from eth_portfolio.argspec import get_return_type
 from eth_portfolio.constants import ADDRESSES
 from eth_portfolio.typing import Addresses, PortfolioBalances
 from eth_portfolio.utils import _LedgeredBase
@@ -141,7 +141,7 @@ for func_name, func in async_functions.items():
         raise RuntimeError(f"A PortfolioAddress object should not have a non-callable attribute suffixed with '_async'")
     @a_sync.a_sync(default=func.default)
     @wraps(func)
-    async def imported_func(self: Portfolio, *args: Any, **kwargs: Any) -> get_return_type(getattr(PortfolioAddress, func_name)):  # type: ignore
+    async def imported_func(self: Portfolio, *args: Any, **kwargs: Any) -> _argspec.get_return_type(getattr(PortfolioAddress, func_name)):  # type: ignore
         return await a_sync.gather({address: func(address, *args, **kwargs, sync=False) for address in self})
     setattr(Portfolio, func_name, imported_func)
     logger.debug(f"Ported {func_name} from PortfolioAddress to Portfolio")
