@@ -20,14 +20,6 @@ eth\_portfolio.address module
    :undoc-members:
    :show-inheritance:
 
-eth\_portfolio.argspec module
------------------------------
-
-.. automodule:: eth_portfolio.argspec
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 eth\_portfolio.buckets module
 -----------------------------
 

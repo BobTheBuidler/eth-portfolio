@@ -57,13 +57,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#eth_portfolio.address.PortfolioAddress"><code class="docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#module-eth_portfolio.argspec">eth_portfolio.argspec module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#eth_portfolio.argspec.get_args_type"><code class="docutils literal notranslate"><span class="pre">get_args_type()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#eth_portfolio.argspec.get_kwargs_type"><code class="docutils literal notranslate"><span class="pre">get_kwargs_type()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#eth_portfolio.argspec.get_return_type"><code class="docutils literal notranslate"><span class="pre">get_return_type()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#eth_portfolio.argspec.get_types"><code class="docutils literal notranslate"><span class="pre">get_types()</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-eth_portfolio.buckets">eth_portfolio.buckets module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#eth_portfolio.buckets._is_stable"><code class="docutils literal notranslate"><span class="pre">_is_stable()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#eth_portfolio.buckets._pool_bucket"><code class="docutils literal notranslate"><span class="pre">_pool_bucket()</span></code></a></li>
@@ -563,61 +556,6 @@
 <span class="sig-name descname"><span class="pre">transactions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">_LT</span></em><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.transactions" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
-</dd></dl>
-
-</section>
-<section id="module-eth_portfolio.argspec">
-<span id="eth-portfolio-argspec-module"></span><h2>eth_portfolio.argspec module<a class="headerlink" href="#module-eth_portfolio.argspec" title="Link to this heading"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="eth_portfolio.argspec.get_args_type">
-<span class="sig-prename descclassname"><span class="pre">eth_portfolio.argspec.</span></span><span class="sig-name descname"><span class="pre">get_args_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.argspec.get_args_type" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>sample</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><em>Callable</em></a>)</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><em>Tuple</em></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Type" title="(in Python v3.12)"><em>Type</em></a>, …]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="eth_portfolio.argspec.get_kwargs_type">
-<span class="sig-prename descclassname"><span class="pre">eth_portfolio.argspec.</span></span><span class="sig-name descname"><span class="pre">get_kwargs_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.argspec.get_kwargs_type" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>sample</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><em>Callable</em></a>)</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><em>Tuple</em></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Type" title="(in Python v3.12)"><em>Type</em></a>, …]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="eth_portfolio.argspec.get_return_type">
-<span class="sig-prename descclassname"><span class="pre">eth_portfolio.argspec.</span></span><span class="sig-name descname"><span class="pre">get_return_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.argspec.get_return_type" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>sample</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><em>Callable</em></a>)</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Type" title="(in Python v3.12)"><em>Type</em></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="eth_portfolio.argspec.get_types">
-<span class="sig-prename descclassname"><span class="pre">eth_portfolio.argspec.</span></span><span class="sig-name descname"><span class="pre">get_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.argspec.get_types" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>sample</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><em>Callable</em></a>)</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><em>Tuple</em></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Type" title="(in Python v3.12)"><em>Type</em></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Type" title="(in Python v3.12)"><em>Type</em></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Type" title="(in Python v3.12)"><em>Type</em></a>]</p>
-</dd>
-</dl>
 </dd></dl>
 
 </section>
