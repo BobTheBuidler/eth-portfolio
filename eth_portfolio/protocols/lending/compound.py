@@ -5,9 +5,9 @@ from typing import List, Optional
 import a_sync
 from async_lru import alru_cache
 from brownie import ZERO_ADDRESS, Contract
-from y import ERC20, Contract, get_prices, weth
+from y import ERC20, Contract, map_prices, weth
+from y._decorators import stuck_coro_debugger
 from y.datatypes import Block
-from y.decorators import stuck_coro_debugger
 from y.exceptions import ContractNotVerified
 from y.prices.lending.compound import CToken, compound
 
@@ -65,11 +65,11 @@ class Compound(LendingProtocol):
             asyncio.gather(*[underlying.__scale__ for underlying in underlyings]),
         )
 
-        debts = {underlying: Decimal(debt) / scale for underlying, scale, debt in zip(underlyings, underlying_scale, debt_data) if debt}
-        prices = await get_prices(debts.keys(), block=block, sync=False)
         balances: TokenBalances = TokenBalances()
-        for (underlying, debt), price in zip(debts.items(), prices):
-            balances[underlying] += Balance(debt, debt * Decimal(price))
+        if debts := {underlying: Decimal(debt) / scale for underlying, scale, debt in zip(underlyings, underlying_scale, debt_data) if debt}:
+            async for underlying, price in map_prices(debts, block=block):
+                debt = debts.pop(underlying)
+                balances[underlying] += Balance(debt, debt * Decimal(price))
         return balances
 
 @stuck_coro_debugger

@@ -44,7 +44,7 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
             logger.debug("yielding %s at block %s [thru: %s, lock: %s]", task, task.block, block, self._lock.value)
             yield task
         logger.debug("%s yield thru %s complete", self, block)
-    def _extend(self, objs: List[LogReceipt]) -> None:
+    async def _extend(self, objs: List[LogReceipt]) -> None:
         for log in objs:
             task = asyncio.create_task(
                 coro=_loaders.load_token_transfer(log, self._load_prices), 
@@ -66,13 +66,13 @@ class InboundTokenTransfers(_TokenTransfers):
     """A container that fetches and iterates over all inbound token transfers for a particular wallet address"""
     @property
     def _topics(self) -> List:
-        return [TRANSFER_SIGS, None, [encode_address(self.address)]]
+        return [TRANSFER_SIGS, None, encode_address(self.address)]
 
 class OutboundTokenTransfers(_TokenTransfers):
     """A container that fetches and iterates over all outbound token transfers for a particular wallet address"""
     @property
     def _topics(self) -> List:
-        return [TRANSFER_SIGS, [encode_address(self.address)]]
+        return [TRANSFER_SIGS, encode_address(self.address)]
     
 class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
     """

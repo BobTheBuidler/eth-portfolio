@@ -3,8 +3,8 @@ from typing import Optional
 
 from brownie import chain
 from y import Contract, Network, get_price
+from y._decorators import stuck_coro_debugger
 from y.datatypes import Address, Block
-from y.decorators import stuck_coro_debugger
 
 from eth_portfolio.protocols.lending._base import \
     LendingProtocolWithLockedCollateral

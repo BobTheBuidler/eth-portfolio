@@ -2,6 +2,7 @@ checksum_dict>=1.1.2
 dank_mids>=4.20.85
 eth-brownie>=1.19.3,<1.21
 eth_retry>=0.1.15,<1
-ez-a-sync>=0.19.5,<0.21
+ez-a-sync>=0.22.1
+numpy<2
 pandas>=1.4.3,<1.6
-ypricemagic>=3.3.0,<4
+ypricemagic>=4.0.0,<4.1

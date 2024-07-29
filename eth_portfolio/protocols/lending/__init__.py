@@ -8,8 +8,8 @@ from eth_portfolio.protocols.lending._base import (
 from eth_portfolio.typing import RemoteTokenBalances
 from eth_portfolio.utils import (_get_protocols_for_submodule,
                                  _import_submodules)
+from y._decorators import stuck_coro_debugger
 from y.datatypes import Address, Block
-from y.decorators import stuck_coro_debugger
 
 _import_submodules()
 
@@ -31,6 +31,8 @@ class Lending:
     @a_sync.future
     @stuck_coro_debugger
     async def debt(self, address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
+        if not self.protocols:
+            return RemoteTokenBalances()
         return RemoteTokenBalances({
             type(protocol).__name__: token_balances
             async for protocol, token_balances in a_sync.map(lambda p: p.debt(address, block), self.protocols)

@@ -2,10 +2,10 @@
 import asyncio
 import logging
 from functools import cached_property, wraps
-from typing import Any, Dict, Iterable, Iterator, List, Tuple
+from typing import Any, Dict, Iterable, Iterator, List, Tuple, Union
 
 import a_sync
-import a_sync.modified
+from a_sync.a_sync import ASyncFunction
 from brownie import web3
 from checksum_dict import ChecksumAddressDict
 from pandas import DataFrame, concat  # type: ignore
@@ -41,6 +41,8 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         })
     def __repr__(self) -> str:
         return f"<{type(self).__name__} wallets={list(self._wallets.values())}>"
+    def __contains__(self, address: Union[Address, PortfolioAddress]) -> bool:
+        return address in self._wallets
     def __getitem__(self, address: Address) -> PortfolioAddress:
         return self._wallets[address]
     def __iter__(self) -> Iterator[PortfolioAddress]:
@@ -133,7 +135,7 @@ class Portfolio(a_sync.ASyncGenericBase):
         return PortfolioBalances(await a_sync.gather({address: address.describe(block, sync=False) for address in self}))
     
     
-async_functions = {name: obj for name, obj in PortfolioAddress.__dict__.items() if isinstance(obj, a_sync.modified.ASyncFunction)}
+async_functions = {name: obj for name, obj in PortfolioAddress.__dict__.items() if isinstance(obj, ASyncFunction)}
 for func_name, func in async_functions.items():
     if not callable(getattr(PortfolioAddress, func_name)):
         raise RuntimeError(f"A PortfolioAddress object should not have a non-callable attribute suffixed with '_async'")

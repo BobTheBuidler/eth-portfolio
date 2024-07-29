@@ -10,7 +10,7 @@ from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem as brownie_EventItem
 from pony.orm import TransactionIntegrityError
 from y import ERC20, Contract
-from y.decorators import stuck_coro_debugger
+from y._decorators import stuck_coro_debugger
 from y.exceptions import ContractNotVerified, NonStandardERC20
 from y.utils.events import decode_logs
 
@@ -41,11 +41,17 @@ async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional
             return None
         token = ERC20(decoded.address, asynchronous=True)
         coros = [token.scale, get_symbol(token), get_transaction_index(decoded.transaction_hash)]
-        if load_prices:
-            coros.append(_get_price(token.address, decoded.block_number))
-            scale, symbol, transaction_index, price = await asyncio.gather(*coros)
-        else:
-            scale, symbol, transaction_index = await asyncio.gather(*coros)
+        
+        try:
+            if load_prices:
+                coros.append(_get_price(token.address, decoded.block_number))
+                scale, symbol, transaction_index, price = await asyncio.gather(*coros)
+            else:
+                scale, symbol, transaction_index = await asyncio.gather(*coros)
+        except NonStandardERC20 as e:
+            # NOTE: if we cant fetch scale or symbol or both, this is probably either a shitcoin or an NFT (which we don't support at this time)
+            logger.debug(f"{e} for {transfer_log}, skipping.")
+            return None
         
         sender, receiver, value = decoded.values()
         value = Decimal(value) / Decimal(scale)

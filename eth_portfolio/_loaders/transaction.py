@@ -11,9 +11,9 @@ from brownie import chain
 from pony.orm import TransactionIntegrityError
 from web3.types import TxData
 from y import get_price
+from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
-from y.decorators import stuck_coro_debugger
 
 from eth_portfolio._db import utils as db
 from eth_portfolio._loaders.utils import get_transaction_receipt, underscore
@@ -105,11 +105,15 @@ async def get_nonce_at_block(address: Address, block: Block) -> int:
             return -1
         raise ValueError(f"For {address} at {block}: {e}")
 
+@alru_cache(ttl=60*60)
 @eth_retry.auto_retry
 @stuck_coro_debugger
-async def get_block_transactions(block: Block) -> List[TxData]:
-    async with _full_block_semaphore:
-        block = await dank_mids.eth.get_block(block, full_transactions=True)
-        return block.transactions
+async def _get_block_transactions(block: Block) -> List[TxData]:
+    block = await dank_mids.eth.get_block(block, full_transactions=True)
+    return block.transactions
 
-_full_block_semaphore = a_sync.Semaphore(1_000, name = __name__ + "._full_block_semaphore")
+get_block_transactions = a_sync.SmartProcessingQueue(
+    _get_block_transactions, 
+    num_workers=1_000, 
+    name=__name__ + ".get_block_transactions",
+)
