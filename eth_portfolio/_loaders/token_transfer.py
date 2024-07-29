@@ -77,13 +77,13 @@ async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional
                 price = None
             token_transfer['price'] = price
             token_transfer['value_usd'] = round(value * price, 18) if price else None
-        
+
+        transfer = TokenTransfer(**token_transfer)
         try:
-            transfer = TokenTransfer(**token_transfer)
             await db.insert_token_transfer(transfer)
         except decimal.InvalidOperation:
-        # Not entirely sure why this happens, probably some crazy uint value
-            return None
+            # Not entirely sure why this happens, probably some crazy uint value?
+            pass
         except TransactionIntegrityError:
             if load_prices:
                 await db.delete_token_transfer(transfer)
