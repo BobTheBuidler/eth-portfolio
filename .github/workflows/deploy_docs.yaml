@@ -28,7 +28,7 @@ jobs:
           pip install wheel
           pip install --no-build-isolation "Cython<3" "pyyaml==5.4.1"
           pip install -r requirements.txt
-          pip install sphinx sphinx-rtd-theme
+          pip install sphinx sphinx-rtd-theme git+https://github.com/BobTheBuidler/toolcache@patch-1
 
       - name: Setup brownie networks
         run: |
