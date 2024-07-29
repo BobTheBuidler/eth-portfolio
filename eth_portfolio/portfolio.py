@@ -19,10 +19,10 @@ from eth_portfolio._ledgers.portfolio import (PortfolioInternalTransfersLedger,
                                               PortfolioTokenTransfersLedger,
                                               PortfolioTransactionsLedger)
 from eth_portfolio import _argspec
+from eth_portfolio._utils import _LedgeredBase
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.constants import ADDRESSES
 from eth_portfolio.typing import Addresses, PortfolioBalances
-from eth_portfolio.utils import _LedgeredBase
 
 logger = logging.getLogger(__name__)
 

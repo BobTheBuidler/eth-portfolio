@@ -6,12 +6,13 @@ from typing import List, Optional
 import a_sync
 from a_sync.a_sync import ASyncFunctionSyncDefault, HiddenMethod
 from brownie.network.contract import ContractCall
-from eth_portfolio.typing import Balance, TokenBalances
-from eth_portfolio.utils import Decimal
 from y import ERC20, Contract
 from y._decorators import stuck_coro_debugger
 from y.contracts import contract_creation_block
 from y.datatypes import Address, Block
+
+from eth_portfolio._utils import Decimal
+from eth_portfolio.typing import Balance, TokenBalances
 
 
 class ProtocolABC(metaclass=abc.ABCMeta):
