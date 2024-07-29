@@ -6,11 +6,17 @@ from brownie import chain
 from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
 
+from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._loaders.utils import checksum, get_transaction_receipt, underscore
 from eth_portfolio.structs import InternalTransfer
 from eth_portfolio.utils import _get_price
 
 
+@cache_to_disk
+async def _get_status(txhash: str) -> int:
+    receipt = await get_transaction_receipt(txhash)
+    return receipt.status
+    
 @stuck_coro_debugger
 async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[InternalTransfer]:
     if transfer.get("to") == "0xd9db270c1b5e3bd161e8c8503c55ceabee709552":
@@ -26,8 +32,7 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
     else:
         # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
         # In all other cases, we need to confirm the transaction didn't revert
-        receipt = await get_transaction_receipt(transfer['transactionHash'])
-        if receipt.status == 0:
+        if await _get_status(transfer['transactionHash']) == 0:
             return None
 
     # Un-nest the action dict

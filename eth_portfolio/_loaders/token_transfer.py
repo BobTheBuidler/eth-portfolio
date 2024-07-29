@@ -14,6 +14,7 @@ from y._decorators import stuck_coro_debugger
 from y.exceptions import ContractNotVerified, NonStandardERC20
 from y.utils.events import decode_logs
 
+from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._db import utils as db
 from eth_portfolio._loaders.utils import get_transaction_receipt
 from eth_portfolio._shitcoins import SHITCOINS
@@ -100,6 +101,7 @@ async def get_symbol(token: ERC20) -> Optional[str]:
         return None
 
 @stuck_coro_debugger
+@cache_to_disk
 async def get_transaction_index(hash: str) -> int:
     receipt = await get_transaction_receipt(hash)
     return receipt.transactionIndex
