@@ -3,11 +3,11 @@ import asyncio
 from typing import List, Optional, Union
 
 import a_sync
+from eth_portfolio._utils import (_get_protocols_for_submodule,
+                                 _import_submodules)
 from eth_portfolio.protocols.lending._base import (
     LendingProtocol, LendingProtocolWithLockedCollateral)
 from eth_portfolio.typing import RemoteTokenBalances
-from eth_portfolio.utils import (_get_protocols_for_submodule,
-                                 _import_submodules)
 from y._decorators import stuck_coro_debugger
 from y.datatypes import Address, Block
 

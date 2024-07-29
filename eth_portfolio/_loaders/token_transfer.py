@@ -18,8 +18,8 @@ from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._db import utils as db
 from eth_portfolio._loaders.utils import get_transaction_receipt
 from eth_portfolio._shitcoins import SHITCOINS
+from eth_portfolio._utils import _get_price
 from eth_portfolio.structs import TokenTransfer
-from eth_portfolio.utils import _get_price
 
 logger = logging.getLogger(__name__)
 

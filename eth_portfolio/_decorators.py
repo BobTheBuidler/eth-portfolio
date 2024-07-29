@@ -10,8 +10,8 @@ from typing_extensions import Concatenate
 from y.datatypes import Block
 
 from eth_portfolio import _config
+from eth_portfolio._utils import get_buffered_chain_height
 from eth_portfolio.typing import _I, _P, _T
-from eth_portfolio.utils import get_buffered_chain_height
 
 logger = logging.getLogger(__name__)
 

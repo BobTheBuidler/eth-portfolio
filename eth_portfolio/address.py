@@ -16,11 +16,11 @@ from eth_portfolio._ledgers.address import (AddressInternalTransfersLedger,
                                             AddressTransactionsLedger,
                                             PandableLedgerEntryList)
 from eth_portfolio._loaders import balances
+from eth_portfolio._utils import _LedgeredBase
 from eth_portfolio.protocols import _external
 from eth_portfolio.protocols.lending import _lending
 from eth_portfolio.typing import (Balance, RemoteTokenBalances, TokenBalances,
                                   WalletBalances)
-from eth_portfolio.utils import _LedgeredBase
 
 if TYPE_CHECKING:
     from eth_portfolio.portfolio import Portfolio

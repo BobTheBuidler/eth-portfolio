@@ -11,8 +11,8 @@ from y.datatypes import Address, Block
 
 from eth_portfolio.protocols.lending._base import \
     LendingProtocolWithLockedCollateral
+from eth_portfolio._utils import Decimal
 from eth_portfolio.typing import Balance, TokenBalances
-from eth_portfolio.utils import Decimal
 
 try:
     # this is only available in 4.0.0+

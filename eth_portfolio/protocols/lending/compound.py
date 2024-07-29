@@ -11,9 +11,9 @@ from y.datatypes import Block
 from y.exceptions import ContractNotVerified
 from y.prices.lending.compound import CToken, compound
 
+from eth_portfolio._utils import Decimal
 from eth_portfolio.protocols.lending._base import LendingProtocol
 from eth_portfolio.typing import Address, Balance, TokenBalances
-from eth_portfolio.utils import Decimal
 
 
 def _get_contract(market: CToken) -> Optional[Contract]:

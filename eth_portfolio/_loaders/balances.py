@@ -10,8 +10,8 @@ from y._decorators import stuck_coro_debugger
 from y.constants import WRAPPED_GAS_COIN
 from y.datatypes import Address, Block
 
+from eth_portfolio._utils import _get_price
 from eth_portfolio.typing import Balance
-from eth_portfolio.utils import _get_price
 
 
 logger = logging.getLogger(__name__)

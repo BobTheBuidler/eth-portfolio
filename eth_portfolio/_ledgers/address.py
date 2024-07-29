@@ -19,9 +19,9 @@ from eth_portfolio import _loaders
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._decorators import set_end_block_if_none
 from eth_portfolio._loaders.transaction import get_nonce_at_block
+from eth_portfolio._utils import _AiterMixin, PandableList, get_buffered_chain_height
 from eth_portfolio._ydb.token_transfers import TokenTransfers
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
-from eth_portfolio.utils import _AiterMixin, PandableList, get_buffered_chain_height
 
 if TYPE_CHECKING:
     from eth_portfolio.address import PortfolioAddress

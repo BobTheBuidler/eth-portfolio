@@ -8,8 +8,8 @@ from y.constants import EEE_ADDRESS
 
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._loaders.utils import checksum, get_transaction_receipt, underscore
+from eth_portfolio._utils import _get_price
 from eth_portfolio.structs import InternalTransfer
-from eth_portfolio.utils import _get_price
 
 
 @cache_to_disk

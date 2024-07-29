@@ -12,7 +12,7 @@ from eth_portfolio._ledgers.address import (AddressLedgerBase,
                                             InternalTransfersList,
                                             TokenTransfersList,
                                             TransactionsList, _LedgerEntryList)
-from eth_portfolio.utils import _AiterMixin, _unpack_indicies
+from eth_portfolio._utils import _AiterMixin, _unpack_indicies
 from eth_portfolio.structs import Transaction, InternalTransfer, TokenTransfer
 
 if TYPE_CHECKING:
