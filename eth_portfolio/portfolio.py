@@ -54,14 +54,14 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         :type addresses: Iterable[Address]
         """
         self._wallets: ChecksumAddressDict[PortfolioAddress] = ChecksumAddressDict({
-            """
-            :ivar _wallets: A checksummed dictionary of PortfolioAddress objects.
-            :vartype _wallets: ChecksumAddressDict[PortfolioAddress]
-            """
+            
             address: PortfolioAddress(address, portfolio, asynchronous=portfolio.asynchronous)
             for address in addresses
         })
-
+        """
+        :ivar _wallets: A checksummed dictionary of PortfolioAddress objects.
+        :vartype _wallets: ChecksumAddressDict[PortfolioAddress]
+        """
     def __repr__(self) -> str:
         """
         Return a string representation of the PortfolioWallets instance.
