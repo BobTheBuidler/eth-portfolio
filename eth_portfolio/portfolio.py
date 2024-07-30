@@ -1,15 +1,7 @@
 """
 This module defines the `Portfolio` and `PortfolioWallets` classes, which are used to manage and interact with a collection of `PortfolioAddress` objects.
 It also includes the `PortfolioLedger` class for handling transactions, internal transfers, and token transfers associated with the portfolio.
-The `Portfolio` class leverages asynchronous operations to efficiently gather data and perform various portfolio-related tasks.
-
-Dependencies:
-- `a_sync`: Provides asynchronous functionality.
-- `brownie`: Used for Ethereum interactions.
-- `checksum_dict`: Ensures Ethereum addresses are checksummed.
-- `pandas`: Used for data manipulation and analysis.
-- `web3`: Interacts with the Ethereum blockchain.
-- `eth_portfolio`: Contains various modules and utilities related to portfolio management.
+The `Portfolio` class leverages the `a_sync` library to support both synchronous and asynchronous operations. This allows it to efficiently gather data, perform portfolio-related tasks, and handle network calls without blocking, thus improving the overall responsiveness and performance of portfolio operations.
 
 This file is part of a larger system that includes modules for handling portfolio addresses, ledger entries, and other related tasks.
 """
@@ -49,8 +41,6 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
     Works like a `Dict[Address, PortfolioAddress]` except when you iterate you get the values instead of the keys.
     You should not initialize these. They are created automagically during :class:`Portfolio` init.
 
-    :ivar _wallets: A checksummed dictionary of PortfolioAddress objects.
-    :vartype _wallets: ChecksumAddressDict[PortfolioAddress]
     """
     _wallets: ChecksumAddressDict[PortfolioAddress]
 
@@ -64,6 +54,10 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         :type addresses: Iterable[Address]
         """
         self._wallets: ChecksumAddressDict[PortfolioAddress] = ChecksumAddressDict({
+            """
+            :ivar _wallets: A checksummed dictionary of PortfolioAddress objects.
+            :vartype _wallets: ChecksumAddressDict[PortfolioAddress]
+            """
             address: PortfolioAddress(address, portfolio, asynchronous=portfolio.asynchronous)
             for address in addresses
         })
@@ -160,21 +154,6 @@ class Portfolio(a_sync.ASyncGenericBase):
 
     - Has all attributes of a :class:`PortfolioAddress`.
     - All calls to `function(*args, **kwargs)` will return `{address: PortfolioAddress(Address).function(*args, **kwargs)}`
-
-    :ivar _start_block: The starting block number.
-    :vartype _start_block: int
-    :ivar label: A label for the portfolio.
-    :vartype label: str
-    :ivar load_prices: Whether to load prices.
-    :vartype load_prices: bool
-    :ivar asynchronous: Whether to use asynchronous operations.
-    :vartype asynchronous: bool
-    :ivar addresses: A container for the portfolio's :class:`PortfolioAddress` objects.
-    :vartype addresses: PortfolioWallets
-    :ivar ledger: A container for all transactions, internal transfers, and token transfers.
-    :vartype ledger: PortfolioLedger
-    :ivar w3: The `Web3` object used for Ethereum interactions.
-    :vartype w3: Web3
     """
     def __init__(
         self,
@@ -184,36 +163,46 @@ class Portfolio(a_sync.ASyncGenericBase):
         load_prices: bool = True,
         asynchronous: bool = False,
     ) -> None:
+        
         """
         Initialize a Portfolio instance.
-
-        :param addresses: The addresses to include in the portfolio.
-        :type addresses: Addresses
-        :param start_block: The starting block number, defaults to 0.
-        :type start_block: int
-        :param label: A label for the portfolio, defaults to "your portfolio".
-        :type label: str
-        :param load_prices: Whether to load prices, defaults to True.
-        :type load_prices: bool
-        :param asynchronous: Whether to use asynchronous operations, defaults to False.
-        :type asynchronous: bool
         """
         assert isinstance(start_block, int), f"`start_block` must be an integer, not {type(start_block)}"
         assert start_block >= 0, "`start_block` must be >= 0"
         self._start_block = start_block
+        """
+        :ivar _start_block: The starting block number.
+        :vartype _start_block: int
+        """
 
         assert isinstance(label, str), f"`label` must be a string, you passed {type(label)}"
         self.label = label
+        """
+        :param label: A label for the portfolio, defaults to "your portfolio".
+        :type label: str
+        """
 
         assert isinstance(load_prices, bool), f"`load_prices` must be a boolean, you passed {type(load_prices)}"
         self.load_prices: bool = load_prices
+        """
+        :param load_prices: Whether to load prices when fetching account history, defaults to True.
+        :type load_prices: bool
+        """
 
         assert isinstance(asynchronous, bool), f"`asynchronous` must be a boolean, you passed {type(load_prices)}"
         self.asynchronous: bool = asynchronous
+        """
+        :param asynchronous: Whether to use asynchronous operations, defaults to False.
+        :type asynchronous: bool
+        """
         
         assert isinstance(addresses, Iterable), f"`addresses` must be an iterable, not {type(addresses)}"
         if isinstance(addresses, str):
             addresses = [addresses]
+            """
+            :param addresses: The addresses to include in the portfolio.
+            :type addresses: Addresses
+            """
 
         self.addresses = PortfolioWallets(self, addresses)
         """
@@ -244,9 +233,7 @@ class Portfolio(a_sync.ASyncGenericBase):
 
         :return: An iterator over PortfolioAddress objects.
         :rtype: Iterator[PortfolioAddress]
-       
-
- """
+        """
         yield from self.addresses
     
     @property
@@ -356,7 +343,7 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
     """
     def __init__(self, portfolio: "Portfolio") -> None:
         """
-        Initialize a PortfolioLedger instance.
+        Internally self-initializes a PortfolioLedger instance.
 
         :param portfolio: The :class:`Portfolio` instance to which this ledger belongs.
         :type portfolio: Portfolio
