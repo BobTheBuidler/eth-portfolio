@@ -274,16 +274,6 @@ class Portfolio(a_sync.ASyncGenericBase):
         """
         return self.ledger.token_transfers
     
-    @cached_property
-    def chain_id(self) -> int:
-        """
-        Returns the chain ID for the connected brownie network.
-
-        :return: The chain ID.
-        :rtype: int
-        """
-        return self.w3.eth.chainId
-    
     async def describe(self, block: int) -> PortfolioBalances:
         """
         Returns a full snapshot of your portfolio at a given block.
