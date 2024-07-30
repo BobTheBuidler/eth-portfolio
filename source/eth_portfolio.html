@@ -596,29 +596,29 @@
 </section>
 <section id="module-eth_portfolio.portfolio">
 <span id="eth-portfolio-portfolio-module"></span><h2>eth_portfolio.portfolio module<a class="headerlink" href="#module-eth_portfolio.portfolio" title="Link to this heading"></a></h2>
-<p>This module defines the <cite>Portfolio</cite> and <cite>PortfolioWallets</cite> classes, which are used to manage and interact with a collection of <cite>PortfolioAddress</cite> objects.
-It also includes the <cite>PortfolioLedger</cite> class for handling transactions, internal transfers, and token transfers associated with the portfolio.
-The <cite>Portfolio</cite> class leverages the <cite>a_sync</cite> library to support both synchronous and asynchronous operations. This allows it to efficiently gather data, perform portfolio-related tasks, and handle network calls without blocking, thus improving the overall responsiveness and performance of portfolio operations.</p>
+<p>This module defines the <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a> and <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioWallets</span></code> classes, which are used to manage and interact with a collection of <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects.
+It also includes the <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioLedger</span></code> class for handling transactions, internal transfers, and token transfers associated with the portfolio.
+The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a> class leverages the <cite>a_sync</cite> library to support both synchronous and asynchronous operations. This allows it to efficiently gather data, perform portfolio-related tasks, and handle network calls without blocking, thus improving the overall responsiveness and performance of portfolio operations.</p>
 <p>This file is part of a larger system that includes modules for handling portfolio addresses, ledger entries, and other related tasks.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.portfolio.</span></span><span class="sig-name descname"><span class="pre">Portfolio</span></span><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://bobthebuidler.github.io/ez-a-sync/source/a_sync.a_sync.html#a_sync.a_sync.base.ASyncGenericBase" title="(in ez-a-sync)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncGenericBase</span></code></a></p>
-<p>Used to export information about a group of <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code> objects.</p>
+<p>Used to export information about a group of <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects.</p>
 <ul class="simple">
-<li><p>Has all attributes of a <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code>.</p></li>
+<li><p>Has all attributes of a <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>.</p></li>
 <li><p>All calls to <cite>function(*args, **kwargs)</cite> will return <cite>{address: PortfolioAddress(Address).function(*args, **kwargs)}</cite></p></li>
 </ul>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.__getitem__">
 <span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.__getitem__" title="Link to this definition"></a></dt>
-<dd><p>Get a PortfolioAddress by its key.</p>
+<dd><p>Get a <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> by its key.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>key</strong> (<em>Address</em>) – The address key.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The PortfolioAddress object.</p>
+<dd class="field-even"><p>The <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> object.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress">PortfolioAddress</a></p>
@@ -649,10 +649,10 @@ The <cite>Portfolio</cite> class leverages the <cite>a_sync</cite> library to su
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.__iter__">
 <span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.__iter__" title="Link to this definition"></a></dt>
-<dd><p>Iterate over the PortfolioAddress objects.</p>
+<dd><p>Iterate over the <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An iterator over PortfolioAddress objects.</p>
+<dd class="field-odd"><p>An iterator over <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Iterator[<a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress">PortfolioAddress</a>]</p>
@@ -675,18 +675,24 @@ The <cite>Portfolio</cite> class leverages the <cite>a_sync</cite> library to su
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.addresses">
 <span class="sig-name descname"><span class="pre">addresses</span></span><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.addresses" title="Link to this definition"></a></dt>
-<dd><p>A container for your <a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a>’s <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code> objects.
-Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the values when you iterate instead of the keys.</p>
+<dd><p>A container for the <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a>’s <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects.
+:vartype addresses: <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioWallets</span></code></p>
+<p>Works like a <code class="docutils literal notranslate"><span class="pre">Dict[Address,</span> <span class="pre">PortfolioAddress]</span></code> except you get the values when you iterate instead of the keys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ivar addresses</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.asynchronous">
 <span class="sig-name descname"><span class="pre">asynchronous</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.asynchronous" title="Link to this definition"></a></dt>
 <dd><p>Whether to use asynchronous operations, defaults to False.
-:type asynchronous: bool</p>
+:vartype asynchronous: bool</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>param asynchronous</p>
+<dd class="field-odd"><p>ivar asynchronous</p>
 </dd>
 </dl>
 </dd></dl>
@@ -717,7 +723,7 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dd class="field-even"><p>A snapshot of the portfolio balances.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#eth_portfolio.typing.PortfolioBalances" title="eth_portfolio.typing.PortfolioBalances">PortfolioBalances</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#eth_portfolio.typing.PortfolioBalances" title="eth_portfolio.typing.PortfolioBalances"><em>PortfolioBalances</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -725,7 +731,7 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.internal_transfers">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">internal_transfers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PortfolioInternalTransfersLedger</span></em><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.internal_transfers" title="Link to this definition"></a></dt>
-<dd><p>A container for all internal transfers to or from any of your <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code>.</p>
+<dd><p>A container for all internal transfers to or from any of your <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioInternalTransfersLedger</span></code> object.</p>
@@ -740,10 +746,10 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.label">
 <span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.label" title="Link to this definition"></a></dt>
 <dd><p>A label for the portfolio, defaults to “your portfolio”.
-:type label: str</p>
+:vartype label: str</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>param label</p>
+<dd class="field-odd"><p>ivar label</p>
 </dd>
 </dl>
 </dd></dl>
@@ -751,17 +757,23 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.ledger">
 <span class="sig-name descname"><span class="pre">ledger</span></span><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.ledger" title="Link to this definition"></a></dt>
-<dd><p>A container for all of your fun taxable events</p>
+<dd><p>A container for all of your fun taxable events.
+:vartype ledger: <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioLedger</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ivar ledger</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.load_prices">
 <span class="sig-name descname"><span class="pre">load_prices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.load_prices" title="Link to this definition"></a></dt>
 <dd><p>Whether to load prices when fetching account history, defaults to True.
-:type load_prices: bool</p>
+:vartype load_prices: bool</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>param load_prices</p>
+<dd class="field-odd"><p>ivar load_prices</p>
 </dd>
 </dl>
 </dd></dl>
@@ -769,7 +781,7 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.token_transfers">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">token_transfers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PortfolioTokenTransfersLedger</span></em><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.token_transfers" title="Link to this definition"></a></dt>
-<dd><p>A container for all token transfers to or from any of your <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code>.</p>
+<dd><p>A container for all token transfers to or from any of your <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioTokenTransfersLedger</span></code> object.</p>
@@ -783,7 +795,7 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.transactions">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">transactions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PortfolioTransactionsLedger</span></em><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.transactions" title="Link to this definition"></a></dt>
-<dd><p>A container for all transactions to or from any of your <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code>.</p>
+<dd><p>A container for all transactions to or from any of your <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioTransactionsLedger</span></code> object.</p>
@@ -797,7 +809,13 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.w3">
 <span class="sig-name descname"><span class="pre">w3</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Web3</span></em><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.w3" title="Link to this definition"></a></dt>
-<dd><p>The <cite>Web3</cite> object which will be used to call your rpc for all read operations</p>
+<dd><p>The <cite>Web3</cite> object which will be used to call your rpc for all read operations.
+:vartype w3: <code class="xref py py-class docutils literal notranslate"><span class="pre">Web3</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ivar w3</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -806,14 +824,14 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.portfolio.</span></span><span class="sig-name descname"><span class="pre">PortfolioLedger</span></span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_LedgeredBase</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioLedgerBase</span></code>]</p>
-<p>A container for all transactions, internal transfers, and token transfers to or from any of the wallets in your <a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a>.</p>
+<p>A container for all transactions, internal transfers, and token transfers to or from any of the wallets in your <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>portfolio</strong> (<a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><em>Portfolio</em></a>) – The <a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a> containing the wallets this ledger will pertain to.</p></li>
-<li><p><strong>transactions</strong> (<em>PortfolioTransactionsLedger</em>) – A container for all transactions to or from any of your <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code>.</p></li>
-<li><p><strong>internal_transfers</strong> (<em>PortfolioInternalTransfersLedger</em>) – A container for all internal transfers to or from any of your <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code>.</p></li>
-<li><p><strong>token_transfers</strong> (<em>PortfolioTokenTransfersLedger</em>) – A container for all token transfers to or from any of your <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code>.</p></li>
+<li><p><strong>portfolio</strong> (<a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><em>Portfolio</em></a>) – The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a> containing the wallets this ledger will pertain to.</p></li>
+<li><p><strong>transactions</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioTransactionsLedger</span></code>) – A container for all transactions to or from any of your <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>.</p></li>
+<li><p><strong>internal_transfers</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioInternalTransfersLedger</span></code>) – A container for all internal transfers to or from any of your <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>.</p></li>
+<li><p><strong>token_transfers</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioTokenTransfersLedger</span></code>) – A container for all token transfers to or from any of your <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>.</p></li>
 <li><p><strong>asynchronous</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – True if default mode is async, False if sync.</p></li>
 </ul>
 </dd>
@@ -848,7 +866,7 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dd><p>Internally self-initializes a PortfolioLedger instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>portfolio</strong> (<a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><em>Portfolio</em></a>) – The <a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a> instance to which this ledger belongs.</p>
+<dd class="field-odd"><p><strong>portfolio</strong> (<a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><em>Portfolio</em></a>) – The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a> instance to which this ledger belongs.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
@@ -970,7 +988,7 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A dictionary mapping PortfolioAddress to their ledger entries.</p>
+<dd class="field-even"><p>A dictionary mapping <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> to their ledger entries.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Dict[<a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress">PortfolioAddress</a>, Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a>, PandableLedgerEntryList]]</p>
@@ -981,7 +999,13 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.asynchronous">
 <span class="sig-name descname"><span class="pre">asynchronous</span></span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.asynchronous" title="Link to this definition"></a></dt>
-<dd><p>True if default mode is async, False if sync</p>
+<dd><p>True if default mode is async, False if sync.
+:vartype asynchronous: bool</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ivar asynchronous</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1008,7 +1032,13 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.internal_transfers">
 <span class="sig-name descname"><span class="pre">internal_transfers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">_LT</span></em><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.internal_transfers" title="Link to this definition"></a></dt>
-<dd><p>A container for all internal transfers to or from any of your <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></p>
+<dd><p>A container for all internal transfers to or from any of your <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>.
+:vartype internal_transfers: <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioInternalTransfersLedger</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ivar internal_transfers</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -1020,19 +1050,37 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.portfolio">
 <span class="sig-name descname"><span class="pre">portfolio</span></span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.portfolio" title="Link to this definition"></a></dt>
-<dd><p>The <a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a> containing the wallets this ledger will pertain to</p>
+<dd><p>The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a> containing the wallets this ledger will pertain to.
+:vartype portfolio: Portfolio</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ivar portfolio</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.token_transfers">
 <span class="sig-name descname"><span class="pre">token_transfers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">_LT</span></em><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.token_transfers" title="Link to this definition"></a></dt>
-<dd><p>A container for all token transfers to or from any of your <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></p>
+<dd><p>A container for all token transfers to or from any of your <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>.
+:vartype token_transfers: <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioTokenTransfersLedger</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ivar token_transfers</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.transactions">
 <span class="sig-name descname"><span class="pre">transactions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">_LT</span></em><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.transactions" title="Link to this definition"></a></dt>
-<dd><p>A container for all transactions to or from any of your <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></p>
+<dd><p>A container for all transactions to or from any of your <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>.
+:vartype transactions: <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioTransactionsLedger</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ivar transactions</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1041,19 +1089,19 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioWallets">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.portfolio.</span></span><span class="sig-name descname"><span class="pre">PortfolioWallets</span></span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioWallets" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <code class="xref py py-class docutils literal notranslate"><span class="pre">HexBytes</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">AnyAddress</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">EthAddress</span></code>, <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>]</p>
-<p>A container that holds all <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code> objects for a specific <a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a>.</p>
-<p>Works like a <cite>Dict[Address, PortfolioAddress]</cite> except when you iterate you get the values instead of the keys.
-You should not initialize these. They are created automagically during <a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a> init.</p>
+<p>A container that holds all <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects for a specific <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a>.</p>
+<p>Works like a <code class="docutils literal notranslate"><span class="pre">Dict[Address,</span> <span class="pre">PortfolioAddress]</span></code> except when you iterate you get the values instead of the keys.
+You should not initialize these. They are created automatically during <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a> initialization.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioWallets.__getitem__">
 <span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioWallets.__getitem__" title="Link to this definition"></a></dt>
-<dd><p>Get the PortfolioAddress object for a given address.</p>
+<dd><p>Get the <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> object for a given address.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>address</strong> (<em>Address</em>) – The address to look up.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The PortfolioAddress object.</p>
+<dd class="field-even"><p>The <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> object.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress">PortfolioAddress</a></p>
@@ -1068,7 +1116,7 @@ You should not initialize these. They are created automagically during <a class=
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>portfolio</strong> (<a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><em>Portfolio</em></a>) – The <a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a> instance to which this wallet belongs.</p></li>
+<li><p><strong>portfolio</strong> (<a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><em>Portfolio</em></a>) – The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a> instance to which this wallet belongs.</p></li>
 <li><p><strong>addresses</strong> (<em>Iterable</em><em>[</em><em>Address</em><em>]</em>) – An iterable of addresses to be included in the portfolio.</p></li>
 </ul>
 </dd>
@@ -1081,10 +1129,10 @@ You should not initialize these. They are created automagically during <a class=
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioWallets.__iter__">
 <span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioWallets.__iter__" title="Link to this definition"></a></dt>
-<dd><p>Iterate over the PortfolioAddress objects in the wallets.</p>
+<dd><p>Iterate over the <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects in the wallets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An iterator over PortfolioAddress objects.</p>
+<dd class="field-odd"><p>An iterator over <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Iterator[<a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress">PortfolioAddress</a>]</p>
@@ -1122,10 +1170,10 @@ You should not initialize these. They are created automagically during <a class=
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioWallets.items">
 <span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioWallets.items" title="Link to this definition"></a></dt>
-<dd><p>Get the items (address, PortfolioAddress pairs) of the wallets.</p>
+<dd><p>Get the items (address, <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> pairs) of the wallets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An iterable of (address, PortfolioAddress) tuples.</p>
+<dd class="field-odd"><p>An iterable of (address, <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>) tuples.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Iterable[Tuple[Address, <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress">PortfolioAddress</a>]]</p>
@@ -1180,10 +1228,10 @@ In either case, this is followed by: for k in F:  D[k] = F[k]</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioWallets.values">
 <span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioWallets.values" title="Link to this definition"></a></dt>
-<dd><p>Get the values (PortfolioAddress objects) of the wallets.</p>
+<dd><p>Get the values (<a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects) of the wallets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An iterable of PortfolioAddress objects.</p>
+<dd class="field-odd"><p>An iterable of <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Iterable[<a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress">PortfolioAddress</a>]</p>
@@ -1199,7 +1247,7 @@ In either case, this is followed by: for k in F:  D[k] = F[k]</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioWallets._wallets">
 <span class="sig-name descname"><span class="pre">_wallets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ChecksumAddressDict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><span class="pre">PortfolioAddress</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioWallets._wallets" title="Link to this definition"></a></dt>
-<dd><p>A checksummed dictionary of PortfolioAddress objects.
+<dd><p>A checksummed dictionary of <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects.
 :vartype _wallets: ChecksumAddressDict[PortfolioAddress]</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -1216,7 +1264,8 @@ In either case, this is followed by: for k in F:  D[k] = F[k]</p>
 <dd><p>Extract missing column names from a KeyError.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>e</strong> (<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#KeyError" title="(in Python v3.12)"><em>KeyError</em></a>) – The KeyError exception.</p>
+<dd class="field-odd"><p><strong>e</strong> (<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#KeyError" title="(in Python v3.12)"><em>KeyError</em></a>) – The KeyError exception.
+:type e: KeyError</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of missing column names.</p>
@@ -2727,21 +2776,21 @@ In either case, this is followed by: for k in F:  D[k] = F[k]</p>
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.</span></span><span class="sig-name descname"><span class="pre">Portfolio</span></span><a class="headerlink" href="#eth_portfolio.Portfolio" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://bobthebuidler.github.io/ez-a-sync/source/a_sync.a_sync.html#a_sync.a_sync.base.ASyncGenericBase" title="(in ez-a-sync)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncGenericBase</span></code></a></p>
-<p>Used to export information about a group of <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code> objects.</p>
+<p>Used to export information about a group of <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects.</p>
 <ul class="simple">
-<li><p>Has all attributes of a <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code>.</p></li>
+<li><p>Has all attributes of a <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>.</p></li>
 <li><p>All calls to <cite>function(*args, **kwargs)</cite> will return <cite>{address: PortfolioAddress(Address).function(*args, **kwargs)}</cite></p></li>
 </ul>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio.__getitem__">
 <span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.Portfolio.__getitem__" title="Link to this definition"></a></dt>
-<dd><p>Get a PortfolioAddress by its key.</p>
+<dd><p>Get a <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> by its key.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>key</strong> (<em>Address</em>) – The address key.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The PortfolioAddress object.</p>
+<dd class="field-even"><p>The <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> object.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress">PortfolioAddress</a></p>
@@ -2772,10 +2821,10 @@ In either case, this is followed by: for k in F:  D[k] = F[k]</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio.__iter__">
 <span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.Portfolio.__iter__" title="Link to this definition"></a></dt>
-<dd><p>Iterate over the PortfolioAddress objects.</p>
+<dd><p>Iterate over the <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An iterator over PortfolioAddress objects.</p>
+<dd class="field-odd"><p>An iterator over <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Iterator[<a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress">PortfolioAddress</a>]</p>
@@ -2798,18 +2847,24 @@ In either case, this is followed by: for k in F:  D[k] = F[k]</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio.addresses">
 <span class="sig-name descname"><span class="pre">addresses</span></span><a class="headerlink" href="#eth_portfolio.Portfolio.addresses" title="Link to this definition"></a></dt>
-<dd><p>A container for your <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a>’s <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code> objects.
-Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the values when you iterate instead of the keys.</p>
+<dd><p>A container for the <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a>’s <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects.
+:vartype addresses: <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioWallets</span></code></p>
+<p>Works like a <code class="docutils literal notranslate"><span class="pre">Dict[Address,</span> <span class="pre">PortfolioAddress]</span></code> except you get the values when you iterate instead of the keys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ivar addresses</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio.asynchronous">
 <span class="sig-name descname"><span class="pre">asynchronous</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#eth_portfolio.Portfolio.asynchronous" title="Link to this definition"></a></dt>
 <dd><p>Whether to use asynchronous operations, defaults to False.
-:type asynchronous: bool</p>
+:vartype asynchronous: bool</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>param asynchronous</p>
+<dd class="field-odd"><p>ivar asynchronous</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2840,7 +2895,7 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dd class="field-even"><p>A snapshot of the portfolio balances.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#eth_portfolio.typing.PortfolioBalances" title="eth_portfolio.typing.PortfolioBalances">PortfolioBalances</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#eth_portfolio.typing.PortfolioBalances" title="eth_portfolio.typing.PortfolioBalances"><em>PortfolioBalances</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2848,7 +2903,7 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio.internal_transfers">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">internal_transfers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PortfolioInternalTransfersLedger</span></em><a class="headerlink" href="#eth_portfolio.Portfolio.internal_transfers" title="Link to this definition"></a></dt>
-<dd><p>A container for all internal transfers to or from any of your <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code>.</p>
+<dd><p>A container for all internal transfers to or from any of your <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioInternalTransfersLedger</span></code> object.</p>
@@ -2863,10 +2918,10 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio.label">
 <span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#eth_portfolio.Portfolio.label" title="Link to this definition"></a></dt>
 <dd><p>A label for the portfolio, defaults to “your portfolio”.
-:type label: str</p>
+:vartype label: str</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>param label</p>
+<dd class="field-odd"><p>ivar label</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2874,17 +2929,23 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio.ledger">
 <span class="sig-name descname"><span class="pre">ledger</span></span><a class="headerlink" href="#eth_portfolio.Portfolio.ledger" title="Link to this definition"></a></dt>
-<dd><p>A container for all of your fun taxable events</p>
+<dd><p>A container for all of your fun taxable events.
+:vartype ledger: <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioLedger</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ivar ledger</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio.load_prices">
 <span class="sig-name descname"><span class="pre">load_prices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#eth_portfolio.Portfolio.load_prices" title="Link to this definition"></a></dt>
 <dd><p>Whether to load prices when fetching account history, defaults to True.
-:type load_prices: bool</p>
+:vartype load_prices: bool</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>param load_prices</p>
+<dd class="field-odd"><p>ivar load_prices</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2892,7 +2953,7 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio.token_transfers">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">token_transfers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PortfolioTokenTransfersLedger</span></em><a class="headerlink" href="#eth_portfolio.Portfolio.token_transfers" title="Link to this definition"></a></dt>
-<dd><p>A container for all token transfers to or from any of your <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code>.</p>
+<dd><p>A container for all token transfers to or from any of your <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioTokenTransfersLedger</span></code> object.</p>
@@ -2906,7 +2967,7 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio.transactions">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">transactions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PortfolioTransactionsLedger</span></em><a class="headerlink" href="#eth_portfolio.Portfolio.transactions" title="Link to this definition"></a></dt>
-<dd><p>A container for all transactions to or from any of your <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code>.</p>
+<dd><p>A container for all transactions to or from any of your <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioTransactionsLedger</span></code> object.</p>
@@ -2920,7 +2981,13 @@ Works like a <cite>Dict[Address, PortfolioAddress]</cite> except you get the val
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio.w3">
 <span class="sig-name descname"><span class="pre">w3</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Web3</span></em><a class="headerlink" href="#eth_portfolio.Portfolio.w3" title="Link to this definition"></a></dt>
-<dd><p>The <cite>Web3</cite> object which will be used to call your rpc for all read operations</p>
+<dd><p>The <cite>Web3</cite> object which will be used to call your rpc for all read operations.
+:vartype w3: <code class="xref py py-class docutils literal notranslate"><span class="pre">Web3</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ivar w3</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
