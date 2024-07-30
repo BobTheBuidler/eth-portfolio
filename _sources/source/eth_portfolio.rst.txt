@@ -36,14 +36,6 @@ eth\_portfolio.constants module
    :undoc-members:
    :show-inheritance:
 
-eth\_portfolio.exceptions module
---------------------------------
-
-.. automodule:: eth_portfolio.exceptions
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 eth\_portfolio.portfolio module
 -------------------------------
 

@@ -65,11 +65,6 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-eth_portfolio.constants">eth_portfolio.constants module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-eth_portfolio.exceptions">eth_portfolio.exceptions module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#eth_portfolio.exceptions.RangeIsCached"><code class="docutils literal notranslate"><span class="pre">RangeIsCached</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#eth_portfolio.exceptions.RangeOutOfBounds"><code class="docutils literal notranslate"><span class="pre">RangeOutOfBounds</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-eth_portfolio.portfolio">eth_portfolio.portfolio module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#eth_portfolio.portfolio.Portfolio"><code class="docutils literal notranslate"><span class="pre">Portfolio</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#eth_portfolio.portfolio.PortfolioLedger"><code class="docutils literal notranslate"><span class="pre">PortfolioLedger</span></code></a></li>
@@ -598,65 +593,6 @@
 </section>
 <section id="module-eth_portfolio.constants">
 <span id="eth-portfolio-constants-module"></span><h2>eth_portfolio.constants module<a class="headerlink" href="#module-eth_portfolio.constants" title="Link to this heading"></a></h2>
-</section>
-<section id="module-eth_portfolio.exceptions">
-<span id="eth-portfolio-exceptions-module"></span><h2>eth_portfolio.exceptions module<a class="headerlink" href="#module-eth_portfolio.exceptions" title="Link to this heading"></a></h2>
-<dl class="py exception">
-<dt class="sig sig-object py" id="eth_portfolio.exceptions.RangeIsCached">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.exceptions.</span></span><span class="sig-name descname"><span class="pre">RangeIsCached</span></span><a class="headerlink" href="#eth_portfolio.exceptions.RangeIsCached" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="eth_portfolio.exceptions.RangeIsCached.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.exceptions.RangeIsCached.__init__" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="eth_portfolio.exceptions.RangeIsCached.__new__">
-<span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.exceptions.RangeIsCached.__new__" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="eth_portfolio.exceptions.RangeIsCached.with_traceback">
-<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.exceptions.RangeIsCached.with_traceback" title="Link to this definition"></a></dt>
-<dd><p>Exception.with_traceback(tb) –
-set self.__traceback__ to tb and return self.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="eth_portfolio.exceptions.RangeIsCached.args">
-<span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#eth_portfolio.exceptions.RangeIsCached.args" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py exception">
-<dt class="sig sig-object py" id="eth_portfolio.exceptions.RangeOutOfBounds">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.exceptions.</span></span><span class="sig-name descname"><span class="pre">RangeOutOfBounds</span></span><a class="headerlink" href="#eth_portfolio.exceptions.RangeOutOfBounds" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="eth_portfolio.exceptions.RangeOutOfBounds.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.exceptions.RangeOutOfBounds.__init__" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="eth_portfolio.exceptions.RangeOutOfBounds.__new__">
-<span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.exceptions.RangeOutOfBounds.__new__" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="eth_portfolio.exceptions.RangeOutOfBounds.with_traceback">
-<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.exceptions.RangeOutOfBounds.with_traceback" title="Link to this definition"></a></dt>
-<dd><p>Exception.with_traceback(tb) –
-set self.__traceback__ to tb and return self.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="eth_portfolio.exceptions.RangeOutOfBounds.args">
-<span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#eth_portfolio.exceptions.RangeOutOfBounds.args" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 </section>
 <section id="module-eth_portfolio.portfolio">
 <span id="eth-portfolio-portfolio-module"></span><h2>eth_portfolio.portfolio module<a class="headerlink" href="#module-eth_portfolio.portfolio" title="Link to this heading"></a></h2>
