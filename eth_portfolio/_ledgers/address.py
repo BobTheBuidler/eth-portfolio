@@ -15,7 +15,7 @@ from y._decorators import stuck_coro_debugger
 from y.datatypes import Block
 from y.utils.events import BATCH_SIZE
 
-from eth_portfolio import _loaders
+from eth_portfolio import _exceptions, _loaders
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._decorators import set_end_block_if_none
 from eth_portfolio._loaders.transaction import get_nonce_at_block
@@ -30,21 +30,6 @@ logger = logging.getLogger(__name__)
 
 class BadResponse(Exception):
     pass
-  
-class BlockRangeIsCached(Exception):
-    pass
-
-class BlockRangeOutOfBounds(Exception):
-    def __init__(self, start_block: Block, end_block: Block, ledger: "AddressLedgerBase") -> None:
-        self.ledger = ledger
-        self.start_block = start_block
-        self.end_block = end_block
-    async def load_remaining(self) -> None:
-        return await asyncio.gather(
-            self.ledger._load_new_objects(self.start_block, self.ledger.cached_thru - 1),
-            self.ledger._load_new_objects(self.ledger.cached_from + 1, self.end_block)
-        )
-
 
 
 T = TypeVar('T')
@@ -165,7 +150,7 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
             
         # Beginning and end both outside bounds of cache, split
         elif start_block < self.cached_from and end_block > self.cached_thru:
-            raise BlockRangeOutOfBounds(start_block, end_block, self)
+            raise _exceptions.BlockRangeOutOfBounds(start_block, end_block, self)
         
         raise NotImplementedError(
             f"""This is a work in progress and we still need code for this specific case. Feel free to create an issue on our github if you need this.
@@ -257,9 +242,9 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
 
         try:
             start_block, end_block = self._check_blocks_against_cache(start_block, end_block)
-        except BlockRangeIsCached:
+        except _exceptions.BlockRangeIsCached:
             return
-        except BlockRangeOutOfBounds as e:
+        except _exceptions.BlockRangeOutOfBounds as e:
             await e.load_remaining()
             return
 
@@ -321,9 +306,9 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
     async def _load_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[TokenTransfer]:
         try:
             start_block, end_block = self._check_blocks_against_cache(start_block, end_block)
-        except BlockRangeIsCached:
+        except _exceptions.BlockRangeIsCached:
             return
-        except BlockRangeOutOfBounds as e:
+        except _exceptions.BlockRangeOutOfBounds as e:
             await e.load_remaining()
             return
                         
