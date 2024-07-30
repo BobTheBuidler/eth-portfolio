@@ -68,14 +68,6 @@ eth\_portfolio.typing module
    :undoc-members:
    :show-inheritance:
 
-eth\_portfolio.utils module
----------------------------
-
-.. automodule:: eth_portfolio.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 
