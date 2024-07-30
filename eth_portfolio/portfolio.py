@@ -296,7 +296,6 @@ for func_name, func in async_functions.items():
     @a_sync.a_sync(default=func.default)
     @wraps(func)
     async def imported_func(self: Portfolio, *args: Any, **kwargs: Any) -> _argspec.get_return_type(getattr(PortfolioAddress, func_name)):  # type: ignore
-    async def imported_func(self: Portfolio, *args: Any, **kwargs: Any) -> get_return_type(getattr(PortfolioAddress, func_name)):  # type: ignore
         """
         Import an asynchronous function from PortfolioAddress to Portfolio.
 
