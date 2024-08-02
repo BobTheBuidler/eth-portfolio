@@ -149,6 +149,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         for protocol, balances in self.items():
             df = balances.dataframe
             df['protocol'] = protocol
+            dfs.append(df)
         if dfs:
             return concat(dfs).reset_index(drop=True)
         else:
