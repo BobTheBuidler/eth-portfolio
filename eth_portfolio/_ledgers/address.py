@@ -130,7 +130,7 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
 
         # Range is cached
         elif start_block >= self.cached_from and end_block <= self.cached_thru:
-            raise BlockRangeIsCached()
+            raise _exceptions.BlockRangeIsCached()
         
         # Beginning of range is cached
         elif start_block >= self.cached_from and start_block < self.cached_thru and end_block > self.cached_thru:
