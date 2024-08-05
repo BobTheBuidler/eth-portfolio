@@ -40,6 +40,9 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
 
     Works like a ``Dict[Address, PortfolioAddress]`` except when you iterate you get the values instead of the keys.
     You should not initialize these. They are created automatically during :class:`~eth_portfolio.Portfolio` initialization.
+
+    Attributes:
+        _wallets: A checksummed dictionary of :class:`~eth_portfolio.address.PortfolioAddress` objects.
     """
     _wallets: ChecksumAddressDict[PortfolioAddress]
 
@@ -47,10 +50,9 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         """
         Initialize a PortfolioWallets instance.
 
-        :param portfolio: The :class:`~eth_portfolio.Portfolio` instance to which this wallet belongs.
-        :type portfolio: Portfolio
-        :param addresses: An iterable of addresses to be included in the portfolio.
-        :type addresses: Iterable[Address]
+        Args:
+            portfolio: The :class:`~eth_portfolio.Portfolio` instance to which this wallet belongs.
+            addresses: An iterable of addresses to be included in the portfolio.
         """
         self._wallets: ChecksumAddressDict[PortfolioAddress] = ChecksumAddressDict({
             
@@ -58,15 +60,17 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
             for address in addresses
         })
         """
-        :ivar _wallets: A checksummed dictionary of :class:`~eth_portfolio.address.PortfolioAddress` objects.
-        :vartype _wallets: ChecksumAddressDict[PortfolioAddress]
+        A checksummed dictionary of :class:`~eth_portfolio.address.PortfolioAddress` objects.
+
+        Type: 
+            ChecksumAddressDict[PortfolioAddress]
         """
     def __repr__(self) -> str:
         """
         Return a string representation of the PortfolioWallets instance.
 
-        :return: String representation of the instance.
-        :rtype: str
+        Returns:
+            String representation of the instance.
         """
         return f"<{type(self).__name__} wallets={list(self._wallets.values())}>"
 
@@ -74,10 +78,11 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         """
         Check if an address is in the portfolio wallets.
 
-        :param address: The address to check.
-        :type address: Union[Address, PortfolioAddress]
-        :return: True if the address is in the wallets, False otherwise.
-        :rtype: bool
+        Args:
+            address: The address to check.
+
+        Returns:
+            True if the address is in the wallets, False otherwise.
         """
         return address in self._wallets
 
@@ -85,10 +90,11 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         """
         Get the :class:`~eth_portfolio.address.PortfolioAddress` object for a given address.
 
-        :param address: The address to look up.
-        :type address: Address
-        :return: The :class:`~eth_portfolio.address.PortfolioAddress` object.
-        :rtype: PortfolioAddress
+        Args:
+            address: The address to look up.
+
+        Returns:
+            PortfolioAddress: The :class:`~eth_portfolio.address.PortfolioAddress` object.
         """
         return self._wallets[address]
 
@@ -96,8 +102,8 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         """
         Iterate over the :class:`~eth_portfolio.address.PortfolioAddress` objects in the wallets.
 
-        :return: An iterator over :class:`~eth_portfolio.address.PortfolioAddress` objects.
-        :rtype: Iterator[PortfolioAddress]
+        Returns:
+            Iterator[PortfolioAddress]: An iterator over :class:`~eth_portfolio.address.PortfolioAddress` objects.
         """
         yield from self._wallets.values()
 
@@ -105,8 +111,8 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         """
         Get the number of :class:`~eth_portfolio.address.PortfolioAddress` objects in the wallets.
 
-        :return: The number of :class:`~eth_portfolio.address.PortfolioAddress` objects.
-        :rtype: int
+        Returns:
+            The number of :class:`~eth_portfolio.address.PortfolioAddress` objects.
         """
         return len(self._wallets)
 
@@ -114,8 +120,8 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         """
         Check if the wallets contain any addresses.
 
-        :return: True if there are addresses in the wallets, False otherwise.
-        :rtype: bool
+        Returns:
+            True if there are addresses in the wallets, False otherwise.
         """
         return bool(self._wallets)
 
@@ -123,8 +129,8 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         """
         Get the keys (addresses) of the wallets.
 
-        :return: An iterable of addresses.
-        :rtype: Iterable[Address]
+        Returns:
+            Iterable[Address]: An iterable of addresses.
         """
         return self._wallets.keys()
 
@@ -132,8 +138,8 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         """
         Get the values (:class:`~eth_portfolio.address.PortfolioAddress` objects) of the wallets.
 
-        :return: An iterable of :class:`~eth_portfolio.address.PortfolioAddress` objects.
-        :rtype: Iterable[PortfolioAddress]
+        Returns:
+            Iterable[PortfolioAddress]: An iterable of :class:`~eth_portfolio.address.PortfolioAddress` objects.
         """
         return self._wallets.values()
 
@@ -141,8 +147,8 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         """
         Get the items (address, :class:`~eth_portfolio.address.PortfolioAddress` pairs) of the wallets.
 
-        :return: An iterable of (address, :class:`~eth_portfolio.address.PortfolioAddress`) tuples.
-        :rtype: Iterable[Tuple[Address, PortfolioAddress]]
+        Returns:
+            Iterable[Tuple[Address, PortfolioAddress]]: An iterable of (address, :class:`~eth_portfolio.address.PortfolioAddress`) tuples.
         """
         return self._wallets.items()
 
@@ -165,73 +171,85 @@ class Portfolio(a_sync.ASyncGenericBase):
         
         """
         Initialize a Portfolio instance.
+
+        Args:
+            addresses: The addresses to include in the portfolio.
+        Examples:
+            >>> portfolio = Portfolio(addresses=["0xAddress1", "0xAddress2"])
+            >>> print(portfolio)
         """
         assert isinstance(start_block, int), f"`start_block` must be an integer, not {type(start_block)}"
         assert start_block >= 0, "`start_block` must be >= 0"
         self._start_block = start_block
         """
-        :ivar _start_block: The starting block number.
-        :vartype _start_block: int
+        The starting block number. Defaults to 0.
         """
 
         assert isinstance(label, str), f"`label` must be a string, you passed {type(label)}"
         self.label = label
         """
-        :ivar label: A label for the portfolio, defaults to "your portfolio".
-        :vartype label: str
+        A label for the portfolio. Defaults to "your portfolio"
         """
 
         assert isinstance(load_prices, bool), f"`load_prices` must be a boolean, you passed {type(load_prices)}"
         self.load_prices: bool = load_prices
         """
-        :ivar load_prices: Whether to load prices when fetching account history, defaults to True.
-        :vartype load_prices: bool
+        Whether to load prices. Defaults to True.
         """
 
-        assert isinstance(asynchronous, bool), f"`asynchronous` must be a boolean, you passed {type(load_prices)}"
+        assert isinstance(asynchronous, bool), f"`asynchronous` must be a boolean, you passed {type(asynchronous)}"
         self.asynchronous: bool = asynchronous
         """
-        :ivar asynchronous: Whether to use asynchronous operations, defaults to False.
-        :vartype asynchronous: bool
+        Whether to use asynchronous operations. Defaults to False.
         """
-        
+
         assert isinstance(addresses, Iterable), f"`addresses` must be an iterable, not {type(addresses)}"
         if isinstance(addresses, str):
             addresses = [addresses]
             """
-            :ivar addresses: The addresses to include in the portfolio.
-            :vartype addresses: Addresses
+            The addresses to include in your portfolio
             """
 
         self.addresses = PortfolioWallets(self, addresses)
         """
-        :ivar addresses: A container for the :class:`~eth_portfolio.Portfolio`'s :class:`~eth_portfolio.address.PortfolioAddress` objects.
-        :vartype addresses: :class:`~eth_portfolio.PortfolioWallets`
+        A container for the :class:`~eth_portfolio.Portfolio`'s :class:`~eth_portfolio.address.PortfolioAddress` objects.
+        
+        Type: 
+            :class:`~eth_portfolio.PortfolioWallets`
         
         Works like a ``Dict[Address, PortfolioAddress]`` except you get the values when you iterate instead of the keys.
-
         """
 
         self.ledger = PortfolioLedger(self)
         """
-        :ivar ledger: A container for all of your fun taxable events.
-        :vartype ledger: :class:`~eth_portfolio.PortfolioLedger`
+        A container for all of your fun taxable events.
+        
+        Type: 
+            :class:`~eth_portfolio.PortfolioLedger`
         """
 
         self.w3: Web3 = web3
         """
-        :ivar w3: The `Web3` object which will be used to call your rpc for all read operations.
-        :vartype w3: :class:`~web3.Web3`
+        The `Web3` object which will be used to call your rpc for all read operations.
+        
+        Type: 
+            :class:`~web3.Web3`
         """
-    
+
     def __getitem__(self, key: Address) -> PortfolioAddress:
         """
         Get a :class:`~eth_portfolio.address.PortfolioAddress` by its key.
 
-        :param key: The address key.
-        :type key: Address
-        :return: The :class:`~eth_portfolio.address.PortfolioAddress` object.
-        :rtype: PortfolioAddress
+        Args:
+            key: The address key.
+
+        Returns:
+            PortfolioAddress: The :class:`~eth_portfolio.address.PortfolioAddress` object.
+
+        Example:
+            >>> portfolio = Portfolio(addresses=["0xAddress1", "0xAddress2"])
+            >>> address = portfolio["0xAddress1"]
+            >>> print(address)
         """
         return self.addresses[key]
     
@@ -239,8 +257,13 @@ class Portfolio(a_sync.ASyncGenericBase):
         """
         Iterate over the :class:`~eth_portfolio.address.PortfolioAddress` objects.
 
-        :return: An iterator over :class:`~eth_portfolio.address.PortfolioAddress` objects.
-        :rtype: Iterator[PortfolioAddress]
+        Returns:
+            Iterator[PortfolioAddress]: An iterator over :class:`~eth_portfolio.address.PortfolioAddress` objects.
+
+        Example:
+            >>> portfolio = Portfolio(addresses=["0xAddress1", "0xAddress2"])
+            >>> for address in portfolio:
+            ...     print(address)
         """
         yield from self.addresses
     
@@ -249,8 +272,13 @@ class Portfolio(a_sync.ASyncGenericBase):
         """
         A container for all transactions to or from any of your :class:`~eth_portfolio.address.PortfolioAddress`.
 
-        :return: The :class:`~eth_portfolio._ledgers.portfolio.PortfolioTransactionsLedger` object.
-        :rtype: PortfolioTransactionsLedger
+        Returns:
+            PortfolioTransactionsLedger: The :class:`~eth_portfolio._ledgers.portfolio.PortfolioTransactionsLedger` object.
+
+        Example:
+            >>> portfolio = Portfolio(addresses=["0xAddress1", "0xAddress2"])
+            >>> transactions = portfolio.transactions
+            >>> print(transactions)
         """
         return self.ledger.transactions
     
@@ -259,8 +287,13 @@ class Portfolio(a_sync.ASyncGenericBase):
         """
         A container for all internal transfers to or from any of your :class:`~eth_portfolio.address.PortfolioAddress`.
 
-        :return: The :class:`~eth_portfolio._ledgers.portfolio.PortfolioInternalTransfersLedger` object.
-        :rtype: PortfolioInternalTransfersLedger
+        Returns:
+            PortfolioInternalTransfersLedger: The :class:`~eth_portfolio._ledgers.portfolio.PortfolioInternalTransfersLedger` object.
+
+        Example:
+            >>> portfolio = Portfolio(addresses=["0xAddress1", "0xAddress2"])
+            >>> internal_transfers = portfolio.internal_transfers
+            >>> print(internal_transfers)
         """
         return self.ledger.internal_transfers
     
@@ -269,19 +302,45 @@ class Portfolio(a_sync.ASyncGenericBase):
         """
         A container for all token transfers to or from any of your :class:`~eth_portfolio.address.PortfolioAddress`.
 
-        :return: The :class:`~eth_portfolio._ledgers.portfolio.PortfolioTokenTransfersLedger` object.
-        :rtype: PortfolioTokenTransfersLedger
+        Returns:
+            PortfolioTokenTransfersLedger: The :class:`~eth_portfolio._ledgers.portfolio.PortfolioTokenTransfersLedger` object.
+
+        Example:
+            >>> portfolio = Portfolio(addresses=["0xAddress1", "0xAddress2"])
+            >>> token_transfers = portfolio.token_transfers
+            >>> print(token_transfers)
         """
         return self.ledger.token_transfers
+    
+    @cached_property
+    def chain_id(self) -> int:
+        """
+        Returns the chain ID for the connected brownie network.
+
+        Returns:
+            The chain ID.
+
+        Example:
+            >>> portfolio = Portfolio(addresses=["0xAddress1", "0xAddress2"])
+            >>> chain_id = portfolio.chain_id
+            >>> print(chain_id)
+        """
+        return self.w3.eth.chainId
     
     async def describe(self, block: int) -> PortfolioBalances:
         """
         Returns a full snapshot of your portfolio at a given block.
 
-        :param block: The block number.
-        :type block: int
-        :return: A snapshot of the portfolio balances.
-        :rtype: ~eth_portfolio.typing.PortfolioBalances
+        Args:
+            block: The block number.
+
+        Returns:
+            PortfolioBalances: A snapshot of the portfolio balances.
+
+        Example:
+            >>> portfolio = Portfolio(addresses=["0xAddress1", "0xAddress2"])
+            >>> balances = await portfolio.describe(block=1200000)
+            >>> print(balances)
         """
         assert block
         return PortfolioBalances(await a_sync.gather({address: address.describe(block, sync=False) for address in self}))
@@ -297,14 +356,18 @@ for func_name, func in async_functions.items():
         """
         Import an asynchronous function from :class:`~eth_portfolio.address.PortfolioAddress` to :class:`~eth_portfolio.Portfolio`.
 
-        :param self: The :class:`~eth_portfolio.Portfolio` instance.
-        :type self: Portfolio
-        :param args: Positional arguments for the function.
-        :type args: Any
-        :param kwargs: Keyword arguments for the function.
-        :type kwargs: Any
-        :return: The return type of the function.
-        :rtype: Any
+        Args:
+            self: The :class:`~eth_portfolio.Portfolio` instance.
+            args: Positional arguments for the function.
+            kwargs: Keyword arguments for the function.
+
+        Returns:
+            Any: The return type of the function.
+
+        Example:
+            >>> portfolio = Portfolio(addresses=["0xAddress1", "0xAddress2"])
+            >>> result = await portfolio.some_async_function(*args, **kwargs)
+            >>> print(result)
         """
         return await a_sync.gather({address: func(address, *args, **kwargs, sync=False) for address in self})
     setattr(Portfolio, func_name, imported_func)
@@ -315,10 +378,11 @@ def _get_missing_cols_from_KeyError(e: KeyError) -> List[str]:
     """
     Extract missing column names from a KeyError.
 
-    :param e: The KeyError exception.
-        :type e: KeyError
-    :return: A list of missing column names.
-    :rtype: List[str]
+    Args:
+        e: The KeyError exception.
+
+    Returns:
+        A list of missing column names.
     """
     split = str(e).split("'")
     return [split[i * 2 + 1] for i in range(len(split)//2)]
@@ -326,83 +390,74 @@ def _get_missing_cols_from_KeyError(e: KeyError) -> List[str]:
 class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
     """
     A container for all transactions, internal transfers, and token transfers to or from any of the wallets in your :class:`~eth_portfolio.Portfolio`.
-
-    :ivar portfolio: The :class:`~eth_portfolio.Portfolio` containing the wallets this ledger will pertain to.
-    :vartype portfolio: Portfolio
-    :ivar transactions: A container for all transactions to or from any of your :class:`~eth_portfolio.address.PortfolioAddress`.
-    :vartype transactions: :class:`~eth_portfolio._ledgers.portfolio.PortfolioTransactionsLedger`
-    :ivar internal_transfers: A container for all internal transfers to or from any of your :class:`~eth_portfolio.address.PortfolioAddress`.
-    :vartype internal_transfers: :class:`~eth_portfolio._ledgers.portfolio.PortfolioInternalTransfersLedger`
-    :ivar token_transfers: A container for all token transfers to or from any of your :class:`~eth_portfolio.address.PortfolioAddress`.
-    :vartype token_transfers: :class:`~eth_portfolio._ledgers.portfolio.PortfolioTokenTransfersLedger`
-    :ivar asynchronous: True if default mode is async, False if sync.
-    :vartype asynchronous: bool
     """
     def __init__(self, portfolio: "Portfolio") -> None:
         """
-        Internally self-initializes a PortfolioLedger instance.
+        Initialize a PortfolioLedger instance.
 
-        :param portfolio: The :class:`~eth_portfolio.Portfolio` instance to which this ledger belongs.
-        :type portfolio: Portfolio
+        Args:
+            portfolio: The :class:`~eth_portfolio.Portfolio` instance to which this ledger belongs.
         """
         super().__init__(portfolio._start_block)
         self.portfolio = portfolio
         """
-        :ivar portfolio: The :class:`~eth_portfolio.Portfolio` containing the wallets this ledger will pertain to.
-        :vartype portfolio: Portfolio
+        The :class:`~eth_portfolio.Portfolio` containing the wallets this ledger will pertain to.
         """
         self.transactions = PortfolioTransactionsLedger(portfolio)
         """
-        :ivar transactions: A container for all transactions to or from any of your :class:`~eth_portfolio.address.PortfolioAddress`.
-        :vartype transactions: :class:`~eth_portfolio._ledgers.portfolio.PortfolioTransactionsLedger`
+        A container for all transactions to or from any of your :class:`~eth_portfolio.address.PortfolioAddress`.
         """
         self.internal_transfers = PortfolioInternalTransfersLedger(portfolio)
         """
-        :ivar internal_transfers: A container for all internal transfers to or from any of your :class:`~eth_portfolio.address.PortfolioAddress`.
-        :vartype internal_transfers: :class:`~eth_portfolio._ledgers.portfolio.PortfolioInternalTransfersLedger`
+        A container for all internal transfers to or from any of your :class:`~eth_portfolio.address.PortfolioAddress`.
         """
         self.token_transfers = PortfolioTokenTransfersLedger(portfolio)
         """
-        :ivar token_transfers: A container for all token transfers to or from any of your :class:`~eth_portfolio.address.PortfolioAddress`.
-        :vartype token_transfers: :class:`~eth_portfolio._ledgers.portfolio.PortfolioTokenTransfersLedger`
+        A container for all token transfers to or from any of your :class:`~eth_portfolio.address.PortfolioAddress`.
         """
         self.asynchronous = portfolio.asynchronous
         """
-        :ivar asynchronous: True if default mode is async, False if sync.
-        :vartype asynchronous: bool
+        True if default mode is async, False if sync.
         """
-    
+
     async def all_entries(self, start_block: Block, end_block: Block) -> Dict[PortfolioAddress, Dict[str, PandableLedgerEntryList]]:
         """
         Returns a mapping containing all transactions, internal transfers, and token transfers to or from each wallet in your portfolio.
 
-        :param start_block: The starting block number.
-        :type start_block: Block
-        :param end_block: The ending block number.
-        :type end_block: Block
-        :return: A dictionary mapping :class:`~eth_portfolio.address.PortfolioAddress` to their ledger entries.
-        :rtype: Dict[PortfolioAddress, Dict[str, PandableLedgerEntryList]]
+        Args:
+            start_block: The starting block number.
+            end_block: The ending block number.
+
+        Returns:
+            Dict[PortfolioAddress, Dict[str, PandableLedgerEntryList]]: A dictionary mapping :class:`~eth_portfolio.address.PortfolioAddress` to their ledger entries.
+
+        Example:
+            >>> portfolio = Portfolio(addresses=["0xAddress1", "0xAddress2"])
+            >>> entries = await portfolio.ledger.all_entries(start_block=1000000, end_block=1100000)
+            >>> print(entries)
         """
         return await a_sync.gather({address: address.all(start_block, end_block, sync=False) for address in self.portfolio})
 
-    # Pandas
-    
     @set_end_block_if_none
     async def df(self, start_block: Block, end_block: Block, full: bool = False) -> DataFrame:
         """
         Returns a DataFrame containing all transactions, internal transfers, and token transfers to or from any wallet in your portfolio.
 
-        :param start_block: The starting block number.
-        :type start_block: Block
-        :param end_block: The ending block number.
-        :type end_block: Block
-        :param full: Whether to include all columns or a subset, defaults to False.
-        :type full: bool
-        :return: A DataFrame with the ledger entries.
-        :rtype: DataFrame
+        Args:
+            start_block: The starting block number.
+            end_block: The ending block number.
+            full (optional): Whether to include all columns or a subset. Defaults to False.
+
+        Returns:
+            DataFrame: A DataFrame with the ledger entries.
+
+        Example:
+            >>> portfolio = Portfolio(addresses=["0xAddress1", "0xAddress2"])
+            >>> df = await portfolio.ledger.df(start_block=1000000, end_block=1100000)
+            >>> print(df)
         """
         df = concat(await asyncio.gather(*(ledger.df(start_block, end_block, sync=False) for ledger in self._ledgers)))
-        
+
         # Reorder columns
         while True:
             try:
