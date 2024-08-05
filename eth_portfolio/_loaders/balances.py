@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 @eth_retry.auto_retry
 @stuck_coro_debugger
 async def load_eth_balance(address: Address, block: Optional[Block]) -> Balance:
-    balance = Decimal(await dank_mids.eth.get_balance(address, block_identifier=block)) / Decimal(1e18)
+    balance = Decimal(await dank_mids.eth.get_balance(address, block_identifier=block)) / Decimal(10**18)
     value = round(balance * Decimal(await get_price(WRAPPED_GAS_COIN, block, sync=False) if balance else 0), 18)
     return Balance(balance, value)
 

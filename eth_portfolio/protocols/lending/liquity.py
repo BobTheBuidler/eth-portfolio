@@ -33,7 +33,7 @@ class Liquity(LendingProtocolWithLockedCollateral):
         data = await self.get_trove(address, block)
         eth_collateral_balance = data[1]
         if eth_collateral_balance:
-            eth_collateral_balance /= 1e18
+            eth_collateral_balance /= 10**18
             value = eth_collateral_balance * await get_price(EEE_ADDRESS, block, sync=False)
             balances[EEE_ADDRESS] = Balance(eth_collateral_balance, value)
         return balances
@@ -46,7 +46,7 @@ class Liquity(LendingProtocolWithLockedCollateral):
         data = await self.get_trove(address, block)
         lusd_debt = data[0]
         if lusd_debt:
-            lusd_debt /= 1e18
+            lusd_debt /= 10**18
             value = lusd_debt * await get_price(lusd, block, sync=False)
             balances[lusd] = Balance(lusd_debt, value)
         return balances
