@@ -396,36 +396,24 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
         Initialize a PortfolioLedger instance.
 
         Args:
-            portfolio (Portfolio): The :class:`~eth_portfolio.Portfolio` instance to which this ledger belongs.
+            portfolio: The :class:`~eth_portfolio.Portfolio` instance to which this ledger belongs.
         """
         super().__init__(portfolio._start_block)
         self.portfolio = portfolio
         """
         The :class:`~eth_portfolio.Portfolio` containing the wallets this ledger will pertain to.
-        
-        Type: 
-            Portfolio
         """
         self.transactions = PortfolioTransactionsLedger(portfolio)
         """
         A container for all transactions to or from any of your :class:`~eth_portfolio.address.PortfolioAddress`.
-        
-        Type: 
-            :class:`~eth_portfolio._ledgers.portfolio.PortfolioTransactionsLedger`
         """
         self.internal_transfers = PortfolioInternalTransfersLedger(portfolio)
         """
         A container for all internal transfers to or from any of your :class:`~eth_portfolio.address.PortfolioAddress`.
-        
-        Type: 
-            :class:`~eth_portfolio._ledgers.portfolio.PortfolioInternalTransfersLedger`
         """
         self.token_transfers = PortfolioTokenTransfersLedger(portfolio)
         """
         A container for all token transfers to or from any of your :class:`~eth_portfolio.address.PortfolioAddress`.
-        
-        Type: 
-            :class:`~eth_portfolio._ledgers.portfolio.PortfolioTokenTransfersLedger`
         """
         self.asynchronous = portfolio.asynchronous
         """
