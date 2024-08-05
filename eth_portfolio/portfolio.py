@@ -79,7 +79,7 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         Check if an address is in the portfolio wallets.
 
         Args:
-            (Union[Address, PortfolioAddress]): The address to check.
+            address: The address to check.
 
         Returns:
             True if the address is in the wallets, False otherwise.
@@ -91,7 +91,7 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         Get the :class:`~eth_portfolio.address.PortfolioAddress` object for a given address.
 
         Args:
-            (Address): The address to look up.
+            address: The address to look up.
 
         Returns:
             PortfolioAddress: The :class:`~eth_portfolio.address.PortfolioAddress` object.
@@ -173,7 +173,7 @@ class Portfolio(a_sync.ASyncGenericBase):
         Initialize a Portfolio instance.
 
         Args:
-            addresses (Addresses): The addresses to include in the portfolio.
+            addresses: The addresses to include in the portfolio.
         Examples:
             >>> portfolio = Portfolio(addresses=["0xAddress1", "0xAddress2"])
             >>> print(portfolio)
