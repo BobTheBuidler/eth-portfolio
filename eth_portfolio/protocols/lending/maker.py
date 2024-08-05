@@ -3,6 +3,7 @@ import asyncio
 from typing import Optional
 
 from async_lru import alru_cache
+from brownie.convert.datatypes import HexString
 from y import Network, get_price
 from y._decorators import stuck_coro_debugger
 from y.constants import dai
@@ -39,7 +40,7 @@ class Maker(LendingProtocolWithLockedCollateral):
         urn = await self._urn(address)
         ink = (await self.vat.urns.coroutine(ilk, urn, block_identifier=block)).dict()["ink"]
         if ink:
-            balance = ink / Decimal(1e18)
+            balance = ink / Decimal(10**18)
             value = round(balance * Decimal(await get_price(yfi, block, sync=False)), 18)
             balances[yfi] = Balance(balance, value)
         return balances

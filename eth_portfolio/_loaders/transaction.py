@@ -52,7 +52,7 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                 tx['hash'] = tx['hash'].hex()
                 tx['from_address'] = tx.pop('from')
                 tx['to_address'] = tx.pop('to')
-                tx['value'] = Decimal(tx['value']) / Decimal(1e18)
+                tx['value'] = Decimal(tx['value']) / Decimal(10**18)
                 tx['type'] = int(tx['type'], 16) if "type" in tx else None
                 tx['r'] = tx['r'].hex()
                 tx['s'] = tx['s'].hex()

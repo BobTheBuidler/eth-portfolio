@@ -290,7 +290,7 @@ def get_internal_transfer(trace: dict) -> Optional[InternalTransfer]:
         call_type = trace['call_type'],
         from_address = (chain.id, trace['from']),
         to_address = (chain.id, trace['to']),
-        value = Decimal(int(trace['value'], 16)) / Decimal(1e18),
+        value = Decimal(int(trace['value'], 16)) / Decimal(10**18),
         trace_address = (chain.id, trace['trace_address']),
         gas = int(trace['gas'], 16),
         gas_used = int(trace['gas_used'], 16) if 'gas_used' in trace else None,
