@@ -1,3 +1,19 @@
+"""
+This module defines the :class:`~PortfolioAddress` class, which represents an address managed by the `eth-portfolio` system. 
+The `eth-portfolio` acts as a manager of addresses, handling various lending protocols and external interactions.
+The :class:`~PortfolioAddress` class is designed to manage different aspects of an Ethereum address within the portfolio, 
+such as transactions, transfers, balances, and interactions with both external and lending protocols. 
+
+Key components and functionalities provided by the :class:`~PortfolioAddress` class include:
+- Handling Ethereum and token balances
+- Managing debt and collateral from lending protocols
+- Tracking transactions and transfers (both internal and token transfers)
+- Providing comprehensive balance descriptions at specific block heights
+
+The class leverages asynchronous operations using the `a_sync` library to efficiently gather and process data. 
+It also integrates with various submodules from `eth-portfolio` to load balances, manage ledgers, and interact 
+with external protocols.
+"""
 
 import asyncio
 import logging
@@ -28,24 +44,88 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
+    """
+    Represents a portfolio address within the eth-portfolio system.
+    """
+    
     def __init__(self, address: Address, portfolio: "Portfolio", asynchronous: bool = False) -> None: # type: ignore
+        """
+        Initializes the PortfolioAddress instance.
+
+        Args:
+            address: The address to manage.
+            portfolio: The portfolio instance managing this address.
+            asynchronous (optional): Flag for asynchronous operation. Defaults to False.
+
+        Raises:
+            TypeError: If `asynchronous` is not a boolean.
+
+        Examples:
+            >>> portfolio = Portfolio()
+            >>> address = PortfolioAddress('0x1234...', portfolio)
+        """
         self.address = convert.to_address(address)
+        """
+        The address being managed.
+        """
+        
         if not isinstance(asynchronous, bool):
             raise TypeError(f"`asynchronous` must be a boolean, you passed {type(asynchronous)}")
         self.asynchronous = asynchronous
+        """
+        Flag indicating if the operations are asynchronous.
+        """
+        
         self.load_prices = portfolio.load_prices
+        """
+        Indicates if price loading is enabled.
+        """
+        
         super().__init__(portfolio._start_block)
+        
         self.transactions = AddressTransactionsLedger(self)
+        """
+        Ledger for tracking transactions.
+        """
+        
         self.internal_transfers = AddressInternalTransfersLedger(self)
+        """
+        Ledger for tracking internal transfers.
+        """
+        
         self.token_transfers = AddressTokenTransfersLedger(self)
+        """
+        Ledger for tracking token transfers.
+        """
     
     def __str__(self) -> str:
+        """
+        Returns the string representation of the address.
+
+        Returns:
+            The address as a string.
+        """
         return self.address
 
     def __repr__(self) -> str:
+        """
+        Returns the string representation of the PortfolioAddress instance.
+
+        Returns:
+            The string representation.
+        """
         return f"<{self.__class__.__name__} address={self.address} at {hex(id(self))}>"
     
     def __eq__(self, other: object) -> bool:
+        """
+        Checks equality with another object.
+
+        Args:
+            other: The object to compare with.
+
+        Returns:
+            True if equal, False otherwise.
+        """
         if isinstance(other, PortfolioAddress):
             return self.address == other.address
         elif isinstance(other, str):
@@ -53,12 +133,33 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         return False
     
     def __hash__(self) -> int:
+        """
+        Returns the hash of the address.
+
+        Returns:
+            The hash value.
+        """
         return hash(self.address)
     
     # Primary functions
     
     @stuck_coro_debugger
     async def describe(self, block: int) -> WalletBalances:
+        """
+        Describes the wallet balances at a given block.
+
+        Args:
+            block: The block number.
+
+        Returns:
+            :class:`~eth_portfolio.typing.WalletBalances`: The wallet balances.
+
+        Raises:
+            TypeError: If block is not an integer.
+
+        Examples:
+            >>> wallet_balances = await address.describe(12345678)
+        """
         if not isinstance(block, int):
             raise TypeError(f"Block must be an integer. You passed {type(block)} {block}")
         return WalletBalances(await a_sync.gather({
@@ -69,20 +170,68 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     
     @stuck_coro_debugger
     async def assets(self, block: Optional[Block] = None) -> TokenBalances:
+        """
+        Retrieves the asset balances at a given block.
+
+        Args:
+            block (optional): The block number. Defaults to None.
+
+        Returns:
+            :class:`~eth_portfolio.typing.TokenBalances`: The asset balances.
+
+        Examples:
+            >>> assets = await address.assets(12345678)
+        """
         return await self.balances(block=block, sync=False)
     
     @stuck_coro_debugger
     async def debt(self, block: Optional[Block] = None) -> RemoteTokenBalances:
+        """
+        Retrieves the debt balances at a given block.
+
+        Args:
+            block (optional): The block number. Defaults to None.
+
+        Returns:
+            :class:`~eth_portfolio.typing.RemoteTokenBalances`: The debt balances.
+
+        Examples:
+            >>> debt = await address.debt(12345678)
+        """
         return await _lending.debt(self.address, block=block)
     
     @stuck_coro_debugger
     async def external_balances(self, block: Optional[Block] = None) -> RemoteTokenBalances:
+        """
+        Retrieves the external balances at a given block.
+
+        Args:
+            block (optional): The block number. Defaults to None.
+
+        Returns:
+            :class:`~eth_portfolio.typing.RemoteTokenBalances`: The external balances.
+
+        Examples:
+            >>> external_balances = await address.external_balances(12345678)
+        """
         return sum(await asyncio.gather(self.staking(block, sync=False), self.collateral(block, sync=False)))
 
     # Assets
     
     @stuck_coro_debugger
     async def balances(self, block: Optional[Block]) -> TokenBalances:
+        """
+        Retrieves the balances at a given block.
+
+        Args:
+            block: The block number.
+
+        Returns:
+            :class:`~eth_portfolio.typing.TokenBalances`: The balances.
+
+        Examples:
+            >>> balances = await address.balances(12345678)
+        """
         eth_balance, token_balances = await asyncio.gather(
             self.eth_balance(block, sync=False),
             self.token_balances(block, sync=False),
@@ -92,10 +241,37 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
 
     @stuck_coro_debugger
     async def eth_balance(self, block: Optional[Block]) -> Balance:
+        """
+        Retrieves the ETH balance at a given block.
+
+        Args:
+            block: The block number.
+
+        Returns:
+            :class:`~eth_portfolio.typing.Balance`: The ETH balance.
+
+        Examples:
+            >>> eth_balance = await address.eth_balance(12345678)
+        """
         return await balances.load_eth_balance(self.address, block)
     
     @stuck_coro_debugger
     async def token_balances(self, block) -> TokenBalances:
+        """
+        Retrieves the token balances at a given block.
+
+        Args:
+            block: The block number.
+
+        Returns:
+            :class:`~eth_portfolio.typing.TokenBalances`: The token balances.
+
+        Raises:
+            MappingIsEmptyError: If no token balances are found.
+
+        Examples:
+            >>> token_balances = await address.token_balances(12345678)
+        """
         try:
             data = a_sync.map(
                 balances.load_token_balance, 
@@ -109,16 +285,53 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
    
     @stuck_coro_debugger 
     async def collateral(self, block: Optional[Block] = None) -> RemoteTokenBalances:
+        """
+        Retrieves the collateral balances at a given block.
+
+        Args:
+            block (optional): The block number. Defaults to None.
+
+        Returns:
+            :class:`~eth_portfolio.typing.RemoteTokenBalances`: The collateral balances.
+
+        Examples:
+            >>> collateral = await address.collateral(12345678)
+        """
         return await _lending.collateral(self.address, block=block)
     
     @stuck_coro_debugger
     async def staking(self, block: Optional[Block] = None) -> RemoteTokenBalances:
+        """
+        Retrieves the staking balances at a given block.
+
+        Args:
+            block (optional): The block number. Defaults to None.
+
+        Returns:
+            :class:`~eth_portfolio.typing.RemoteTokenBalances`: The staking balances.
+
+        Examples:
+            >>> staking_balances = await address.staking(12345678)
+        """
         return await _external.balances(self.address, block=block)
     
     # Ledger Entries
     
     @stuck_coro_debugger
     async def all(self, start_block: Block, end_block: Block) -> Dict[str, PandableLedgerEntryList]:
+        """
+        Retrieves all ledger entries between two blocks.
+
+        Args:
+            start_block: The starting block number.
+            end_block: The ending block number.
+
+        Returns:
+            Dict[str, :class:`~eth_portfolio._ledgers.address.PandableLedgerEntryList`]: The ledger entries.
+
+        Examples:
+            >>> all_entries = await address.all(12000000, 12345678)
+        """
         return a_sync.gather({
             "transactions": self.transactions.get(start_block, end_block, sync=False),
             "internal_transactions": self.internal_transfers.get(start_block, end_block, sync=False),
