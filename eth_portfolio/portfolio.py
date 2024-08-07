@@ -8,7 +8,7 @@ This file is part of a larger system that includes modules for handling portfoli
 
 import asyncio
 import logging
-from functools import cached_property, wraps
+from functools import wraps
 from typing import Any, Dict, Iterable, Iterator, List, Tuple, Union
 
 import a_sync
@@ -311,21 +311,6 @@ class Portfolio(a_sync.ASyncGenericBase):
             >>> print(token_transfers)
         """
         return self.ledger.token_transfers
-    
-    @cached_property
-    def chain_id(self) -> int:
-        """
-        Returns the chain ID for the connected brownie network.
-
-        Returns:
-            The chain ID.
-
-        Example:
-            >>> portfolio = Portfolio(addresses=["0xAddress1", "0xAddress2"])
-            >>> chain_id = portfolio.chain_id
-            >>> print(chain_id)
-        """
-        return self.w3.eth.chainId
     
     async def describe(self, block: int) -> PortfolioBalances:
         """
