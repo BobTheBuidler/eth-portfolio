@@ -7,7 +7,7 @@ from typing import (Any, DefaultDict, Dict, Iterable, List, Literal, Optional,
 
 from checksum_dict import DefaultChecksumDict
 from pandas import DataFrame, concat
-from typing_extensions import ParamSpec
+from typing_extensions import ParamSpec, Self
 from y.datatypes import Address, Block
 
 from eth_portfolio.structs import _DictStruct
@@ -25,10 +25,10 @@ class Balance(_DictStruct):
         ''' An alias for usd_value. ''' 
         return self.usd_value
     
-    def __add__(self, other: Union['Balance', Literal[0]]) -> 'Balance':
-        """ It is on you to ensure the two BalanceItems are for the same token. """
+    def __add__(self, other: 'Balance') -> 'Balance':
+        """ It is on you to ensure the two Balances are for the same token. """
         if not isinstance(other, Balance):
-            raise TypeError(f"{other} is not a BalanceItem")
+            raise TypeError(f"{other} is not a `Balance` object")
         try:
             return Balance(balance = self.balance + other.balance, usd_value = self.usd_value + other.usd_value)
         except Exception as e:
@@ -39,9 +39,10 @@ class Balance(_DictStruct):
             return self
         return self.__add__(other)  # type: ignore
     
-    def __sub__(self, other: Union['Balance', Literal[0]]) -> 'Balance':
-        """ It is on you to ensure the two BalanceItems are for the same token. """
-        assert isinstance(other, Balance), f"{other} is not a BalanceItem"
+    def __sub__(self, other: 'Balance') -> 'Balance':
+        """ It is on you to ensure the two Balances are for the same token. """
+        if not isinstance(other, Balance):
+            raise TypeError(f"{other} is not a `Balance` object.")
         try:
             return Balance(balance = self.balance - other.balance, usd_value = self.usd_value - other.usd_value)
         except Exception as e:
@@ -59,9 +60,9 @@ TokenAddress = TypeVar('TokenAddress', bound=Address)
 
 class _SummableNonNumeric(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def __add__(self: _T, other: Union[_T, Literal[0]]) -> _T:
+    def __add__(self, other: Self) -> Self:
         ...
-    def __radd__(self, other: Union[_T, Literal[0]]) -> _T:
+    def __radd__(self, other: Union[Self, Literal[0]]) -> Self:
         if other == 0:
             return self
         return self.__add__(other)  # type: ignore
@@ -73,8 +74,8 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumeric):
     """
     A specialized defaultdict subclass made for holding a mapping of ``token -> balance``
 
-    Token addresses are checksummed automatically when adding items to the dict, and the default value for a token not present is an empty :class:~eth_portfolio.typing.Balance: object.
-    """ 
+    Token addresses are checksummed automatically when adding items to the dict, and the default value for a token not present is an empty :class:`~eth_portfolio.typing.Balance` object.
+    """
     def __init__(self, seed: Optional[_TBSeed] = None) -> None:
         super().__init__(Balance)
         if seed is None:
@@ -108,8 +109,9 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumeric):
     def __repr__(self) -> str:
         return f"TokenBalances{str(dict(self))}"
     
-    def __add__(self, other: Union['TokenBalances', Literal[0]]) -> 'TokenBalances':
-        assert isinstance(other, TokenBalances), f"{other} is not a TokenBalances object"
+    def __add__(self, other: 'TokenBalances') -> 'TokenBalances':
+        if not isinstance(other, TokenBalances):
+            raise TypeError(f"{other} is not a TokenBalances object")
         # NOTE We need a new object to avoid mutating the inputs
         combined: TokenBalances = TokenBalances()
         for token, balance in self.items():
@@ -123,8 +125,9 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumeric):
                     combined._setitem_nochecksum(token, Balance(balance.balance, balance.usd_value))
         return combined
     
-    def __sub__(self, other: Union['TokenBalances', Literal[0]]) -> 'TokenBalances':
-        assert isinstance(other, TokenBalances), f"{other} is not a TokenBalances object"
+    def __sub__(self, other: 'TokenBalances') -> 'TokenBalances':
+        if not isinstance(other, TokenBalances):
+            raise TypeError(f"{other} is not a TokenBalances object")
         # We need a new object to avoid mutating the inputs
         subtracted: TokenBalances = TokenBalances(self)
         for token, balance in other.items():
@@ -143,10 +146,10 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         if seed is None:
             return
         if isinstance(seed, dict):
-            seed = seed.items()  # type: ignore
+            seed = seed.items()  # type: ignore [assignment]
         if isinstance(seed, Iterable):
-            for remote, token_balances in seed:
-                self[remote] += token_balances  # type: ignore
+            for remote, token_balances in seed:  # type: ignore [misc]
+                self[remote] += token_balances  # type: ignore [has-type]
         else:
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
     
@@ -176,8 +179,9 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
     def __repr__(self) -> str:
         return f"RemoteTokenBalances{str(dict(self))}"
     
-    def __add__(self, other: Union['RemoteTokenBalances', Literal[0]]) -> 'RemoteTokenBalances':
-        assert isinstance(other, RemoteTokenBalances), f"{other} is not a RemoteTokenBalances object"
+    def __add__(self, other: 'RemoteTokenBalances') -> 'RemoteTokenBalances':
+        if not isinstance(other, RemoteTokenBalances):
+            raise TypeError(f"{other} is not a RemoteTokenBalances object")
         # NOTE We need a new object to avoid mutating the inputs
         combined: RemoteTokenBalances = RemoteTokenBalances()
         for protocol, token_balances in self.items():
@@ -188,8 +192,9 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
                 combined[protocol] += token_balances
         return combined
     
-    def __sub__(self, other: Union['RemoteTokenBalances', Literal[0]]) -> 'RemoteTokenBalances':
-        assert isinstance(other, RemoteTokenBalances), f"{other} is not a RemoteTokenBalances object"
+    def __sub__(self, other: 'RemoteTokenBalances') -> 'RemoteTokenBalances':
+        if not isinstance(other, RemoteTokenBalances):
+            raise TypeError(f"{other} is not a RemoteTokenBalances object")
         # We need a new object to avoid mutating the inputs
         subtracted: RemoteTokenBalances = RemoteTokenBalances(self)
         for protocol, token_balances in other.items():
@@ -258,8 +263,9 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
     def __repr__(self) -> str:
         return f"WalletBalances {str(dict(self))}"
 
-    def __add__(self, other: Union['WalletBalances', Literal[0]]) -> 'WalletBalances':
-        assert isinstance(other, WalletBalances), f"{other} is not a WalletBalances object"
+    def __add__(self, other: 'WalletBalances') -> 'WalletBalances':
+        if not isinstance(other, WalletBalances):
+            raise TypeError(f"{other} is not a WalletBalances object")
         # NOTE We need a new object to avoid mutating the inputs
         combined: WalletBalances = WalletBalances()
         for category, balances in self.items():
@@ -270,8 +276,9 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
                 combined[category] += balances
         return combined
     
-    def __sub__(self, other: Union['WalletBalances', Literal[0]]) -> 'WalletBalances':
-        assert isinstance(other, WalletBalances), f"{other} is not a WalletBalances object"
+    def __sub__(self, other: 'WalletBalances') -> 'WalletBalances':
+        if not isinstance(other, WalletBalances):
+            raise TypeError(f"{other} is not a WalletBalances object")
         # We need a new object to avoid mutating the inputs
         subtracted: WalletBalances = WalletBalances(self)
         for category, balances in other.items():
@@ -353,8 +360,9 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
     def __repr__(self) -> str:
         return f"WalletBalances{str(dict(self))}"
     
-    def __add__(self, other: Union['PortfolioBalances', Literal[0]]) -> 'PortfolioBalances':
-        assert isinstance(other, PortfolioBalances), f"{other} is not a WalletBalances object"
+    def __add__(self, other: 'PortfolioBalances') -> 'PortfolioBalances':
+        if not isinstance(other, PortfolioBalances):
+            raise TypeError(f"{other} is not a WalletBalances object")
         # NOTE We need a new object to avoid mutating the inputs
         combined: PortfolioBalances = PortfolioBalances()
         for wallet, balance in self.items():
@@ -365,8 +373,9 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
                 combined._setitem_nochecksum(wallet, combined._getitem_nochecksum(wallet) + balance)
         return combined
     
-    def __sub__(self, other: Union['PortfolioBalances', Literal[0]]) -> 'PortfolioBalances':
-        assert isinstance(other, PortfolioBalances), f"{other} is not a WalletBalances object"
+    def __sub__(self, other: 'PortfolioBalances') -> 'PortfolioBalances':
+        if not isinstance(other, PortfolioBalances):
+            raise TypeError(f"{other} is not a WalletBalances object")
         # We need a new object to avoid mutating the inputs
         subtracted: PortfolioBalances = PortfolioBalances(self)
         for protocol, balances in other.items():
@@ -405,8 +414,9 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumeric)
     def __repr__(self) -> str:
         return f"WalletBalances{str(dict(self))}"
     
-    def __add__(self, other: Union['WalletBalancesRaw', Literal[0]]) -> 'WalletBalancesRaw':
-        assert isinstance(other, WalletBalancesRaw), f"{other} is not a WalletBalancesRaw object"
+    def __add__(self, other: 'WalletBalancesRaw') -> 'WalletBalancesRaw':
+        if not isinstance(other, WalletBalancesRaw):
+            raise TypeError(f"{other} is not a WalletBalancesRaw object")
         # NOTE We need a new object to avoid mutating the inputs
         combined: WalletBalancesRaw = WalletBalancesRaw()
         for wallet, balance in self.items():
@@ -417,8 +427,9 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumeric)
                 combined._setitem_nochecksum(wallet, combined._getitem_nochecksum(wallet) + balance)
         return combined
     
-    def __sub__(self, other: Union['WalletBalancesRaw', Literal[0]]) -> 'WalletBalancesRaw':
-        assert isinstance(other, WalletBalancesRaw), f"{other} is not a WalletBalancesRaw object"
+    def __sub__(self, other: 'WalletBalancesRaw') -> 'WalletBalancesRaw':
+        if not isinstance(other, WalletBalancesRaw):
+            raise TypeError(f"{other} is not a WalletBalancesRaw object")
         # We need a new object to avoid mutating the inputs
         subtracted: WalletBalancesRaw = WalletBalancesRaw(self)
         for wallet, balances in other.items():
@@ -469,8 +480,9 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
     def __repr__(self) -> str:
         return f"PortfolioBalancesByCategory{str(dict(self))}"
     
-    def __add__(self, other: Union['PortfolioBalancesByCategory', Literal[0]]) -> 'PortfolioBalancesByCategory':
-        assert isinstance(other, PortfolioBalancesByCategory), f"{other} is not a PortfolioBalancesByCategory object"
+    def __add__(self, other: 'PortfolioBalancesByCategory') -> 'PortfolioBalancesByCategory':
+        if not isinstance(other, PortfolioBalancesByCategory):
+            raise TypeError(f"{other} is not a PortfolioBalancesByCategory object")
         # NOTE We need a new object to avoid mutating the inputs
         combined: PortfolioBalancesByCategory = PortfolioBalancesByCategory()
         for protocol, balances in self.items():
@@ -481,8 +493,9 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
                 combined[protocol] += balances
         return combined
     
-    def __sub__(self, other: Union['PortfolioBalancesByCategory', Literal[0]]) -> 'PortfolioBalancesByCategory':
-        assert isinstance(other, PortfolioBalancesByCategory), f"{other} is not a PortfolioBalancesByCategory object"
+    def __sub__(self, other: 'PortfolioBalancesByCategory') -> 'PortfolioBalancesByCategory':
+        if not isinstance(other, PortfolioBalancesByCategory):
+            raise TypeError(f"{other} is not a PortfolioBalancesByCategory object")
         # We need a new object to avoid mutating the inputs
         subtracted: PortfolioBalancesByCategory = PortfolioBalancesByCategory(self)
         for protocol, balances in other.items():
