@@ -41,7 +41,7 @@ class Maker(LendingProtocolWithLockedCollateral):
         )
 
         gems, ink_data = await asyncio.gather(
-            asyncio.gather(*[self.get_gem(ilk) for ilk in ilks]),
+            asyncio.gather(*[self.get_gem(str(ilk)) for ilk in ilks]),
             asyncio.gather(*[self.vat.urns.coroutine(ilk, urn, block_identifier=block) for ilk in ilks]),
         )
 
