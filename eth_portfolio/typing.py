@@ -71,7 +71,9 @@ _TBSeed = Union[Dict[Address, Balance], Iterable[Tuple[Address, Balance]]]
 
 class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumeric):
     """
-    Keyed: ``token -> balance``
+    A specialized defaultdict subclass made for holding a mapping of ``token -> balance``
+
+    Token addresses are checksummed automatically when adding items to the dict, and the default value for a token not present is an empty :class:~eth_portfolio.typing.Balance: object.
     """ 
     def __init__(self, seed: Optional[_TBSeed] = None) -> None:
         super().__init__(Balance)
@@ -84,6 +86,11 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumeric):
                 self[token] += balance
         else:
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
+    
+    def __setitem__(self, key, value):
+        if not isinstance(value, Balance):
+            raise TypeError(f'value must be a `Balance` object. You passed {value}') from None
+        return super().__setitem__(key, value)
     
     @property
     def dataframe(self) -> DataFrame:
@@ -142,6 +149,11 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
                 self[remote] += token_balances  # type: ignore
         else:
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
+    
+    def __setitem__(self, key, value):
+        if not isinstance(value, TokenBalances):
+            raise TypeError(f'value must be a `TokenBalances` object. You passed {value}') from None
+        return super().__setitem__(key, value)
     
     @property
     def dataframe(self) -> DataFrame:
