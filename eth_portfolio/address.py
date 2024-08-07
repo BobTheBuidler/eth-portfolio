@@ -119,7 +119,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     
     @stuck_coro_debugger
     async def all(self, start_block: Block, end_block: Block) -> Dict[str, PandableLedgerEntryList]:
-        return a_sync.gather({
+        return await a_sync.gather({
             "transactions": self.transactions.get(start_block, end_block, sync=False),
             "internal_transactions": self.internal_transfers.get(start_block, end_block, sync=False),
             "token_transfers": self.token_transfers.get(start_block, end_block, sync=False),
