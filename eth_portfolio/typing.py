@@ -132,7 +132,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumeric):
         subtracted: TokenBalances = TokenBalances(self)
         for token, balance in other.items():
             subtracted[token] -= balance
-        for token, balance in subtracted.items():
+        for token, balance in dict(subtracted).items():
             if not balance:
                 del subtracted[token]
         return subtracted
@@ -199,7 +199,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         subtracted: RemoteTokenBalances = RemoteTokenBalances(self)
         for protocol, token_balances in other.items():
             subtracted[protocol] -= token_balances
-        for protocol, token_balances in subtracted.items():
+        for protocol, token_balances in dict(subtracted).items():
             if not token_balances:
                 del subtracted[protocol]
         return subtracted
@@ -283,7 +283,7 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         subtracted: WalletBalances = WalletBalances(self)
         for category, balances in other.items():
             subtracted[category] -= balances  # type: ignore
-        for category, balances in subtracted.items():
+        for category, balances in dict(subtracted).items():
             if not balances:
                 del subtracted[category]
         return subtracted
@@ -329,6 +329,11 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
                 self[wallet] += balances
         else:
             raise TypeError(f"{seed} is not a valid input for PortfolioBalances")
+    
+    def __setitem__(self, key, value):
+        if not isinstance(value, WalletBalances):
+            raise TypeError(f'value must be a `WalletBalances` object. You passed {value}') from None
+        return super().__setitem__(key, value)
     
     @property
     def dataframe(self) -> DataFrame:
