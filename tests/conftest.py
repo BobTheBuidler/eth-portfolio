@@ -1,7 +1,10 @@
 
 import os
+import sys
 
 from brownie import network
+
+sys.path.insert(0, os.path.abspath('.'))
 
 try:
     brownie_network = os.environ["PYTEST_NETWORK"]
