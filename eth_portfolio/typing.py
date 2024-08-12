@@ -1,5 +1,4 @@
 
-import abc
 from decimal import Decimal
 from functools import cached_property
 from typing import (Any, DefaultDict, Dict, Iterable, List, Literal, Optional,
@@ -150,24 +149,26 @@ Addresses = Union[Address, Iterable[Address]]
 TokenAddress = TypeVar('TokenAddress', bound=Address)
 
 
-class _SummableNonNumeric(metaclass=abc.ABCMeta):
+class _SummableNonNumericMixin:
     """
-    Abstract base class for non-numeric summable objects.
+    Mixin class for non-numeric summable objects.
 
     This class provides an interface for objects that can be used with `sum` but are not necessarily numeric.
     """
-
-    @abc.abstractmethod
     def __add__(self, other: Self) -> Self:
         """
         Abstract method for adding two objects of the same type.
 
         Args:
             other: Another object of the same type.
+        
+        Raises:
+            NotImplementedError: If no `__add__` method was defined on the subclass.
 
         Returns:
             A new object representing the sum.
         """
+        raise NotImplementedError
 
     def __radd__(self, other: Union[Self, Literal[0]]) -> Self:
         """
@@ -200,7 +201,7 @@ class _SummableNonNumeric(metaclass=abc.ABCMeta):
 
 _TBSeed = Union[Dict[Address, Balance], Iterable[Tuple[Address, Balance]]]
 
-class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumeric):
+class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
     """
     A specialized defaultdict subclass made for holding a mapping of ``token -> balance``
 
@@ -321,7 +322,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumeric):
 
 _RTBSeed = Dict[ProtocolLabel, TokenBalances]
 
-class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNonNumeric):
+class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNonNumericMixin):
     def __init__(self, seed: Optional[_RTBSeed] = None) -> None:
         super().__init__(TokenBalances)
         if seed is None:
@@ -444,7 +445,7 @@ CategoryLabel = Literal["assets", "debt", "external"]
 
 _WBSeed = Union[Dict[CategoryLabel, TokenBalances], Iterable[Tuple[CategoryLabel, TokenBalances]]]
 
-class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalances]], _SummableNonNumeric):
+class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalances]], _SummableNonNumericMixin):
     """
     Keyed: ``category -> token -> balance``
     """
@@ -642,7 +643,7 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
 
 _PBSeed = Union[Dict[Address, WalletBalances], Iterable[Tuple[Address, WalletBalances]]]
 
-class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric):
+class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumericMixin):
     """
     Keyed: ``wallet -> category -> token -> balance``
     """ 
@@ -762,7 +763,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
 
 _WTBInput = Union[Dict[Address, TokenBalances], Iterable[Tuple[Address, TokenBalances]]]
 
-class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumeric):
+class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericMixin):
     """
     Since PortfolioBalances key lookup is:    ``wallet   -> category -> token    -> balance``
     and WalletBalances key lookup is:         ``category -> token    -> balance``
@@ -841,7 +842,7 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumeric)
 
 _CBInput = Union[Dict[CategoryLabel, WalletBalancesRaw], Iterable[Tuple[CategoryLabel, WalletBalancesRaw]]]
 
-class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw], _SummableNonNumeric):
+class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw], _SummableNonNumericMixin):
     """
     Keyed: ``category -> wallet -> token -> balance``
     """ 
