@@ -17,7 +17,7 @@ from y.datatypes import Address, Block
 
 from eth_portfolio._db import utils as db
 from eth_portfolio._loaders.utils import get_transaction_receipt, underscore
-from eth_portfolio.structs import Transaction, _AccessListEntry
+from eth_portfolio.structs import AccessListEntry, Transaction
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +60,7 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                     tx['price'] = round(Decimal(await get_price(EEE_ADDRESS, block = tx['blockNumber'], sync=False)), 18)
                     tx['value_usd'] = tx['value'] * tx['price']
                 if access := tx.pop('accessList', None):
-                    tx['access_list'] = tuple(_AccessListEntry(address=obj["address"], storage_keys=obj["storageKeys"]) for obj in access)
+                    tx['access_list'] = tuple(AccessListEntry(address=obj["address"], storage_keys=obj["storageKeys"]) for obj in access)
                 try:
                     transaction = Transaction(**{underscore(k): v for k, v in tx.items()})
                 except TypeError as e:
