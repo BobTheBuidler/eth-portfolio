@@ -249,8 +249,8 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
             A DataFrame representation of the token balances.
         """
         df = DataFrame({token: {**balance} for token, balance in self.items()}).T
-        df.rename(columns = {'index': 'token'}, inplace = True)
         df.reset_index(inplace=True)
+        df.rename(columns = {'index': 'token'}, inplace = True)
         return df
     
     def sum_usd(self) -> Decimal:
