@@ -53,7 +53,20 @@ autodoc_default_options = {
     'undoc-members': True,
     'member-order': 'groupwise',
     # hide private methods that aren't relevant to us here
-    'exclude-members': '_abc_impl,_fget,_fset,_fdel,_ASyncSingletonMeta__instances,_ASyncSingletonMeta__lock'
+    'exclude-members': [
+        '__new__',
+        '_abc_impl',
+        '_fget',
+        '_fset',
+        '_fdel',
+        '_ASyncSingletonMeta__instances',
+        '_ASyncSingletonMeta__lock',
+        '_is_protocol',
+        'fromkeys',
+        'default_factory',
+        'setdefault',
+        '_getitem_nochecksum',
+        '_setitem_nochecksum',
 }
 autodoc_typehints = "description"
 # Don't show class signature with the class' name.
