@@ -33,7 +33,14 @@ class ProtocolWithStakingABC(ProtocolABC, metaclass=abc.ABCMeta):
 
 class StakingPoolABC(ProtocolABC, metaclass=abc.ABCMeta):
     contract_address: Address
+    """
+    The address of the staking pool.
+    """
+    
     balance_method_name: str
+    """
+    The name of the method that is used to query a staker's balance in the staking pool.
+    """
 
     @a_sync.future
     async def __call__(self, *args, block: Optional[Block] = None, **_) -> int:
@@ -58,7 +65,6 @@ class StakingPoolABC(ProtocolABC, metaclass=abc.ABCMeta):
 
 
 class SingleTokenStakingPoolABC(StakingPoolABC, metaclass=abc.ABCMeta):
-    token: ERC20
     """
     Works for any contract that has a view method with the following signature:
 
@@ -70,6 +76,11 @@ class SingleTokenStakingPoolABC(StakingPoolABC, metaclass=abc.ABCMeta):
      - ``address`` is the user's address, provided at runtime.
      - ``methodName`` is whatever string you set for the staking pool's ``balance_method_name``.
      - ``uint256`` is the user's ``token`` balance held in ``contract_address`` at the queried block.
+    """
+
+    token: ERC20
+    """
+    The token that is used for staking in this pool.
     """
 
     @property
