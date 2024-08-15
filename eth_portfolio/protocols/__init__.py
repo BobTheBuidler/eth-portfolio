@@ -14,8 +14,7 @@ _import_submodules()
 
 
 class ExternalBalances:
-    def __init__(self) -> None:
-        self.protocols: List[StakingPoolABC] = _get_protocols_for_submodule()  # type: ignore
+    protocols: List[StakingPoolABC] = _get_protocols_for_submodule()  # type: ignore
     
     @a_sync.future
     async def balances(self, address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
