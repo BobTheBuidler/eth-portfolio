@@ -1,5 +1,4 @@
 
-import asyncio
 from typing import List, Optional, Union
 
 import a_sync
@@ -18,10 +17,13 @@ protocols: List[Union[LendingProtocol, LendingProtocolWithLockedCollateral]] = _
 @a_sync.future
 @stuck_coro_debugger
 async def collateral(address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
-    protocols = (protocol for protocol in protocols if isinstance(protocol, LendingProtocolWithLockedCollateral))
     return RemoteTokenBalances({
         type(protocol).__name__: token_balances
-        async for protocol, token_balances in a_sync.map(lambda p: p.balances(address, block), protocols)
+        async for protocol, token_balances
+        in a_sync.map(
+            lambda p: p.balances(address, block),
+            (protocol for protocol in protocols if isinstance(protocol, LendingProtocolWithLockedCollateral)),
+        )
         if token_balances is not None
     })
 
