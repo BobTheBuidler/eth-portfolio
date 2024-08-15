@@ -206,6 +206,14 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
     A specialized defaultdict subclass made for holding a mapping of ``token -> balance``
 
     Token addresses are checksummed automatically when adding items to the dict, and the default value for a token not present is an empty :class:`~eth_portfolio.typing.Balance` object.
+
+    Args:
+        seed: An initial seed of token balances, either as a dictionary or an iterable of tuples.
+
+    Example:
+        >>> token_balances = TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})
+        >>> token_balances['0x123'].balance
+        Decimal('100')
     """
     def __init__(self, seed: Optional[_TBSeed] = None) -> None:
         super().__init__(Balance)
@@ -232,8 +240,8 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
 
         Example:
             >>> token_balances = TokenBalances()
-            >>> token_balances[Address('0x123')] = Balance(Decimal('100'), Decimal('2000'))
-            >>> token_balances[Address('0x123')].balance
+            >>> token_balances['0x123'] = Balance(Decimal('100'), Decimal('2000'))
+            >>> token_balances['0x123'].balance
             Decimal('100')
         """
         if not isinstance(value, Balance):
@@ -261,7 +269,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
             The total USD value of all token balances.
 
         Example:
-            >>> token_balances = TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})
+            >>> token_balances = TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})
             >>> total_usd = token_balances.sum_usd()
             >>> total_usd
             Decimal('2000')
@@ -305,10 +313,10 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
             TypeError: If the other object is not a :class:`~eth_portfolio.typing.TokenBalances`.
 
         Example:
-            >>> tb1 = TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})
-            >>> tb2 = TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})
+            >>> tb1 = TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})
+            >>> tb2 = TokenBalances({'0x123': Balance(Decimal('50'), Decimal('1000'))})
             >>> combined_tb = tb1 + tb2
-            >>> combined_tb[Address('0x123')].balance
+            >>> combined_tb['0x123'].balance
             Decimal('150')
         """
         if not isinstance(other, TokenBalances):
@@ -340,10 +348,10 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
             TypeError: If the other object is not a :class:`~eth_portfolio.typing.TokenBalances`.
 
         Example:
-            >>> tb1 = TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})
-            >>> tb2 = TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})
+            >>> tb1 = TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})
+            >>> tb2 = TokenBalances({'0x123': Balance(Decimal('50'), Decimal('1000'))})
             >>> result_tb = tb1 - tb2
-            >>> result_tb[Address('0x123')].balance
+            >>> result_tb['0x123'].balance
             Decimal('50')
         """
         if not isinstance(other, TokenBalances):
@@ -372,8 +380,8 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
             or an iterable of tuples.
 
     Example:
-        >>> remote_balances = RemoteTokenBalances({'protocol1': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
-        >>> remote_balances['protocol1'][Address('0x123')].balance
+        >>> remote_balances = RemoteTokenBalances({'protocol1': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})
+        >>> remote_balances['protocol1']['0x123'].balance
         Decimal('100')
     """
     def __init__(self, seed: Optional[_RTBSeed] = None) -> None:
@@ -388,10 +396,26 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         else:
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
     
-    def __setitem__(self, key, value):
+    def __setitem__(self, protocol: str, value: TokenBalances):
+        """
+        Sets the token balances for a given protocol.
+
+        Args:
+            key: The protocol label.
+            value: The token balances to set for the protocol.
+
+        Raises:
+            TypeError: If the value is not a :class:`~eth_portfolio.typing.TokenBalances` object.
+
+        Example:
+            >>> remote_balances = RemoteTokenBalances()
+            >>> remote_balances['protocol1'] = TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})
+            >>> remote_balances['protocol1']['0x123'].balance
+            Decimal('100')
+        """
         if not isinstance(value, TokenBalances):
             raise TypeError(f'value must be a `TokenBalances` object. You passed {value}') from None
-        return super().__setitem__(key, value)
+        return super().__setitem__(protocol, value)
     
     @property
     def dataframe(self) -> DataFrame:
@@ -419,7 +443,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
             The total USD value of all remote token balances.
 
         Example:
-            >>> remote_balances = RemoteTokenBalances({'protocol1': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
+            >>> remote_balances = RemoteTokenBalances({'protocol1': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})
             >>> total_usd = remote_balances.sum_usd()
             >>> total_usd
             Decimal('2000')
@@ -463,10 +487,10 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
             TypeError: If the other object is not a :class:`~eth_portfolio.typing.RemoteTokenBalances`.
 
         Example:
-            >>> rb1 = RemoteTokenBalances({'protocol1': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
-            >>> rb2 = RemoteTokenBalances({'protocol1': TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})})
+            >>> rb1 = RemoteTokenBalances({'protocol1': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})
+            >>> rb2 = RemoteTokenBalances({'protocol1': TokenBalances({'0x123': Balance(Decimal('50'), Decimal('1000'))})})
             >>> combined_rb = rb1 + rb2
-            >>> combined_rb['protocol1'][Address('0x123')].balance
+            >>> combined_rb['protocol1']['0x123'].balance
             Decimal('150')
         """
         if not isinstance(other, RemoteTokenBalances):
@@ -495,10 +519,10 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
             TypeError: If the other object is not a :class:`~eth_portfolio.typing.RemoteTokenBalances`.
 
         Example:
-            >>> rb1 = RemoteTokenBalances({'protocol1': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
-            >>> rb2 = RemoteTokenBalances({'protocol1': TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})})
+            >>> rb1 = RemoteTokenBalances({'protocol1': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})
+            >>> rb2 = RemoteTokenBalances({'protocol1': TokenBalances({'0x123': Balance(Decimal('50'), Decimal('1000'))})})
             >>> result_rb = rb1 - rb2
-            >>> result_rb['protocol1'][Address('0x123')].balance
+            >>> result_rb['protocol1']['0x123'].balance
             Decimal('50')
         """
         if not isinstance(other, RemoteTokenBalances):
@@ -528,8 +552,8 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         seed: An initial seed of wallet balances, either as a dictionary or an iterable of tuples.
 
     Example:
-        >>> wallet_balances = WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
-        >>> wallet_balances['assets'][Address('0x123')].balance
+        >>> wallet_balances = WalletBalances({'assets': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})
+        >>> wallet_balances['assets']['0x123'].balance
         Decimal('100')
     """
     def __init__(self, seed: Optional[Union["WalletBalances", _WBSeed]] = None) -> None:
@@ -605,7 +629,7 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
             The total USD value of the wallet's net assets (assets - debt + external).
 
         Example:
-            >>> wallet_balances = WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
+            >>> wallet_balances = WalletBalances({'assets': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})
             >>> total_usd = wallet_balances.sum_usd()
             >>> total_usd
             Decimal('2000')
@@ -649,10 +673,10 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
             TypeError: If the other object is not a :class:`~eth_portfolio.typing.WalletBalances`.
 
         Example:
-            >>> wb1 = WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
-            >>> wb2 = WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})})
+            >>> wb1 = WalletBalances({'assets': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})
+            >>> wb2 = WalletBalances({'assets': TokenBalances({'0x123': Balance(Decimal('50'), Decimal('1000'))})})
             >>> combined_wb = wb1 + wb2
-            >>> combined_wb['assets'][Address('0x123')].balance
+            >>> combined_wb['assets']['0x123'].balance
             Decimal('150')
         """
         if not isinstance(other, WalletBalances):
@@ -681,10 +705,10 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
             TypeError: If the other object is not a :class:`~eth_portfolio.typing.WalletBalances`.
 
         Example:
-            >>> wb1 = WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
-            >>> wb2 = WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})})
+            >>> wb1 = WalletBalances({'assets': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})
+            >>> wb2 = WalletBalances({'assets': TokenBalances({'0x123': Balance(Decimal('50'), Decimal('1000'))})})
             >>> result_wb = wb1 - wb2
-            >>> result_wb['assets'][Address('0x123')].balance
+            >>> result_wb['assets']['0x123'].balance
             Decimal('50')
         """
         if not isinstance(other, WalletBalances):
@@ -712,9 +736,9 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
             KeyError: If the key is not a valid category.
 
         Example:
-            >>> wallet_balances = WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
+            >>> wallet_balances = WalletBalances({'assets': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})
             >>> assets_balances = wallet_balances['assets']
-            >>> assets_balances[Address('0x123')].balance
+            >>> assets_balances['0x123'].balance
             Decimal('100')
         """
         self.__validatekey(key)
@@ -734,8 +758,8 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
 
         Example:
             >>> wallet_balances = WalletBalances()
-            >>> wallet_balances['assets'] = TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})
-            >>> wallet_balances['assets'][Address('0x123')].balance
+            >>> wallet_balances['assets'] = TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})
+            >>> wallet_balances['assets']['0x123'].balance
             Decimal('100')
         """
         self.__validateitem(key, value)
@@ -828,7 +852,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             The total USD value of all wallet balances in the portfolio.
 
         Example:
-            >>> portfolio_balances = PortfolioBalances({Address('0x123'): WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})})
+            >>> portfolio_balances = PortfolioBalances({'0x123': WalletBalances({'assets': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})})
             >>> total_usd = portfolio_balances.sum_usd()
             >>> total_usd
             Decimal('2000')
@@ -844,9 +868,9 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             :class:`~eth_portfolio.typing.PortfolioBalancesByCategory`: The inverted portfolio balances, grouped by category.
 
         Example:
-            >>> portfolio_balances = PortfolioBalances({Address('0x123'): WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})})
+            >>> portfolio_balances = PortfolioBalances({'0x123': WalletBalances({'assets': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})})
             >>> inverted_pb = portfolio_balances.inverted
-            >>> inverted_pb['assets'][Address('0x123')].balance
+            >>> inverted_pb['assets']['0x123'].balance
             Decimal('100')
         """
         inverted = PortfolioBalancesByCategory()
@@ -893,10 +917,10 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             TypeError: If the other object is not a :class:`~eth_portfolio.typing.PortfolioBalances`.
 
         Example:
-            >>> pb1 = PortfolioBalances({Address('0x123'): WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})})
-            >>> pb2 = PortfolioBalances({Address('0x123'): WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})})})
+            >>> pb1 = PortfolioBalances({'0x123': WalletBalances({'assets': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})})
+            >>> pb2 = PortfolioBalances({'0x123': WalletBalances({'assets': TokenBalances({'0x123': Balance(Decimal('50'), Decimal('1000'))})})})
             >>> combined_pb = pb1 + pb2
-            >>> combined_pb[Address('0x123')]['assets'][Address('0x123')].balance
+            >>> combined_pb['0x123']['assets']['0x123'].balance
             Decimal('150')
         """
         if not isinstance(other, PortfolioBalances):
@@ -925,10 +949,10 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             TypeError: If the other object is not a :class:`~eth_portfolio.typing.PortfolioBalances`.
 
         Example:
-            >>> pb1 = PortfolioBalances({Address('0x123'): WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})})
-            >>> pb2 = PortfolioBalances({Address('0x123'): WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})})})
+            >>> pb1 = PortfolioBalances({'0x123': WalletBalances({'assets': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})})
+            >>> pb2 = PortfolioBalances({'0x123': WalletBalances({'assets': TokenBalances({'0x123': Balance(Decimal('50'), Decimal('1000'))})})})
             >>> result_pb = pb1 - pb2
-            >>> result_pb[Address('0x123')]['assets'][Address('0x123')].balance
+            >>> result_pb['0x123']['assets']['0x123'].balance
             Decimal('50')
         """
         if not isinstance(other, PortfolioBalances):
@@ -951,7 +975,10 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
     and WalletBalances key lookup is:         ``category -> token    -> balance``
     We need a new structure for key pattern:  ``wallet   -> token    -> balance``
 
-    WalletBalancesRaw fills this role.
+    Example:
+        >>> raw_balances = WalletBalancesRaw({'0x123': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})
+        >>> raw_balances['0x123']['0x123'].balance
+        Decimal('100')
     """ 
     def __init__(self, seed: Optional[_WTBInput] = None) -> None:
         super().__init__(TokenBalances)
@@ -1002,10 +1029,10 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
             TypeError: If the other object is not a :class:`~eth_portfolio.typing.WalletBalancesRaw`.
 
         Example:
-            >>> raw_balances1 = WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
-            >>> raw_balances2 = WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})})
+            >>> raw_balances1 = WalletBalancesRaw({'0x123': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})
+            >>> raw_balances2 = WalletBalancesRaw({'0x123': TokenBalances({'0x123': Balance(Decimal('50'), Decimal('1000'))})})
             >>> combined_raw = raw_balances1 + raw_balances2
-            >>> combined_raw[Address('0x123')][Address('0x123')].balance
+            >>> combined_raw['0x123']['0x123'].balance
             Decimal('150')
         """
         if not isinstance(other, WalletBalancesRaw):
@@ -1034,10 +1061,10 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
             TypeError: If the other object is not a :class:`~eth_portfolio.typing.WalletBalancesRaw`.
 
         Example:
-            >>> raw_balances1 = WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
-            >>> raw_balances2 = WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})})
+            >>> raw_balances1 = WalletBalancesRaw({'0x123': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})
+            >>> raw_balances2 = WalletBalancesRaw({'0x123': TokenBalances({'0x123': Balance(Decimal('50'), Decimal('1000'))})})
             >>> result_raw = raw_balances1 - raw_balances2
-            >>> result_raw[Address('0x123')][Address('0x123')].balance
+            >>> result_raw['0x123']['0x123'].balance
             Decimal('50')
         """
         if not isinstance(other, WalletBalancesRaw):
@@ -1110,9 +1137,9 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
             :class:`~eth_portfolio.typing.PortfolioBalances`: The inverted portfolio balances, grouped by wallet first.
 
         Example:
-            >>> pb_by_category = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})})
+            >>> pb_by_category = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({'0x123': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})})
             >>> inverted_pb = pb_by_category.invert()
-            >>> inverted_pb[Address('0x123')]['assets'][Address('0x123')].balance
+            >>> inverted_pb['0x123']['assets']['0x123'].balance
             Decimal('100')
         """
         inverted = PortfolioBalances()
@@ -1159,10 +1186,10 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
             TypeError: If the other object is not a :class:`~eth_portfolio.typing.PortfolioBalancesByCategory`.
 
         Example:
-            >>> pb_by_category1 = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})})
-            >>> pb_by_category2 = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})})})
+            >>> pb_by_category1 = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({'0x123': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})})
+            >>> pb_by_category2 = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({'0x123': TokenBalances({'0x123': Balance(Decimal('50'), Decimal('1000'))})})})
             >>> combined_pb_by_category = pb_by_category1 + pb_by_category2
-            >>> combined_pb_by_category['assets'][Address('0x123')][Address('0x123')].balance
+            >>> combined_pb_by_category['assets']['0x123']['0x123'].balance
             Decimal('150')
         """
         if not isinstance(other, PortfolioBalancesByCategory):
@@ -1191,10 +1218,10 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
             TypeError: If the other object is not a :class:`~eth_portfolio.typing.PortfolioBalancesByCategory`.
 
         Example:
-            >>> pb_by_category1 = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})})
-            >>> pb_by_category2 = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})})})
+            >>> pb_by_category1 = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({'0x123': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})})
+            >>> pb_by_category2 = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({'0x123': TokenBalances({'0x123': Balance(Decimal('50'), Decimal('1000'))})})})
             >>> result_pb_by_category = pb_by_category1 - pb_by_category2
-            >>> result_pb_by_category['assets'][Address('0x123')][Address('0x123')].balance
+            >>> result_pb_by_category['assets']['0x123']['0x123'].balance
             Decimal('50')
         """
         if not isinstance(other, PortfolioBalancesByCategory):
