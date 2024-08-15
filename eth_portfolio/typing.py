@@ -17,38 +17,126 @@ _I = TypeVar('_I')
 _P = ParamSpec('_P')
 
 class Balance(_DictStruct):
+    """
+    Represents the balance of a single token, including its token amount and equivalent USD value.
+
+    Example:
+        >>> balance1 = Balance(Decimal('100'), Decimal('2000'))
+        >>> balance2 = Balance(Decimal('50'), Decimal('1000'))
+        >>> combined_balance = balance1 + balance2
+        >>> combined_balance.balance
+        Decimal('150')
+        >>> combined_balance.usd_value
+        Decimal('3000')
+    """
     balance: Decimal = Decimal(0)
+    """
+    The amount of the token.
+    """
     usd_value: Decimal = Decimal(0)
+    """
+    The USD equivalent value of the token amount.
+    """
     
     @property
     def usd(self) -> Decimal:
-        ''' An alias for usd_value. ''' 
+        """ 
+        An alias for `usd_value`. Returns the USD value of the token amount. 
+        """
         return self.usd_value
     
     def __add__(self, other: 'Balance') -> 'Balance':
-        """ It is on you to ensure the two Balances are for the same token. """
+        """
+        Adds two :class:`~eth_portfolio.typing.Balance` objects together. It is the user's responsibility to ensure that the two 
+        :class:`~eth_portfolio.typing.Balance` instances represent the same token.
+
+        Args:
+            other: Another :class:`~eth_portfolio.typing.Balance` object.
+
+        Returns:
+            A new :class:`~eth_portfolio.typing.Balance` object with the summed values.
+
+        Raises:
+            TypeError: If the other object is not a :class:`~eth_portfolio.typing.Balance`.
+            Exception: If any other error occurs during addition.
+
+        Example:
+            >>> balance1 = Balance(Decimal('100'), Decimal('2000'))
+            >>> balance2 = Balance(Decimal('50'), Decimal('1000'))
+            >>> combined_balance = balance1 + balance2
+            >>> combined_balance.balance
+            Decimal('150')
+            >>> combined_balance.usd_value
+            Decimal('3000')
+        """
         if not isinstance(other, Balance):
             raise TypeError(f"{other} is not a `Balance` object")
         try:
-            return Balance(balance = self.balance + other.balance, usd_value = self.usd_value + other.usd_value)
+            return Balance(balance=self.balance + other.balance, usd_value=self.usd_value + other.usd_value)
         except Exception as e:
             raise e.__class__(f"Cannot add {self} and {other}: {e}") from e
     
     def __radd__(self, other: Union['Balance', Literal[0]]) -> 'Balance':
+        """
+        Supports the addition operation from the right side to enable use of `sum`.
+
+        Args:
+            other: Another :class:`~eth_portfolio.typing.Balance` object or zero.
+
+        Returns:
+            A new :class:`~eth_portfolio.typing.Balance` object with the summed values.
+
+        Example:
+            >>> balance = Balance(Decimal('100'), Decimal('2000'))
+            >>> sum_balance = sum([balance, Balance()])
+            >>> sum_balance.balance
+            Decimal('100')
+        """
         if other == 0:
             return self
         return self.__add__(other)  # type: ignore
     
     def __sub__(self, other: 'Balance') -> 'Balance':
-        """ It is on you to ensure the two Balances are for the same token. """
+        """
+        Subtracts one :class:`~eth_portfolio.typing.Balance` object from another. It is the user's responsibility to ensure that 
+        the two :class:`~eth_portfolio.typing.Balance` instances represent the same token.
+
+        Args:
+            other: Another :class:`~eth_portfolio.typing.Balance` object.
+
+        Returns:
+            A new :class:`~eth_portfolio.typing.Balance` object with the subtracted values.
+
+        Raises:
+            TypeError: If the other object is not a :class:`~eth_portfolio.typing.Balance`.
+            Exception: If any other error occurs during subtraction.
+
+        Example:
+            >>> balance1 = Balance(Decimal('100'), Decimal('2000'))
+            >>> balance2 = Balance(Decimal('50'), Decimal('1000'))
+            >>> result_balance = balance1 - balance2
+            >>> result_balance.balance
+            Decimal('50')
+        """
         if not isinstance(other, Balance):
             raise TypeError(f"{other} is not a `Balance` object.")
         try:
-            return Balance(balance = self.balance - other.balance, usd_value = self.usd_value - other.usd_value)
+            return Balance(balance=self.balance - other.balance, usd_value=self.usd_value - other.usd_value)
         except Exception as e:
             raise e.__class__(f"Cannot subtract {self} and {other}: {e}") from e
     
     def __bool__(self) -> bool:
+        """
+        Evaluates the truth value of the :class:`~eth_portfolio.typing.Balance` object.
+
+        Returns:
+            True if either the balance or the USD value is non-zero, otherwise False.
+
+        Example:
+            >>> balance = Balance(Decimal('0'), Decimal('0'))
+            >>> bool(balance)
+            False
+        """
         return self.balance != 0 or self.usd_value != 0
 
 
@@ -61,8 +149,40 @@ TokenAddress = TypeVar('TokenAddress', bound=Address)
 class _SummableNonNumeric(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def __add__(self, other: Self) -> Self:
-        ...
+        """
+        Abstract method for adding two objects of the same type.
+
+        Args:
+            other: Another object of the same type.
+
+        Returns:
+            A new object representing the sum.
+        """
+
     def __radd__(self, other: Union[Self, Literal[0]]) -> Self:
+        """
+        Supports the addition operation from the right side to enable use of `sum`.
+
+        Args:
+            other: Another object of the same type or zero.
+
+        Returns:
+            A new object representing the sum.
+
+        Example:
+            >>> class Summable(_SummableNonNumeric):
+            ...     def __init__(self, value: int):
+            ...         self.value = value
+            ...     def __add__(self, other):
+            ...         return Summable(self.value + other.value)
+            ...     def __radd__(self, other):
+            ...         return self.__add__(other)
+            >>> a = Summable(10)
+            >>> b = Summable(20)
+            >>> sum_result = a + b
+            >>> sum_result.value
+            30
+        """
         if other == 0:
             return self
         return self.__add__(other)  # type: ignore
