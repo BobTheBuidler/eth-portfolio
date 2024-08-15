@@ -29,7 +29,9 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 class BadResponse(Exception):
-    pass
+    """
+    Exception raised for errors in the response from the web3 provider.
+    """
 
 
 T = TypeVar('T')
