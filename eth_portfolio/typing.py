@@ -519,7 +519,18 @@ _WBSeed = Union[Dict[CategoryLabel, TokenBalances], Iterable[Tuple[CategoryLabel
 
 class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalances]], _SummableNonNumericMixin):
     """
-    Keyed: ``category -> token -> balance``
+    Organizes token balances into categories such as assets, debts, and external balances for a single wallet.
+
+    The class uses categories as keys (`assets`, `debt`, `external`) and :class:`~eth_portfolio.typing.TokenBalances` or :class:`~eth_portfolio.typing.RemoteTokenBalances` 
+    objects as values.
+
+    Args:
+        seed: An initial seed of wallet balances, either as a dictionary or an iterable of tuples.
+
+    Example:
+        >>> wallet_balances = WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
+        >>> wallet_balances['assets'][Address('0x123')].balance
+        Decimal('100')
     """
     def __init__(self, seed: Optional[Union["WalletBalances", _WBSeed]] = None) -> None:
         super().__init__()
@@ -869,6 +880,25 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         return f"WalletBalances{str(dict(self))}"
     
     def __add__(self, other: 'PortfolioBalances') -> 'PortfolioBalances':
+        """
+        Adds another :class:`~eth_portfolio.typing.PortfolioBalances` object to this one.
+
+        Args:
+            other: Another :class:`~eth_portfolio.typing.PortfolioBalances` object.
+
+        Returns:
+            A new :class:`~eth_portfolio.typing.PortfolioBalances` object with the combined balances.
+
+        Raises:
+            TypeError: If the other object is not a :class:`~eth_portfolio.typing.PortfolioBalances`.
+
+        Example:
+            >>> pb1 = PortfolioBalances({Address('0x123'): WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})})
+            >>> pb2 = PortfolioBalances({Address('0x123'): WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})})})
+            >>> combined_pb = pb1 + pb2
+            >>> combined_pb[Address('0x123')]['assets'][Address('0x123')].balance
+            Decimal('150')
+        """
         if not isinstance(other, PortfolioBalances):
             raise TypeError(f"{other} is not a WalletBalances object")
         # NOTE We need a new object to avoid mutating the inputs
@@ -1026,7 +1056,19 @@ _CBInput = Union[Dict[CategoryLabel, WalletBalancesRaw], Iterable[Tuple[Category
 
 class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw], _SummableNonNumericMixin):
     """
-    Keyed: ``category -> wallet -> token -> balance``
+    Provides an inverted view of :class:`~eth_portfolio.typing.PortfolioBalances`, allowing access by category first, 
+    then by wallet and token.
+
+    The class uses category labels as keys (`assets`, `debt`, `external`) and :class:`~eth_portfolio.typing.WalletBalancesRaw` 
+    objects as values.
+
+    Args:
+        seed: An initial seed of portfolio balances by category, either as a dictionary or an iterable of tuples.
+
+    Example:
+        >>> pb_by_category = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({'0x123': TokenBalances({'0x456': Balance(Decimal('100'), Decimal('2000'))})})})
+        >>> pb_by_category['assets']['0x123']['0x456'].balance
+        Decimal('100')
     """ 
     def __init__(self, seed: Optional[_CBInput] = None) -> None:
         super().__init__(WalletBalancesRaw)
