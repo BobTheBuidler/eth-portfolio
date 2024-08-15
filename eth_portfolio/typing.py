@@ -86,6 +86,10 @@ class Balance(_DictStruct):
         Returns:
             A new :class:`~eth_portfolio.typing.Balance` object with the summed values.
 
+        Raises:
+            TypeError: If the other object is not a :class:`~eth_portfolio.typing.Balance`.
+            Exception: If any other error occurs during addition.
+
         Example:
             >>> balance = Balance(Decimal('100'), Decimal('2000'))
             >>> sum_balance = sum([balance, Balance()])
@@ -147,6 +151,12 @@ TokenAddress = TypeVar('TokenAddress', bound=Address)
 
 
 class _SummableNonNumeric(metaclass=abc.ABCMeta):
+    """
+    Abstract base class for non-numeric summable objects.
+
+    This class provides an interface for objects that can be used with `sum` but are not necessarily numeric.
+    """
+
     @abc.abstractmethod
     def __add__(self, other: Self) -> Self:
         """
@@ -209,24 +219,75 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumeric):
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
     
     def __setitem__(self, key, value):
+        """
+        Sets the balance for a given token address.
+
+        Args:
+            key: The token address.
+            value: The balance to set for the token.
+
+        Raises:
+            TypeError: If the value is not a :class:`~eth_portfolio.typing.Balance` object.
+
+        Example:
+            >>> token_balances = TokenBalances()
+            >>> token_balances[Address('0x123')] = Balance(Decimal('100'), Decimal('2000'))
+            >>> token_balances[Address('0x123')].balance
+            Decimal('100')
+        """
         if not isinstance(value, Balance):
             raise TypeError(f'value must be a `Balance` object. You passed {value}') from None
         return super().__setitem__(key, value)
     
     @property
     def dataframe(self) -> DataFrame:
+        """
+        Converts the token balances into a pandas DataFrame.
+
+        Returns:
+            A DataFrame representation of the token balances.
+        """
         df = DataFrame({token: {**balance} for token, balance in self.items()}).T
         df.rename(columns = {'index': 'token'}, inplace = True)
         df.reset_index(inplace=True)
         return df
     
     def sum_usd(self) -> Decimal:
+        """
+        Sums the USD values of all token balances.
+
+        Returns:
+            The total USD value of all token balances.
+
+        Example:
+            >>> token_balances = TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})
+            >>> total_usd = token_balances.sum_usd()
+            >>> total_usd
+            Decimal('2000')
+        """
         return Decimal(sum(balance.usd for balance in self.values()))
     
     def __bool__(self) -> bool:
+        """
+        Evaluates the truth value of the :class:`~eth_portfolio.typing.TokenBalances` object.
+
+        Returns:
+            True if any token has a non-zero balance, otherwise False.
+
+        Example:
+            >>> token_balances = TokenBalances()
+            >>> bool(token_balances)
+            False
+        """
         return any(self.values())
 
     def __repr__(self) -> str:
+        """
+        Returns a string representation of the :class:`~eth_portfolio.typing.TokenBalances` object.
+
+        Returns:
+            The string representation of the token balances.
+        """
         return f"TokenBalances{str(dict(self))}"
     
     def __add__(self, other: 'TokenBalances') -> 'TokenBalances':
@@ -280,6 +341,12 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
     
     @property
     def dataframe(self) -> DataFrame:
+        """
+        Converts the remote token balances into a pandas DataFrame.
+
+        Returns:
+            A DataFrame representation of the remote token balances.
+        """
         dfs: List[DataFrame] = []
         for protocol, balances in self.items():
             df = balances.dataframe
@@ -291,15 +358,63 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
             return DataFrame()
 
     def sum_usd(self) -> Decimal:
+        """
+        Sums the USD values of all token balances across all protocols.
+
+        Returns:
+            The total USD value of all remote token balances.
+
+        Example:
+            >>> remote_balances = RemoteTokenBalances({'protocol1': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
+            >>> total_usd = remote_balances.sum_usd()
+            >>> total_usd
+            Decimal('2000')
+        """
         return Decimal(sum(balance.sum_usd() for balance in self.values()))
     
     def __bool__(self) -> bool:
+        """
+        Evaluates the truth value of the :class:`~eth_portfolio.typing.RemoteTokenBalances` object.
+
+        Returns:
+            True if any protocol has a non-zero balance, otherwise False.
+
+        Example:
+            >>> remote_balances = RemoteTokenBalances()
+            >>> bool(remote_balances)
+            False
+        """
         return any(self.values())
 
     def __repr__(self) -> str:
+        """
+        Returns a string representation of the :class:`~eth_portfolio.typing.RemoteTokenBalances` object.
+
+        Returns:
+            The string representation of the remote token balances.
+        """
         return f"RemoteTokenBalances{str(dict(self))}"
     
     def __add__(self, other: 'RemoteTokenBalances') -> 'RemoteTokenBalances':
+        """
+        Adds another :class:`~eth_portfolio.typing.RemoteTokenBalances` object to this one.
+
+        Args:
+            other: Another :class:`~eth_portfolio.typing.RemoteTokenBalances` object.
+
+        Returns:
+            A new :class:`~eth_portfolio.typing.RemoteTokenBalances` object with the combined balances.
+
+        Raises:
+            TypeError: If the other object is not a :class:`~eth_portfolio.typing.RemoteTokenBalances`.
+
+        Example:
+            >>> rb1 = RemoteTokenBalances({'protocol1': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
+            >>> rb2 = RemoteTokenBalances({'protocol1': TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})})
+            >>> combined_rb = rb1 + rb2
+            >>> combined_rb['protocol1'][Address('0x123')].balance
+            Decimal('150')
+        """
         if not isinstance(other, RemoteTokenBalances):
             raise TypeError(f"{other} is not a RemoteTokenBalances object")
         # NOTE We need a new object to avoid mutating the inputs
@@ -352,18 +467,42 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         
     @property
     def assets(self) -> TokenBalances:
+        """
+        Returns the assets held by the wallet.
+
+        Returns:
+            :class:`~eth_portfolio.typing.TokenBalances`: The :class:`~eth_portfolio.typing.TokenBalances` object representing the wallet's assets.
+        """
         return self['assets']  # type: ignore
     
     @property
     def debt(self) -> RemoteTokenBalances:
+        """
+        Returns the debts associated with the wallet.
+
+        Returns:
+            :class:`~eth_portfolio.typing.RemoteTokenBalances`: The :class:`~eth_portfolio.typing.RemoteTokenBalances` object representing the wallet's debts.
+        """
         return self['debt']
     
     @property
     def external(self) -> RemoteTokenBalances:
+        """
+        Returns the external balances associated with the wallet.
+
+        Returns:
+            :class:`~eth_portfolio.typing.RemoteTokenBalances`: The :class:`~eth_portfolio.typing.RemoteTokenBalances` object representing the wallet's external balances.
+        """
         return self['external']
     
     @property
     def dataframe(self) -> DataFrame:
+        """
+        Converts the wallet balances into a pandas DataFrame.
+
+        Returns:
+            A DataFrame representation of the wallet balances.
+        """
         dfs: List[DataFrame] = []
         for category, category_bals in self.items():
             df = category_bals.dataframe
@@ -375,12 +514,41 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
             return DataFrame()
     
     def sum_usd(self) -> Decimal:
+        """
+        Sums the USD values of the wallet's assets, debts, and external balances.
+
+        Returns:
+            The total USD value of the wallet's net assets (assets - debt + external).
+
+        Example:
+            >>> wallet_balances = WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
+            >>> total_usd = wallet_balances.sum_usd()
+            >>> total_usd
+            Decimal('2000')
+        """
         return self.assets.sum_usd() - self.debt.sum_usd() + self.external.sum_usd()
     
     def __bool__(self) -> bool:
+        """
+        Evaluates the truth value of the :class:`~eth_portfolio.typing.WalletBalances` object.
+
+        Returns:
+            True if any category has a non-zero balance, otherwise False.
+
+        Example:
+            >>> wallet_balances = WalletBalances()
+            >>> bool(wallet_balances)
+            False
+        """
         return any(self.values())
     
     def __repr__(self) -> str:
+        """
+        Returns a string representation of the :class:`~eth_portfolio.typing.WalletBalances` object.
+
+        Returns:
+            The string representation of the wallet balances.
+        """
         return f"WalletBalances {str(dict(self))}"
 
     def __add__(self, other: 'WalletBalances') -> 'WalletBalances':
@@ -409,6 +577,24 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         return subtracted
     
     def __getitem__(self, key: CategoryLabel) -> Union[TokenBalances, RemoteTokenBalances]:
+        """
+        Retrieves the balance associated with the given category key.
+
+        Args:
+            key: The category label (`assets`, `debt`, or `external`).
+
+        Returns:
+            The balances associated with the category.
+
+        Raises:
+            KeyError: If the key is not a valid category.
+
+        Example:
+            >>> wallet_balances = WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
+            >>> assets_balances = wallet_balances['assets']
+            >>> assets_balances[Address('0x123')].balance
+            Decimal('100')
+        """
         self.__validatekey(key)
         return super().__getitem__(key)
 
@@ -417,10 +603,32 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         return super().__setitem__(key, value)
     
     def __validatekey(self, key: CategoryLabel) -> None:
+        """
+        Validates that the given key is a valid category. 
+        
+        Valid keys: "assets", "debt", "external"
+
+        Args:
+            key: The category label to validate.
+
+        Raises:
+            KeyError: If the key is not a valid category.
+        """
         if key not in self._keys:
             raise KeyError(f"{key} is not a valid key for WalletBalances. Valid keys are: {self._keys}")
 
     def __validateitem(self, key: CategoryLabel, item: Any) -> None:
+        """
+        Validates that the given item is a valid balance type for the category.
+
+        Args:
+            key: The category label.
+            item: The balance item to validate.
+
+        Raises:
+            KeyError: If the key is not a valid category.
+            TypeError: If the item is not a valid balance type for the category.
+        """
         self.__validatekey(key)
         if key == 'assets':
             if not isinstance(item, TokenBalances):
@@ -457,6 +665,12 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
     
     @property
     def dataframe(self) -> DataFrame:
+        """
+        Converts the portfolio balances into a pandas DataFrame.
+
+        Returns:
+            A DataFrame representation of the portfolio balances.
+        """
         dfs: List[DataFrame] = []
         for wallet, balances in self.items():
             df = balances.dataframe
@@ -468,10 +682,34 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             return DataFrame()
     
     def sum_usd(self) -> Decimal:
+        """
+        Sums the USD values of all wallet balances in the portfolio.
+
+        Returns:
+            The total USD value of all wallet balances in the portfolio.
+
+        Example:
+            >>> portfolio_balances = PortfolioBalances({Address('0x123'): WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})})
+            >>> total_usd = portfolio_balances.sum_usd()
+            >>> total_usd
+            Decimal('2000')
+        """
         return sum(balances.sum_usd() for balances in self.values())  # type: ignore
     
     @cached_property
     def inverted(self) -> "PortfolioBalancesByCategory":
+        """
+        Returns an inverted view of the portfolio balances, grouped by category first.
+
+        Returns:
+            :class:`~eth_portfolio.typing.PortfolioBalancesByCategory`: The inverted portfolio balances, grouped by category.
+
+        Example:
+            >>> portfolio_balances = PortfolioBalances({Address('0x123'): WalletBalances({'assets': TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})})
+            >>> inverted_pb = portfolio_balances.inverted
+            >>> inverted_pb['assets'][Address('0x123')].balance
+            Decimal('100')
+        """
         inverted = PortfolioBalancesByCategory()
         for wallet, wbalances in self.items():
             for label, tbalances in wbalances.items():
@@ -480,6 +718,17 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         return inverted
     
     def __bool__(self) -> bool:
+        """
+        Evaluates the truth value of the :class:`~eth_portfolio.typing.PortfolioBalances` object.
+
+        Returns:
+            True if any wallet has a non-zero balance of any token, otherwise False.
+
+        Example:
+            >>> portfolio_balances = PortfolioBalances()
+            >>> bool(portfolio_balances)
+            False
+        """
         return any(self.values())
 
     def __repr__(self) -> str:
@@ -537,6 +786,12 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumeric)
         return any(self.values())
 
     def __repr__(self) -> str:
+        """
+        Returns a string representation of the :class:`~eth_portfolio.typing.WalletBalancesRaw` object.
+
+        Returns:
+            The string representation of the raw wallet balances.
+        """
         return f"WalletBalances{str(dict(self))}"
     
     def __add__(self, other: 'WalletBalancesRaw') -> 'WalletBalancesRaw':
@@ -553,6 +808,25 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumeric)
         return combined
     
     def __sub__(self, other: 'WalletBalancesRaw') -> 'WalletBalancesRaw':
+        """
+        Subtracts another :class:`~eth_portfolio.typing.WalletBalancesRaw` object from this one.
+
+        Args:
+            other: Another :class:`~eth_portfolio.typing.WalletBalancesRaw` object.
+
+        Returns:
+            A new :class:`~eth_portfolio.typing.WalletBalancesRaw` object with the subtracted balances.
+
+        Raises:
+            TypeError: If the other object is not a :class:`~eth_portfolio.typing.WalletBalancesRaw`.
+
+        Example:
+            >>> raw_balances1 = WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})
+            >>> raw_balances2 = WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})})
+            >>> result_raw = raw_balances1 - raw_balances2
+            >>> result_raw[Address('0x123')][Address('0x123')].balance
+            Decimal('50')
+        """
         if not isinstance(other, WalletBalancesRaw):
             raise TypeError(f"{other} is not a WalletBalancesRaw object")
         # We need a new object to avoid mutating the inputs
@@ -585,13 +859,37 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
 
     @property
     def assets(self) -> WalletBalancesRaw:
+        """
+        Returns the asset balances across all wallets.
+
+        Returns:
+            :class:`~eth_portfolio.typing.WalletBalancesRaw`: The :class:`~eth_portfolio.typing.WalletBalancesRaw` object representing the asset balances.
+        """
         return self['assets']
     
     @property
     def debt(self) -> WalletBalancesRaw:
+        """
+        Returns the debt balances across all wallets.
+
+        Returns:
+            :class:`~eth_portfolio.typing.WalletBalancesRaw`: The :class:`~eth_portfolio.typing.WalletBalancesRaw` object representing the debt balances.
+        """
         return self['debt']
     
     def invert(self) -> "PortfolioBalances":
+        """
+        Inverts the portfolio balances by category to group by wallet first.
+
+        Returns:
+            :class:`~eth_portfolio.typing.PortfolioBalances`: The inverted portfolio balances, grouped by wallet first.
+
+        Example:
+            >>> pb_by_category = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})})
+            >>> inverted_pb = pb_by_category.invert()
+            >>> inverted_pb[Address('0x123')]['assets'][Address('0x123')].balance
+            Decimal('100')
+        """
         inverted = PortfolioBalances()
         for label, wtbalances in self.items():
             for wallet, tbalances in wtbalances.items():
@@ -600,12 +898,48 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
         return inverted
     
     def __bool__(self) -> bool:
+        """
+        Evaluates the truth value of the :class:`~eth_portfolio.typing.PortfolioBalancesByCategory` object.
+
+        Returns:
+            True if any category has a non-zero balance, otherwise False.
+
+        Example:
+            >>> pb_by_category = PortfolioBalancesByCategory()
+            >>> bool(pb_by_category)
+            False
+        """
         return any(self.values())
 
     def __repr__(self) -> str:
+        """
+        Returns a string representation of the :class:`~eth_portfolio.typing.PortfolioBalancesByCategory` object.
+
+        Returns:
+            The string representation of the portfolio balances by category.
+        """
         return f"PortfolioBalancesByCategory{str(dict(self))}"
     
     def __add__(self, other: 'PortfolioBalancesByCategory') -> 'PortfolioBalancesByCategory':
+        """
+        Adds another :class:`~eth_portfolio.typing.PortfolioBalancesByCategory` object to this one.
+
+        Args:
+            other: Another :class:`~eth_portfolio.typing.PortfolioBalancesByCategory` object.
+
+        Returns:
+            A new :class:`~eth_portfolio.typing.PortfolioBalancesByCategory` object with the combined balances.
+
+        Raises:
+            TypeError: If the other object is not a :class:`~eth_portfolio.typing.PortfolioBalancesByCategory`.
+
+        Example:
+            >>> pb_by_category1 = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})})
+            >>> pb_by_category2 = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})})})
+            >>> combined_pb_by_category = pb_by_category1 + pb_by_category2
+            >>> combined_pb_by_category['assets'][Address('0x123')][Address('0x123')].balance
+            Decimal('150')
+        """
         if not isinstance(other, PortfolioBalancesByCategory):
             raise TypeError(f"{other} is not a PortfolioBalancesByCategory object")
         # NOTE We need a new object to avoid mutating the inputs
@@ -619,6 +953,25 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
         return combined
     
     def __sub__(self, other: 'PortfolioBalancesByCategory') -> 'PortfolioBalancesByCategory':
+        """
+        Subtracts another :class:`~eth_portfolio.typing.PortfolioBalancesByCategory` object from this one.
+
+        Args:
+            other: Another :class:`~eth_portfolio.typing.PortfolioBalancesByCategory` object.
+
+        Returns:
+            A new :class:`~eth_portfolio.typing.PortfolioBalancesByCategory` object with the subtracted balances.
+
+        Raises:
+            TypeError: If the other object is not a :class:`~eth_portfolio.typing.PortfolioBalancesByCategory`.
+
+        Example:
+            >>> pb_by_category1 = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('100'), Decimal('2000'))})})})
+            >>> pb_by_category2 = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({Address('0x123'): TokenBalances({Address('0x123'): Balance(Decimal('50'), Decimal('1000'))})})})
+            >>> result_pb_by_category = pb_by_category1 - pb_by_category2
+            >>> result_pb_by_category['assets'][Address('0x123')][Address('0x123')].balance
+            Decimal('50')
+        """
         if not isinstance(other, PortfolioBalancesByCategory):
             raise TypeError(f"{other} is not a PortfolioBalancesByCategory object")
         # We need a new object to avoid mutating the inputs
