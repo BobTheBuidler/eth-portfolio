@@ -807,8 +807,19 @@ _PBSeed = Union[Dict[Address, WalletBalances], Iterable[Tuple[Address, WalletBal
 
 class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumericMixin):
     """
-    Keyed: ``wallet -> category -> token -> balance``
-    """ 
+    Aggregates :class:`~eth_portfolio.typing.WalletBalances` for multiple wallets, providing operations to sum 
+    balances across an entire portfolio.
+
+    The class uses wallet addresses as keys and :class:`~eth_portfolio.typing.WalletBalances` objects as values.
+
+    Args:
+        seed: An initial seed of portfolio balances, either as a dictionary or an iterable of tuples.
+
+    Example:
+        >>> portfolio_balances = PortfolioBalances({'0x123': WalletBalances({'assets': TokenBalances({'0x456': Balance(Decimal('100'), Decimal('2000'))})})})
+        >>> portfolio_balances['0x123']['assets']['0x456'].balance
+        Decimal('100')
+    """
     def __init__(self, seed: Optional[_PBSeed] = None) -> None:
         super().__init__(WalletBalances)
         if seed is None:
@@ -976,8 +987,8 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
     We need a new structure for key pattern:  ``wallet   -> token    -> balance``
 
     Example:
-        >>> raw_balances = WalletBalancesRaw({'0x123': TokenBalances({'0x123': Balance(Decimal('100'), Decimal('2000'))})})
-        >>> raw_balances['0x123']['0x123'].balance
+        >>> raw_balances = WalletBalancesRaw({'0x123': TokenBalances({'0x456': Balance(Decimal('100'), Decimal('2000'))})})
+        >>> raw_balances['0x123']['0x456'].balance
         Decimal('100')
     """ 
     def __init__(self, seed: Optional[_WTBInput] = None) -> None:
