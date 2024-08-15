@@ -10,6 +10,7 @@ from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
 
+from eth_portfolio import protocols
 from eth_portfolio._ledgers.address import (AddressInternalTransfersLedger,
                                             AddressLedgerBase,
                                             AddressTokenTransfersLedger,
@@ -17,8 +18,6 @@ from eth_portfolio._ledgers.address import (AddressInternalTransfersLedger,
                                             PandableLedgerEntryList)
 from eth_portfolio._loaders import balances
 from eth_portfolio._utils import _LedgeredBase
-from eth_portfolio.protocols import _external
-from eth_portfolio.protocols.lending import _lending
 from eth_portfolio.typing import (Balance, RemoteTokenBalances, TokenBalances,
                                   WalletBalances)
 
@@ -73,7 +72,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     
     @stuck_coro_debugger
     async def debt(self, block: Optional[Block] = None) -> RemoteTokenBalances:
-        return await _lending.debt(self.address, block=block)
+        return await protocols.lending.debt(self.address, block=block)
     
     @stuck_coro_debugger
     async def external_balances(self, block: Optional[Block] = None) -> RemoteTokenBalances:
@@ -109,11 +108,11 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
    
     @stuck_coro_debugger 
     async def collateral(self, block: Optional[Block] = None) -> RemoteTokenBalances:
-        return await _lending.collateral(self.address, block=block)
+        return await protocols.lending.collateral(self.address, block=block)
     
     @stuck_coro_debugger
     async def staking(self, block: Optional[Block] = None) -> RemoteTokenBalances:
-        return await _external.balances(self.address, block=block)
+        return await protocols.balances(self.address, block=block)
     
     # Ledger Entries
     

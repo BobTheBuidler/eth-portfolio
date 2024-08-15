@@ -13,30 +13,25 @@ from y.datatypes import Address, Block
 
 _import_submodules()
 
+protocols: List[Union[LendingProtocol, LendingProtocolWithLockedCollateral]] = _get_protocols_for_submodule()  # type: ignore [assignment]
 
-class Lending:
-    def __init__(self) -> None:
-        self.protocols: List[Union[LendingProtocol, LendingProtocolWithLockedCollateral]] = _get_protocols_for_submodule()  # type: ignore
+@a_sync.future
+@stuck_coro_debugger
+async def collateral(address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
+    protocols = (protocol for protocol in protocols if isinstance(protocol, LendingProtocolWithLockedCollateral))
+    return RemoteTokenBalances({
+        type(protocol).__name__: token_balances
+        async for protocol, token_balances in a_sync.map(lambda p: p.balances(address, block), protocols)
+        if token_balances is not None
+    })
 
-    @a_sync.future
-    @stuck_coro_debugger
-    async def collateral(self, address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
-        protocols = (protocol for protocol in self.protocols if isinstance(protocol, LendingProtocolWithLockedCollateral))
-        return RemoteTokenBalances({
-            type(protocol).__name__: token_balances
-            async for protocol, token_balances in a_sync.map(lambda p: p.balances(address, block), protocols)
-            if token_balances is not None
-        })
-
-    @a_sync.future
-    @stuck_coro_debugger
-    async def debt(self, address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
-        if not self.protocols:
-            return RemoteTokenBalances()
-        return RemoteTokenBalances({
-            type(protocol).__name__: token_balances
-            async for protocol, token_balances in a_sync.map(lambda p: p.debt(address, block), self.protocols)
-            if token_balances is not None
-        })
-
-_lending = Lending()
+@a_sync.future
+@stuck_coro_debugger
+async def debt(address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
+    if not protocols:
+        return RemoteTokenBalances()
+    return RemoteTokenBalances({
+        type(protocol).__name__: token_balances
+        async for protocol, token_balances in a_sync.map(lambda p: p.debt(address, block), protocols)
+        if token_balances is not None
+    })
