@@ -1,3 +1,28 @@
+"""
+This module defines a set of classes to represent and manipulate various levels of balance structures 
+within an Ethereum portfolio. The focus of these classes is on reading, aggregating, and summarizing 
+balances, including the value in both tokens and their equivalent in USD.
+
+The main classes and their purposes are as follows:
+
+- :class:`~eth_portfolio.typing.Balance`: Represents the balance of a single token, including its token amount and equivalent USD value.
+- :class:`~eth_portfolio.typing.TokenBalances`: Manages a collection of :class:`~eth_portfolio.typing.Balance` objects for multiple tokens, providing operations 
+  such as summing balances across tokens.
+- :class:`~eth_portfolio.typing.RemoteTokenBalances`: Extends :class:`~eth_portfolio.typing.TokenBalances` to manage balances across different protocols, enabling 
+  aggregation and analysis of balances by protocol.
+- :class:`~eth_portfolio.typing.WalletBalances`: Organizes token balances into categories such as assets, debts, and external balances 
+  for a single wallet. It combines :class:`~eth_portfolio.typing.TokenBalances` and :class:`~eth_portfolio.typing.RemoteTokenBalances` to provide a complete view 
+  of a wallet's balances.
+- :class:`~eth_portfolio.typing.PortfolioBalances`: Aggregates :class:`~eth_portfolio.typing.WalletBalances` for multiple wallets, providing operations to sum 
+  balances across an entire portfolio.
+- :class:`~eth_portfolio.typing.WalletBalancesRaw`: Similar to :class:`~eth_portfolio.typing.WalletBalances`, but with a key structure optimized for accessing 
+  balances directly by wallet and token.
+- :class:`~eth_portfolio.typing.PortfolioBalancesByCategory`: Provides an inverted view of :class:`~eth_portfolio.typing.PortfolioBalances`, allowing access 
+  by category first, then by wallet and token.
+
+These classes are designed for efficient parsing, manipulation, and summarization of portfolio data, 
+without managing or altering any underlying assets.
+"""
 
 from decimal import Decimal
 from functools import cached_property
@@ -203,7 +228,13 @@ _TBSeed = Union[Dict[Address, Balance], Iterable[Tuple[Address, Balance]]]
 
 class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
     """
-    A specialized defaultdict subclass made for holding a mapping of ``token -> balance``
+    A specialized defaultdict subclass made for holding a mapping of ``token -> balance``.
+
+    Manages a collection of :class:`~eth_portfolio.typing.Balance` objects for multiple tokens, allowing for operations 
+    such as summing balances across tokens.
+
+    The class uses token addresses as keys and :class:`~eth_portfolio.typing.Balance` objects as values. It supports 
+    arithmetic operations like addition and subtraction of token balances.
 
     Token addresses are checksummed automatically when adding items to the dict, and the default value for a token not present is an empty :class:`~eth_portfolio.typing.Balance` object.
 
@@ -321,7 +352,6 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
         """
         if not isinstance(other, TokenBalances):
             raise TypeError(f"{other} is not a TokenBalances object")
-        # NOTE We need a new object to avoid mutating the inputs
         combined: TokenBalances = TokenBalances()
         for token, balance in self.items():
             if balance:
@@ -356,7 +386,6 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
         """
         if not isinstance(other, TokenBalances):
             raise TypeError(f"{other} is not a TokenBalances object")
-        # We need a new object to avoid mutating the inputs
         subtracted: TokenBalances = TokenBalances(self)
         for token, balance in other.items():
             subtracted[token] -= balance
@@ -495,7 +524,6 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         """
         if not isinstance(other, RemoteTokenBalances):
             raise TypeError(f"{other} is not a RemoteTokenBalances object")
-        # NOTE We need a new object to avoid mutating the inputs
         combined: RemoteTokenBalances = RemoteTokenBalances()
         for protocol, token_balances in self.items():
             if token_balances:
@@ -527,7 +555,6 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         """
         if not isinstance(other, RemoteTokenBalances):
             raise TypeError(f"{other} is not a RemoteTokenBalances object")
-        # We need a new object to avoid mutating the inputs
         subtracted: RemoteTokenBalances = RemoteTokenBalances(self)
         for protocol, token_balances in other.items():
             subtracted[protocol] -= token_balances
@@ -681,7 +708,6 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         """
         if not isinstance(other, WalletBalances):
             raise TypeError(f"{other} is not a WalletBalances object")
-        # NOTE We need a new object to avoid mutating the inputs
         combined: WalletBalances = WalletBalances()
         for category, balances in self.items():
             if balances:
@@ -713,7 +739,6 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         """
         if not isinstance(other, WalletBalances):
             raise TypeError(f"{other} is not a WalletBalances object")
-        # We need a new object to avoid mutating the inputs
         subtracted: WalletBalances = WalletBalances(self)
         for category, balances in other.items():
             subtracted[category] -= balances  # type: ignore
@@ -936,7 +961,6 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         """
         if not isinstance(other, PortfolioBalances):
             raise TypeError(f"{other} is not a WalletBalances object")
-        # NOTE We need a new object to avoid mutating the inputs
         combined: PortfolioBalances = PortfolioBalances()
         for wallet, balance in self.items():
             if balance:
@@ -968,7 +992,6 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         """
         if not isinstance(other, PortfolioBalances):
             raise TypeError(f"{other} is not a WalletBalances object")
-        # We need a new object to avoid mutating the inputs
         subtracted: PortfolioBalances = PortfolioBalances(self)
         for protocol, balances in other.items():
             subtracted[protocol] -= balances
@@ -981,10 +1004,18 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
 _WTBInput = Union[Dict[Address, TokenBalances], Iterable[Tuple[Address, TokenBalances]]]
 
 class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericMixin):
+    #Since PortfolioBalances key lookup is:    ``wallet   -> category -> token    -> balance``
+    #We need a new structure for key pattern:  ``wallet   -> token    -> balance``
+
+    #WalletBalancesRaw fills this role.
     """
-    Since PortfolioBalances key lookup is:    ``wallet   -> category -> token    -> balance``
-    and WalletBalances key lookup is:         ``category -> token    -> balance``
-    We need a new structure for key pattern:  ``wallet   -> token    -> balance``
+    A structure for key pattern `wallet -> token -> balance`.
+
+    This class is similar to :class:`~eth_portfolio.typing.WalletBalances` but optimized for key lookups by wallet and token directly. 
+    It manages :class:`~eth_portfolio.typing.TokenBalances` objects for multiple wallets.
+
+    Args:
+        seed: An initial seed of wallet balances, either as a dictionary or an iterable of tuples.
 
     Example:
         >>> raw_balances = WalletBalancesRaw({'0x123': TokenBalances({'0x456': Balance(Decimal('100'), Decimal('2000'))})})
@@ -1048,7 +1079,6 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
         """
         if not isinstance(other, WalletBalancesRaw):
             raise TypeError(f"{other} is not a WalletBalancesRaw object")
-        # NOTE We need a new object to avoid mutating the inputs
         combined: WalletBalancesRaw = WalletBalancesRaw()
         for wallet, balance in self.items():
             if balance:
@@ -1080,7 +1110,6 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
         """
         if not isinstance(other, WalletBalancesRaw):
             raise TypeError(f"{other} is not a WalletBalancesRaw object")
-        # We need a new object to avoid mutating the inputs
         subtracted: WalletBalancesRaw = WalletBalancesRaw(self)
         for wallet, balances in other.items():
             if balances:
@@ -1205,7 +1234,6 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
         """
         if not isinstance(other, PortfolioBalancesByCategory):
             raise TypeError(f"{other} is not a PortfolioBalancesByCategory object")
-        # NOTE We need a new object to avoid mutating the inputs
         combined: PortfolioBalancesByCategory = PortfolioBalancesByCategory()
         for protocol, balances in self.items():
             if balances:
@@ -1237,7 +1265,6 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
         """
         if not isinstance(other, PortfolioBalancesByCategory):
             raise TypeError(f"{other} is not a PortfolioBalancesByCategory object")
-        # We need a new object to avoid mutating the inputs
         subtracted: PortfolioBalancesByCategory = PortfolioBalancesByCategory(self)
         for protocol, balances in other.items():
             subtracted[protocol] -= balances
