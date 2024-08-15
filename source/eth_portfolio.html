@@ -398,14 +398,22 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.assets">
 <span class="sig-name descname"><span class="pre">assets</span></span><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.assets" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Retrieves the balances for every asset in the wallet at a given block.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p>
+<dd class="field-odd"><p><strong>block</strong> (<em>optional</em>) – The block number to query. Defaults to None.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The asset balances at <cite>block</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a></p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">assets</span> <span class="o">=</span> <span class="k">await</span> <span class="n">address</span><span class="o">.</span><span class="n">assets</span><span class="p">(</span><span class="mi">12345678</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py attribute">
@@ -437,14 +445,22 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.debt">
 <span class="sig-name descname"><span class="pre">debt</span></span><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.debt" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Retrieves all debt balances for the wallet at a given block.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p>
+<dd class="field-odd"><p><strong>block</strong> (<em>optional</em>) – The block number. Defaults to None.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#eth_portfolio.typing.RemoteTokenBalances" title="eth_portfolio.typing.RemoteTokenBalances"><em>RemoteTokenBalances</em></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The debt balances at <cite>block</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#eth_portfolio.typing.RemoteTokenBalances" title="eth_portfolio.typing.RemoteTokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteTokenBalances</span></code></a></p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">debt</span> <span class="o">=</span> <span class="k">await</span> <span class="n">address</span><span class="o">.</span><span class="n">debt</span><span class="p">(</span><span class="mi">12345678</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py attribute">
@@ -463,14 +479,22 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.eth_balance">
 <span class="sig-name descname"><span class="pre">eth_balance</span></span><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.eth_balance" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Retrieves the ETH balance for the wallet at a given block.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p>
+<dd class="field-odd"><p><strong>block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>) – The block number.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#eth_portfolio.typing.Balance" title="eth_portfolio.typing.Balance"><em>Balance</em></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The ETH balance at <cite>block</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#eth_portfolio.typing.Balance" title="eth_portfolio.typing.Balance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Balance</span></code></a></p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">eth_balance</span> <span class="o">=</span> <span class="k">await</span> <span class="n">address</span><span class="o">.</span><span class="n">eth_balance</span><span class="p">(</span><span class="mi">12345678</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py attribute">
@@ -513,11 +537,22 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.token_balances">
 <span class="sig-name descname"><span class="pre">token_balances</span></span><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.token_balances" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Retrieves the balances for all tokens in the wallet at a given block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>block</strong> – The block number.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The token balances at <cite>block</cite>.</p>
+</dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a></p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">token_balances</span> <span class="o">=</span> <span class="k">await</span> <span class="n">address</span><span class="o">.</span><span class="n">token_balances</span><span class="p">(</span><span class="mi">12345678</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py attribute">
