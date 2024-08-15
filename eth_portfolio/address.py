@@ -68,10 +68,34 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     
     @stuck_coro_debugger
     async def assets(self, block: Optional[Block] = None) -> TokenBalances:
+        """
+        Retrieves the balances for every asset in the wallet at a given block.
+
+        Args:
+            block (optional): The block number to query. Defaults to None.
+
+        Returns:
+            :class:`~eth_portfolio.typing.TokenBalances`: The asset balances at `block`.
+
+        Examples:
+            >>> assets = await address.assets(12345678)
+        """
         return await self.balances(block=block, sync=False)
     
     @stuck_coro_debugger
     async def debt(self, block: Optional[Block] = None) -> RemoteTokenBalances:
+        """
+        Retrieves all debt balances for the wallet at a given block.
+
+        Args:
+            block (optional): The block number. Defaults to None.
+
+        Returns:
+            :class:`~eth_portfolio.typing.RemoteTokenBalances`: The debt balances at `block`.
+
+        Examples:
+            >>> debt = await address.debt(12345678)
+        """
         return await protocols.lending.debt(self.address, block=block)
     
     @stuck_coro_debugger
@@ -91,10 +115,34 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
 
     @stuck_coro_debugger
     async def eth_balance(self, block: Optional[Block]) -> Balance:
+        """
+        Retrieves the ETH balance for the wallet at a given block.
+
+        Args:
+            block: The block number.
+
+        Returns:
+            :class:`~eth_portfolio.typing.Balance`: The ETH balance at `block`.
+
+        Examples:
+            >>> eth_balance = await address.eth_balance(12345678)
+        """
         return await balances.load_eth_balance(self.address, block)
     
     @stuck_coro_debugger
     async def token_balances(self, block) -> TokenBalances:
+        """
+        Retrieves the balances for all tokens in the wallet at a given block.
+
+        Args:
+            block: The block number.
+
+        Returns:
+            :class:`~eth_portfolio.typing.TokenBalances`: The token balances at `block`.
+
+        Examples:
+            >>> token_balances = await address.token_balances(12345678)
+        """
         try:
             data = a_sync.map(
                 balances.load_token_balance, 
