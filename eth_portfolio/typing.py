@@ -352,6 +352,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
         """
         if not isinstance(other, TokenBalances):
             raise TypeError(f"{other} is not a TokenBalances object")
+        # NOTE We need a new object to avoid mutating the inputs
         combined: TokenBalances = TokenBalances()
         for token, balance in self.items():
             if balance:
@@ -386,6 +387,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
         """
         if not isinstance(other, TokenBalances):
             raise TypeError(f"{other} is not a TokenBalances object")
+        # NOTE We need a new object to avoid mutating the inputs
         subtracted: TokenBalances = TokenBalances(self)
         for token, balance in other.items():
             subtracted[token] -= balance
@@ -524,6 +526,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         """
         if not isinstance(other, RemoteTokenBalances):
             raise TypeError(f"{other} is not a RemoteTokenBalances object")
+        # NOTE We need a new object to avoid mutating the inputs
         combined: RemoteTokenBalances = RemoteTokenBalances()
         for protocol, token_balances in self.items():
             if token_balances:
@@ -555,6 +558,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         """
         if not isinstance(other, RemoteTokenBalances):
             raise TypeError(f"{other} is not a RemoteTokenBalances object")
+        # NOTE We need a new object to avoid mutating the inputs
         subtracted: RemoteTokenBalances = RemoteTokenBalances(self)
         for protocol, token_balances in other.items():
             subtracted[protocol] -= token_balances
@@ -708,6 +712,7 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         """
         if not isinstance(other, WalletBalances):
             raise TypeError(f"{other} is not a WalletBalances object")
+        # NOTE We need a new object to avoid mutating the inputs
         combined: WalletBalances = WalletBalances()
         for category, balances in self.items():
             if balances:
@@ -739,6 +744,7 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         """
         if not isinstance(other, WalletBalances):
             raise TypeError(f"{other} is not a WalletBalances object")
+        # We need a new object to avoid mutating the inputs
         subtracted: WalletBalances = WalletBalances(self)
         for category, balances in other.items():
             subtracted[category] -= balances  # type: ignore
@@ -961,6 +967,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         """
         if not isinstance(other, PortfolioBalances):
             raise TypeError(f"{other} is not a WalletBalances object")
+        # NOTE We need a new object to avoid mutating the inputs
         combined: PortfolioBalances = PortfolioBalances()
         for wallet, balance in self.items():
             if balance:
@@ -992,6 +999,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         """
         if not isinstance(other, PortfolioBalances):
             raise TypeError(f"{other} is not a WalletBalances object")
+        # We need a new object to avoid mutating the inputs
         subtracted: PortfolioBalances = PortfolioBalances(self)
         for protocol, balances in other.items():
             subtracted[protocol] -= balances
@@ -1079,6 +1087,7 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
         """
         if not isinstance(other, WalletBalancesRaw):
             raise TypeError(f"{other} is not a WalletBalancesRaw object")
+        # NOTE We need a new object to avoid mutating the inputs
         combined: WalletBalancesRaw = WalletBalancesRaw()
         for wallet, balance in self.items():
             if balance:
@@ -1110,6 +1119,7 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
         """
         if not isinstance(other, WalletBalancesRaw):
             raise TypeError(f"{other} is not a WalletBalancesRaw object")
+        # NOTE We need a new object to avoid mutating the inputs
         subtracted: WalletBalancesRaw = WalletBalancesRaw(self)
         for wallet, balances in other.items():
             if balances:
@@ -1234,6 +1244,7 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
         """
         if not isinstance(other, PortfolioBalancesByCategory):
             raise TypeError(f"{other} is not a PortfolioBalancesByCategory object")
+        # NOTE We need a new object to avoid mutating the inputs
         combined: PortfolioBalancesByCategory = PortfolioBalancesByCategory()
         for protocol, balances in self.items():
             if balances:
@@ -1265,6 +1276,7 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
         """
         if not isinstance(other, PortfolioBalancesByCategory):
             raise TypeError(f"{other} is not a PortfolioBalancesByCategory object")
+        # NOTE We need a new object to avoid mutating the inputs
         subtracted: PortfolioBalancesByCategory = PortfolioBalancesByCategory(self)
         for protocol, balances in other.items():
             subtracted[protocol] -= balances
