@@ -1,3 +1,14 @@
+"""
+This module defines the :class:`~eth_portfolio.AddressLedgerBase`, :class:`~eth_portfolio.TransactionsList`, 
+:class:`~eth_portfolio.AddressTransactionsLedger`, :class:`~eth_portfolio.InternalTransfersList`, 
+:class:`~eth_portfolio.AddressInternalTransfersLedger`, :class:`~eth_portfolio.TokenTransfersList`, 
+and :class:`~eth_portfolio.AddressTokenTransfersLedger` classes. These classes manage and interact with ledger entries 
+such as transactions, internal transfers, and token transfers associated with Ethereum addresses within the `eth-portfolio` system.
+
+These classes leverage the `a_sync` library to support both synchronous and asynchronous operations, allowing efficient data gathering
+and processing without blocking, thus improving the overall responsiveness and performance of portfolio operations.
+"""
+
 import abc
 import asyncio
 import logging
@@ -40,36 +51,92 @@ _LedgerEntryList = TypeVar("_LedgerEntryList", "TransactionsList", "InternalTran
 PandableLedgerEntryList = Union["TransactionsList", "InternalTransfersList", "TokenTransfersList"]
 
 class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta):
+    """
+    Abstract base class for address ledgers in the eth-portfolio system.
+    """
     __slots__ = "address", "asynchronous", "cached_from", "cached_thru", "load_prices", "objects", "portfolio_address", "_lock"
     def __init__(self, portfolio_address: "PortfolioAddress") -> None:
 
         # TODO replace the following line with an abc implementation.
         # assert isinstance(portfolio_address, PortfolioAddress), f"address must be a PortfolioAddress. try passing in PortfolioAddress({portfolio_address}) instead."
+        """
+        Initializes the AddressLedgerBase instance.
 
+        Args:
+            portfolio_address: The :class:`~eth_portfolio.address.PortfolioAddress` this ledger belongs to.
+        """
         self.portfolio_address = portfolio_address
+        """
+        The portfolio address this ledger belongs to.
+        """
         self.address = self.portfolio_address.address
+        """
+        The Ethereum address being managed.
+        """
         self.asynchronous = self.portfolio_address.asynchronous
+        """
+        Flag indicating if the operations are asynchronous.
+        """
         self.load_prices = self.portfolio_address.load_prices
+        """
+        Indicates if price loading is enabled.
+        """
         self.objects: _LedgerEntryList = self._list_type()
-        # The following two properties will both be ints once the cache has contents
-        self.cached_from: int = None # type: ignore
-        """The block from which all entries for this ledger have been loaded into memory"""
-        self.cached_thru: int = None # type: ignore
-        """The block thru which all entries for this ledger have been loaded into memory"""
+        
+         # The following two properties will both be ints once the cache has contents
+        """
+        _LedgerEntryList: List of ledger entries.
+        """
+        self.cached_from: int = None  # type: ignore
+        """
+        The block from which all entries for this ledger have been loaded into memory.
+        """
+        self.cached_thru: int = None  # type: ignore
+        """
+        The block through which all entries for this ledger have been loaded into memory.
+        """
         self._lock = asyncio.Lock()
+        """
+        asyncio.Lock: Lock for synchronizing access to ledger entries.
+        """
     
     def __hash__(self) -> int:
+        """
+        Returns the hash of the address.
+
+        Returns:
+            The hash value.
+        """
         return hash(self.address)
 
     @abc.abstractproperty
     def _list_type(self) -> Type[_LedgerEntryList]:
+        """
+        Type of list used to store ledger entries.
+        """
         ...
 
     @property
     def _start_block(self) -> int:
+        """
+        Returns the starting block for the portfolio address.
+
+        Returns:
+            The starting block number.
+        """
         return self.portfolio_address._start_block
 
     async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[T, None]:
+        """
+        Yields ledger entries between the specified blocks.
+
+        Args:
+            start_block: The starting block number.
+            end_block: The ending block number.
+
+        Yields:
+            AsyncGenerator[T, None]: An async generator of ledger entries.
+        """
         yielded = set()
         for obj in self.objects:
             block = obj.block_number
@@ -100,6 +167,19 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
     @set_end_block_if_none
     @stuck_coro_debugger
     async def get(self, start_block: Block, end_block: Block) -> _LedgerEntryList:
+        """
+        Retrieves ledger entries between the specified blocks.
+
+        Args:
+            start_block: The starting block number.
+            end_block: The ending block number.
+
+        Returns:
+            _LedgerEntryList: The list of ledger entries.
+
+        Examples:
+            >>> entries = await ledger.get(12000000, 12345678)
+        """
         objects = self._list_type()
         async for obj in self[start_block: end_block]:
             objects.append(obj)
@@ -107,6 +187,15 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
     
     @stuck_coro_debugger
     async def new(self) -> _LedgerEntryList:
+        """
+        Retrieves new ledger entries since the last cached block.
+
+        Returns:
+            _LedgerEntryList: The list of new ledger entries.
+
+        Examples:
+            >>> new_entries = await ledger.new()
+        """
         start_block = 0 if self.cached_thru is None else self.cached_thru + 1
         end_block = await get_buffered_chain_height()
         return self[start_block, end_block]
@@ -114,15 +203,50 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
     @set_end_block_if_none
     @stuck_coro_debugger
     async def _get_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[T]:
+        """
+        Retrieves new ledger entries between the specified blocks.
+
+        Args:
+            start_block: The starting block number.
+            end_block: The ending block number.
+
+        Yields:
+            AsyncIterator[T]: An async iterator of new ledger entries.
+        """
         async with self._lock:
             async for obj in self._load_new_objects(start_block, end_block):
                 yield obj
     
     @abc.abstractmethod
     async def _load_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[T]:
+        """
+        Abstract method to load new ledger entries between the specified blocks.
+
+        Args:
+            start_block: The starting block number.
+            end_block: The ending block number.
+
+        Yields:
+            AsyncIterator[T]: An async iterator of new ledger entries.
+        """
         yield
 
     def _check_blocks_against_cache(self, start_block: Block, end_block: Block) -> Tuple[Block, Block]:
+        """
+        Checks the specified block range against the cached block range.
+
+        Args:
+            start_block: The starting block number.
+            end_block: The ending block number.
+
+        Returns:
+            Tuple: The adjusted block range.
+
+        Raises:
+            ValueError: If the start block is after the end block.
+            _exceptions.BlockRangeIsCached: If the block range is already cached.
+            _exceptions.BlockRangeOutOfBounds: If the block range is out of bounds.
+        """
         if start_block > end_block:
             raise ValueError(f"Start block {start_block} is after end block {end_block}")
         
@@ -160,10 +284,19 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
 
 
 class TransactionsList(PandableList[Transaction]):
+    """
+    A list class for handling transaction entries and converting them to DataFrames.
+    """
     def __init__(self):
         super().__init__()
     
     def _df(self) -> DataFrame:
+        """
+        Converts the list of transactions to a DataFrame.
+
+        Returns:
+            DataFrame: The transactions as a DataFrame.
+        """
         df = DataFrame(self)
         if len(df) > 0:
             df.chainId = df.chainId.apply(int)
@@ -175,15 +308,38 @@ class TransactionsList(PandableList[Transaction]):
         return df
 
 class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]):
+    """
+    A ledger for managing transaction entries.
+    """
     _list_type = TransactionsList
     __slots__ = "cached_thru_nonce", 
+
     def __init__(self, portfolio_address: "PortfolioAddress"):
+        """
+        Initializes the AddressTransactionsLedger instance.
+
+        Args:
+            portfolio_address: The :class:`~eth_portfolio.address.PortfolioAddress` this ledger belongs to.
+        """
         super().__init__(portfolio_address)
         self.cached_thru_nonce = -1
+        """
+        The nonce through which all transactions have been loaded into memory.
+        """
 
     @set_end_block_if_none
     @stuck_coro_debugger
     async def _load_new_objects(self, _: Block, end_block: Block) -> AsyncIterator[Transaction]:
+        """
+        Loads new transaction entries between the specified blocks.
+
+        Args:
+            _: The starting block number (unused).
+            end_block: The ending block number.
+
+        Yields:
+            AsyncIterator[Transaction]: An async iterator of transaction entries.
+        """
         if self.cached_thru and end_block < self.cached_thru:
             return
         end_block_nonce = await get_nonce_at_block(self.address, end_block)
@@ -218,6 +374,9 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
 
     
 class InternalTransfersList(PandableList[InternalTransfer]):
+    """
+    A list class for handling internal transfer entries.
+    """
     pass
 
 
@@ -228,17 +387,42 @@ class InternalTransfersList(PandableList[InternalTransfer]):
 @a_sync.Semaphore(32, __name__ + ".trace_semaphore")
 @eth_retry.auto_retry
 async def get_traces(params: list) -> List[dict]:
+    """
+    Retrieves traces from the web3 provider using the given parameters.
+
+    Args:
+        params: The parameters for the trace filter.
+
+    Returns:
+        List[dict]: The list of traces.
+
+    Raises:
+        :class:`~eth_portfolio.BadResponse`: If the response from the web3 provider is invalid.
+    """
     traces = await dank_mids.web3.provider.make_request("trace_filter", params)  # type: ignore [arg-type, misc]
     if 'result' not in traces:
         raise BadResponse(traces)
     return [trace for trace in traces['result'] if "error" not in trace]
     
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
+    """
+    A ledger for managing internal transfer entries.
+    """
     _list_type = InternalTransfersList
     
     @set_end_block_if_none
     @stuck_coro_debugger
     async def _load_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[InternalTransfer]:
+        """
+        Loads new internal transfer entries between the specified blocks.
+
+        Args:
+            start_block: The starting block number.
+            end_block: The ending block number.
+
+        Yields:
+            AsyncIterator[InternalTransfer]: An async iterator of internal transfer entries.
+        """
         if start_block == 0:
             start_block = 1
 
@@ -283,20 +467,57 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
 
 
 class TokenTransfersList(PandableList[TokenTransfer]):
+    """
+    A list class for handling token transfer entries.
+    """
     pass
   
 class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTransfer]):
+    """
+    A ledger for managing token transfer entries.
+    """
     _list_type = TokenTransfersList
     __slots__ = "_transfers",
+    
     def __init__(self, portfolio_address: "PortfolioAddress"):
+        """
+        Initializes the AddressTokenTransfersLedger instance.
+
+        Args:
+            portfolio_address: The :class:`~eth_portfolio.address.PortfolioAddress` this ledger belongs to.
+        """
         super().__init__(portfolio_address)
         self._transfers = TokenTransfers(self.address, self.portfolio_address._start_block, load_prices=self.load_prices)
+        """
+        TokenTransfers: Instance for handling token transfer operations.
+        """
     
     @stuck_coro_debugger
     async def list_tokens_at_block(self, block: Optional[int] = None) -> List[ERC20]:
+        """
+        Lists the tokens held at a specific block.
+
+        Args:
+            block (Optional[int], optional): The block number. Defaults to None.
+
+        Returns:
+            List[ERC20]: The list of ERC20 tokens.
+
+        Examples:
+            >>> tokens = await ledger.list_tokens_at_block(12345678)
+        """
         return [token async for token in self._yield_tokens_at_block(block)]
     
     async def _yield_tokens_at_block(self, block: Optional[int] = None) -> AsyncIterator[ERC20]:
+        """
+        Yields the tokens held at a specific block.
+
+        Args:
+            block (Optional[int], optional): The block number. Defaults to None.
+
+        Yields:
+            AsyncIterator[ERC20]: An async iterator of ERC20 tokens.
+        """
         yielded = set()
         async for transfer in self[0: block]:
             if transfer.token_address not in yielded:
@@ -306,6 +527,16 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
     @set_end_block_if_none
     @stuck_coro_debugger
     async def _load_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[TokenTransfer]:
+        """
+        Loads new token transfer entries between the specified blocks.
+
+        Args:
+            start_block: The starting block number.
+            end_block: The ending block number.
+
+        Yields:
+            AsyncIterator[TokenTransfer]: An async iterator of token transfer entries.
+        """
         try:
             start_block, end_block = self._check_blocks_against_cache(start_block, end_block)
         except _exceptions.BlockRangeIsCached:
