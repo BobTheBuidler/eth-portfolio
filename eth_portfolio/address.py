@@ -304,7 +304,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         Examples:
             >>> all_entries = await address.all(12000000, 12345678)
         """
-        return a_sync.gather({
+        return await a_sync.gather({
             "transactions": self.transactions.get(start_block, end_block, sync=False),
             "internal_transactions": self.internal_transfers.get(start_block, end_block, sync=False),
             "token_transfers": self.token_transfers.get(start_block, end_block, sync=False),
