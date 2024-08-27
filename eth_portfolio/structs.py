@@ -1,3 +1,9 @@
+"""
+Defines the data classes used to represent the various types of value-transfer actions on the blockchain. These include transactions, internal transfers, and token transfers. 
+
+The classes are designed to provide a consistent and flexible interface for working with blockchain data. Instance attributes can be fetched with either dot notation or key lookup. Classes are compatible with the standard dictionary interface.
+"""
+
 import logging
 from decimal import Decimal
 from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
@@ -40,12 +46,12 @@ class _DictStruct(Struct):
 
         Args:
             item: The name of the field to retrieve.
-
-        Returns:
-            The value of the specified field.
         
         Raises:
             KeyError: If the provided key is not a member of the struct.
+
+        Returns:
+            The value of the specified field.
         """
         try:
             return getattr(self, item)
@@ -71,6 +77,10 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
     hash: str
     from_address: Optional[str] = None
     value: Decimal
+    """
+    The value/amount of the transferred assets.
+    """
+    
     to_address: Optional[str] = None
     price: Optional[Decimal] = None
     """
@@ -147,6 +157,10 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     """
 
     entry_type: ClassVar[Literal['transaction']] = 'transaction'
+    """
+    Constant indicating this value transfer is an on-chain transaction entry.
+    """
+    
     block_hash: str
     """
     The hash of the block that includes this transaction.
@@ -249,6 +263,10 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
     """
 
     entry_type: ClassVar[Literal['internal_transfer']] = 'internal_transfer'
+    """
+    Constant indicating this value transfer is an internal transfer or call entry.
+    """
+    
     block_hash: str
     """
     The hash of the block containing the transaction that includes this internal transfer.
@@ -342,6 +360,10 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
     """
 
     entry_type: ClassVar[Literal['token_transfer']] = 'token_transfer'
+    """
+    Constant indicating this value transfer is a token transfer entry.
+    """
+    
     log_index: int
     """
     The index of this transfer event within the transaction logs.
@@ -359,6 +381,9 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
     """
     
     value: Decimal
+    """
+    The amount of tokens transferred, scaled to a human-readable decimal value.
+    """
 
 
 LedgerEntry = Union[Transaction, InternalTransfer, TokenTransfer]
