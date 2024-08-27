@@ -281,10 +281,34 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
    
     @stuck_coro_debugger 
     async def collateral(self, block: Optional[Block] = None) -> RemoteTokenBalances:
+        """
+        Retrieves the collateral balances at a given block.
+
+        Args:
+            block (optional): The block number. Defaults to None.
+
+        Returns:
+            :class:`~eth_portfolio.typing.RemoteTokenBalances`: The collateral balances.
+
+        Examples:
+            >>> collateral = await address.collateral(12345678)
+        """
         return await protocols.lending.collateral(self.address, block=block)
     
     @stuck_coro_debugger
     async def staking(self, block: Optional[Block] = None) -> RemoteTokenBalances:
+        """
+        Retrieves the staking balances at a given block.
+
+        Args:
+            block (optional): The block number. Defaults to None.
+
+        Returns:
+            :class:`~eth_portfolio.typing.RemoteTokenBalances`: The staking balances.
+
+        Examples:
+            >>> staking_balances = await address.staking(12345678)
+        """
         return await protocols.balances(self.address, block=block)
     
     # Ledger Entries
