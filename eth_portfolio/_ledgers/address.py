@@ -82,11 +82,10 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
         Indicates if price loading is enabled.
         """
         self.objects: _LedgerEntryList = self._list_type()
-        
-         # The following two properties will both be ints once the cache has contents
         """
         _LedgerEntryList: List of ledger entries.
         """
+        # The following two properties will both be ints once the cache has contents
         self.cached_from: int = None  # type: ignore
         """
         The block from which all entries for this ledger have been loaded into memory.
