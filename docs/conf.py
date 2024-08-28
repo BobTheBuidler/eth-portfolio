@@ -68,6 +68,7 @@ autodoc_default_options = {
         'setdefault',
         '_getitem_nochecksum',
         '_setitem_nochecksum',
+    ],
 }
 autodoc_typehints = "description"
 # Don't show class signature with the class' name.
