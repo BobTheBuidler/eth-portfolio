@@ -145,7 +145,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     @stuck_coro_debugger
     async def describe(self, block: int) -> WalletBalances:
         """
-        Describes the wallet balances at a given block.
+        Describes all of the wallet's balances at a given block.
 
         Args:
             block: The block number.
@@ -173,7 +173,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         Retrieves the balances for every asset in the wallet at a given block.
 
         Args:
-            block (optional): The block number to query. Defaults to None.
+            block (optional): The block number to query. Defaults to None, which uses the latest block.
 
         Returns:
             :class:`~eth_portfolio.typing.TokenBalances`: The asset balances at `block`.
@@ -189,7 +189,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         Retrieves all debt balances for the wallet at a given block.
 
         Args:
-            block (optional): The block number. Defaults to None.
+            block (optional): The block number. Defaults to None, which uses the latest block.
 
         Returns:
             :class:`~eth_portfolio.typing.RemoteTokenBalances`: The debt balances at `block`.
@@ -202,10 +202,10 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     @stuck_coro_debugger
     async def external_balances(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         """
-        Retrieves the external balances at a given block.
+        Retrieves the balances owned by the wallet, but not held *in* the wallet, at a given block.
 
         Args:
-            block (optional): The block number. Defaults to None.
+            block (optional): The block number. Defaults to None, which uses the latest block.
 
         Returns:
             :class:`~eth_portfolio.typing.RemoteTokenBalances`: The external balances.
@@ -220,7 +220,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     @stuck_coro_debugger
     async def balances(self, block: Optional[Block]) -> TokenBalances:
         """
-        Retrieves the balances at a given block.
+        Retrieves balances for all assets in the wallet at a given block.
 
         Args:
             block: The block number.
@@ -281,10 +281,34 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
    
     @stuck_coro_debugger 
     async def collateral(self, block: Optional[Block] = None) -> RemoteTokenBalances:
+        """
+        Retrieves all balances held by lending protocols on behalf of the wallet at a given block.
+
+        Args:
+            block (optional): The block number. Defaults to None, which uses the latest block.
+
+        Returns:
+            :class:`~eth_portfolio.typing.RemoteTokenBalances`: The collateral balances.
+
+        Examples:
+            >>> collateral = await address.collateral(12345678)
+        """
         return await protocols.lending.collateral(self.address, block=block)
     
     @stuck_coro_debugger
     async def staking(self, block: Optional[Block] = None) -> RemoteTokenBalances:
+        """
+        Retrieves all balances staked in protocols supported by eth_portfolio on behalf of the wallet at a given block.
+
+        Args:
+            block (optional): The block number. Defaults to None, which uses the latest block.
+
+        Returns:
+            :class:`~eth_portfolio.typing.RemoteTokenBalances`: The staked balances.
+
+        Examples:
+            >>> staking_balances = await address.staking(12345678)
+        """
         return await protocols.balances(self.address, block=block)
     
     # Ledger Entries

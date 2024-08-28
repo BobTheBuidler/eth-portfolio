@@ -65,36 +65,43 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
         Args:
             portfolio_address: The :class:`~eth_portfolio.address.PortfolioAddress` this ledger belongs to.
         """
+      
         self.portfolio_address = portfolio_address
         """
         The portfolio address this ledger belongs to.
         """
+      
         self.address = self.portfolio_address.address
         """
         The Ethereum address being managed.
         """
+      
         self.asynchronous = self.portfolio_address.asynchronous
         """
         Flag indicating if the operations are asynchronous.
         """
+      
         self.load_prices = self.portfolio_address.load_prices
         """
         Indicates if price loading is enabled.
         """
+      
         self.objects: _LedgerEntryList = self._list_type()
-        
-         # The following two properties will both be ints once the cache has contents
         """
         _LedgerEntryList: List of ledger entries.
         """
+      
+        # NOTE: The following two properties will both be ints once the cache has contents
         self.cached_from: int = None  # type: ignore
         """
         The block from which all entries for this ledger have been loaded into memory.
         """
+      
         self.cached_thru: int = None  # type: ignore
         """
         The block through which all entries for this ledger have been loaded into memory.
         """
+      
         self._lock = asyncio.Lock()
         """
         asyncio.Lock: Lock for synchronizing access to ledger entries.
