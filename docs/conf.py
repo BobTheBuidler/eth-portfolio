@@ -47,6 +47,7 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 autodoc_default_options = {
+    'members': True,
     'private-members': True,
     'special-members': '__init__,__call__,__getitem__,__iter__,__aiter__,__next__,__anext__',
     'inherited-members': True,
