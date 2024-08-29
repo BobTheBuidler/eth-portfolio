@@ -68,20 +68,40 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
     """
 
     chainid: Network
+    """
+    The blockchain network identifier where the action occurred.
+    """
+    
     block_number: Block
+    """
+    The block number in which the action was included.
+    """
+    
     transaction_index: Optional[int] = None
     """
     The index of the transaction within its block, if applicable.
     """
     
     hash: str
+    """
+    The unique transaction hash that includes this action.
+    """
+    
     from_address: Optional[str] = None
+    """
+    The address that initiated the action, if known.
+    """
+    
     value: Decimal
     """
-    The value/amount of the transferred assets.
+    The value/amount of cryptocurrency transferred in the action.
     """
     
     to_address: Optional[str] = None
+    """
+    The recipient address of the action, if applicable.
+    """
+    
     price: Optional[Decimal] = None
     """
     The price of the cryptocurrency at the time of the action, if known.
