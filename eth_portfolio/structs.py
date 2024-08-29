@@ -69,12 +69,12 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
 
     chainid: Network
     """
-    The blockchain network identifier where the action occurred.
+    The network ID where the transaction occurred.    
     """
     
     block_number: Block
     """
-    The block number in which the action was included.
+    The block number where the transaction was included.
     """
     
     transaction_index: Optional[int] = None
@@ -84,12 +84,12 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
     
     hash: str
     """
-    The unique transaction hash that includes this action.
+    The unique transaction hash.
     """
     
     from_address: Optional[str] = None
     """
-    The address that initiated the action, if known.
+    The address from which the transaction was sent, if known.
     """
     
     value: Decimal
@@ -99,7 +99,7 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
     
     to_address: Optional[str] = None
     """
-    The recipient address of the action, if applicable.
+    The address to which the transaction was sent, if applicable.
     """
     
     price: Optional[Decimal] = None
