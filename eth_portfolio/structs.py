@@ -69,49 +69,64 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
 
     chainid: Network
     """
-    The network ID where the transaction occurred.    
+    The network ID where the {cls_name} occurred.    
     """
     
     block_number: Block
     """
-    The block number where the transaction was included.
+    The block number where the {cls_name} was included.
     """
     
     transaction_index: Optional[int] = None
     """
-    The index of the transaction within its block, if applicable.
+    The index of the {cls_name} within its block, if applicable.
     """
     
     hash: str
     """
-    The unique transaction hash.
+    The unique {cls_name} hash.
     """
     
     from_address: Optional[str] = None
     """
-    The address from which the transaction was sent, if known.
+    The address from which the {cls_name} was sent, if known.
     """
     
     value: Decimal
     """
-    The value/amount of cryptocurrency transferred in the action.
+    The value/amount of cryptocurrency transferred in the {cls_name}.
     """
     
     to_address: Optional[str] = None
     """
-    The address to which the transaction was sent, if applicable.
+    The address to which the {cls_name} was sent, if applicable.
     """
     
     price: Optional[Decimal] = None
     """
-    The price of the cryptocurrency at the time of the action, if known.
+    The price of the cryptocurrency at the time of the {cls_name}, if known.
     """
     
     value_usd: Optional[Decimal] = None
     """
-    The USD value of the cryptocurrency transferred, if price is known.
+    The USD value of the cryptocurrency transferred in the {cls_name}, if price is known.
     """
     
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+
+        # Use the class name exactly as it is defined (e.g., TokenTransfer)
+        cls_name = cls.__name__
+
+        # Replace {cls_name} in the class-level docstring
+        if cls.__doc__:
+            cls.__doc__ = cls.__doc__.format(cls_name=cls_name)
+
+        # Replace {cls_name} in attribute-level docstrings
+        for key in cls.__annotations__:
+            attr = getattr(cls, key, None)
+            if attr and attr.__doc__:
+                attr.__doc__ = attr.__doc__.format(cls_name=cls_name)
 
 class AccessListEntry(Struct, frozen=True):
     """
@@ -122,13 +137,11 @@ class AccessListEntry(Struct, frozen=True):
 
     Example:
         >>> entry = AccessListEntry(
-        ...     address="0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+        ...     address="0x742d35Cc6634C0532925a3b844Bc454e4438f44e", 
         ...     storage_keys=(b'key1', b'key2')
         ... )
-        >>> entry.address
-        '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'
-        >>> len(entry.storage_keys)
-        2
+        >>> entry.address, len(entry.storage_keys)
+        ('0x742d35Cc6634C0532925a3b844Bc454e4438f44e', 2)
     """
 
     address: str
@@ -150,30 +163,13 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
 
     Example:
         >>> tx = Transaction(
-        ...     chainid=Network.Mainnet,
-        ...     block_number=Block(15537393),
-        ...     hash="0x123...",
-        ...     from_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        ...     to_address="0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-        ...     value=Decimal("0.1"),
-        ...     block_hash="0xabc...",
-        ...     nonce=42,
-        ...     type=2,  # EIP-1559 transaction
-        ...     gas=21000,
-        ...     gas_price=20000000000,
-        ...     max_fee_per_gas=30000000000,
-        ...     max_priority_fee_per_gas=1000000000,
-        ...     input="0x",
-        ...     r="0x123...",
-        ...     s="0x456...",
-        ...     v=27
+        ...     chainid=Network.Mainnet, block_number=Block(number=15537393), hash="0x123...",
+        ...     from_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", to_address="0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", 
+        ...     value=Decimal("0.1"), block_hash="0xabc...", nonce=42, type=2, gas=21000, gas_price=20000000000,
+        ...     max_fee_per_gas=30000000000, max_priority_fee_per_gas=1000000000, input="0x", r="0x123...", s="0x456...", v=27
         ... )
-        >>> tx.chainid
-        Network.Mainnet
-        >>> tx.type
-        2
-        >>> tx.max_fee_per_gas
-        30000000000
+        >>> tx.chainid, tx.type, tx.max_fee_per_gas
+        (Network.Mainnet, 2, 30000000000)
     """
 
     entry_type: ClassVar[Literal['transaction']] = 'transaction'
@@ -183,12 +179,12 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     
     block_hash: str
     """
-    The hash of the block that includes this transaction.
+    The hash of the block that includes this Transaction.
     """
     
     nonce: int
     """
-    The sender's transaction count at the time of this transaction.
+    The sender's transaction count at the time of this Transaction.
     """
     
     type: Optional[int]
@@ -199,7 +195,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     
     gas: int
     """
-    The maximum amount of gas the sender is willing to use for the transaction.
+    The maximum amount of gas the sender is willing to use for the Transaction.
     """
     
     gas_price: int
@@ -219,22 +215,22 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     
     input: str
     """
-    The data payload sent with the transaction, often used for contract interactions.
+    The data payload sent with the Transaction, often used for contract interactions.
     """
     
     r: str
     """
-    The R component of the transaction's ECDSA signature.
+    The R component of the Transaction's ECDSA signature.
     """
     
     s: str
     """
-    The S component of the transaction's ECDSA signature.
+    The S component of the Transaction's ECDSA signature.
     """
     
     v: int
     """
-    The V component of the transaction's ECDSA signature, used for replay protection.
+    The V component of the Transaction's ECDSA signature, used for replay protection.
     """
     
     access_list: Optional[Tuple[AccessListEntry, ...]] = None
@@ -258,28 +254,13 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
 
     Example:
         >>> internal_tx = InternalTransfer(
-        ...     chainid=Network.Mainnet,
-        ...     block_number=Block(15537393),
-        ...     hash="0x123...",
-        ...     from_address="0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-        ...     to_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        ...     value=Decimal("0"),
-        ...     block_hash="0xabc...",
-        ...     type="call",
-        ...     trace_address="0.1",
-        ...     gas=100000,
-        ...     gas_used=21000,
-        ...     subtraces=1,
-        ...     call_type="call",
-        ...     input="0x123...",
-        ...     output="0x456..."
+        ...     chainid=Network.Mainnet, block_number=Block(number=15537393), hash="0x123...",
+        ...     from_address="0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", to_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 
+        ...     value=Decimal("0"), block_hash="0xabc...", type="call", trace_address="0.1", gas=100000, gas_used=21000, 
+        ...     subtraces=1, call_type="call", input="0x123...", output="0x456..."
         ... )
-        >>> internal_tx.type
-        'call'
-        >>> internal_tx.trace_address
-        '0.1'
-        >>> internal_tx.gas_used
-        21000
+        >>> internal_tx.type, internal_tx.trace_address, internal_tx.gas_used
+        ('call', '0.1', 21000)
     """
 
     entry_type: ClassVar[Literal['internal_transfer']] = 'internal_transfer'
@@ -289,7 +270,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
     
     block_hash: str
     """
-    The hash of the block containing the transaction that includes this internal transfer.
+    The hash of the block containing the transaction that includes this InternalTransfer.
     """
     
     type: str
@@ -300,7 +281,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
     
     trace_address: str
     """
-    The path of sub-calls to reach this internal transfer within the transaction.
+    The path of sub-calls to reach this InternalTransfer within the transaction.
     Represented as period-separated integers, e.g., "0.1.2" for the third sub-call of the second sub-call
     of the first top-level call.
     """
@@ -317,12 +298,12 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
     
     subtraces: int
     """
-    The number of sub-operations spawned by this internal transfer.
+    The number of sub-operations spawned by this InternalTransfer.
     """
     
     call_type: Optional[str] = None
     """
-    The type of call made in this internal transfer (e.g., "call", "delegatecall", "staticcall").
+    The type of call made in this InternalTransfer (e.g., "call", "delegatecall", "staticcall").
     """
     
     input: Optional[str] = None
@@ -342,12 +323,12 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
     
     address: Optional[str] = None
     """
-    The address of the account or contract involved in this internal transfer.
+    The address of the account or contract involved in this InternalTransfer.
     """
     
     code: Optional[str] = None
     """
-    The code of the contract involved in this internal transfer, if applicable.
+    The code of the contract involved in this InternalTransfer, if applicable.
     """
 
 
@@ -361,22 +342,12 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
 
     Example:
         >>> token_transfer = TokenTransfer(
-        ...     chainid=Network.Mainnet,
-        ...     block_number=Block(15537393),
-        ...     hash="0x123...",
-        ...     from_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        ...     to_address="0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-        ...     value=Decimal("1000000"),  # 1 USDC (assuming 6 decimals)
-        ...     log_index=3,
-        ...     token="USDC",
-        ...     token_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+        ...     chainid=Network.Mainnet, block_number=Block(number=15537393), hash="0x123...",
+        ...     from_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", to_address="0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+        ...     value=Decimal("1000000"), log_index=3, token="USDC", token_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
         ... )
-        >>> token_transfer.token
-        'USDC'
-        >>> token_transfer.value
-        Decimal('1000000')
-        >>> token_transfer.log_index
-        3
+        >>> token_transfer.token, token_transfer.value, token_transfer.log_index
+        ('USDC', Decimal('1000000'), 3)
     """
 
     entry_type: ClassVar[Literal['token_transfer']] = 'token_transfer'
@@ -387,7 +358,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
     log_index: int
     """
     The index of this transfer event within the transaction logs.
-    Used to uniquely identify this token Transfer event within the transaction.
+    Used to uniquely identify this TokenTransfer event within the transaction.
     """
     
     token: Optional[str]
