@@ -77,7 +77,7 @@ class Maker(LendingProtocolWithLockedCollateral):
     
     async def get_ilks(self, block: Optional[int]) -> List[str]:
         """List all ilks (cdp keys of sorts) for MakerDAO"""
-        return await self.ilk_registry.list(block_identifier=block)
+        return await self.ilk_registry.list.coroutine(block_identifier=block)
 
     @alru_cache
     async def get_gem(self, ilk: bytes) -> str:
