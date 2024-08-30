@@ -75,7 +75,7 @@ class Maker(LendingProtocolWithLockedCollateral):
             balances[dai] += Balance(debt, debt)
         return balances
     
-    async def get_ilks(self, block: Optional[int]) -> List[str]:
+    async def get_ilks(self, block: Optional[int]) -> List[HexString]:
         """List all ilks (cdp keys of sorts) for MakerDAO"""
         return await self.ilk_registry.list.coroutine(block_identifier=block)
 
