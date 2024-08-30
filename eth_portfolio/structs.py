@@ -68,30 +68,61 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
     """
 
     chainid: Network
+    """
+    The network ID where the {cls_name} occurred.    
+    """
+    
     block_number: Block
+    """
+    The block number where the {cls_name} was included.
+    """
+    
     transaction_index: Optional[int] = None
     """
     The index of the transaction within its block, if applicable.
     """
     
     hash: str
+    """
+    The unique transaction hash.
+    """
+    
     from_address: Optional[str] = None
+    """
+    The address from which the {cls_name} was sent, if applicable.
+    """
+    
     value: Decimal
     """
-    The value/amount of the transferred assets.
+    The value/amount of cryptocurrency transferred in the {cls_name}.
     """
     
     to_address: Optional[str] = None
+    """
+    The address to which the {cls_name} was sent, if applicable.
+    """
+    
     price: Optional[Decimal] = None
     """
-    The price of the cryptocurrency at the time of the action, if known.
+    The price of the cryptocurrency at the time of the {cls_name}, if known.
     """
     
     value_usd: Optional[Decimal] = None
     """
-    The USD value of the cryptocurrency transferred, if price is known.
+    The USD value of the cryptocurrency transferred in the {cls_name}, if price is known.
     """
     
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+
+        # Use the class name exactly as it is defined (e.g., TokenTransfer)
+        cls_name = cls.__name__
+
+        # Replace {cls_name} in attribute-level docstrings
+        for key in cls.__annotations__:
+            attr = getattr(cls, key, None)
+            if attr is not None and attr.__doc__:
+                attr.__doc__ = attr.__doc__.format(cls_name=cls_name)
 
 class AccessListEntry(Struct, frozen=True):
     """
