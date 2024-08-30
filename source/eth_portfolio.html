@@ -929,7 +929,7 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 <span class="sig-name descname"><span class="pre">w3</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Web3</span></em><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.w3" title="Link to this definition"></a></dt>
 <dd><p>The <cite>Web3</cite> object which will be used to call your rpc for all read operations.</p>
 <dl class="simple">
-<dt>Type:</dt><dd><p><a class="reference external" href="https://web3py.readthedocs.io/en/stable/web3.main.html#web3.Web3" title="(in web3.py v7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Web3</span></code></a></p>
+<dt>Type:</dt><dd><p><a class="reference external" href="https://web3py.readthedocs.io/en/stable/web3.main.html#web3.Web3" title="(in web3.py v7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Web3</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1451,13 +1451,13 @@ the execution of a single transaction.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.InternalTransfer.address">
 <span class="sig-name descname"><span class="pre">address</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#eth_portfolio.structs.InternalTransfer.address" title="Link to this definition"></a></dt>
-<dd><p>The address of the account or contract involved in this internal transfer.</p>
+<dd><p>The address of the account or contract involved in this InternalTransfer.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.InternalTransfer.block_hash">
 <span class="sig-name descname"><span class="pre">block_hash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#eth_portfolio.structs.InternalTransfer.block_hash" title="Link to this definition"></a></dt>
-<dd><p>The hash of the block containing the transaction that includes this internal transfer.</p>
+<dd><p>The hash of the block containing the transaction that includes this InternalTransfer.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1468,7 +1468,7 @@ the execution of a single transaction.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.InternalTransfer.call_type">
 <span class="sig-name descname"><span class="pre">call_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#eth_portfolio.structs.InternalTransfer.call_type" title="Link to this definition"></a></dt>
-<dd><p>The type of call made in this internal transfer (e.g., “call”, “delegatecall”, “staticcall”).</p>
+<dd><p>The type of call made in this InternalTransfer (e.g., “call”, “delegatecall”, “staticcall”).</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1479,7 +1479,7 @@ the execution of a single transaction.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.InternalTransfer.code">
 <span class="sig-name descname"><span class="pre">code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#eth_portfolio.structs.InternalTransfer.code" title="Link to this definition"></a></dt>
-<dd><p>The code of the contract involved in this internal transfer, if applicable.</p>
+<dd><p>The code of the contract involved in this InternalTransfer, if applicable.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1537,7 +1537,7 @@ the execution of a single transaction.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.InternalTransfer.subtraces">
 <span class="sig-name descname"><span class="pre">subtraces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#eth_portfolio.structs.InternalTransfer.subtraces" title="Link to this definition"></a></dt>
-<dd><p>The number of sub-operations spawned by this internal transfer.</p>
+<dd><p>The number of sub-operations spawned by this InternalTransfer.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1548,7 +1548,7 @@ the execution of a single transaction.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.InternalTransfer.trace_address">
 <span class="sig-name descname"><span class="pre">trace_address</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#eth_portfolio.structs.InternalTransfer.trace_address" title="Link to this definition"></a></dt>
-<dd><p>The path of sub-calls to reach this internal transfer within the transaction.
+<dd><p>The path of sub-calls to reach this InternalTransfer within the transaction.
 Represented as period-separated integers, e.g., “0.1.2” for the third sub-call of the second sub-call
 of the first top-level call.</p>
 </dd></dl>
@@ -1672,7 +1672,7 @@ the execution of a transaction interacting with the token contract.</p>
 <dt class="sig sig-object py" id="eth_portfolio.structs.TokenTransfer.log_index">
 <span class="sig-name descname"><span class="pre">log_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#eth_portfolio.structs.TokenTransfer.log_index" title="Link to this definition"></a></dt>
 <dd><p>The index of this transfer event within the transaction logs.
-Used to uniquely identify this token Transfer event within the transaction.</p>
+Used to uniquely identify the Transfer event associated with this TokenTransfer within the transaction.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1796,7 +1796,7 @@ including gas parameters, signature components, and transaction-specific data.</
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.Transaction.block_hash">
 <span class="sig-name descname"><span class="pre">block_hash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#eth_portfolio.structs.Transaction.block_hash" title="Link to this definition"></a></dt>
-<dd><p>The hash of the block that includes this transaction.</p>
+<dd><p>The hash of the block that includes this Transaction.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1823,7 +1823,7 @@ including gas parameters, signature components, and transaction-specific data.</
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.Transaction.gas">
 <span class="sig-name descname"><span class="pre">gas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#eth_portfolio.structs.Transaction.gas" title="Link to this definition"></a></dt>
-<dd><p>The maximum amount of gas the sender is willing to use for the transaction.</p>
+<dd><p>The maximum amount of gas the sender is willing to use for the Transaction.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1840,7 +1840,7 @@ including gas parameters, signature components, and transaction-specific data.</
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.Transaction.input">
 <span class="sig-name descname"><span class="pre">input</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#eth_portfolio.structs.Transaction.input" title="Link to this definition"></a></dt>
-<dd><p>The data payload sent with the transaction, often used for contract interactions.</p>
+<dd><p>The data payload sent with the Transaction, often used for contract interactions.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1858,7 +1858,7 @@ including gas parameters, signature components, and transaction-specific data.</
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.Transaction.nonce">
 <span class="sig-name descname"><span class="pre">nonce</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#eth_portfolio.structs.Transaction.nonce" title="Link to this definition"></a></dt>
-<dd><p>The sender’s transaction count at the time of this transaction.</p>
+<dd><p>The sender’s transaction count at the time of this Transaction.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1870,13 +1870,13 @@ including gas parameters, signature components, and transaction-specific data.</
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.Transaction.r">
 <span class="sig-name descname"><span class="pre">r</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#eth_portfolio.structs.Transaction.r" title="Link to this definition"></a></dt>
-<dd><p>The R component of the transaction’s ECDSA signature.</p>
+<dd><p>The R component of the Transaction’s ECDSA signature.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.Transaction.s">
 <span class="sig-name descname"><span class="pre">s</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#eth_portfolio.structs.Transaction.s" title="Link to this definition"></a></dt>
-<dd><p>The S component of the transaction’s ECDSA signature.</p>
+<dd><p>The S component of the Transaction’s ECDSA signature.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1900,7 +1900,7 @@ None for chains that don’t specify transaction types.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.Transaction.v">
 <span class="sig-name descname"><span class="pre">v</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#eth_portfolio.structs.Transaction.v" title="Link to this definition"></a></dt>
-<dd><p>The V component of the transaction’s ECDSA signature, used for replay protection.</p>
+<dd><p>The V component of the Transaction’s ECDSA signature, used for replay protection.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -3327,7 +3327,7 @@ In either case, this is followed by: for k in F:  D[k] = F[k]</p>
 <span class="sig-name descname"><span class="pre">w3</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Web3</span></em><a class="headerlink" href="#eth_portfolio.Portfolio.w3" title="Link to this definition"></a></dt>
 <dd><p>The <cite>Web3</cite> object which will be used to call your rpc for all read operations.</p>
 <dl class="simple">
-<dt>Type:</dt><dd><p><a class="reference external" href="https://web3py.readthedocs.io/en/stable/web3.main.html#web3.Web3" title="(in web3.py v7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Web3</span></code></a></p>
+<dt>Type:</dt><dd><p><a class="reference external" href="https://web3py.readthedocs.io/en/stable/web3.main.html#web3.Web3" title="(in web3.py v7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Web3</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>

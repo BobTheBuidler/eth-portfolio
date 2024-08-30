@@ -189,7 +189,7 @@
 
 <span class="sd">    Example:</span>
 <span class="sd">        &gt;&gt;&gt; entry = AccessListEntry(</span>
-<span class="sd">        ...     address=&quot;0x742d35Cc6634C0532925a3b844Bc454e4438f44e&quot;,</span>
+<span class="sd">        ...     address=&quot;0x742d35Cc6634C0532925a3b844Bc454e4438f44e&quot;, </span>
 <span class="sd">        ...     storage_keys=(b&#39;key1&#39;, b&#39;key2&#39;)</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; entry.address</span>
@@ -253,12 +253,12 @@
     
     <span class="n">block_hash</span><span class="p">:</span> <span class="nb">str</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The hash of the block that includes this transaction.</span>
+<span class="sd">    The hash of the block that includes this Transaction.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="n">nonce</span><span class="p">:</span> <span class="nb">int</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The sender&#39;s transaction count at the time of this transaction.</span>
+<span class="sd">    The sender&#39;s transaction count at the time of this Transaction.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="nb">type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
@@ -269,7 +269,7 @@
     
     <span class="n">gas</span><span class="p">:</span> <span class="nb">int</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The maximum amount of gas the sender is willing to use for the transaction.</span>
+<span class="sd">    The maximum amount of gas the sender is willing to use for the Transaction.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="n">gas_price</span><span class="p">:</span> <span class="nb">int</span>
@@ -289,22 +289,22 @@
     
     <span class="nb">input</span><span class="p">:</span> <span class="nb">str</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The data payload sent with the transaction, often used for contract interactions.</span>
+<span class="sd">    The data payload sent with the Transaction, often used for contract interactions.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="n">r</span><span class="p">:</span> <span class="nb">str</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The R component of the transaction&#39;s ECDSA signature.</span>
+<span class="sd">    The R component of the Transaction&#39;s ECDSA signature.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="n">s</span><span class="p">:</span> <span class="nb">str</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The S component of the transaction&#39;s ECDSA signature.</span>
+<span class="sd">    The S component of the Transaction&#39;s ECDSA signature.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="n">v</span><span class="p">:</span> <span class="nb">int</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The V component of the transaction&#39;s ECDSA signature, used for replay protection.</span>
+<span class="sd">    The V component of the Transaction&#39;s ECDSA signature, used for replay protection.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="n">access_list</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">AccessListEntry</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -362,7 +362,7 @@
     
     <span class="n">block_hash</span><span class="p">:</span> <span class="nb">str</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The hash of the block containing the transaction that includes this internal transfer.</span>
+<span class="sd">    The hash of the block containing the transaction that includes this InternalTransfer.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
@@ -373,7 +373,7 @@
     
     <span class="n">trace_address</span><span class="p">:</span> <span class="nb">str</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The path of sub-calls to reach this internal transfer within the transaction.</span>
+<span class="sd">    The path of sub-calls to reach this InternalTransfer within the transaction.</span>
 <span class="sd">    Represented as period-separated integers, e.g., &quot;0.1.2&quot; for the third sub-call of the second sub-call</span>
 <span class="sd">    of the first top-level call.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -390,12 +390,12 @@
     
     <span class="n">subtraces</span><span class="p">:</span> <span class="nb">int</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The number of sub-operations spawned by this internal transfer.</span>
+<span class="sd">    The number of sub-operations spawned by this InternalTransfer.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="n">call_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The type of call made in this internal transfer (e.g., &quot;call&quot;, &quot;delegatecall&quot;, &quot;staticcall&quot;).</span>
+<span class="sd">    The type of call made in this InternalTransfer (e.g., &quot;call&quot;, &quot;delegatecall&quot;, &quot;staticcall&quot;).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -415,12 +415,12 @@
     
     <span class="n">address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The address of the account or contract involved in this internal transfer.</span>
+<span class="sd">    The address of the account or contract involved in this InternalTransfer.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="n">code</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The code of the contract involved in this internal transfer, if applicable.</span>
+<span class="sd">    The code of the contract involved in this InternalTransfer, if applicable.</span>
 <span class="sd">    &quot;&quot;&quot;</span></div>
 
 
@@ -463,7 +463,7 @@
     <span class="n">log_index</span><span class="p">:</span> <span class="nb">int</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The index of this transfer event within the transaction logs.</span>
-<span class="sd">    Used to uniquely identify this token Transfer event within the transaction.</span>
+<span class="sd">    Used to uniquely identify the Transfer event associated with this TokenTransfer within the transaction.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="n">token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
