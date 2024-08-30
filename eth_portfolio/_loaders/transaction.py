@@ -205,8 +205,5 @@ A smart processing queue that manages retrieving transactions from blocks with h
 This queue processes the retrieval of block transactions using a large number of workers to handle potentially high throughput in blockchain environments. It wraps the _get_block_transactions function to provide efficient concurrent processing.
 
 Example:
-    >>> block = 12345678
-    >>> transactions = await get_block_transactions.process(block)
-    >>> for tx in transactions:
-    ...     print(tx['hash'])
+    >>> transactions = await get_block_transactions.process(block=12345678); [print(tx['hash']) for tx in transactions]
 """
