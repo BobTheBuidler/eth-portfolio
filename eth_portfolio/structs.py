@@ -118,11 +118,16 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
         # Use the class name exactly as it is defined (e.g., TokenTransfer)
         cls_name = cls.__name__
 
+        # Replace {cls_name} in the class-level docstring
+        if cls.__doc__:
+            cls.__doc__ = cls.__doc__.replace("{cls_name}", cls_name)
+
         # Replace {cls_name} in attribute-level docstrings
-        for key in cls.__annotations__:
+        for key, attr_type in cls.__annotations__.items():
             attr = getattr(cls, key, None)
-            if attr is not None and attr.__doc__:
-                attr.__doc__ = attr.__doc__.format(cls_name=cls_name)
+            if attr and isinstance(attr, str):  # Ensure that attr is a docstring
+                docstring = attr.replace("{cls_name}", cls_name)
+                setattr(cls, key, docstring)
 
 class AccessListEntry(Struct, frozen=True):
     """
