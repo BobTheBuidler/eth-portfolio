@@ -118,7 +118,7 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
         # Replace {cls_name} in attribute-level docstrings
         for key, attr in cls.__dict__.items():
             if attr.__doc__ and "{cls_name}" in attr.__doc__:
-                attr.__doc__ = attr.__doc__.replace("{cls_name}", cls.__name__))
+                attr.__doc__ = attr.__doc__.replace("{cls_name}", cls.__name__)
 
 
 class AccessListEntry(Struct, frozen=True):
