@@ -1,12 +1,12 @@
 """
-This module handles the loading and processing of token transfers and associated data within the eth_portfolio project.
+This module orchestrates the process of loading and processing token transfers and associated metadata within the eth_portfolio ecosystem.
 
-Functions in this module decode token transfer logs, retrieve necessary transaction details, and store processed data in a local database. It uses semaphores to manage concurrency and includes caching mechanisms for improved performance.
+The module's primary responsibilities include decoding token transfer logs, retrieving pertinent transaction details, and persisting processed data in a local database. It leverages semaphores for concurrent operation management and implements caching mechanisms to optimize performance.
 
-Additionally, it includes utility functions for fetching token symbols and transaction indexes.
+The module also encapsulates utility functions for retrieving token symbols and transaction indices.
 
 Classes:
-    :class:`~eth_portfolio._loaders.transactions._EventItem`: A helper class for type hinting, extending brownie.EventItem, but not used directly at runtime.
+    :class:`~eth_portfolio._loaders.transactions._EventItem`: A type hinting construct extending brownie.EventItem, utilized solely for static analysis and not instantiated at runtime.
 """
 
 import asyncio
@@ -34,36 +34,37 @@ from eth_portfolio.structs import TokenTransfer
 
 logger = logging.getLogger(__name__)
 
-token_transfer_semaphore = dank_mids.BlockSemaphore(10_000, name='eth_portfolio.token_transfers')  # Some arbitrary number
-"""A semaphore that limits the number of concurrent token transfers being processed per block."""
+token_transfer_semaphore = dank_mids.BlockSemaphore(10_000, name='eth_portfolio.token_transfers')
+"""A semaphore that regulates the concurrent processing of token transfers on a per-block basis."""
 
 
 @stuck_coro_debugger
 async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional[TokenTransfer]:
     """
-    Processes and loads a token transfer from a log entry.
+    Processes and loads a token transfer from a log entry, with comprehensive error handling and optional price fetching.
 
-    This function first checks if the transfer is for a known 'shitcoin' and skips it if so.
-    It then checks if the transfer has already been processed and stored in the database. If the transfer exists and 
-    `load_prices` is set to True but the price data is missing, the function deletes the existing entry and processes the transfer again. 
-    If the transfer hasn't been processed, the function decodes the log, retrieves necessary data (e.g., token scale, symbol, transaction index), 
-    and optionally fetches the token price at the time of the transaction. The processed transfer is then stored in the database.
+    This function employs a multi-step process:
+    1. Validates the transfer against a known set of 'shitcoins', skipping processing if matched.
+    2. Checks for existing database entries, potentially deleting and reprocessing if price data is requested but missing.
+    3. Utilizes a semaphore to manage concurrent processing within the same block.
+    4. Decodes the transfer log and retrieves associated metadata (e.g., token scale, symbol, transaction index).
+    5. Optionally fetches the token price at the time of the transaction.
+    6. Constructs and persists a :class:`~eth_portfolio.structs.TokenTransfer` object in the database.
 
-    A semaphore is used to limit the number of concurrent token transfer processes within the same block.
+    The function handles various exceptions, including :class:`~y.exceptions.NonStandardERC20` for non-compliant tokens and :class:`decimal.InvalidOperation` for extreme token values.
 
     Args:
-        transfer_log: The log entry of the token transfer.
-        load_prices: Whether to load the token price at the time of the transaction.
+        transfer_log: A dictionary containing the raw log entry of the token transfer.
+        load_prices: A flag indicating whether to fetch and include price data for the token at the time of transfer.
 
     Returns:
-        Optional[TokenTransfer]: The processed TokenTransfer object, or None if the transfer cannot be processed.
+        Optional: A processed TokenTransfer object if successful, or None if the transfer cannot be processed due to various constraints or errors.
 
     Raises:
-        TypeError: If there's an issue creating the TokenTransfer object.
+        TypeError: If there's an incompatibility in the data types when constructing the TokenTransfer object.
 
-    Example:
-        >>> transfer = await load_token_transfer(transfer_log={"address": "0x1234567890abcdef1234567890abcdef12345678", "blockNumber": 12345678}, load_prices=True)
-        >>> print(transfer)
+    Note:
+        This function employs caching mechanisms and database operations to optimize performance and maintain data consistency.
     """
     if transfer_log['address'] in SHITCOINS.get(chain.id, set()):
         return None
@@ -134,19 +135,22 @@ async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional
 @stuck_coro_debugger
 async def get_symbol(token: ERC20) -> Optional[str]:
     """
-    Retrieves the symbol of the given ERC20 token.
+    Asynchronously retrieves the symbol of a given ERC20 token, with error handling for non-standard implementations.
 
-    The function attempts to access the token's symbol. If the token contract does not follow the standard ERC20 interface, indicated by raising a `NonStandardERC20` exception, the function returns `None`.
+    This function attempts to access the token's symbol through its asynchronous interface. If the token contract
+    does not adhere to the standard ERC20 interface, indicated by a :class:`~y.exceptions.NonStandardERC20` exception, the function
+    returns `None` instead of propagating the error.
 
     Args:
-        token: The ERC20 token object.
+        token: An asynchronous ERC20 token object representing the token whose symbol is to be retrieved.
 
     Returns:
-        Optional[str]: The token symbol, or None if it cannot be retrieved.
+        Optional[str]: The token's symbol as a string if successfully retrieved, or None if the token does not
+                       implement a standard symbol method.
 
-    Example:
-        >>> symbol = await get_symbol(token=ERC20("0x1234567890abcdef1234567890abcdef12345678", asynchronous=True))
-        >>> print(symbol)
+    Note:
+        This function is decorated with :func:`~y._decorators.stuck_coro_debugger`, which may provide additional debugging information
+        in case of coroutine-related issues.
     """
     try:
         return await token.__symbol__
@@ -157,64 +161,85 @@ async def get_symbol(token: ERC20) -> Optional[str]:
 @cache_to_disk
 async def get_transaction_index(hash: str) -> int:
     """
-    Retrieves the transaction index for a given transaction hash.
+    Asynchronously retrieves the transaction index for a given transaction hash, with results cached to disk.
 
-    This function fetches the transaction receipt using the provided hash and extracts the transaction index, which indicates the position of the transaction within its block. The result is cached to disk for improved performance.
+    This function fetches the transaction receipt corresponding to the provided hash and extracts the transaction index,
+    which represents the position of the transaction within its containing block. The result is cached to disk to
+    optimize performance in subsequent calls with the same hash.
 
     Args:
-        hash: The transaction hash.
+        hash: The hexadecimal string representation of the transaction hash.
 
     Returns:
-        int: The index of the transaction within its block.
+        int: The zero-based index of the transaction within its block.
 
-    Example:
-        >>> index = await get_transaction_index(hash="0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef")
-        >>> print(index)
+    Note:
+        1. This function is decorated with both :func:`~y._decorators.stuck_coro_debugger` and :func:`~eth_portfolio._cache.cache_to_disk`. The former aids in
+           debugging potential coroutine-related issues, while the latter implements disk-based caching for
+           performance optimization.
+        2. The function assumes that :func:`~eth_portfolio._loaders.utils.get_transaction_receipt` is an asynchronous function that retrieves
+           the full transaction receipt, from which the index is extracted.
     """
     receipt = await get_transaction_receipt(hash)
     return receipt.transactionIndex
 
 class _EventItem(brownie_EventItem):
     """
-    A helper class for type hinting and MyPy only. You will not encounter instances of this class during runtime.
+    A type hinting construct extending :class:`brownie.network.event._EventItem`, designed exclusively for static analysis and IDE support.
 
-    This class extends brownie_EventItem to provide type hints for additional attributes specific to token transfer events.
-    It's used to improve static type checking and IDE support, but does not affect runtime behavior.
+    This class augments brownie_EventItem with additional attributes specific to token transfer events, enhancing
+    type checking capabilities and IDE autocompletion. It is not intended to be instantiated or used at runtime.
+
+    Attributes:
+        block_number: The block number in which the event occurred.
+        log_index: The index of the log entry within the block.
+        transaction_hash (Union[str, bytes]): The hash of the transaction. Note the dual type to accommodate
+                                              inconsistencies in representation.
 
     Note:
-        The transaction_hash type is a Union[str, bytes] due to inconsistencies in how it's represented. This should be resolved in future versions.
+        The dual typing of `transaction_hash` (Union[str, bytes]) is a temporary measure to handle inconsistencies
+        in how it's represented. This should be resolved in future versions to standardize the type.
     """
     block_number: int
     """
-    block_number: The block number of the event.
+    The block number in which the event occurred.
     """
     log_index: int
     """
-    log_index: The index of the log entry within the block.
+    The index of the log entry within the block.
     """
-    transaction_hash: Union[str, bytes]  # TODO figure out why it comes in both ways
+    transaction_hash: Union[str, bytes]
     """
-    transaction_hash: The hash of the transaction, which may be a string or bytes.
+    transaction_hash: The hash of the transaction. Note the dual type to accommodate inconsistencies in representation.
     """
 
 
 @stuck_coro_debugger
 async def _decode_token_transfer(log) -> Optional[_EventItem]:
     """
-    Decodes a token transfer log into :class:`~eth_portfolio._loaders.transactions._EventItem`.
+    Asynchronously decodes a token transfer log into an :class:`~eth_portfolio._loaders.transactions._EventItem`, with comprehensive error handling.
 
-    This function attempts to retrieve the contract for the given log's address. If the contract is found and verified, it decodes the log into a `Transfer` event. This function handles exceptions for ContractNotFound and ContractNotVerified, logging warnings in these cases. 
-    It also handles various decoding errors, logging them for debugging purposes.
+    This function attempts to retrieve and verify the contract associated with the log's address. If successful,
+    it proceeds to decode the log into a 'Transfer' event. The function handles various exceptions that may occur
+    during this process, including :class:`brownie.exceptions.ContractNotFound` and :class:`~y.exceptions.ContractNotVerified`, logging appropriate warnings.
 
     Args:
-        log: The log entry to be decoded.
+        log: The raw log entry to be decoded, expected to contain at least an 'address' field.
 
     Returns:
-        Optional[_EventItem]: The decoded event as an _EventItem, or None if the log cannot be decoded due to contract issues or decoding errors.
+        Optional[:class:`~eth_portfolio._loaders.transactions._EventItem`]: The decoded event as an _EventItem if successful, or None if the log cannot be
+                              decoded due to contract issues or other decoding errors.
 
-    Example:
-        >>> decoded_event = await _decode_token_transfer(log={"address": "0x1234567890abcdef1234567890abcdef12345678", "topics": [...], "data": "..."})
-        >>> print(decoded_event)
+    Raises:
+        Various exceptions may be logged but not propagated, including :class:`brownie.exceptions.ContractNotFound`, :class:`~y.exceptions.ContractNotVerified`,
+        and general decoding errors.
+
+    Note:
+        1. This function is crucial for interpreting raw blockchain data and should be maintained with care.
+        2. The function employs nested try-except blocks to handle different layers of potential errors,
+           providing detailed logging for debugging purposes.
+        3. If the contract is not found or not verified, appropriate warning messages are logged, and the
+           function returns None.
     """
     try:
         await Contract.coroutine(log['address'])
