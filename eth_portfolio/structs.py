@@ -115,7 +115,6 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
 
-        # Use the class name exactly as it is defined (e.g., TokenTransfer)
         cls_name = cls.__name__
 
         # Replace {cls_name} in the class-level docstring
@@ -123,11 +122,10 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
             cls.__doc__ = cls.__doc__.replace("{cls_name}", cls_name)
 
         # Replace {cls_name} in attribute-level docstrings
-        for key, attr_type in cls.__annotations__.items():
+        for key in cls.__annotations__:
             attr = getattr(cls, key, None)
-            if attr and isinstance(attr, str):  # Ensure that attr is a docstring
-                docstring = attr.replace("{cls_name}", cls_name)
-                setattr(cls, key, docstring)
+            if isinstance(attr, str):
+                setattr(cls, key, attr.replace("{cls_name}", cls_name))
 
 class AccessListEntry(Struct, frozen=True):
     """
