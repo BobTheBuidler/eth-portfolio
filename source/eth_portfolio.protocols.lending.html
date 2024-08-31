@@ -52,13 +52,13 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#eth-portfolio-address-module">eth_portfolio.address module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#eth-portfolio-buckets-module">eth_portfolio.buckets module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#eth-portfolio-constants-module">eth_portfolio.constants module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#eth-portfolio-portfolio-module">eth_portfolio.portfolio module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#eth-portfolio-structs-module">eth_portfolio.structs module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#eth-portfolio-typing-module">eth_portfolio.typing module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio.address">eth_portfolio.address module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio.buckets">eth_portfolio.buckets module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio.constants">eth_portfolio.constants module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio.portfolio">eth_portfolio.portfolio module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio.structs">eth_portfolio.structs module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio.typing">eth_portfolio.typing module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -97,20 +97,440 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
-<section id="eth-portfolio-protocols-lending-compound-module">
-<h2>eth_portfolio.protocols.lending.compound module<a class="headerlink" href="#eth-portfolio-protocols-lending-compound-module" title="Link to this heading"></a></h2>
+<section id="module-eth_portfolio.protocols.lending.compound">
+<span id="eth-portfolio-protocols-lending-compound-module"></span><h2>eth_portfolio.protocols.lending.compound module<a class="headerlink" href="#module-eth_portfolio.protocols.lending.compound" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.compound.Compound">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.protocols.lending.compound.</span></span><span class="sig-name descname"><span class="pre">Compound</span></span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/compound.html#Compound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.compound.Compound" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LendingProtocol</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.compound.Compound._debt">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_debt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/compound.html#Compound._debt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.compound.Compound._debt" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>)</p></li>
+<li><p><strong>block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.compound.Compound._markets">
+<span class="sig-name descname"><span class="pre">_markets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Contract</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.compound.Compound._markets" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.compound.Compound.debt">
+<span class="sig-name descname"><span class="pre">debt</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_ASyncFutureInstanceMethod</span> <span class="pre">for</span> <span class="pre">&lt;function</span> <span class="pre">LendingProtocol.debt&gt;</span> <span class="pre">bound</span> <span class="pre">to</span> <span class="pre">None&gt;</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.compound.Compound.debt" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn_args</strong> (<em>~P</em>)</p></li>
+<li><p><strong>fn_kwargs</strong> (<em>~P</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>T</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.compound.Compound.markets">
+<span class="sig-name descname"><span class="pre">markets</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_ASyncFutureInstanceMethod</span> <span class="pre">for</span> <span class="pre">&lt;function</span> <span class="pre">Compound.markets&gt;</span> <span class="pre">bound</span> <span class="pre">to</span> <span class="pre">None&gt;</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.compound.Compound.markets" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn_args</strong> (<em>~P</em>)</p></li>
+<li><p><strong>fn_kwargs</strong> (<em>~P</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>T</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.compound.Compound.underlyings">
+<span class="sig-name descname"><span class="pre">underlyings</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_ASyncFutureInstanceMethod</span> <span class="pre">for</span> <span class="pre">&lt;async_lru._LRUCacheWrapper</span> <span class="pre">object&gt;</span> <span class="pre">bound</span> <span class="pre">to</span> <span class="pre">None&gt;</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.compound.Compound.underlyings" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn_args</strong> (<em>~P</em>)</p></li>
+<li><p><strong>fn_kwargs</strong> (<em>~P</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>T</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.compound._borrow_balance_stored">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.protocols.lending.compound.</span></span><span class="sig-name descname"><span class="pre">_borrow_balance_stored</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">market</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/compound.html#_borrow_balance_stored"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.compound._borrow_balance_stored" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>market</strong> (<em>Contract</em>)</p></li>
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>)</p></li>
+<li><p><strong>block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)">int</a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.compound._get_contract">
+<span class="sig-prename descclassname"><span class="pre">eth_portfolio.protocols.lending.compound.</span></span><span class="sig-name descname"><span class="pre">_get_contract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">market</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/compound.html#_get_contract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.compound._get_contract" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>market</strong> (<em>CToken</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Contract</em> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="eth-portfolio-protocols-lending-liquity-module">
-<h2>eth_portfolio.protocols.lending.liquity module<a class="headerlink" href="#eth-portfolio-protocols-lending-liquity-module" title="Link to this heading"></a></h2>
+<section id="module-eth_portfolio.protocols.lending.liquity">
+<span id="eth-portfolio-protocols-lending-liquity-module"></span><h2>eth_portfolio.protocols.lending.liquity module<a class="headerlink" href="#module-eth_portfolio.protocols.lending.liquity" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.liquity.Liquity">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.protocols.lending.liquity.</span></span><span class="sig-name descname"><span class="pre">Liquity</span></span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/liquity.html#Liquity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.liquity.Liquity" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LendingProtocolWithLockedCollateral</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.liquity.Liquity.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/liquity.html#Liquity.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.liquity.Liquity.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.liquity.Liquity._balances">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_balances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/liquity.html#Liquity._balances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.liquity.Liquity._balances" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>)</p></li>
+<li><p><strong>block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.liquity.Liquity._debt">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_debt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/liquity.html#Liquity._debt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.liquity.Liquity._debt" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>)</p></li>
+<li><p><strong>block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.liquity.Liquity.balances">
+<span class="sig-name descname"><span class="pre">balances</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_ASyncFutureInstanceMethod</span> <span class="pre">for</span> <span class="pre">&lt;function</span> <span class="pre">ProtocolABC.balances&gt;</span> <span class="pre">bound</span> <span class="pre">to</span> <span class="pre">None&gt;</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.liquity.Liquity.balances" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn_args</strong> (<em>~P</em>)</p></li>
+<li><p><strong>fn_kwargs</strong> (<em>~P</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>T</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.liquity.Liquity.debt">
+<span class="sig-name descname"><span class="pre">debt</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_ASyncFutureInstanceMethod</span> <span class="pre">for</span> <span class="pre">&lt;function</span> <span class="pre">LendingProtocol.debt&gt;</span> <span class="pre">bound</span> <span class="pre">to</span> <span class="pre">None&gt;</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.liquity.Liquity.debt" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn_args</strong> (<em>~P</em>)</p></li>
+<li><p><strong>fn_kwargs</strong> (<em>~P</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>T</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.liquity.Liquity.get_trove">
+<span class="sig-name descname"><span class="pre">get_trove</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;async_lru._LRUCacheWrapperInstanceMethod</span> <span class="pre">object&gt;</span></em><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/liquity.html#Liquity.get_trove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.liquity.Liquity.get_trove" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>)</p></li>
+<li><p><strong>block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>BlockNumber</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.liquity.Liquity.networks">
+<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Network.&lt;function</span> <span class="pre">Network.name</span> <span class="pre">at</span> <span class="pre">0x7f20a3b07eb0&gt;]</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.liquity.Liquity.networks" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="eth-portfolio-protocols-lending-maker-module">
-<h2>eth_portfolio.protocols.lending.maker module<a class="headerlink" href="#eth-portfolio-protocols-lending-maker-module" title="Link to this heading"></a></h2>
+<section id="module-eth_portfolio.protocols.lending.maker">
+<span id="eth-portfolio-protocols-lending-maker-module"></span><h2>eth_portfolio.protocols.lending.maker module<a class="headerlink" href="#module-eth_portfolio.protocols.lending.maker" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.maker.Maker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.protocols.lending.maker.</span></span><span class="sig-name descname"><span class="pre">Maker</span></span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/maker.html#Maker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.maker.Maker" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LendingProtocolWithLockedCollateral</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.maker.Maker.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/maker.html#Maker.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.maker.Maker.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.maker.Maker._balances">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_balances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/maker.html#Maker._balances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.maker.Maker._balances" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>)</p></li>
+<li><p><strong>block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.maker.Maker._debt">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_debt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/maker.html#Maker._debt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.maker.Maker._debt" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>)</p></li>
+<li><p><strong>block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.maker.Maker._cdp">
+<span class="sig-name descname"><span class="pre">_cdp</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;async_lru._LRUCacheWrapperInstanceMethod</span> <span class="pre">object&gt;</span></em><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/maker.html#Maker._cdp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.maker.Maker._cdp" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a> | <em>HexBytes</em> | <em>AnyAddress</em> | <a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.maker.Maker._proxy">
+<span class="sig-name descname"><span class="pre">_proxy</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;async_lru._LRUCacheWrapperInstanceMethod</span> <span class="pre">object&gt;</span></em><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/maker.html#Maker._proxy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.maker.Maker._proxy" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a> | <em>HexBytes</em> | <em>AnyAddress</em> | <a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.maker.Maker._urn">
+<span class="sig-name descname"><span class="pre">_urn</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;async_lru._LRUCacheWrapperInstanceMethod</span> <span class="pre">object&gt;</span></em><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/maker.html#Maker._urn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.maker.Maker._urn" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a> | <em>HexBytes</em> | <em>AnyAddress</em> | <a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.maker.Maker.balances">
+<span class="sig-name descname"><span class="pre">balances</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_ASyncFutureInstanceMethod</span> <span class="pre">for</span> <span class="pre">&lt;function</span> <span class="pre">ProtocolABC.balances&gt;</span> <span class="pre">bound</span> <span class="pre">to</span> <span class="pre">None&gt;</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.maker.Maker.balances" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn_args</strong> (<em>~P</em>)</p></li>
+<li><p><strong>fn_kwargs</strong> (<em>~P</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>T</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.maker.Maker.debt">
+<span class="sig-name descname"><span class="pre">debt</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_ASyncFutureInstanceMethod</span> <span class="pre">for</span> <span class="pre">&lt;function</span> <span class="pre">LendingProtocol.debt&gt;</span> <span class="pre">bound</span> <span class="pre">to</span> <span class="pre">None&gt;</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.maker.Maker.debt" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn_args</strong> (<em>~P</em>)</p></li>
+<li><p><strong>fn_kwargs</strong> (<em>~P</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>T</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.maker.Maker.networks">
+<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Network.&lt;function</span> <span class="pre">Network.name</span> <span class="pre">at</span> <span class="pre">0x7f20a3b07eb0&gt;]</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.maker.Maker.networks" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.maker.encode_bytes">
+<span class="sig-prename descclassname"><span class="pre">eth_portfolio.protocols.lending.maker.</span></span><span class="sig-name descname"><span class="pre">encode_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bytestring</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.protocols.lending.maker.encode_bytes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </section>
-<section id="eth-portfolio-protocols-lending-unit-module">
-<h2>eth_portfolio.protocols.lending.unit module<a class="headerlink" href="#eth-portfolio-protocols-lending-unit-module" title="Link to this heading"></a></h2>
+<section id="module-eth_portfolio.protocols.lending.unit">
+<span id="eth-portfolio-protocols-lending-unit-module"></span><h2>eth_portfolio.protocols.lending.unit module<a class="headerlink" href="#module-eth_portfolio.protocols.lending.unit" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.unit.UnitXyz">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.protocols.lending.unit.</span></span><span class="sig-name descname"><span class="pre">UnitXyz</span></span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/unit.html#UnitXyz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.unit.UnitXyz" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LendingProtocolWithLockedCollateral</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.unit.UnitXyz.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/unit.html#UnitXyz.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.unit.UnitXyz.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.unit.UnitXyz._balances">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_balances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/unit.html#UnitXyz._balances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.unit.UnitXyz._balances" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>)</p></li>
+<li><p><strong>block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.unit.UnitXyz._debt">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_debt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/unit.html#UnitXyz._debt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.unit.UnitXyz._debt" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>)</p></li>
+<li><p><strong>block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.unit.UnitXyz.balances">
+<span class="sig-name descname"><span class="pre">balances</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_ASyncFutureInstanceMethod</span> <span class="pre">for</span> <span class="pre">&lt;function</span> <span class="pre">ProtocolABC.balances&gt;</span> <span class="pre">bound</span> <span class="pre">to</span> <span class="pre">None&gt;</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.unit.UnitXyz.balances" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn_args</strong> (<em>~P</em>)</p></li>
+<li><p><strong>fn_kwargs</strong> (<em>~P</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>T</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.unit.UnitXyz.debt">
+<span class="sig-name descname"><span class="pre">debt</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_ASyncFutureInstanceMethod</span> <span class="pre">for</span> <span class="pre">&lt;function</span> <span class="pre">LendingProtocol.debt&gt;</span> <span class="pre">bound</span> <span class="pre">to</span> <span class="pre">None&gt;</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.unit.UnitXyz.debt" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn_args</strong> (<em>~P</em>)</p></li>
+<li><p><strong>fn_kwargs</strong> (<em>~P</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>T</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.protocols.lending.unit.UnitXyz.networks">
+<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Network.&lt;function</span> <span class="pre">Network.name</span> <span class="pre">at</span> <span class="pre">0x7f20a3b07eb0&gt;]</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.unit.UnitXyz.networks" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="module-eth_portfolio.protocols.lending">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-eth_portfolio.protocols.lending" title="Link to this heading"></a></h2>
 </section>
 </section>
 
