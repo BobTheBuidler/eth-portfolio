@@ -14,10 +14,6 @@ Key components:
 - Reward type identification (block and uncle rewards)
 - Address checksumming and value conversion
 - Price loading for transferred value (optional)
-
-Note:
-    This module assumes the existence of a global 'chain' object from the brownie library,
-    which provides information about the current blockchain being interacted with.
 """
 
 from decimal import Decimal
