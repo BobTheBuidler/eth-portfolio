@@ -255,7 +255,7 @@ with external protocols.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.__aiter__">
 <span class="sig-name descname"><span class="pre">__aiter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.__aiter__" title="Link to this definition"></a></dt>
-<dd><p>Returns an async iterator for the wrapped async iterable.</p>
+<dd><p>Return an async iterator that yields <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects from the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AsyncIterator" title="(in Python v3.12)"><em>AsyncIterator</em></a>[<em>_T</em>]</p>
@@ -305,7 +305,7 @@ with external protocols.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.__iter__">
 <span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.__iter__" title="Link to this definition"></a></dt>
-<dd><p>Returns an iterator for the wrapped async iterable.</p>
+<dd><p>Return an iterator that yields <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects from the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.12)"><em>Iterator</em></a>[<em>T</em>]</p>
@@ -332,13 +332,13 @@ with external protocols.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.filter">
 <span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.filter" title="Link to this definition"></a></dt>
-<dd><p>Filters the contents of the {cls} based on a function.</p>
+<dd><p>Filters the contents of the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code> based on a function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>function</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><em>Callable</em></a><em>[</em><em>[</em><em>T</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Awaitable" title="(in Python v3.12)"><em>Awaitable</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>]</em><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><em>Callable</em></a><em>[</em><em>[</em><em>T</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>]</em>) – A function that returns a boolean that indicates if an item should be included in the filtered result. Can be sync or async.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncFilter</span></code> that yields the filtered objects from the {cls}.</p>
+<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncFilter</span></code> that yields the filtered objects from the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://bobthebuidler.github.io/ez-a-sync/source/a_sync.html#a_sync.iter.ASyncFilter" title="(in ez-a-sync)"><em>ASyncFilter</em></a>[<em>T</em>]</p>
@@ -349,7 +349,7 @@ with external protocols.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.sort">
 <span class="sig-name descname"><span class="pre">sort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.sort" title="Link to this definition"></a></dt>
-<dd><p>Sort the contents of the {cls}.</p>
+<dd><p>Sort the contents of the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -358,7 +358,7 @@ with external protocols.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncSorter</span></code> that will yield the objects yielded from this {cls}, but sorted.</p>
+<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncSorter</span></code> that will yield the objects yielded from this <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code>, but sorted.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://bobthebuidler.github.io/ez-a-sync/source/a_sync.html#a_sync.iter.ASyncSorter" title="(in ez-a-sync)"><em>ASyncSorter</em></a>[<em>T</em>]</p>
@@ -399,10 +399,10 @@ with external protocols.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress._materialized">
 <span class="sig-name descname"><span class="pre">_materialized</span></span><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress._materialized" title="Link to this definition"></a></dt>
-<dd><p>Asynchronously iterate through the {cls} and return all objects.</p>
+<dd><p>Asynchronously iterate through the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code> and return all objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A list of the objects yielded by the {cls}.</p>
+<dd class="field-odd"><p>A list of the objects yielded by the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -613,10 +613,10 @@ with external protocols.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.materialized">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">materialized</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.materialized" title="Link to this definition"></a></dt>
-<dd><p>Synchronously iterate through the {cls} and return all objects.</p>
+<dd><p>Synchronously iterate through the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code> and return all objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A list of the objects yielded by the {cls}.</p>
+<dd class="field-odd"><p>A list of the objects yielded by the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -968,7 +968,7 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.__aiter__">
 <span class="sig-name descname"><span class="pre">__aiter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.__aiter__" title="Link to this definition"></a></dt>
-<dd><p>Returns an async iterator for the wrapped async iterable.</p>
+<dd><p>Return an async iterator that yields <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects from the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AsyncIterator" title="(in Python v3.12)"><em>AsyncIterator</em></a>[<em>_T</em>]</p>
@@ -1006,7 +1006,7 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.__iter__">
 <span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.__iter__" title="Link to this definition"></a></dt>
-<dd><p>Returns an iterator for the wrapped async iterable.</p>
+<dd><p>Return an iterator that yields <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects from the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.12)"><em>Iterator</em></a>[<em>T</em>]</p>
@@ -1033,13 +1033,13 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.filter">
 <span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.filter" title="Link to this definition"></a></dt>
-<dd><p>Filters the contents of the {cls} based on a function.</p>
+<dd><p>Filters the contents of the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code> based on a function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>function</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><em>Callable</em></a><em>[</em><em>[</em><em>T</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Awaitable" title="(in Python v3.12)"><em>Awaitable</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>]</em><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><em>Callable</em></a><em>[</em><em>[</em><em>T</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>]</em>) – A function that returns a boolean that indicates if an item should be included in the filtered result. Can be sync or async.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncFilter</span></code> that yields the filtered objects from the {cls}.</p>
+<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncFilter</span></code> that yields the filtered objects from the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://bobthebuidler.github.io/ez-a-sync/source/a_sync.html#a_sync.iter.ASyncFilter" title="(in ez-a-sync)"><em>ASyncFilter</em></a>[<em>T</em>]</p>
@@ -1050,7 +1050,7 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.sort">
 <span class="sig-name descname"><span class="pre">sort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.sort" title="Link to this definition"></a></dt>
-<dd><p>Sort the contents of the {cls}.</p>
+<dd><p>Sort the contents of the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1059,7 +1059,7 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncSorter</span></code> that will yield the objects yielded from this {cls}, but sorted.</p>
+<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncSorter</span></code> that will yield the objects yielded from this <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code>, but sorted.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://bobthebuidler.github.io/ez-a-sync/source/a_sync.html#a_sync.iter.ASyncSorter" title="(in ez-a-sync)"><em>ASyncSorter</em></a>[<em>T</em>]</p>
@@ -1100,10 +1100,10 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger._materialized">
 <span class="sig-name descname"><span class="pre">_materialized</span></span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger._materialized" title="Link to this definition"></a></dt>
-<dd><p>Asynchronously iterate through the {cls} and return all objects.</p>
+<dd><p>Asynchronously iterate through the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code> and return all objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A list of the objects yielded by the {cls}.</p>
+<dd class="field-odd"><p>A list of the objects yielded by the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1181,10 +1181,10 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.materialized">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">materialized</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.materialized" title="Link to this definition"></a></dt>
-<dd><p>Synchronously iterate through the {cls} and return all objects.</p>
+<dd><p>Synchronously iterate through the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code> and return all objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A list of the objects yielded by the {cls}.</p>
+<dd class="field-odd"><p>A list of the objects yielded by the <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterable</span></code>.</p>
 </dd>
 </dl>
 </dd></dl>
