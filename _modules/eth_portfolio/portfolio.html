@@ -468,8 +468,6 @@
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ported </span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2"> from PortfolioAddress to Portfolio&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="_get_missing_cols_from_KeyError">
-<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.portfolio._get_missing_cols_from_KeyError">[docs]</a>
 <span class="k">def</span> <span class="nf">_get_missing_cols_from_KeyError</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="ne">KeyError</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extract missing column names from a KeyError.</span>
@@ -481,8 +479,7 @@
 <span class="sd">        A list of missing column names.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">split</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">split</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">split</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">)]</span></div>
-
+    <span class="k">return</span> <span class="p">[</span><span class="n">split</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">split</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">)]</span>
 
 <div class="viewcode-block" id="PortfolioLedger">
 <a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.portfolio.PortfolioLedger">[docs]</a>

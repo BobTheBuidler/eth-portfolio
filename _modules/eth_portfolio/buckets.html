@@ -114,8 +114,6 @@
     <span class="k">return</span> <span class="s1">&#39;Other short term assets&#39;</span></div>
 
 
-<div class="viewcode-block" id="_unwrap_token">
-<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.buckets._unwrap_token">[docs]</a>
 <span class="nd">@alru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_unwrap_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
@@ -138,11 +136,8 @@
             <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="k">await</span> <span class="n">CToken</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">asynchronous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">underlying</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">WRAPPED_GAS_COIN</span>
-    <span class="k">return</span> <span class="n">token</span></div>
+    <span class="k">return</span> <span class="n">token</span>
 
-
-<div class="viewcode-block" id="_pool_bucket">
-<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.buckets._pool_bucket">[docs]</a>
 <span class="k">def</span> <span class="nf">_pool_bucket</span><span class="p">(</span><span class="n">pool_tokens</span><span class="p">:</span> <span class="nb">set</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Pool tokens: </span><span class="si">{</span><span class="n">pool_tokens</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">pool_tokens</span> <span class="o">&lt;</span> <span class="n">BTC_LIKE</span><span class="p">:</span>
@@ -153,17 +148,13 @@
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">STABLECOINS</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">pool_tokens</span> <span class="o">&lt;</span> <span class="n">INTL_STABLECOINS</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">INTL_STABLECOINS</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">return</span> <span class="kc">None</span></div>
+    <span class="k">return</span> <span class="kc">None</span>
 
-
-<div class="viewcode-block" id="_is_stable">
-<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.buckets._is_stable">[docs]</a>
 <span class="k">def</span> <span class="nf">_is_stable</span><span class="p">(</span><span class="n">token</span><span class="p">:</span> <span class="n">Address</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="k">return</span> <span class="nb">any</span><span class="p">([</span>
         <span class="n">token</span> <span class="ow">in</span> <span class="n">STABLECOINS</span><span class="p">,</span>
         <span class="n">token</span> <span class="ow">in</span> <span class="n">INTL_STABLECOINS</span><span class="p">,</span>
-    <span class="p">])</span></div>
-
+    <span class="p">])</span>
 </pre></div>
 
            </div>
