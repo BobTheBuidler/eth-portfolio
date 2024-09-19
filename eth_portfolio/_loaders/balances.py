@@ -1,5 +1,5 @@
 """
-This module provides asynchronous functions for fetching Ethereum and ERC20 token balances along with their USD values.
+This module provides asynchronous functions for fetching Ethereum and ERC20 token balances with USD values.
 
 Key features:
 - Fetches ETH and ERC20 token balances for specified addresses and blocks
@@ -22,8 +22,17 @@ Dependencies:
     - eth_portfolio._utils: Internal utility for token price retrieval
     - eth_portfolio.typing: Custom type definitions for balance objects
 
-Note: This module is designed to work with asynchronous code. Ensure you're calling these functions
-from an async context or use appropriate async runners.
+Note:
+    This module is designed for asynchronous usage. Ensure you're calling these functions
+    from an async context or use appropriate async runners.
+
+Example:
+    >>> import asyncio
+    >>> async def main():
+    ...     eth_balance = await load_eth_balance(address='0x1234...', block=12345678)
+    ...     dai_balance = await load_token_balance(token=dai_contract, address='0x5678...', block=12345678)
+    ...     print(f"ETH: {eth_balance.balance} (${eth_balance.value}), DAI: {dai_balance.balance} (${dai_balance.value})")
+    >>> asyncio.run(main())
 """
 
 import logging
@@ -47,23 +56,24 @@ logger = logging.getLogger(__name__)
 @stuck_coro_debugger
 async def load_eth_balance(address: Address, block: Optional[Block]) -> Balance:
     """
-    Asynchronously fetches the Ethereum balance for a given address at a specific block.
-
-    This function queries the Ethereum blockchain for the ETH balance of the specified address.
-    It also calculates the USD value of the balance using the current ETH price.
+    Asynchronously fetch the Ethereum balance and its USD value for a given address at a specific block.
 
     Args:
-        address: The Ethereum address to query, as a string or :class:`~y.datatypes.Address`.
-        block: The block number for the balance query. If None, uses the latest block. 
-            Accepts a string, int, or :class:`~y.datatypes.Block`.
+        address: The Ethereum address to query.
+        block: The block number for the balance query.
+            If None, uses the latest block. Can be a block number (int) or block identifier (str).
 
     Returns:
         :class:`~eth_portfolio.typing.Balance`: A custom object containing:
-            - `balance`: The ETH balance as a :class:`~decimal.Decimal` (18 decimal places).
-            - `value`: The USD value of the balance as a :class:`~decimal.Decimal` (18 decimal places).
+            - balance: The ETH balance in Ether (18 decimal places).
+            - value: The USD value of the balance (18 decimal places).
 
     Raises:
         :exc:`~eth_retry.RetryError`: If the balance fetch fails after multiple retries.
+        ValueError: If the provided address is invalid.
+
+    Note:
+        This function uses automatic retries for network issues. Consider rate limiting for large numbers of queries.
 
     Example:
         >>> balance = await load_eth_balance(address='0x1234...', block=12345678)
@@ -77,24 +87,25 @@ async def load_eth_balance(address: Address, block: Optional[Block]) -> Balance:
 @stuck_coro_debugger
 async def load_token_balance(token: ERC20, address: Address, block: Block) -> Balance:
     """
-    Asynchronously fetches the ERC20 token balance for a given address at a specific block.
-
-    This function queries the specified ERC20 token contract for the balance of the given address.
-    It also calculates the USD value of the balance using the current token price.
+    Asynchronously fetch the ERC20 token balance and its USD value for a given address at a specific block.
 
     Args:
         token: The ERC20 token contract instance to query.
-        address: The address holding the ERC20 tokens, as a string or :class:`~y.datatypes.Address`.
+        address: The address holding the ERC20 tokens.
         block: The block number for the balance query.
 
     Returns:
         :class:`~eth_portfolio.typing.Balance`: A custom object containing:
-            - `balance`: The token balance as a :class:`~decimal.Decimal` (18 decimal places).
-            - `value`: The USD value of the balance as a :class:`~decimal.Decimal` (18 decimal places).
+            - balance: The token balance (in token's smallest unit).
+            - value: The USD value of the balance (18 decimal places).
 
     Raises:
         :exc:`~y.NonStandardERC20`: If the token contract doesn't follow the standard ERC20 interface.
             This exception is caught and logged, returning a zero balance in such cases.
+        ValueError: If the provided address is invalid.
+
+    Note:
+        Non-standard ERC20 tokens are handled gracefully, returning a zero balance.
 
     Example:
         >>> balance = await load_token_balance(token=dai_contract, address='0x1234...', block=12345678)
@@ -113,18 +124,15 @@ async def load_token_balance(token: ERC20, address: Address, block: Block) -> Ba
 
 def _calc_value(balance, price) -> Decimal:
     """
-    Calculates the USD value of a token balance based on its price.
-
-    This internal function handles the multiplication of balance and price,
-    ensuring proper decimal precision and rounding where possible.
+    Calculate the USD value of a token balance based on its price.
 
     Args:
-        balance: The token balance as a float, int, or :class:`~decimal.Decimal`.
-        price: The token price in USD as a float, int, or :class:`~decimal.Decimal`.
+        balance: The token balance.
+        price: The token price in USD.
 
     Returns:
         :class:`~decimal.Decimal`: The total USD value, rounded to 18 decimal places if possible.
-                 If rounding is not possible due to high precision, returns the unrounded value.
+            If rounding is not possible due to high precision, returns the unrounded value.
 
     Note:
         Returns :class:`~decimal.Decimal(0)` if the price is None, handling cases where price data is unavailable.
