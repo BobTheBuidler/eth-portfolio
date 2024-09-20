@@ -15,13 +15,6 @@ Main Classes and Functions:
 - :class:`~eth_portfolio.typing.Balance`: Custom object representing balance and value.
 - :exc:`~y.NonStandardERC20`: Exception raised for non-standard ERC20 tokens.
 
-Dependencies:
-    - dank_mids: Fast Ethereum balance querying
-    - eth_retry: Automatic retry mechanism for Ethereum operations
-    - y: Comprehensive toolkit for ERC20 token operations and price fetching
-    - eth_portfolio._utils: Internal utility for token price retrieval
-    - eth_portfolio.typing: Custom type definitions for balance objects
-
 Note:
     This module is designed for asynchronous usage. Ensure you're calling these functions
     from an async context or use appropriate async runners.
