@@ -1,27 +1,35 @@
 """
-This module provides the core functionality for handling portfolio ledger entries, 
-which include transactions, token transfers, and internal transfers for Ethereum addresses.
+This module provides the core functionality for managing portfolio-wide ledger entries, 
+including Ethereum transactions, token transfers, and internal transfers across multiple addresses.
+
+It plays a crucial role in the eth-portfolio ecosystem by:
+- Aggregating portfolio-wide data across multiple Ethereum addresses.
+- Serving as an abstraction layer between address-specific ledgers and overall portfolio management.
+- Providing standardized data processing and presentation methods.
+- Implementing asynchronous operations for efficient data retrieval and processing.
+- Offering extensibility for different types of ledger entries.
+- Ensuring data accuracy through deduplication, especially for internal transfers.
+- Supporting block range queries for time-specific analysis.
 
 Key features:
-- Supports fetching portfolio-wide Ethereum transaction and token transfer history.
-- Organizes ledger entries by address and supports fetching data for specific block ranges.
-- Provides asynchronous operations for improved performance.
+- Fetches and aggregates portfolio-wide Ethereum transaction, token transfer, and internal transfer history.
+- Organizes ledger entries by address and supports querying data for specific block ranges.
+- Implements asynchronous operations for improved performance.
 - Deduplicates and cleans ledger data before returning them as DataFrames.
 
-Main Classes and Functions:
-- :class:`~eth_portfolio._ledgers.PortfolioLedgerBase`: Base class for managing portfolio-wide ledger entries.
-- :class:`~eth_portfolio._ledgers.PortfolioTransactionsLedger`: Ledger for Ethereum transactions.
-- :class:`~eth_portfolio._ledgers.PortfolioTokenTransfersLedger`: Ledger for ERC20 token transfers.
-- :class:`~eth_portfolio._ledgers.PortfolioInternalTransfersLedger`: Ledger for internal transfers between Ethereum addresses.
+Main Classes:
+- :class:`~eth_portfolio._ledgers.PortfolioLedgerBase`: Abstract base class for managing portfolio-wide ledger entries.
+- :class:`~eth_portfolio._ledgers.PortfolioTransactionsLedger`: Ledger for Ethereum transactions across the portfolio.
+- :class:`~eth_portfolio._ledgers.PortfolioTokenTransfersLedger`: Ledger for ERC20 token transfers across the portfolio.
+- :class:`~eth_portfolio._ledgers.PortfolioInternalTransfersLedger`: Ledger for internal transfers between Ethereum addresses in the portfolio.
 
 Module-Wide Example:
-    This example demonstrates how to use the module to fetch transaction data from a portfolio.
+    This example demonstrates how to use the module to fetch transaction data for a portfolio.
 
     >>> from eth_portfolio.portfolio import Portfolio
     >>> from eth_portfolio._ledgers import PortfolioTransactionsLedger
-    >>> my_portfolio = Portfolio(addresses=["0x1234...", "0xABCD..."])
-    >>> transactions_ledger = PortfolioTransactionsLedger(portfolio=my_portfolio)
-    >>> df = await transactions_ledger.df(start_block=1000000, end_block=1100000)
+    >>> ledger = PortfolioTransactionsLedger(portfolio=Portfolio(addresses=["0x1234...", "0xABCD..."]))
+    >>> df = await ledger.df(start_block=1000000, end_block=1100000)
     >>> print(df)
 """
 
@@ -52,16 +60,21 @@ T = TypeVar('T')
 class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_LedgerEntryList, T]):
     """
     The :class:`~eth_portfolio._ledgers.PortfolioLedgerBase` class provides
-    common methods for fetching and cleaning ledger entries across Ethereum addresses
-    in a portfolio. This is a base class for managing portfolio-wide ledger operations.
+    an abstract base for fetching and processing ledger entries across multiple Ethereum addresses
+    in a portfolio. It defines common methods and properties for portfolio-wide ledger operations.
+
+    This class is a key component in the eth-portfolio ecosystem, serving as:
+    - An abstraction layer between address-specific ledgers and portfolio-wide data management.
+    - A foundation for standardized data processing across different ledger types.
+    - A base for implementing asynchronous operations for efficient data retrieval.
 
     Attributes:
-        property_name: The name of the ledger property (e.g., 'transactions', 'token_transfers', etc.).
-        portfolio: The portfolio containing the addresses.
-        object_caches: A dictionary mapping Ethereum addresses to their respective address ledgers.
+        property_name: The name of the ledger property (e.g., 'transactions', 'token_transfers', 'internal_transfers').
+        portfolio: The portfolio containing the addresses to be queried.
+        object_caches: A dictionary mapping Ethereum addresses to their respective address-specific ledgers.
 
     Example:
-        >>> ledger = PortfolioLedgerBase(portfolio=my_portfolio)
+        >>> ledger = PortfolioLedgerBase(portfolio=Portfolio(addresses=["0x1234...", "0xABCD..."]))
     """
 
     property_name: str
@@ -70,14 +83,26 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
         """
         Initializes the :class:`~eth_portfolio._ledgers.PortfolioLedgerBase` class.
 
+        This constructor is crucial in the eth-portfolio ecosystem as it:
+        - Sets up the foundation for portfolio-wide ledger management.
+        - Establishes connections between portfolio addresses and their respective ledgers.
+        - Ensures proper initialization for subclasses handling different ledger types.
+
         Args:
-            portfolio: The portfolio containing the Ethereum addresses.
+            portfolio: The :class:`~eth_portfolio.portfolio.Portfolio` instance containing the Ethereum addresses to be managed.
 
         Raises:
-            AssertionError: If the subclass does not define a `property_name`.
+            AssertionError: If the subclass does not define a `property_name`, which is essential
+                            for identifying the specific ledger type (e.g., transactions, token transfers).
 
         Example:
-            >>> ledger = PortfolioLedgerBase(portfolio=my_portfolio)
+            >>> from eth_portfolio.portfolio import Portfolio
+            >>> from eth_portfolio._ledgers import PortfolioTransactionsLedger
+            >>> ledger = PortfolioTransactionsLedger(portfolio=Portfolio(addresses=["0x1234...", "0xABCD..."]))
+
+        Note:
+            Subclasses must define a `property_name` attribute to specify the type of ledger
+            they manage (e.g., 'transactions', 'token_transfers', 'internal_transfers').
         """
         assert hasattr(self, "property_name"), "Subclasses must define a property_name"
         self.object_caches: Dict[Address, AddressLedgerBase[_LedgerEntryList, T]] = {address.address: getattr(address, self.property_name) for address in portfolio}
@@ -90,15 +115,22 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
     
     def _get_and_yield(self, start_block: int, end_block: int) -> AsyncIterator[T]:
         """
-        Yields ledger entries for each address in the portfolio for the specified block range.
+        Asynchronously yields ledger entries for each address in the portfolio for the specified block range.
+
+        This method is crucial for efficient data retrieval across multiple addresses, as it:
+        - Utilizes asynchronous iteration to process addresses concurrently.
+        - Reduces memory usage by yielding entries one at a time.
 
         Args:
             start_block: The starting block for the ledger query.
             end_block: The ending block for the ledger query.
 
+        Yields:
+            Individual ledger entries of type T for each address in the portfolio.
+
         Example:
             >>> async for entry in ledger._get_and_yield(start_block=1000000, end_block=1100000):
-            >>>     print(entry)
+            ...     print(entry)
         """
         return a_sync.as_yielded(*[getattr(address, self.property_name)[start_block: end_block] for address in self.portfolio])
     
@@ -110,15 +142,29 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
     @set_end_block_if_none
     async def get(self, start_block: Block, end_block: Block) -> Dict[Address, _LedgerEntryList]:
         """
-        Asynchronously fetches ledger entries for the portfolio addresses within a block range.
+        Asynchronously fetches ledger entries for all portfolio addresses within the specified block range.
+
+        This method is crucial in the eth-portfolio ecosystem as it:
+        - Aggregates ledger data across multiple addresses efficiently.
+        - Utilizes asynchronous operations for improved performance.
+        - Provides a comprehensive view of portfolio activity within a given time frame.
 
         Args:
-            start_block: The starting block for the query.
-            end_block: The ending block for the query.
+            start_block: The starting block number for the query.
+            end_block: The ending block number for the query.
+
+        Returns:
+            Dict: A dictionary mapping each portfolio address to its
+            corresponding ledger entries within the specified block range.
 
         Example:
+            >>> ledger = PortfolioTransactionsLedger(portfolio=portfolio)
             >>> ledger_entries = await ledger.get(start_block=1000000, end_block=1100000)
-            >>> print(ledger_entries)
+            >>> print("\n".join(f"Address {addr}: {len(entries)} entries" for addr, entries in ledger_entries.items()))
+
+        Note:
+            The @set_end_block_if_none decorator ensures that if end_block is not provided,
+            it defaults to the latest block.
         """
         return await a_sync.gather({
             address: cache.get(start_block, end_block, sync=False)
@@ -128,13 +174,20 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
     @set_end_block_if_none
     async def df(self, start_block: Block, end_block: Block) -> DataFrame:
         """
-        Returns a DataFrame with all entries for this ledger, deduplicated and cleaned up.
+        Returns a DataFrame containing all entries for this ledger type across the portfolio,
+        deduplicated and cleaned up.
 
-        NOTE: Override this method if you want to do something special with the dataframe
+        This method is essential in the ecosystem for providing standardized, clean data
+        for further analysis and reporting.
+
+        NOTE: Subclasses may override this method for type-specific DataFrame processing.
 
         Args:
             start_block: The starting block for the query.
             end_block: The ending block for the query.
+
+        Returns:
+            A DataFrame containing processed ledger entries.
 
         Example:
             >>> df = await ledger.df(start_block=1000000, end_block=1100000)
@@ -147,15 +200,27 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
     
     async def _df_base(self, start_block: Block, end_block: Block) -> DataFrame:
         """
-        Fetches the raw ledger data and returns it as a DataFrame.
+        Fetches and concatenates raw ledger data for all addresses in the portfolio.
+
+        This method is a crucial part of the data processing pipeline, as it:
+        - Retrieves ledger entries for the specified block range across all portfolio addresses.
+        - Combines the data from multiple addresses into a single DataFrame.
+        - Serves as the foundation for further data cleaning and analysis.
 
         Args:
-            start_block: The starting block for the query.
-            end_block: The ending block for the query.
+            start_block: The starting block number for the query.
+            end_block: The ending block number for the query.
+
+        Returns:
+            DataFrame: A concatenated DataFrame containing raw ledger entries from all addresses.
 
         Example:
             >>> df_base = await ledger._df_base(start_block=1000000, end_block=1100000)
-            >>> print(df_base)
+            >>> print(f"Total entries: {len(df_base)}", df_base.head(), sep="\n")
+
+        Note:
+            This method returns raw data that may contain duplicates or require further processing.
+            For cleaned and deduplicated data, use the `df()` method instead.
         """
         data: Dict[Address, _LedgerEntryList] = await self.get(start_block, end_block, sync=False)
         df = concat(pandable.df for pandable in data.values())
@@ -164,17 +229,28 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
     @classmethod
     def _deduplicate_df(cls, df: DataFrame) -> DataFrame:
         """
-        Deduplicate the dataframe so transfers sending crypto to yourself are not double counted
+        Deduplicate the DataFrame to prevent double-counting of transfers within the portfolio.
+
         NOTE: This can be overridden if needed.
 
-        # If there is a value of list type in the DataFrame, it must be converted to a string for comparison.
+        This method is crucial for:
+        - Ensuring accurate portfolio analysis by removing duplicate entries.
+        - Handling cases where transfers between owned addresses appear multiple times.
 
         Args:
             df: The DataFrame to deduplicate.
 
+        Returns:
+            DataFrame: A deduplicated version of the input DataFrame.
+
+        Note:
+            - This method can be overridden in subclasses if needed.
+            - If the DataFrame contains columns with list-type values, they are converted to strings for comparison.
+
         Example:
-            >>> deduped_df = ledger._deduplicate_df(df)
-            >>> print(deduped_df)
+            >>> original_df = pd.DataFrame(...)  # Your original DataFrame
+            >>> deduped_df = PortfolioLedgerBase._deduplicate_df(original_df)
+            >>> print(f"Original rows: {len(original_df)}, Deduplicated rows: {len(deduped_df)}")
         """
         return df.loc[df.astype(str).drop_duplicates().index]
 
@@ -183,8 +259,15 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
         """
         Cleans up the DataFrame by deduplicating and sorting it by block number.
 
+        This method is essential for ensuring the accuracy and consistency of the ledger data by:
+        - Removing duplicate entries to prevent double-counting.
+        - Sorting the entries by block number for chronological analysis.
+
         Args:
             df: The DataFrame to clean up.
+
+        Returns:
+            DataFrame: A cleaned and deduplicated DataFrame sorted by block number.
 
         Example:
             >>> cleaned_df = ledger._cleanup_df(df)
@@ -196,11 +279,16 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
 class PortfolioTransactionsLedger(PortfolioLedgerBase[TransactionsList, Transaction]):
     """
     The :class:`~eth_portfolio._ledgers.PortfolioTransactionsLedger` class manages Ethereum 
-    transaction entries in a portfolio. It handles fetching and organizing transactions 
-    across multiple addresses in a portfolio.
+    transaction entries across all addresses in a portfolio. It aggregates and processes
+    transactions for the entire portfolio within specified block ranges.
+
+    In the eth-portfolio ecosystem, this class is essential for:
+    - Providing a comprehensive view of all Ethereum transactions across multiple addresses.
+    - Supporting portfolio-wide analysis and reporting of transaction history.
+    - Enabling efficient querying of transaction data for specific time periods or block ranges.
 
     Example:
-        >>> ledger = PortfolioTransactionsLedger(portfolio=my_portfolio)
+        >>> ledger = PortfolioTransactionsLedger(portfolio=Portfolio(addresses=["0x1234...", "0xABCD..."]))
         >>> df = await ledger.df(start_block=10000000, end_block=12000000)
         >>> print(df)
     """
@@ -209,11 +297,16 @@ class PortfolioTransactionsLedger(PortfolioLedgerBase[TransactionsList, Transact
 class PortfolioTokenTransfersLedger(PortfolioLedgerBase[TokenTransfersList, TokenTransfer]):
     """
     The :class:`~eth_portfolio._ledgers.PortfolioTokenTransfersLedger` class manages ERC20 token 
-    transfer entries in a portfolio. It handles fetching and organizing ERC20 token transfers 
-    across multiple addresses in a portfolio.
+    transfer entries across all addresses in a portfolio. It aggregates and processes
+    token transfers for the entire portfolio within specified block ranges.
+
+    In the eth-portfolio ecosystem, this class is crucial for:
+    - Tracking all ERC20 token movements across multiple addresses in a portfolio.
+    - Facilitating token balance calculations and portfolio valuation.
+    - Supporting analysis of token transfer patterns and history.
 
     Example:
-        >>> ledger = PortfolioTokenTransfersLedger(portfolio=my_portfolio)
+        >>> ledger = PortfolioTokenTransfersLedger(portfolio=Portfolio(addresses=["0x1234...", "0xABCD..."]))
         >>> df = await ledger.df(start_block=10000000, end_block=12000000)
         >>> print(df)
     """
@@ -222,11 +315,17 @@ class PortfolioTokenTransfersLedger(PortfolioLedgerBase[TokenTransfersList, Toke
 class PortfolioInternalTransfersLedger(PortfolioLedgerBase[InternalTransfersList, InternalTransfer]):
     """
     The :class:`~eth_portfolio._ledgers.PortfolioInternalTransfersLedger` class manages internal 
-    transfer entries in a portfolio. It handles fetching and organizing internal transfers 
-    across multiple addresses in a portfolio and customizes the DataFrame output for internal transfers.
+    transfer entries across all addresses in a portfolio. It aggregates and processes internal transfers 
+    for the entire portfolio within specified block ranges, and customizes the DataFrame output
+    for internal transfers by renaming certain columns.
+
+    In the eth-portfolio ecosystem, this class plays a vital role in:
+    - Tracking internal Ethereum transfers between addresses within the same portfolio.
+    - Providing insights into complex transactions that involve multiple internal transfers.
+    - Supporting accurate portfolio analysis by deduplicating internal transfer data.
 
     Example:
-        >>> ledger = PortfolioInternalTransfersLedger(portfolio=my_portfolio)
+        >>> ledger = PortfolioInternalTransfersLedger(portfolio=Portfolio(addresses=["0x1234...", "0xABCD..."]))
         >>> df = await ledger.df(start_block=10000000, end_block=12000000)
         >>> print(df)
     """
@@ -235,11 +334,19 @@ class PortfolioInternalTransfersLedger(PortfolioLedgerBase[InternalTransfersList
     @set_end_block_if_none
     async def df(self, start_block: Block, end_block: Block) -> DataFrame:
         """
-        Returns a DataFrame containing all internal transfers to or from any of the wallets in your portfolio.
+        Returns a DataFrame containing all internal transfers to or from any of the addresses in the portfolio.
+        This method customizes the output by renaming certain columns specific to internal transfers.
+
+        In the ecosystem, this method is crucial for:
+        - Providing a standardized view of internal transfers across the portfolio.
+        - Supporting analysis of complex transactions involving multiple internal transfers.
 
         Args:
             start_block: The starting block for the query.
             end_block: The ending block for the query.
+
+        Returns:
+            A DataFrame containing processed internal transfer entries.
 
         Example:
             >>> df = await ledger.df(start_block=10000000, end_block=12000000)
@@ -257,9 +364,17 @@ class PortfolioInternalTransfersLedger(PortfolioLedgerBase[InternalTransfersList
         #We must first convert the lists to strings
         """
         Deduplicates the DataFrame, handling columns with list types (e.g., `traceAddress`).
+        This method converts list-type columns to strings before deduplication to ensure proper comparison.
+
+        This deduplication is essential in the ecosystem for:
+        - Ensuring accurate portfolio analysis by removing duplicate entries.
+        - Handling the complexities of internal transfers that may appear multiple times.
 
         Args:
             df: The DataFrame to deduplicate.
+
+        Returns:
+            A deduplicated DataFrame.
 
         Example:
             >>> deduped_df = PortfolioInternalTransfersLedger._deduplicate_df(df)
