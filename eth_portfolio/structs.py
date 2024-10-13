@@ -8,55 +8,12 @@ import logging
 from decimal import Decimal
 from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
 
+from dank_mids.types import _DictStruct
 from msgspec import Struct
 from y import Network
 from y.datatypes import Block
 
 logger = logging.getLogger(__name__)
-
-class _DictStruct(Struct):
-    """
-    A base class that extends the :class:`~msgspec.Struct` class to provide dictionary-like access to struct fields.
-
-    Allows iteration over the fields of a struct and provides a dictionary-like interface for retrieving values by field name.
-
-    Example:
-        >>> class MyStruct(_DictStruct):
-        ...     field1: str
-        ...     field2: int
-        >>> s = MyStruct(field1="value", field2=42)
-        >>> list(s.keys())
-        ['field1', 'field2']
-        >>> s['field1']
-        'value'
-    """
-    
-    def keys(self) -> Iterator[str]:
-        """
-        Returns an iterator over the field names of the struct.
-
-        Returns:
-            An iterator over the field names.
-        """
-        return iter(self.__struct_fields__)
-
-    def __getitem__(self, item: str) -> Any:
-        """
-        Retrieves the value of the specified field.
-
-        Args:
-            item: The name of the field to retrieve.
-        
-        Raises:
-            KeyError: If the provided key is not a member of the struct.
-
-        Returns:
-            The value of the specified field.
-        """
-        try:
-            return getattr(self, item)
-        except AttributeError:
-            raise KeyError(item) from None
     
 class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
     """
