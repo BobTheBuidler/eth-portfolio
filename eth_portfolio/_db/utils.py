@@ -359,7 +359,7 @@ def _insert_internal_transfer(transfer: InternalTransfer) -> None:
         output = transfer.output,
         subtraces = transfer.subtraces,
         address = (chain.id, transfer.address),
-        raw = json.encode(transfer),
+        raw = json.encode(transfer, enc_hook=_encode_hook),
     )
     
 @a_sync(default='async')
@@ -448,7 +448,7 @@ def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
             value = token_transfer.value,
             price = token_transfer.price,
             value_usd = token_transfer.value_usd,
-            raw = json.encode(token_transfer),
+            raw = json.encode(token_transfer, enc_hook=_encode_hook),
         )
         commit()
     except Exception as e:
