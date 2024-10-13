@@ -8,7 +8,7 @@ from datetime import datetime
 from decimal import Decimal as _Decimal
 from functools import cached_property
 from types import ModuleType
-from typing import TYPE_CHECKING, AsyncGenerator, AsyncIterator, Dict, Generic, Iterator, List, Optional, Tuple, Union
+from typing import TYPE_CHECKING, Any, AsyncGenerator, AsyncIterator, Dict, Generic, Iterator, List, Optional, Tuple, Union
 
 import a_sync
 import dank_mids
