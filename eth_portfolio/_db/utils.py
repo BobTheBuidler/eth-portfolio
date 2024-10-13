@@ -3,7 +3,7 @@ import logging
 from contextlib import suppress
 from decimal import Decimal
 from functools import lru_cache
-from typing import Dict, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 
 import y._db.config as config
 from a_sync import a_sync
