@@ -16,7 +16,7 @@ from y.datatypes import Block
 
 logger = logging.getLogger(__name__)
     
-class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True):
+class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True):
     """
     The :class:`~structs._LedgerEntryBase` class is a base class for ledger entries representing on-chain actions in a blockchain.
 
@@ -79,7 +79,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True):
                 attr.__doc__ = attr.__doc__.replace("{cls_name}", cls.__name__)
 
     
-class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
+class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
     """
     The :class:`~structs.Transaction` class represents a complete on-chain blockchain transaction.
 
@@ -186,7 +186,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     """
 
 
-class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
+class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
     """
     The :class:`~structs.InternalTransfer`class represents an internal transfer or call within a blockchain transaction.
 
