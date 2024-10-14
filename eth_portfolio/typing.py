@@ -30,17 +30,16 @@ from typing import (Any, DefaultDict, Dict, Iterable, List, Literal, Optional,
                     Tuple, TypedDict, TypeVar, Union)
 
 from checksum_dict import DefaultChecksumDict
+from dank_mids.structs import DictStruct
 from pandas import DataFrame, concat
 from typing_extensions import ParamSpec, Self
 from y.datatypes import Address, Block
-
-from eth_portfolio.structs import _DictStruct
 
 _T = TypeVar('_T')
 _I = TypeVar('_I')
 _P = ParamSpec('_P')
 
-class Balance(_DictStruct):
+class Balance(DictStruct):
     """
     Represents the balance of a single token, including its token amount and equivalent USD value.
 
