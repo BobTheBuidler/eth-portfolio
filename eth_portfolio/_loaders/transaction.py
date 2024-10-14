@@ -21,6 +21,7 @@ from y import get_price
 from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
+from y.utils.events import decode_logs
 
 from eth_portfolio import structs
 from eth_portfolio._db import utils as db
@@ -133,12 +134,13 @@ async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block
     for tx in await get_block_transactions(block):
         if tx.sender == address and tx.nonce == nonce:
             return tx
+        receipt = await get_transaction_receipt(tx.hash)
         # Special handler for contract creation transactions
-        elif tx.to is None and (await get_transaction_receipt(tx.hash)).contractAddress == address:
+        elif tx.to is None and receipt.contractAddress == address:
             return tx
         # Special handler for Gnosis Safe deployments
         elif tx.to == "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2":
-            events = chain.get_transaction(tx.hash).events
+            events = decode_logs(tx.logs)
             if "SafeSetup" in events and "ProxyCreation" in events and any(event['proxy'] == address for event in events['ProxyCreation']):
                 return tx
     return None
