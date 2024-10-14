@@ -8,14 +8,14 @@ import logging
 from decimal import Decimal
 from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
 
-from dank_mids.types import _DictStruct
+from dank_mids.structs import DictStruct
 from msgspec import Struct
 from y import Network
 from y.datatypes import Block
 
 logger = logging.getLogger(__name__)
     
-class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
+class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True):
     """
     The :class:`~structs._LedgerEntryBase` class is a base class for ledger entries representing on-chain actions in a blockchain.
 
