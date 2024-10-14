@@ -8,8 +8,10 @@ import dank_mids
 from brownie import chain
 from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem as brownie_EventItem
+from dank_mids.structs import Log as dankLog
 from pony.orm import TransactionIntegrityError
 from y import ERC20, Contract
+from y._db.structs import Log as ydbLog
 from y._decorators import stuck_coro_debugger
 from y.exceptions import ContractNotVerified, NonStandardERC20
 from y.utils.events import decode_logs
@@ -23,11 +25,13 @@ from eth_portfolio.structs import TokenTransfer
 
 logger = logging.getLogger(__name__)
 
+Log = Union[dankLog, ydbLog]
+
 token_transfer_semaphore = dank_mids.BlockSemaphore(10_000, name='eth_portfolio.token_transfers')  # Some arbitrary number
 
 @stuck_coro_debugger
-async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional[TokenTransfer]:
-    if transfer_log['address'] in SHITCOINS.get(chain.id, set()):
+async def load_token_transfer(transfer_log: Log, load_prices: bool) -> Optional[TokenTransfer]:
+    if transfer_log.address in SHITCOINS.get(chain.id, set()):
         return None
     
     if transfer := await db.get_token_transfer(transfer_log):
@@ -81,6 +85,7 @@ async def load_token_transfer(transfer_log: dict, load_prices: bool) -> Optional
         
         try:
             transfer = TokenTransfer(**token_transfer)
+            del transfer_log  # free up some memory
             await db.insert_token_transfer(transfer)
         except decimal.InvalidOperation:
         # Not entirely sure why this happens, probably some crazy uint value
