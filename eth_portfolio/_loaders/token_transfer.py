@@ -40,7 +40,7 @@ async def load_token_transfer(transfer_log: Log, load_prices: bool) -> Optional[
         else:
             return transfer
     
-    async with token_transfer_semaphore[transfer_log["blockNumber"]]:
+    async with token_transfer_semaphore[transfer_log.block]:
         decoded = await _decode_token_transfer(transfer_log)
         if decoded is None:
             return None
@@ -118,21 +118,19 @@ class _EventItem(brownie_EventItem):
     transaction_hash: Union[str, bytes]  # TODO figure out why it comes in both ways
 
 @stuck_coro_debugger
-async def _decode_token_transfer(log) -> Optional[_EventItem]:
+async def _decode_token_transfer(log: Log) -> Optional[_EventItem]:
     try:
-        await Contract.coroutine(log['address'])
+        await Contract.coroutine(log.address)
     except ContractNotFound:
-        logger.warning(f"Token {log['address']} cannot be found. Skipping. If the contract has been self-destructed, eth-portfolio will not support it.")
+        logger.warning(f"Token {log.address} cannot be found. Skipping. If the contract has been self-destructed, eth-portfolio will not support it.")
+        return None
     except ContractNotVerified:
-        logger.warning(f"Token {log['address']} is not verified and is most likely a shitcoin. Skipping. Please submit a PR at github.com/BobTheBuidler/eth-portfolio if this is not a shitcoin and should be included.")
+        logger.warning(f"Token {log.address} is not verified and is most likely a shitcoin. Skipping. Please submit a PR at github.com/BobTheBuidler/eth-portfolio if this is not a shitcoin and should be included.")
         return None
     try:
-        try:
-            event = decode_logs(
-                [log]
-            )  # NOTE: We have to decode logs here because NFTs prevent us from batch decoding logs
-        except Exception as e:
-            raise e
+        event = decode_logs(
+            [log]
+        )  # NOTE: We have to decode logs here because NFTs prevent us from batch decoding logs
         try:
             events = event['Transfer']
         except Exception as e:
