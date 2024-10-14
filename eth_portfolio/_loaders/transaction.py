@@ -15,7 +15,7 @@ import dank_mids
 import eth_retry
 from async_lru import alru_cache
 from brownie import chain
-from dank_mids.types import Transaction as dTransaction
+from dank_mids.structs import Transaction as dTransaction
 from pony.orm import TransactionIntegrityError
 from y import get_price
 from y._decorators import stuck_coro_debugger
@@ -69,24 +69,25 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
             prev_block_nonce = await get_nonce_at_block(address, lo - 1)
             if prev_block_nonce < nonce:
                 logger.debug(f"Found nonce {nonce} at block {lo}")
-                tx = await get_transaction_by_nonce_and_block(address, nonce, lo)
-                if tx is None:
+                _tx = await get_transaction_by_nonce_and_block(address, nonce, lo)
+                if _tx is None:
                     return nonce, None
-                tx = dict(tx)
+                tx = dict(_tx)
                 tx['chainid'] = int(tx.pop('chainId'), 16) if 'chainId' in tx else chain.id
                 tx['block_hash'] = tx.pop('blockHash').hex()
-                tx['hash'] = tx['hash'].hex()
+                tx['hash'] = _tx.hash.hex()
                 tx['from_address'] = tx.pop('from')
                 tx['to_address'] = tx.pop('to')
-                tx['value'] = Decimal(tx['value']) / Decimal(10**18)
-                tx['type'] = int(tx['type'], 16) if "type" in tx else None
-                tx['r'] = tx['r'].hex()
-                tx['s'] = tx['s'].hex()
+                tx['value'] = Decimal(_tx.value) / 10**18
+                tx['type'] = int(_tx.type, 16) if "type" in tx else None
+                tx['r'] = _tx.r.hex()
+                tx['s'] = _tx.s.hex()
                 if load_prices:
-                    tx['price'] = round(Decimal(await get_price(EEE_ADDRESS, block = tx['blockNumber'], sync=False)), 18)
-                    tx['value_usd'] = tx['value'] * tx['price']
-                if access := tx.pop('accessList', None):
-                    tx['access_list'] = tuple(AccessListEntry(address=obj["address"], storage_keys=obj["storageKeys"]) for obj in access)
+                    price = Decimal(await get_price(EEE_ADDRESS, block = _tx.blockNumber, sync=False))
+                    tx['price'] = round(price, 18)
+                    tx['value_usd'] = round(_tx.value * price, 18)
+                if (access_list := tx.pop('accessList', None)) is not None:
+                    tx['access_list'] = access_list
                 try:
                     transaction = Transaction(**{underscore(k): v for k, v in tx.items()})
                 except TypeError as e:
@@ -124,18 +125,17 @@ async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block
     Example:
         >>> transaction = await get_transaction_by_nonce_and_block(address="0x1234567890abcdef1234567890abcdef12345678", nonce=5, block=1234567)
         >>> if transaction:
-        ...     print(transaction['hash'])
+        ...     print(transaction.hash)
     """
-    txs = await get_block_transactions(block)
-    for tx in txs:
-        if tx['from'] == address and tx['nonce'] == nonce:
+    for tx in await get_block_transactions(block):
+        if tx.sender == address and tx.nonce == nonce:
             return tx
         # Special handler for contract creation transactions
-        elif tx['to'] is None and (await get_transaction_receipt(tx['hash'])).contractAddress == address:
+        elif tx.to is None and (await get_transaction_receipt(tx.hash)).contractAddress == address:
             return tx
         # Special handler for Gnosis Safe deployments
-        elif tx['to'] == "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2":
-            events = chain.get_transaction(tx['hash']).events
+        elif tx.to == "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2":
+            events = chain.get_transaction(tx.hash).events
             if "SafeSetup" in events and "ProxyCreation" in events and any(event['proxy'] == address for event in events['ProxyCreation']):
                 return tx
     return None
@@ -189,7 +189,7 @@ async def _get_block_transactions(block: Block) -> List[dTransaction]:
 
     Example:
         >>> transactions = await _get_block_transactions(block=12345678)
-        >>> [print(tx['hash']) for tx in transactions]
+        >>> [print(tx.hash) for tx in transactions]
     """
     block = await dank_mids.eth.get_block(block, full_transactions=True)
     return block.transactions
