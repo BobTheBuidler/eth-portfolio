@@ -20,6 +20,7 @@ from typing import (TYPE_CHECKING, AsyncGenerator, AsyncIterator, Generic, List,
 import a_sync
 import dank_mids
 import eth_retry
+from dank_mids.eth import TraceFilterParams
 from pandas import DataFrame  # type: ignore
 from y import ERC20
 from y._decorators import stuck_coro_debugger
@@ -38,11 +39,6 @@ if TYPE_CHECKING:
     from eth_portfolio.address import PortfolioAddress
 
 logger = logging.getLogger(__name__)
-
-class BadResponse(Exception):
-    """
-    Exception raised for errors in the response from the web3 provider.
-    """
 
 
 T = TypeVar('T')
@@ -393,7 +389,7 @@ class InternalTransfersList(PandableList[InternalTransfer]):
 @stuck_coro_debugger
 @a_sync.Semaphore(32, __name__ + ".trace_semaphore")
 @eth_retry.auto_retry
-async def get_traces(params: list) -> List[dict]:
+async def get_traces(params: TraceFilterParams) -> List[FilterTrace]:
     """
     Retrieves traces from the web3 provider using the given parameters.
 
@@ -401,15 +397,9 @@ async def get_traces(params: list) -> List[dict]:
         params: The parameters for the trace filter.
 
     Returns:
-        List[dict]: The list of traces.
-
-    Raises:
-        :class:`~eth_portfolio.BadResponse`: If the response from the web3 provider is invalid.
+        The list of traces.
     """
-    traces = await dank_mids.web3.provider.make_request("trace_filter", params)  # type: ignore [arg-type, misc]
-    if 'result' not in traces:
-        raise BadResponse(traces)
-    return [trace for trace in traces['result'] if "error" not in trace]
+    return [trace for trace in await dank_mids.eth.trace_filter(params) if "error" not in trace]
     
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
     """
