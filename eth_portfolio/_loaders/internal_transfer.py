@@ -88,17 +88,15 @@ async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Inter
     params['gas'] = 0 if trace.type == TxType.reward else trace.gas
 
     # Un-nest the action object
-    if trace.action:
-        params.update({
-            # for block reward transfers, the recipient is 'author'
-            'to' if key == 'author' else key: value
-            for key, value in trace.action.items()
-        })
+    params.update({
+        # for block reward transfers, the recipient is 'author'
+        'to' if key == 'author' else key: value
+        for key, value in trace.action.items()
+    })
             
     # Un-nest the result object
-    if trace.result:
-        params['output'] = trace.result.output
-        params['gasUsed'] = trace.result.gasUsed
+    params['output'] = trace.result.output
+    params['gasUsed'] = trace.result.gasUsed
 
     if load_prices:
         price = round(Decimal(await _get_price(EEE_ADDRESS, trace.blockNumber)), 18)
