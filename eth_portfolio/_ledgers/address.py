@@ -439,8 +439,11 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
         
         traces.append(trace)
 
-    unsuccessful = [txhash async for txhash, status in check_status if status == 0]
-    return [trace for trace in traces if trace.hash not in unsuccessful]
+    if check_status:
+        unsuccessful = [txhash async for txhash, status in check_status if status == 0]
+        return [trace for trace in traces if trace.hash not in unsuccessful]
+    else:
+        return traces
     
 
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
