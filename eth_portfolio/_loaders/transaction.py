@@ -197,8 +197,7 @@ async def _get_block_transactions(block: Block) -> List[dankTransaction]:
         >>> transactions = await _get_block_transactions(block=12345678)
         >>> [print(tx.hash) for tx in transactions]
     """
-    block = await dank_mids.eth.get_block(block, full_transactions=True)
-    return block.transactions
+    return await dank_mids.eth.get_transactions(block, True)
 
 get_block_transactions = a_sync.SmartProcessingQueue(
     _get_block_transactions, 
