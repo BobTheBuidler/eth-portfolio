@@ -19,7 +19,7 @@ from decimal import Decimal
 from typing import Optional
 
 from brownie import chain
-from dank_mids.structs import Trace
+from dank_mids.structs import FilterTrace
 from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
 
@@ -54,7 +54,7 @@ async def _get_status(txhash: str) -> int:
     return receipt.status
     
 @stuck_coro_debugger
-async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[InternalTransfer]:
+async def load_internal_transfer(transfer: FilterTrace, load_prices: bool) -> Optional[InternalTransfer]:
     """
     Asynchronously processes a raw internal transfer dictionary into an InternalTransfer object.
 
