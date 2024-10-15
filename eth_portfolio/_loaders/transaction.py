@@ -85,6 +85,10 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                     'r': tx.r.hex()
                     's': tx.s.hex()
                 }
+
+                with suppress(AttributeError):
+                    params['max_fee_per_gas'] = tx.maxFeePerGas
+                    params['max_priority_fee_per_gas'] = tx.maxPriorityFeePerGas
                 
                 if tx.accessList is not None:
                     params['access_list'] = tx.accessList
