@@ -8,10 +8,11 @@ from typing import Any, Dict, Optional, Tuple
 import y._db.config as config
 from a_sync import a_sync
 from brownie import chain
-from dank_mids.structs import FilterTrace, Log
+from dank_mids.structs import FilterTrace
 from msgspec import json
 from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush, select
+from y._db.structs import Log
 
 from eth_portfolio._db import entities
 from eth_portfolio._db.decorators import (break_locks,
