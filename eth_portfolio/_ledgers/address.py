@@ -290,9 +290,6 @@ class TransactionsList(PandableList[Transaction]):
     """
     A list class for handling transaction entries and converting them to DataFrames.
     """
-    def __init__(self):
-        super().__init__()
-    
     def _df(self) -> DataFrame:
         """
         Converts the list of transactions to a DataFrame.
