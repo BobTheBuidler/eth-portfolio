@@ -410,6 +410,13 @@ async def _get_status(txhash: str) -> int:
     receipt = await get_transaction_receipt(txhash)
     return receipt.status
 
+async def get_status(trace: FilterTrace) -> int:
+    # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
+    
+    return 1 if trace.type == "reward" else await _get_status(self
+    
+  
+
 @cache_to_disk
 @eth_retry.auto_retry
 @stuck_coro_debugger
@@ -423,14 +430,29 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     Returns:
         The list of traces.
     """
-    traces = (
-        trace for trace in await trace_filter(filter_params) 
-        if not trace.error
+    traces = []
+
+    check_status = a_sync.TaskMapping(_get_status)
+  
+    for trace in await trace_filter(filter_params) :
+        if trace.error:
+            continue
+          
         # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
         # that actually transmitted value to the singleton even though they appear to.
-        and trace.to != "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":  # Gnosis Safe Singleton 1.3.0
-    )
-    return [trace async for trace, status in a_sync.map(_get_status, traces) if status != 0]
+        if trace.to == "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":  # Gnosis Safe Singleton 1.3.0
+            continue
+          
+        if trace.type != "reward":
+            check_status[trace]
+        
+        traces.append(trace)
+
+    async for trace, status in check_status:
+        if status == 0:
+            traces.remove(trace)
+          
+    return traces
     
 
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
