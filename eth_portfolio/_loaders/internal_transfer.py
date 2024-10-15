@@ -134,14 +134,13 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
     if trace.to:
         params['to_address'] = trace.to
 
-    value = trace.value_scaled
-    params['value'] = value
+    params['value'] = trace.value
     params['gas'] = 0 if trace.type == "reward" and trace.action.rewardType in ["block", "uncle"] else trace.gas
 
     if load_prices:
         price = round(Decimal(await _get_price(EEE_ADDRESS, trace.blockNumber)), 18)
         params['price'] = price
-        params['value_usd'] = round(value * price, 18)
+        params['value_usd'] = round(trace.value * price, 18)
     
     return InternalTransfer(**params)
     
