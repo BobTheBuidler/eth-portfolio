@@ -74,32 +74,12 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                 if tx is None:
                     return nonce, None
                                     
-                params = {
-                    'chainid': int(tx.chainId) if tx.chainId else chain.id,
-                    'block_hash': tx.blockHash.hex(),
-                    'hash': tx.hash.hex(),
-                    'from_address': tx.sender,
-                    'to_address': tx.to,
-                    'value': tx.value,
-                    'type': int(tx.type, 16) if tx.type else None,
-                    'r': tx.r.hex(),
-                    's': tx.s.hex(),
-                }
-
-                with suppress(AttributeError):
-                    params['max_fee_per_gas'] = tx.maxFeePerGas
-                    params['max_priority_fee_per_gas'] = tx.maxPriorityFeePerGas
-
-                with suppress(AttributeError):
-                    params['access_list'] = tx.accessList
+                params = {'transaction': tx}
                     
                 if load_prices:
-                    block = tx.blockNumber
-                    value = tx.value
-                    del tx  # we dont need to maintain this reference while we fetch the price
-                    price = Decimal(await get_price(EEE_ADDRESS, block = block, sync=False))
+                    price = Decimal(await get_price(EEE_ADDRESS, block = tx.blockNumber, sync=False))
                     params['price'] = round(price, 18)
-                    params['value_usd'] = round(value * price, 18)
+                    params['value_usd'] = round(tx.value * price, 18)
                     
                 try:
                     transaction = structs.Transaction(**params)
