@@ -16,7 +16,6 @@ Key components:
 """
 
 from decimal import Decimal
-from typing import Optional
 
 from brownie import chain
 from dank_mids.structs import FilterTrace
@@ -30,7 +29,7 @@ from eth_portfolio.structs import InternalTransfer
 
     
 @stuck_coro_debugger
-async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Optional[InternalTransfer]:
+async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> InternalTransfer:
     """
     Asynchronously processes a raw internal transfer dictionary into an InternalTransfer object.
 
@@ -50,8 +49,7 @@ async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Optio
         load_prices: Flag to determine whether to load USD prices for the transfer value.
 
     Returns:
-        Optional: A processed InternalTransfer object, or None if the
-        transfer is invalid, irrelevant, or from a failed transaction.
+        A processed InternalTransfer object.
 
     Example:
         >>> transfer = {"type": "call", "transactionHash": "0x123...", "blockNumber": 15537393, "from": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "to": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", "value": "0x10", "gas": "0x5208", "gasUsed": "0x5208", "traceAddress": [0]}
