@@ -366,16 +366,16 @@ def _insert_internal_transfer(transfer: InternalTransfer) -> None:
 @a_sync(default='async')
 @robust_db_session
 def get_token_transfer(transfer: Log) -> Optional[TokenTransfer]:
-    block = transfer.blockNumber
+    block = transfer.block_number
     transfers = token_transfers_known_at_startup()
-    pk = ((chain.id, block), transfer.transactionIndex, transfer.logIndex)
+    pk = ((chain.id, block), transfer.transaction_index, transfer.log_index)
     if pk in transfers:
         return json.decode(transfers[pk], type=TokenTransfer)
     entity: entities.TokenTransfer
     if entity := entities.TokenTransfer.get(
         block = (chain.id, block), 
-        transaction_index = transfer.transactionIndex,
-        log_index = transfer.logIndex,
+        transaction_index = transfer.transaction_index,
+        log_index = transfer.log_index,
     ):
         return json.decode(entity.raw, type=TokenTransfer)
 
