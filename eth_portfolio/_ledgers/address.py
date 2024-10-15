@@ -380,12 +380,13 @@ class InternalTransfersList(PandableList[InternalTransfer]):
     pass
 
 
+trace_filter = a_sync.Semaphore(32, __name__ + ".trace_semaphore")(
+    eth_retry.auto_retry(dank_mids.eth.trace_filter)
+)
+
 @cache_to_disk
-# we double stack these because high-volume wallets will likely need it
 @eth_retry.auto_retry
 @stuck_coro_debugger
-@a_sync.Semaphore(32, __name__ + ".trace_semaphore")
-@eth_retry.auto_retry
 async def get_traces(params: TraceFilterParams) -> List[FilterTrace]:
     """
     Retrieves traces from the web3 provider using the given parameters.
@@ -396,7 +397,7 @@ async def get_traces(params: TraceFilterParams) -> List[FilterTrace]:
     Returns:
         The list of traces.
     """
-    return [trace for trace in await dank_mids.eth.trace_filter(params) if "error" not in trace]
+    return [trace for trace in await trace_filter(params) if not trace.error]
     
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
     """
