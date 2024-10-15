@@ -68,16 +68,9 @@ async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Inter
         - Utilizes utility functions from eth_portfolio._loaders.utils and eth_portfolio._utils.
         - Interacts with the global 'chain' object from the brownie library for chain ID.
     """
-    if trace.type == TxType.reward:
-        if trace.action.rewardType not in ["block", "uncle"]:
-            raise NotImplementedError(trace.action.rewardType)
-            
-        params = {'hash': f'{trace.action.rewardType} reward'}
-        
-    else:
-        params = {'hash': trace.transactionHash}
     
-    params.update({
+    params = {
+        "hash": f'{trace.action.rewardType} reward' if trace.type == TxType.reward else trace.transactionHash,
         "transaction_index": trace.transactionPosition,
         "chainid": chain.id,
         
@@ -94,7 +87,7 @@ async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Inter
         # Un-nest the result object
         "output": trace.result.output,
         "gasUsed": trace.result.gasUsed,
-    })
+    }
 
     if load_prices:
         price = round(Decimal(await _get_price(EEE_ADDRESS, trace.blockNumber)), 18)
