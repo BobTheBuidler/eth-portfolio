@@ -145,14 +145,14 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=Tru
     The price per unit of gas the sender is willing to pay (for legacy and EIP-2930 transactions).
     """
     
-    max_fee_per_gas: Optional[int]
+    max_fee_per_gas: Optional[int] = None
     """
-    The maximum total fee per gas the sender is willing to pay (for EIP-1559 transactions).
+    The maximum total fee per gas the sender is willing to pay (for EIP-1559 transactions only).
     """
     
-    max_priority_fee_per_gas: Optional[int]
+    max_priority_fee_per_gas: Optional[int] = None
     """
-    The maximum priority fee per gas the sender is willing to pay (for EIP-1559 transactions).
+    The maximum priority fee per gas the sender is willing to pay (for EIP-1559 transactions only).
     """
     
     input: str
