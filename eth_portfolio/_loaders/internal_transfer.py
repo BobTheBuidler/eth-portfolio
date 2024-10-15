@@ -27,7 +27,7 @@ async def load_internal_transfer(trace: Trace, load_prices: bool) -> Optional[In
         elif trace.action.rewardType == 'uncle':
             params = {'hash': 'uncle reward'}
         else:
-            raise NotImplementedError(transfer.action.rewardType)
+            raise NotImplementedError(trace.action.rewardType)
     else:
         # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
         # In all other cases, we need to confirm the transaction didn't revert
@@ -44,14 +44,14 @@ async def load_internal_transfer(trace: Trace, load_prices: bool) -> Optional[In
         for key, value in action.items():
             if key == 'author':
                 # for block reward transfers, the recipient is 'author'
-                transfer['to'] = value
+                params['to'] = value
             else:
-                transfer[key] = value
+                params[key] = value
             
     # Un-nest the result dict
     if result := trace.result:
         for key, value in result.items():
-            transfer[key] = value
+            params[key] = value
 
     # Remap the addresses
     if trace.sender:
