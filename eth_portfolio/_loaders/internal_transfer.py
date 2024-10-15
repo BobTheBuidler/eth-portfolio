@@ -98,23 +98,18 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
         # that actually transmitted value to the singleton even though they appear to.
         return None
 
-    params = {}
-
     if trace.type == "reward:
-        if trace.action.rewardType == 'block':
-            params = {'hash': 'block reward'}
-        elif trace.action.rewardType == 'uncle':
-            params = {'hash': 'uncle reward'}
-        else:
+        if trace.action.rewardType not in ['block', 'uncle']:
             raise NotImplementedError(trace.action.rewardType)
-    else:
-        # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
-        # In all other cases, we need to confirm the transaction didn't revert
-        if await _get_status(trace.transactionHash) == 0:
-            return None
-            
-        params = {'hash': trace.transactionHash}
+        params = {'hash': f'{trace.action.rewardType} reward'}
 
+    # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
+    # In all other cases, we need to confirm the transaction didn't revert
+    elif await _get_status(trace.transactionHash) == 0:
+        return None
+
+    else:
+        params = {'hash': trace.transactionHash}
     
     params['transaction_index'] = trace.transactionPosition
     params['chainid'] = chain.id
