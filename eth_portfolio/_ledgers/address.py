@@ -20,6 +20,7 @@ from typing import (TYPE_CHECKING, AsyncGenerator, AsyncIterator, Generic, List,
 import a_sync
 import dank_mids
 import eth_retry
+from async_lru import alru_cache
 from dank_mids.eth import TraceFilterParams
 from dank_mids.structs import FilterTrace
 from pandas import DataFrame  # type: ignore
