@@ -98,7 +98,7 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                     params['value_usd'] = round(value * price, 18)
                     
                 try:
-                    transaction = structs.Transaction(**params)})
+                    transaction = structs.Transaction(**params)
                 except TypeError as e:
                     raise TypeError(str(e), tx) from e
                     
