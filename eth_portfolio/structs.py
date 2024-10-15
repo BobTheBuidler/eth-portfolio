@@ -35,7 +35,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
     The block number where the {cls_name} was included.
     """
     
-    transaction_index: Optional[int] = None
+    transaction_index: Optional[int]
     """
     The index of the transaction within its block, if applicable.
     """
@@ -45,7 +45,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
     The unique transaction hash.
     """
     
-    from_address: Optional[str] = None
+    from_address: Optional[str]
     """
     The address from which the {cls_name} was sent, if applicable.
     """
@@ -55,7 +55,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
     The value/amount of cryptocurrency transferred in the {cls_name}.
     """
     
-    to_address: Optional[str] = None
+    to_address: Optional[str]
     """
     The address to which the {cls_name} was sent, if applicable.
     """
@@ -145,12 +145,12 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=Tru
     The price per unit of gas the sender is willing to pay (for legacy and EIP-2930 transactions).
     """
     
-    max_fee_per_gas: Optional[int] = None
+    max_fee_per_gas: Optional[int]
     """
     The maximum total fee per gas the sender is willing to pay (for EIP-1559 transactions).
     """
     
-    max_priority_fee_per_gas: Optional[int] = None
+    max_priority_fee_per_gas: Optional[int]
     """
     The maximum priority fee per gas the sender is willing to pay (for EIP-1559 transactions).
     """
@@ -180,7 +180,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=Tru
     List of addresses and storage keys the transaction plans to access (for EIP-2930 and EIP-1559 transactions).
     """
     
-    y_parity: Optional[int] = None
+    y_parity: Optional[int]
     """
     The Y parity of the transaction signature, used in EIP-2718 typed transactions.
     """
@@ -258,32 +258,32 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, omit_default
     The number of sub-operations spawned by this InternalTransfer.
     """
     
-    call_type: Optional[str] = None
+    call_type: Optional[str]
     """
     The type of call made in this InternalTransfer (e.g., "call", "delegatecall", "staticcall").
     """
     
-    input: Optional[str] = None
+    input: Optional[str]
     """
     The input data for this internal operation, if any.
     """
     
-    output: Optional[str] = None
+    output: Optional[str]
     """
     The output data from this internal operation, if any.
     """
     
-    init: Optional[str] = None
+    init: Optional[str]
     """
     The initialization code for contract creation, if this is a create operation.
     """
     
-    address: Optional[str] = None
+    address: Optional[str]
     """
     The address of the account or contract involved in this InternalTransfer.
     """
     
-    code: Optional[str] = None
+    code: Optional[str]
     """
     The code of the contract involved in this InternalTransfer, if applicable.
     """
