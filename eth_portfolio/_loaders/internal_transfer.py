@@ -111,31 +111,28 @@ async def load_internal_transfer(transfer: FilterTrace, load_prices: bool) -> Op
     else:
         params = {'hash': trace.transactionHash}
     
-    params['transaction_index'] = trace.transactionPosition
-    params['chainid'] = chain.id
-
-    # Un-nest the action dict
-    if action := trace.action:
-        for key, value in action.items():
-            if key == 'author':
-                # for block reward transfers, the recipient is 'author'
-                params['to'] = value
-            else:
-                params[key] = value
-            
-    # Un-nest the result dict
-    if result := trace.result:
-        for key, value in result.items():
-            params[key] = value
-
-    # Remap the addresses
     if trace.sender:
         params['from_address'] = trace.sender
     if trace.to:
         params['to_address'] = trace.to
-
+        
+    params['transaction_index'] = trace.transactionPosition
+    params['chainid'] = chain.id
     params['value'] = trace.value
     params['gas'] = 0 if trace.type == "reward" and trace.action.rewardType in ["block", "uncle"] else trace.gas
+
+    # Un-nest the action object
+    if trace.action:
+        params.update({
+            # for block reward transfers, the recipient is 'author'
+            'to' if key == 'author' else key: value
+            for key, value in trace.action.items()
+        })
+            
+    # Un-nest the result object
+    if trace.result:
+        params['output'] = trace.result.output
+        params['gasUsed'] = trace.result.gasUsed
 
     if load_prices:
         price = round(Decimal(await _get_price(EEE_ADDRESS, trace.blockNumber)), 18)
