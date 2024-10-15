@@ -19,6 +19,7 @@ from decimal import Decimal
 
 from brownie import chain
 from dank_mids.structs import FilterTrace
+from dank_mids.structs.trace import Type as TxType
 from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
 
@@ -67,7 +68,7 @@ async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Inter
         - Utilizes utility functions from eth_portfolio._loaders.utils and eth_portfolio._utils.
         - Interacts with the global 'chain' object from the brownie library for chain ID.
     """
-    if trace.type == "reward":
+    if trace.type == TxType.reward:
         if trace.action.rewardType not in ["block", "uncle"]:
             raise NotImplementedError(trace.action.rewardType)
             
@@ -84,7 +85,7 @@ async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Inter
     params['transaction_index'] = trace.transactionPosition
     params['chainid'] = chain.id
     params['value'] = trace.value
-    params['gas'] = 0 if trace.type == "reward" else trace.gas
+    params['gas'] = 0 if trace.type == TxType.reward else trace.gas
 
     # Un-nest the action object
     if trace.action:
