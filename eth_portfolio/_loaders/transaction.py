@@ -79,13 +79,9 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                     
                 if load_prices:
                     price = Decimal(await get_price(EEE_ADDRESS, block = tx.blockNumber, sync=False))
-                    transaction = structs.Transaction(
-                        transaction=tx,
-                        price=round(price, 18),
-                        value_usd=round(tx.value * price, 18),
-                    )
+                    transaction = structs.Transaction.from_rpc_response(tx, price=round(price, 18), value_usd=round(tx.value * price, 18))
                 else:
-                    transaction = structs.Transaction(transaction=tx)
+                    transaction = structs.Transaction.from_rpc_response(tx)
 
                 a_sync.create_task(_insert_to_db(transaction, load_prices), skip_gc_until_done)
                 
