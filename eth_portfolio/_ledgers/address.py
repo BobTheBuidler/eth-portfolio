@@ -53,15 +53,16 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
     """
     __slots__ = "address", "asynchronous", "cached_from", "cached_thru", "load_prices", "objects", "portfolio_address", "_lock"
     def __init__(self, portfolio_address: "PortfolioAddress") -> None:
-
-        # TODO replace the following line with an abc implementation.
-        # assert isinstance(portfolio_address, PortfolioAddress), f"address must be a PortfolioAddress. try passing in PortfolioAddress({portfolio_address}) instead."
         """
         Initializes the AddressLedgerBase instance.
 
         Args:
             portfolio_address: The :class:`~eth_portfolio.address.PortfolioAddress` this ledger belongs to.
         """
+      
+        # TODO replace the following line with an abc implementation.
+        # assert isinstance(portfolio_address, PortfolioAddress), f"address must be a PortfolioAddress. try passing in PortfolioAddress({portfolio_address}) instead."
+      
       
         self.portfolio_address = portfolio_address
         """
@@ -434,15 +435,12 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
           
         if trace.type != "reward":
             # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
-            check_status[trace]
+            check_status[trace.transactionHash]
         
         traces.append(trace)
 
-    async for trace, status in check_status:
-        if status == 0:
-            traces.remove(trace)
-          
-    return traces
+    unsuccessful = [txhash async for txhash, status in check_status if status == 0]
+    return [trace for trace in traces if trace.hash not in unsuccessful]
     
 
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
