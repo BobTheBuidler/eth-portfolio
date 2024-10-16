@@ -1,5 +1,6 @@
 
 from decimal import Decimal
+from functools import cached_property
 
 from dank_mids.structs.transaction import AccessListEntry
 from msgspec import json
