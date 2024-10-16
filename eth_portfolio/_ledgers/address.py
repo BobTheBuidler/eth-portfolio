@@ -334,7 +334,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
 
     @set_end_block_if_none
     @stuck_coro_debugger
-    async def _load_new_objects(self, _: Block, end_block: Block) -> AsyncIterator[Transaction]:
+    async def _load_new_objects(self, _: Block, end_block: Block) -> AsyncIterator[Transaction]:  # type: ignore [override]
         """
         Loads new transaction entries between the specified blocks.
 
@@ -540,7 +540,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
             AsyncIterator[ERC20]: An async iterator of ERC20 tokens.
         """
         yielded = set()
-        async for transfer in self[0: block]:
+        async for transfer in self[:block]:
             if transfer.token_address not in yielded:
                 yielded.add(transfer.token_address)
                 yield ERC20(transfer.token_address, asynchronous=self.asynchronous)
