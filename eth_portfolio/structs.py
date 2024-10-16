@@ -40,7 +40,10 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
         """
         The network ID where the {cls_name} occurred.    
         """
-        return Network(self.__evm_object.chainId)
+        try:
+            return Network(self.__evm_object.chainId)
+        except AttributeError:
+            return Network(chain.id)
     
     @property
     def block_number(self) -> Block:
