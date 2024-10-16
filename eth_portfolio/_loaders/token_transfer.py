@@ -125,26 +125,27 @@ async def _decode_token_transfer(log: Log) -> Optional[_EventItem]:
         logger.warning(f"Token {log.address} is not verified and is most likely a shitcoin. Skipping. Please submit a PR at github.com/BobTheBuidler/eth-portfolio if this is not a shitcoin and should be included.")
         return None
     try:
-        events = decode_logs(
-            [log]
-        )  # NOTE: We have to decode logs here because NFTs prevent us from batch decoding logs
+        # NOTE: We have to decode logs here because NFTs prevent us from batch decoding logs
+        events = decode_logs([log])
 
         # NOTE: once in a while it comes out as a list instead of _EventDict?
         if isinstance(events, list):
-            assert len(events) == 1, f"too many events: {events}"
             event = events[0]
+            if tokenId in event:
+                logger.debug("this is a NFT related transfer, skipping %s", event)
+                return None
             _check_event(event)
             return event
             
         try:
-            events = events['Transfer']
-            return events[0]
+            return events['Transfer'][0]
         except Exception as e:
             logger.error(event)
-            raise e
+            raise
+            
     except Exception as e:
         logger.error('unable to decode logs, dev figure out why')
-        logger.error(e)
+        logger.exception(e)
         logger.error(log)
 
 _checks = [
