@@ -432,12 +432,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
     """
 
 
-class _TokenTransfer(DictStruct, frozen=True, forbid_unknown_fields=True):
-    sender: Address
-    receiver: Address
-    value: Decimal
-    
-class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_fields=True):
+class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True):
     """
     The :class:`~structs.TokenTransfer` class represents a token transfer event within a blockchain transaction.
 
