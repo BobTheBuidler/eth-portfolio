@@ -95,11 +95,13 @@ _to_raise = (
     RuntimeError,
 )
 
-async def _get_price(token: Address, block: int = None) -> float:
+async def _get_price(token: Address, block: int = None) -> _Decimal:
     try:
         if await is_erc721(token):
             return 0
-        return await get_price(token, block, silent=True, sync=False)
+        maybe_float = await get_price(token, block, silent=True, sync=False)
+        dprice = _Decimal(maybe_float)
+        return round(dprice, 18)
     except CantFetchParam as e:
         logger.warning('CantFetchParam %s', e)
     except yPriceMagicError as e:
