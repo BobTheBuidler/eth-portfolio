@@ -1,7 +1,7 @@
 
+import typing
 from decimal import Decimal
 from functools import cached_property
-from typing import List
 
 from dank_mids.structs.transaction import AccessListEntry
 from hexbytes import HexBytes
@@ -80,12 +80,12 @@ class Transaction(db.Entity):
         return self.decoded.v
 
     @property
-    def access_list(self) -> List[AccessListEntry]:
+    def access_list(self) -> typing.List[AccessListEntry]:
         structs.Transaction.access_list.__doc__
         return self.decoded.access_list
     
     @property
-    def y_parity(self) -> Optional[int]:
+    def y_parity(self) -> typing.Optional[int]:
         structs.TokenTransfer.y_parity.__doc__
         return self.decoded.y_parity
     
