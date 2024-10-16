@@ -9,6 +9,7 @@ from decimal import Decimal
 from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
 
 from dank_mids.structs import DictStruct, FilterTrace, Log, Transaction as DankTransaction
+from dank_mids.structs.trace import Type
 from dank_mids.structs.transaction import AccessListEntry
 from msgspec import Struct
 from y import Network
@@ -297,12 +298,52 @@ class InternalTransfer(_BiggerBase, kw_only=True, frozen=True, omit_defaults=Tru
     """
 
     internal_transfer: FilterTrace
+
+    @property
+    def trace(self) -> FilterTrace:
+        return self.internal_transfer
     
     block_hash: str
     """
     The hash of the block containing the transaction that includes this InternalTransfer.
     """
     
+    @property
+    def transaction_index(self) -> Optional[int]:
+        """
+        The index of the transaction within its block, if applicable.
+        """
+        return self.__evm_object.transactionPosition
+        
+    @property
+    def hash(self) -> Optional[int]:
+        """
+        The index of the transaction within its block, if applicable.
+        """
+        return f'{self.trace.action.rewardType.name} reward' if self.trace.type == Type.reward else self.trace.transactionHash
+
+    @property
+    def from_address(self) -> Address:
+        """
+        The address from which the internal transfer was sent, if applicable.
+        """
+        return self.trace.action.sender
+
+    @property
+    def to_address(self) -> Address:
+        """
+        The address to which the internal transfer was sent, if applicable.
+        """
+        # NOTE: for block reward transfers, the recipient is 'author'
+        return self.trace.action.author if self.trace.type == Type.reward else self.trace.action.to
+        
+    @property
+    def value(self) -> int:
+        """
+        The value/amount of cryptocurrency transferred in the internal transfer.
+        """
+        return self.trace.action.value
+        
     type: str
     """
     The type of internal operation (e.g., "call" for contract calls, "create" for contract creation,
@@ -316,35 +357,52 @@ class InternalTransfer(_BiggerBase, kw_only=True, frozen=True, omit_defaults=Tru
     of the first top-level call.
     """
     
-    gas: int
-    """
-    The amount of gas allocated for this internal operation.
-    """
+    @property
+    def gas(self) -> int:
+        """
+        The amount of gas allocated for this internal operation.
+        """
+        return 0 if self.trace.type == Type.reward else self.trace.action.gas
     
-    gas_used: Optional[int]
-    """
-    The amount of gas actually consumed by this internal operation, if known.
-    """
+    @property
+    def gas_used(self) -> int:
+        """
+        The amount of gas actually consumed by this internal operation, if known.
+        """
+        return self.trace.result.gasUsed
     
     subtraces: int
     """
     The number of sub-operations spawned by this InternalTransfer.
     """
     
-    call_type: Optional[str]
-    """
-    The type of call made in this InternalTransfer (e.g., "call", "delegatecall", "staticcall").
-    """
+    @property
+    def call_type(self) -> Optional[str]:
+        """
+        The type of call made in this InternalTransfer (e.g., "call", "delegatecall", "staticcall").
+        """
+        return trace.action.callType.name
     
-    input: Optional[str]
-    """
-    The input data for this internal operation, if any.
-    """
+    @property
+    def reward_type(self) -> Optional[str]:
+        """
+        The type of the reward, for reward transactions.
+        """
+        return trace.action.rewardType.name
+
+    @property
+    def input(self) -> HexBytes:
+        """
+        The input data for this internal operation, if any.
+        """
+        return self.trace.action.input
     
-    output: Optional[str]
-    """
-    The output data from this internal operation, if any.
-    """
+    @property
+    def output(self) -> HexBytes:
+        """
+        The output data from this internal operation, if any.
+        """
+        return self.trace.result.output
     
     init: Optional[str]
     """
