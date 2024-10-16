@@ -22,7 +22,7 @@ from eth_portfolio._utils import _get_price
 from eth_portfolio.structs import TokenTransfer
 
 if TYPE_CHECKING:
-    from y._db.utils.logs import Log
+    from y._db.utils.logs import ArrayEncodableLog
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +30,7 @@ token_transfer_semaphore = dank_mids.BlockSemaphore(10_000, name='eth_portfolio.
 
 @stuck_coro_debugger
 async def load_token_transfer(
-    transfer_log: "Log", 
+    transfer_log: "ArrayEncodableLog", 
     load_prices: bool,
 ) -> Optional[TokenTransfer]:
     
@@ -118,7 +118,7 @@ class _EventItem(brownie_EventItem):
 
 
 @stuck_coro_debugger
-async def _decode_token_transfer(log: "Log") -> Optional[_EventItem]:
+async def _decode_token_transfer(log: "ArrayEncodableLog") -> Optional[_EventItem]:
     try:
         await Contract.coroutine(log.address)
     except ContractNotFound:
