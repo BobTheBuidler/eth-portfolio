@@ -72,7 +72,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
                 attr.__doc__ = attr.__doc__.replace("{cls_name}", cls.__name__)
 
     
-class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True, dict=True):
+class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True, dict=True):
     """
     The :class:`~structs.Transaction` class represents a complete on-chain blockchain transaction.
 
@@ -228,7 +228,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_fi
         return self.transaction.yParity
 
 
-class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):
+class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):
     """
     The :class:`~structs.InternalTransfer`class represents an internal transfer or call within a blockchain transaction.
 
@@ -381,13 +381,8 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unkno
     The code of the contract involved in this InternalTransfer, if applicable.
     """
 
-
-class _TokenTransfer(DictStruct, frozen=True, forbid_unknown_fields=True):
-    sender: Address
-    receiver: Address
-    value: Decimal
     
-class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_fields=True):
+class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True):
     """
     The :class:`~structs.TokenTransfer` class represents a token transfer event within a blockchain transaction.
 
