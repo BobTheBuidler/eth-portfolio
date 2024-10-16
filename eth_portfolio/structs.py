@@ -7,9 +7,9 @@ The classes are designed to provide a consistent and flexible interface for work
 import logging
 from decimal import Decimal
 from functools import cached_property
-from typing import TYPE_CHECKING, Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
+from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
 
-from dank_mids.structs import DictStruct, FilterTrace, Transaction1559, Transaction2930, TransactionLegacy
+from dank_mids.structs import DictStruct, FilterTrace, Log, Transaction1559, Transaction2930, TransactionLegacy
 from dank_mids.structs.data import Address, checksum
 from dank_mids.structs.trace import Type
 from dank_mids.structs.transaction import AccessListEntry
@@ -18,11 +18,16 @@ from msgspec import Struct
 from y import Network
 from y.datatypes import Block
 
-if TYPE_CHECKING:
-    from y._db.utils.logs import Log
 
 logger = logging.getLogger(__name__)
-    
+
+
+class Log(Log, frozen=True, array_like=True):
+    ...
+
+ArrayEncodableLog = Log
+
+
 class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
     """
     The :class:`~structs._LedgerEntryBase` class is a base class for ledger entries representing on-chain actions in a blockchain.
@@ -292,7 +297,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
     """
 
     @property
-    def _evm_object(self) -> Log:
+    def _evm_object(self) -> ArrayEncodableFilterTrace:
         return self.trace
         
     trace: ArrayEncodableFilterTrace
@@ -444,7 +449,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True
     Constant indicating this value transfer is a token transfer entry.
     """
 
-    log: "Log"
+    log: ArrayEncodableLog
     """
     The log associated with this token transfer.
     """
@@ -458,7 +463,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True
         return checksum(self.log.topics[2][-20:])
 
     @property
-    def _evm_object(self) -> "Log":
+    def _evm_object(self) -> ArrayEncodableLog:
         return self.log
 
     transaction_index: int
