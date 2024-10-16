@@ -31,9 +31,6 @@ token_transfer_semaphore = dank_mids.BlockSemaphore(10_000, name='eth_portfolio.
 
 @stuck_coro_debugger
 async def load_token_transfer(transfer_log: Log, load_prices: bool) -> Optional[TokenTransfer]:
-    if transfer_log.address in SHITCOINS.get(chain.id, set()):
-        return None
-    
     if transfer := await db.get_token_transfer(transfer_log):
         if load_prices and transfer.price is None:
             await db.delete_token_transfer(transfer)
