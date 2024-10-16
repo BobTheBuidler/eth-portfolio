@@ -362,8 +362,8 @@ def get_token_transfer(transfer: dank_mids.structs.Log) -> Optional[TokenTransfe
     entity: entities.TokenTransfer
     if entity := entities.TokenTransfer.get(
         block = (chain.id, block), 
-        transaction_index = transfer.transaction_index,
-        log_index = transfer.log_index,
+        transaction_index = transfer.transactionIndex,
+        log_index = transfer.logIndex,
     ):
         return json.decode(entity.raw, type=TokenTransfer)
 
