@@ -5,14 +5,13 @@ from decimal import Decimal
 from functools import lru_cache
 from typing import Any, Dict, Optional, Tuple
 
+import dank_mids
 import y._db.config as config
 from a_sync import a_sync
 from brownie import chain
-from dank_mids.structs import FilterTrace
 from msgspec import json
 from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush, select
-from y._db.structs import Log
 
 from eth_portfolio._db import entities
 from eth_portfolio._db.decorators import (break_locks,
@@ -281,7 +280,7 @@ def _encode_hook(obj: Any) -> Any:
     
 @a_sync(default='async')
 @robust_db_session
-def get_internal_transfer(trace: FilterTrace) -> Optional[InternalTransfer]:
+def get_internal_transfer(trace: dank_mids.structs.FilterTrace) -> Optional[InternalTransfer]:
     block = trace.blockNumber
     entity: entities.InternalTransfer
     if entity := entities.InternalTransfer.get(
@@ -358,7 +357,7 @@ def _insert_internal_transfer(transfer: InternalTransfer) -> None:
     
 @a_sync(default='async')
 @robust_db_session
-def get_token_transfer(transfer: Log) -> Optional[TokenTransfer]:
+def get_token_transfer(transfer: dank_mids.structs.Log) -> Optional[TokenTransfer]:
     block = transfer.block_number
     transfers = token_transfers_known_at_startup()
     pk = ((chain.id, block), transfer.transaction_index, transfer.log_index)
