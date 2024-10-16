@@ -69,7 +69,7 @@ async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Inter
         - Interacts with the global 'chain' object from the brownie library for chain ID.
     """
     
-    params = {"internal_transfer": trace}
+    params = {"trace": trace}
 
     if load_prices:
         block = trace.block
