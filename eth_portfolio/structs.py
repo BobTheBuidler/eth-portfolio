@@ -9,7 +9,8 @@ from decimal import Decimal
 from functools import cached_property
 from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
 
-from dank_mids.structs import DictStruct, FilterTrace, Log, Transaction1559, Transaction2930, TransactionLegacy
+from dank_mids.structs import DictStruct, FilterTrace, Log
+from dank_mids.structs.transaction import Transaction1559, Transaction2930, TransactionLegacy
 from dank_mids.structs.data import Address, checksum
 from dank_mids.structs.trace import Type
 from dank_mids.structs.transaction import AccessListEntry
