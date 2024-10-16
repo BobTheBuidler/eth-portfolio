@@ -7,16 +7,21 @@ The classes are designed to provide a consistent and flexible interface for work
 import logging
 from decimal import Decimal
 from functools import cached_property
-from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
+from typing import TYPE_CHECKING, Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
 
-from dank_mids.structs import DictStruct, FilterTrace, Log, Transaction as DankTransaction
+from brownie import chain
+from dank_mids.structs import DictStruct, FilterTrace
+from dank_mids.structs.transaction import Transaction1559, Transaction2930, TransactionLegacy
 from dank_mids.structs.data import Address, checksum
 from dank_mids.structs.trace import Type
 from dank_mids.structs.transaction import AccessListEntry
 from hexbytes import HexBytes
-from msgspec import Struct
 from y import Network
 from y.datatypes import Block
+
+if TYPE_CHECKING:
+    from y._db.utils.logs import ArrayEncodableLog
+
 
 logger = logging.getLogger(__name__)
     
@@ -72,7 +77,25 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
                 attr.__doc__ = attr.__doc__.replace("{cls_name}", cls.__name__)
 
     
-class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True, dict=True):
+
+class ArrayEncodableTransactionLegacy(TransactionLegacy, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):  # type: ignore [call-arg]
+    ...
+    
+class ArrayEncodableTransaction2930(Transaction2930, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):  # type: ignore [call-arg]
+    ...
+    
+class ArrayEncodableTransaction1559(Transaction1559, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):  # type: ignore [call-arg]
+    ...
+    
+ArrayEncodableTransaction = Union[ArrayEncodableTransactionLegacy, ArrayEncodableTransaction2930, ArrayEncodableTransaction1559]
+
+_types_mapping = {
+    TransactionLegacy: ArrayEncodableTransactionLegacy,
+    Transaction2930: ArrayEncodableTransaction2930,
+    Transaction1559: ArrayEncodableTransaction1559,
+}
+
+class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True, dict=True):
     """
     The :class:`~structs.Transaction` class represents a complete on-chain blockchain transaction.
 
@@ -80,7 +103,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_fi
     including gas parameters, signature components, and transaction-specific data.
 
     Example:
-        >>> tx = Transaction(tx=DankTransaction(...))
+        >>> tx = Transaction(tx=ArrayEncodableTransaction1559(...))
         >>> tx.chainid
         Network.Mainnet
         >>> tx.type
@@ -94,7 +117,22 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_fi
     Constant indicating this value transfer is an on-chain transaction entry.
     """
 
-    transaction: DankTransaction
+    @classmethod
+    def from_rpc_response(
+        cls, 
+        transaction: Union[TransactionLegacy, Transaction2930, Transaction1559], 
+        *,
+        price: Optional[Decimal] = None, 
+        value_usd: Optional[Decimal] = None,
+    ) -> "Transaction":
+
+        if (tx_type := type(transaction)) in _types_mapping:
+            new_type = _types_mapping[tx_type]
+            return cls(transaction=new_type(**transaction), price=price, value_usd=value_usd)
+            
+        raise TypeError(type(transaction), transaction)
+
+    transaction: ArrayEncodableTransaction
     """
     The transaction object received by calling eth_getTransactionByHash.
     """
@@ -414,7 +452,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_
     Constant indicating this value transfer is a token transfer entry.
     """
 
-    log: Log
+    log: "ArrayEncodableLog"
     """
     The log associated with this token transfer.
     """
@@ -428,7 +466,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_
         return checksum(self.log.topics[2][-20:])
 
     @property
-    def _evm_object(self) -> Log:
+    def _evm_object(self) -> "ArrayEncodableLog":
         return self.log
 
     transaction_index: int
