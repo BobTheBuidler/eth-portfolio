@@ -15,8 +15,8 @@ import dank_mids
 import eth_retry
 from async_lru import alru_cache
 from brownie import chain
+from dank_mids.types import Transaction as dTransaction
 from pony.orm import TransactionIntegrityError
-from web3.types import TxData
 from y import get_price
 from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
@@ -104,7 +104,7 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
 
 @eth_retry.auto_retry
 @stuck_coro_debugger
-async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block: Block) -> Optional[TxData]:
+async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block: Block) -> Optional[dTransaction]:
     """
     This function retrieves a transaction for a specifified address by its nonce and block, if any match.
     
@@ -173,7 +173,7 @@ async def get_nonce_at_block(address: Address, block: Block) -> int:
 @alru_cache(ttl=60*60)
 @eth_retry.auto_retry
 @stuck_coro_debugger
-async def _get_block_transactions(block: Block) -> List[TxData]:
+async def _get_block_transactions(block: Block) -> List[dTransaction]:
     """
     Retrieves all transactions from a specific block.
 
