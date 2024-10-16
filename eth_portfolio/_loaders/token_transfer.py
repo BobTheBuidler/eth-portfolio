@@ -1,8 +1,9 @@
-import asyncio
+
 import logging
 from decimal import Decimal
 from typing import Optional, Union
 
+import a_sync
 import dank_mids
 from brownie import chain
 from brownie.exceptions import ContractNotFound
@@ -84,14 +85,17 @@ async def load_token_transfer(
         # TODO: get rid of this once its run fine for a few days
         raise TypeError(str(e), token_transfer) from e
 
+    a_sync.create_task(_insert_to_db(transfer, load_prices), skip_gc_until_done=True)
+    return transfer
+
+async def _insert_to_db(transfer: TokenTransfer, load_prices: bool) -> None:
     try:
         await db.insert_token_transfer(transfer)
     except TransactionIntegrityError:
         if load_prices:
             await db.delete_token_transfer(transfer)
             await db.insert_token_transfer(transfer)
-    return transfer
-
+            
 @stuck_coro_debugger
 async def get_symbol(token: ERC20) -> Optional[str]:
     try:
