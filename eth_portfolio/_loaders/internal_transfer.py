@@ -75,24 +75,24 @@ async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Inter
         "chainid": chain.id,
         
         # Un-nest the action object
-        "callType": trace.action.callType,
+        "call_type": trace.action.callType,
         # NOTE: for block reward transfers, the recipient is 'author'
         "to_address": trace.action.author if trace.type == TxType.reward else trace.action.to,
         "from_address": trace.action.sender,
         "input": trace.action.input,
         "gas": 0 if trace.type == TxType.reward else trace.gas,
-        "rewardType": trace.action.rewardType,
+        "reward_type": trace.action.rewardType,
         "value": trace.action.value,
         
         # Un-nest the result object
         "output": trace.result.output,
-        "gasUsed": trace.result.gasUsed,
+        "gas_used": trace.result.gasUsed,
     }
 
     if load_prices:
         price = round(Decimal(await _get_price(EEE_ADDRESS, trace.blockNumber)), 18)
         params['price'] = price
-        params['value_usd'] = round(trace.value * price, 18)
+        params['value_usd'] = round(trace.action.value * price, 18)
     
     return InternalTransfer(**params)
     
