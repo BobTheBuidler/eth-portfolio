@@ -114,9 +114,6 @@ class _EventItem(brownie_EventItem):
     transaction_hash: Union[str, bytes]  # TODO figure out why it comes in both ways
 
 
-class DecodingError(Exception):
-    ...
-    
 @stuck_coro_debugger
 async def _decode_token_transfer(log: Log) -> Optional[_EventItem]:
     try:
@@ -127,32 +124,26 @@ async def _decode_token_transfer(log: Log) -> Optional[_EventItem]:
     except ContractNotVerified:
         logger.warning(f"Token {log.address} is not verified and is most likely a shitcoin. Skipping. Please submit a PR at github.com/BobTheBuidler/eth-portfolio if this is not a shitcoin and should be included.")
         return None
+    
     try:
         # NOTE: We have to decode logs here because NFTs prevent us from batch decoding logs
-        events = decode_logs([log])
-
-        # NOTE: once in a while it comes out as a list instead of _EventDict?
-        if isinstance(events, list):
-            event = events[0]
-            if "tokenId" in event:
-                logger.debug("this is a NFT related transfer, skipping %s", event)
-                return None
-            if tuple(event.keys()) == ("topic1", "topic2", "topic3", "data"):
-                raise DecodingError(f'unable to decode logs for {event.address}, dev figure out why')
-            _check_event(event)
-            return event
-            
-        try:
-            return events['Transfer'][0]
-        except Exception as e:
-            logger.error(event)
-            raise
-    except DecodingError as e:
-        logger.error(e)
+        event = decode_logs([log])[0]
     except Exception as e:
         logger.error(e)
         logger.exception(e)
         logger.error(log)
+        return None
+
+    if "tokenId" in event:
+        logger.debug("this is a NFT related transfer, skipping %s", event)
+        return None
+        
+    if tuple(event.keys()) == ("topic1", "topic2", "topic3", "data"):
+        logger.error(f'unable to decode logs for {event.address}, dev figure out why')
+        return None
+
+    _check_event(event)
+    return event
 
 _checks = [
     {'from', 'sender', '_from', 'src'},
@@ -162,4 +153,6 @@ _checks = [
 
 def _check_event(event: _EventItem) -> None:
     if not all(key in keys for key, keys in zip(event.keys(), _checks)):
-        raise NotImplementedError(*event.keys())
+        exc = NotImplementedError(*event.keys())
+        logger.error(exc)
+        raise exc
