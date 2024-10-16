@@ -292,7 +292,7 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
 
 class TransactionsList(PandableList[Transaction]):
     """
-    A list class for handling transaction entries and converting them to DataFrames.
+    A list subclass for transactions that can convert to a :class:`DataFrame`.
     """
     def _df(self) -> DataFrame:
         """
@@ -379,9 +379,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     
 class InternalTransfersList(PandableList[InternalTransfer]):
     """
-    A list class for handling internal transfer entries.
+    A list subclass for internal transfer entries that can convert to a :class:`DataFrame`.
     """
-    pass
 
 
 trace_filter = a_sync.Semaphore(64, __name__ + ".trace_semaphore")(
@@ -490,9 +489,8 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
 
 class TokenTransfersList(PandableList[TokenTransfer]):
     """
-    A list class for handling token transfer entries.
+    A list subclass for token transfer entries that can convert to a :class:`DataFrame`.
     """
-    pass
   
 class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTransfer]):
     """
