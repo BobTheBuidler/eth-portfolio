@@ -69,9 +69,8 @@ async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Inter
         - Interacts with the global 'chain' object from the brownie library for chain ID.
     """
 
-    if load_prices:
-        price = await _get_price(EEE_ADDRESS, trace.block)
-        return InternalTransfer(trace=trace, price=price, value_usd=round(trace.action.value * price, 18))
-    else:
-        return InternalTransfer(trace=trace)
+    if not load_prices:
+        return InternalTransfer.from_trace(trace=trace)
+    price = await _get_price(EEE_ADDRESS, trace.block)
+    return InternalTransfer.from_trace(trace=trace, price=price, value_usd=round(trace.action.value * price, 18))
     
