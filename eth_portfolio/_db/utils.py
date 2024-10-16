@@ -287,7 +287,7 @@ def get_internal_transfer(trace: dank_mids.structs.FilterTrace) -> Optional[Inte
         block = (chain.id, block),
         transaction_index = trace.transactionPosition,
         hash = trace.transactionHash,
-        type = trace.type,
+        type = trace.type.name,
         call_type = trace.callType,
         from_address = (chain.id, trace.sender),
         to_address = (chain.id, trace.to),
