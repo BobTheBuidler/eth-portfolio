@@ -243,7 +243,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=Tru
         return self.transaction.yParity
 
 
-class InternalTransfer(_BiggerBase, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
+class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
     """
     The :class:`~structs.InternalTransfer`class represents an internal transfer or call within a blockchain transaction.
 
