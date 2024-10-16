@@ -303,7 +303,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unkno
     @property
     def hash(self) -> Optional[int]:
         """
-        The index of the transaction within its block, if applicable.
+        The unique hash of the transaction containing this internal transfer.
         """
         return f'{self.trace.action.rewardType.name} reward' if self.trace.type == Type.reward else self.trace.transactionHash
 
@@ -444,21 +444,32 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_
     def _evm_object(self) -> Log:
         return self.log
     
-    log_index: int
-    """
-    The index of this transfer event within the transaction logs.
-    Used to uniquely identify the Transfer event associated with this TokenTransfer within the transaction.
-    """
+    @property
+    def log_index(self) -> int:
+        """
+        The index of this transfer event within the transaction logs.
+        Used to uniquely identify the Transfer event associated with this TokenTransfer within the transaction.
+        """
+        return self.log.logIndex
     
     token: Optional[str]
     """
     The identifier or symbol of the token being transferred, if known.
     """
-    
-    token_address: Address
-    """
-    The contract address of the token being transferred.
-    """
+        
+    @property
+    def hash(self) -> Optional[int]:
+        """
+        The unique hash of the transaction containing this token transfer.
+        """
+        return self.log.transactionHash
+
+    @property
+    def token_address(self) -> Address:
+        """
+        The contract address of the token being transferred.
+        """
+        return self.log.address
     
     value: Decimal
     """
