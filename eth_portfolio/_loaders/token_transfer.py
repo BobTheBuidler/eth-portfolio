@@ -1,14 +1,13 @@
 
 import logging
 from decimal import Decimal
-from typing import Optional, Union
+from typing import TYPE_CHECKING, Optional, Union
 
 import a_sync
 import dank_mids
 from brownie import chain
 from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem as brownie_EventItem
-from dank_mids.structs import Log
 from pony.orm import TransactionIntegrityError
 from y import ERC20, Contract
 from y._decorators import stuck_coro_debugger
@@ -22,13 +21,16 @@ from eth_portfolio._shitcoins import SHITCOINS
 from eth_portfolio._utils import _get_price
 from eth_portfolio.structs import TokenTransfer
 
+if TYPE_CHECKING:
+    from y._db.utils.logs import Log
+
 logger = logging.getLogger(__name__)
 
 token_transfer_semaphore = dank_mids.BlockSemaphore(10_000, name='eth_portfolio.token_transfers')  # Some arbitrary number
 
 @stuck_coro_debugger
 async def load_token_transfer(
-    transfer_log: Log, 
+    transfer_log: "Log", 
     load_prices: bool,
 ) -> Optional[TokenTransfer]:
     
@@ -116,7 +118,7 @@ class _EventItem(brownie_EventItem):
 
 
 @stuck_coro_debugger
-async def _decode_token_transfer(log: Log) -> Optional[_EventItem]:
+async def _decode_token_transfer(log: "Log") -> Optional[_EventItem]:
     try:
         await Contract.coroutine(log.address)
     except ContractNotFound:
