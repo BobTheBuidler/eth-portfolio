@@ -86,13 +86,9 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                     )
                 else:
                     transaction = structs.Transaction(transaction=tx)
-                    
-                try:
-                    await db.insert_transaction(transaction)
-                except TransactionIntegrityError:
-                    if load_prices:
-                        await db.delete_transaction(transaction)
-                        await db.insert_transaction(transaction)
+
+                a_sync.create_task(_insert_to_db(transaction, load_prices), skip_gc_until_done)
+                
                 return nonce, transaction
 
             hi = lo
@@ -100,6 +96,14 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
             logger.debug(f"Nonce at {hi} is {_nonce}, checking lower block {lo}")
 
 
+async def _insert_to_db(transaction: structs.Transaction, load_prices: bool) -> None:
+    try:
+        await db.insert_transaction(transaction)
+    except TransactionIntegrityError:
+        if load_prices:
+            await db.delete_transaction(transaction)
+            await db.insert_transaction(transaction)
+    
 @eth_retry.auto_retry
 @stuck_coro_debugger
 async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block: Block) -> Optional[dankTransaction]:
