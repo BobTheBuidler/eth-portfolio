@@ -72,13 +72,9 @@ async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Optio
     if trace.type == "reward":
         if trace.action.rewardType not in ["block", "uncle"]:
             raise NotImplementedError(trace.action.rewardType)
+            
         params = {'hash': f'{trace.action.rewardType} reward'}
-
-    # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
-    # In all other cases, we need to confirm the transaction didn't revert
-    elif await _get_status(trace.transactionHash) == 0:
-        return None
-
+        
     else:
         params = {'hash': trace.transactionHash}
     
