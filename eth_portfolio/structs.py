@@ -8,7 +8,7 @@ import logging
 from decimal import Decimal
 from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
 
-from dank_mids.structs import DictStruct
+from dank_mids.structs import DictStruct, Transaction as DankTransaction
 from dank_mids.structs.transaction import AccessListEntry
 from msgspec import Struct
 from y import Network
@@ -16,7 +16,7 @@ from y.datatypes import Block
 
 logger = logging.getLogger(__name__)
     
-class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True):
+class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
     """
     The :class:`~structs._LedgerEntryBase` class is a base class for ledger entries representing on-chain actions in a blockchain.
 
@@ -24,6 +24,27 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
 
     Extended by specific ledger entry types :class:`~structs.Transaction`, :class:`~structs.InternalTransfer`, and :class:`~structs.TokenTransfer`.
     """
+    
+    price: Optional[Decimal] = None
+    """
+    The price of the cryptocurrency at the time of the {cls_name}, if known.
+    """
+    
+    value_usd: Optional[Decimal] = None
+    """
+    The USD value of the cryptocurrency transferred in the {cls_name}, if price is known.
+    """
+    
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+
+        # Replace {cls_name} in attribute-level docstrings
+        for key, attr in cls.__dict__.items():
+            if attr.__doc__ and "{cls_name}" in attr.__doc__:
+                attr.__doc__ = attr.__doc__.replace("{cls_name}", cls.__name__)
+                
+
+class _BiggerBase(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
 
     chainid: Network
     """
@@ -59,24 +80,6 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
     """
     The address to which the {cls_name} was sent, if applicable.
     """
-    
-    price: Optional[Decimal] = None
-    """
-    The price of the cryptocurrency at the time of the {cls_name}, if known.
-    """
-    
-    value_usd: Optional[Decimal] = None
-    """
-    The USD value of the cryptocurrency transferred in the {cls_name}, if price is known.
-    """
-    
-    def __init_subclass__(cls, **kwargs):
-        super().__init_subclass__(**kwargs)
-
-        # Replace {cls_name} in attribute-level docstrings
-        for key, attr in cls.__dict__.items():
-            if attr.__doc__ and "{cls_name}" in attr.__doc__:
-                attr.__doc__ = attr.__doc__.replace("{cls_name}", cls.__name__)
 
     
 class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
@@ -118,75 +121,153 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=Tru
     """
     Constant indicating this value transfer is an on-chain transaction entry.
     """
+
+    transaction: DankTransaction    
+
+    @property
+    def chainid(self) -> Network:
+        """
+        The network ID where the transaction occurred.    
+        """
+        return Network(self.transaction.chainId)
     
-    block_hash: str
-    """
-    The hash of the block that includes this Transaction.
-    """
+    @property
+    def block_number(self) -> Block:
+        """
+        The block number where the transaction was included.
+        """
+        return self.transaction.block
     
-    nonce: int
-    """
-    The sender's transaction count at the time of this Transaction.
-    """
+    @property
+    def transaction_index(self) -> Optional[int]:
+        """
+        The index of the transaction within its block, if applicable.
+        """
+        return self.transaction.transactionIndex
     
-    type: Optional[int]
-    """
-    The transaction type (e.g., 0 for legacy, 1 for EIP-2930, 2 for EIP-1559).
-    None for chains that don't specify transaction types.
-    """
+    @property
+    def hash(self) -> str:
+        """
+        The unique transaction hash.
+        """
+        return self.transaction.hash
+
+    @property
+    def block_hash(self) -> HexBytes:
+        """
+        The hash of the block that includes this Transaction.
+        """
+        return self.transaction.blockHash
     
-    gas: int
-    """
-    The maximum amount of gas the sender is willing to use for the Transaction.
-    """
+    @property
+    def nonce(self) -> int:
+        """
+        The sender's transaction count at the time of this Transaction.
+        """
+        return self.transaction.nonce
+
+    @cached_property
+    def type(self) -> Optional[int]:
+        """
+        The transaction type (e.g., 0 for legacy, 1 for EIP-2930, 2 for EIP-1559).
+        None for chains that don't specify transaction types.
+        """
+        typ = self.transaction.type
+        return None if typ is None else int(typ, 16)
+
+    @property
+    def from_address(self) -> Optional[Address]:
+        """
+        The address from which the transaction was sent, if applicable.
+        """
+        return self.transaction.sender
+
+    @property
+    def to_address(self) -> Optional[Address]:
+        """
+        The address to which the transaction was sent, if applicable.
+        """
+        return self.transaction.to
+
+    @property
+    def value(self) -> int:
+        """
+        The value/amount of cryptocurrency transferred in the transaction.
+        """
+        return self.transaction.value
+
+    @property
+    def gas(self) -> int:
+        """
+        The maximum amount of gas the sender is willing to use for the Transaction.
+        """
+        return self.transaction.gas
+
+    @property
+    def gas_price(self) -> int:
+        """
+        The price per unit of gas the sender is willing to pay (for legacy and EIP-2930 transactions).
+        """
+        return self.transaction.gasPrice
+
+    @property
+    def max_fee_per_gas(self) -> Optional[int]:
+        """
+        The maximum total fee per gas the sender is willing to pay (for EIP-1559 transactions only).
+        """
+        return self.transaction.maxFeePerGas
+
+    @property
+    def max_priority_fee_per_gas(self) -> Optional[int]:
+        """
+        The maximum priority fee per gas the sender is willing to pay (for EIP-1559 transactions only).
+        """
+        return self.transaction.maxPriorityFeePerGas
+
+    @property
+    def input(self) -> HexBytes:
+        """
+        The data payload sent with the Transaction, often used for contract interactions.
+        """
+        return self.transaction.input
     
-    gas_price: int
-    """
-    The price per unit of gas the sender is willing to pay (for legacy and EIP-2930 transactions).
-    """
+    @property
+    def r(self) -> HexBytes:
+        """
+        The R component of the Transaction's ECDSA signature.
+        """
+        return self.transaction.r
     
-    max_fee_per_gas: Optional[int] = None
-    """
-    The maximum total fee per gas the sender is willing to pay (for EIP-1559 transactions only).
-    """
+    @property
+    def s(self) -> HexBytes:
+        """
+        The S component of the Transaction's ECDSA signature.
+        """
+        return self.transaction.s
     
-    max_priority_fee_per_gas: Optional[int] = None
-    """
-    The maximum priority fee per gas the sender is willing to pay (for EIP-1559 transactions only).
-    """
+    @property
+    def v(self) -> int:
+        """
+        The V component of the Transaction's ECDSA signature, used for replay protection.
+        """
+        return self.transaction.v
     
-    input: str
-    """
-    The data payload sent with the Transaction, often used for contract interactions.
-    """
+    @property
+    def access_list(self) -> Optional[Tuple[AccessListEntry, ...]]:
+        """
+        List of addresses and storage keys the transaction plans to access (for EIP-2930 and EIP-1559 transactions).
+        """
+        return self.transaction.accessList
     
-    r: str
-    """
-    The R component of the Transaction's ECDSA signature.
-    """
-    
-    s: str
-    """
-    The S component of the Transaction's ECDSA signature.
-    """
-    
-    v: int
-    """
-    The V component of the Transaction's ECDSA signature, used for replay protection.
-    """
-    
-    access_list: Optional[Tuple[AccessListEntry, ...]] = None
-    """
-    List of addresses and storage keys the transaction plans to access (for EIP-2930 and EIP-1559 transactions).
-    """
-    
-    y_parity: Optional[int]
-    """
-    The Y parity of the transaction signature, used in EIP-2718 typed transactions.
-    """
+    @property
+    def y_parity(self) -> Optional[int]:
+        """
+        The Y parity of the transaction signature, used in EIP-2718 typed transactions.
+        """
+        return self.transaction.yParity
 
 
-class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
+class InternalTransfer(_BiggerBase, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
     """
     The :class:`~structs.InternalTransfer`class represents an internal transfer or call within a blockchain transaction.
 
@@ -289,7 +370,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, omit_default
     """
 
 
-class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
+class TokenTransfer(_BiggerBase, kw_only=True, frozen=True):
     """
     The :class:`~structs.TokenTransfer` class represents a token transfer event within a blockchain transaction.
 
