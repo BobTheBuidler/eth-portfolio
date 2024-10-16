@@ -48,9 +48,9 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
             logger.debug("yielding %s at block %s [thru: %s, lock: %s]", task, task.block, block, self._lock.value)
             yield task
         logger.debug("%s yield thru %s complete", self, block)
-    def _include_event(self, event: ArrayEncodableLog) -> bool:
+    def _include_event(self, event: "ArrayEncodableLog") -> bool:
         return event.address not in SHITCOINS.get(chain.id, [])
-    async def _extend(self, objs: List[ArrayEncodableLog]) -> None:
+    async def _extend(self, objs: List["ArrayEncodableLog"]) -> None:
         for log in objs:
             task = asyncio.create_task(
                 coro=_loaders.load_token_transfer(log, self._load_prices), 
