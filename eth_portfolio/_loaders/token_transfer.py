@@ -79,21 +79,21 @@ async def load_token_transfer(
             logger.error(f"{e.__class__.__name__} {e} for {symbol} {decoded.address} at block {decoded.block_number}.")
             return None
         
-        if price := token_transfer.get('price'):
-            token_transfer['value_usd'] = round(value * price, 18)
-        
-        try:
-            transfer = TokenTransfer(**token_transfer)
-        except TypeError as e:
-            raise TypeError(str(e), token_transfer) from e
+    if price := token_transfer.get('price'):
+        token_transfer['value_usd'] = round(value * price, 18)
+    
+    try:
+        transfer = TokenTransfer(**token_transfer)
+    except TypeError as e:
+        raise TypeError(str(e), token_transfer) from e
 
-        try:
+    try:
+        await db.insert_token_transfer(transfer)
+    except TransactionIntegrityError:
+        if load_prices:
+            await db.delete_token_transfer(transfer)
             await db.insert_token_transfer(transfer)
-        except TransactionIntegrityError:
-            if load_prices:
-                await db.delete_token_transfer(transfer)
-                await db.insert_token_transfer(transfer)
-        return transfer
+    return transfer
 
 @stuck_coro_debugger
 async def get_symbol(token: ERC20) -> Optional[str]:
