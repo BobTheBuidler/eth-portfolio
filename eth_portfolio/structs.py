@@ -439,7 +439,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_
         The index of this transfer event within the transaction logs.
         Used to uniquely identify the Transfer event associated with this TokenTransfer within the transaction.
         """
-        return self.log.log_index
+        return self.log.logIndex
     
     token: Optional[str]
     """
@@ -451,7 +451,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_
         """
         The unique hash of the transaction containing this token transfer.
         """
-        return self.log.transaction_hash
+        return self.log.transactionHash
 
     @property
     def token_address(self) -> Address:
