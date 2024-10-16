@@ -79,7 +79,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
                 attr.__doc__ = attr.__doc__.replace("{cls_name}", cls.__name__)
 
     
-class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True, dict=True):
+class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True, dict=True):
     """
     The :class:`~structs.Transaction` class represents a complete on-chain blockchain transaction.
 
@@ -243,7 +243,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=Tru
         return self.transaction.yParity
 
 
-class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
+class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):
     """
     The :class:`~structs.InternalTransfer`class represents an internal transfer or call within a blockchain transaction.
 
@@ -288,7 +288,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, omit_default
     def trace(self) -> FilterTrace:
         return self.internal_transfer
     
-    block_hash: str
+    block_hash: HexBytes
     """
     The hash of the block containing the transaction that includes this InternalTransfer.
     """
@@ -389,23 +389,23 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, omit_default
         """
         return self.trace.result.output
     
-    init: Optional[str]
+    init: Optional[HexBytes]
     """
     The initialization code for contract creation, if this is a create operation.
     """
     
-    address: Optional[str]
+    address: Optional[HexBytes]
     """
     The address of the account or contract involved in this InternalTransfer.
     """
     
-    code: Optional[str]
+    code: Optional[HexBytes]
     """
     The code of the contract involved in this InternalTransfer, if applicable.
     """
 
 
-class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
+class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_fields=True):
     """
     The :class:`~structs.TokenTransfer` class represents a token transfer event within a blockchain transaction.
 
@@ -451,7 +451,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
     The identifier or symbol of the token being transferred, if known.
     """
     
-    token_address: str
+    token_address: Address
     """
     The contract address of the token being transferred.
     """
