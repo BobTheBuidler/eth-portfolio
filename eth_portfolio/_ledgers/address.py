@@ -21,6 +21,7 @@ import a_sync
 import dank_mids
 import eth_retry
 from dank_mids.eth import TraceFilterParams
+from dank_mids.structs import FilterTrace
 from pandas import DataFrame  # type: ignore
 from y import ERC20
 from y._decorators import stuck_coro_debugger
