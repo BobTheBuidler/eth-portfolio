@@ -22,7 +22,7 @@ from y.datatypes import Block
 logger = logging.getLogger(__name__)
 
 
-class Log(Log, frozen=True, array_like=True):
+class Log(Log, frozen=True, kw_only=True, array_like=True):
     ...
 
 ArrayEncodableLog = Log
