@@ -87,7 +87,10 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                 else:
                     transaction = structs.Transaction(transaction=tx)
 
-                a_sync.create_task(_insert_to_db(transaction, load_prices), skip_gc_until_done)
+                a_sync.create_task(
+                    coro=_insert_to_db(transaction, load_prices), 
+                    skip_gc_until_done=True,
+                )
                 
                 return nonce, transaction
 
