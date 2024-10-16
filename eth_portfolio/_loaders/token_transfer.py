@@ -30,9 +30,18 @@ Log = Union[dankLog, ydbLog]
 token_transfer_semaphore = dank_mids.BlockSemaphore(10_000, name='eth_portfolio.token_transfers')  # Some arbitrary number
 
 @stuck_coro_debugger
-async def load_token_transfer(transfer_log: Log, load_prices: bool) -> Optional[TokenTransfer]:
+async def load_token_transfer(
+    transfer_log: Log, 
+    load_prices: bool,
+) -> Optional[TokenTransfer]:
+    
+    if log.removed:
+        if transfer := await db.get_token_transfer(transfer_log):
+            await db.delete_token_transfer(transfer)
+        return
+        
     if transfer := await db.get_token_transfer(transfer_log):
-        if load_prices and transfer.price is None:
+        elif load_prices and transfer.price is None:
             await db.delete_token_transfer(transfer)
         else:
             return transfer
