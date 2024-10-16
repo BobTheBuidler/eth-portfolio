@@ -110,6 +110,16 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
     Constant indicating this value transfer is an on-chain transaction entry.
     """
 
+    @classmethod
+    def from_rpc_response(cls, transaction: Union[TransactionLegacy, Transaction2930, Transaction1559], price, value_usd) -> "Transaction":
+        if isinstance(transaction, TransactionLegacy):
+            return cls(transaction=ArrayEncodableTransactionLegacy(**transaction), price, value_usd)
+        if isinstance(transaction, Transaction1559):
+            return cls(transaction=ArrayEncodableTransaction2930(**transaction), price, value_usd)
+        if isinstance(transaction, Transaction2930):
+            return cls(transaction=ArrayEncodableTransaction1559(**transaction), price, value_usd)
+        raise TypeError(type(transaction), transaction)
+
     transaction: ArrayEncodableTransaction
     """
     The transaction object received by calling eth_getTransactionByHash.
