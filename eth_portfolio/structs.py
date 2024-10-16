@@ -9,13 +9,14 @@ from decimal import Decimal
 from functools import cached_property
 from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
 
-from dank_mids.structs import DictStruct, FilterTrace, Log, Transaction as DankTransaction
+from dank_mids.structs import DictStruct, FilterTrace, Transaction as DankTransaction
 from dank_mids.structs.data import Address, checksum
 from dank_mids.structs.trace import Type
 from dank_mids.structs.transaction import AccessListEntry
 from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
+from y._db.structs import Log
 from y.datatypes import Block
 
 logger = logging.getLogger(__name__)
@@ -439,7 +440,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_
         The index of this transfer event within the transaction logs.
         Used to uniquely identify the Transfer event associated with this TokenTransfer within the transaction.
         """
-        return self.log.logIndex
+        return self.log.log_index
     
     token: Optional[str]
     """
@@ -451,7 +452,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_
         """
         The unique hash of the transaction containing this token transfer.
         """
-        return self.log.transactionHash
+        return self.log.transaction_hash
 
     @property
     def token_address(self) -> Address:
