@@ -270,11 +270,6 @@ def _insert_transaction(transaction: Transaction) -> None:
         gas_price = transaction.gas_price,
         max_fee_per_gas = transaction.max_fee_per_gas, 
         max_priority_fee_per_gas = transaction.max_priority_fee_per_gas,
-        input = transaction.input,
-        r = transaction.r,
-        s = transaction.s,
-        v = transaction.v,
-        access_list = json.encode(transaction.access_list) if transaction.access_list else None,
         raw = json.encode(transaction, enc_hook=_encode_hook),    
     )
 
