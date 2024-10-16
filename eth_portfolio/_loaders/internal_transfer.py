@@ -68,13 +68,10 @@ async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Inter
         - Utilizes utility functions from eth_portfolio._loaders.utils and eth_portfolio._utils.
         - Interacts with the global 'chain' object from the brownie library for chain ID.
     """
-    
-    params = {"trace": trace}
 
     if load_prices:
         price = round(Decimal(await _get_price(EEE_ADDRESS, trace.block)), 18)
-        params['price'] = price
-        params['value_usd'] = round(trace.action.value * price, 18)
-    
-    return InternalTransfer(**params)
+        return InternalTransfer(trace=trace, price=price, value_usd=round(trace.action.value * price, 18))
+    else:
+        return InternalTransfer(trace=trace)
     
