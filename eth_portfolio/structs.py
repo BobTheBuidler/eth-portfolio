@@ -92,6 +92,11 @@ class ArrayEncodableTransaction1559(Transaction1559, array_like=True, frozen=Tru
     
 ArrayEncodableTransaction = Union[ArrayEncodableTransactionLegacy, ArrayEncodableTransaction2930, ArrayEncodableTransaction1559]
 
+_types_mapping = {
+    TransactionLegacy: ArrayEncodableTransactionLegacy,
+    Transaction2930: ArrayEncodableTransaction2930,
+    Transaction1559: ArrayEncodableTransaction1559,
+}
 
 class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True, dict=True):
     """
@@ -123,12 +128,11 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
         price: Optional[Decimal] = None, 
         value_usd: Optional[Decimal] = None,
     ) -> "Transaction":
-        if isinstance(transaction, TransactionLegacy):
-            return cls(transaction=ArrayEncodableTransactionLegacy(**transaction), price, value_usd)
-        if isinstance(transaction, Transaction1559):
-            return cls(transaction=ArrayEncodableTransaction2930(**transaction), price, value_usd)
-        if isinstance(transaction, Transaction2930):
-            return cls(transaction=ArrayEncodableTransaction1559(**transaction), price, value_usd)
+
+        if (tx_type := type(transaction)) in _types_mapping:
+            new_type = types[tx_type]
+            return cls(transaction=new_type(**transaction), price=price, value_usd=value_usd)
+            
         raise TypeError(type(transaction), transaction)
 
     transaction: ArrayEncodableTransaction
