@@ -384,7 +384,7 @@ class InternalTransfersList(PandableList[InternalTransfer]):
     pass
 
 
-trace_filter = a_sync.Semaphore(32, __name__ + ".trace_semaphore")(
+trace_filter = a_sync.Semaphore(64, __name__ + ".trace_semaphore")(
     eth_retry.auto_retry(dank_mids.eth.trace_filter)
 )
 
@@ -405,7 +405,7 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     """
     traces = []
 
-    check_status = a_sync.TaskMapping(get_transaction_status)
+    check_status_tasks = a_sync.TaskMapping(get_transaction_status)
   
     for trace in await trace_filter(filter_params):
         #if trace.error:
@@ -418,15 +418,12 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
           
         if trace.type != TxType.reward:
             # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
-            check_status[trace.transactionHash]
+            check_status_tasks[trace.transactionHash]
         
         traces.append(trace)
 
-    if check_status:
-        unsuccessful = [txhash async for txhash, status in check_status if status == 0]
-        return [trace for trace in traces if trace.hash not in unsuccessful]
-    else:
-        return traces
+    # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
+    return [trace for trace in traces if trace.type == TxType.reward or await check_status_tasks[trace.hash] == Status.success]
     
 
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
