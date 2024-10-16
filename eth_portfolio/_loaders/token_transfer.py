@@ -83,15 +83,12 @@ async def load_token_transfer(
                 token_transfer['value_usd'] = round(value * price, 18)
             except Exception as e:
                 logger.error(f"{e.__class__.__name__} {e} for {symbol} {decoded.address} at block {decoded.block_number}.")
-                token_transfer['price'] = None
-                token_transfer['value_usd'] = None
         
         try:
             transfer = TokenTransfer(**token_transfer)
-            del transfer_log  # free up some memory
             await db.insert_token_transfer(transfer)
         except decimal.InvalidOperation:
-        # Not entirely sure why this happens, probably some crazy uint value
+            # Not entirely sure why this happens, probably some crazy uint value
             return None
         except TransactionIntegrityError:
             if load_prices:
