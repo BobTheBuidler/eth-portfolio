@@ -72,12 +72,9 @@ async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Inter
     params = {"trace": trace}
 
     if load_prices:
-        block = trace.block
-        value = trace.action.value
-        del trace  # we dont need to maintain this reference while we fetch the price
-        price = round(Decimal(await _get_price(EEE_ADDRESS, block)), 18)
+        price = round(Decimal(await _get_price(EEE_ADDRESS, trace.block)), 18)
         params['price'] = price
-        params['value_usd'] = round(value * price, 18)
+        params['value_usd'] = round(trace.action.value * price, 18)
     
     return InternalTransfer(**params)
     
