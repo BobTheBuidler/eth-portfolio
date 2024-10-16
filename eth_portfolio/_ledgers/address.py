@@ -422,7 +422,7 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
         traces.append(trace)
 
     # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
-    return [trace for trace in traces if trace.type == TxType.reward or await check_status_tasks[trace.hash] == Status.success]
+    return [trace for trace in traces if trace.type == TxType.reward or await check_status_tasks[trace.transactionHash] == Status.success]
     
 
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
