@@ -266,7 +266,10 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
         return self.transaction.yParity
 
 
-class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):
+class ArrayEncodableFilterTrace(FilterTrace, frozen=True, kw_only=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
+    ...
+    
+class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):
     """
     The :class:`~structs.InternalTransfer`class represents an internal transfer or call within a blockchain transaction.
 
@@ -276,7 +279,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unkno
 
     Example:
         >>> internal_tx = InternalTransfer(
-        ...     trace=FilterTrace(...),
+        ...     trace=ArrayEncodableFilterTrace(...),
         ...     type="call",
         ...     trace_address="0.1",
         ...     subtraces=1,
@@ -295,10 +298,10 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unkno
     """
 
     @property
-    def _evm_object(self) -> FilterTrace:
+    def _evm_object(self) -> ArrayEncodableFilterTrace:
         return self.trace
         
-    trace: FilterTrace
+    trace: ArrayEncodableFilterTrace
     """
     The raw trace object associated with this internal transfer.
     """
