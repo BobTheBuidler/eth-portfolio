@@ -397,9 +397,15 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
 
     Returns:
         The list of traces.
-    """
-    return [trace for trace in await trace_filter(filter_params) if not trace.error]
-    
+    """if 
+    return [
+        trace for trace in await trace_filter(filter_params) 
+        if not trace.error
+        # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
+        # that actually transmitted value to the singleton even though they appear to.
+        and trace.to != "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":  # Gnosis Safe Singleton 1.3.0
+    ]
+
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
     """
     A ledger for managing internal transfer entries.
