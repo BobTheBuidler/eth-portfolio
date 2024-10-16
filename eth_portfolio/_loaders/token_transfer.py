@@ -1,7 +1,7 @@
 
 import logging
 from decimal import Decimal
-from typing import TYPE_CHECKING, Optional, Union
+from typing import  Optional, Union
 
 import a_sync
 import dank_mids
@@ -19,10 +19,7 @@ from eth_portfolio._db import utils as db
 from eth_portfolio._loaders.utils import get_transaction_receipt
 from eth_portfolio._shitcoins import SHITCOINS
 from eth_portfolio._utils import _get_price
-from eth_portfolio.structs import TokenTransfer
-
-if TYPE_CHECKING:
-    from y._db.utils.logs import Log
+from eth_portfolio.structs import TokenTransfer, Log
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +27,7 @@ token_transfer_semaphore = dank_mids.BlockSemaphore(10_000, name='eth_portfolio.
 
 @stuck_coro_debugger
 async def load_token_transfer(
-    transfer_log: "Log", 
+    transfer_log: Log, 
     load_prices: bool,
 ) -> Optional[TokenTransfer]:
     
@@ -118,7 +115,7 @@ class _EventItem(brownie_EventItem):
 
 
 @stuck_coro_debugger
-async def _decode_token_transfer(log: "Log") -> Optional[_EventItem]:
+async def _decode_token_transfer(log: Log) -> Optional[_EventItem]:
     try:
         await Contract.coroutine(log.address)
     except ContractNotFound:
