@@ -69,25 +69,7 @@ async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Inter
         - Interacts with the global 'chain' object from the brownie library for chain ID.
     """
     
-    params = {
-        "hash": f'{trace.action.rewardType.name} reward' if trace.type == TxType.reward else trace.transactionHash,
-        "transaction_index": trace.transactionPosition,
-        "chainid": chain.id,
-        
-        # Un-nest the action object
-        "call_type": trace.action.callType.name,
-        # NOTE: for block reward transfers, the recipient is 'author'
-        "to_address": trace.action.author if trace.type == TxType.reward else trace.action.to,
-        "from_address": trace.action.sender,
-        "input": trace.action.input,
-        "gas": 0 if trace.type == TxType.reward else trace.gas,
-        "reward_type": trace.action.rewardType.name,
-        "value": trace.action.value,
-        
-        # Un-nest the result object
-        "output": trace.result.output,
-        "gas_used": trace.result.gasUsed,
-    }
+    params = {"internal_transfer": trace}
 
     if load_prices:
         block = trace.block
