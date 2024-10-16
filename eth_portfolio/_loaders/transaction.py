@@ -24,6 +24,7 @@ from y.datatypes import Address, Block
 from y.utils.events import decode_logs
 
 from eth_portfolio import structs
+from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._db import utils as db
 from eth_portfolio._loaders.utils import get_transaction_receipt, underscore
 
@@ -62,37 +63,40 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
     hi = await dank_mids.eth.block_number
     while True:
         _nonce = await get_nonce_at_block(address, lo)
+        
         if _nonce < nonce:
             old_lo = lo
             lo += int((hi - lo) / 2) or 1
             logger.debug(f"Nonce at {old_lo} is {_nonce}, checking higher block {lo}")
-        elif _nonce >= nonce:
-            prev_block_nonce = await get_nonce_at_block(address, lo - 1)
-            if prev_block_nonce < nonce:
-                logger.debug(f"Found nonce {nonce} at block {lo}")
-                tx = await get_transaction_by_nonce_and_block(address, nonce, lo)
-                if tx is None:
-                    return nonce, None
-                                    
-                params = {'transaction': tx}
-                
-                    
-                if load_prices:
-                    price = Decimal(await get_price(EEE_ADDRESS, block = tx.blockNumber, sync=False))
-                    transaction = structs.Transaction.from_rpc_response(tx, price=round(price, 18), value_usd=round(tx.value * price, 18))
-                else:
-                    transaction = structs.Transaction.from_rpc_response(tx)
+            continue
 
-                a_sync.create_task(
-                    coro=_insert_to_db(transaction, load_prices), 
-                    skip_gc_until_done=True,
-                )
-                
-                return nonce, transaction
-
+        prev_block_nonce = await get_nonce_at_block(address, lo - 1)
+        if prev_block_nonce >= nonce:
             hi = lo
             lo = int(lo / 2)
             logger.debug(f"Nonce at {hi} is {_nonce}, checking lower block {lo}")
+            continue
+
+        
+        logger.debug(f"Found nonce {nonce} at block {lo}")
+        tx = await get_transaction_by_nonce_and_block(address, nonce, lo)
+        if tx is None:
+            return nonce, None
+            
+        if load_prices:
+            price = Decimal(await get_price(EEE_ADDRESS, block = tx.blockNumber, sync=False))
+            transaction = structs.Transaction.from_rpc_response(tx, price=round(price, 18), value_usd=round(tx.value * price, 18))
+        else:
+            transaction = structs.Transaction.from_rpc_response(tx)
+
+        a_sync.create_task(
+            coro=_insert_to_db(transaction, load_prices), 
+            skip_gc_until_done=True,
+        )
+        
+        return nonce, transaction
+
+        
 
 
 async def _insert_to_db(transaction: structs.Transaction, load_prices: bool) -> None:
@@ -105,6 +109,7 @@ async def _insert_to_db(transaction: structs.Transaction, load_prices: bool) -> 
     
 @eth_retry.auto_retry
 @stuck_coro_debugger
+@cache_to_disk
 async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block: Block) -> Optional[dankTransaction]:
     """
     This function retrieves a transaction for a specifified address by its nonce and block, if any match.
@@ -145,6 +150,7 @@ async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block
 @alru_cache(maxsize=None)
 @eth_retry.auto_retry
 @stuck_coro_debugger
+@cache_to_disk
 async def get_nonce_at_block(address: Address, block: Block) -> int:
     """
     Retrieves the nonce of an address at a specific block.
