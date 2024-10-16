@@ -75,16 +75,17 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                     return nonce, None
                                     
                 params = {'transaction': tx}
+                
                     
                 if load_prices:
                     price = Decimal(await get_price(EEE_ADDRESS, block = tx.blockNumber, sync=False))
-                    params['price'] = round(price, 18)
-                    params['value_usd'] = round(tx.value * price, 18)
-                    
-                try:
-                    transaction = structs.Transaction(**params)
-                except TypeError as e:
-                    raise TypeError(str(e), tx) from e
+                    transaction = structs.Transaction(
+                        transaction=tx,
+                        price=round(price, 18),
+                        value_usd=round(tx.value * price, 18),
+                    )
+                else:
+                    transaction = structs.Transaction(transaction=tx)
                     
                 try:
                     await db.insert_transaction(transaction)
