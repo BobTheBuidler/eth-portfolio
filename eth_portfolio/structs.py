@@ -9,6 +9,7 @@ from decimal import Decimal
 from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
 
 from dank_mids.structs import DictStruct
+from dank_mids.structs.transaction import AccessListEntry
 from msgspec import Struct
 from y import Network
 from y.datatypes import Block
@@ -77,34 +78,6 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True):
             if attr.__doc__ and "{cls_name}" in attr.__doc__:
                 attr.__doc__ = attr.__doc__.replace("{cls_name}", cls.__name__)
 
-
-class AccessListEntry(Struct, frozen=True):
-    """
-    The :class:`~structs.AccessListEntry` class represents an entry in an Ethereum transaction access list.
-
-    Access lists are used in EIP-2930 and EIP-1559 transactions to specify storage slots
-    that the transaction plans to access, potentially reducing gas costs.
-
-    Example:
-        >>> entry = AccessListEntry(
-        ...     address="0x742d35Cc6634C0532925a3b844Bc454e4438f44e", 
-        ...     storage_keys=(b'key1', b'key2')
-        ... )
-        >>> entry.address
-        '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'
-        >>> len(entry.storage_keys)
-        2
-    """
-
-    address: str
-    """
-    The Ethereum address of the contract whose storage is being accessed.
-    """
-    
-    storage_keys: Tuple[bytes, ...]
-    """
-    The specific storage slot keys within the contract that will be accessed.
-    """
     
 class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     """
