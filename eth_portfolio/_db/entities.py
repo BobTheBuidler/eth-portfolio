@@ -1,6 +1,7 @@
 
 from decimal import Decimal
 from functools import cached_property
+from typing import List
 
 from dank_mids.structs.transaction import AccessListEntry
 from hexbytes import HexBytes
