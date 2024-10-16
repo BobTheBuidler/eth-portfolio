@@ -30,7 +30,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
     """
 
     @property
-    def __evm_object(self) -> Union["Transaction", "InternalTransfer", "TokenTransfer"]:
+    def _evm_object(self) -> Union["Transaction", "InternalTransfer", "TokenTransfer"]:
         """
         The EVM object associated with {cls_name}, exactly as it was received from the RPC.
         """
@@ -42,7 +42,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
         The network ID where the {cls_name} occurred.    
         """
         try:
-            return Network(self.__evm_object.chainId)
+            return Network(self._evm_object.chainId)
         except AttributeError:
             return Network(chain.id)
     
@@ -51,14 +51,14 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
         """
         The block number where the {cls_name} was included.
         """
-        return self.__evm_object.block
+        return self._evm_object.block
     
     @property
     def transaction_index(self) -> Optional[int]:
         """
         The index of the transaction within its block, if applicable.
         """
-        return self.__evm_object.transactionIndex
+        return self._evm_object.transactionIndex
     
     price: Optional[Decimal] = None
     """
@@ -282,11 +282,11 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unkno
     Constant indicating this value transfer is an internal transfer or call entry.
     """
 
-    internal_transfer: FilterTrace
-
     @property
-    def trace(self) -> FilterTrace:
-        return self.internal_transfer
+    def _evm_object(self) -> Log:
+        return self.trace
+        
+    trace: FilterTrace
     
     block_hash: HexBytes
     """
@@ -298,7 +298,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unkno
         """
         The index of the transaction within its block, if applicable.
         """
-        return self.__evm_object.transactionPosition
+        return self.trace.transactionPosition
         
     @property
     def hash(self) -> Optional[int]:
@@ -438,7 +438,11 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_
     Constant indicating this value transfer is a token transfer entry.
     """
 
-    token_transfer: Log
+    log: Log
+
+    @property
+    def _evm_object(self) -> Log:
+        return self.log
     
     log_index: int
     """
