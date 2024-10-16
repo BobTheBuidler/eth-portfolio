@@ -413,7 +413,7 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
           
         # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
         # that actually transmitted value to the singleton even though they appear to.
-        if trace.to == "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":  # Gnosis Safe Singleton 1.3.0
+        if trace.action.to == "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":  # Gnosis Safe Singleton 1.3.0
             continue
           
         if trace.type != TxType.reward:
