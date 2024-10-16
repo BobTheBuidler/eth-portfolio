@@ -89,8 +89,8 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                 with suppress(AttributeError):
                     params['max_fee_per_gas'] = tx.maxFeePerGas
                     params['max_priority_fee_per_gas'] = tx.maxPriorityFeePerGas
-                
-                if tx.accessList is not None:
+
+                with suppress(AttributeError):
                     params['access_list'] = tx.accessList
                     
                 if load_prices:
