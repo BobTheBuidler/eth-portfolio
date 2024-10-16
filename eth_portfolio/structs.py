@@ -6,6 +6,7 @@ The classes are designed to provide a consistent and flexible interface for work
 
 import logging
 from decimal import Decimal
+from functools import cached_property
 from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
 
 from dank_mids.structs import DictStruct, FilterTrace, Log, Transaction as DankTransaction
@@ -74,7 +75,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
                 attr.__doc__ = attr.__doc__.replace("{cls_name}", cls.__name__)
 
     
-class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
+class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True, dict=True):
     """
     The :class:`~structs.Transaction` class represents a complete on-chain blockchain transaction.
 
