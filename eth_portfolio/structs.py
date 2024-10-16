@@ -111,7 +111,13 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
     """
 
     @classmethod
-    def from_rpc_response(cls, transaction: Union[TransactionLegacy, Transaction2930, Transaction1559], price, value_usd) -> "Transaction":
+    def from_rpc_response(
+        cls, 
+        transaction: Union[TransactionLegacy, Transaction2930, Transaction1559], 
+        *,
+        price: Optional[Decimal] = None, 
+        value_usd: Optional[Decimal] = None,
+    ) -> "Transaction":
         if isinstance(transaction, TransactionLegacy):
             return cls(transaction=ArrayEncodableTransactionLegacy(**transaction), price, value_usd)
         if isinstance(transaction, Transaction1559):
