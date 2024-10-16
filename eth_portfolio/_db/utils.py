@@ -273,9 +273,14 @@ def _insert_transaction(transaction: Transaction) -> None:
         s = transaction.s,
         v = transaction.v,
         access_list = json.encode(transaction.access_list) if transaction.access_list else None,
-        raw = json.encode(transaction),    
+        raw = json.encode(transaction, enc_hook=_encode_hook),    
     )
-    
+
+def _encode_hook(obj: Any) -> Any:
+    typ = type(obj)
+    if issubclass(typ, int):
+        return int(obj)
+    raise TypeError(typ)
     
 @a_sync(default='async')
 @robust_db_session
