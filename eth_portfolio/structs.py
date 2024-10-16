@@ -9,14 +9,13 @@ from decimal import Decimal
 from functools import cached_property
 from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
 
-from dank_mids.structs import DictStruct, FilterTrace, Transaction as DankTransaction
+from dank_mids.structs import DictStruct, FilterTrace, Log, Transaction as DankTransaction
 from dank_mids.structs.data import Address, checksum
 from dank_mids.structs.trace import Type
 from dank_mids.structs.transaction import AccessListEntry
 from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
-from y._db.structs import Log
 from y.datatypes import Block
 
 logger = logging.getLogger(__name__)
