@@ -7,9 +7,9 @@ The classes are designed to provide a consistent and flexible interface for work
 import logging
 from decimal import Decimal
 from functools import cached_property
-from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
+from typing import TYPE_CHECKING, Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
 
-from dank_mids.structs import DictStruct, FilterTrace, Transaction as DankTransaction
+from dank_mids.structs import DictStruct, FilterTrace, Transaction1559, Transaction2930, TransactionLegacy
 from dank_mids.structs.data import Address, checksum
 from dank_mids.structs.trace import Type
 from dank_mids.structs.transaction import AccessListEntry
@@ -17,7 +17,9 @@ from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
 from y.datatypes import Block
-from y._db.utils.logs import Log
+
+if TYPE_CHECKING:
+    from y._db.utils.logs import Log
 
 logger = logging.getLogger(__name__)
     
@@ -72,7 +74,20 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
             if attr.__doc__ and "{cls_name}" in attr.__doc__:
                 attr.__doc__ = attr.__doc__.replace("{cls_name}", cls.__name__)
 
+
+
+class ArrayEncodableTransactionLegacy(TransactionLegacy, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):
+    ...
     
+class ArrayEncodableTransaction2930(Transaction2930, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):
+    ...
+    
+class ArrayEncodableTransaction1559(Transaction1559, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):
+    ...
+    
+ArrayEncodableTransaction = Union[ArrayEncodableTransactionLegacy, ArrayEncodableTransaction2930, ArrayEncodableTransaction1559]
+
+
 class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True, dict=True):
     """
     The :class:`~structs.Transaction` class represents a complete on-chain blockchain transaction.
@@ -81,7 +96,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
     including gas parameters, signature components, and transaction-specific data.
 
     Example:
-        >>> tx = Transaction(tx=DankTransaction(...))
+        >>> tx = Transaction(tx=ArrayEncodableTransaction1559(...))
         >>> tx.chainid
         Network.Mainnet
         >>> tx.type
@@ -95,7 +110,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
     Constant indicating this value transfer is an on-chain transaction entry.
     """
 
-    transaction: DankTransaction
+    transaction: ArrayEncodableTransaction
     """
     The transaction object received by calling eth_getTransactionByHash.
     """
@@ -229,6 +244,9 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
         return self.transaction.yParity
 
 
+class ArrayEncodableFilterTrace(FilterTrace, frozen=True, kw_only=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):
+    ...
+    
 class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):
     """
     The :class:`~structs.InternalTransfer`class represents an internal transfer or call within a blockchain transaction.
@@ -239,7 +257,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
 
     Example:
         >>> internal_tx = InternalTransfer(
-        ...     trace=FilterTrace(...),
+        ...     trace=ArrayEncodableFilterTrace(...),
         ...     type="call",
         ...     trace_address="0.1",
         ...     subtraces=1,
@@ -261,7 +279,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
     def _evm_object(self) -> Log:
         return self.trace
         
-    trace: FilterTrace
+    trace: ArrayEncodableFilterTrace
     """
     The raw trace object associated with this internal transfer.
     """
@@ -410,7 +428,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True
     Constant indicating this value transfer is a token transfer entry.
     """
 
-    log: Log
+    log: "Log"
     """
     The log associated with this token transfer.
     """
@@ -424,7 +442,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True
         return checksum(self.log.topics[2][-20:])
 
     @property
-    def _evm_object(self) -> Log:
+    def _evm_object(self) -> "Log":
         return self.log
 
     transaction_index: int
