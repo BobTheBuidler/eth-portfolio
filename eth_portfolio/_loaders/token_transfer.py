@@ -138,7 +138,7 @@ async def _decode_token_transfer(log: Log) -> Optional[_EventItem]:
             if "tokenId" in event:
                 logger.debug("this is a NFT related transfer, skipping %s", event)
                 return None
-            if tuple(event.keys()) == ("topic0", "topic1", "topic2", "topic3"):
+            if tuple(event.keys()) == ("topic1", "topic2", "topic3", "data"):
                 raise DecodingError(f'unable to decode logs for {event.address}, dev figure out why')
             _check_event(event)
             return event
