@@ -77,26 +77,24 @@ async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Inter
     else:
         params = {'hash': trace.transactionHash}
     
-    if trace.sender:
-        params['from_address'] = trace.sender
-    if trace.to:
-        params['to_address'] = trace.to
-        
-    params['transaction_index'] = trace.transactionPosition
-    params['chainid'] = chain.id
-    params['value'] = trace.value
-    params['gas'] = 0 if trace.type == TxType.reward else trace.gas
-
-    # Un-nest the action object
     params.update({
-        # for block reward transfers, the recipient is 'author'
-        'to' if key == 'author' else key: value
-        for key, value in trace.action.items()
+        "transaction_index": trace.transactionPosition,
+        "chainid": chain.id,
+        
+        # Un-nest the action object
+        "callType": trace.action.callType,
+        # NOTE: for block reward transfers, the recipient is 'author'
+        "to_address": trace.action.author if trace.type == TxType.reward else trace.action.to,
+        "from_address": trace.action.sender,
+        "input": trace.action.input,
+        "gas": 0 if trace.type == TxType.reward else trace.gas,
+        "rewardType": trace.action.rewardType,
+        "value": trace.action.value,
+        
+        # Un-nest the result object
+        "output": trace.result.output,
+        "gasUsed": trace.result.gasUsed,
     })
-            
-    # Un-nest the result object
-    params['output'] = trace.result.output
-    params['gasUsed'] = trace.result.gasUsed
 
     if load_prices:
         price = round(Decimal(await _get_price(EEE_ADDRESS, trace.blockNumber)), 18)
