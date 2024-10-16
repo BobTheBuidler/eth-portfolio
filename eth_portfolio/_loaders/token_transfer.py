@@ -41,7 +41,7 @@ async def load_token_transfer(
         return
         
     if transfer := await db.get_token_transfer(transfer_log):
-        elif load_prices and transfer.price is None:
+        if load_prices and transfer.price is None:
             await db.delete_token_transfer(transfer)
         else:
             return transfer
