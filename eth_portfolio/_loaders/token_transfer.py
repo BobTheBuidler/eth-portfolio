@@ -71,8 +71,6 @@ async def load_token_transfer(
             'log': transfer_log,
             'transaction_index': transaction_index,
             'token': symbol,
-            'from_address': str(sender),
-            'to_address': str(receiver),
             'value': value,
         }
         
