@@ -70,30 +70,38 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
             prev_block_nonce = await get_nonce_at_block(address, lo - 1)
             if prev_block_nonce < nonce:
                 logger.debug(f"Found nonce {nonce} at block {lo}")
-                _tx = await get_transaction_by_nonce_and_block(address, nonce, lo)
-                if _tx is None:
+                tx = await get_transaction_by_nonce_and_block(address, nonce, lo)
+                if tx is None:
                     return nonce, None
                                     
-                tx = dict(_tx)
-                tx['chainid'] = int(tx.pop('chainId')) if 'chainId' in tx else chain.id
-                tx['block_hash'] = tx.pop('blockHash').hex()
-                tx['hash'] = _tx.hash.hex()
-                tx['from_address'] = tx.pop('sender')
-                tx['to_address'] = tx.pop('to')
-                tx['value'] = _tx.value
-                tx['type'] = int(_tx.type, 16) if "type" in tx else None
-                tx['r'] = _tx.r.hex()
-                tx['s'] = _tx.s.hex()
+                params = {
+                    'chainid': int(tx.chainId) if tx.chainId else chain.id
+                    'block_hash': tx.blockHash.hex()
+                    'hash': tx.hash.hex()
+                    'from_address': tx.sender
+                    'to_address': tx.to
+                    'value': tx.value
+                    'type': int(tx.type, 16) if tx.type else None
+                    'r': tx.r.hex()
+                    's': tx.s.hex()
+                }
+                
+                if tx.accessList is not None:
+                    params['access_list'] = tx.accessList
+                    
                 if load_prices:
-                    price = Decimal(await get_price(EEE_ADDRESS, block = _tx.blockNumber, sync=False))
-                    tx['price'] = round(price, 18)
-                    tx['value_usd'] = round(_tx.value * price, 18)
-                if (access_list := tx.pop('accessList', None)) is not None:
-                    tx['access_list'] = access_list
+                    block = tx.blockNumber
+                    value = tx.value
+                    del tx  # we dont need to maintain this reference while we fetch the price
+                    price = Decimal(await get_price(EEE_ADDRESS, block = block, sync=False))
+                    params['price'] = round(price, 18)
+                    params['value_usd'] = round(value * price, 18)
+                    
                 try:
-                    transaction = structs.Transaction(**{underscore(k): v for k, v in tx.items()})
+                    transaction = structs.Transaction(**params)})
                 except TypeError as e:
                     raise TypeError(str(e), tx) from e
+                    
                 try:
                     await db.insert_transaction(transaction)
                 except TransactionIntegrityError:
@@ -101,9 +109,11 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                         await db.delete_transaction(transaction)
                         await db.insert_transaction(transaction)
                 return nonce, transaction
+
             hi = lo
             lo = int(lo / 2)
             logger.debug(f"Nonce at {hi} is {_nonce}, checking lower block {lo}")
+
 
 @eth_retry.auto_retry
 @stuck_coro_debugger
