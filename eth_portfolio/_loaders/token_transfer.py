@@ -41,10 +41,9 @@ async def load_token_transfer(
         return
         
     if transfer := await db.get_token_transfer(transfer_log):
-        if load_prices and transfer.price is None:
-            await db.delete_token_transfer(transfer)
-        else:
+        if load_prices is False or transfer.price:
             return transfer
+        await db.delete_token_transfer(transfer)
     
     async with token_transfer_semaphore[transfer_log.block]:
         decoded = await _decode_token_transfer(transfer_log)
