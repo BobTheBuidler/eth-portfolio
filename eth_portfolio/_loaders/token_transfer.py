@@ -57,7 +57,7 @@ async def load_token_transfer(
         
         coros = {
             'scale': token.scale, 
-            'symbol': get_symbol(token), 
+            'token': get_symbol(token), 
             'transaction_index': get_transaction_index(decoded.transaction_hash),
         }
 
