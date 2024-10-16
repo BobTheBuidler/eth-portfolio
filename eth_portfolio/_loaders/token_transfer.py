@@ -1,7 +1,7 @@
 
 import logging
 from decimal import Decimal
-from typing import  Optional, Union
+from typing import TYPE_CHECKING, Optional, Union
 
 import a_sync
 import dank_mids
