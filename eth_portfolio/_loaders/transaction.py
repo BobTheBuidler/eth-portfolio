@@ -73,23 +73,21 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                 _tx = await get_transaction_by_nonce_and_block(address, nonce, lo)
                 if _tx is None:
                     return nonce, None
-                    
-                value = Decimal(_tx.value) / 10**18
-                
+                                    
                 tx = dict(_tx)
                 tx['chainid'] = int(tx.pop('chainId')) if 'chainId' in tx else chain.id
                 tx['block_hash'] = tx.pop('blockHash').hex()
                 tx['hash'] = _tx.hash.hex()
                 tx['from_address'] = tx.pop('sender')
                 tx['to_address'] = tx.pop('to')
-                tx['value'] = value
+                tx['value'] = _tx.value
                 tx['type'] = int(_tx.type, 16) if "type" in tx else None
                 tx['r'] = _tx.r.hex()
                 tx['s'] = _tx.s.hex()
                 if load_prices:
                     price = Decimal(await get_price(EEE_ADDRESS, block = _tx.blockNumber, sync=False))
                     tx['price'] = round(price, 18)
-                    tx['value_usd'] = round(value * price, 18)
+                    tx['value_usd'] = round(_tx.value * price, 18)
                 if (access_list := tx.pop('accessList', None)) is not None:
                     tx['access_list'] = access_list
                 try:
