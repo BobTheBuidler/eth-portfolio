@@ -54,34 +54,6 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
         """
         return self.__evm_object.transactionIndex
     
-    @property
-    def hash(self) -> str:
-        """
-        The unique transaction hash.
-        """
-        return self.__evm_object.hash
-    
-    @property
-    def from_address(self) -> Optional[str]:
-        """
-        The address from which the {cls_name} was sent, if applicable.
-        """
-        return self.__evm_object.sender
-    
-    @property
-    def value(self) -> Decimal:
-        """
-        The value/amount of cryptocurrency transferred in the {cls_name}.
-        """
-        return self.__evm_object.value
-    
-    @property
-    def to_address(self) -> Optional[str]:
-        """
-        The address to which the {cls_name} was sent, if applicable.
-        """
-        return self.__evm_object.to
-    
     price: Optional[Decimal] = None
     """
     The price of the cryptocurrency at the time of the {cls_name}, if known.
@@ -142,6 +114,13 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=Tru
     """
 
     transaction: DankTransaction
+    
+    @property
+    def hash(self) -> HexBytes:
+        """
+        The unique transaction hash.
+        """
+        return self.transaction.hash
 
     @property
     def block_hash(self) -> HexBytes:
