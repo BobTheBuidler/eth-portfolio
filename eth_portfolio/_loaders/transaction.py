@@ -73,10 +73,10 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                 if _tx is None:
                     return nonce, None
                 tx = dict(_tx)
-                tx['chainid'] = int(tx.pop('chainId'), 16) if 'chainId' in tx else chain.id
+                tx['chainid'] = int(tx.pop('chainId')) if 'chainId' in tx else chain.id
                 tx['block_hash'] = tx.pop('blockHash').hex()
                 tx['hash'] = _tx.hash.hex()
-                tx['from_address'] = tx.pop('from')
+                tx['from_address'] = tx.pop('sender')
                 tx['to_address'] = tx.pop('to')
                 tx['value'] = Decimal(_tx.value) / 10**18
                 tx['type'] = int(_tx.type, 16) if "type" in tx else None
