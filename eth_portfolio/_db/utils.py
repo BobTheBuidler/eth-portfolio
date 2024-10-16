@@ -12,6 +12,7 @@ from brownie import chain
 from msgspec import json
 from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush, select
+from y._db.common import enc_hook
 
 from eth_portfolio._db import entities
 from eth_portfolio._db.decorators import (break_locks,
@@ -269,14 +270,9 @@ def _insert_transaction(transaction: Transaction) -> None:
         gas_price = transaction.gas_price,
         max_fee_per_gas = transaction.max_fee_per_gas, 
         max_priority_fee_per_gas = transaction.max_priority_fee_per_gas,
-        raw = json.encode(transaction, enc_hook=_encode_hook),    
+        raw = json.encode(transaction, enc_hook=enc_hook),    
     )
 
-def _encode_hook(obj: Any) -> Any:
-    typ = type(obj)
-    if issubclass(typ, int):
-        return int(obj)
-    raise TypeError(typ)
     
 @a_sync(default='async')
 @robust_db_session
@@ -352,7 +348,7 @@ def _insert_internal_transfer(transfer: InternalTransfer) -> None:
         gas = transfer.gas,
         gas_used = transfer.gas_used,
         address = (chain.id, transfer.address),
-        raw = json.encode(transfer, enc_hook=_encode_hook),
+        raw = json.encode(transfer, enc_hook=enc_hook),
     )
     
 @a_sync(default='async')
@@ -441,7 +437,7 @@ def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
             value = token_transfer.value,
             price = token_transfer.price,
             value_usd = token_transfer.value_usd,
-            raw = json.encode(token_transfer, enc_hook=_encode_hook),
+            raw = json.encode(token_transfer, enc_hook=enc_hook),
         )
         commit()
     except Exception as e:
