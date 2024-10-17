@@ -129,8 +129,9 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
 
         if (tx_type := type(transaction)) in _types_mapping:
             new_type = _types_mapping[tx_type]
+            init_kwargs = {key: getattr(transaction, key) for key in transaction.__struct_fields__}
             try:
-                return cls(transaction=new_type(**transaction), price=price, value_usd=value_usd)
+                return cls(transaction=new_type(**init_kwargs), price=price, value_usd=value_usd)
             except TypeError as e:  # NOTE keep this around later to help in case new fields are added
                 raise TypeError(*e.args, new_type.__qualname__, {**transaction}) from e
             
