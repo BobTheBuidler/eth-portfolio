@@ -208,11 +208,11 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
         return self.transaction.to
 
     @property
-    def value(self) -> int:
+    def value(self) -> Decimal:
         """
         The value/amount of cryptocurrency transferred in the transaction.
         """
-        return self.transaction.value
+        return self.transaction.value_scaled
 
     @property
     def gas(self) -> int:
