@@ -231,7 +231,7 @@ def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
         from_address = (chain.id, sender),
         nonce = nonce
     ):
-        return json.decode(entity.raw, type=Transaction)
+        return json.decode(entity.raw, type=Transaction, dec_hook=_decode_hook)
     
     
 @a_sync(default='async')
@@ -298,7 +298,7 @@ def get_internal_transfer(trace: dank_mids.structs.FilterTrace) -> Optional[Inte
         subtraces = trace.subtraces,
         address = (chain.id, trace.address),
     ):
-        return json.decode(entity.raw, type=InternalTransfer)
+        return json.decode(entity.raw, type=InternalTransfer, dec_hook=_decode_hook)
     
 @a_sync(default='async')
 @robust_db_session
@@ -362,10 +362,10 @@ def get_token_transfer(transfer: dank_mids.structs.Log) -> Optional[TokenTransfe
         "log_index": transfer.logIndex,
     }
     if obj := token_transfers_known_at_startup().get(tuple(pk.values())):
-        return json.decode(obj, type=TokenTransfer)
+        return json.decode(obj, type=TokenTransfer, dec_hook=_decode_hook)
     entity: entities.TokenTransfer
     if entity := entities.TokenTransfer.get(**pk):
-        return json.decode(entity.raw, type=TokenTransfer)
+        return json.decode(entity.raw, type=TokenTransfer, dec_hook=_decode_hook)
 
 _TPK = Tuple[Tuple[int, str], int]
 
