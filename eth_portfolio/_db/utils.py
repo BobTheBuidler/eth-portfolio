@@ -8,6 +8,7 @@ import dank_mids
 import y._db.config as config
 from a_sync import a_sync
 from brownie import chain
+from dank_mids.structs.data import _decode_hook
 from msgspec import ValidationError, json
 from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush, select
@@ -217,18 +218,14 @@ def get_token(address: str) -> entities.TokenExtended:
 @a_sync_write_db_session_cached
 def ensure_token(token_address: str) -> None:
     get_token(token_address, sync=True)
-    
+
 @a_sync(default='async')
 @robust_db_session
 def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
     transactions = transactions_known_at_startup()
     pk = ((chain.id, sender), nonce)
     if pk in transactions:
-        try:
-            return json.decode(transactions[pk], type=Transaction)
-        except ValidationError as e:
-            e.args = (*e.args, json.decode(transactions[pk]))
-            raise
+        return json.decode(transactions[pk], type=Transaction, dec_hook=_decode_hook)
     entity: entities.Transaction
     if entity := entities.Transaction.get(
         from_address = (chain.id, sender),
