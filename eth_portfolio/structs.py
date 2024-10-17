@@ -7,7 +7,7 @@ The classes are designed to provide a consistent and flexible interface for work
 import logging
 from decimal import Decimal
 from functools import cached_property
-from typing import TYPE_CHECKING, ClassVar, List, Literal, Optional, Tuple, TypeVar, Union, final
+from typing import TYPE_CHECKING, Any, ClassVar, Dict, List, Literal, Optional, Tuple, TypeVar, Union, final
 
 from brownie import chain
 from dank_mids.structs import DictStruct, FilterTrace
@@ -16,6 +16,7 @@ from dank_mids.structs.data import Address, checksum
 from dank_mids.structs.trace import Type
 from dank_mids.structs.transaction import AccessListEntry
 from hexbytes import HexBytes
+from msgspec import Struct
 from y import Network
 from y.datatypes import Block
 
@@ -95,6 +96,17 @@ _types_mapping = {
     Transaction1559: ArrayEncodableTransaction1559,
 }
 
+
+def _get_init_kwargs(original_struct: Struct) -> Dict[str, Any]:
+    kwargs = {}
+    for key in original_struct.__struct_fields__:
+        try:
+            kwargs[key] = getattr(original_struct, key)
+        except AttributeError:
+            continue
+    return kwargs
+    
+
 @final
 class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True, dict=True):
     """
@@ -126,16 +138,18 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
         price: Optional[Decimal] = None, 
         value_usd: Optional[Decimal] = None,
     ) -> "Transaction":
-
-        if (tx_type := type(transaction)) in _types_mapping:
-            new_type = _types_mapping[tx_type]
-            init_kwargs = {key: getattr(transaction, key) for key in transaction.__struct_fields__}
-            try:
-                return cls(transaction=new_type(**init_kwargs), price=price, value_usd=value_usd)
-            except TypeError as e:  # NOTE keep this around later to help in case new fields are added
-                raise TypeError(*e.args, new_type.__qualname__, {**transaction}) from e
-            
-        raise TypeError(type(transaction), transaction)
+        try:
+            new_type = _types_mapping[type(transaction)]
+        except KeyError as e:
+            raise TypeError(type(transaction), transaction) from e
+        try:
+            return cls(
+                transaction=new_type(**_get_init_kwargs(transaction)), 
+                price=price, 
+                value_usd=value_usd,
+            )
+        except TypeError as e:  # NOTE keep this around later to help in case new fields are added
+            raise TypeError(*e.args, new_type.__qualname__, {**transaction}) from e
 
     transaction: ArrayEncodableTransaction
     """
@@ -295,7 +309,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
 
     @classmethod
     def from_trace(cls, trace: FilterTrace, price: Optional[Decimal] = None, value_usd: Optional[Decimal] = None) -> "InternalTransfer":
-        return cls(trace=ArrayEncodableFilterTrace(**trace), price=price, value_usd=value_usd)
+        return cls(trace=ArrayEncodableFilterTrace(**_get_init_kwargs(trace)), price=price, value_usd=value_usd)
 
     entry_type: ClassVar[Literal['internal_transfer']] = 'internal_transfer'
     """
