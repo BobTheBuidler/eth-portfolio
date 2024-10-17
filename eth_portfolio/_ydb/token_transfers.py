@@ -6,8 +6,8 @@ from typing import AsyncIterator, List
 
 import a_sync
 from brownie import chain
+from brownie.network.event import _EventItem
 from eth_utils import encode_hex
-from web3.types import LogReceipt
 from y.datatypes import Address
 from y.utils.events import ProcessedEvents
 
@@ -44,7 +44,9 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
             logger.debug("yielding %s at block %s [thru: %s, lock: %s]", task, task.block, block, self._lock.value)
             yield task
         logger.debug("%s yield thru %s complete", self, block)
-    async def _extend(self, objs: List[LogReceipt]) -> None:
+    def _include_event(self, event: _EventItem) -> bool:
+        return event.address not in SHITCOINS.get(chain.id, [])
+    async def _extend(self, objs: List[_EventItem]) -> None:
         for log in objs:
             task = asyncio.create_task(
                 coro=_loaders.load_token_transfer(log, self._load_prices), 

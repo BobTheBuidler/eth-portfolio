@@ -3,8 +3,9 @@ import logging
 from contextlib import suppress
 from decimal import Decimal
 from functools import lru_cache
-from typing import Dict, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 
+import dank_mids
 import y._db.config as config
 from a_sync import a_sync
 from brownie import chain
@@ -256,7 +257,7 @@ def _insert_transaction(transaction: Transaction) -> None:
     entities.Transaction(
         block = (chain.id, transaction.block_number),
         transaction_index = transaction.transaction_index,
-        hash = transaction.hash,
+        hash = transaction.hash.hex(),
         nonce = transaction.nonce,
         from_address = (chain.id, transaction.from_address),
         to_address = (chain.id, transaction.to_address) if transaction.to_address else None,
@@ -268,36 +269,36 @@ def _insert_transaction(transaction: Transaction) -> None:
         gas_price = transaction.gas_price,
         max_fee_per_gas = transaction.max_fee_per_gas, 
         max_priority_fee_per_gas = transaction.max_priority_fee_per_gas,
-        input = transaction.input,
-        r = transaction.r,
-        s = transaction.s,
-        v = transaction.v,
-        access_list = json.encode(transaction.access_list) if transaction.access_list else None,
-        raw = json.encode(transaction),    
+        raw = json.encode(transaction, enc_hook=_encode_hook),    
     )
-    
+
+def _encode_hook(obj: Any) -> Any:
+    typ = type(obj)
+    if issubclass(typ, int):
+        return int(obj)
+    raise TypeError(typ)
     
 @a_sync(default='async')
 @robust_db_session
-def get_internal_transfer(trace: dict) -> Optional[InternalTransfer]:
-    block = trace['blockNumber']
+def get_internal_transfer(trace: dank_mids.structs.FilterTrace) -> Optional[InternalTransfer]:
+    block = trace.blockNumber
     entity: entities.InternalTransfer
     if entity := entities.InternalTransfer.get(
         block = (chain.id, block),
-        transaction_index = trace['transactionPosition'],
-        hash = trace['transactionHash'],
-        type = trace['type'],
-        call_type = trace['call_type'],
-        from_address = (chain.id, trace['from']),
-        to_address = (chain.id, trace['to']),
-        value = Decimal(int(trace['value'], 16)) / Decimal(10**18),
-        trace_address = (chain.id, trace['trace_address']),
-        gas = int(trace['gas'], 16),
-        gas_used = int(trace['gas_used'], 16) if 'gas_used' in trace else None,
-        input = trace['input'],
-        output = trace['output'],
-        subtraces = trace['subtraces'],
-        address = (chain.id, trace['address']),
+        transaction_index = trace.transactionPosition,
+        hash = trace.transactionHash,
+        type = trace.type,
+        call_type = trace.callType,
+        from_address = (chain.id, trace.sender),
+        to_address = (chain.id, trace.to),
+        value = trace.value_scaled,
+        trace_address = (chain.id, trace.traceAddress),
+        gas = trace.gas,
+        gas_used = trace.gasUsed if 'gasUsed' in trace else None,
+        input = trace.input,
+        output = trace.output,
+        subtraces = trace.subtraces,
+        address = (chain.id, trace.address),
     ):
         return json.decode(entity.raw, type=InternalTransfer)
     
@@ -350,26 +351,23 @@ def _insert_internal_transfer(transfer: InternalTransfer) -> None:
         trace_address = (chain.id, transfer.trace_address),
         gas = transfer.gas,
         gas_used = transfer.gas_used,
-        input = transfer.input,
-        output = transfer.output,
-        subtraces = transfer.subtraces,
         address = (chain.id, transfer.address),
-        raw = json.encode(transfer),
+        raw = json.encode(transfer, enc_hook=_encode_hook),
     )
     
 @a_sync(default='async')
 @robust_db_session
-def get_token_transfer(transfer_log: dict) -> Optional[TokenTransfer]:
-    block = transfer_log["blockNumber"]
+def get_token_transfer(transfer: dank_mids.structs.Log) -> Optional[TokenTransfer]:
+    block = transfer.block_number
     transfers = token_transfers_known_at_startup()
-    pk = ((chain.id, block), transfer_log["transactionIndex"], transfer_log["logIndex"])
+    pk = ((chain.id, block), transfer.transaction_index, transfer.log_index)
     if pk in transfers:
         return json.decode(transfers[pk], type=TokenTransfer)
     entity: entities.TokenTransfer
     if entity := entities.TokenTransfer.get(
         block = (chain.id, block), 
-        transaction_index = transfer_log["transactionIndex"],
-        log_index = transfer_log["logIndex"],
+        transaction_index = transfer.transaction_index,
+        log_index = transfer.log_index,
     ):
         return json.decode(entity.raw, type=TokenTransfer)
 
@@ -443,7 +441,7 @@ def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
             value = token_transfer.value,
             price = token_transfer.price,
             value_usd = token_transfer.value_usd,
-            raw = json.encode(token_transfer),
+            raw = json.encode(token_transfer, enc_hook=_encode_hook),
         )
         commit()
     except Exception as e:

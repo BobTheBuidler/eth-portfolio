@@ -20,6 +20,10 @@ from typing import (TYPE_CHECKING, AsyncGenerator, AsyncIterator, Generic, List,
 import a_sync
 import dank_mids
 import eth_retry
+from async_lru import alru_cache
+from dank_mids.eth import TraceFilterParams
+from dank_mids.structs import FilterTrace
+from dank_mids.structs.trace import Type as TxType
 from pandas import DataFrame  # type: ignore
 from y import ERC20
 from y._decorators import stuck_coro_debugger
@@ -39,11 +43,6 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
-class BadResponse(Exception):
-    """
-    Exception raised for errors in the response from the web3 provider.
-    """
-
 
 T = TypeVar('T')
 
@@ -56,15 +55,16 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
     """
     __slots__ = "address", "asynchronous", "cached_from", "cached_thru", "load_prices", "objects", "portfolio_address", "_lock"
     def __init__(self, portfolio_address: "PortfolioAddress") -> None:
-
-        # TODO replace the following line with an abc implementation.
-        # assert isinstance(portfolio_address, PortfolioAddress), f"address must be a PortfolioAddress. try passing in PortfolioAddress({portfolio_address}) instead."
         """
         Initializes the AddressLedgerBase instance.
 
         Args:
             portfolio_address: The :class:`~eth_portfolio.address.PortfolioAddress` this ledger belongs to.
         """
+      
+        # TODO replace the following line with an abc implementation.
+        # assert isinstance(portfolio_address, PortfolioAddress), f"address must be a PortfolioAddress. try passing in PortfolioAddress({portfolio_address}) instead."
+      
       
         self.portfolio_address = portfolio_address
         """
@@ -292,11 +292,8 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
 
 class TransactionsList(PandableList[Transaction]):
     """
-    A list class for handling transaction entries and converting them to DataFrames.
+    A list subclass for transactions that can convert to a :class:`DataFrame`.
     """
-    def __init__(self):
-        super().__init__()
-    
     def _df(self) -> DataFrame:
         """
         Converts the list of transactions to a DataFrame.
@@ -382,35 +379,52 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     
 class InternalTransfersList(PandableList[InternalTransfer]):
     """
-    A list class for handling internal transfer entries.
+    A list subclass for internal transfer entries that can convert to a :class:`DataFrame`.
     """
-    pass
 
+
+trace_filter = a_sync.Semaphore(64, __name__ + ".trace_semaphore")(
+    eth_retry.auto_retry(dank_mids.eth.trace_filter)
+)
+
+get_transaction_status = alru_cache(maxsize=None)(dank_mids.eth.get_transaction_status)
 
 @cache_to_disk
-# we double stack these because high-volume wallets will likely need it
 @eth_retry.auto_retry
 @stuck_coro_debugger
-@a_sync.Semaphore(32, __name__ + ".trace_semaphore")
-@eth_retry.auto_retry
-async def get_traces(params: list) -> List[dict]:
+async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     """
     Retrieves traces from the web3 provider using the given parameters.
 
     Args:
-        params: The parameters for the trace filter.
+        filter_params: The parameters for the trace filter.
 
     Returns:
-        List[dict]: The list of traces.
-
-    Raises:
-        :class:`~eth_portfolio.BadResponse`: If the response from the web3 provider is invalid.
+        The list of traces.
     """
-    traces = await dank_mids.web3.provider.make_request("trace_filter", params)  # type: ignore [arg-type, misc]
-    if 'result' not in traces:
-        raise BadResponse(traces)
-    return [trace for trace in traces['result'] if "error" not in trace]
+    traces = []
+
+    check_status_tasks = a_sync.TaskMapping(get_transaction_status)
+  
+    for trace in await trace_filter(filter_params):
+        if "error" in trace:
+            continue
+          
+        # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
+        # that actually transmitted value to the singleton even though they appear to.
+        if trace.action.to == "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":  # Gnosis Safe Singleton 1.3.0
+            continue
+          
+        if trace.type != TxType.reward:
+            # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
+            check_status_tasks[trace.transactionHash]
+        
+        traces.append(trace)
+
+    # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
+    return [trace for trace in traces if trace.type == TxType.reward or await check_status_tasks[trace.transactionHash] == Status.success]
     
+
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
     """
     A ledger for managing internal transfer entries.
@@ -444,7 +458,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
         block_ranges = [[hex(i), hex(i + BATCH_SIZE - 1)] for i in range(start_block, end_block, BATCH_SIZE)]
         
         trace_filter_coros = [
-            get_traces([{direction: [self.address],"fromBlock": start, "toBlock": end}])
+            get_traces({direction: [self.address], "fromBlock": start, "toBlock": end})
             for direction, (start, end) in product(["toAddress", "fromAddress"], block_ranges)
         ]
 
@@ -475,9 +489,8 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
 
 class TokenTransfersList(PandableList[TokenTransfer]):
     """
-    A list class for handling token transfer entries.
+    A list subclass for token transfer entries that can convert to a :class:`DataFrame`.
     """
-    pass
   
 class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTransfer]):
     """

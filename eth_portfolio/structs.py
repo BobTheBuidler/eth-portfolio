@@ -6,59 +6,30 @@ The classes are designed to provide a consistent and flexible interface for work
 
 import logging
 from decimal import Decimal
+from functools import cached_property
 from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
 
+from dank_mids.structs import DictStruct, FilterTrace, Log
+from dank_mids.structs.transaction import Transaction1559, Transaction2930, TransactionLegacy
+from dank_mids.structs.data import Address, checksum
+from dank_mids.structs.trace import Type
+from dank_mids.structs.transaction import AccessListEntry
+from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
 from y.datatypes import Block
 
+
 logger = logging.getLogger(__name__)
 
-class _DictStruct(Struct):
-    """
-    A base class that extends the :class:`~msgspec.Struct` class to provide dictionary-like access to struct fields.
 
-    Allows iteration over the fields of a struct and provides a dictionary-like interface for retrieving values by field name.
+class Log(Log, frozen=True, kw_only=True, array_like=True):
+    ...
 
-    Example:
-        >>> class MyStruct(_DictStruct):
-        ...     field1: str
-        ...     field2: int
-        >>> s = MyStruct(field1="value", field2=42)
-        >>> list(s.keys())
-        ['field1', 'field2']
-        >>> s['field1']
-        'value'
-    """
-    
-    def keys(self) -> Iterator[str]:
-        """
-        Returns an iterator over the field names of the struct.
+ArrayEncodableLog = Log
 
-        Returns:
-            An iterator over the field names.
-        """
-        return iter(self.__struct_fields__)
 
-    def __getitem__(self, item: str) -> Any:
-        """
-        Retrieves the value of the specified field.
-
-        Args:
-            item: The name of the field to retrieve.
-        
-        Raises:
-            KeyError: If the provided key is not a member of the struct.
-
-        Returns:
-            The value of the specified field.
-        """
-        try:
-            return getattr(self, item)
-        except AttributeError:
-            raise KeyError(item) from None
-    
-class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
+class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
     """
     The :class:`~structs._LedgerEntryBase` class is a base class for ledger entries representing on-chain actions in a blockchain.
 
@@ -67,40 +38,29 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
     Extended by specific ledger entry types :class:`~structs.Transaction`, :class:`~structs.InternalTransfer`, and :class:`~structs.TokenTransfer`.
     """
 
-    chainid: Network
-    """
-    The network ID where the {cls_name} occurred.    
-    """
+    @property
+    def _evm_object(self) -> Union["Transaction", "InternalTransfer", "TokenTransfer"]:
+        """
+        The EVM object associated with {cls_name}, exactly as it was received from the RPC.
+        """
+        return getattr(self, self.entry_type)
     
-    block_number: Block
-    """
-    The block number where the {cls_name} was included.
-    """
+    @property
+    def chainid(self) -> Network:
+        """
+        The network ID where the {cls_name} occurred.    
+        """
+        try:
+            return Network(self._evm_object.chainId)
+        except AttributeError:
+            return Network(chain.id)
     
-    transaction_index: Optional[int] = None
-    """
-    The index of the transaction within its block, if applicable.
-    """
-    
-    hash: str
-    """
-    The unique transaction hash.
-    """
-    
-    from_address: Optional[str] = None
-    """
-    The address from which the {cls_name} was sent, if applicable.
-    """
-    
-    value: Decimal
-    """
-    The value/amount of cryptocurrency transferred in the {cls_name}.
-    """
-    
-    to_address: Optional[str] = None
-    """
-    The address to which the {cls_name} was sent, if applicable.
-    """
+    @property
+    def block_number(self) -> Block:
+        """
+        The block number where the {cls_name} was included.
+        """
+        return self._evm_object.block
     
     price: Optional[Decimal] = None
     """
@@ -121,35 +81,25 @@ class _LedgerEntryBase(_DictStruct, kw_only=True, frozen=True):
                 attr.__doc__ = attr.__doc__.replace("{cls_name}", cls.__name__)
 
 
-class AccessListEntry(Struct, frozen=True):
-    """
-    The :class:`~structs.AccessListEntry` class represents an entry in an Ethereum transaction access list.
 
-    Access lists are used in EIP-2930 and EIP-1559 transactions to specify storage slots
-    that the transaction plans to access, potentially reducing gas costs.
-
-    Example:
-        >>> entry = AccessListEntry(
-        ...     address="0x742d35Cc6634C0532925a3b844Bc454e4438f44e", 
-        ...     storage_keys=(b'key1', b'key2')
-        ... )
-        >>> entry.address
-        '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'
-        >>> len(entry.storage_keys)
-        2
-    """
-
-    address: str
-    """
-    The Ethereum address of the contract whose storage is being accessed.
-    """
+class ArrayEncodableTransactionLegacy(TransactionLegacy, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):
+    ...
     
-    storage_keys: Tuple[bytes, ...]
-    """
-    The specific storage slot keys within the contract that will be accessed.
-    """
+class ArrayEncodableTransaction2930(Transaction2930, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):
+    ...
     
-class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
+class ArrayEncodableTransaction1559(Transaction1559, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):
+    ...
+    
+ArrayEncodableTransaction = Union[ArrayEncodableTransactionLegacy, ArrayEncodableTransaction2930, ArrayEncodableTransaction1559]
+
+_types_mapping = {
+    TransactionLegacy: ArrayEncodableTransactionLegacy,
+    Transaction2930: ArrayEncodableTransaction2930,
+    Transaction1559: ArrayEncodableTransaction1559,
+}
+
+class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True, dict=True):
     """
     The :class:`~structs.Transaction` class represents a complete on-chain blockchain transaction.
 
@@ -157,25 +107,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     including gas parameters, signature components, and transaction-specific data.
 
     Example:
-        >>> tx = Transaction(
-        ...     chainid=Network.Mainnet,
-        ...     block_number=Block(15537393),
-        ...     hash="0x123...",
-        ...     from_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        ...     to_address="0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-        ...     value=Decimal("0.1"),
-        ...     block_hash="0xabc...",
-        ...     nonce=42,
-        ...     type=2,  # EIP-1559 transaction
-        ...     gas=21000,
-        ...     gas_price=20000000000,
-        ...     max_fee_per_gas=30000000000,
-        ...     max_priority_fee_per_gas=1000000000,
-        ...     input="0x",
-        ...     r="0x123...",
-        ...     s="0x456...",
-        ...     v=27
-        ... )
+        >>> tx = Transaction(tx=ArrayEncodableTransaction1559(...))
         >>> tx.chainid
         Network.Mainnet
         >>> tx.type
@@ -188,75 +120,160 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True):
     """
     Constant indicating this value transfer is an on-chain transaction entry.
     """
-    
-    block_hash: str
+
+    @classmethod
+    def from_rpc_response(
+        cls, 
+        transaction: Union[TransactionLegacy, Transaction2930, Transaction1559], 
+        *,
+        price: Optional[Decimal] = None, 
+        value_usd: Optional[Decimal] = None,
+    ) -> "Transaction":
+
+        if (tx_type := type(transaction)) in _types_mapping:
+            new_type = types[tx_type]
+            return cls(transaction=new_type(**transaction), price=price, value_usd=value_usd)
+            
+        raise TypeError(type(transaction), transaction)
+
+    transaction: ArrayEncodableTransaction
     """
-    The hash of the block that includes this Transaction.
-    """
-    
-    nonce: int
-    """
-    The sender's transaction count at the time of this Transaction.
-    """
-    
-    type: Optional[int]
-    """
-    The transaction type (e.g., 0 for legacy, 1 for EIP-2930, 2 for EIP-1559).
-    None for chains that don't specify transaction types.
-    """
-    
-    gas: int
-    """
-    The maximum amount of gas the sender is willing to use for the Transaction.
-    """
-    
-    gas_price: int
-    """
-    The price per unit of gas the sender is willing to pay (for legacy and EIP-2930 transactions).
+    The transaction object received by calling eth_getTransactionByHash.
     """
     
-    max_fee_per_gas: Optional[int] = None
-    """
-    The maximum total fee per gas the sender is willing to pay (for EIP-1559 transactions).
-    """
+    @property
+    def hash(self) -> HexBytes:
+        """
+        The unique transaction hash.
+        """
+        return self.transaction.hash
+
+    @property
+    def block_hash(self) -> HexBytes:
+        """
+        The hash of the block that includes this Transaction.
+        """
+        return self.transaction.blockHash
     
-    max_priority_fee_per_gas: Optional[int] = None
-    """
-    The maximum priority fee per gas the sender is willing to pay (for EIP-1559 transactions).
-    """
+    @property
+    def transaction_index(self) -> Optional[int]:
+        """
+        The index of the transaction within its block, if applicable.
+        """
+        return self.transaction.transactionIndex
     
-    input: str
-    """
-    The data payload sent with the Transaction, often used for contract interactions.
-    """
+    @property
+    def nonce(self) -> int:
+        """
+        The sender's transaction count at the time of this Transaction.
+        """
+        return self.transaction.nonce
+
+    @cached_property
+    def type(self) -> Optional[int]:
+        """
+        The transaction type (e.g., 0 for legacy, 1 for EIP-2930, 2 for EIP-1559).
+        None for chains that don't specify transaction types.
+        """
+        typ = self.transaction.type
+        return None if typ is None else int(typ, 16)
+
+    @property
+    def from_address(self) -> Optional[Address]:
+        """
+        The address from which the transaction was sent, if applicable.
+        """
+        return self.transaction.sender
+
+    @property
+    def to_address(self) -> Optional[Address]:
+        """
+        The address to which the transaction was sent, if applicable.
+        """
+        return self.transaction.to
+
+    @property
+    def value(self) -> int:
+        """
+        The value/amount of cryptocurrency transferred in the transaction.
+        """
+        return self.transaction.value
+
+    @property
+    def gas(self) -> int:
+        """
+        The maximum amount of gas the sender is willing to use for the Transaction.
+        """
+        return self.transaction.gas
+
+    @property
+    def gas_price(self) -> int:
+        """
+        The price per unit of gas the sender is willing to pay (for legacy and EIP-2930 transactions).
+        """
+        return self.transaction.gasPrice
+
+    @property
+    def max_fee_per_gas(self) -> Optional[int]:
+        """
+        The maximum total fee per gas the sender is willing to pay (for EIP-1559 transactions only).
+        """
+        return self.transaction.maxFeePerGas
+
+    @property
+    def max_priority_fee_per_gas(self) -> Optional[int]:
+        """
+        The maximum priority fee per gas the sender is willing to pay (for EIP-1559 transactions only).
+        """
+        return self.transaction.maxPriorityFeePerGas
+
+    @property
+    def input(self) -> HexBytes:
+        """
+        The data payload sent with the Transaction, often used for contract interactions.
+        """
+        return self.transaction.input
     
-    r: str
-    """
-    The R component of the Transaction's ECDSA signature.
-    """
+    @property
+    def r(self) -> HexBytes:
+        """
+        The R component of the Transaction's ECDSA signature.
+        """
+        return self.transaction.r
     
-    s: str
-    """
-    The S component of the Transaction's ECDSA signature.
-    """
+    @property
+    def s(self) -> HexBytes:
+        """
+        The S component of the Transaction's ECDSA signature.
+        """
+        return self.transaction.s
     
-    v: int
-    """
-    The V component of the Transaction's ECDSA signature, used for replay protection.
-    """
+    @property
+    def v(self) -> int:
+        """
+        The V component of the Transaction's ECDSA signature, used for replay protection.
+        """
+        return self.transaction.v
     
-    access_list: Optional[Tuple[AccessListEntry, ...]] = None
-    """
-    List of addresses and storage keys the transaction plans to access (for EIP-2930 and EIP-1559 transactions).
-    """
+    @property
+    def access_list(self) -> Optional[Tuple[AccessListEntry, ...]]:
+        """
+        List of addresses and storage keys the transaction plans to access (for EIP-2930 and EIP-1559 transactions).
+        """
+        return self.transaction.accessList
     
-    y_parity: Optional[int] = None
-    """
-    The Y parity of the transaction signature, used in EIP-2718 typed transactions.
-    """
+    @property
+    def y_parity(self) -> Optional[int]:
+        """
+        The Y parity of the transaction signature, used in EIP-2718 typed transactions.
+        """
+        return self.transaction.yParity
 
 
-class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
+class ArrayEncodableFilterTrace(FilterTrace, frozen=True, kw_only=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):
+    ...
+    
+class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):
     """
     The :class:`~structs.InternalTransfer`class represents an internal transfer or call within a blockchain transaction.
 
@@ -266,21 +283,10 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
 
     Example:
         >>> internal_tx = InternalTransfer(
-        ...     chainid=Network.Mainnet,
-        ...     block_number=Block(15537393),
-        ...     hash="0x123...",
-        ...     from_address="0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-        ...     to_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        ...     value=Decimal("0"),
-        ...     block_hash="0xabc...",
+        ...     trace=ArrayEncodableFilterTrace(...),
         ...     type="call",
         ...     trace_address="0.1",
-        ...     gas=100000,
-        ...     gas_used=21000,
         ...     subtraces=1,
-        ...     call_type="call",
-        ...     input="0x123...",
-        ...     output="0x456..."
         ... )
         >>> internal_tx.type
         'call'
@@ -294,12 +300,57 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
     """
     Constant indicating this value transfer is an internal transfer or call entry.
     """
+
+    @property
+    def _evm_object(self) -> ArrayEncodableFilterTrace:
+        return self.trace
+        
+    trace: ArrayEncodableFilterTrace
+    """
+    The raw trace object associated with this internal transfer.
+    """
     
-    block_hash: str
+    block_hash: HexBytes
     """
     The hash of the block containing the transaction that includes this InternalTransfer.
     """
     
+    @property
+    def transaction_index(self) -> Optional[int]:
+        """
+        The index of the transaction within its block, if applicable.
+        """
+        return self.trace.transactionPosition
+        
+    @property
+    def hash(self) -> Optional[int]:
+        """
+        The unique hash of the transaction containing this internal transfer.
+        """
+        return f'{self.trace.action.rewardType.name} reward' if self.trace.type == Type.reward else self.trace.transactionHash
+
+    @property
+    def from_address(self) -> Address:
+        """
+        The address from which the internal transfer was sent, if applicable.
+        """
+        return self.trace.action.sender
+
+    @property
+    def to_address(self) -> Address:
+        """
+        The address to which the internal transfer was sent, if applicable.
+        """
+        # NOTE: for block reward transfers, the recipient is 'author'
+        return self.trace.action.author if self.trace.type == Type.reward else self.trace.action.to
+        
+    @property
+    def value(self) -> int:
+        """
+        The value/amount of cryptocurrency transferred in the internal transfer.
+        """
+        return self.trace.action.value
+        
     type: str
     """
     The type of internal operation (e.g., "call" for contract calls, "create" for contract creation,
@@ -313,53 +364,70 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
     of the first top-level call.
     """
     
-    gas: int
-    """
-    The amount of gas allocated for this internal operation.
-    """
+    @property
+    def gas(self) -> int:
+        """
+        The amount of gas allocated for this internal operation.
+        """
+        return 0 if self.trace.type == Type.reward else self.trace.action.gas
     
-    gas_used: Optional[int]
-    """
-    The amount of gas actually consumed by this internal operation, if known.
-    """
+    @property
+    def gas_used(self) -> int:
+        """
+        The amount of gas actually consumed by this internal operation, if known.
+        """
+        return self.trace.result.gasUsed
     
     subtraces: int
     """
     The number of sub-operations spawned by this InternalTransfer.
     """
     
-    call_type: Optional[str] = None
-    """
-    The type of call made in this InternalTransfer (e.g., "call", "delegatecall", "staticcall").
-    """
+    @property
+    def call_type(self) -> Optional[str]:
+        """
+        The type of call made in this InternalTransfer (e.g., "call", "delegatecall", "staticcall").
+        """
+        return trace.action.callType.name
     
-    input: Optional[str] = None
-    """
-    The input data for this internal operation, if any.
-    """
+    @property
+    def reward_type(self) -> Optional[str]:
+        """
+        The type of the reward, for reward transactions.
+        """
+        return trace.action.rewardType.name
+
+    @property
+    def input(self) -> HexBytes:
+        """
+        The input data for this internal operation, if any.
+        """
+        return self.trace.action.input
     
-    output: Optional[str] = None
-    """
-    The output data from this internal operation, if any.
-    """
+    @property
+    def output(self) -> HexBytes:
+        """
+        The output data from this internal operation, if any.
+        """
+        return self.trace.result.output
     
-    init: Optional[str] = None
+    init: Optional[HexBytes]
     """
     The initialization code for contract creation, if this is a create operation.
     """
     
-    address: Optional[str] = None
+    address: Optional[HexBytes]
     """
     The address of the account or contract involved in this InternalTransfer.
     """
     
-    code: Optional[str] = None
+    code: Optional[HexBytes]
     """
     The code of the contract involved in this InternalTransfer, if applicable.
     """
 
-
-class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
+    
+class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True):
     """
     The :class:`~structs.TokenTransfer` class represents a token transfer event within a blockchain transaction.
 
@@ -369,15 +437,9 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
 
     Example:
         >>> token_transfer = TokenTransfer(
-        ...     chainid=Network.Mainnet,
-        ...     block_number=Block(15537393),
-        ...     hash="0x123...",
-        ...     from_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        ...     to_address="0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+        ...     log=Log(...),
         ...     value=Decimal("1000000"),  # 1 USDC (assuming 6 decimals)
-        ...     log_index=3,
         ...     token="USDC",
-        ...     token_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
         ... )
         >>> token_transfer.token
         'USDC'
@@ -391,23 +453,53 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
     """
     Constant indicating this value transfer is a token transfer entry.
     """
+
+    log: ArrayEncodableLog
+    """
+    The log associated with this token transfer.
+    """
+
+    @property
+    def from_address(self) -> Address:
+        return checksum(self.log.topics[1][-20:])
+
+    @property
+    def to_address(self) -> Address:
+        return checksum(self.log.topics[2][-20:])
+
+    @property
+    def _evm_object(self) -> ArrayEncodableLog:
+        return self.log
+
+    transaction_index: int
     
-    log_index: int
-    """
-    The index of this transfer event within the transaction logs.
-    Used to uniquely identify the Transfer event associated with this TokenTransfer within the transaction.
-    """
+    @property
+    def log_index(self) -> int:
+        """
+        The index of this transfer event within the transaction logs.
+        Used to uniquely identify the Transfer event associated with this TokenTransfer within the transaction.
+        """
+        return self.log.logIndex
     
     token: Optional[str]
     """
-    The identifier or symbol of the token being transferred, if known.
+    The symbol of the token being transferred, if known.
     """
-    
-    token_address: str
-    """
-    The contract address of the token being transferred.
-    """
-    
+        
+    @property
+    def hash(self) -> HexBytes:
+        """
+        The unique hash of the transaction containing this token transfer.
+        """
+        return self.log.transactionHash
+
+    @property
+    def token_address(self) -> Address:
+        """
+        The contract address of the token being transferred.
+        """
+        return self.log.address
+
     value: Decimal
     """
     The amount of tokens transferred, scaled to a human-readable decimal value.
