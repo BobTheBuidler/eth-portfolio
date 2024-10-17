@@ -190,8 +190,8 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
         The transaction type (e.g., 0 for legacy, 1 for EIP-2930, 2 for EIP-1559).
         None for chains that don't specify transaction types.
         """
-        typ = self.transaction.type
-        return None if typ is None else int(typ, 16)
+        if typ := self.transaction.type:
+            return int(typ.hex(), 16)
 
     @property
     def from_address(self) -> Optional[Address]:
