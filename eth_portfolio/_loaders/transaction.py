@@ -67,18 +67,18 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
         if _nonce < nonce:
             old_lo = lo
             lo += int((hi - lo) / 2) or 1
-            logger.debug(f"Nonce at {old_lo} is {_nonce}, checking higher block {lo}")
+            logger.debug("Nonce at %s is %s, checking higher block %s", old_lo, _nonce, lo)
             continue
 
         prev_block_nonce = await get_nonce_at_block(address, lo - 1)
         if prev_block_nonce >= nonce:
             hi = lo
             lo = int(lo / 2)
-            logger.debug(f"Nonce at {hi} is {_nonce}, checking lower block {lo}")
+            logger.debug("Nonce at %s is %s, checking lower block %s", hi, _nonce, lo)
             continue
 
         
-        logger.debug(f"Found nonce {nonce} at block {lo}")
+        logger.debug("Found nonce %s at block %s", nonce, lo)
         tx = await get_transaction_by_nonce_and_block(address, nonce, lo)
         if tx is None:
             return nonce, None
