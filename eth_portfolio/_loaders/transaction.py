@@ -8,7 +8,6 @@ The primary focus of this module is to support eth-portfolio's internal operatio
 
 import logging
 from collections import defaultdict
-from decimal import Decimal
 from typing import DefaultDict, List, Optional, Tuple
 
 import a_sync
@@ -16,6 +15,7 @@ import dank_mids
 import eth_retry
 from async_lru import alru_cache
 from dank_mids.structs import Transaction as dankTransaction
+from dank_mids.structs.data import Decimal
 from pony.orm import TransactionIntegrityError
 from y import get_price
 from y._decorators import stuck_coro_debugger

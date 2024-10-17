@@ -1,8 +1,8 @@
 
 import asyncio
-from decimal import Decimal
 from typing import Optional
 
+from dank_mids.structs.data import Decimal
 from y import Contract, Network, dai
 from y.datatypes import Address, Block
 

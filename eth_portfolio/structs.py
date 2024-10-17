@@ -5,14 +5,13 @@ The classes are designed to provide a consistent and flexible interface for work
 """
 
 import logging
-from decimal import Decimal
 from functools import cached_property
 from typing import TYPE_CHECKING, Any, ClassVar, Dict, List, Literal, Optional, Tuple, TypeVar, Union, final
 
 from brownie import chain
 from dank_mids.structs import DictStruct, FilterTrace
 from dank_mids.structs.transaction import Transaction1559, Transaction2930, TransactionLegacy
-from dank_mids.structs.data import Address, checksum
+from dank_mids.structs.data import Address, Decimal, checksum
 from dank_mids.structs.trace import Type
 from dank_mids.structs.transaction import AccessListEntry
 from hexbytes import HexBytes

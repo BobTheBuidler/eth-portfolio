@@ -15,16 +15,10 @@ Key components:
 - Price loading for transferred value (optional)
 """
 
-from decimal import Decimal
-
-from brownie import chain
 from dank_mids.structs import FilterTrace
-from dank_mids.structs.trace import Type as TxType
 from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
 
-from eth_portfolio._cache import cache_to_disk
-from eth_portfolio._loaders.utils import get_transaction_receipt
 from eth_portfolio._utils import _get_price
 from eth_portfolio.structs import InternalTransfer
 

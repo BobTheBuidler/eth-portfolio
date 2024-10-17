@@ -1,8 +1,7 @@
 
-from decimal import Decimal
 from typing import Optional
 
-from brownie import chain
+from dank_mids.structs.data import Decimal
 from y import Contract, Network, get_price
 from y._decorators import stuck_coro_debugger
 from y.datatypes import Address, Block
