@@ -2,13 +2,13 @@ import asyncio
 import logging
 from contextlib import suppress
 from functools import lru_cache
-from typing import Any, Dict, Optional, Tuple
+from typing import Dict, Optional, Tuple
 
 import dank_mids
 import y._db.config as config
 from a_sync import a_sync
 from brownie import chain
-from msgspec import json
+from msgspec import ValidationError, json
 from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush, select
 from y._db.common import enc_hook
@@ -225,6 +225,9 @@ def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
     pk = ((chain.id, sender), nonce)
     if pk in transactions:
         return json.decode(transactions[pk], type=Transaction)
+        except ValidationError as e:
+            e.args = (*e.args, json.decode(transactions[pk]))
+            raise
     entity: entities.Transaction
     if entity := entities.Transaction.get(
         from_address = (chain.id, sender),
@@ -273,7 +276,7 @@ def _insert_transaction(transaction: Transaction) -> None:
         max_priority_fee_per_gas = getattr(transaction, 'max_priority_fee_per_gas', None),
         raw = encoded,    
     )
-    
+
 
 @a_sync(default='async')
 @robust_db_session
