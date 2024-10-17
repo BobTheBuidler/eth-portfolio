@@ -270,8 +270,8 @@ def _insert_transaction(transaction: Transaction) -> None:
         type = transaction.type,
         gas = transaction.gas,
         gas_price = transaction.gas_price,
-        max_fee_per_gas = transaction.max_fee_per_gas, 
-        max_priority_fee_per_gas = transaction.max_priority_fee_per_gas,
+        max_fee_per_gas = getattr(transaction, 'max_fee_per_gas', None)
+        max_priority_fee_per_gas = getattr(transaction, 'max_priority_fee_per_gas', None)
         raw = encoded,    
     )
 
