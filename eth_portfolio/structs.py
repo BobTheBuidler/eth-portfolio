@@ -207,11 +207,11 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
         return self.transaction.to
 
     @property
-    def value(self) -> int:
+    def value(self) -> Decimal:
         """
-        The value/amount of cryptocurrency transferred in the transaction.
+        The value/amount of cryptocurrency transferred in the transaction, scaled to a human-readable decimal value.
         """
-        return self.transaction.value
+        return self.transaction.value_scaled
 
     @property
     def gas(self) -> int:
@@ -361,11 +361,11 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         return self.trace.action.author if self.trace.type == Type.reward else self.trace.action.to
         
     @property
-    def value(self) -> int:
+    def value(self) -> Decimal:
         """
-        The value/amount of cryptocurrency transferred in the internal transfer.
+        The value/amount of cryptocurrency transferred in the internal transfer, scaled to a human-readable decimal value.
         """
-        return self.trace.action.value
+        return self.trace.action.value_scaled
         
     @property
     def type(self) -> Type:

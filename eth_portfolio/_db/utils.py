@@ -259,7 +259,7 @@ def _insert_transaction(transaction: Transaction) -> None:
     entities.Transaction(
         block = (chain.id, transaction.block_number),
         transaction_index = transaction.transaction_index,
-        hash = transaction.hash,
+        hash = transaction.hash.hex(),
         nonce = transaction.nonce,
         from_address = (chain.id, transaction.from_address),
         to_address = (chain.id, transaction.to_address) if transaction.to_address else None,
@@ -269,8 +269,8 @@ def _insert_transaction(transaction: Transaction) -> None:
         type = transaction.type,
         gas = transaction.gas,
         gas_price = transaction.gas_price,
-        max_fee_per_gas = transaction.max_fee_per_gas, 
-        max_priority_fee_per_gas = transaction.max_priority_fee_per_gas,
+        max_fee_per_gas = getattr(transaction, 'max_fee_per_gas', None),
+        max_priority_fee_per_gas = getattr(transaction, 'max_priority_fee_per_gas', None),
         raw = encoded,    
     )
 
