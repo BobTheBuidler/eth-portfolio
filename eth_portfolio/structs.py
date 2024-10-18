@@ -487,11 +487,11 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True
 
     @property
     def from_address(self) -> Address:
-        return checksum(self.log.topics[1][-20:])
+        return checksum(self.log.topic1[-20:])
 
     @property
     def to_address(self) -> Address:
-        return checksum(self.log.topics[2][-20:])
+        return checksum(self.log.topic2[-20:])
 
     @property
     def _evm_object(self) -> "ArrayEncodableLog":
