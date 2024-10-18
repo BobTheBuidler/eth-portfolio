@@ -211,7 +211,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
         """
         The value/amount of cryptocurrency transferred in the transaction, scaled to a human-readable decimal value.
         """
-        return self.transaction.value_scaled
+        return self.transaction.value.scaled
 
     @property
     def gas(self) -> int:
@@ -365,7 +365,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         """
         The value/amount of cryptocurrency transferred in the internal transfer, scaled to a human-readable decimal value.
         """
-        return self.trace.action.value_scaled
+        return self.trace.action.value.scaled
         
     @property
     def type(self) -> Type:
