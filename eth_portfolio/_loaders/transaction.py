@@ -15,7 +15,7 @@ import dank_mids
 import eth_retry
 from async_lru import alru_cache
 from dank_mids.structs import Transaction as dankTransaction
-from dank_mids.structs.data import Decimal
+from dank_mids.structs.data import Decimal, Wei
 from pony.orm import TransactionIntegrityError
 from y import get_price
 from y._decorators import stuck_coro_debugger
@@ -110,8 +110,10 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
             return nonce, None
             
         if load_prices:
+            # TODO: debug why `tx.value` isnt already a Wei obj
+            scaled = Wei(tx.value).scaled
             price = Decimal(await get_price(EEE_ADDRESS, block = tx.blockNumber, sync=False))
-            transaction = structs.Transaction.from_rpc_response(tx, price=round(price, 18), value_usd=round(tx.value.scaled * price, 18))
+            transaction = structs.Transaction.from_rpc_response(tx, price=round(price, 18), value_usd=round(scaled * price, 18))
         else:
             transaction = structs.Transaction.from_rpc_response(tx)
 
