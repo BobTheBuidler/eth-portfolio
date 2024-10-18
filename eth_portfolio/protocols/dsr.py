@@ -22,7 +22,8 @@ class MakerDSR(ProtocolABC):
             self.dsr_manager.pieOf.coroutine(address, block_identifier=block),
             self._exchange_rate(block),
         )
-        if dai_in_dsr := pie * exchange_rate / 10 ** 18:
+        if pie:
+            dai_in_dsr = pie * exchange_rate / 10 ** 18
             balances[dai] = Balance(dai_in_dsr, dai_in_dsr)
         return balances
     

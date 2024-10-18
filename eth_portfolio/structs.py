@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING, Any, ClassVar, Dict, List, Literal, Optional, 
 from brownie import chain
 from dank_mids.structs import DictStruct, FilterTrace
 from dank_mids.structs.transaction import Transaction1559, Transaction2930, TransactionLegacy
-from dank_mids.structs.data import Address, Decimal, checksum
+from dank_mids.structs.data import Address, Decimal, Wei, checksum
 from dank_mids.structs.trace import Type
 from dank_mids.structs.transaction import AccessListEntry
 from hexbytes import HexBytes
@@ -211,7 +211,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
         """
         The value/amount of cryptocurrency transferred in the transaction, scaled to a human-readable decimal value.
         """
-        return self.transaction.value.scaled
+        return Wei(self.transaction.value).scaled
 
     @property
     def gas(self) -> int:
