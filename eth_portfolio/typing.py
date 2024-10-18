@@ -25,8 +25,8 @@ without managing or altering any underlying assets.
 """
 
 from functools import cached_property
-from typing import (Any, DefaultDict, Dict, Iterable, List, Literal, Optional,
-                    Tuple, TypedDict, TypeVar, Union)
+from typing import (Any, Callable, DefaultDict, Dict, Iterable, List, Literal, 
+                    Optional, Tuple, TypedDict, TypeVar, Union)
 
 from checksum_dict import DefaultChecksumDict
 from dank_mids.structs import DictStruct
@@ -38,6 +38,8 @@ from y.datatypes import Address, Block
 _T = TypeVar('_T')
 _I = TypeVar('_I')
 _P = ParamSpec('_P')
+
+Fn = Callable[_P, _T]
 
 class Balance(DictStruct):
     """
