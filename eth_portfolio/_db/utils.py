@@ -354,17 +354,15 @@ def _insert_internal_transfer(transfer: InternalTransfer) -> None:
 @a_sync(default='async')
 @robust_db_session
 def get_token_transfer(transfer: dank_mids.structs.Log) -> Optional[TokenTransfer]:
-    block = transfer.block_number
-    transfers = token_transfers_known_at_startup()
-    pk = ((chain.id, block), transfer.transaction_index, transfer.log_index)
-    if pk in transfers:
-        return json.decode(transfers[pk], type=TokenTransfer)
+    pk = {
+        "block": (chain.id, transfer.block_number), 
+        "transaction_index": transfer.transactionIndex, 
+        "log_index": transfer.logIndex,
+    }
+    if obj := token_transfers_known_at_startup().get(tuple(pk.values())):
+        return json.decode(obj, type=TokenTransfer)
     entity: entities.TokenTransfer
-    if entity := entities.TokenTransfer.get(
-        block = (chain.id, block), 
-        transaction_index = transfer.transactionIndex,
-        log_index = transfer.logIndex,
-    ):
+    if entity := entities.TokenTransfer.get(**pk):
         return json.decode(entity.raw, type=TokenTransfer)
 
 _TPK = Tuple[Tuple[int, str], int]
