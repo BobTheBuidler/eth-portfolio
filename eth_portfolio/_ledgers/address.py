@@ -159,8 +159,9 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
                 if obj not in yielded:
                     yield obj
                     yielded.add(obj)
-            except TypeError as e:
-                raise TypeError(e, obj) from None
+            except Exception as e:
+                e.args = *e.args, obj
+                raise
         for obj in self.objects:
             block = obj.block_number
             if block < start_block:
