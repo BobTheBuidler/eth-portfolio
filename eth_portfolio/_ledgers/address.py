@@ -23,6 +23,7 @@ import eth_retry
 from async_lru import alru_cache
 from dank_mids.eth import TraceFilterParams
 from dank_mids.structs import FilterTrace
+from dank_mids.structs.data import Status
 from dank_mids.structs.trace import Type as TxType
 from pandas import DataFrame  # type: ignore
 from y import ERC20
@@ -236,7 +237,7 @@ class AddressLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledger
         Yields:
             AsyncIterator[T]: An async iterator of new ledger entries.
         """
-        yield
+        yield  # type: ignore [misc]
 
     def _check_blocks_against_cache(self, start_block: Block, end_block: Block) -> Tuple[Block, Block]:
         """
