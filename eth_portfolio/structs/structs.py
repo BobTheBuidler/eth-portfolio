@@ -137,7 +137,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
         except TypeError as e:  # NOTE keep this around later to help in case new fields are added
             raise TypeError(*e.args, new_type.__qualname__, {**transaction}) from e
 
-    transaction: dank_tx.Transaction
+    transaction: ModifiedTransaction
     """
     The transaction object received by calling eth_getTransactionByHash.
     """
