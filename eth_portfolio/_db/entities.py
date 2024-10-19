@@ -117,7 +117,6 @@ class InternalTransfer(db.Entity):
 
     @cached_property
     def decoded(self) -> structs.InternalTransfer:
-        from eth_portfolio import structs
         return json.decode(self.raw, type=structs.InternalTransfer)
 
     @property
@@ -164,6 +163,5 @@ class TokenTransfer(db.Entity):
 
     @cached_property
     def decoded(self) -> structs.TokenTransfer:
-        from eth_portfolio import structs
         return json.decode(self.raw, type=structs.TokenTransfer)
     
