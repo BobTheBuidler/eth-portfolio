@@ -388,17 +388,17 @@ trace_filter = a_sync.Semaphore(32, __name__ + ".trace_semaphore")(
 @cache_to_disk
 @eth_retry.auto_retry
 @stuck_coro_debugger
-async def get_traces(params: TraceFilterParams) -> List[FilterTrace]:
+async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     """
     Retrieves traces from the web3 provider using the given parameters.
 
     Args:
-        params: The parameters for the trace filter.
+        filter_params: The parameters for the trace filter.
 
     Returns:
         The list of traces.
     """
-    return [trace for trace in await trace_filter(params) if not trace.error]
+    return [trace for trace in await trace_filter(filter_params) if not trace.error]
     
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
     """
@@ -433,7 +433,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
         block_ranges = [[hex(i), hex(i + BATCH_SIZE - 1)] for i in range(start_block, end_block, BATCH_SIZE)]
         
         trace_filter_coros = [
-            get_traces([{direction: [self.address],"fromBlock": start, "toBlock": end}])
+            get_traces({direction: [self.address], "fromBlock": start, "toBlock": end})
             for direction, (start, end) in product(["toAddress", "fromAddress"], block_ranges)
         ]
 
