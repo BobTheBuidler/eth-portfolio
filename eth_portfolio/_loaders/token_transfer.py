@@ -32,13 +32,12 @@ token_transfer_semaphore = dank_mids.BlockSemaphore(10_000, name='eth_portfolio.
 async def load_token_transfer(
     transfer_log: "ArrayEncodableLog", 
     load_prices: bool,
-) -> Optional[TokenTransfer]:
-    raise Exception('here')
+) -> Optional[TokenTransfer]:  # sourcery skip: simplify-boolean-comparison
 
     if transfer_log.removed:
         if transfer := await db.get_token_transfer(transfer_log):
             await db.delete_token_transfer(transfer)
-        return
+        return None
         
     if transfer := await db.get_token_transfer(transfer_log):
         if load_prices is False or transfer.price:
@@ -156,7 +155,7 @@ _checks = [
 ]
 
 def _check_event(event: _EventItem) -> None:
-    if not all(key in keys for key, keys in zip(event.keys(), _checks)):
+    if any(key not in keys for key, keys in zip(event.keys(), _checks)):
         exc = NotImplementedError(*event.keys())
         logger.error(exc)
         raise exc

@@ -98,7 +98,7 @@ _to_raise = (
 async def _get_price(token: Address, block: Optional[int] = None) -> _Decimal:
     try:
         if await is_erc721(token):
-            return 0
+            return _Decimal(0)
         maybe_float = await get_price(token, block, silent=True, sync=False)
         dprice = _Decimal(maybe_float)
         return round(dprice, 18)
@@ -123,7 +123,7 @@ async def _get_price(token: Address, block: Optional[int] = None) -> _Decimal:
         #failsafe
         except:
             raise e
-    return Decimal(0)
+    return _Decimal(0)
 
 @alru_cache(maxsize=None)
 async def is_erc721(token: Address) -> bool:
@@ -164,9 +164,10 @@ def _get_protocols_for_submodule() -> List[type]:
         cls()
         for component in components
         for cls in get_class_defs_from_module(component)
-        if cls and not cls.__name__.startswith("_") and
-        not cls.__name__ == "Lending" and
-        (not hasattr(cls, 'networks') or chain.id in cls.networks)  # type: ignore
+        if cls
+        and not cls.__name__.startswith("_")
+        and cls.__name__ != "Lending"
+        and (not hasattr(cls, 'networks') or chain.id in cls.networks)
     ]
 
 def _import_submodules() -> Dict[str, ModuleType]:
