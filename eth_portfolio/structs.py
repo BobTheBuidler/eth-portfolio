@@ -8,7 +8,7 @@ import logging
 from decimal import Decimal
 from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
 
-from dank_mids.structs import DictStruct, Transaction as DankTransaction
+from dank_mids.structs import DictStruct, FilterTrace, Log, Transaction as DankTransaction
 from dank_mids.structs.transaction import AccessListEntry
 from msgspec import Struct
 from y import Network
@@ -24,6 +24,62 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
 
     Extended by specific ledger entry types :class:`~structs.Transaction`, :class:`~structs.InternalTransfer`, and :class:`~structs.TokenTransfer`.
     """
+
+    @property
+    def __evm_object(self) -> Union["Transaction", "InternalTransfer", "TokenTransfer"]:
+        """
+        The EVM object associated with {cls_name}, exactly as it was received from the RPC.
+        """
+        return getattr(self, self.entry_type)
+    
+    @property
+    def chainid(self) -> Network:
+        """
+        The network ID where the {cls_name} occurred.    
+        """
+        return Network(self.__evm_object.chainId)
+    
+    @property
+    def block_number(self) -> Block:
+        """
+        The block number where the {cls_name} was included.
+        """
+        return self.__evm_object.block
+    
+    @property
+    def transaction_index(self) -> Optional[int]:
+        """
+        The index of the transaction within its block, if applicable.
+        """
+        return self.__evm_object.transactionIndex
+    
+    @property
+    def hash(self) -> str:
+        """
+        The unique transaction hash.
+        """
+        return self.__evm_object.hash
+    
+    @property
+    def from_address(self) -> Optional[str]:
+        """
+        The address from which the {cls_name} was sent, if applicable.
+        """
+        return self.__evm_object.sender
+    
+    @property
+    def value(self) -> Decimal:
+        """
+        The value/amount of cryptocurrency transferred in the {cls_name}.
+        """
+        return self.__evm_object.value
+    
+    @property
+    def to_address(self) -> Optional[str]:
+        """
+        The address to which the {cls_name} was sent, if applicable.
+        """
+        return self.__evm_object.to
     
     price: Optional[Decimal] = None
     """
@@ -42,44 +98,6 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
         for key, attr in cls.__dict__.items():
             if attr.__doc__ and "{cls_name}" in attr.__doc__:
                 attr.__doc__ = attr.__doc__.replace("{cls_name}", cls.__name__)
-                
-
-class _BiggerBase(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
-
-    chainid: Network
-    """
-    The network ID where the {cls_name} occurred.    
-    """
-    
-    block_number: Block
-    """
-    The block number where the {cls_name} was included.
-    """
-    
-    transaction_index: Optional[int]
-    """
-    The index of the transaction within its block, if applicable.
-    """
-    
-    hash: str
-    """
-    The unique transaction hash.
-    """
-    
-    from_address: Optional[str]
-    """
-    The address from which the {cls_name} was sent, if applicable.
-    """
-    
-    value: Decimal
-    """
-    The value/amount of cryptocurrency transferred in the {cls_name}.
-    """
-    
-    to_address: Optional[str]
-    """
-    The address to which the {cls_name} was sent, if applicable.
-    """
 
     
 class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
@@ -122,35 +140,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=Tru
     Constant indicating this value transfer is an on-chain transaction entry.
     """
 
-    transaction: DankTransaction    
-
-    @property
-    def chainid(self) -> Network:
-        """
-        The network ID where the transaction occurred.    
-        """
-        return Network(self.transaction.chainId)
-    
-    @property
-    def block_number(self) -> Block:
-        """
-        The block number where the transaction was included.
-        """
-        return self.transaction.block
-    
-    @property
-    def transaction_index(self) -> Optional[int]:
-        """
-        The index of the transaction within its block, if applicable.
-        """
-        return self.transaction.transactionIndex
-    
-    @property
-    def hash(self) -> str:
-        """
-        The unique transaction hash.
-        """
-        return self.transaction.hash
+    transaction: DankTransaction
 
     @property
     def block_hash(self) -> HexBytes:
@@ -305,6 +295,8 @@ class InternalTransfer(_BiggerBase, kw_only=True, frozen=True, omit_defaults=Tru
     """
     Constant indicating this value transfer is an internal transfer or call entry.
     """
+
+    internal_transfer: FilterTrace
     
     block_hash: str
     """
@@ -370,7 +362,7 @@ class InternalTransfer(_BiggerBase, kw_only=True, frozen=True, omit_defaults=Tru
     """
 
 
-class TokenTransfer(_BiggerBase, kw_only=True, frozen=True):
+class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True):
     """
     The :class:`~structs.TokenTransfer` class represents a token transfer event within a blockchain transaction.
 
@@ -402,6 +394,8 @@ class TokenTransfer(_BiggerBase, kw_only=True, frozen=True):
     """
     Constant indicating this value transfer is a token transfer entry.
     """
+
+    token_transfer: Log
     
     log_index: int
     """
