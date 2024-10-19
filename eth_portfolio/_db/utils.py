@@ -234,24 +234,18 @@ def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
             e.args = (*e.args, json.decode(transactions[pk]))
             raise
     entity: entities.Transaction
-    if entity := entities.Transaction.get(
-        from_address = (chain.id, sender),
-        nonce = nonce
-    ):
+    if entity := entities.Transaction.get(from_address=pk[0], nonce=pk[1]):
         try:
             return json.decode(entity.raw, type=Transaction, dec_hook=_decode_hook)
         except Exception as e:
             e.args = (*e.args, json.decode(entity.raw))
             raise
     
-    
+
 @a_sync(default='async')
 @robust_db_session
 def delete_transaction(transaction: Transaction) -> None:
-    if entity := entities.Transaction.get(
-        from_address = (chain.id, transaction.from_address),
-        nonce = transaction.nonce,
-    ):
+    if entity := entities.Transaction.get(**transaction.__db_primary_key__):
         entity.delete()
     
 async def insert_transaction(transaction: Transaction) -> None:
@@ -269,11 +263,10 @@ def _insert_transaction(transaction: Transaction) -> None:
     encoded = json.encode(transaction, enc_hook=enc_hook)
     logger.warning(f"inserting {encoded}")
     entities.Transaction(
+        **transaction.__db_primary_key__,
         block = (chain.id, transaction.block_number),
         transaction_index = transaction.transaction_index,
         hash = transaction.hash.hex(),
-        nonce = transaction.nonce,
-        from_address = (chain.id, transaction.from_address),
         to_address = (chain.id, transaction.to_address) if transaction.to_address else None,
         value = transaction.value,
         price = transaction.price,

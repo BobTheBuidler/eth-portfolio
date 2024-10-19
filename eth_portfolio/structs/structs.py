@@ -270,6 +270,10 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
         """
         return self.transaction.yParity
 
+    @property
+    def __db_primary_key__(self):
+        return {"from_address": (chain.id, self.from_address), "nonce": self.nonce}
+
 
 @final
 class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):
