@@ -2,11 +2,10 @@
 from functools import lru_cache
 
 import a_sync
-import dank_mids
 import eth_retry
 import inflection
+import msgspec
 from async_lru import alru_cache
-from dank_mids.types import TransactionReceipt
 from dank_mids.structs.data import TransactionHash
 from eth_utils import to_checksum_address
 from y._decorators import stuck_coro_debugger
@@ -15,8 +14,8 @@ from y._decorators import stuck_coro_debugger
 @eth_retry.auto_retry
 @alru_cache(ttl=60*60)
 @stuck_coro_debugger
-async def _get_transaction_receipt(txhash: TransactionHash) -> TransactionReceipt:
-    return await txhash.get_receipt(txhash)
+async def _get_transaction_receipt(txhash: TransactionHash) -> msgspec.Raw:
+    return await txhash.get_receipt(txhash, decode_to=msgspec.Raw, decode_hook=None)
 
 get_transaction_receipt = a_sync.SmartProcessingQueue(
     _get_transaction_receipt, 

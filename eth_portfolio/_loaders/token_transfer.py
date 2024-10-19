@@ -1,22 +1,19 @@
 
 import logging
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING, Optional
 
 import a_sync
 import dank_mids
-from brownie.exceptions import ContractNotFound
-from brownie.network.event import _EventItem as brownie_EventItem
-from dank_mids.structs.data import Decimal
+import msgspec
+from dank_mids.structs.data import Decimal, TransactionIndex
 from pony.orm import TransactionIntegrityError
-from y import ERC20, Contract
+from y import ERC20
 from y._decorators import stuck_coro_debugger
-from y.exceptions import ContractNotVerified, NonStandardERC20
-from y.utils.events import decode_logs
+from y.exceptions import NonStandardERC20
 
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._db import utils as db
 from eth_portfolio._loaders.utils import get_transaction_receipt
-from eth_portfolio._shitcoins import SHITCOINS
 from eth_portfolio._utils import _get_price
 from eth_portfolio.structs import TokenTransfer
 
@@ -28,11 +25,7 @@ logger = logging.getLogger(__name__)
 token_transfer_semaphore = dank_mids.BlockSemaphore(10_000, name='eth_portfolio.token_transfers')  # Some arbitrary number
 
 @stuck_coro_debugger
-async def load_token_transfer(
-    transfer_log: "ArrayEncodableLog", 
-    load_prices: bool,
-) -> Optional[TokenTransfer]:  # sourcery skip: simplify-boolean-comparison
-
+async def load_token_transfer(transfer_log: "ArrayEncodableLog", load_prices: bool) -> Optional[TokenTransfer]:  # sourcery skip: simplify-boolean-comparison
     if transfer_log.removed:
         if transfer := await db.get_token_transfer(transfer_log):
             await db.delete_token_transfer(transfer)
@@ -100,5 +93,8 @@ async def get_symbol(token: ERC20) -> Optional[str]:
 @stuck_coro_debugger
 @cache_to_disk
 async def get_transaction_index(hash: str) -> int:
-    receipt = await get_transaction_receipt(hash)
-    return receipt.transactionIndex
+    receipt_bytes = await get_transaction_receipt(hash)
+    return msgspec.json.decode(receipt_bytes, type=HasTxIndex, dec_hook=TransactionIndex._decode_hook).transactionIndex
+
+class HasTxIndex(msgspec.Struct):
+    transactionIndex: TransactionIndex
