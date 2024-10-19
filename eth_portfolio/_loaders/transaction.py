@@ -131,7 +131,7 @@ async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block
         if tx['from'] == address and tx['nonce'] == nonce:
             return tx
         # Special handler for contract creation transactions
-        elif tx['to'] is None and (await get_transaction_receipt(tx['hash']))['contractAddress'] == address:
+        elif tx['to'] is None and (await get_transaction_receipt(tx['hash'])).contractAddress == address:
             return tx
         # Special handler for Gnosis Safe deployments
         elif tx['to'] == "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2":
