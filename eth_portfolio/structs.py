@@ -17,7 +17,11 @@ from dank_mids.structs.transaction import AccessListEntry
 from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
+from y._decorators import stuck_coro_debugger
+from y.constants import EEE_ADDRESS
 from y.datatypes import Block
+
+from eth_portfolio._utils import _get_price
 
 if TYPE_CHECKING:
     from y._db.utils.logs import ArrayEncodableLog
@@ -306,9 +310,53 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         21000
     """
 
-    @classmethod
-    def from_trace(cls, trace: FilterTrace, price: Optional[Decimal] = None, value_usd: Optional[Decimal] = None) -> "InternalTransfer":
-        return cls(trace=ArrayEncodableFilterTrace(**_get_init_kwargs(trace)), price=price, value_usd=value_usd)
+    @staticmethod
+    @stuck_coro_debugger
+    async def from_trace(trace: FilterTrace, load_prices: bool) -> "InternalTransfer":
+        """
+        Asynchronously processes a raw internal transfer dictionary into an InternalTransfer object.
+
+        This function is the core of the internal transfer processing pipeline. It handles
+        various types of transfers, including special cases like block and uncle rewards.
+        It also filters out certain transfers (e.g., to Gnosis Safe Singleton) and verifies
+        transaction success for non-reward transfers.
+
+        The function performs several data transformations:
+        - Value and gas conversions
+        - Optional USD price loading
+        - Field standardization
+
+        Args:
+            transfer: A dictionary containing the raw internal transfer data. Expected to have keys such as
+                    'type', 'transactionHash', 'blockNumber', 'from', 'to', 'value', 'gas', 'gasUsed', 'traceAddress'.
+            load_prices: Flag to determine whether to load USD prices for the transfer value.
+
+        Returns:
+            A processed InternalTransfer object.
+
+        Example:
+            >>> transfer = {"type": "call", "transactionHash": "0x123...", "blockNumber": 15537393, "from": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "to": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", "value": "0x10", "gas": "0x5208", "gasUsed": "0x5208", "traceAddress": [0]}
+            >>> internal_tx = await load_internal_transfer(transfer=transfer, load_prices=True); print(internal_tx)
+
+        Note:
+            - Transfers to the Gnosis Safe Singleton (0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552) are filtered out
+            as they typically don't represent actual value transfers.
+            - The `traceAddress` is converted to a string for consistent representation across different scenarios.
+            - For block and uncle rewards, `gas` is set to 0 as these are not regular transactions.
+            - When loading prices, the `EEE_ADDRESS` constant is used, which represents the native currency of the chain.
+
+        Integration with eth_portfolio ecosystem:
+            - Uses the InternalTransfer struct from eth_portfolio.structs for standardized output.
+            - Utilizes utility functions from eth_portfolio._loaders.utils and eth_portfolio._utils.
+            - Interacts with the global 'chain' object from the brownie library for chain ID.
+        """
+
+        args = {"trace": ArrayEncodableFilterTrace(**_get_init_kwargs(trace))}
+        if load_prices:
+            price = await _get_price(EEE_ADDRESS, trace.block)
+            args["price"] = price
+            args["value_usd"] = round(trace.action.value * price, 18)
+        return InternalTransfer(**args)
 
     entry_type: ClassVar[Literal['internal_transfer']] = 'internal_transfer'
     """
