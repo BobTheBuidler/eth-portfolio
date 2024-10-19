@@ -114,6 +114,10 @@ class _EventItem(brownie_EventItem):
     log_index: int
     transaction_hash: Union[str, bytes]  # TODO figure out why it comes in both ways
 
+
+class DecodingError(Exception):
+    ...
+    
 @stuck_coro_debugger
 async def _decode_token_transfer(log: Log) -> Optional[_EventItem]:
     try:
@@ -134,6 +138,8 @@ async def _decode_token_transfer(log: Log) -> Optional[_EventItem]:
             if "tokenId" in event:
                 logger.debug("this is a NFT related transfer, skipping %s", event)
                 return None
+            if tuple(event.keys()) == ("topic0", "topic1", "topic2", "topic3"):
+                raise DecodingError(f'unable to decode logs for {event.address}, dev figure out why')
             _check_event(event)
             return event
             
@@ -142,9 +148,10 @@ async def _decode_token_transfer(log: Log) -> Optional[_EventItem]:
         except Exception as e:
             logger.error(event)
             raise
-            
+    except DecodingError as e:
+        logger.error(e)
     except Exception as e:
-        logger.error('unable to decode logs, dev figure out why')
+        logger.error(e)
         logger.exception(e)
         logger.error(log)
 
