@@ -28,30 +28,6 @@ from eth_portfolio._loaders.utils import get_transaction_receipt
 from eth_portfolio._utils import _get_price
 from eth_portfolio.structs import InternalTransfer
 
-@cache_to_disk
-async def _get_status(txhash: str) -> int:
-    """
-    Asynchronously retrieves the transaction status for the given hash.
-
-    This function is cached to disk to optimize performance for repeated calls.
-    It relies on the :func:`~eth_portfolio._loaders.utils.get_transaction_receipt` function from the utils module.
-
-    Args:
-        txhash: The hexadecimal string representation of the transaction hash.
-
-    Returns:
-        int: The status of the transaction (1 for success, 0 for failure).
-
-    Example:
-        >>> status = await _get_status(txhash="0x123..."); print(status)
-
-    Note:
-        This function is primarily used within :func:`~eth_portfolio._loaders.internal_transfer.load_internal_transfer` to verify
-        transaction success for non-reward transfers. The caching mechanism helps reduce
-        redundant blockchain queries, improving overall performance of the eth_portfolio system.
-    """
-    receipt = await get_transaction_receipt(txhash)
-    return receipt.status
     
 @stuck_coro_debugger
 async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Optional[InternalTransfer]:
