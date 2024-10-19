@@ -13,9 +13,10 @@ from typing import DefaultDict, List, Optional, Tuple
 import a_sync
 import dank_mids
 import eth_retry
+import msgspec
 from async_lru import alru_cache
+from dank_mids.structs import Log, data
 from dank_mids.structs import Transaction as dankTransaction
-from dank_mids.structs.data import Decimal, Wei
 from pony.orm import TransactionIntegrityError
 from y import get_price
 from y._decorators import stuck_coro_debugger
@@ -111,8 +112,8 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
             
         if load_prices:
             # TODO: debug why `tx.value` isnt already a Wei obj
-            scaled = Wei(tx.value).scaled
-            price = Decimal(await get_price(EEE_ADDRESS, block = tx.blockNumber, sync=False))
+            scaled = data.Wei(tx.value).scaled
+            price = data.Decimal(await get_price(EEE_ADDRESS, block = tx.blockNumber, sync=False))
             transaction = structs.Transaction.from_rpc_response(tx, price=round(price, 18), value_usd=round(scaled * price, 18))
         else:
             transaction = structs.Transaction.from_rpc_response(tx)
@@ -163,17 +164,29 @@ async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block
     for tx in await get_block_transactions(block):
         if tx.sender == address and tx.nonce == nonce:
             return tx
-        receipt = await get_transaction_receipt(tx.hash)
+        
+        receipt_bytes: msgspec.Raw
         # Special handler for contract creation transactions
         if tx.to is None:
-            if receipt.contractAddress == address:
+            receipt_bytes = await get_transaction_receipt(tx.hash)
+            receipt_0 = msgspec.json.decode(receipt_bytes, type=ReceiptContractAddress, dec_hook=data.Address._decode_hook)
+            if receipt_0.contractAddress == address:
                 return tx
         # Special handler for Gnosis Safe deployments
         elif tx.to == "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2":
-            events = decode_logs(receipt.logs)
+            receipt_bytes = await get_transaction_receipt(tx.hash)
+            receipt_1 = msgspec.json.decode(receipt_bytes, type=ReceiptLogs, dec_hook=data._decode_hook)
+            events = decode_logs(receipt_1.logs)
             if "SafeSetup" in events and "ProxyCreation" in events and any(event['proxy'] == address for event in events['ProxyCreation']):
                 return tx
     return None
+
+class ReceiptContractAddress(msgspec.Struct):
+    """We only decode what we need and immediately discard the rest of the receipt."""
+    contractAddress: data.Address
+
+class ReceiptLogs(msgspec.Struct):
+    logs: List[Log]
 
 @alru_cache(maxsize=None)
 @eth_retry.auto_retry
@@ -239,9 +252,9 @@ async def _get_block_transactions(block: Block) -> List[dankTransaction]:
     return await dank_mids.eth.get_transactions(block)
 
 get_block_transactions = a_sync.SmartProcessingQueue(
-    _get_block_transactions, 
-    num_workers=1_000, 
-    name=__name__ + ".get_block_transactions",
+    _get_block_transactions,
+    num_workers=1_000,
+    name=f"{__name__}.get_block_transactions",
 )
 
 
