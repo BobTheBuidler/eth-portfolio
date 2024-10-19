@@ -86,7 +86,7 @@ async def load_token_transfer(
         transfer = TokenTransfer(log=transfer_log, value=value, **coro_results)
     except TypeError as e:
         # TODO: get rid of this once its run fine for a few days
-        raise TypeError(str(e), token_transfer) from e
+        raise TypeError(str(e), transfer_log, coro_results) from e
 
     a_sync.create_task(_insert_to_db(transfer, load_prices), skip_gc_until_done=True)
     return transfer
