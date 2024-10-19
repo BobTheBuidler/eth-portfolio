@@ -44,22 +44,16 @@ async def load_token_transfer(
         await db.delete_token_transfer(transfer)
     
     async with token_transfer_semaphore[transfer_log.block]:
-        decoded = await _decode_token_transfer(transfer_log)
-        if decoded is None:
-            return None
-            
-        sender, receiver, value = decoded.values()
-
-        token = ERC20(decoded.address, asynchronous=True)
+        token = ERC20(transfer_log.address, asynchronous=True)
         
         coros = {
             'scale': token.scale, 
             'token': get_symbol(token), 
-            'transaction_index': get_transaction_index(decoded.transaction_hash),
+            'transaction_index': get_transaction_index(transfer_log.transactionHash),
         }
 
         if load_prices:
-            coros['price'] = _get_price(token.address, decoded.block_number)
+            coros['price'] = _get_price(token.address, transfer_log.blockNumber)
         
         try:
             coro_results = await a_sync.gather(coros)
@@ -69,24 +63,24 @@ async def load_token_transfer(
             return None
         except Exception as e:
             try:
-                logger.error(f"{e.__class__.__name__} {e} for {await get_symbol(token)} {decoded.address} at block {decoded.block_number}.")
+                logger.error(f"{e.__class__.__name__} {e} for {await get_symbol(token)} {transfer_log.address} at block {transfer_log.blockNumber}.")
             except NonStandardERC20 as e:
-                logger.error(f"{e.__class__.__name__} {e} for {decoded.address} at block {decoded.block_number}.")
+                logger.error(f"{e.__class__.__name__} {e} for {transfer_log.address} at block {transfer_log.blockNumber}.")
             return None
 
-    value = Decimal(value) / coro_results.pop('scale')
-    
-    if price := coro_results.get('price'):
-        coro_results['value_usd'] = round(value * price, 18)
-            
-    try:
-        transfer = TokenTransfer(log=transfer_log, value=value, **coro_results)
-    except TypeError as e:
-        # TODO: get rid of this once its run fine for a few days
-        raise TypeError(str(e), transfer_log, coro_results) from e
+        value = Decimal(transfer_log.topic3.as_uint) / coro_results.pop('scale')
+        
+        if price := coro_results.get('price'):
+            coro_results['value_usd'] = round(value * price, 18)
+                
+        try:
+            transfer = TokenTransfer(log=transfer_log, value=value, **coro_results)
+        except TypeError as e:
+            # TODO: get rid of this once its run fine for a few days
+            raise TypeError(str(e), transfer_log, coro_results) from e
 
-    a_sync.create_task(_insert_to_db(transfer, load_prices), skip_gc_until_done=True)
-    return transfer
+        a_sync.create_task(_insert_to_db(transfer, load_prices), skip_gc_until_done=True)
+        return transfer
 
 async def _insert_to_db(transfer: TokenTransfer, load_prices: bool) -> None:
     try:
@@ -108,55 +102,3 @@ async def get_symbol(token: ERC20) -> Optional[str]:
 async def get_transaction_index(hash: str) -> int:
     receipt = await get_transaction_receipt(hash)
     return receipt.transactionIndex
-
-class _EventItem(brownie_EventItem):
-    """A helper for mypy only. You will not run into any actual instances of this class.\n\n""" + brownie_EventItem.__doc__
-    block_number: int
-    log_index: int
-    transaction_hash: Union[str, bytes]  # TODO figure out why it comes in both ways
-
-
-@stuck_coro_debugger
-async def _decode_token_transfer(log: "ArrayEncodableLog") -> Optional[_EventItem]:
-    try:
-        await Contract.coroutine(log.address)
-    except ContractNotFound:
-        logger.warning(f"Token {log.address} cannot be found. Skipping. If the contract has been self-destructed, eth-portfolio will not support it.")
-        return None
-    except ContractNotVerified:
-        logger.warning(f"Token {log.address} is not verified and is most likely a shitcoin. Skipping. Please submit a PR at github.com/BobTheBuidler/eth-portfolio if this is not a shitcoin and should be included.")
-        return None
-    
-    try:
-        # NOTE: We have to decode logs here because NFTs prevent us from batch decoding logs
-        event = decode_logs([log])[0]
-    except Exception as e:
-        logger.error(e)
-        logger.exception(e)
-        logger.error(log)
-        return None
-
-    if "tokenId" in event:
-        logger.debug("this is a NFT related transfer, skipping %s", event)
-        return None
-        
-    if tuple(event.keys()) == ("topic1", "topic2", "topic3", "data"):
-        if not log.data:
-            return {"sender": log.topic1.as_address, "receiver": log.topic2.as_address, "amount": log.topic3.as_uint}
-        logger.error(f'unable to decode logs for {event.address}, dev figure out why')
-        return None
-
-    _check_event(event)
-    return event
-
-_checks = [
-    {'from', 'sender', '_from', 'src'},
-    {'to', 'receiver', '_to', 'dst'},
-    {'value', 'amount', '_value', '_amount', 'wad'},
-]
-
-def _check_event(event: _EventItem) -> None:
-    if any(key not in keys for key, keys in zip(event.keys(), _checks)):
-        exc = NotImplementedError(*event.keys())
-        logger.error(exc)
-        raise exc
