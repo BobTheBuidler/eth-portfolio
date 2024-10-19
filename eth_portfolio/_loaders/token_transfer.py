@@ -51,13 +51,7 @@ async def load_token_transfer(
             return None
             
         sender, receiver, value = decoded.values()
-        value = Decimal(value) / scale
-        
-        token_transfer = {
-            'log': transfer_log,
-            'value': value,
-        }
-        
+
         token = ERC20(decoded.address, asynchronous=True)
         
         coros = {
@@ -70,7 +64,7 @@ async def load_token_transfer(
             coros['price'] = _get_price(token.address, decoded.block_number)
         
         try:
-            token_transfer.update(await a_sync.gather(coros))
+            coro_results = await a_sync.gather(coros)
         except NonStandardERC20 as e:
             # NOTE: if we cant fetch scale or symbol or both, this is probably either a shitcoin or an NFT (which we don't support at this time)
             logger.debug(f"{e} for {transfer_log}, skipping.")
@@ -78,13 +72,16 @@ async def load_token_transfer(
         except Exception as e:
             logger.error(f"{e.__class__.__name__} {e} for {symbol} {decoded.address} at block {decoded.block_number}.")
             return None
-        
-    if price := token_transfer.get('price'):
-        token_transfer['value_usd'] = round(value * price, 18)
+
+    value = Decimal(value) / coro_results.pop('scale')
     
+    if price := coro_results.get('price'):
+        coro_results['value_usd'] = round(value * price, 18)
+            
     try:
-        transfer = TokenTransfer(**token_transfer)
+        transfer = TokenTransfer(log=transfer_log, value=value, **coro_results)
     except TypeError as e:
+        # TODO: get rid of this once its run fine for a few days
         raise TypeError(str(e), token_transfer) from e
 
     try:
