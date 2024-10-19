@@ -72,20 +72,20 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
 
     hi = await dank_mids.eth.block_number
 
-    # lets find the general area first
+    # lets find the general area first before we proceed with our binary search
     range_size = hi-lo+1
-    chunks = min(10, range_size)
-    chunk_size = range_size // chunks
-    
-    points = await a_sync.gather({
-        point: get_nonce_at_block(address, point) 
-        for point in [lo+i*chunk_size for i in range(chunks-1)] + [hi]
-    })
+    if range_size > 4:
+        num_chunks = _get_num_chunks(range_size)
+        chunk_size = range_size // num_chunks
+        points = await a_sync.gather({
+            point: get_nonce_at_block(address, point) 
+            for point in [lo+i*chunk_size for i in range(num_chunks)]
+        })
 
-    for block, _nonce in points.items():
-        if _nonce >= nonce:
-            break
-        lo = block
+        for block, _nonce in points.items():
+            if _nonce >= nonce:
+                break
+            lo = block
 
     while True:
         _nonce = await get_nonce_at_block(address, lo)
@@ -241,3 +241,29 @@ get_block_transactions = a_sync.SmartProcessingQueue(
     num_workers=1_000, 
     name=__name__ + ".get_block_transactions",
 )
+
+
+def _get_num_chunks(range_size):
+    if range_size >= 4096:
+        return 100
+    elif range_size >= 2048:
+        return 80
+    elif range_size >= 1024:
+        return 40
+    elif range_size >= 512:
+        return 20
+    elif range_size >= 256:
+        return 10
+    elif range_size >= 128:
+        return 8
+    elif range_size >= 64:
+        return 6
+    elif range_size >= 32:
+        return 5
+    elif range_size >= 16:
+        return 4
+    elif range_size >= 8:
+        return 3
+    else:
+        return 2
+
