@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING, Any, ClassVar, Dict, List, Literal, Optional, 
 
 from brownie import chain
 from dank_mids.structs import DictStruct, FilterTrace
-from dank_mids.structs.transaction import Transaction1559, Transaction2930, TransactionLegacy
+from dank_mids.structs.transaction import _TransactionBase, Transaction1559, Transaction2930, TransactionLegacy
 from dank_mids.structs.data import Address, Decimal, Wei, checksum
 from dank_mids.structs.trace import Type
 from dank_mids.structs.transaction import AccessListEntry
@@ -82,6 +82,9 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
 
     
 
+class _ArrayEncodableTransactionBase(_TransactionBase, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):  # type: ignore [call-arg]
+    ...
+
 class ArrayEncodableTransactionLegacy(TransactionLegacy, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):  # type: ignore [call-arg]
     ...
     
@@ -97,6 +100,7 @@ _types_mapping = {
     TransactionLegacy: ArrayEncodableTransactionLegacy,
     Transaction2930: ArrayEncodableTransaction2930,
     Transaction1559: ArrayEncodableTransaction1559,
+    _TransactionBase: _ArrayEncodableTransactionBase,
 }
 
 
