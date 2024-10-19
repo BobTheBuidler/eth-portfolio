@@ -407,8 +407,8 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     check_status_tasks = a_sync.TaskMapping(get_transaction_status)
   
     for trace in await trace_filter(filter_params):
-        #if trace.error:
-        #    continue
+        if "error" in trace:
+            continue
           
         # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
         # that actually transmitted value to the singleton even though they appear to.
