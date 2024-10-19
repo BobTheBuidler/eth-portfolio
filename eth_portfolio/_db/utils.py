@@ -224,7 +224,8 @@ def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
     transactions = transactions_known_at_startup()
     pk = ((chain.id, sender), nonce)
     if pk in transactions:
-        return json.decode(transactions[pk], type=Transaction)
+        try:
+            return json.decode(transactions[pk], type=Transaction)
         except ValidationError as e:
             e.args = (*e.args, json.decode(transactions[pk]))
             raise
