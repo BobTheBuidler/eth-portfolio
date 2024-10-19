@@ -131,7 +131,7 @@ async def _decode_token_transfer(log: Log) -> Optional[_EventItem]:
         # NOTE: once in a while it comes out as a list instead of _EventDict?
         if isinstance(events, list):
             event = events[0]
-            if tokenId in event:
+            if "tokenId" in event:
                 logger.debug("this is a NFT related transfer, skipping %s", event)
                 return None
             _check_event(event)
