@@ -24,7 +24,7 @@ class MakerDSR(ProtocolABC):
         )
         if pie:
             dai_in_dsr = pie * exchange_rate / 10 ** 18
-            balances[dai] = Balance(dai_in_dsr, dai_in_dsr)
+            balances[dai] = Balance(dai_in_dsr, dai_in_dsr, token=dai, block=block)
         return balances
     
     async def _exchange_rate(self, block: Optional[Block] = None) -> Decimal:

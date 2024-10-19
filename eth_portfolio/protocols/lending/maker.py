@@ -41,7 +41,7 @@ class Maker(LendingProtocolWithLockedCollateral):
         if ink:
             balance = ink / Decimal(10**18)
             value = round(balance * Decimal(await get_price(yfi, block, sync=False)), 18)
-            balances[yfi] = Balance(balance, value)
+            balances[yfi] = Balance(balance, value, token=yfi, block=block)
         return balances
     
     @stuck_coro_debugger
@@ -56,7 +56,7 @@ class Maker(LendingProtocolWithLockedCollateral):
         rate = ilks.dict()["rate"]
         debt = art * rate / Decimal(1e45)
         balances: TokenBalances = TokenBalances()
-        balances[dai] += Balance(debt, debt)
+        balances[dai] += Balance(debt, debt, token=dai, block=block)
         return balances
 
     @alru_cache

@@ -69,7 +69,7 @@ class Compound(LendingProtocol):
         if debts := {underlying: Decimal(debt) / scale for underlying, scale, debt in zip(underlyings, underlying_scale, debt_data) if debt}:
             async for underlying, price in map_prices(debts, block=block):
                 debt = debts.pop(underlying)
-                balances[underlying] += Balance(debt, debt * Decimal(price))
+                balances[underlying] += Balance(debt, debt * Decimal(price), token=underlying.address, block=block)
         return balances
 
 @stuck_coro_debugger

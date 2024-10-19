@@ -29,7 +29,7 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
         bal = await self.unitVault.collaterals.coroutine(yfi, address, block_identifier=block)
         if bal:
             bal = Decimal(bal) / 10 ** 18
-            balances[yfi] = Balance(bal, bal * await get_price(yfi, block, sync=False))
+            balances[yfi] = Balance(bal, bal * await get_price(yfi, block, sync=False), token=yfi, block=block)
         return balances
 
     @stuck_coro_debugger
@@ -40,5 +40,5 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
         # NOTE: This only works for YFI based debt, must extend before using for other collaterals
         if debt := await self.unitVault.getTotalDebt.coroutine(yfi, address, block_identifier=block):
             debt = Decimal(debt) / 10 ** 18
-            balances[usdp] = Balance(debt, debt)
+            balances[usdp] = Balance(debt, debt, token=usdp, block=block)
         return balances

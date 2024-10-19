@@ -26,11 +26,12 @@ without managing or altering any underlying assets.
 
 from functools import cached_property
 from typing import (Any, Callable, DefaultDict, Dict, Iterable, List, Literal, 
-                    Optional, Tuple, TypedDict, TypeVar, Union)
+                    Optional, Tuple, TypedDict, TypeVar, Union, final)
 
 from checksum_dict import DefaultChecksumDict
 from dank_mids.structs import DictStruct
 from dank_mids.structs.data import Decimal
+from msgspec import UNSET
 from pandas import DataFrame, concat
 from typing_extensions import ParamSpec, Self
 from y.datatypes import Address, Block
@@ -41,7 +42,8 @@ _P = ParamSpec('_P')
 
 Fn = Callable[_P, _T]
 
-class Balance(DictStruct):
+@final
+class Balance(DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=True, forbid_unknown_fields=True):
     """
     Represents the balance of a single token, including its token amount and equivalent USD value.
 
@@ -54,13 +56,25 @@ class Balance(DictStruct):
         >>> combined_balance.usd_value
         Decimal('3000')
     """
+
     balance: Decimal = Decimal(0)
     """
     The amount of the token.
     """
+
     usd_value: Decimal = Decimal(0)
     """
     The USD equivalent value of the token amount.
+    """
+
+    token: Address = UNSET
+    """
+    The token the balance is of, if known.
+    """
+
+    block: Block = UNSET
+    """
+    The block from which the balance was taken, if known.
     """
     
     @property
@@ -96,10 +110,20 @@ class Balance(DictStruct):
         """
         if not isinstance(other, Balance):
             raise TypeError(f"{other} is not a `Balance` object")
+        if self.token != other.token:
+            raise ValueError(f"These Balance objects represent balances of different tokens ({self.token} and {other.token})")
+        if self.block != other.block:
+            raise ValueError(f"These Balance objects represent balances from different blocks ({self.block} and {other.block})")
         try:
-            return Balance(balance=self.balance + other.balance, usd_value=self.usd_value + other.usd_value)
+            return Balance(
+                balance=self.balance + other.balance, 
+                usd_value=self.usd_value + other.usd_value,
+                token=self.token,
+                block=self.block,
+            )
         except Exception as e:
-            raise e.__class__(f"Cannot add {self} and {other}: {e}") from e
+            e.args = (f"Cannot add {self} and {other}: {e}", *e.args)
+            raise
     
     def __radd__(self, other: Union['Balance', Literal[0]]) -> 'Balance':
         """
@@ -121,9 +145,7 @@ class Balance(DictStruct):
             >>> sum_balance.balance
             Decimal('100')
         """
-        if other == 0:
-            return self
-        return self.__add__(other)  # type: ignore
+        return self if other == 0 else self.__add__(other)  # type: ignore
     
     def __sub__(self, other: 'Balance') -> 'Balance':
         """
@@ -149,8 +171,17 @@ class Balance(DictStruct):
         """
         if not isinstance(other, Balance):
             raise TypeError(f"{other} is not a `Balance` object.")
+        if self.token != other.token:
+            raise ValueError(f"These Balance objects represent balances of different tokens ({self.token} and {other.token})")
+        if self.block != other.block:
+            raise ValueError(f"These Balance objects represent balances from different blocks ({self.block} and {other.block})")
         try:
-            return Balance(balance=self.balance - other.balance, usd_value=self.usd_value - other.usd_value)
+            return Balance(
+                balance=self.balance - other.balance, 
+                usd_value=self.usd_value - other.usd_value,
+                token=self.token,
+                block=self.block,
+            )
         except Exception as e:
             raise e.__class__(f"Cannot subtract {self} and {other}: {e}") from e
     
