@@ -6,15 +6,15 @@ import dank_mids
 import eth_retry
 import inflection
 from async_lru import alru_cache
+from dank_mids.types import TransactionReceipt
 from eth_utils import to_checksum_address
-from web3.types import TxReceipt
 from y._decorators import stuck_coro_debugger
 
 
 @eth_retry.auto_retry
 @alru_cache(ttl=60*60)
 @stuck_coro_debugger
-async def _get_transaction_receipt(txhash: str) -> TxReceipt:
+async def _get_transaction_receipt(txhash: str) -> TransactionReceipt:
     return await dank_mids.eth.get_transaction_receipt(txhash)
 
 get_transaction_receipt = a_sync.SmartProcessingQueue(
