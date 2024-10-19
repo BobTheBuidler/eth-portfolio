@@ -67,7 +67,7 @@ async def load_token_transfer(
         }
 
         if load_prices:
-            coros['price'] = _get_price(token.address, decoded.block_number))
+            coros['price'] = _get_price(token.address, decoded.block_number)
         
         try:
             token_transfer.update(await a_sync.gather(coros))
