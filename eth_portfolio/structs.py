@@ -175,7 +175,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, omit_defaults=Tru
     The V component of the Transaction's ECDSA signature, used for replay protection.
     """
     
-    access_list: Optional[Tuple[AccessListEntry, ...]] = None
+    access_list: Optional[Tuple[AccessListEntry, ...]]
     """
     List of addresses and storage keys the transaction plans to access (for EIP-2930 and EIP-1559 transactions).
     """
