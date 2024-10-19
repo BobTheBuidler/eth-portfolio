@@ -39,7 +39,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
     """
 
     @property
-    def _evm_object(self) -> Union["ModifiedTransaction", dank_trace.FilterTrace, Log]:
+    def _evm_object(self) -> Union["ModifiedTransaction", dank_trace.FilterTrace, "Log"]:
         """
         The EVM object associated with {cls_name}, exactly as it was received from the RPC.
         """
