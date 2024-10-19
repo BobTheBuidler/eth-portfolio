@@ -80,25 +80,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_fi
     including gas parameters, signature components, and transaction-specific data.
 
     Example:
-        >>> tx = Transaction(
-        ...     chainid=Network.Mainnet,
-        ...     block_number=Block(15537393),
-        ...     hash="0x123...",
-        ...     from_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        ...     to_address="0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-        ...     value=Decimal("0.1"),
-        ...     block_hash="0xabc...",
-        ...     nonce=42,
-        ...     type=2,  # EIP-1559 transaction
-        ...     gas=21000,
-        ...     gas_price=20000000000,
-        ...     max_fee_per_gas=30000000000,
-        ...     max_priority_fee_per_gas=1000000000,
-        ...     input="0x",
-        ...     r="0x123...",
-        ...     s="0x456...",
-        ...     v=27
-        ... )
+        >>> tx = Transaction(tx=DankTransaction(...))
         >>> tx.chainid
         Network.Mainnet
         >>> tx.type
@@ -256,21 +238,10 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unkno
 
     Example:
         >>> internal_tx = InternalTransfer(
-        ...     chainid=Network.Mainnet,
-        ...     block_number=Block(15537393),
-        ...     hash="0x123...",
-        ...     from_address="0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-        ...     to_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        ...     value=Decimal("0"),
-        ...     block_hash="0xabc...",
+        ...     trace=FilterTrace(...),
         ...     type="call",
         ...     trace_address="0.1",
-        ...     gas=100000,
-        ...     gas_used=21000,
         ...     subtraces=1,
-        ...     call_type="call",
-        ...     input="0x123...",
-        ...     output="0x456..."
         ... )
         >>> internal_tx.type
         'call'
@@ -421,15 +392,9 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_
 
     Example:
         >>> token_transfer = TokenTransfer(
-        ...     chainid=Network.Mainnet,
-        ...     block_number=Block(15537393),
-        ...     hash="0x123...",
-        ...     from_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        ...     to_address="0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+        ...     log=Log(...),
         ...     value=Decimal("1000000"),  # 1 USDC (assuming 6 decimals)
-        ...     log_index=3,
         ...     token="USDC",
-        ...     token_address="0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
         ... )
         >>> token_transfer.token
         'USDC'
@@ -448,6 +413,14 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_
     """
     The log associated with this token transfer.
     """
+
+    @property
+    def from_address(self) -> Address:
+        return checksum(self.log.topics[1][-20:])
+
+    @property
+    def to_address(self) -> Address:
+        return checksum(self.log.topics[2][-20:])
 
     @property
     def _evm_object(self) -> Log:
