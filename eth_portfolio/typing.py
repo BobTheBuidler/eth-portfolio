@@ -24,13 +24,13 @@ These classes are designed for efficient parsing, manipulation, and summarizatio
 without managing or altering any underlying assets.
 """
 
-from decimal import Decimal
 from functools import cached_property
 from typing import (Any, DefaultDict, Dict, Iterable, List, Literal, Optional,
                     Tuple, TypedDict, TypeVar, Union)
 
 from checksum_dict import DefaultChecksumDict
 from dank_mids.structs import DictStruct
+from dank_mids.structs.data import Decimal
 from pandas import DataFrame, concat
 from typing_extensions import ParamSpec, Self
 from y.datatypes import Address, Block

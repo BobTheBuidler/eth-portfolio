@@ -1,7 +1,6 @@
 import asyncio
 import logging
 from contextlib import suppress
-from decimal import Decimal
 from functools import lru_cache
 from typing import Any, Dict, Optional, Tuple
 
@@ -275,7 +274,8 @@ def _insert_transaction(transaction: Transaction) -> None:
         raw = encoded,    
     )
 
-    
+    hex(100, 2)
+
 @a_sync(default='async')
 @robust_db_session
 def get_internal_transfer(trace: dank_mids.structs.FilterTrace) -> Optional[InternalTransfer]:

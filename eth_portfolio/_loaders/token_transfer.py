@@ -1,13 +1,12 @@
 
 import logging
-from decimal import Decimal
 from typing import TYPE_CHECKING, Optional, Union
 
 import a_sync
 import dank_mids
-from brownie import chain
 from brownie.exceptions import ContractNotFound
 from brownie.network.event import _EventItem as brownie_EventItem
+from dank_mids.structs.data import Decimal
 from pony.orm import TransactionIntegrityError
 from y import ERC20, Contract
 from y._decorators import stuck_coro_debugger

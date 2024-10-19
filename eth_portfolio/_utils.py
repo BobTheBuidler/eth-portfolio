@@ -5,7 +5,7 @@ import logging
 import pkgutil
 from abc import abstractmethod
 from datetime import datetime
-from decimal import Decimal as _Decimal
+from dank_mids.structs import data
 from functools import cached_property
 from types import ModuleType
 from typing import TYPE_CHECKING, Any, AsyncGenerator, AsyncIterator, Dict, Generic, Iterator, List, Optional, Tuple, Union
@@ -56,7 +56,7 @@ class PandableList(List[_T]):
         return DataFrame(self)
 
 
-class Decimal(_Decimal):
+class Decimal(data.Decimal):
     """
     I'm in the process of moving from floats to decimals, this will help be as I buidl.
     """

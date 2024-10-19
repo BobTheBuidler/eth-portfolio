@@ -1,10 +1,11 @@
 
 import logging
-from decimal import Decimal, InvalidOperation
+from decimal import InvalidOperation
 from typing import Optional
 
 import dank_mids
 import eth_retry
+from dank_mids.structs.data import Decimal
 from y import ERC20, NonStandardERC20, get_price
 from y._decorators import stuck_coro_debugger
 from y.constants import WRAPPED_GAS_COIN

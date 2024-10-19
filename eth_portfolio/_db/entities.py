@@ -1,8 +1,8 @@
 
 import typing
-from decimal import Decimal
 from functools import cached_property
 
+from dank_mids.structs.data import Decimal
 from dank_mids.structs.transaction import AccessListEntry
 from hexbytes import HexBytes
 from msgspec import json

@@ -1,5 +1,5 @@
 import pytest
-from decimal import Decimal
+from dank_mids.structs.data import Decimal
 from pandas import DataFrame
 from eth_portfolio.typing import (Balance, TokenBalances, RemoteTokenBalances, 
                                   WalletBalances, PortfolioBalances, WalletBalancesRaw, 
