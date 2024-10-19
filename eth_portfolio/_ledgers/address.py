@@ -385,13 +385,9 @@ trace_filter = a_sync.Semaphore(32, __name__ + ".trace_semaphore")(
     eth_retry.auto_retry(dank_mids.eth.trace_filter)
 )
 
-@cache_to_disk
 async def _get_status(txhash: str) -> int:
     """
     Asynchronously retrieves the transaction status for the given hash.
-
-    This function is cached to disk to optimize performance for repeated calls.
-    It relies on the :func:`~eth_portfolio._loaders.utils.get_transaction_receipt` function from the utils module.
 
     Args:
         txhash: The hexadecimal string representation of the transaction hash.
@@ -409,13 +405,6 @@ async def _get_status(txhash: str) -> int:
     """
     receipt = await get_transaction_receipt(txhash)
     return receipt.status
-
-async def get_status(trace: FilterTrace) -> int:
-    # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
-    
-    return 1 if trace.type == "reward" else await _get_status(self
-    
-  
 
 @cache_to_disk
 @eth_retry.auto_retry
@@ -444,6 +433,7 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
             continue
           
         if trace.type != "reward":
+            # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
             check_status[trace]
         
         traces.append(trace)
