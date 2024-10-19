@@ -343,14 +343,14 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unkno
         """
         The type of call made in this InternalTransfer (e.g., "call", "delegatecall", "staticcall").
         """
-        return trace.action.callType.name
+        return self.trace.action.callType.name
     
     @property
     def reward_type(self) -> Optional[str]:
         """
         The type of the reward, for reward transactions.
         """
-        return trace.action.rewardType.name
+        return self.trace.action.rewardType.name
 
     @property
     def input(self) -> HexBytes:
