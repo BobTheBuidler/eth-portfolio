@@ -7,7 +7,7 @@ The classes are designed to provide a consistent and flexible interface for work
 import logging
 from decimal import Decimal
 from functools import cached_property
-from typing import TYPE_CHECKING, ClassVar, List, Literal, Optional, Tuple, TypeVar, Union
+from typing import TYPE_CHECKING, ClassVar, List, Literal, Optional, Tuple, TypeVar, Union, final
 
 from brownie import chain
 from dank_mids.structs import DictStruct, FilterTrace
@@ -24,7 +24,7 @@ if TYPE_CHECKING:
 
 
 logger = logging.getLogger(__name__)
-    
+
 class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
     """
     The :class:`~structs._LedgerEntryBase` class is a base class for ledger entries representing on-chain actions in a blockchain.
@@ -95,6 +95,7 @@ _types_mapping = {
     Transaction1559: ArrayEncodableTransaction1559,
 }
 
+@final
 class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True, dict=True):
     """
     The :class:`~structs.Transaction` class represents a complete on-chain blockchain transaction.
@@ -268,7 +269,8 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
 
 class ArrayEncodableFilterTrace(FilterTrace, frozen=True, kw_only=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
     ...
-    
+
+@final
 class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):
     """
     The :class:`~structs.InternalTransfer`class represents an internal transfer or call within a blockchain transaction.
@@ -286,6 +288,10 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         >>> internal_tx.gas_used
         21000
     """
+
+    @classmethod
+    def from_trace(cls, trace: FilterTrace, price: Optional[Decimal] = None, value_usd: Optional[Decimal] = None) -> "InternalTransfer":
+        return cls(trace=ArrayEncodableFilterTrace(**trace), price=price, value_usd=value_usd)
 
     entry_type: ClassVar[Literal['internal_transfer']] = 'internal_transfer'
     """
@@ -417,18 +423,19 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
     The initialization code for contract creation, if this is a create operation.
     """
     
-    address: Optional[HexBytes]
+    address: Optional[HexBytes] = UNSET
     """
     The address of the account or contract involved in this InternalTransfer.
     """
     
-    code: Optional[HexBytes]
+    code: Optional[HexBytes] = UNSET
     """
     The code of the contract involved in this InternalTransfer, if applicable.
     """
     '''
 
 
+@final
 class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True):
     """
     The :class:`~structs.TokenTransfer` class represents a token transfer event within a blockchain transaction.
