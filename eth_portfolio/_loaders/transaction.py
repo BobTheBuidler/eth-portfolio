@@ -243,7 +243,7 @@ get_block_transactions = a_sync.SmartProcessingQueue(
 )
 
 
-def _get_num_chunks(range_size):
+def _get_num_chunks(range_size: int) -> int:
     if range_size >= 4096:
         return 100
     elif range_size >= 2048:
