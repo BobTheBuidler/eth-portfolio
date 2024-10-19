@@ -75,15 +75,15 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
                     return nonce, None
                                     
                 params = {
-                    'chainid': int(tx.chainId) if tx.chainId else chain.id
-                    'block_hash': tx.blockHash.hex()
-                    'hash': tx.hash.hex()
-                    'from_address': tx.sender
-                    'to_address': tx.to
-                    'value': tx.value
-                    'type': int(tx.type, 16) if tx.type else None
-                    'r': tx.r.hex()
-                    's': tx.s.hex()
+                    'chainid': int(tx.chainId) if tx.chainId else chain.id,
+                    'block_hash': tx.blockHash.hex(),
+                    'hash': tx.hash.hex(),
+                    'from_address': tx.sender,
+                    'to_address': tx.to,
+                    'value': tx.value,
+                    'type': int(tx.type, 16) if tx.type else None,
+                    'r': tx.r.hex(),
+                    's': tx.s.hex(),
                 }
 
                 with suppress(AttributeError):
