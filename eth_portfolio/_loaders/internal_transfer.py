@@ -98,8 +98,8 @@ async def load_internal_transfer(transfer: dict, load_prices: bool) -> Optional[
         # that actually transmitted value to the singleton even though they appear to.
         return None
 
-    if trace.type == "reward:
-        if trace.action.rewardType not in ['block', 'uncle']:
+    if trace.type == "reward":
+        if trace.action.rewardType not in ["block", "uncle"]:
             raise NotImplementedError(trace.action.rewardType)
         params = {'hash': f'{trace.action.rewardType} reward'}
 
