@@ -149,11 +149,11 @@ async def _decode_token_transfer(log: Log) -> Optional[_EventItem]:
         logger.error(log)
 
 _checks = [
-    {'from', 'sender'},
-    {'to', 'receiver'},
-    {'value'},
+    {'from', 'sender', '_from'},
+    {'to', 'receiver', '_to'},
+    {'value', '_value'},
 ]
 
 def _check_event(event: _EventItem) -> None:
-    if not all(any(k in event for k in keys) for keys in _checks):
+    if not all(key in keys for key, keys in zip(event.keys(), _checks)):
         raise NotImplementedError(*event.keys())
