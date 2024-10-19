@@ -82,16 +82,16 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
 
     
 
-class _ArrayEncodableTransactionBase(_TransactionBase, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):  # type: ignore [call-arg]
+class _ArrayEncodableTransactionBase(_TransactionBase, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
     ...
 
-class ArrayEncodableTransactionLegacy(TransactionLegacy, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):  # type: ignore [call-arg]
+class ArrayEncodableTransactionLegacy(TransactionLegacy, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
     ...
     
-class ArrayEncodableTransaction2930(Transaction2930, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):  # type: ignore [call-arg]
+class ArrayEncodableTransaction2930(Transaction2930, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
     ...
     
-class ArrayEncodableTransaction1559(Transaction1559, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):  # type: ignore [call-arg]
+class ArrayEncodableTransaction1559(Transaction1559, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
     ...
     
 ArrayEncodableTransaction = Union[ArrayEncodableTransactionLegacy, ArrayEncodableTransaction2930, ArrayEncodableTransaction1559]

@@ -133,6 +133,9 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
 async def _insert_to_db(transaction: structs.Transaction, load_prices: bool) -> None:
     try:
         await db.insert_transaction(transaction)
+    except NotImplementedError as e:
+        e.args = (*e.args, transaction)
+        raise
     except TransactionIntegrityError:
         if load_prices:
             await db.delete_transaction(transaction)
