@@ -56,7 +56,7 @@ async def load_token_transfer(transfer_log: Log, load_prices: bool) -> Optional[
             return None
         
         sender, receiver, value = decoded.values()
-        value = Decimal(value) / Decimal(scale)
+        value = Decimal(value) / scale
         
         token_transfer = {
             'chainid': chain.id,
