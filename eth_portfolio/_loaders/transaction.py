@@ -168,7 +168,7 @@ async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block
                 return tx
         # Special handler for Gnosis Safe deployments
         elif tx.to == "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2":
-            events = decode_logs(tx.logs)
+            events = decode_logs(receipt.logs)
             if "SafeSetup" in events and "ProxyCreation" in events and any(event['proxy'] == address for event in events['ProxyCreation']):
                 return tx
     return None
