@@ -70,23 +70,21 @@ async def load_token_transfer(
         token_transfer = {
             'log': transfer_log,
             'transaction_index': transaction_index,
-            # TODO figure out why it comes in both ways
-            'hash': hash.hex() if isinstance((hash := decoded.transaction_hash), bytes) else hash,  # type: ignore [attr-defined]
-            'log_index': decoded.log_index,
             'token': symbol,
-            'token_address': decoded.address,
             'from_address': str(sender),
             'to_address': str(receiver),
             'value': value,
         }
+        
         if load_prices:
             try:
                 price = round(Decimal(price), 18) if price else None
+                token_transfer['price'] = price
+                token_transfer['value_usd'] = round(value * price, 18)
             except Exception as e:
                 logger.error(f"{e.__class__.__name__} {e} for {symbol} {decoded.address} at block {decoded.block_number}.")
-                price = None
-            token_transfer['price'] = price
-            token_transfer['value_usd'] = round(value * price, 18) if price else None
+                token_transfer['price'] = None
+                token_transfer['value_usd'] = None
         
         try:
             transfer = TokenTransfer(**token_transfer)
@@ -157,7 +155,7 @@ async def _decode_token_transfer(log: Log) -> Optional[_EventItem]:
 _checks = [
     {'from', 'sender', '_from', 'src'},
     {'to', 'receiver', '_to', 'dst'},
-    {'value', 'amount', '_value', 'wad'},
+    {'value', 'amount', '_value', '_amount', 'wad'},
 ]
 
 def _check_event(event: _EventItem) -> None:
