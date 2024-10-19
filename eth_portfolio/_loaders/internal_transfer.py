@@ -84,7 +84,7 @@ async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Inter
     params['transaction_index'] = trace.transactionPosition
     params['chainid'] = chain.id
     params['value'] = trace.value
-    params['gas'] = 0 if trace.type == "reward" and trace.action.rewardType in ["block", "uncle"] else trace.gas
+    params['gas'] = 0 if trace.type == "reward" else trace.gas
 
     # Un-nest the action object
     if trace.action:
