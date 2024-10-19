@@ -35,7 +35,7 @@ async def load_token_transfer(
     load_prices: bool,
 ) -> Optional[TokenTransfer]:
     
-    if log.removed:
+    if transfer_log.removed:
         if transfer := await db.get_token_transfer(transfer_log):
             await db.delete_token_transfer(transfer)
         return
