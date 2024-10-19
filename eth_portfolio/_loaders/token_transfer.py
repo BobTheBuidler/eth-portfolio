@@ -141,6 +141,8 @@ async def _decode_token_transfer(log: "ArrayEncodableLog") -> Optional[_EventIte
         return None
         
     if tuple(event.keys()) == ("topic1", "topic2", "topic3", "data"):
+        if not log.data:
+            return {"sender": log.topics[1].as_address, "receiver": log.topics[2].as_address, "amount": log.topics[3].as_uint}
         logger.error(f'unable to decode logs for {event.address}, dev figure out why')
         return None
 
