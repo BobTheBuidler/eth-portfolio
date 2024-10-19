@@ -547,7 +547,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
     
     @set_end_block_if_none
     @stuck_coro_debugger
-    async def _load_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[TokenTransfer]:
+    async def _load_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[TokenTransfer]:  # type: ignore [override]
         """
         Loads new token transfer entries between the specified blocks.
 

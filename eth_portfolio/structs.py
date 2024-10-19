@@ -7,7 +7,7 @@ The classes are designed to provide a consistent and flexible interface for work
 import logging
 from decimal import Decimal
 from functools import cached_property
-from typing import TYPE_CHECKING, ClassVar, Literal, Optional, Tuple, TypeVar, Union
+from typing import TYPE_CHECKING, ClassVar, List, Literal, Optional, Tuple, TypeVar, Union
 
 from brownie import chain
 from dank_mids.structs import DictStruct, FilterTrace
@@ -25,7 +25,7 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
     
-class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):
+class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
     """
     The :class:`~structs._LedgerEntryBase` class is a base class for ledger entries representing on-chain actions in a blockchain.
 
@@ -302,11 +302,13 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unkno
     """
     The raw trace object associated with this internal transfer.
     """
-    
-    block_hash: HexBytes
-    """
-    The hash of the block containing the transaction that includes this InternalTransfer.
-    """
+
+    @property
+    def block_hash(self) -> HexBytes:
+        """
+        The hash of the block containing the transaction that includes this InternalTransfer.
+        """
+        return self.trace.blockHash
     
     @property
     def transaction_index(self) -> Optional[int]:
@@ -316,7 +318,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unkno
         return self.trace.transactionPosition
         
     @property
-    def hash(self) -> Optional[int]:
+    def hash(self) -> Union[HexBytes, str]:
         """
         The unique hash of the transaction containing this internal transfer.
         """
@@ -344,18 +346,23 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unkno
         """
         return self.trace.action.value
         
-    type: str
-    """
-    The type of internal operation (e.g., "call" for contract calls, "create" for contract creation,
-    "suicide" for contract self-destruct).
-    """
+    @property
+    def type(self) -> Type:
+        return self.trace.type
     
-    trace_address: str
-    """
-    The path of sub-calls to reach this InternalTransfer within the transaction.
-    Represented as period-separated integers, e.g., "0.1.2" for the third sub-call of the second sub-call
-    of the first top-level call.
-    """
+    @property
+    def trace_address(self) -> List[int]:
+        """
+        The path of sub-calls to reach this InternalTransfer within the transaction,
+        
+        Example:
+        - The following trace_address
+        ```python
+        [0, 1, 2]
+        ```
+        represents the third sub-call of the second sub-call of the first top-level call.
+        """
+        return self.trace.traceAddress
     
     @property
     def gas(self) -> int:
@@ -371,10 +378,12 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unkno
         """
         return self.trace.result.gasUsed
     
-    subtraces: int
-    """
-    The number of sub-operations spawned by this InternalTransfer.
-    """
+    @property
+    def subtraces(self) -> int:
+        """
+        The number of sub-operations spawned by this InternalTransfer.
+        """
+        return self.trace.subtraces
     
     @property
     def call_type(self) -> Optional[str]:
