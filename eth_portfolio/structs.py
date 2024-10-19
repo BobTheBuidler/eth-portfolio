@@ -7,7 +7,7 @@ The classes are designed to provide a consistent and flexible interface for work
 import logging
 from decimal import Decimal
 from functools import cached_property
-from typing import TYPE_CHECKING, Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
+from typing import TYPE_CHECKING, ClassVar, Literal, Optional, Tuple, TypeVar, Union
 
 from brownie import chain
 from dank_mids.structs import DictStruct, FilterTrace
@@ -295,7 +295,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unkno
     """
 
     @property
-    def _evm_object(self) -> Log:
+    def _evm_object(self) -> FilterTrace:
         return self.trace
         
     trace: FilterTrace
