@@ -72,6 +72,21 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
 
     hi = await dank_mids.eth.block_number
 
+    # lets find the general area first
+    range_size = hi-lo+1
+    chunks = min(10, range_size)
+    chunk_size = range_size // chunks
+    
+    points = await a_sync.gather({
+        point: get_nonce_at_block(address, point) 
+        for point in [lo+i*chunk_size for i in range(chunks-1)] + [hi]
+    })
+
+    for block, _nonce in points.items():
+        if _nonce >= nonce:
+            break
+        lo = block
+
     while True:
         _nonce = await get_nonce_at_block(address, lo)
         
