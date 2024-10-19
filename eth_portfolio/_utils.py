@@ -3,7 +3,7 @@ import importlib
 import inspect
 import logging
 import pkgutil
-from abc import abstractmethod, abstractproperty
+from abc import abstractmethod
 from datetime import datetime
 from decimal import Decimal as _Decimal
 from functools import cached_property
@@ -209,7 +209,8 @@ class _AiterMixin(a_sync.ASyncIterable[_T]):
     @abstractmethod
     async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[_T, None]:
         yield
-    @abstractproperty
+    @property
+    @abstractmethod
     def _start_block(self) -> int:
         ...
 
