@@ -71,7 +71,10 @@ async def load_token_transfer(
             logger.debug(f"{e} for {transfer_log}, skipping.")
             return None
         except Exception as e:
-            logger.error(f"{e.__class__.__name__} {e} for {symbol} {decoded.address} at block {decoded.block_number}.")
+            try:
+                logger.error(f"{e.__class__.__name__} {e} for {await get_symbol(token)} {decoded.address} at block {decoded.block_number}.")
+            except NonStandardERC20 as e:
+                logger.error(f"{e.__class__.__name__} {e} for {decoded.address} at block {decoded.block_number}.")
             return None
 
     value = Decimal(value) / coro_results.pop('scale')
