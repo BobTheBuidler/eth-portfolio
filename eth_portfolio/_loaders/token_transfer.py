@@ -155,9 +155,9 @@ async def _decode_token_transfer(log: Log) -> Optional[_EventItem]:
         logger.error(log)
 
 _checks = [
-    {'from', 'sender', '_from'},
-    {'to', 'receiver', '_to'},
-    {'value', '_value'},
+    {'from', 'sender', '_from', 'src'},
+    {'to', 'receiver', '_to', 'dst'},
+    {'value', '_value', 'wad'},
 ]
 
 def _check_event(event: _EventItem) -> None:
