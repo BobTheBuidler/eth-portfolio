@@ -8,9 +8,10 @@ import logging
 from functools import cached_property
 from typing import TYPE_CHECKING, Any, ClassVar, Dict, List, Literal, Optional, Tuple, TypeVar, Union, final
 
+import dank_mids.structs.trace as dank_trace_structs
+import dank_mids.structs.transactions as dank_tx_structs
 from brownie import chain
-from dank_mids.structs import DictStruct, trace
-from dank_mids.structs import transactions as structs
+from dank_mids.structs import DictStruct
 from dank_mids.structs.data import Address, Decimal, Wei, checksum
 from hexbytes import HexBytes
 from msgspec import Struct
@@ -38,7 +39,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
     """
 
     @property
-    def _evm_object(self) -> Union["ModifiedTransaction", trace.FilterTrace, Log]:
+    def _evm_object(self) -> Union["ModifiedTransaction", dank_trace_structs.FilterTrace, Log]:
         """
         The EVM object associated with {cls_name}, exactly as it was received from the RPC.
         """
@@ -118,7 +119,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
     @classmethod
     def from_rpc_response(
         cls, 
-        transaction: structs.Transaction, 
+        transaction: dank_tx_structs.Transaction, 
         *,
         price: Optional[Decimal] = None, 
         value_usd: Optional[Decimal] = None,
@@ -256,7 +257,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
         return self.transaction.v
     
     @property
-    def access_list(self) -> Optional[Tuple[structs.AccessListEntry, ...]]:
+    def access_list(self) -> Optional[Tuple[dank_tx_structs.AccessListEntry, ...]]:
         """
         List of addresses and storage keys the transaction plans to access (for EIP-2930 and EIP-1559 transactions).
         """
@@ -291,7 +292,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
 
     @staticmethod
     @stuck_coro_debugger
-    async def from_trace(trace: trace.FilterTrace, load_prices: bool) -> "InternalTransfer":
+    async def from_trace(trace: dank_trace_structs.FilterTrace, load_prices: bool) -> "InternalTransfer":
         """
         Asynchronously processes a raw internal transfer dictionary into an InternalTransfer object.
 
@@ -370,7 +371,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         """
         The unique hash of the transaction containing this internal transfer.
         """
-        return f'{self.trace.action.rewardType.name} reward' if self.trace.type == trace.Type.reward else self.trace.transactionHash
+        return f'{self.trace.action.rewardType.name} reward' if self.trace.type == dank_trace_structs.Type.reward else self.trace.transactionHash
 
     @property
     def from_address(self) -> Address:
@@ -385,7 +386,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         The address to which the internal transfer was sent, if applicable.
         """
         # NOTE: for block reward transfers, the recipient is 'author'
-        return self.trace.action.author if self.trace.type == trace.Type.reward else self.trace.action.to
+        return self.trace.action.author if self.trace.type == dank_trace_structs.Type.reward else self.trace.action.to
         
     @property
     def value(self) -> Decimal:
@@ -395,7 +396,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         return self.trace.action.value.scaled
         
     @property
-    def type(self) -> trace.Type:
+    def type(self) -> dank_trace_structs.Type:
         return self.trace.type
     
     @property
@@ -417,7 +418,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         """
         The amount of gas allocated for this internal operation.
         """
-        return 0 if self.trace.type == trace.Type.reward else self.trace.action.gas
+        return 0 if self.trace.type == dank_trace_structs.Type.reward else self.trace.action.gas
     
     @property
     def gas_used(self) -> int:
