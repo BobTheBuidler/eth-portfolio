@@ -27,7 +27,7 @@ from y.utils.events import decode_logs
 from eth_portfolio import structs
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._db import utils as db
-from eth_portfolio._loaders.utils import get_transaction_receipt, underscore
+from eth_portfolio._loaders.utils import get_transaction_receipt
 
 logger = logging.getLogger(__name__)
 

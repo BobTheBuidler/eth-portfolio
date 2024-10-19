@@ -1,9 +1,6 @@
 
-from functools import lru_cache
-
 import a_sync
 import eth_retry
-import inflection
 import msgspec
 from async_lru import alru_cache
 from dank_mids.structs.data import TransactionHash
@@ -29,11 +26,6 @@ def checksum(addr: str) -> str:
         return __checksums[addr]
     except KeyError:
         checksummed = __checksums[addr] = to_checksum_address(addr)
-        return checksummed 
-
-@lru_cache(maxsize=None)
-def underscore(string: str) -> str:
-    """cached to conserve cpu cycles\n\n""" + inflection.underscore.__doc__
-    return inflection.underscore(string)   
+        return checksummed
 
 __checksums = {}
