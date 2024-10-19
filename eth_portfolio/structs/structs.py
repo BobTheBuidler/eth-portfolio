@@ -9,11 +9,9 @@ from functools import cached_property
 from typing import TYPE_CHECKING, Any, ClassVar, Dict, List, Literal, Optional, Tuple, TypeVar, Union, final
 
 from brownie import chain
-from dank_mids.structs import DictStruct, FilterTrace
-from dank_mids.structs.transaction import _TransactionBase, Transaction1559, Transaction2930, TransactionLegacy
+from dank_mids.structs import DictStruct, trace
+from dank_mids.structs import transactions as structs
 from dank_mids.structs.data import Address, Decimal, Wei, checksum
-from dank_mids.structs.trace import Type
-from dank_mids.structs.transaction import AccessListEntry
 from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
@@ -22,9 +20,10 @@ from y.constants import EEE_ADDRESS
 from y.datatypes import Block
 
 from eth_portfolio._utils import _get_price
+from eth_portfolio.structs.modified import FilterTrace, ModifiedTransaction, _modified_tx_type_map
 
 if TYPE_CHECKING:
-    from y._db.utils.logs import ArrayEncodableLog
+    from y._db.utils.logs import Log
 
 
 logger = logging.getLogger(__name__)
@@ -39,7 +38,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
     """
 
     @property
-    def _evm_object(self) -> Union["Transaction", "InternalTransfer", "TokenTransfer"]:
+    def _evm_object(self) -> Union["ModifiedTransaction", trace.FilterTrace, Log]:
         """
         The EVM object associated with {cls_name}, exactly as it was received from the RPC.
         """
@@ -82,27 +81,6 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
 
     
 
-class _ArrayEncodableTransactionBase(_TransactionBase, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
-    ...
-
-class ArrayEncodableTransactionLegacy(TransactionLegacy, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
-    ...
-    
-class ArrayEncodableTransaction2930(Transaction2930, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
-    ...
-    
-class ArrayEncodableTransaction1559(Transaction1559, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
-    ...
-    
-ArrayEncodableTransaction = Union[ArrayEncodableTransactionLegacy, ArrayEncodableTransaction2930, ArrayEncodableTransaction1559]
-
-_types_mapping = {
-    TransactionLegacy: ArrayEncodableTransactionLegacy,
-    Transaction2930: ArrayEncodableTransaction2930,
-    Transaction1559: ArrayEncodableTransaction1559,
-    _TransactionBase: _ArrayEncodableTransactionBase,
-}
-
 
 def _get_init_kwargs(original_struct: Struct) -> Dict[str, Any]:
     kwargs = {}
@@ -123,7 +101,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
     including gas parameters, signature components, and transaction-specific data.
 
     Example:
-        >>> tx = Transaction(tx=ArrayEncodableTransaction1559(...))
+        >>> tx = Transaction(tx=Transaction1559(...))
         >>> tx.chainid
         Network.Mainnet
         >>> tx.type
@@ -140,13 +118,13 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
     @classmethod
     def from_rpc_response(
         cls, 
-        transaction: Union[TransactionLegacy, Transaction2930, Transaction1559], 
+        transaction: structs.Transaction, 
         *,
         price: Optional[Decimal] = None, 
         value_usd: Optional[Decimal] = None,
     ) -> "Transaction":
         try:
-            new_type = _types_mapping[type(transaction)]
+            new_type = _modified_tx_type_map[type(transaction)]
         except KeyError as e:
             raise TypeError(type(transaction), transaction) from e
         try:
@@ -158,7 +136,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
         except TypeError as e:  # NOTE keep this around later to help in case new fields are added
             raise TypeError(*e.args, new_type.__qualname__, {**transaction}) from e
 
-    transaction: ArrayEncodableTransaction
+    transaction: Transaction
     """
     The transaction object received by calling eth_getTransactionByHash.
     """
@@ -278,7 +256,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
         return self.transaction.v
     
     @property
-    def access_list(self) -> Optional[Tuple[AccessListEntry, ...]]:
+    def access_list(self) -> Optional[Tuple[structs.AccessListEntry, ...]]:
         """
         List of addresses and storage keys the transaction plans to access (for EIP-2930 and EIP-1559 transactions).
         """
@@ -292,9 +270,6 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
         return self.transaction.yParity
 
 
-class ArrayEncodableFilterTrace(FilterTrace, frozen=True, kw_only=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
-    ...
-
 @final
 class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):
     """
@@ -305,7 +280,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
     the execution of a single transaction.
 
     Example:
-        >>> internal_tx = InternalTransfer(trace=ArrayEncodableFilterTrace(...), ...)
+        >>> internal_tx = InternalTransfer(trace=FilterTrace(...), ...)
         >>> internal_tx.type
         'call'
         >>> internal_tx.trace_address
@@ -316,7 +291,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
 
     @staticmethod
     @stuck_coro_debugger
-    async def from_trace(trace: FilterTrace, load_prices: bool) -> "InternalTransfer":
+    async def from_trace(trace: trace.FilterTrace, load_prices: bool) -> "InternalTransfer":
         """
         Asynchronously processes a raw internal transfer dictionary into an InternalTransfer object.
 
@@ -355,7 +330,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
             - Interacts with the global 'chain' object from the brownie library for chain ID.
         """
 
-        args = {"trace": ArrayEncodableFilterTrace(**_get_init_kwargs(trace))}
+        args = {"trace": FilterTrace(**_get_init_kwargs(trace))}
         if load_prices:
             price = await _get_price(EEE_ADDRESS, trace.block)
             args["price"] = price
@@ -368,10 +343,10 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
     """
 
     @property
-    def _evm_object(self) -> ArrayEncodableFilterTrace:
+    def _evm_object(self) -> FilterTrace:
         return self.trace
         
-    trace: ArrayEncodableFilterTrace
+    trace: FilterTrace
     """
     The raw trace object associated with this internal transfer.
     """
@@ -395,7 +370,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         """
         The unique hash of the transaction containing this internal transfer.
         """
-        return f'{self.trace.action.rewardType.name} reward' if self.trace.type == Type.reward else self.trace.transactionHash
+        return f'{self.trace.action.rewardType.name} reward' if self.trace.type == trace.Type.reward else self.trace.transactionHash
 
     @property
     def from_address(self) -> Address:
@@ -410,7 +385,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         The address to which the internal transfer was sent, if applicable.
         """
         # NOTE: for block reward transfers, the recipient is 'author'
-        return self.trace.action.author if self.trace.type == Type.reward else self.trace.action.to
+        return self.trace.action.author if self.trace.type == trace.Type.reward else self.trace.action.to
         
     @property
     def value(self) -> Decimal:
@@ -420,7 +395,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         return self.trace.action.value.scaled
         
     @property
-    def type(self) -> Type:
+    def type(self) -> trace.Type:
         return self.trace.type
     
     @property
@@ -442,7 +417,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         """
         The amount of gas allocated for this internal operation.
         """
-        return 0 if self.trace.type == Type.reward else self.trace.action.gas
+        return 0 if self.trace.type == trace.Type.reward else self.trace.action.gas
     
     @property
     def gas_used(self) -> int:
@@ -532,7 +507,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True
     Constant indicating this value transfer is a token transfer entry.
     """
 
-    log: "ArrayEncodableLog"
+    log: "Log"
     """
     The log associated with this token transfer.
     """
@@ -546,7 +521,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True
         return checksum(self.log.topic2[-20:])
 
     @property
-    def _evm_object(self) -> "ArrayEncodableLog":
+    def _evm_object(self) -> "Log":
         return self.log
 
     transaction_index: int

@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, AsyncIterator, List
 
 import a_sync
 from brownie import chain
-from brownie.network.event import _EventItem
 from eth_utils import encode_hex
 from y.datatypes import Address
 from y.utils.events import ProcessedEvents
@@ -17,7 +16,7 @@ from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.structs import TokenTransfer
 
 if TYPE_CHECKING:
-    from y._db.utils.logs import ArrayEncodableLog
+    from y._db.utils.logs import Log
 
 try:
     # this is only available in 4.0.0+
@@ -48,9 +47,9 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
             logger.debug("yielding %s at block %s [thru: %s, lock: %s]", task, task.block, block, self._lock.value)
             yield task
         logger.debug("%s yield thru %s complete", self, block)
-    def _include_event(self, event: "ArrayEncodableLog") -> bool:
+    def _include_event(self, event: "Log") -> bool:
         return event.address not in SHITCOINS.get(chain.id, [])
-    async def _extend(self, objs: List["ArrayEncodableLog"]) -> None:
+    async def _extend(self, objs: List["Log"]) -> None:
         for log in objs:
             task = asyncio.create_task(
                 coro=_loaders.load_token_transfer(log, self._load_prices), 

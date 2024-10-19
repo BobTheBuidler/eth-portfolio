@@ -18,14 +18,14 @@ from eth_portfolio._utils import _get_price
 from eth_portfolio.structs import TokenTransfer
 
 if TYPE_CHECKING:
-    from y._db.utils.logs import ArrayEncodableLog
+    from y._db.utils.logs import Log
 
 logger = logging.getLogger(__name__)
 
 token_transfer_semaphore = dank_mids.BlockSemaphore(10_000, name='eth_portfolio.token_transfers')  # Some arbitrary number
 
 @stuck_coro_debugger
-async def load_token_transfer(transfer_log: "ArrayEncodableLog", load_prices: bool) -> Optional[TokenTransfer]:  # sourcery skip: simplify-boolean-comparison
+async def load_token_transfer(transfer_log: "Log", load_prices: bool) -> Optional[TokenTransfer]:  # sourcery skip: simplify-boolean-comparison
     if transfer_log.removed:
         if transfer := await db.get_token_transfer(transfer_log):
             await db.delete_token_transfer(transfer)
