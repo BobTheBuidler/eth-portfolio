@@ -352,9 +352,6 @@ def _insert_internal_transfer(transfer: InternalTransfer) -> None:
         trace_address = (chain.id, transfer.trace_address),
         gas = transfer.gas,
         gas_used = transfer.gas_used,
-        input = transfer.input,
-        output = transfer.output,
-        subtraces = transfer.subtraces,
         address = (chain.id, transfer.address),
         raw = json.encode(transfer, enc_hook=_encode_hook),
     )
