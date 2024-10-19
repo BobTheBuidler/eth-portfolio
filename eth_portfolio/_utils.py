@@ -61,7 +61,7 @@ class Decimal(data.Decimal):
     I'm in the process of moving from floats to decimals, this will help be as I buidl.
     """
     def __init__(self, v) -> None:
-        #assert not isinstance(v, _Decimal)
+        #assert not isinstance(v, data.Decimal)
         super().__init__()
 
 async def _describe_err(token: Address, block: Optional[Block]) -> str:
@@ -95,12 +95,12 @@ _to_raise = (
     RuntimeError,
 )
 
-async def _get_price(token: Address, block: Optional[int] = None) -> _Decimal:
+async def _get_price(token: Address, block: Optional[int] = None) -> data.Decimal:
     try:
         if await is_erc721(token):
-            return _Decimal(0)
+            return data.Decimal(0)
         maybe_float = await get_price(token, block, silent=True, sync=False)
-        dprice = _Decimal(maybe_float)
+        dprice = data.Decimal(maybe_float)
         return round(dprice, 18)
     except CantFetchParam as e:
         logger.warning('CantFetchParam %s', e)
@@ -123,7 +123,7 @@ async def _get_price(token: Address, block: Optional[int] = None) -> _Decimal:
         #failsafe
         except:
             raise e
-    return _Decimal(0)
+    return data.Decimal(0)
 
 @alru_cache(maxsize=None)
 async def is_erc721(token: Address) -> bool:
