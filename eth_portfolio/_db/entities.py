@@ -117,6 +117,7 @@ class InternalTransfer(db.Entity):
 
     @cached_property
     def decoded(self) -> structs.InternalTransfer:
+        structs.InternalTransfer.__doc__
         return json.decode(self.raw, type=structs.InternalTransfer)
 
     @property
