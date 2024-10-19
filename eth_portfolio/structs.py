@@ -460,12 +460,10 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_
         """
         return self.log.address
 
-    @cached_property
-    def value(self) -> Decimal:
-        """
-        The amount of tokens transferred, scaled to a human-readable decimal value.
-        """
-        return int(self.topics[3], 16)
+    value: Decimal
+    """
+    The amount of tokens transferred, scaled to a human-readable decimal value.
+    """
 
 
 LedgerEntry = Union[Transaction, InternalTransfer, TokenTransfer]
