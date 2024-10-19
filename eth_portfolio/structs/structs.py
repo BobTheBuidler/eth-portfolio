@@ -12,7 +12,7 @@ import dank_mids.structs.trace as dank_trace
 import dank_mids.structs.transaction as dank_tx
 from brownie import chain
 from dank_mids.structs import DictStruct
-from dank_mids.structs.data import Address, Decimal, Wei, checksum
+from dank_mids.structs.data import Address, BlockHash, Decimal, TransactionHash, Wei, checksum
 from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
@@ -143,14 +143,14 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
     """
     
     @property
-    def hash(self) -> HexBytes:
+    def hash(self) -> TransactionHash:
         """
         The unique transaction hash.
         """
         return self.transaction.hash
 
     @property
-    def block_hash(self) -> HexBytes:
+    def block_hash(self) -> BlockHash:
         """
         The hash of the block that includes this Transaction.
         """
