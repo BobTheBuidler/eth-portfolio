@@ -9,13 +9,12 @@ The primary focus of this module is to support eth-portfolio's internal operatio
 import logging
 from collections import defaultdict
 from decimal import Decimal
-from typing import DefaultDict, Dict, List, Optional, Tuple
+from typing import DefaultDict, List, Optional, Tuple
 
 import a_sync
 import dank_mids
 import eth_retry
 from async_lru import alru_cache
-from brownie import chain
 from dank_mids.structs import Transaction as dankTransaction
 from pony.orm import TransactionIntegrityError
 from y import get_price
@@ -32,9 +31,9 @@ from eth_portfolio._loaders.utils import get_transaction_receipt, underscore
 logger = logging.getLogger(__name__)
 
 Nonce = int
-Nonces = Dict[Nonce, Block]
+Nonces = DefaultDict[Nonce, Block]
 
-nonces: DefaultDict[Address, Nonces] = defaultdict(dict)
+nonces: DefaultDict[Address, Nonces] = defaultdict(lambda: defaultdict(int))
 
 @eth_retry.auto_retry
 @stuck_coro_debugger
