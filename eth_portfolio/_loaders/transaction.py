@@ -7,8 +7,9 @@ The primary focus of this module is to support eth-portfolio's internal operatio
 """
 
 import logging
+from collections import defaultdict
 from decimal import Decimal
-from typing import List, Optional, Tuple
+from typing import DefaultDict, Dict, List, Optional, Tuple
 
 import a_sync
 import dank_mids
@@ -31,6 +32,9 @@ from eth_portfolio._loaders.utils import get_transaction_receipt, underscore
 logger = logging.getLogger(__name__)
 
 Nonce = int
+Nonces = Dict[Nonce, Block]
+
+nonces: DefaultDict[Address, Nonces] = defaultdict(dict)
 
 @eth_retry.auto_retry
 @stuck_coro_debugger
@@ -59,8 +63,16 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
             await db.delete_transaction(transaction)
         else:
             return nonce, transaction
-    lo = 0
+
+    if known_nonces_lower_than_query := [n for n in nonces[address] if n < nonce]:
+        highest_known_nonce_lower_than_query_nonce = max(known_nonces_lower_than_query)
+        block_at_known_nonce = nonces[address][highest_known_nonce_lower_than_query_nonce]
+        lo = block_at_known_nonce
+    else:
+        lo = 0
+
     hi = await dank_mids.eth.block_number
+
     while True:
         _nonce = await get_nonce_at_block(address, lo)
         
@@ -171,12 +183,21 @@ async def get_nonce_at_block(address: Address, block: Block) -> int:
 
     """
     try:
-        return await dank_mids.eth.get_transaction_count(address, block_identifier = block) - 1
+        nonce = await dank_mids.eth.get_transaction_count(address, block_identifier = block) - 1
+        _update_nonces(address, nonce, block)
+        return nonce
     except ValueError as e:
         # NOTE this is known to occur on Arbitrum
         if 'error creating execution cursor' in str(e) and block == 0:
             return -1
         raise ValueError(f"For {address} at {block}: {e}") from e
+
+
+def _update_nonces(address: Address, nonce: Nonce, block: Block):
+    # if you are searching for `nonce` and you verified it occurs AT or ABOVE `block` call this fn.
+    if block > nonces[address][nonce]:
+        nonces[address][nonce] = block
+
 
 @alru_cache(ttl=60*60)
 @eth_retry.auto_retry
