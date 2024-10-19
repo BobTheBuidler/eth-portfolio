@@ -255,6 +255,8 @@ async def insert_transaction(transaction: Transaction) -> None:
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def _insert_transaction(transaction: Transaction) -> None:
+    encoded = json.encode(transaction, enc_hook=enc_hook)
+    logger.warning(f"inserting {encoded}")
     entities.Transaction(
         block = (chain.id, transaction.block_number),
         transaction_index = transaction.transaction_index,
@@ -270,7 +272,7 @@ def _insert_transaction(transaction: Transaction) -> None:
         gas_price = transaction.gas_price,
         max_fee_per_gas = transaction.max_fee_per_gas, 
         max_priority_fee_per_gas = transaction.max_priority_fee_per_gas,
-        raw = json.encode(transaction, enc_hook=enc_hook),    
+        raw = encoded,    
     )
 
     
