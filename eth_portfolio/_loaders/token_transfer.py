@@ -1,5 +1,4 @@
 import asyncio
-import decimal
 import logging
 from decimal import Decimal
 from typing import Optional, Union
@@ -50,50 +49,50 @@ async def load_token_transfer(
         decoded = await _decode_token_transfer(transfer_log)
         if decoded is None:
             return None
-        token = ERC20(decoded.address, asynchronous=True)
-        coros = [token.scale, get_symbol(token), get_transaction_index(decoded.transaction_hash)]
-        
-        try:
-            if load_prices:
-                coros.append(_get_price(token.address, decoded.block_number))
-                scale, symbol, transaction_index, price = await asyncio.gather(*coros)
-            else:
-                scale, symbol, transaction_index = await asyncio.gather(*coros)
-        except NonStandardERC20 as e:
-            # NOTE: if we cant fetch scale or symbol or both, this is probably either a shitcoin or an NFT (which we don't support at this time)
-            logger.debug(f"{e} for {transfer_log}, skipping.")
-            return None
-        
+            
         sender, receiver, value = decoded.values()
         value = Decimal(value) / scale
         
         token_transfer = {
             'log': transfer_log,
-            'transaction_index': transaction_index,
-            'token': symbol,
             'value': value,
         }
         
+        token = ERC20(decoded.address, asynchronous=True)
+        
+        coros = {
+            'scale': token.scale, 
+            'symbol': get_symbol(token), 
+            'transaction_index': get_transaction_index(decoded.transaction_hash),
+        }
+
         if load_prices:
-            try:
-                price = round(Decimal(price), 18) if price else None
-                token_transfer['price'] = price
-                token_transfer['value_usd'] = round(value * price, 18)
-            except Exception as e:
-                logger.error(f"{e.__class__.__name__} {e} for {symbol} {decoded.address} at block {decoded.block_number}.")
+            coros['price'] = _get_price(token.address, decoded.block_number))
+        
+        try:
+            token_transfer.update(await a_sync.gather(coros))
+        except NonStandardERC20 as e:
+            # NOTE: if we cant fetch scale or symbol or both, this is probably either a shitcoin or an NFT (which we don't support at this time)
+            logger.debug(f"{e} for {transfer_log}, skipping.")
+            return None
+        except Exception as e:
+            logger.error(f"{e.__class__.__name__} {e} for {symbol} {decoded.address} at block {decoded.block_number}.")
+            return None
+        
+        if price := token_transfer.get('price'):
+            token_transfer['value_usd'] = round(value * price, 18)
         
         try:
             transfer = TokenTransfer(**token_transfer)
+        except TypeError as e:
+            raise TypeError(str(e), token_transfer) from e
+
+        try:
             await db.insert_token_transfer(transfer)
-        except decimal.InvalidOperation:
-            # Not entirely sure why this happens, probably some crazy uint value
-            return None
         except TransactionIntegrityError:
             if load_prices:
                 await db.delete_token_transfer(transfer)
                 await db.insert_token_transfer(transfer)
-        except TypeError as e:
-            raise TypeError(str(e), token_transfer) from e
         return transfer
 
 @stuck_coro_debugger
