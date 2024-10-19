@@ -33,7 +33,8 @@ async def load_token_transfer(
     transfer_log: "ArrayEncodableLog", 
     load_prices: bool,
 ) -> Optional[TokenTransfer]:
-    
+    raise Exception('here')
+
     if transfer_log.removed:
         if transfer := await db.get_token_transfer(transfer_log):
             await db.delete_token_transfer(transfer)
