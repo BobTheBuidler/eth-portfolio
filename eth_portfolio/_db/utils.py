@@ -35,8 +35,8 @@ try:
     db.generate_mapping(create_tables=True)
 except OperationalError as e:
     if not str(e).startswith("no such column:"):
-        raise e
-    raise OperationalError("Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script")
+        raise
+    raise OperationalError("Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script") from e
 
 from y._db.decorators import a_sync_write_db_session_cached, retry_locked
 from y._db.entities import Address, Block, Chain, Contract, Token, insert
@@ -370,12 +370,12 @@ _TPK = Tuple[Tuple[int, str], int]
 @lru_cache(maxsize=None)
 def transactions_known_at_startup() -> Dict[_TPK, bytes]:
     transfers = {}
+    obj: Tuple[int, str, int, bytes]
     for obj in select(
         (t.from_address.chain.id, t.from_address.address, t.nonce, t.raw)
         for t in entities.Transaction  # type: ignore [attr-defined]
         if t.from_address.chain.id == chain.id
     ):
-        obj: Tuple[int, str, int, bytes]
         chainid, from_address, nonce, raw = obj
         pk = ((chainid, from_address), nonce)
         transfers[pk] = raw
@@ -386,12 +386,12 @@ _TTPK = Tuple[Tuple[int, int], int, int]
 @lru_cache(maxsize=None)
 def token_transfers_known_at_startup() -> Dict[_TTPK, bytes]:
     transfers = {}
+    obj: Tuple[int, int, int, int, bytes]
     for obj in select(
         (t.block.chain.id, t.block.number, t.transaction_index, t.log_index, t.raw)
-        for t in entities.TokenTransfer
+        for t in entities.TokenTransfer  # type: ignore [attr-defined]
         if t.block.chain.id == chain.id
     ):
-        obj: Tuple[int, int, int, int, bytes]
         chainid, block, tx_index, log_index, raw = obj
         pk = ((chainid, block), tx_index, log_index)
         transfers[pk] = raw

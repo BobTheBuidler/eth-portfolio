@@ -123,7 +123,7 @@ async def _get_price(token: Address, block: Optional[int] = None) -> _Decimal:
         #failsafe
         except:
             raise e
-    return 0
+    return Decimal(0)
 
 @alru_cache(maxsize=None)
 async def is_erc721(token: Address) -> bool:
