@@ -469,7 +469,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             generator_function = partial(generator_function, tqdm=True, desc=f"Trace Filters       {self.address}")
 
         if tasks := [
-            asyncio.create_task(coro=_loaders.load_internal_transfer(trace, self.load_prices), name="load_internal_transfer")
+            asyncio.create_task(coro=InternalTransfer.from_trace(trace, self.load_prices), name="InternalTransfer.from_trace")
             for traces in generator_function(trace_filter_coros)
             for trace in await traces
         ]:
