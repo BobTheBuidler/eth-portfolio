@@ -24,11 +24,10 @@ from y.exceptions import CantFetchParam, ContractNotVerified, NodeNotSynced, Non
 from y.prices.magic import get_price
 
 from eth_portfolio import _config
-from eth_portfolio.structs import _LE, LedgerEntry
 from eth_portfolio.typing import _T
 
 if TYPE_CHECKING:
-    from eth_portfolio import Portfolio
+    from eth_portfolio.structs import LedgerEntry
 
 logger = logging.getLogger(__name__)
 
@@ -220,7 +219,7 @@ class _AiterMixin(a_sync.ASyncIterable[_T]):
 from typing import TypeVar
 _LT = TypeVar("_LT")
 
-class _LedgeredBase(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry], Generic[_LT]):
+class _LedgeredBase(a_sync.ASyncGenericBase, _AiterMixin["LedgerEntry"], Generic[_LT]):
     """A mixin class for things with ledgers"""
     transactions: _LT
     internal_transfers: _LT
@@ -235,5 +234,5 @@ class _LedgeredBase(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry], Generic[_
     def _ledgers(self) -> Iterator[_LT]:
         """An iterator with the 3 ledgers (transactions, internal transfers, token transfers)"""
         yield from (self.transactions, self.internal_transfers, self.token_transfers)
-    def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[LedgerEntry, None]:
+    def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator["LedgerEntry", None]:
         return a_sync.as_yielded(*(ledger[start_block: end_block] for ledger in self._ledgers))  # type: ignore [return-value,index]
