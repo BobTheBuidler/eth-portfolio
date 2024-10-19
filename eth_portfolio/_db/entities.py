@@ -1,8 +1,12 @@
 
 from decimal import Decimal
 
+from dank_mids.structs.transaction import AccessListEntry
+from msgspec import json
 from pony.orm import Optional, PrimaryKey, Required, Set, composite_key
 from y._db.entities import Address, Block, Contract, Token, db
+
+from eth_portfolio import structs
 
 
 class BlockExtended(Block):
@@ -36,7 +40,6 @@ class Transaction(db.Entity):
     value = Required(Decimal, 38, 18, lazy=True)
     price = Optional(Decimal, 38, 18, lazy=True)
     value_usd = Optional(Decimal, 38, 18, lazy=True)
-    access_list = Optional(bytes, lazy=True)
     
     nonce = Required(int, lazy=True)
     type = Optional(int, lazy=True)
@@ -44,15 +47,44 @@ class Transaction(db.Entity):
     gas_price = Required(Decimal, 38, 1, lazy=True)
     max_fee_per_gas = Optional(Decimal, 38, 1, lazy=True)
     max_priority_fee_per_gas = Optional(Decimal, 38, 1, lazy=True)
-    input = Required(str, lazy=True)
-    r = Required(str, lazy=True)
-    s = Required(str, lazy=True)
-    v = Required(int, lazy=True)
-    y_parity = Optional(int, lazy=True)
     
     composite_key(block, transaction_index)
     
     raw = Required(bytes, lazy=True)
+
+    @cached_property
+    def decoded(self) -> "structs.Transaction":
+        return json.decode(self.raw, type=structs.Transaction)
+
+    @property
+    def input(self) -> HexBytes:
+        structs.Transaction.input.__doc__
+        return self.decoded.input
+
+    @property
+    def r(self) -> HexBytes:
+        structs.Transaction.r.__doc__
+        return self.decoded.r
+
+    @property
+    def s(self) -> HexBytes:
+        structs.Transaction.s.__doc__
+        return self.decoded.s
+
+    @property
+    def v(self) -> int:
+        structs.Transaction.v.__doc__
+        return self.decoded.v
+
+    @property
+    def access_list(self) -> List[AccessListEntry]:
+        structs.Transaction.access_list.__doc__
+        return self.decoded.access_list
+    
+    @property
+    def y_parity(self) -> Optional[int]:
+        structs.TokenTransfer.y_parity.__doc__
+        return self.decoded.y_parity
     
 
 class InternalTransfer(db.Entity):
@@ -84,6 +116,11 @@ class InternalTransfer(db.Entity):
     
     raw = Required(bytes, lazy=True)
 
+    @cached_property
+    def decoded(self) -> "structs.InternalTransfer":
+        from eth_portfolio import structs
+        return json.decode(self.raw, type=structs.InternalTransfer)
+
 class TokenTransfer(db.Entity):
     _id = PrimaryKey(int, auto=True)
     
@@ -104,4 +141,9 @@ class TokenTransfer(db.Entity):
     composite_key(block, transaction_index, log_index)
     
     raw = Required(bytes, lazy=True)
+
+    @cached_property
+    def decoded(self) -> "structs.TokenTransfer":
+        from eth_portfolio import structs
+        return json.decode(self.raw, type=structs.TokenTransfer)
     
