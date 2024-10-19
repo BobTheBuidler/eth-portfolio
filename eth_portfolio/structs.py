@@ -355,7 +355,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         if load_prices:
             price = await _get_price(EEE_ADDRESS, trace.block)
             args["price"] = price
-            args["value_usd"] = round(trace.action.value * price, 18)
+            args["value_usd"] = round(trace.action.value.scaled * price, 18)
         return InternalTransfer(**args)
 
     entry_type: ClassVar[Literal['internal_transfer']] = 'internal_transfer'
