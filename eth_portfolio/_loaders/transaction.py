@@ -12,11 +12,10 @@ from typing import DefaultDict, Dict, List, Optional, Tuple
 
 import a_sync
 import dank_mids
+import dank_mids.structs as dank_structs
 import eth_retry
 import msgspec
 from async_lru import alru_cache
-from dank_mids.structs import Log, data
-from dank_mids.structs import Transaction as dankTransaction
 from pony.orm import TransactionIntegrityError
 from y import get_price
 from y._decorators import stuck_coro_debugger
@@ -24,7 +23,7 @@ from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
 from y.utils.events import decode_logs
 
-from eth_portfolio import structs
+from eth_portfolio.structs import structs
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._db import utils as db
 from eth_portfolio._loaders.utils import get_transaction_receipt
@@ -71,8 +70,8 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
         
     if load_prices:
         # TODO: debug why `tx.value` isnt already a Wei obj
-        scaled = data.Wei(tx.value).scaled
-        price = data.Decimal(await get_price(EEE_ADDRESS, block = tx.blockNumber, sync=False))
+        scaled = dank_structs.data.Wei(tx.value).scaled
+        price = dank_structs.data.Decimal(await get_price(EEE_ADDRESS, block = tx.blockNumber, sync=False))
         transaction = structs.Transaction.from_rpc_response(tx, price=round(price, 18), value_usd=round(scaled * price, 18))
     else:
         transaction = structs.Transaction.from_rpc_response(tx)
@@ -144,7 +143,7 @@ async def _insert_to_db(transaction: structs.Transaction, load_prices: bool) -> 
 @eth_retry.auto_retry
 @stuck_coro_debugger
 @cache_to_disk
-async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block: Block) -> Optional[dankTransaction]:
+async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block: Block) -> Optional[dank_structs.Transaction]:
     """
     This function retrieves a transaction for a specifified address by its nonce and block, if any match.
     
@@ -174,13 +173,13 @@ async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block
         # Special handler for contract creation transactions
         if tx.to is None:
             receipt_bytes = await get_transaction_receipt(tx.hash)
-            receipt_0 = msgspec.json.decode(receipt_bytes, type=ReceiptContractAddress, dec_hook=data.Address._decode_hook)
+            receipt_0 = msgspec.json.decode(receipt_bytes, type=ReceiptContractAddress, dec_hook=dank_structs.data.Address._decode_hook)
             if receipt_0.contractAddress == address:
                 return tx
         # Special handler for Gnosis Safe deployments
         elif tx.to == "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2":
             receipt_bytes = await get_transaction_receipt(tx.hash)
-            receipt_1 = msgspec.json.decode(receipt_bytes, type=ReceiptLogs, dec_hook=data._decode_hook)
+            receipt_1 = msgspec.json.decode(receipt_bytes, type=ReceiptLogs, dec_hook=dank_structs.data._decode_hook)
             events = decode_logs(receipt_1.logs)
             if "SafeSetup" in events and "ProxyCreation" in events and any(event['proxy'] == address for event in events['ProxyCreation']):
                 return tx
@@ -188,10 +187,10 @@ async def get_transaction_by_nonce_and_block(address: Address, nonce: int, block
 
 class ReceiptContractAddress(msgspec.Struct):
     """We only decode what we need and immediately discard the rest of the receipt."""
-    contractAddress: data.Address
+    contractAddress: dank_structs.data.Address
 
 class ReceiptLogs(msgspec.Struct):
-    logs: List[Log]
+    logs: List[dank_structs.Log]
 
 @alru_cache(maxsize=None)
 @eth_retry.auto_retry
@@ -236,7 +235,7 @@ def _update_nonces(address: Address, nonce: Nonce, block: Block):
 @alru_cache(ttl=60*60)
 @eth_retry.auto_retry
 @stuck_coro_debugger
-async def _get_block_transactions(block: Block) -> List[dankTransaction]:
+async def _get_block_transactions(block: Block) -> List[dank_structs.Transaction]:
     """
     Retrieves all transactions from a specific block.
 
