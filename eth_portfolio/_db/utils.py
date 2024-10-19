@@ -273,8 +273,7 @@ def _insert_transaction(transaction: Transaction) -> None:
         max_priority_fee_per_gas = getattr(transaction, 'max_priority_fee_per_gas', None),
         raw = encoded,    
     )
-
-    hex(100, 2)
+    
 
 @a_sync(default='async')
 @robust_db_session
