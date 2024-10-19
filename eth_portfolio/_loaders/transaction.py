@@ -8,7 +8,7 @@ The primary focus of this module is to support eth-portfolio's internal operatio
 
 import logging
 from collections import defaultdict
-from typing import DefaultDict, List, Optional, Tuple
+from typing import DefaultDict, Dict, List, Optional, Tuple
 
 import a_sync
 import dank_mids
@@ -64,6 +64,28 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
         else:
             return nonce, transaction
 
+    block = await get_block_for_nonce(address, nonce)
+    tx = await get_transaction_by_nonce_and_block(address, nonce, block)
+    if tx is None:
+        return nonce, None
+        
+    if load_prices:
+        # TODO: debug why `tx.value` isnt already a Wei obj
+        scaled = data.Wei(tx.value).scaled
+        price = data.Decimal(await get_price(EEE_ADDRESS, block = tx.blockNumber, sync=False))
+        transaction = structs.Transaction.from_rpc_response(tx, price=round(price, 18), value_usd=round(scaled * price, 18))
+    else:
+        transaction = structs.Transaction.from_rpc_response(tx)
+
+    await a_sync.create_task(
+        coro=_insert_to_db(transaction, load_prices), 
+        skip_gc_until_done=True,
+    )
+    
+    return nonce, transaction
+
+
+async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
     if known_nonces_lower_than_query := [n for n in nonces[address] if n < nonce]:
         highest_known_nonce_lower_than_query_nonce = max(known_nonces_lower_than_query)
         block_at_known_nonce = nonces[address][highest_known_nonce_lower_than_query_nonce]
@@ -78,9 +100,9 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
     if range_size > 4:
         num_chunks = _get_num_chunks(range_size)
         chunk_size = range_size // num_chunks
-        points = await a_sync.gather({
+        points: Dict[int, Nonce] = await a_sync.gather({
             point: get_nonce_at_block(address, point) 
-            for point in [lo+i*chunk_size for i in range(num_chunks)]
+            for point in [lo + i * chunk_size for i in range(num_chunks)]
         })
 
         for block, _nonce in points.items():
@@ -97,36 +119,16 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
             logger.debug("Nonce at %s is %s, checking higher block %s", old_lo, _nonce, lo)
             continue
 
-        prev_block_nonce = await get_nonce_at_block(address, lo - 1)
+        prev_block_nonce: int = await get_nonce_at_block(address, lo - 1)
         if prev_block_nonce >= nonce:
             hi = lo
             lo = int(lo / 2)
             logger.debug("Nonce at %s is %s, checking lower block %s", hi, _nonce, lo)
             continue
 
-        
         logger.debug("Found nonce %s at block %s", nonce, lo)
-        tx = await get_transaction_by_nonce_and_block(address, nonce, lo)
-        if tx is None:
-            return nonce, None
-            
-        if load_prices:
-            # TODO: debug why `tx.value` isnt already a Wei obj
-            scaled = data.Wei(tx.value).scaled
-            price = data.Decimal(await get_price(EEE_ADDRESS, block = tx.blockNumber, sync=False))
-            transaction = structs.Transaction.from_rpc_response(tx, price=round(price, 18), value_usd=round(scaled * price, 18))
-        else:
-            transaction = structs.Transaction.from_rpc_response(tx)
-
-        await a_sync.create_task(
-            coro=_insert_to_db(transaction, load_prices), 
-            skip_gc_until_done=True,
-        )
-        
-        return nonce, transaction
-
-        
-
+        return lo
+    
 
 async def _insert_to_db(transaction: structs.Transaction, load_prices: bool) -> None:
     try:
