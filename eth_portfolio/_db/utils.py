@@ -9,7 +9,7 @@ import y._db.config as config
 from a_sync import a_sync
 from brownie import chain
 from dank_mids.structs.data import _decode_hook
-from msgspec import ValidationError, json
+from msgspec import json
 from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush, select
 from y._db.common import enc_hook
@@ -19,6 +19,7 @@ from eth_portfolio._db.decorators import (break_locks,
                                           requery_objs_on_diff_tx_err)
 from eth_portfolio._db.entities import db
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
+from eth_portfolio.typing import _P, _T, Fn
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +50,9 @@ from y.constants import EEE_ADDRESS
 from y.exceptions import NonStandardERC20
 from y.contracts import is_contract
 
-robust_db_session = lambda callable: retry_locked(break_locks(db_session(callable)))
+
+def robust_db_session(fn: Fn[_P, _T]) -> Fn[_P, _T]:
+    return retry_locked(break_locks(db_session(fn)))
 
 @a_sync(default='async')
 @robust_db_session

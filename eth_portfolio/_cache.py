@@ -22,11 +22,11 @@ def cache_to_disk(fn: AnyFn[P, T]) -> AnyFn[P, T]:
     if iscoroutinefunction(fn):
         @cache_decorator
         @functools.wraps(fn)
-        async def disk_cache_wrap(*args, **kwargs) -> T:
+        async def disk_cache_wrap(*args: P.args, **kwargs: P.kwargs) -> T:
             return await fn(*args, **kwargs)
     else:
         @cache_decorator
         @functools.wraps(fn)
-        def disk_cache_wrap(*args, **kwargs) -> T:
+        def disk_cache_wrap(*args: P.args, **kwargs: P.kwargs) -> T:
             return fn(*args, **kwargs)  # type: ignore [return-value]
     return disk_cache_wrap
