@@ -59,7 +59,7 @@ async def load_token_transfer(transfer_log: Log, load_prices: bool) -> Optional[
         value = Decimal(value) / scale
         
         token_transfer = {
-            'token_transfer': transfer_log,
+            'log': transfer_log,
             'transaction_index': transaction_index,
             # TODO figure out why it comes in both ways
             'hash': hash.hex() if isinstance((hash := decoded.transaction_hash), bytes) else hash,  # type: ignore [attr-defined]
