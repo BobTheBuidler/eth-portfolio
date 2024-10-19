@@ -53,13 +53,6 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
         """
         return self._evm_object.block
     
-    @property
-    def transaction_index(self) -> Optional[int]:
-        """
-        The index of the transaction within its block, if applicable.
-        """
-        return self._evm_object.transactionIndex
-    
     price: Optional[Decimal] = None
     """
     The price of the cryptocurrency at the time of the {cls_name}, if known.
@@ -137,6 +130,13 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_fi
         The hash of the block that includes this Transaction.
         """
         return self.transaction.blockHash
+    
+    @property
+    def transaction_index(self) -> Optional[int]:
+        """
+        The index of the transaction within its block, if applicable.
+        """
+        return self.transaction.transactionIndex
     
     @property
     def nonce(self) -> int:
@@ -452,6 +452,8 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_
     @property
     def _evm_object(self) -> Log:
         return self.log
+
+    transaction_index: int
     
     @property
     def log_index(self) -> int:
@@ -463,11 +465,11 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_
     
     token: Optional[str]
     """
-    The identifier or symbol of the token being transferred, if known.
+    The symbol of the token being transferred, if known.
     """
         
     @property
-    def hash(self) -> Optional[int]:
+    def hash(self) -> HexBytes:
         """
         The unique hash of the transaction containing this token transfer.
         """
