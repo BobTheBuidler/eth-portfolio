@@ -356,7 +356,7 @@ for func_name, func in async_functions.items():
         """
         return await a_sync.gather({address: func(address, *args, **kwargs, sync=False) for address in self})
     setattr(Portfolio, func_name, imported_func)
-    logger.debug(f"Ported {func_name} from PortfolioAddress to Portfolio")
+    logger.debug("Ported %s from PortfolioAddress to Portfolio", func_name)
 
 
 def _get_missing_cols_from_KeyError(e: KeyError) -> List[str]:

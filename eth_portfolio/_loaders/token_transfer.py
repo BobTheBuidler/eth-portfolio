@@ -66,7 +66,7 @@ async def load_token_transfer(
             coro_results = await a_sync.gather(coros)
         except NonStandardERC20 as e:
             # NOTE: if we cant fetch scale or symbol or both, this is probably either a shitcoin or an NFT (which we don't support at this time)
-            logger.debug(f"{e} for {transfer_log}, skipping.")
+            logger.debug("%s for %s, skipping.", e, transfer_log)
             return None
         except Exception as e:
             try:
