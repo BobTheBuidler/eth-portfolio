@@ -120,6 +120,9 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_fi
     """
 
     transaction: DankTransaction
+    """
+    The transaction object received by calling eth_getTransactionByHash.
+    """
     
     @property
     def hash(self) -> HexBytes:
@@ -287,6 +290,9 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unkno
         return self.trace
         
     trace: FilterTrace
+    """
+    The raw trace object associated with this internal transfer.
+    """
     
     block_hash: HexBytes
     """
@@ -439,6 +445,9 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, forbid_unknown_
     """
 
     log: Log
+    """
+    The log associated with this token transfer.
+    """
 
     @property
     def _evm_object(self) -> Log:
