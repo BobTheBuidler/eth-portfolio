@@ -54,7 +54,7 @@ class Transaction(db.Entity):
     raw = Required(bytes, lazy=True)
 
     @cached_property
-    def decoded(self) -> "structs.Transaction":
+    def decoded(self) -> structs.Transaction:
         return json.decode(self.raw, type=structs.Transaction)
 
     @property
@@ -107,20 +107,37 @@ class InternalTransfer(db.Entity):
     trace_address = Required(AddressExtended, lazy=True, reverse='traces')
     gas = Required(Decimal, 38, 1, lazy=True)
     gas_used = Optional(Decimal, 38, 1, lazy=True)
-    code = Optional(str, lazy=True)
-    input = Optional(str, lazy=True)
-    output = Optional(str, lazy=True)
-    subtraces = Required(int, lazy=True)
     address = Required(AddressExtended, lazy=True, reverse='_not_sure_what_this_field_is')
     
-    composite_key(block, transaction_index, hash, from_address, to_address, value, type, call_type, trace_address, gas, gas_used, code, input, output, subtraces, address)
+    composite_key(block, transaction_index, hash, from_address, to_address, value, type, call_type, trace_address, gas, gas_used, address)
     
     raw = Required(bytes, lazy=True)
 
     @cached_property
-    def decoded(self) -> "structs.InternalTransfer":
+    def decoded(self) -> structs.InternalTransfer:
         from eth_portfolio import structs
         return json.decode(self.raw, type=structs.InternalTransfer)
+
+    @property
+    def code(self) -> HexBytes:
+        structs.InternalTransfer.code.__doc__
+        return self.decoded.code
+
+    @property
+    def input(self) -> HexBytes:
+        structs.InternalTransfer.input.__doc__
+        return self.decoded.input
+
+    @property
+    def output(self) -> HexBytes:
+        structs.InternalTransfer.output.__doc__
+        return self.decoded.output
+
+    @property
+    def subtraces(self) -> int:
+        structs.InternalTransfer.subtraces.__doc__
+        return self.decoded.subtraces
+
 
 class TokenTransfer(db.Entity):
     _id = PrimaryKey(int, auto=True)
@@ -144,7 +161,7 @@ class TokenTransfer(db.Entity):
     raw = Required(bytes, lazy=True)
 
     @cached_property
-    def decoded(self) -> "structs.TokenTransfer":
+    def decoded(self) -> structs.TokenTransfer:
         from eth_portfolio import structs
         return json.decode(self.raw, type=structs.TokenTransfer)
     
