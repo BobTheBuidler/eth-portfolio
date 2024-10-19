@@ -278,12 +278,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
     the execution of a single transaction.
 
     Example:
-        >>> internal_tx = InternalTransfer(
-        ...     trace=ArrayEncodableFilterTrace(...),
-        ...     type="call",
-        ...     trace_address="0.1",
-        ...     subtraces=1,
-        ... )
+        >>> internal_tx = InternalTransfer(trace=ArrayEncodableFilterTrace(...), ...)
         >>> internal_tx.type
         'call'
         >>> internal_tx.trace_address
@@ -416,7 +411,8 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         """
         return self.trace.result.output
     
-    init: Optional[HexBytes]
+    '''
+    init: Optional[HexBytes] = UNSET
     """
     The initialization code for contract creation, if this is a create operation.
     """
@@ -430,6 +426,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
     """
     The code of the contract involved in this InternalTransfer, if applicable.
     """
+    '''
 
 
 class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True):
