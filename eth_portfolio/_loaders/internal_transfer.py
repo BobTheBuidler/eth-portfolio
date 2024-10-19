@@ -54,7 +54,7 @@ async def _get_status(txhash: str) -> int:
     return receipt.status
     
 @stuck_coro_debugger
-async def load_internal_transfer(transfer: FilterTrace, load_prices: bool) -> Optional[InternalTransfer]:
+async def load_internal_transfer(trace: FilterTrace, load_prices: bool) -> Optional[InternalTransfer]:
     """
     Asynchronously processes a raw internal transfer dictionary into an InternalTransfer object.
 
