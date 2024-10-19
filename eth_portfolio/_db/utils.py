@@ -18,7 +18,7 @@ from eth_portfolio._db import entities
 from eth_portfolio._db.decorators import (break_locks,
                                           requery_objs_on_diff_tx_err)
 from eth_portfolio._db.entities import db
-from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
+from eth_portfolio.structs.structs import InternalTransfer, TokenTransfer, Transaction
 from eth_portfolio.typing import _P, _T, Fn
 
 logger = logging.getLogger(__name__)
@@ -228,13 +228,21 @@ def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
     transactions = transactions_known_at_startup()
     pk = ((chain.id, sender), nonce)
     if pk in transactions:
-        return json.decode(transactions[pk], type=Transaction, dec_hook=_decode_hook)
+        try:
+            return json.decode(transactions[pk], type=Transaction, dec_hook=_decode_hook)
+        except Exception as e:
+            e.args = (*e.args, json.decode(transactions[pk]))
+            raise
     entity: entities.Transaction
     if entity := entities.Transaction.get(
         from_address = (chain.id, sender),
         nonce = nonce
     ):
-        return json.decode(entity.raw, type=Transaction, dec_hook=_decode_hook)
+        try:
+            return json.decode(entity.raw, type=Transaction, dec_hook=_decode_hook)
+        except Exception as e:
+            e.args = (*e.args, json.decode(entity.raw))
+            raise
     
     
 @a_sync(default='async')
