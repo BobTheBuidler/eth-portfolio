@@ -2,7 +2,7 @@
 from typing import Union
 
 import dank_mids.structs
-from dank_mids.structs import FilterTrace
+from dank_mids.structs import CallTrace, CreateTrace, RewardTrace, SuicideTrace
 from dank_mids.structs.transaction import _TransactionBase, Transaction1559, Transaction2930, TransactionLegacy
 
 
@@ -37,5 +37,13 @@ _modified_tx_type_map = {
 }
 
 
-class FilterTrace(FilterTrace, frozen=True, kw_only=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
+class CallTrace(CallTrace, frozen=True, kw_only=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
     ...
+class CreateTrace(CreateTrace, frozen=True, kw_only=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
+    ...
+class RewardTrace(RewardTrace, frozen=True, kw_only=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
+    ...
+class SuicideTrace(SuicideTrace, frozen=True, kw_only=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
+    ...
+
+FilterTrace = Union[CallTrace, CreateTrace, RewardTrace, SuicideTrace]
