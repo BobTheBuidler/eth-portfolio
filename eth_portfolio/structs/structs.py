@@ -402,7 +402,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         return self.trace.action.value.scaled
         
     @property
-    def type(self) -> dank_trace.Type:
+    def type(self) -> Literal["call", "create", "reward", "suicide"]:
         return self.trace.type
     
     @property
