@@ -9,7 +9,7 @@ import y._db.config as config
 from a_sync import a_sync
 from brownie import chain
 from dank_mids.structs.data import _decode_hook
-from msgspec import json
+from msgspec import UNSET, json
 from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush, select
 from y._db.common import enc_hook
@@ -260,6 +260,12 @@ async def insert_transaction(transaction: Transaction) -> None:
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def _insert_transaction(transaction: Transaction) -> None:
+    for x in transaction.__struct_fields__:
+        if getattr(transaction, x, None) is UNSET:
+            raise ValueError(UNSET, x)
+    for x in transaction.transaction.__struct_fields__:
+        if getattr(transaction.transaction, x, None) is UNSET:
+            raise ValueError(UNSET, x)
     encoded = json.encode(transaction, enc_hook=enc_hook)
     logger.warning(f"inserting {encoded}")
     entities.Transaction(
