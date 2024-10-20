@@ -21,7 +21,7 @@ from y.constants import EEE_ADDRESS
 from y.datatypes import Block
 
 from eth_portfolio._utils import _get_price
-from eth_portfolio.structs.modified import FilterTrace, ModifiedTransaction, _modified_tx_type_map
+from eth_portfolio.structs.modified import ModifiedTrace, ModifiedTransaction, _modified_trace_type_map, _modified_tx_type_map
 
 if TYPE_CHECKING:
     from y._db.utils.logs import Log
@@ -337,7 +337,8 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
             - Interacts with the global 'chain' object from the brownie library for chain ID.
         """
 
-        args = {"trace": FilterTrace(**_get_init_kwargs(trace))}
+        modified_cls = _modified_trace_type_map[type(trace)]
+        args = {"trace": modified_cls(**_get_init_kwargs(trace))}
         if load_prices:
             price = await _get_price(EEE_ADDRESS, trace.block)
             args["price"] = price
@@ -350,10 +351,10 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
     """
 
     @property
-    def _evm_object(self) -> FilterTrace:
+    def _evm_object(self) -> ModifiedTrace:
         return self.trace
         
-    trace: FilterTrace
+    trace: ModifiedTrace
     """
     The raw trace object associated with this internal transfer.
     """
@@ -377,7 +378,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         """
         The unique hash of the transaction containing this internal transfer.
         """
-        return f'{self.trace.action.rewardType.name} reward' if self.trace.type == dank_trace.Type.reward else self.trace.transactionHash
+        return f'{self.trace.action.rewardType.name} reward' if self.trace.type == "reward" else self.trace.transactionHash
 
     @property
     def from_address(self) -> Address:
@@ -392,7 +393,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         The address to which the internal transfer was sent, if applicable.
         """
         # NOTE: for block reward transfers, the recipient is 'author'
-        return self.trace.action.author if self.trace.type == dank_trace.Type.reward else self.trace.action.to
+        return self.trace.action.author if self.trace.type == "reward" else self.trace.action.to
         
     @property
     def value(self) -> Decimal:
@@ -424,7 +425,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         """
         The amount of gas allocated for this internal operation.
         """
-        return 0 if self.trace.type == dank_trace.Type.reward else self.trace.action.gas
+        return 0 if self.trace.type == "reward" else self.trace.action.gas
     
     @property
     def gas_used(self) -> int:

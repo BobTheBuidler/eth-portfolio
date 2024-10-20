@@ -46,4 +46,12 @@ class RewardTrace(RewardTrace, frozen=True, kw_only=True, array_like=True, forbi
 class SuicideTrace(SuicideTrace, frozen=True, kw_only=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
     ...
 
-FilterTrace = Union[CallTrace, CreateTrace, RewardTrace, SuicideTrace]
+
+_modified_trace_type_map = {
+    dank_mids.structs.TransactionLegacy: TransactionLegacy,
+    dank_mids.structs.Transaction2930: Transaction2930,
+    dank_mids.structs.Transaction1559: Transaction1559,
+    _TransactionBase: _ModifiedTransactionBase,
+}
+
+ModifiedTrace = Union[CallTrace, CreateTrace, RewardTrace, SuicideTrace]
