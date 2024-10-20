@@ -25,7 +25,6 @@ class AddressExtended(Address):
     token_transfers_sent = Set("TokenTransfer", lazy=True, reverse='from_address')
     token_transfers_received = Set("TokenTransfer", lazy=True, reverse='to_address')
     traces = Set("InternalTransfer", lazy=True, reverse='trace_address')
-    _not_sure_what_this_field_is = Set("InternalTransfer", lazy=True, reverse='address')
 
 class ContractExtended(Contract, AddressExtended):
     pass
@@ -106,10 +105,9 @@ class InternalTransfer(db.Entity):
     # unique
     type = Required(str, lazy=True)
     call_type = Required(str, lazy=True)
-    trace_address = Required(AddressExtended, lazy=True, reverse='traces')
+    trace_address = Required(str, lazy=True, reverse='traces')
     gas = Required(Decimal, 38, 1, lazy=True)
     gas_used = Optional(Decimal, 38, 1, lazy=True)
-    address = Required(AddressExtended, lazy=True, reverse='_not_sure_what_this_field_is')
     
     composite_key(block, transaction_index, hash, from_address, to_address, value, type, call_type, trace_address, gas, gas_used, address)
     
