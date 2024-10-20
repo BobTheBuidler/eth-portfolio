@@ -24,7 +24,6 @@ class AddressExtended(Address):
     internal_transfers_received = Set("InternalTransfer", lazy=True, reverse='to_address')
     token_transfers_sent = Set("TokenTransfer", lazy=True, reverse='from_address')
     token_transfers_received = Set("TokenTransfer", lazy=True, reverse='to_address')
-    traces = Set("InternalTransfer", lazy=True, reverse='trace_address')
 
 class ContractExtended(Contract, AddressExtended):
     pass
