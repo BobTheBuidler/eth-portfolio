@@ -128,6 +128,7 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
             new_type = _modified_tx_type_map[type(transaction)]
         except KeyError as e:
             raise TypeError(type(transaction), transaction) from e
+        
         try:
             return cls(
                 transaction=new_type(**_get_init_kwargs(transaction)), 
@@ -135,7 +136,8 @@ class Transaction(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True, 
                 value_usd=value_usd,
             )
         except TypeError as e:  # NOTE keep this around later to help in case new fields are added
-            raise TypeError(*e.args, new_type.__qualname__, {**transaction}) from e
+            e.args = (*e.args, new_type.__qualname__, {**transaction})
+            raise
 
     transaction: ModifiedTransaction
     """

@@ -21,6 +21,7 @@ from y import get_price
 from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
+from y.exceptions import reraise_excs_with_extra_context
 from y.utils.events import decode_logs
 
 from eth_portfolio.structs import structs
@@ -130,15 +131,13 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
     
 
 async def _insert_to_db(transaction: structs.Transaction, load_prices: bool) -> None:
-    try:
-        await db.insert_transaction(transaction)
-    except NotImplementedError as e:
-        e.args = (*e.args, transaction)
-        raise
-    except TransactionIntegrityError:
-        if load_prices:
-            await db.delete_transaction(transaction)
+    with reraise_excs_with_extra_context(transaction):
+        try:
             await db.insert_transaction(transaction)
+        except TransactionIntegrityError:
+            if load_prices:
+                await db.delete_transaction(transaction)
+                await db.insert_transaction(transaction)
     
 @eth_retry.auto_retry
 @stuck_coro_debugger
