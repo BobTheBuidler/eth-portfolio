@@ -393,14 +393,8 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         The address to which the internal transfer was sent, if applicable.
         """
         action = self.trace.action
-        if isinstance(action, Call):
-            return action.to
-        elif isinstance(action, Create):
-            return None
-        elif isinstance(action, Reward):
-            # NOTE: for block reward transfers, the recipient is 'author'
-            return action.author
-        raise TypeError(action)
+        # NOTE: for block reward transfers, the recipient is 'author'
+        return action.author if isinstance(action, Reward) else action.to
         
     @property
     def value(self) -> Decimal:

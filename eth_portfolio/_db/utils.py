@@ -318,7 +318,7 @@ def get_internal_transfer(trace: dank_mids.structs.FilterTrace) -> Optional[Inte
         type = trace.type.name,
         call_type = trace.callType,
         from_address = (chain.id, trace.sender),
-        to_address = (chain.id, trace.to) if trace.to else None,
+        to_address = (chain.id, trace.to),
         value = trace.value.scaled,
         trace_address = (chain.id, trace.traceAddress),
         gas = trace.gas,
@@ -353,13 +353,13 @@ def delete_internal_transfer(transfer: InternalTransfer) -> None:
         entity.delete()
 
 async def insert_internal_transfer(transfer: InternalTransfer) -> None:
-    await asyncio.gather(*[
+    coros = [
         ensure_block(transfer.block_number),
         ensure_address(transfer.from_address),
-        ensure_address(transfer.to_address),
-        ensure_address(transfer.trace_address),
-        ensure_address(transfer.address),
-    ])
+    ]
+    if to_address := getattr(transfer, "to_address", None):
+        coros.append(ensure_address(to_address))
+    await asyncio.gather(*coros)
     await _insert_internal_transfer(transfer)
 
 @a_sync(default='async')
