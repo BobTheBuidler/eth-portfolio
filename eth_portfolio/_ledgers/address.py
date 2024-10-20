@@ -22,9 +22,8 @@ import dank_mids
 import eth_retry
 from async_lru import alru_cache
 from dank_mids.eth import TraceFilterParams
-from dank_mids.structs import FilterTrace
+from dank_mids.structs import CallTrace, FilterTrace, RewardTrace
 from dank_mids.structs.data import Status
-from dank_mids.structs.trace import RewardTrace
 from pandas import DataFrame  # type: ignore
 from y import ERC20
 from y._decorators import stuck_coro_debugger
@@ -410,7 +409,7 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
           
         # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
         # that actually transmitted value to the singleton even though they appear to.
-        if trace.action.to == "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":  # Gnosis Safe Singleton 1.3.0
+        if isinstance(trace, CallTrace) and trace.action.to == "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552":  # Gnosis Safe Singleton 1.3.0
             continue
           
         if not isinstance(trace, RewardTrace):
