@@ -2,7 +2,7 @@
 from typing import Union
 
 import dank_mids.structs
-from dank_mids.structs import CallTrace, CreateTrace, RewardTrace, SuicideTrace
+from dank_mids.structs.trace import CallTrace, CreateTrace, RewardTrace, SuicideTrace
 from dank_mids.structs.transaction import _TransactionBase, Transaction1559, Transaction2930, TransactionLegacy
 
 
