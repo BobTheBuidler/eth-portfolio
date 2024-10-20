@@ -353,10 +353,7 @@ def delete_internal_transfer(transfer: InternalTransfer) -> None:
         entity.delete()
 
 async def insert_internal_transfer(transfer: InternalTransfer) -> None:
-    coros = [
-        ensure_block(transfer.block_number),
-        ensure_address(transfer.from_address),
-    ]
+    coros = [ensure_block(transfer.block_number), ensure_address(transfer.from_address)]
     if to_address := getattr(transfer, "to_address", None):
         coros.append(ensure_address(to_address))
     await asyncio.gather(*coros)
