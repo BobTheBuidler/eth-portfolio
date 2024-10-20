@@ -268,10 +268,21 @@ def _insert_transaction(transaction: Transaction) -> None:
             raise ValueError(UNSET, x)
     if "UNSET" in repr(transaction):
         raise ValueError(transaction)
-    debugger = {k: getattr(transaction, k) for k in dir(transaction) if hasattr(transaction, k) and "method" not in type(getattr(transaction, k)).__name__}
+    debugger = {
+        k: getattr(transaction, k) 
+        for k in dir(transaction) 
+        if k != "__struct_defaults__" 
+        and hasattr(transaction, k) 
+        and "method" not in type(getattr(transaction, k)).__name__}
     if "UNSET" in repr(debugger):
         raise ValueError(debugger)
-    debugger = {k: getattr(transaction.transaction, k) for k in dir(transaction.transaction) if hasattr(transaction.transaction, k) and "method" not in type(getattr(transaction.transaction, k)).__name__}
+    debugger = {
+        k: getattr(transaction.transaction, k)
+        for k in dir(transaction.transaction) 
+        if k != "__struct_defaults__"
+        and hasattr(transaction.transaction, k) 
+        and "method" not in type(getattr(transaction.transaction, k)).__name__
+    }
     if "UNSET" in repr(debugger):
         raise ValueError(debugger)
 
