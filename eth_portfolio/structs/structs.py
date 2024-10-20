@@ -8,12 +8,10 @@ import logging
 from functools import cached_property
 from typing import TYPE_CHECKING, Any, ClassVar, Dict, List, Literal, Optional, Tuple, TypeVar, Union, final
 
-import dank_mids.structs.trace as dank_trace
 import dank_mids.structs.transaction as dank_tx
 from brownie import chain
-from dank_mids.structs import DictStruct
+from dank_mids.structs import DictStruct, FilterTrace, RewardTrace
 from dank_mids.structs.data import Address, BlockHash, Decimal, TransactionHash, Wei, checksum
-from dank_mids.structs.trace import RewardTrace
 from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
@@ -40,7 +38,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
     """
 
     @property
-    def _evm_object(self) -> Union["ModifiedTransaction", dank_trace.FilterTrace, "Log"]:
+    def _evm_object(self) -> Union["ModifiedTransaction", FilterTrace, "Log"]:
         """
         The EVM object associated with {cls_name}, exactly as it was received from the RPC.
         """
@@ -299,7 +297,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
 
     @staticmethod
     @stuck_coro_debugger
-    async def from_trace(trace: dank_trace.FilterTrace, load_prices: bool) -> "InternalTransfer":
+    async def from_trace(trace: FilterTrace, load_prices: bool) -> "InternalTransfer":
         """
         Asynchronously processes a raw internal transfer dictionary into an InternalTransfer object.
 
