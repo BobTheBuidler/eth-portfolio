@@ -266,6 +266,15 @@ def _insert_transaction(transaction: Transaction) -> None:
     for x in transaction.transaction.__struct_fields__:
         if getattr(transaction.transaction, x, None) is UNSET:
             raise ValueError(UNSET, x)
+    if "UNSET" in repr(transaction):
+        raise ValueError(transaction)
+    debugger = {k: getattr(transaction, k) for k in dir(transaction)}
+    if "UNSET" in repr(debugger):
+        raise ValueError(debugger)
+    debugger = {k: getattr(transaction.transaction, k) for k in dir(transaction.transaction)}
+    if "UNSET" in repr(debugger):
+        raise ValueError(debugger)
+
     encoded = json.encode(transaction, enc_hook=enc_hook)
     logger.warning(f"inserting {encoded}")
     entities.Transaction(
