@@ -268,10 +268,10 @@ def _insert_transaction(transaction: Transaction) -> None:
             raise ValueError(UNSET, x)
     if "UNSET" in repr(transaction):
         raise ValueError(transaction)
-    debugger = {k: getattr(transaction, k) for k in dir(transaction)}
+    debugger = {k: getattr(transaction, k) for k in dir(transaction) if hasattr(transaction, k)}
     if "UNSET" in repr(debugger):
         raise ValueError(debugger)
-    debugger = {k: getattr(transaction.transaction, k) for k in dir(transaction.transaction)}
+    debugger = {k: getattr(transaction.transaction, k) for k in dir(transaction.transaction) if hasattr(transaction, k)}
     if "UNSET" in repr(debugger):
         raise ValueError(debugger)
 
@@ -443,23 +443,17 @@ async def insert_token_transfer(token_transfer: TokenTransfer) -> None:
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
-    try:
-        # Now requery and use the values
-        entities.TokenTransfer(
-            block = (chain.id, token_transfer.block_number), 
-            transaction_index = token_transfer.transaction_index,
-            log_index = token_transfer.log_index,
-            hash = token_transfer.hash,
-            token = (chain.id, token_transfer.token_address),
-            from_address = (chain.id, token_transfer.from_address),
-            to_address = (chain.id, token_transfer.to_address),
-            value = token_transfer.value,
-            price = token_transfer.price,
-            value_usd = token_transfer.value_usd,
-            raw = json.encode(token_transfer, enc_hook=enc_hook),
-        )
-        commit()
-    except Exception as e:
-        if "numeric field overflow" not in str(e):
-            raise e
-        # NOTE: We can just leave this out of the db for now, figure out how to better handle before we start loading ranges from db
+    entities.TokenTransfer(
+        block = (chain.id, token_transfer.block_number), 
+        transaction_index = token_transfer.transaction_index,
+        log_index = token_transfer.log_index,
+        hash = token_transfer.hash,
+        token = (chain.id, token_transfer.token_address),
+        from_address = (chain.id, token_transfer.from_address),
+        to_address = (chain.id, token_transfer.to_address),
+        value = token_transfer.value,
+        price = token_transfer.price,
+        value_usd = token_transfer.value_usd,
+        raw = json.encode(token_transfer, enc_hook=enc_hook),
+    )
+    commit()
