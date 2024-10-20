@@ -319,7 +319,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
         Returns:
             A DataFrame representation of the token balances.
         """
-        df = DataFrame({token: {**balance} for token, balance in self.items()}).T
+        df = DataFrame({token: {"balance": balance.balance, "usd_value": balance.usd_value} for token, balance in self.items()}).T
         df.reset_index(inplace=True)
         df.rename(columns = {'index': 'token'}, inplace = True)
         return df
