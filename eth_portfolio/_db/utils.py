@@ -318,7 +318,7 @@ def get_internal_transfer(trace: dank_mids.structs.FilterTrace) -> Optional[Inte
         type = trace.type.name,
         call_type = trace.callType,
         from_address = (chain.id, trace.sender),
-        to_address = (chain.id, trace.to),
+        to_address = (chain.id, trace.to) if trace.to else None,
         value = trace.value.scaled,
         trace_address = (chain.id, trace.traceAddress),
         gas = trace.gas,

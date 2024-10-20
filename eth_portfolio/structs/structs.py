@@ -12,6 +12,7 @@ import dank_mids.structs.transaction as dank_tx
 from brownie import chain
 from dank_mids.structs import DictStruct, FilterTrace, RewardTrace
 from dank_mids.structs.data import Address, BlockHash, Decimal, TransactionHash, Wei, checksum
+from dank_mids.structs.trace import Call, Create, Reward
 from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
@@ -387,12 +388,19 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         return self.trace.action.sender
 
     @property
-    def to_address(self) -> Address:
+    def to_address(self) -> Optional[Address]:
         """
         The address to which the internal transfer was sent, if applicable.
         """
-        # NOTE: for block reward transfers, the recipient is 'author'
-        return self.trace.action.author if isinstance(self.trace, RewardTrace) else self.trace.action.to
+        action = self.trace.action
+        if isinstance(action, Call):
+            return action.to
+        elif isinstance(action, Create):
+            return None
+        elif isinstance(action, Reward):
+            # NOTE: for block reward transfers, the recipient is 'author'
+            return action.author
+        raise TypeError(action)
         
     @property
     def value(self) -> Decimal:
