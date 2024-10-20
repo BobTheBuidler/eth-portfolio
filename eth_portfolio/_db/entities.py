@@ -109,7 +109,7 @@ class InternalTransfer(db.Entity):
     gas = Required(Decimal, 38, 1, lazy=True)
     gas_used = Optional(Decimal, 38, 1, lazy=True)
     
-    composite_key(block, transaction_index, hash, from_address, to_address, value, type, call_type, trace_address, gas, gas_used, address)
+    composite_key(block, transaction_index, hash, from_address, to_address, value, type, call_type, trace_address, gas, gas_used)
     
     raw = Required(bytes, lazy=True)
 
