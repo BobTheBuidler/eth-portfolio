@@ -105,7 +105,7 @@ class InternalTransfer(db.Entity):
     # unique
     type = Required(str, lazy=True)
     call_type = Required(str, lazy=True)
-    trace_address = Required(str, lazy=True, reverse='traces')
+    trace_address = Required(str, lazy=True)
     gas = Required(Decimal, 38, 1, lazy=True)
     gas_used = Optional(Decimal, 38, 1, lazy=True)
     
