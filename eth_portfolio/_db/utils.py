@@ -297,7 +297,7 @@ def _insert_transaction(transaction: Transaction) -> None:
         value = transaction.value,
         price = transaction.price,
         value_usd = transaction.value_usd,
-        type = transaction.type,
+        type = getattr(transaction, "type", None),
         gas = transaction.gas,
         gas_price = transaction.gas_price,
         max_fee_per_gas = getattr(transaction, 'max_fee_per_gas', None),
