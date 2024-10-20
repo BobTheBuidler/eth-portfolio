@@ -13,6 +13,7 @@ import dank_mids.structs.transaction as dank_tx
 from brownie import chain
 from dank_mids.structs import DictStruct
 from dank_mids.structs.data import Address, BlockHash, Decimal, TransactionHash, Wei, checksum
+from dank_mids.structs.trace import RewardTrace
 from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
@@ -378,7 +379,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         """
         The unique hash of the transaction containing this internal transfer.
         """
-        return f'{self.trace.action.rewardType.name} reward' if self.trace.type == "reward" else self.trace.transactionHash
+        return f'{self.trace.action.rewardType.name} reward' if isinstance(self.trace, RewardTrace) else self.trace.transactionHash
 
     @property
     def from_address(self) -> Address:
@@ -393,7 +394,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         The address to which the internal transfer was sent, if applicable.
         """
         # NOTE: for block reward transfers, the recipient is 'author'
-        return self.trace.action.author if self.trace.type == "reward" else self.trace.action.to
+        return self.trace.action.author if isinstance(self.trace, RewardTrace) else self.trace.action.to
         
     @property
     def value(self) -> Decimal:
@@ -425,7 +426,7 @@ class InternalTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=T
         """
         The amount of gas allocated for this internal operation.
         """
-        return 0 if self.trace.type == "reward" else self.trace.action.gas
+        return 0 if isinstance(self.trace, RewardTrace) else self.trace.action.gas
     
     @property
     def gas_used(self) -> int:
