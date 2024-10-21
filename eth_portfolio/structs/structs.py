@@ -523,9 +523,6 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True
 
     @property
     def from_address(self) -> Address:
-        logger.error(f'topic1 {self.log.topic1}')
-        logger.error(f'topic1[-20:] {self.log.topic1[-20:]}')
-        logger.error(type(self.log.topic1))
         return checksum(self.log.topic1.hex())
 
     @property
