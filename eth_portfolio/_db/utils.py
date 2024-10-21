@@ -454,7 +454,7 @@ def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
         block = (chain.id, token_transfer.block_number), 
         transaction_index = token_transfer.transaction_index,
         log_index = token_transfer.log_index,
-        hash = token_transfer.hash,
+        hash = token_transfer.hash.hex(),
         token = (chain.id, token_transfer.token_address),
         from_address = (chain.id, token_transfer.from_address),
         to_address = (chain.id, token_transfer.to_address),
