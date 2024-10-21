@@ -48,6 +48,7 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
             yield task
         logger.debug("%s yield thru %s complete", self, block)
     def _include_event(self, event: "Log") -> bool:
+        logger.warning(f'event address checksummed? {event.address}')
         return event.address not in SHITCOINS.get(chain.id, [])
     async def _extend(self, objs: List["Log"]) -> None:
         for log in objs:
