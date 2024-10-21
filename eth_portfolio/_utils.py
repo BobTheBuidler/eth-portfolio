@@ -199,13 +199,13 @@ class _AiterMixin(a_sync.ASyncIterable[_T]):
     def __aiter__(self) -> AsyncIterator[_T]:
         return self[self._start_block: chain.height].__aiter__()
     def __getitem__(self, slice: slice) -> a_sync.ASyncIterator[_T]:
-        if not isinstance(slice.start, (int, datetime)):
+        if slice.start is not None and not isinstance(slice.start, (int, datetime)):
             raise TypeError(f"start must be int or datetime. you passed {slice.start}")
         if slice.stop and not isinstance(slice.stop, (int, datetime)):
             raise TypeError(f"start must be int or datetime. you passed {slice.start}")
         if slice.step is not None:
             raise ValueError("You cannot use a step here.")
-        return a_sync.ASyncIterator(self._get_and_yield(slice.start, slice.stop))
+        return a_sync.ASyncIterator(self._get_and_yield(slice.start or 0, slice.stop))
     def yield_forever(self) -> a_sync.ASyncIterator[_T]:
         return self[self._start_block: None]
     @abstractmethod
