@@ -11,8 +11,8 @@ from typing import TYPE_CHECKING, Any, ClassVar, Dict, List, Literal, Optional, 
 import dank_mids.structs.transaction as dank_tx
 from brownie import chain
 from dank_mids.structs import DictStruct, FilterTrace, RewardTrace
-from dank_mids.structs.data import Address, BlockHash, Decimal, TransactionHash, Wei, checksum
-from dank_mids.structs.trace import Call, Create, Reward
+from dank_mids.structs.data import Address, BlockHash, Decimal, TransactionHash, Wei
+from dank_mids.structs.trace import Reward
 from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
@@ -523,11 +523,11 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True
 
     @property
     def from_address(self) -> Address:
-        return checksum(self.log.topic1.hex())
+        return self.log.topic1.as_address
 
     @property
     def to_address(self) -> Address:
-        return checksum(self.log.topic2.hex())
+        return self.log.topic2.as_address
 
     @property
     def _evm_object(self) -> "Log":
