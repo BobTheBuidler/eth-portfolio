@@ -383,7 +383,7 @@ def _insert_internal_transfer(transfer: InternalTransfer) -> None:
 @robust_db_session
 def get_token_transfer(transfer: dank_mids.structs.Log) -> Optional[TokenTransfer]:
     pk = {
-        "block": (chain.id, transfer.block_number), 
+        "block": (chain.id, transfer.blockNumber), 
         "transaction_index": transfer.transactionIndex, 
         "log_index": transfer.logIndex,
     }
