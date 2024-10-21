@@ -67,12 +67,12 @@ class Balance(DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=Tr
     The USD equivalent value of the token amount.
     """
 
-    token: Address = UNSET
+    token: Address = None
     """
     The token the balance is of, if known.
     """
 
-    block: Block = UNSET
+    block: Block = None
     """
     The block from which the balance was taken, if known.
     """
