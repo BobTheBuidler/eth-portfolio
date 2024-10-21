@@ -77,7 +77,7 @@ async def load_transaction(address: Address, nonce: Nonce, load_prices: bool) ->
     else:
         transaction = structs.Transaction.from_rpc_response(tx)
 
-    await a_sync.create_task(
+    a_sync.create_task(
         coro=_insert_to_db(transaction, load_prices), 
         skip_gc_until_done=True,
     )

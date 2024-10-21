@@ -76,7 +76,11 @@ async def load_token_transfer(transfer_log: "Log", load_prices: bool) -> Optiona
             # TODO: get rid of this once its run fine for a few days
             raise TypeError(str(e), transfer_log, coro_results) from e
 
-        a_sync.create_task(_insert_to_db(transfer, load_prices), skip_gc_until_done=True)
+        a_sync.create_task(
+            _insert_to_db(transfer, load_prices), 
+            skip_gc_until_done=True,
+        )
+        
         return transfer
 
 async def _insert_to_db(transfer: TokenTransfer, load_prices: bool) -> None:
