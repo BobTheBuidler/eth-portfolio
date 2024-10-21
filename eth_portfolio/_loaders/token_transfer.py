@@ -61,7 +61,10 @@ async def load_token_transfer(transfer_log: "Log", load_prices: bool) -> Optiona
                 logger.error(f"{e.__class__.__name__} {e} for {transfer_log.address} at block {transfer_log.blockNumber}.")
             return None
 
-        value = Decimal(transfer_log.topic3.as_uint) / coro_results.pop('scale')
+        try:
+            value = Decimal(transfer_log.topic3.as_uint) / coro_results.pop('scale')
+        except AttributeError:
+            return None
         
         if price := coro_results.get('price'):
             coro_results['value_usd'] = round(value * price, 18)

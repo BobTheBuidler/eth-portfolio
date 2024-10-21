@@ -523,6 +523,8 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True
 
     @property
     def from_address(self) -> Address:
+        logger.error('topic1 %s', self.log.topic1)
+        logger.error('topic1[-20:] %s', self.log.topic1[-20:])
         return checksum(self.log.topic1[-20:])
 
     @property
