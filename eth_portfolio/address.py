@@ -169,6 +169,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
             "external": self.external_balances(block, sync=False),
         })
         for ds in data.values():
+            assert ds.block, ds
             for t, d in ds.items():
                 assert d.block, ds
         return WalletBalances(data, block=block)
