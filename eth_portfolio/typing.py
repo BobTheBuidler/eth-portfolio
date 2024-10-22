@@ -569,7 +569,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         if self.block != other.block:
             raise ValueError(f"These RemoteTokenBalances objects are not from the same block ({self.block} and {other.block})")
         # NOTE We need a new object to avoid mutating the inputs
-        combined: RemoteTokenBalances = RemoteTokenBalances()
+        combined: RemoteTokenBalances = RemoteTokenBalances(block=self.block)
         for protocol, token_balances in self.items():
             if token_balances:
                 combined[protocol] += token_balances
