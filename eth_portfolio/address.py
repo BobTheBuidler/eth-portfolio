@@ -281,9 +281,9 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
                 address=self.address, 
                 block=block,
             )
-            return TokenBalances(await data)
+            return TokenBalances(await data, block=block)
         except MappingIsEmptyError:
-            return TokenBalances()
+            return TokenBalances(block=block)
    
     @stuck_coro_debugger 
     async def collateral(self, block: Optional[Block] = None) -> RemoteTokenBalances:

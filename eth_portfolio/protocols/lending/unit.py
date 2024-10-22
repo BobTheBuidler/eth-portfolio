@@ -23,7 +23,7 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
     
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        balances: TokenBalances = TokenBalances()
+        balances: TokenBalances = TokenBalances(block=block)
         if block and block < self.start_block:
             return balances
         bal = await self.unitVault.collaterals.coroutine(yfi, address, block_identifier=block)
@@ -34,7 +34,7 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
 
     @stuck_coro_debugger
     async def _debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        balances: TokenBalances = TokenBalances()
+        balances: TokenBalances = TokenBalances(block=block)
         if block and block < self.start_block:
             return balances
         # NOTE: This only works for YFI based debt, must extend before using for other collaterals

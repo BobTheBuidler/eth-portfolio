@@ -27,7 +27,7 @@ class Liquity(LendingProtocolWithLockedCollateral):
     
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        balances: TokenBalances = TokenBalances()
+        balances: TokenBalances = TokenBalances(block=block)
         if block and block < self.start_block:
             return balances
         data = await self.get_trove(address, block)
@@ -40,7 +40,7 @@ class Liquity(LendingProtocolWithLockedCollateral):
     
     @stuck_coro_debugger
     async def _debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        balances: TokenBalances = TokenBalances()
+        balances: TokenBalances = TokenBalances(block=block)
         if block and block < self.start_block:
             return balances
         data = await self.get_trove(address, block)

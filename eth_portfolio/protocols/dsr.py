@@ -17,7 +17,7 @@ class MakerDSR(ProtocolABC):
         self.pot = Contract('0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7')
         
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        balances = TokenBalances()
+        balances = TokenBalances(block=block)
         pie, exchange_rate = await asyncio.gather(
             self.dsr_manager.pieOf.coroutine(address, block_identifier=block),
             self._exchange_rate(block),
