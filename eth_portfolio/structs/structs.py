@@ -16,15 +16,13 @@ from dank_mids.structs.trace import Reward
 from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
+from y._db.utils.logs import Log
 from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
 from y.datatypes import Block
 
 from eth_portfolio._utils import _get_price
 from eth_portfolio.structs.modified import ModifiedTrace, ModifiedTransaction, _modified_trace_type_map, _modified_tx_type_map
-
-if TYPE_CHECKING:
-    from y._db.utils.logs import Log
 
 
 logger = logging.getLogger(__name__)
@@ -516,7 +514,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True
     Constant indicating this value transfer is a token transfer entry.
     """
 
-    log: "Log"
+    log: Log
     """
     The log associated with this token transfer.
     """
