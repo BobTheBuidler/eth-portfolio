@@ -435,7 +435,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
                 del subtracted[token]
         return subtracted
 
-    __slots__ = "block", "__dict__"
+    __slots__ = "block",
     
 
 _RTBSeed = Dict[ProtocolLabel, TokenBalances]
@@ -1059,7 +1059,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
                 del subtracted[protocol]
         return subtracted
 
-    __slots__ = "block", "__dict__"
+    __slots__ = "block",
 
 
 _WTBInput = Union[Dict[Address, TokenBalances], Iterable[Tuple[Address, TokenBalances]]]
@@ -1188,7 +1188,7 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
                 del subtracted[wallet]
         return subtracted
 
-    __slots__ = "block", "__dict__"
+    __slots__ = "block",
     
 
 _CBInput = Union[Dict[CategoryLabel, WalletBalancesRaw], Iterable[Tuple[CategoryLabel, WalletBalancesRaw]]]
