@@ -10,7 +10,7 @@ from pony.orm import TransactionIntegrityError
 from y import ERC20
 from y._db.log import Log
 from y._decorators import stuck_coro_debugger
-from y.exceptions import NonStandardERC20
+from y.exceptions import NonStandardERC20, reraise_excs_with_extra_context
 
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._db import utils as db
@@ -41,7 +41,7 @@ async def load_token_transfer(transfer_log: "Log", load_prices: bool) -> Optiona
         coros = {
             'scale': token.scale, 
             'token': get_symbol(token), 
-            'transaction_index': get_transaction_index(transfer_log.transactionHash),
+            'transaction_index': get_transaction_index(transfer_log.transactionHash.hex()),
         }
 
         if load_prices:
@@ -83,12 +83,13 @@ async def load_token_transfer(transfer_log: "Log", load_prices: bool) -> Optiona
         return transfer
 
 async def _insert_to_db(transfer: TokenTransfer, load_prices: bool) -> None:
-    try:
-        await db.insert_token_transfer(transfer)
-    except TransactionIntegrityError:
-        if load_prices:
-            await db.delete_token_transfer(transfer)
+    with reraise_excs_with_extra_context(transfer):
+        try:
             await db.insert_token_transfer(transfer)
+        except TransactionIntegrityError:
+            if load_prices:
+                await db.delete_token_transfer(transfer)
+                await db.insert_token_transfer(transfer)
             
 @stuck_coro_debugger
 async def get_symbol(token: ERC20) -> Optional[str]:
