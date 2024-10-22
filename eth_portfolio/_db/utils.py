@@ -9,10 +9,11 @@ import y._db.config as config
 from a_sync import a_sync
 from brownie import chain
 from dank_mids.structs.data import _decode_hook
-from msgspec import UNSET, json
+from msgspec import json
 from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush, select
 from y._db.common import enc_hook
+from y.exceptions import reraise_excs_with_extra_context
 
 from eth_portfolio._db import entities
 from eth_portfolio._db.decorators import (break_locks,
@@ -260,50 +261,23 @@ async def insert_transaction(transaction: Transaction) -> None:
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def _insert_transaction(transaction: Transaction) -> None:
-    for x in transaction.__struct_fields__:
-        if getattr(transaction, x, None) is UNSET:
-            raise ValueError(UNSET, x)
-    for x in transaction.transaction.__struct_fields__:
-        if getattr(transaction.transaction, x, None) is UNSET:
-            raise ValueError(UNSET, x)
-    if "UNSET" in repr(transaction):
-        raise ValueError(transaction)
-    debugger = {
-        k: getattr(transaction, k) 
-        for k in dir(transaction) 
-        if k != "__struct_defaults__" 
-        and hasattr(transaction, k) 
-        and "method" not in type(getattr(transaction, k)).__name__}
-    if "UNSET" in repr(debugger):
-        raise ValueError(debugger)
-    debugger = {
-        k: getattr(transaction.transaction, k)
-        for k in dir(transaction.transaction) 
-        if k != "__struct_defaults__"
-        and hasattr(transaction.transaction, k) 
-        and "method" not in type(getattr(transaction.transaction, k)).__name__
-    }
-    if "UNSET" in repr(debugger):
-        raise ValueError(debugger)
-
-    encoded = json.encode(transaction, enc_hook=enc_hook)
-    logger.warning(f"inserting {encoded}")
-    entities.Transaction(
-        **transaction.__db_primary_key__,
-        block = (chain.id, transaction.block_number),
-        transaction_index = transaction.transaction_index,
-        hash = transaction.hash.hex(),
-        to_address = (chain.id, transaction.to_address) if transaction.to_address else None,
-        value = transaction.value,
-        price = transaction.price,
-        value_usd = transaction.value_usd,
-        type = getattr(transaction, "type", None),
-        gas = transaction.gas,
-        gas_price = transaction.gas_price,
-        max_fee_per_gas = getattr(transaction, 'max_fee_per_gas', None),
-        max_priority_fee_per_gas = getattr(transaction, 'max_priority_fee_per_gas', None),
-        raw = encoded,    
-    )
+    with reraise_excs_with_extra_context(transaction):
+        entities.Transaction(
+            **transaction.__db_primary_key__,
+            block = (chain.id, transaction.block_number),
+            transaction_index = transaction.transaction_index,
+            hash = transaction.hash.hex(),
+            to_address = (chain.id, transaction.to_address) if transaction.to_address else None,
+            value = transaction.value,
+            price = transaction.price,
+            value_usd = transaction.value_usd,
+            type = getattr(transaction, "type", None),
+            gas = transaction.gas,
+            gas_price = transaction.gas_price,
+            max_fee_per_gas = getattr(transaction, 'max_fee_per_gas', None),
+            max_priority_fee_per_gas = getattr(transaction, 'max_priority_fee_per_gas', None),
+            raw = json.encode(transaction, enc_hook=enc_hook),    
+        )
 
 
 @a_sync(default='async')
@@ -450,6 +424,8 @@ async def insert_token_transfer(token_transfer: TokenTransfer) -> None:
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
+    encoded = json.encode(token_transfer, enc_hook=enc_hook)
+    logger.warning(f"encoded token transfer: {encoded}")
     entities.TokenTransfer(
         block = (chain.id, token_transfer.block_number), 
         transaction_index = token_transfer.transaction_index,
@@ -461,6 +437,6 @@ def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
         value = token_transfer.value,
         price = token_transfer.price,
         value_usd = token_transfer.value_usd,
-        raw = json.encode(token_transfer, enc_hook=enc_hook),
+        raw = encoded,
     )
     commit()
