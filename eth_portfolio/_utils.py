@@ -20,7 +20,8 @@ from eth_abi.exceptions import InsufficientDataBytes
 from pandas import DataFrame  # type: ignore
 from y import ERC20, Contract, Network
 from y.datatypes import Address, Block
-from y.exceptions import CantFetchParam, ContractNotVerified, NodeNotSynced, NonStandardERC20, PriceError, yPriceMagicError
+from y.exceptions import (CantFetchParam, ContractNotVerified, NodeNotSynced, NonStandardERC20, PriceError, 
+                          yPriceMagicError, reraise_excs_with_extra_context)
 from y.prices.magic import get_price
 
 from eth_portfolio import _config
@@ -95,33 +96,28 @@ _to_raise = (
 )
 
 async def _get_price(token: Address, block: Optional[int] = None) -> data.Decimal:
-    try:
-        if await is_erc721(token):
-            return data.Decimal(0)
-        maybe_float = await get_price(token, block, silent=True, sync=False)
-        dprice = data.Decimal(maybe_float)
-        return round(dprice, 18)
-    except CantFetchParam as e:
-        logger.warning('CantFetchParam %s', e)
-    except yPriceMagicError as e:
-        # Raise these exceptions
-        if isinstance(e.exception, _to_raise) and not isinstance(e.exception, RecursionError):
-            raise e.exception
-        # The exceptions below are acceptable enough
-        elif isinstance(e.exception, NonStandardERC20):
-            # Can't get symbol for handling like other excs
-            logger.warning(f'NonStandardERC20 while fetching price for {token}')
-        elif isinstance(e.exception, PriceError):
-            logger.warning(f'PriceError while fetching price for {await _describe_err(token, block)}')
-        else:
-            logger.warning(f'{e} while fetching price for {await _describe_err(token, block)}')
-            logger.warning(e, exc_info=True)
-    except Exception as e:
+    with reraise_excs_with_extra_context(token, block):
         try:
-            raise e.__class__(str(e), token, block)
-        #failsafe
-        except:
-            raise e
+            if await is_erc721(token):
+                return data.Decimal(0)
+            maybe_float = await get_price(token, block, silent=True, sync=False)
+            dprice = data.Decimal(maybe_float)
+            return round(dprice, 18)
+        except CantFetchParam as e:
+            logger.warning('CantFetchParam %s', e)
+        except yPriceMagicError as e:
+            # Raise these exceptions
+            if isinstance(e.exception, _to_raise) and not isinstance(e.exception, RecursionError):
+                raise e.exception
+            # The exceptions below are acceptable enough
+            elif isinstance(e.exception, NonStandardERC20):
+                # Can't get symbol for handling like other excs
+                logger.warning(f'NonStandardERC20 while fetching price for {token}')
+            elif isinstance(e.exception, PriceError):
+                logger.warning(f'PriceError while fetching price for {await _describe_err(token, block)}')
+            else:
+                logger.warning(f'{e} while fetching price for {await _describe_err(token, block)}')
+                logger.warning(e, exc_info=True)
     return data.Decimal(0)
 
 @alru_cache(maxsize=None)
