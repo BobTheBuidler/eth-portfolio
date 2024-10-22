@@ -168,6 +168,9 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
             "debt": self.debt(block, sync=False), 
             "external": self.external_balances(block, sync=False),
         })
+        for ds in data.values():
+            for t, d in ds.items():
+                assert d.block, ds
         return WalletBalances(data, block=block)
     
     @stuck_coro_debugger
