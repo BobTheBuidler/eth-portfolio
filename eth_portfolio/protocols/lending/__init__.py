@@ -17,7 +17,7 @@ protocols: List[Union[LendingProtocol, LendingProtocolWithLockedCollateral]] = _
 @a_sync.future
 @stuck_coro_debugger
 async def collateral(address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
-    return RemoteTokenBalances({
+    data = {
         type(protocol).__name__: token_balances
         async for protocol, token_balances
         in a_sync.map(
@@ -25,15 +25,17 @@ async def collateral(address: Address, block: Optional[Block] = None) -> RemoteT
             (protocol for protocol in protocols if isinstance(protocol, LendingProtocolWithLockedCollateral)),
         )
         if token_balances is not None
-    })
+    }
+    return RemoteTokenBalances(data, block=block)
 
 @a_sync.future
 @stuck_coro_debugger
 async def debt(address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
     if not protocols:
-        return RemoteTokenBalances()
-    return RemoteTokenBalances({
+        return RemoteTokenBalances(block=block)
+    data = {
         type(protocol).__name__: token_balances
         async for protocol, token_balances in a_sync.map(lambda p: p.debt(address, block), protocols)
         if token_balances is not None
-    })
+    }
+    return RemoteTokenBalances(data, block=block)

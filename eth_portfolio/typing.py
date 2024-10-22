@@ -251,9 +251,7 @@ class _SummableNonNumericMixin:
             >>> sum_result.value
             30
         """
-        if other == 0:
-            return self
-        return self.__add__(other)  # type: ignore
+        return self if other == 0 else self.__add__(other)  # type: ignore
 
 
 _TBSeed = Union[Dict[Address, Balance], Iterable[Tuple[Address, Balance]]]
@@ -278,18 +276,17 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
         >>> token_balances['0x123'].balance
         Decimal('100')
     """
-    def __init__(self, seed: Optional[_TBSeed] = None, block: Optional[int] = None) -> None:
+    def __init__(self, seed: Optional[_TBSeed] = None, *, block: Optional[int] = None) -> None:
         super().__init__(Balance)
         self.block = block
         if seed is None:
             return
         if isinstance(seed, dict):
             seed = seed.items()
-        if isinstance(seed, Iterable):
-            for token, balance in seed:
-                self[token] += balance
-        else:
+        if not isinstance(seed, Iterable):
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
+        for token, balance in seed:
+            self[token] += balance
     
     def __getitem__(self, key) -> Balance:
         return super().__getitem__(key) if key in self else Balance(token=key, block=self.block)
@@ -455,20 +452,19 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         >>> remote_balances['protocol1']['0x123'].balance
         Decimal('100')
     """
-    def __init__(self, seed: Optional[_RTBSeed] = None, block: Optional[int] = None) -> None:
+    def __init__(self, seed: Optional[_RTBSeed] = None, *, block: Optional[int] = None) -> None:
         super().__init__(lambda: TokenBalances(block=block))
         self.block=block
         if seed is None:
             return
         if isinstance(seed, dict):
             seed = seed.items()  # type: ignore [assignment]
-        if isinstance(seed, Iterable):
-            for remote, token_balances in seed:  # type: ignore [misc]
-                if self.block != token_balances.block:
-                    raise ValueError(f"These objects are not from the same block ({self.block} and {token_balances.block})")
-                self[remote] += token_balances  # type: ignore [has-type]
-        else:
+        if not isinstance(seed, Iterable):
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
+        for remote, token_balances in seed:  # type: ignore [misc]
+            if self.block != token_balances.block:
+                raise ValueError(f"These objects are not from the same block ({self.block} and {token_balances.block})")
+            self[remote] += token_balances  # type: ignore [has-type]
     
     def __setitem__(self, protocol: str, value: TokenBalances):
         """
@@ -504,10 +500,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
             df = balances.dataframe
             df['protocol'] = protocol
             dfs.append(df)
-        if dfs:
-            return concat(dfs).reset_index(drop=True)
-        else:
-            return DataFrame()
+        return concat(dfs).reset_index(drop=True) if dfs else DataFrame()
 
     def sum_usd(self) -> Decimal:
         """
@@ -545,7 +538,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         Returns:
             The string representation of the remote token balances.
         """
-        return f"RemoteTokenBalances{str(dict(self))}"
+        return f"RemoteTokenBalances{dict(self)}"
     
     def __add__(self, other: 'RemoteTokenBalances') -> 'RemoteTokenBalances':
         """
@@ -634,7 +627,7 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         >>> wallet_balances['assets']['0x123'].balance
         Decimal('100')
     """
-    def __init__(self, seed: Optional[Union["WalletBalances", _WBSeed]] = None, block: Optional[int] = None) -> None:
+    def __init__(self, seed: Optional[Union["WalletBalances", _WBSeed]] = None, *, block: Optional[int] = None) -> None:
         super().__init__()
         self.block = block
         self._keys = 'assets', 'debt', 'external'
@@ -697,10 +690,7 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
             df = category_bals.dataframe
             df['category'] = category
             dfs.append(df)
-        if dfs:
-            return concat(dfs).reset_index(drop=True)
-        else:
-            return DataFrame()
+        return concat(dfs).reset_index(drop=True) if dfs else DataFrame()
     
     def sum_usd(self) -> Decimal:
         """
@@ -738,7 +728,7 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         Returns:
             The string representation of the wallet balances.
         """
-        return f"WalletBalances {str(dict(self))}"
+        return f"WalletBalances {dict(self)}"
 
     def __add__(self, other: 'WalletBalances') -> 'WalletBalances':
         """
@@ -905,20 +895,19 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         >>> portfolio_balances['0x123']['assets']['0x456'].balance
         Decimal('100')
     """
-    def __init__(self, seed: Optional[_PBSeed] = None, block: Optional[int] = None) -> None:
+    def __init__(self, seed: Optional[_PBSeed] = None, *, block: Optional[int] = None) -> None:
         super().__init__(lambda: WalletBalances(block=block))
         self.block = block
         if seed is None:
             return
         if isinstance(seed, dict):
             seed = seed.items()
-        if isinstance(seed, Iterable):
-            for wallet, balances in seed:
-                if self.block != balances.block:
-                    raise ValueError(f"These objects are not from the same block ({self.block} and {balances.block})")
-                self[wallet] += balances
-        else:
+        if not isinstance(seed, Iterable):
             raise TypeError(f"{seed} is not a valid input for PortfolioBalances")
+        for wallet, balances in seed:
+            if self.block != balances.block:
+                raise ValueError(f"These objects are not from the same block ({self.block} and {balances.block})")
+            self[wallet] += balances
     
     def __setitem__(self, key, value):
         if not isinstance(value, WalletBalances):
@@ -938,10 +927,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             df = balances.dataframe
             df['wallet'] = wallet
             dfs.append(df)
-        if dfs:
-            return concat(dfs).reset_index(drop=True)
-        else:
-            return DataFrame()
+        return concat(dfs).reset_index(drop=True) if dfs else DataFrame()
     
     def sum_usd(self) -> Decimal:
         """
@@ -1091,20 +1077,19 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
         >>> raw_balances['0x123']['0x456'].balance
         Decimal('100')
     """ 
-    def __init__(self, seed: Optional[_WTBInput] = None, block: Optional[int] = None) -> None:
+    def __init__(self, seed: Optional[_WTBInput] = None, *, block: Optional[int] = None) -> None:
         super().__init__(lambda: TokenBalances(block=block))
         self.block = block
         if seed is None:
             return
         if isinstance(seed, dict):
             seed = seed.items()
-        if isinstance(seed, Iterable):
-            for wallet, balances in seed:
-                if self.block != balances.block:
-                    raise ValueError(f"These objects are not from the same block ({self.block} and {balances.block})")
-                self[wallet] += balances
-        else:
+        if not isinstance(seed, Iterable):
             raise TypeError(f"{seed} is not a valid input for WalletBalancesRaw")
+        for wallet, balances in seed:
+            if self.block != balances.block:
+                raise ValueError(f"These objects are not from the same block ({self.block} and {balances.block})")
+            self[wallet] += balances
     
     def __bool__(self) -> bool:
         """
@@ -1215,20 +1200,19 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
         >>> pb_by_category['assets']['0x123']['0x456'].balance
         Decimal('100')
     """ 
-    def __init__(self, seed: Optional[_CBInput] = None, block: Optional[int] = None) -> None:
+    def __init__(self, seed: Optional[_CBInput] = None, *, block: Optional[int] = None) -> None:
         super().__init__(lambda: WalletBalancesRaw(block=block))
         self.block = block
         if seed is None:
             return
         if isinstance(seed, dict):
             seed = seed.items()
-        if isinstance(seed, Iterable):
-            for label, balances in seed:  # type: ignore
-                if self.block != balances.block:
-                    raise ValueError(f"These objects are not from the same block ({self.block} and {balances.block})")
-                self[label] += balances
-        else:
+        if not isinstance(seed, Iterable):
             raise TypeError(f"{seed} is not a valid input for PortfolioBalancesByCategory")
+        for label, balances in seed:  # type: ignore
+            if self.block != balances.block:
+                raise ValueError(f"These objects are not from the same block ({self.block} and {balances.block})")
+            self[label] += balances
 
     @property
     def assets(self) -> WalletBalancesRaw:

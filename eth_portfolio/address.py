@@ -163,11 +163,12 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         """
         if not isinstance(block, int):
             raise TypeError(f"Block must be an integer. You passed {type(block)} {block}")
-        return WalletBalances(await a_sync.gather({
+        data = await a_sync.gather({
             "assets": self.assets(block, sync=False), 
             "debt": self.debt(block, sync=False), 
             "external": self.external_balances(block, sync=False),
-        }))
+        })
+        return WalletBalances(data, block=block)
     
     @stuck_coro_debugger
     async def assets(self, block: Optional[Block] = None) -> TokenBalances:
