@@ -391,6 +391,8 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
         combined: TokenBalances = TokenBalances(block=self.block)
         for token, balance in self.items():
             if balance:
+                if not isinstance(balance, Balance):
+                    raise TypeError('wut', token, balance)
                 combined._setitem_nochecksum(token, Balance(balance.balance, balance.usd_value, token=token, block=self.block))
         for token, balance in other.items():
             if balance:
