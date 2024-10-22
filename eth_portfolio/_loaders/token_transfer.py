@@ -1,12 +1,12 @@
 
 import logging
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
 
 import a_sync
 import dank_mids
 import msgspec
 from dank_mids.structs.data import Decimal, TransactionIndex
-from pony.orm import TransactionIntegrityError
+from pony.orm import TransactionIntegrityError, UnexpectedError
 from y import ERC20
 from y._db.log import Log
 from y._decorators import stuck_coro_debugger
@@ -90,6 +90,10 @@ async def _insert_to_db(transfer: TokenTransfer, load_prices: bool) -> None:
             if load_prices:
                 await db.delete_token_transfer(transfer)
                 await db.insert_token_transfer(transfer)
+        except UnexpectedError:
+            digits_before_decimal = str(transfer.value).split('.')[0]
+            if len(digits_before_decimal) <= 20:
+                raise
             
 @stuck_coro_debugger
 async def get_symbol(token: ERC20) -> Optional[str]:
