@@ -8,6 +8,7 @@ import msgspec
 from dank_mids.structs.data import Decimal, TransactionIndex
 from pony.orm import TransactionIntegrityError
 from y import ERC20
+from y._db.log import Log
 from y._decorators import stuck_coro_debugger
 from y.exceptions import NonStandardERC20
 
@@ -17,8 +18,6 @@ from eth_portfolio._loaders.utils import get_transaction_receipt
 from eth_portfolio._utils import _get_price
 from eth_portfolio.structs import TokenTransfer
 
-if TYPE_CHECKING:
-    from y._db.utils.logs import Log
 
 logger = logging.getLogger(__name__)
 

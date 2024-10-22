@@ -16,7 +16,7 @@ from dank_mids.structs.trace import Reward
 from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
-from y._db.utils.logs import Log
+from y._db.log import Log
 from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
 from y.datatypes import Block

@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, AsyncIterator, List
 import a_sync
 from brownie import chain
 from eth_utils import encode_hex
+from y._db.log import Log
 from y.datatypes import Address
 from y.utils.events import ProcessedEvents
 
@@ -15,8 +16,6 @@ from eth_portfolio._shitcoins import SHITCOINS
 from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.structs import TokenTransfer
 
-if TYPE_CHECKING:
-    from y._db.utils.logs import Log
 
 try:
     # this is only available in 4.0.0+
