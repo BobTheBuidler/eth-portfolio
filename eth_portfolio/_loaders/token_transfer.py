@@ -64,6 +64,7 @@ async def load_token_transfer(transfer_log: "Log", load_prices: bool) -> Optiona
         try:
             value = Decimal(transfer_log.topic3.as_uint) / coro_results.pop('scale')
         except AttributeError:
+            logger.warning("no topic3, skipping")
             return None
         
         if price := coro_results.get('price'):
