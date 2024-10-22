@@ -328,7 +328,7 @@ class Portfolio(a_sync.ASyncGenericBase):
             >>> print(balances)
         """
         assert block
-        return PortfolioBalances(await a_sync.gather({address: address.describe(block, sync=False) for address in self}))
+        return PortfolioBalances(await a_sync.gather({address: address.describe(block, sync=False) for address in self}), block=block)
     
     
 async_functions = {name: obj for name, obj in PortfolioAddress.__dict__.items() if isinstance(obj, ASyncFunction)}
