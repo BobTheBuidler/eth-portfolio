@@ -464,6 +464,8 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
             seed = seed.items()  # type: ignore [assignment]
         if isinstance(seed, Iterable):
             for remote, token_balances in seed:  # type: ignore [misc]
+                if self.block != token_balances.block:
+                    raise ValueError(f"These objects are not from the same block ({self.block} and {token_balances.block})")
                 self[remote] += token_balances  # type: ignore [has-type]
         else:
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
@@ -647,6 +649,8 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         if not isinstance(seed, Iterable):
             raise TypeError(f"{seed} is not a valid input for WalletBalances")
         for key, balances in seed:  # type: ignore
+            if self.block != balances.block:
+                raise ValueError(f"These objects are not from the same block ({self.block} and {balances.block})")
             self.__validateitem(key, balances)
             self[key] += balances            
         
@@ -910,6 +914,8 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             seed = seed.items()
         if isinstance(seed, Iterable):
             for wallet, balances in seed:
+                if self.block != balances.block:
+                    raise ValueError(f"These objects are not from the same block ({self.block} and {balances.block})")
                 self[wallet] += balances
         else:
             raise TypeError(f"{seed} is not a valid input for PortfolioBalances")
@@ -1094,6 +1100,8 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
             seed = seed.items()
         if isinstance(seed, Iterable):
             for wallet, balances in seed:
+                if self.block != balances.block:
+                    raise ValueError(f"These objects are not from the same block ({self.block} and {balances.block})")
                 self[wallet] += balances
         else:
             raise TypeError(f"{seed} is not a valid input for WalletBalancesRaw")
@@ -1216,6 +1224,8 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
             seed = seed.items()
         if isinstance(seed, Iterable):
             for label, balances in seed:  # type: ignore
+                if self.block != balances.block:
+                    raise ValueError(f"These objects are not from the same block ({self.block} and {balances.block})")
                 self[label] += balances
         else:
             raise TypeError(f"{seed} is not a valid input for PortfolioBalancesByCategory")
