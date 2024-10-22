@@ -37,7 +37,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
     """
 
     @property
-    def _evm_object(self) -> Union["ModifiedTransaction", FilterTrace, "Log"]:
+    def _evm_object(self) -> Union["ModifiedTransaction", FilterTrace, Log]:
         """
         The EVM object associated with {cls_name}, exactly as it was received from the RPC.
         """
@@ -528,7 +528,7 @@ class TokenTransfer(_LedgerEntryBase, kw_only=True, frozen=True, array_like=True
         return self.log.topic2.as_address
 
     @property
-    def _evm_object(self) -> "Log":
+    def _evm_object(self) -> Log:
         return self.log
 
     transaction_index: int
