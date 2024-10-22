@@ -2,12 +2,13 @@
 import abc
 import asyncio
 import logging
-from typing import TYPE_CHECKING, AsyncIterator, List
+from typing import AsyncIterator, List
 
 import a_sync
+import dank_mids.structs
+import y._db.log
 from brownie import chain
 from eth_utils import encode_hex
-from y._db.log import Log
 from y.datatypes import Address
 from y.utils.events import ProcessedEvents
 
@@ -46,13 +47,15 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
             logger.debug("yielding %s at block %s [thru: %s, lock: %s]", task, task.block, block, self._lock.value)
             yield task
         logger.debug("%s yield thru %s complete", self, block)
-    def _include_event(self, event: "Log") -> bool:
+    def _include_event(self, event: "dank_mids.structs.Log") -> bool:
         logger.warning(f'event address checksummed? {event.address}')
         return event.address not in SHITCOINS.get(chain.id, [])
-    async def _extend(self, objs: List["Log"]) -> None:
+    async def _extend(self, objs: List["dank_mids.structs.Log"]) -> None:
         for log in objs:
+            # save i/o
+            array_encodable_log = y._db.log.Log(**log)
             task = asyncio.create_task(
-                coro=_loaders.load_token_transfer(log, self._load_prices), 
+                coro=_loaders.load_token_transfer(array_encodable_log, self._load_prices), 
                 name="load_token_transfer",
             )
             task.block = log.block  # type: ignore [attr-defined]
