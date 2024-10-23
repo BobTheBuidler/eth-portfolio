@@ -51,7 +51,7 @@ async def load_token_transfer(transfer_log: "Log", load_prices: bool) -> Optiona
             coro_results = await a_sync.gather(coros)
         except NonStandardERC20 as e:
             # NOTE: if we cant fetch scale or symbol or both, this is probably either a shitcoin or an NFT (which we don't support at this time)
-            logger.debug("%s for %s, skipping.", e, transfer_log)
+            logger.warning("%s for %s, skipping.", e, transfer_log)
             return None
         except Exception as e:
             try:
@@ -63,6 +63,8 @@ async def load_token_transfer(transfer_log: "Log", load_prices: bool) -> Optiona
 
         try:
             value = Decimal(transfer_log.topic3.as_uint) / coro_results.pop('scale')
+            if value >= int("9"*20):
+                logger.warning("value too high? %s %s", transfer_log, value)
         except AttributeError:
             logger.warning("no topic3, skipping")
             return None
