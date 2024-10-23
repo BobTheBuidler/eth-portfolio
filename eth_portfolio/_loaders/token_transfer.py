@@ -59,15 +59,17 @@ async def load_token_transfer(transfer_log: "Log", load_prices: bool) -> Optiona
                 logger.exception(e)
             except NonStandardERC20 as e:
                 logger.error(f"{e.__class__.__name__} {e} for {transfer_log.address} at block {transfer_log.blockNumber}.")
+            except ContractLogicError:
+
             return None
 
-        try:
-            value = Decimal(transfer_log.topic3.as_uint) / coro_results.pop('scale')
-            if value >= int("9"*20):
-                logger.warning("value too high? %s %s", transfer_log, value)
-        except AttributeError:
-            logger.warning("no topic3, skipping")
-            return None
+        #try:
+        value = Decimal(transfer_log.topic3.as_uint) / coro_results.pop('scale')
+        if value >= int("9"*20):
+            logger.warning("value too high? %s %s", transfer_log, value)
+        #except AttributeError:
+        #    logger.warning("no topic3, skipping")
+        #    return None
         
         if price := coro_results.get('price'):
             coro_results['value_usd'] = round(value * price, 18)
