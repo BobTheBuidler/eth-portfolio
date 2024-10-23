@@ -62,7 +62,7 @@ async def load_token_transfer(transfer_log: "Log", load_prices: bool) -> Optiona
             return None
 
         #try:
-        value = Decimal(transfer_log.topic3.as_uint) / coro_results.pop('scale')
+        value = Decimal(int(transfer_log.data, 16)) / coro_results.pop('scale')
         if value >= int("9"*20):
             logger.warning("value too high? %s %s", transfer_log, value)
         #except AttributeError:
