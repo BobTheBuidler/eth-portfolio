@@ -59,8 +59,6 @@ async def load_token_transfer(transfer_log: "Log", load_prices: bool) -> Optiona
                 logger.exception(e)
             except NonStandardERC20 as e:
                 logger.error(f"{e.__class__.__name__} {e} for {transfer_log.address} at block {transfer_log.blockNumber}.")
-            except ContractLogicError:
-
             return None
 
         #try:
