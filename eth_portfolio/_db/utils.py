@@ -428,6 +428,8 @@ async def insert_token_transfer(token_transfer: TokenTransfer) -> None:
 def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
     encoded = json.encode(token_transfer, enc_hook=enc_hook)
     logger.warning(f"encoded token transfer: {encoded}")
+    if encoded.endswith(b'null]'):
+        raise ValueError("null value", token_transfer)
     entities.TokenTransfer(
         block = (chain.id, token_transfer.block_number), 
         transaction_index = token_transfer.transaction_index,
