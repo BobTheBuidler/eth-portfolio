@@ -51,7 +51,7 @@ async def load_token_transfer(transfer_log: "Log", load_prices: bool) -> Optiona
             coro_results = await a_sync.gather(coros)
         except NonStandardERC20 as e:
             # NOTE: if we cant fetch scale or symbol or both, this is probably either a shitcoin or an NFT (which we don't support at this time)
-            logger.warning("%s for %s, skipping.", e, transfer_log)
+            logger.debug("%s for %s, skipping.", e, transfer_log)
             return None
         except Exception as e:
             try:
@@ -61,19 +61,12 @@ async def load_token_transfer(transfer_log: "Log", load_prices: bool) -> Optiona
                 logger.error(f"{e.__class__.__name__} {e} for {transfer_log.address} at block {transfer_log.blockNumber}.")
             return None
 
-        value = Decimal(transfer_log.data.as_uint) / coro_results.pop('scale')
-
-        if value >= int("9"*20):
-            logger.warning("value too high? %s %s", transfer_log, value)
+        value = Decimal(transfer_log.data.as_uint256) / coro_results.pop('scale')
         
         if price := coro_results.get('price'):
             coro_results['value_usd'] = round(value * price, 18)
                 
-        try:
-            transfer = TokenTransfer(log=transfer_log, value=value, **coro_results)
-        except TypeError as e:
-            # TODO: get rid of this once its run fine for a few days
-            raise TypeError(str(e), transfer_log, coro_results) from e
+        transfer = TokenTransfer(log=transfer_log, value=value, **coro_results)
 
         await a_sync.create_task(
             _insert_to_db(transfer, load_prices), 

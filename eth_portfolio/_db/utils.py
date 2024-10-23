@@ -362,10 +362,12 @@ def get_token_transfer(transfer: dank_mids.structs.Log) -> Optional[TokenTransfe
         "log_index": transfer.logIndex,
     }
     if obj := token_transfers_known_at_startup().get(tuple(pk.values())):
-        return json.decode(obj, type=TokenTransfer, dec_hook=_decode_hook)
+        with reraise_excs_with_extra_context(obj):
+            return json.decode(obj, type=TokenTransfer, dec_hook=_decode_hook)
     entity: entities.TokenTransfer
     if entity := entities.TokenTransfer.get(**pk):
-        return json.decode(entity.raw, type=TokenTransfer, dec_hook=_decode_hook)
+        with reraise_excs_with_extra_context(entity):
+            return json.decode(entity.raw, type=TokenTransfer, dec_hook=_decode_hook)
 
 _TPK = Tuple[Tuple[int, str], int]
 
