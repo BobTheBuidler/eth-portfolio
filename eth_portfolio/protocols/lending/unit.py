@@ -38,7 +38,7 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
         if block and block < self.start_block:
             return balances
         # NOTE: This only works for YFI based debt, must extend before using for other collaterals
-        debt = await self.unitVault.getTotalDebt.coroutine(yfi, address, block_identifier=block) / 10**18
-        if debt:
+        if debt := await self.unitVault.getTotalDebt.coroutine(yfi, address, block_identifier=block):
+            debt = Decimal(debt) / 10 ** 18
             balances[usdp] = Balance(debt, debt)
         return balances
