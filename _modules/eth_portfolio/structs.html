@@ -1,0 +1,550 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eth_portfolio.structs &mdash; eth-portfolio  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            eth-portfolio
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../source/modules.html">eth_portfolio</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">eth-portfolio</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">eth_portfolio.structs</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for eth_portfolio.structs</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Defines the data classes used to represent the various types of value-transfer actions on the blockchain. These include transactions, internal transfers, and token transfers. </span>
+
+<span class="sd">The classes are designed to provide a consistent and flexible interface for working with blockchain data. Instance attributes can be fetched with either dot notation or key lookup. Classes are compatible with the standard dictionary interface.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">msgspec</span> <span class="kn">import</span> <span class="n">Struct</span>
+<span class="kn">from</span> <span class="nn">y</span> <span class="kn">import</span> <span class="n">Network</span>
+<span class="kn">from</span> <span class="nn">y.datatypes</span> <span class="kn">import</span> <span class="n">Block</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<div class="viewcode-block" id="_DictStruct">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.structs._DictStruct">[docs]</a>
+<span class="k">class</span> <span class="nc">_DictStruct</span><span class="p">(</span><span class="n">Struct</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A base class that extends the :class:`~msgspec.Struct` class to provide dictionary-like access to struct fields.</span>
+
+<span class="sd">    Allows iteration over the fields of a struct and provides a dictionary-like interface for retrieving values by field name.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; class MyStruct(_DictStruct):</span>
+<span class="sd">        ...     field1: str</span>
+<span class="sd">        ...     field2: int</span>
+<span class="sd">        &gt;&gt;&gt; s = MyStruct(field1=&quot;value&quot;, field2=42)</span>
+<span class="sd">        &gt;&gt;&gt; list(s.keys())</span>
+<span class="sd">        [&#39;field1&#39;, &#39;field2&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; s[&#39;field1&#39;]</span>
+<span class="sd">        &#39;value&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="_DictStruct.keys">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.structs._DictStruct.keys">[docs]</a>
+    <span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns an iterator over the field names of the struct.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            An iterator over the field names.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__struct_fields__</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="_DictStruct.__getitem__">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.structs._DictStruct.__getitem__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the value of the specified field.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            item: The name of the field to retrieve.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            KeyError: If the provided key is not a member of the struct.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The value of the specified field.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span></div>
+</div>
+
+    
+<div class="viewcode-block" id="_LedgerEntryBase">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.structs._LedgerEntryBase">[docs]</a>
+<span class="k">class</span> <span class="nc">_LedgerEntryBase</span><span class="p">(</span><span class="n">_DictStruct</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The :class:`~structs._LedgerEntryBase` class is a base class for ledger entries representing on-chain actions in a blockchain.</span>
+
+<span class="sd">    Provides common attributes for transactions, internal transfers, and token transfers.</span>
+
+<span class="sd">    Extended by specific ledger entry types :class:`~structs.Transaction`, :class:`~structs.InternalTransfer`, and :class:`~structs.TokenTransfer`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">chainid</span><span class="p">:</span> <span class="n">Network</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The network ID where the {cls_name} occurred.    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">block_number</span><span class="p">:</span> <span class="n">Block</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The block number where the {cls_name} was included.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">transaction_index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The index of the transaction within its block, if applicable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nb">hash</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The unique transaction hash.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">from_address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The address from which the {cls_name} was sent, if applicable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">value</span><span class="p">:</span> <span class="n">Decimal</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The value/amount of cryptocurrency transferred in the {cls_name}.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">to_address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The address to which the {cls_name} was sent, if applicable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">price</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Decimal</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The price of the cryptocurrency at the time of the {cls_name}, if known.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">value_usd</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Decimal</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The USD value of the cryptocurrency transferred in the {cls_name}, if price is known.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init_subclass__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init_subclass__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Replace {cls_name} in attribute-level docstrings</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">and</span> <span class="s2">&quot;</span><span class="si">{cls_name}</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="n">attr</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">:</span>
+                <span class="n">attr</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{cls_name}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="AccessListEntry">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.structs.AccessListEntry">[docs]</a>
+<span class="k">class</span> <span class="nc">AccessListEntry</span><span class="p">(</span><span class="n">Struct</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The :class:`~structs.AccessListEntry` class represents an entry in an Ethereum transaction access list.</span>
+
+<span class="sd">    Access lists are used in EIP-2930 and EIP-1559 transactions to specify storage slots</span>
+<span class="sd">    that the transaction plans to access, potentially reducing gas costs.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; entry = AccessListEntry(</span>
+<span class="sd">        ...     address=&quot;0x742d35Cc6634C0532925a3b844Bc454e4438f44e&quot;, </span>
+<span class="sd">        ...     storage_keys=(b&#39;key1&#39;, b&#39;key2&#39;)</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; entry.address</span>
+<span class="sd">        &#39;0x742d35Cc6634C0532925a3b844Bc454e4438f44e&#39;</span>
+<span class="sd">        &gt;&gt;&gt; len(entry.storage_keys)</span>
+<span class="sd">        2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">address</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Ethereum address of the contract whose storage is being accessed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">storage_keys</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The specific storage slot keys within the contract that will be accessed.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+    
+<div class="viewcode-block" id="Transaction">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.structs.Transaction">[docs]</a>
+<span class="k">class</span> <span class="nc">Transaction</span><span class="p">(</span><span class="n">_LedgerEntryBase</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The :class:`~structs.Transaction` class represents a complete on-chain blockchain transaction.</span>
+
+<span class="sd">    Contains detailed information about a single executed transaction on the blockchain,</span>
+<span class="sd">    including gas parameters, signature components, and transaction-specific data.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; tx = Transaction(</span>
+<span class="sd">        ...     chainid=Network.Mainnet,</span>
+<span class="sd">        ...     block_number=Block(15537393),</span>
+<span class="sd">        ...     hash=&quot;0x123...&quot;,</span>
+<span class="sd">        ...     from_address=&quot;0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&quot;,</span>
+<span class="sd">        ...     to_address=&quot;0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D&quot;,</span>
+<span class="sd">        ...     value=Decimal(&quot;0.1&quot;),</span>
+<span class="sd">        ...     block_hash=&quot;0xabc...&quot;,</span>
+<span class="sd">        ...     nonce=42,</span>
+<span class="sd">        ...     type=2,  # EIP-1559 transaction</span>
+<span class="sd">        ...     gas=21000,</span>
+<span class="sd">        ...     gas_price=20000000000,</span>
+<span class="sd">        ...     max_fee_per_gas=30000000000,</span>
+<span class="sd">        ...     max_priority_fee_per_gas=1000000000,</span>
+<span class="sd">        ...     input=&quot;0x&quot;,</span>
+<span class="sd">        ...     r=&quot;0x123...&quot;,</span>
+<span class="sd">        ...     s=&quot;0x456...&quot;,</span>
+<span class="sd">        ...     v=27</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; tx.chainid</span>
+<span class="sd">        Network.Mainnet</span>
+<span class="sd">        &gt;&gt;&gt; tx.type</span>
+<span class="sd">        2</span>
+<span class="sd">        &gt;&gt;&gt; tx.max_fee_per_gas</span>
+<span class="sd">        30000000000</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">entry_type</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;transaction&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="s1">&#39;transaction&#39;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Constant indicating this value transfer is an on-chain transaction entry.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">block_hash</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The hash of the block that includes this Transaction.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">nonce</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The sender&#39;s transaction count at the time of this Transaction.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The transaction type (e.g., 0 for legacy, 1 for EIP-2930, 2 for EIP-1559).</span>
+<span class="sd">    None for chains that don&#39;t specify transaction types.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">gas</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The maximum amount of gas the sender is willing to use for the Transaction.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">gas_price</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The price per unit of gas the sender is willing to pay (for legacy and EIP-2930 transactions).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">max_fee_per_gas</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The maximum total fee per gas the sender is willing to pay (for EIP-1559 transactions).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">max_priority_fee_per_gas</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The maximum priority fee per gas the sender is willing to pay (for EIP-1559 transactions).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nb">input</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The data payload sent with the Transaction, often used for contract interactions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">r</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The R component of the Transaction&#39;s ECDSA signature.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">s</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The S component of the Transaction&#39;s ECDSA signature.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">v</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The V component of the Transaction&#39;s ECDSA signature, used for replay protection.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">access_list</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">AccessListEntry</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    List of addresses and storage keys the transaction plans to access (for EIP-2930 and EIP-1559 transactions).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">y_parity</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Y parity of the transaction signature, used in EIP-2718 typed transactions.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="InternalTransfer">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.structs.InternalTransfer">[docs]</a>
+<span class="k">class</span> <span class="nc">InternalTransfer</span><span class="p">(</span><span class="n">_LedgerEntryBase</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The :class:`~structs.InternalTransfer`class represents an internal transfer or call within a blockchain transaction.</span>
+
+<span class="sd">    Captures operations that occur during transaction execution, such as contract-to-contract calls,</span>
+<span class="sd">    contract creations, or self-destructs. These are not separate on-chain transactions but part of</span>
+<span class="sd">    the execution of a single transaction.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; internal_tx = InternalTransfer(</span>
+<span class="sd">        ...     chainid=Network.Mainnet,</span>
+<span class="sd">        ...     block_number=Block(15537393),</span>
+<span class="sd">        ...     hash=&quot;0x123...&quot;,</span>
+<span class="sd">        ...     from_address=&quot;0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D&quot;,</span>
+<span class="sd">        ...     to_address=&quot;0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&quot;,</span>
+<span class="sd">        ...     value=Decimal(&quot;0&quot;),</span>
+<span class="sd">        ...     block_hash=&quot;0xabc...&quot;,</span>
+<span class="sd">        ...     type=&quot;call&quot;,</span>
+<span class="sd">        ...     trace_address=&quot;0.1&quot;,</span>
+<span class="sd">        ...     gas=100000,</span>
+<span class="sd">        ...     gas_used=21000,</span>
+<span class="sd">        ...     subtraces=1,</span>
+<span class="sd">        ...     call_type=&quot;call&quot;,</span>
+<span class="sd">        ...     input=&quot;0x123...&quot;,</span>
+<span class="sd">        ...     output=&quot;0x456...&quot;</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; internal_tx.type</span>
+<span class="sd">        &#39;call&#39;</span>
+<span class="sd">        &gt;&gt;&gt; internal_tx.trace_address</span>
+<span class="sd">        &#39;0.1&#39;</span>
+<span class="sd">        &gt;&gt;&gt; internal_tx.gas_used</span>
+<span class="sd">        21000</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">entry_type</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;internal_transfer&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="s1">&#39;internal_transfer&#39;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Constant indicating this value transfer is an internal transfer or call entry.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">block_hash</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The hash of the block containing the transaction that includes this InternalTransfer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The type of internal operation (e.g., &quot;call&quot; for contract calls, &quot;create&quot; for contract creation,</span>
+<span class="sd">    &quot;suicide&quot; for contract self-destruct).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">trace_address</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The path of sub-calls to reach this InternalTransfer within the transaction.</span>
+<span class="sd">    Represented as period-separated integers, e.g., &quot;0.1.2&quot; for the third sub-call of the second sub-call</span>
+<span class="sd">    of the first top-level call.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">gas</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The amount of gas allocated for this internal operation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">gas_used</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The amount of gas actually consumed by this internal operation, if known.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">subtraces</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The number of sub-operations spawned by this InternalTransfer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">call_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The type of call made in this InternalTransfer (e.g., &quot;call&quot;, &quot;delegatecall&quot;, &quot;staticcall&quot;).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The input data for this internal operation, if any.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">output</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The output data from this internal operation, if any.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">init</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The initialization code for contract creation, if this is a create operation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The address of the account or contract involved in this InternalTransfer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">code</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The code of the contract involved in this InternalTransfer, if applicable.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="TokenTransfer">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.structs.TokenTransfer">[docs]</a>
+<span class="k">class</span> <span class="nc">TokenTransfer</span><span class="p">(</span><span class="n">_LedgerEntryBase</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The :class:`~structs.TokenTransfer` class represents a token transfer event within a blockchain transaction.</span>
+
+<span class="sd">    Captures the movement of ERC20-like tokens between addresses. These are typically</span>
+<span class="sd">    emitted as events by token contracts and are not separate transactions but part of</span>
+<span class="sd">    the execution of a transaction interacting with the token contract.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; token_transfer = TokenTransfer(</span>
+<span class="sd">        ...     chainid=Network.Mainnet,</span>
+<span class="sd">        ...     block_number=Block(15537393),</span>
+<span class="sd">        ...     hash=&quot;0x123...&quot;,</span>
+<span class="sd">        ...     from_address=&quot;0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&quot;,</span>
+<span class="sd">        ...     to_address=&quot;0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D&quot;,</span>
+<span class="sd">        ...     value=Decimal(&quot;1000000&quot;),  # 1 USDC (assuming 6 decimals)</span>
+<span class="sd">        ...     log_index=3,</span>
+<span class="sd">        ...     token=&quot;USDC&quot;,</span>
+<span class="sd">        ...     token_address=&quot;0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&quot;</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; token_transfer.token</span>
+<span class="sd">        &#39;USDC&#39;</span>
+<span class="sd">        &gt;&gt;&gt; token_transfer.value</span>
+<span class="sd">        Decimal(&#39;1000000&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; token_transfer.log_index</span>
+<span class="sd">        3</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">entry_type</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;token_transfer&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="s1">&#39;token_transfer&#39;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Constant indicating this value transfer is a token transfer entry.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">log_index</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The index of this transfer event within the transaction logs.</span>
+<span class="sd">    Used to uniquely identify the Transfer event associated with this TokenTransfer within the transaction.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The identifier or symbol of the token being transferred, if known.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">token_address</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The contract address of the token being transferred.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">value</span><span class="p">:</span> <span class="n">Decimal</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The amount of tokens transferred, scaled to a human-readable decimal value.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<span class="n">LedgerEntry</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Transaction</span><span class="p">,</span> <span class="n">InternalTransfer</span><span class="p">,</span> <span class="n">TokenTransfer</span><span class="p">]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Type alias representing any type of ledger entry (:class:`~structs.Transaction`, :class:`~structs.InternalTransfer`, or :class:`~structs.TokenTransfer`).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">_LE</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;_LE&quot;</span><span class="p">,</span> <span class="n">Transaction</span><span class="p">,</span> <span class="n">InternalTransfer</span><span class="p">,</span> <span class="n">TokenTransfer</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Type variable for generic operations on ledger entries. Can be :class:`~structs.Transaction`, :class:`~structs.InternalTransfer`, or :class:`~structs.TokenTransfer`.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, BobTheBuidler.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
