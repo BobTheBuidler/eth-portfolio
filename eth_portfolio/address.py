@@ -238,6 +238,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         token_balances[EEE_ADDRESS] = eth_balance
         return token_balances
 
+    @eth_retry.auto_retry
     @stuck_coro_debugger
     async def eth_balance(self, block: Optional[Block]) -> Balance:
         """
