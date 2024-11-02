@@ -26,7 +26,7 @@ def set_end_block_if_none(func: Callable[Concatenate[_I, Block, Block, _P], _T])
         async def wrap(obj: _I, start_block: Block, end_block: Optional[Block], *args: _P.args, **kwargs: _P.kwargs) -> _T:
             if end_block is None:
                 end_block = await get_buffered_chain_height()
-                logger.debug(f"end_block not provided, using {end_block}")
+                logger.debug("end_block not provided, using %s", end_block)
             async for thing in func(obj, start_block, end_block, *args, **kwargs):
                 yield thing
     elif asyncio.iscoroutinefunction(func):
@@ -34,13 +34,13 @@ def set_end_block_if_none(func: Callable[Concatenate[_I, Block, Block, _P], _T])
         async def wrap(obj: _I, start_block: Block, end_block: Block, *args: _P.args, **kwargs: _P.kwargs) -> _T:
             if end_block is None:
                 end_block = await get_buffered_chain_height()
-                logger.debug(f"end_block not provided, using {end_block}")
+                logger.debug("end_block not provided, using %s", end_block)
             return await func(obj, start_block, end_block, *args, **kwargs)
     else:
         @functools.wraps(func)
         def wrap(obj: _I, start_block: Block, end_block: Block, *args: _P.args, **kwargs: _P.kwargs) -> _T:
             if end_block is None:
                 end_block = chain.height - _config.REORG_BUFFER
-                logger.debug(f"end_block not provided, using {end_block}")
+                logger.debug("end_block not provided, using %s", end_block)
             return func(obj, start_block, end_block, *args, **kwargs)
     return wrap
