@@ -1,7 +1,5 @@
-import asyncio
 import logging
-from typing import (TYPE_CHECKING, AsyncIterator, Dict, Generic, Tuple,
-                    TypeVar, Union)
+from typing import TYPE_CHECKING, AsyncIterator, Dict, Generic, TypeVar
 
 import a_sync
 from pandas import DataFrame, concat  # type: ignore
@@ -12,7 +10,7 @@ from eth_portfolio._ledgers.address import (AddressLedgerBase,
                                             InternalTransfersList,
                                             TokenTransfersList,
                                             TransactionsList, _LedgerEntryList)
-from eth_portfolio._utils import _AiterMixin, _unpack_indicies
+from eth_portfolio._utils import _AiterMixin
 from eth_portfolio.structs import Transaction, InternalTransfer, TokenTransfer
 
 if TYPE_CHECKING:
