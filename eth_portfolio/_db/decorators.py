@@ -5,10 +5,9 @@ from functools import wraps
 from random import random
 from typing import Callable, TypeVar
 
+from a_sync._typing import AnyFn
 from pony.orm import OperationalError, TransactionError
 from typing_extensions import ParamSpec
-
-from a_sync._typing import AnyFn
 
 P = ParamSpec("P")
 T = TypeVar("T")

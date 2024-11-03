@@ -1,6 +1,6 @@
-import pytest
-from unittest.mock import patch, AsyncMock, create_autospec
+from unittest.mock import AsyncMock, create_autospec, patch
 
+import pytest
 from eth_portfolio import protocols
 from eth_portfolio.protocols._base import StakingPoolABC
 from eth_portfolio.typing import Balance, RemoteTokenBalances, TokenBalances

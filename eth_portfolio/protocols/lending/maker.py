@@ -2,15 +2,15 @@ import asyncio
 from typing import Optional
 
 from async_lru import alru_cache
-from brownie.convert.datatypes import HexString
 from y import Network, get_price
 from y._decorators import stuck_coro_debugger
 from y.constants import dai
 from y.contracts import Contract
 from y.datatypes import Address, Block
 
-from eth_portfolio.protocols.lending._base import LendingProtocolWithLockedCollateral
 from eth_portfolio._utils import Decimal
+from eth_portfolio.protocols.lending._base import \
+    LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import Balance, TokenBalances
 
 try:

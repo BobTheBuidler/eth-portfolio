@@ -5,7 +5,8 @@ from y import Contract, Network, get_price
 from y._decorators import stuck_coro_debugger
 from y.datatypes import Address, Block
 
-from eth_portfolio.protocols.lending._base import LendingProtocolWithLockedCollateral
+from eth_portfolio.protocols.lending._base import \
+    LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import Balance, TokenBalances
 
 # NOTE: This only works for YFI collateral, must extend before using for other collaterals

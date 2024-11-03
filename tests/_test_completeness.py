@@ -7,7 +7,7 @@ import eth_portfolio.protocols.lending
 import eth_portfolio.protocols.staking
 import pytest
 from eth_portfolio.address import PortfolioAddress
-from eth_portfolio.portfolio import PortfolioLedger, Portfolio
+from eth_portfolio.portfolio import Portfolio, PortfolioLedger
 
 """
 Test sync-async completeness.

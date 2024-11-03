@@ -6,7 +6,8 @@ The classes are designed to provide a consistent and flexible interface for work
 
 import logging
 from decimal import Decimal
-from typing import Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar, Union
+from typing import (Any, ClassVar, Iterator, Literal, Optional, Tuple, TypeVar,
+                    Union)
 
 from msgspec import Struct
 from y import Network

@@ -6,7 +6,6 @@ import toolcache
 from a_sync._typing import AnyFn, P, T
 from brownie import chain
 
-
 cache_base_path = f"./cache/{chain.id}/"
 
 
