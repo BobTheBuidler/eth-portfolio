@@ -15,8 +15,7 @@ from eth_portfolio.constants import BTC_LIKE, ETH_LIKE, INTL_STABLECOINS
 
 logger = logging.getLogger(__name__)
 
-OTHER_LONG_TERM_ASSETS: Set[Address] = {
-}.get(chain.id, set())
+OTHER_LONG_TERM_ASSETS: Set[Address] = {}.get(chain.id, set())
 
 
 async def get_token_bucket(token: AnyAddressType) -> str:
@@ -24,26 +23,27 @@ async def get_token_bucket(token: AnyAddressType) -> str:
     try:
         token = str(await _unwrap_token(token))
     except ValueError as e:
-        if str(e).startswith('Source for') and str(e).endswith('has not been verified'):
-            return 'Other short term assets'
+        if str(e).startswith("Source for") and str(e).endswith("has not been verified"):
+            return "Other short term assets"
         raise
-    
+
     if _is_stable(token):
-        return 'Cash & cash equivalents'
+        return "Cash & cash equivalents"
     if token in ETH_LIKE:
-        return 'ETH'
+        return "ETH"
     if token in BTC_LIKE:
-        return 'BTC'
+        return "BTC"
     if token in OTHER_LONG_TERM_ASSETS:
-        return 'Other long term assets'
-    return 'Other short term assets'
+        return "Other long term assets"
+    return "Other short term assets"
+
 
 @alru_cache(maxsize=None)
 async def _unwrap_token(token) -> str:
-    '''
+    """
     Unwraps the base
-    '''
-    if str(token) in ["ETH", "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"]:
+    """
+    if str(token) in {"ETH", "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"}:
         return token
 
     if await is_yearn_vault(token, sync=False):
@@ -62,20 +62,17 @@ async def _unwrap_token(token) -> str:
             return WRAPPED_GAS_COIN
     return token
 
+
 def _pool_bucket(pool_tokens: set) -> Optional[str]:
-    logger.debug('Pool tokens: %s', pool_tokens)
+    logger.debug("Pool tokens: %s", pool_tokens)
     if pool_tokens < BTC_LIKE:
         return list(BTC_LIKE)[0]
     if pool_tokens < ETH_LIKE:
         return list(ETH_LIKE)[0]
     if pool_tokens < STABLECOINS.keys():
         return list(STABLECOINS.keys())[0]
-    if pool_tokens < INTL_STABLECOINS:
-        return list(INTL_STABLECOINS)[0]
-    return None
+    return list(INTL_STABLECOINS)[0] if pool_tokens < INTL_STABLECOINS else None
+
 
 def _is_stable(token: Address) -> bool:
-    return any([
-        token in STABLECOINS,
-        token in INTL_STABLECOINS,
-    ])
+    return token in STABLECOINS or token in INTL_STABLECOINS
