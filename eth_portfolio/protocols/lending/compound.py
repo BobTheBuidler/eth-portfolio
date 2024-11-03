@@ -1,4 +1,3 @@
-
 import asyncio
 from typing import List, Optional
 
@@ -23,6 +22,7 @@ def _get_contract(market: CToken) -> Optional[Contract]:
         # We will skip these for now. Might consider supporting them later if necessary.
         return None
 
+
 class Compound(LendingProtocol):
     _markets: List[Contract]
 
@@ -30,15 +30,24 @@ class Compound(LendingProtocol):
     @alru_cache(ttl=300)
     @stuck_coro_debugger
     async def underlyings(self) -> List[ERC20]:
-        all_markets: List[List[CToken]] = await asyncio.gather(*[comp.markets for comp in compound.trollers.values()])
-        markets: List[Contract] = [market.contract for troller in all_markets for market in troller if hasattr(_get_contract(market), 'borrowBalanceStored')] # this last part takes out xinv
-        gas_token_markets = [market for market in markets if not hasattr(market,'underlying')]
-        other_markets = [market for market in markets if hasattr(market,'underlying')]
+        all_markets: List[List[CToken]] = await asyncio.gather(
+            *[comp.markets for comp in compound.trollers.values()]
+        )
+        markets: List[Contract] = [
+            market.contract
+            for troller in all_markets
+            for market in troller
+            if hasattr(_get_contract(market), "borrowBalanceStored")
+        ]  # this last part takes out xinv
+        gas_token_markets = [market for market in markets if not hasattr(market, "underlying")]
+        other_markets = [market for market in markets if hasattr(market, "underlying")]
 
         markets = gas_token_markets + other_markets
-        underlyings = [weth for market in gas_token_markets] + await asyncio.gather(*[market.underlying.coroutine() for market in other_markets])
+        underlyings = [weth for market in gas_token_markets] + await asyncio.gather(
+            *[market.underlying.coroutine() for market in other_markets]
+        )
 
-        markets_zip = zip(markets,underlyings)
+        markets_zip = zip(markets, underlyings)
         self._markets, underlyings = [], []
         for contract, underlying in markets_zip:
             if underlying != ZERO_ADDRESS:
@@ -51,9 +60,10 @@ class Compound(LendingProtocol):
     async def markets(self) -> List[Contract]:
         await self.underlyings()
         return self._markets
-    
+
     async def _debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        if len(compound.trollers) == 0: # if ypricemagic doesn't support any Compound forks on current chain
+        # if ypricemagic doesn't support any Compound forks on current chain
+        if len(compound.trollers) == 0:
             return TokenBalances()
 
         address = str(address)
@@ -66,14 +76,21 @@ class Compound(LendingProtocol):
         )
 
         balances: TokenBalances = TokenBalances()
-        if debts := {underlying: Decimal(debt) / scale for underlying, scale, debt in zip(underlyings, underlying_scale, debt_data) if debt}:
+        if debts := {
+            underlying: Decimal(debt) / scale
+            for underlying, scale, debt in zip(underlyings, underlying_scale, debt_data)
+            if debt
+        }:
             async for underlying, price in map_prices(debts, block=block):
                 debt = debts.pop(underlying)
                 balances[underlying] += Balance(debt, debt * Decimal(price))
         return balances
 
+
 @stuck_coro_debugger
-async def _borrow_balance_stored(market: Contract, address: Address, block: Optional[Block] = None) -> Optional[int]:
+async def _borrow_balance_stored(
+    market: Contract, address: Address, block: Optional[Block] = None
+) -> Optional[int]:
     try:
         return await market.borrowBalanceStored.coroutine(str(address), block_identifier=block)
     except ValueError as e:
