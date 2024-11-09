@@ -98,10 +98,11 @@ def get_block(block: int) -> entities.BlockExtended:
             for trace in traces:
                 insert_trace(trace)
         except Exception as e:
-            raise e.__class__(
+            e.args = (
                 "This is really bad. Might need to nuke your db if you value your logs/traces",
                 *e.args,
             )
+            raise
         for token, price in prices:
             _set_price(token, price, sync=True)
     asdasd = get_chain(sync=True)
@@ -186,8 +187,7 @@ def get_address(address: str) -> entities.AddressExtended:
         entity.delete()
         commit()
     """
-    entity = entities.Address.get(chain=chain.id, address=address)
-    if entity:
+    if entity := entities.Address.get(chain=chain.id, address=address):
         return entity
 
     ensure_chain()
@@ -495,4 +495,4 @@ def enc_hook(obj: Any) -> Any:
     except TypeError:
         if type(obj) is Decimal:
             return obj.jsonify()
-        raise TypeError(type(obj), obj)
+        raise TypeError(type(obj), obj) from None
