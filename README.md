@@ -2,8 +2,6 @@
 Use `eth-portfolio` to output information about your portfolio in a streamlined, speed-optimized way.
 
 ### NOTES:
-- Any object prefixed with an underscore is an internal object and generally should not be used outside of this lib.
-- Any module prefixed with an underscode is an internal module and generally should not be used outside of this lib. Objects inside intenral modules may or may not be prefixed with underscores, but still should generally not be used.
 - This lib is still a WIP and the provided API is subject to change without notice.
 
 ### INSTALLATION:
@@ -13,7 +11,7 @@ pip install git+https://github.com/BobTheBuidler/eth-portfolio
 ```
 
 **Known Issues**  
-Make sure you are using Python >= 3.8 and < 3.11  
+Make sure you are using Python >= 3.8 and < 3.13
 If you have a PyYaml Issue with 3.4.1 not installing due to an issue with cython, try the following:  
 ```
 pip install wheel
