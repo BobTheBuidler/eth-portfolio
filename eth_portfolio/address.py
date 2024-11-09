@@ -20,10 +20,12 @@ import logging
 from typing import TYPE_CHECKING, Dict, Optional
 
 import a_sync
+import dank_mids
+import eth_retry
+import y
 from a_sync.exceptions import MappingIsEmptyError
 from y import convert
 from y._decorators import stuck_coro_debugger
-from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
 
 from eth_portfolio import protocols
@@ -33,7 +35,7 @@ from eth_portfolio._ledgers.address import (AddressInternalTransfersLedger,
                                             AddressTransactionsLedger,
                                             PandableLedgerEntryList)
 from eth_portfolio._loaders import balances
-from eth_portfolio._utils import _LedgeredBase
+from eth_portfolio._utils import _LedgeredBase, _get_price
 from eth_portfolio.typing import (Balance, RemoteTokenBalances, TokenBalances,
                                   WalletBalances)
 
@@ -161,11 +163,12 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         """
         if not isinstance(block, int):
             raise TypeError(f"Block must be an integer. You passed {type(block)} {block}")
-        return WalletBalances(await a_sync.gather({
+        data = await a_sync.gather({
             "assets": self.assets(block, sync=False), 
             "debt": self.debt(block, sync=False), 
             "external": self.external_balances(block, sync=False),
-        }))
+        })
+        return WalletBalances(data, block=block)
     
     @stuck_coro_debugger
     async def assets(self, block: Optional[Block] = None) -> TokenBalances:
@@ -235,7 +238,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
             self.eth_balance(block, sync=False),
             self.token_balances(block, sync=False),
         )
-        token_balances[EEE_ADDRESS] = eth_balance
+        token_balances[y.EEE_ADDRESS] = eth_balance
         return token_balances
 
     @eth_retry.auto_retry
@@ -253,7 +256,10 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         Examples:
             >>> eth_balance = await address.eth_balance(12345678)
         """
-        return await balances.load_eth_balance(self.address, block)
+        if balance := await dank_mids.eth.get_balance(self.address, block_identifier=block):
+            price = await _get_price(y.WRAPPED_GAS_COIN, block)
+            return Balance(balance.scaled, round(balance.scaled * price, 18), token=y.EEE_ADDRESS, block=block)
+        return Balance(token=y.EEE_ADDRESS, block=block)
     
     @stuck_coro_debugger
     async def token_balances(self, block) -> TokenBalances:
@@ -276,9 +282,9 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
                 address=self.address, 
                 block=block,
             )
-            return TokenBalances(await data)
+            return TokenBalances(await data, block=block)
         except MappingIsEmptyError:
-            return TokenBalances()
+            return TokenBalances(block=block)
    
     @stuck_coro_debugger 
     async def collateral(self, block: Optional[Block] = None) -> RemoteTokenBalances:

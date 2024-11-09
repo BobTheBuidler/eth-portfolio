@@ -64,7 +64,7 @@ class Compound(LendingProtocol):
     async def _debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         # if ypricemagic doesn't support any Compound forks on current chain
         if len(compound.trollers) == 0:
-            return TokenBalances()
+            return TokenBalances(block=block)
 
         address = str(address)
         markets: List[Contract]
@@ -75,7 +75,7 @@ class Compound(LendingProtocol):
             asyncio.gather(*[underlying.__scale__ for underlying in underlyings]),
         )
 
-        balances: TokenBalances = TokenBalances()
+        balances: TokenBalances = TokenBalances(block=block)
         if debts := {
             underlying: Decimal(debt) / scale
             for underlying, scale, debt in zip(underlyings, underlying_scale, debt_data)

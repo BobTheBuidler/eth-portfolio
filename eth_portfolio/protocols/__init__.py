@@ -26,4 +26,4 @@ async def balances(address: Address, block: Optional[Block] = None) -> RemoteTok
         async for protocol, protocol_balances in protocol_balances
         if protocol_balances is not None
     }
-    return RemoteTokenBalances(data)
+    return RemoteTokenBalances(data, block=block)
