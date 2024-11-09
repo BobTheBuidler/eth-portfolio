@@ -1,3 +1,39 @@
+"""
+This module provides the core functionality for managing portfolio-wide ledger entries, 
+including Ethereum transactions, token transfers, and internal transfers across multiple addresses.
+
+It plays a crucial role in the eth-portfolio ecosystem by:
+- Aggregating portfolio-wide data across multiple Ethereum addresses.
+- Serving as an abstraction layer between address-specific ledgers and overall portfolio management.
+- Providing standardized data processing and presentation methods.
+- Implementing asynchronous operations for efficient data retrieval and processing.
+- Offering extensibility for different types of ledger entries.
+- Ensuring data accuracy through deduplication, especially for internal transfers.
+- Supporting block range queries for time-specific analysis.
+
+Key features:
+- Fetches and aggregates portfolio-wide Ethereum transaction, token transfer, and internal transfer history.
+- Organizes ledger entries by address and supports querying data for specific block ranges.
+- Implements asynchronous operations for improved performance.
+- Deduplicates and cleans ledger data before returning them as DataFrames.
+
+Main Classes:
+- :class:`~eth_portfolio._ledgers.PortfolioLedgerBase`: Abstract base class for managing portfolio-wide ledger entries.
+- :class:`~eth_portfolio._ledgers.PortfolioTransactionsLedger`: Ledger for Ethereum transactions across the portfolio.
+- :class:`~eth_portfolio._ledgers.PortfolioTokenTransfersLedger`: Ledger for ERC20 token transfers across the portfolio.
+- :class:`~eth_portfolio._ledgers.PortfolioInternalTransfersLedger`: Ledger for internal transfers between Ethereum addresses in the portfolio.
+
+Module-Wide Example:
+    This example demonstrates how to use the module to fetch transaction data for a portfolio.
+
+    >>> from eth_portfolio.portfolio import Portfolio
+    >>> from eth_portfolio._ledgers import PortfolioTransactionsLedger
+    >>> ledger = PortfolioTransactionsLedger(portfolio=Portfolio(addresses=["0x1234...", "0xABCD..."]))
+    >>> df = await ledger.df(start_block=1000000, end_block=1100000)
+    >>> print(df)
+"""
+
+import asyncio
 import logging
 from typing import TYPE_CHECKING, AsyncIterator, Dict, Generic, TypeVar
 
