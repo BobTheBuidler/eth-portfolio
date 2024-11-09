@@ -1,7 +1,6 @@
 """
-This module defines the :class:`~eth_portfolio.address.PortfolioAddress` class, which represents an address managed by the `eth-portfolio` system. 
-The `eth-portfolio` acts as a manager of addresses, handling various lending protocols and external interactions.
-The :class:`~eth_portfolio.address.PortfolioAddress` class is designed to manage different aspects of an Ethereum address within the portfolio, 
+This module defines the :class:`~PortfolioAddress` class, which represents an address managed by the `eth-portfolio` system. 
+The :class:`~PortfolioAddress` class is designed to manage different aspects of an Ethereum address within the portfolio, 
 such as transactions, transfers, balances, and interactions with both external and lending protocols. 
 
 Key components and functionalities provided by the :class:`~eth_portfolio.address.PortfolioAddress` class include:
@@ -71,14 +70,12 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         """
         The address being managed.
         """
-
         if not isinstance(asynchronous, bool):
             raise TypeError(f"`asynchronous` must be a boolean, you passed {type(asynchronous)}")
         self.asynchronous = asynchronous
         """
         Flag indicating if the operations are asynchronous.
         """
-
         self.load_prices = portfolio.load_prices
         """
         Indicates if price loading is enabled.
@@ -90,12 +87,10 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         """
         Ledger for tracking transactions.
         """
-
         self.internal_transfers = AddressInternalTransfersLedger(self)
         """
         Ledger for tracking internal transfers.
         """
-
         self.token_transfers = AddressTokenTransfersLedger(self)
         """
         Ledger for tracking token transfers.
