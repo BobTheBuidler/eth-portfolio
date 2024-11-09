@@ -35,14 +35,14 @@ class Maker(LendingProtocolWithLockedCollateral):
 
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        balances: TokenBalances = TokenBalances()
+        balances: TokenBalances = TokenBalances(block=block)
         ilk = encode_bytes(b"YFI-A")
         urn = await self._urn(address)
         ink = (await self.vat.urns.coroutine(ilk, urn, block_identifier=block)).dict()["ink"]
         if ink:
             balance = ink / Decimal(10**18)
             value = round(balance * Decimal(await get_price(yfi, block, sync=False)), 18)
-            balances[yfi] = Balance(balance, value)
+            balances[yfi] = Balance(balance, value, token=yfi, block=block)
         return balances
 
     @stuck_coro_debugger
@@ -56,8 +56,8 @@ class Maker(LendingProtocolWithLockedCollateral):
         art = urns.dict()["art"]
         rate = ilks.dict()["rate"]
         debt = art * rate / Decimal(1e45)
-        balances: TokenBalances = TokenBalances()
-        balances[dai] += Balance(debt, debt)
+        balances: TokenBalances = TokenBalances(block=block)
+        balances[dai] += Balance(debt, debt, token=dai, block=block)
         return balances
 
     @alru_cache

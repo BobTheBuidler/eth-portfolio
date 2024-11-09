@@ -29,7 +29,7 @@ async def collateral(address: Address, block: Optional[Block] = None) -> RemoteT
         async for protocol, token_balances in protocol_balances
         if token_balances is not None
     }
-    return RemoteTokenBalances(data)
+    return RemoteTokenBalances(data, block=block)
 
 
 @a_sync.future
@@ -46,4 +46,4 @@ async def debt(address: Address, block: Optional[Block] = None) -> RemoteTokenBa
         async for protocol, token_balances in protocol_debts
         if token_balances is not None
     }
-    return RemoteTokenBalances(data)
+    return RemoteTokenBalances(data, block=block)

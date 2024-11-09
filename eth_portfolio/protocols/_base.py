@@ -96,7 +96,7 @@ class SingleTokenStakingPoolABC(StakingPoolABC, metaclass=abc.ABCMeta):
 
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        balances: TokenBalances = TokenBalances()
+        balances: TokenBalances = TokenBalances(block=block)
         if self.should_check(block):
             balance = Decimal(await self(address, block=block))  # type: ignore
             if balance:
