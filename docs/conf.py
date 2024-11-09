@@ -76,6 +76,12 @@ autodoc_default_options = {
             "setdefault",
             "_getitem_nochecksum",
             "_setitem_nochecksum",
+            "__validatekey",
+            "__validateitem",
+            # dict members
+            "clear",
+            "copy",
+            "update",
             # ez-a-sync
             "_materialized",
             # temporary part of ez-a-sync, deprecated and will eventually be removed
