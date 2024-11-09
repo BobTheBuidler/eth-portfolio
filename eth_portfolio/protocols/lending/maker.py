@@ -1,7 +1,8 @@
 import asyncio
-from typing import Optional
+from typing import List, Optional
 
 from async_lru import alru_cache
+from eth_typing import HexStr
 from y import Network, get_price
 from y._decorators import stuck_coro_debugger
 from y.constants import dai
@@ -31,34 +32,57 @@ class Maker(LendingProtocolWithLockedCollateral):
     def __init__(self) -> None:
         self.proxy_registry = Contract("0x4678f0a6958e4D2Bc4F1BAF7Bc52E8F3564f3fE4")
         self.cdp_manager = Contract("0x5ef30b9986345249bc32d8928B7ee64DE9435E39")
+        self.ilk_registry = Contract("0x5a464C28D19848f44199D003BeF5ecc87d090F87")
         self.vat = Contract("0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B")
 
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        ilks, urn = await asyncio.gather(self.get_ilks(block), self._urn(address))
+
+        gem_coros = asyncio.gather(*[self.get_gem(str(ilk)) for ilk in ilks])
+        ink_coros = asyncio.gather(
+            *[self.vat.urns.coroutine(ilk, urn, block_identifier=block) for ilk in ilks]
+        )
+
+        gems, ink_data = await asyncio.gather(gem_coros, ink_coros)
+
         balances: TokenBalances = TokenBalances(block=block)
-        ilk = encode_bytes(b"YFI-A")
-        urn = await self._urn(address)
-        ink = (await self.vat.urns.coroutine(ilk, urn, block_identifier=block)).dict()["ink"]
-        if ink:
-            balance = ink / Decimal(10**18)
-            value = round(balance * Decimal(await get_price(yfi, block, sync=False)), 18)
-            balances[yfi] = Balance(balance, value, token=yfi, block=block)
+        for token, data in zip(gems, ink_data):
+            if ink := data.dict()["ink"]:
+                balance = ink / Decimal(10**18)
+                value = round(balance * Decimal(await get_price(token, block, sync=False)), 18)
+                balances[token] = Balance(balance, value, token=token, block=block)
         return balances
 
     @stuck_coro_debugger
     async def _debt(self, address: Address, block: Optional[int] = None) -> TokenBalances:
-        ilk = encode_bytes(b"YFI-A")
-        urn = await self._urn(address)
-        urns, ilks = await asyncio.gather(
-            self.vat.urns.coroutine(ilk, urn, block_identifier=block),
-            self.vat.ilks.coroutine(ilk, block_identifier=block),
+        ilks, urn = await asyncio.gather(self.get_ilks(block), self._urn(address))
+
+        data = await asyncio.gather(
+            *[
+                asyncio.gather(
+                    self.vat.urns.coroutine(ilk, urn, block_identifier=block),
+                    self.vat.ilks.coroutine(ilk, block_identifier=block),
+                )
+                for ilk in ilks
+            ]
         )
-        art = urns.dict()["art"]
-        rate = ilks.dict()["rate"]
-        debt = art * rate / Decimal(1e45)
+
         balances: TokenBalances = TokenBalances(block=block)
-        balances[dai] += Balance(debt, debt, token=dai, block=block)
+        for urns, ilk_info in data:
+            art = urns.dict()["art"]
+            rate = ilk_info.dict()["rate"]
+            debt = art * rate / Decimal(1e45)
+            balances[dai] += Balance(debt, debt, token=dai, block=block)
         return balances
+
+    async def get_ilks(self, block: Optional[int]) -> List[HexStr]:
+        """List all ilks (cdp keys of sorts) for MakerDAO"""
+        return await self.ilk_registry.list.coroutine(block_identifier=block)
+
+    @alru_cache
+    async def get_gem(self, ilk: bytes) -> str:
+        return await self.ilk_registry.gem.coroutine(ilk)
 
     @alru_cache
     async def _proxy(self, address: Address) -> Address:
