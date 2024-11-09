@@ -69,10 +69,9 @@
            <div itemprop="articleBody">
              
   <h1>Source code for eth_portfolio.protocols.lending.unit</h1><div class="highlight"><pre>
-<span></span>
+<span></span><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">brownie</span> <span class="kn">import</span> <span class="n">chain</span>
 <span class="kn">from</span> <span class="nn">y</span> <span class="kn">import</span> <span class="n">Contract</span><span class="p">,</span> <span class="n">Network</span><span class="p">,</span> <span class="n">get_price</span>
 <span class="kn">from</span> <span class="nn">y._decorators</span> <span class="kn">import</span> <span class="n">stuck_coro_debugger</span>
 <span class="kn">from</span> <span class="nn">y.datatypes</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">Block</span>
@@ -83,20 +82,21 @@
 
 <span class="c1"># NOTE: This only works for YFI collateral, must extend before using for other collaterals</span>
 <span class="n">yfi</span> <span class="o">=</span> <span class="s2">&quot;0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e&quot;</span>
-<span class="n">usdp</span> <span class="o">=</span> <span class="s1">&#39;0x1456688345527bE1f37E9e627DA0837D6f08C925&#39;</span>
+<span class="n">usdp</span> <span class="o">=</span> <span class="s2">&quot;0x1456688345527bE1f37E9e627DA0837D6f08C925&quot;</span>
+
 
 <div class="viewcode-block" id="UnitXyz">
 <a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.unit.UnitXyz">[docs]</a>
 <span class="k">class</span> <span class="nc">UnitXyz</span><span class="p">(</span><span class="n">LendingProtocolWithLockedCollateral</span><span class="p">):</span>
     <span class="n">networks</span> <span class="o">=</span> <span class="p">[</span><span class="n">Network</span><span class="o">.</span><span class="n">Mainnet</span><span class="p">]</span>
-    
+
 <div class="viewcode-block" id="UnitXyz.__init__">
 <a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.unit.UnitXyz.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unitVault</span> <span class="o">=</span> <span class="n">Contract</span><span class="p">(</span><span class="s2">&quot;0xb1cff81b9305166ff1efc49a129ad2afcd7bcf19&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start_block</span> <span class="o">=</span> <span class="mi">11315910</span></div>
 
-    
+
 <div class="viewcode-block" id="UnitXyz._balances">
 <a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.unit.UnitXyz._balances">[docs]</a>
     <span class="nd">@stuck_coro_debugger</span>
@@ -106,7 +106,7 @@
             <span class="k">return</span> <span class="n">balances</span>
         <span class="n">bal</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">unitVault</span><span class="o">.</span><span class="n">collaterals</span><span class="o">.</span><span class="n">coroutine</span><span class="p">(</span><span class="n">yfi</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">block_identifier</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">bal</span><span class="p">:</span>
-            <span class="n">bal</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="n">bal</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">18</span>
+            <span class="n">bal</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="n">bal</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span><span class="o">**</span><span class="mi">18</span>
             <span class="n">balances</span><span class="p">[</span><span class="n">yfi</span><span class="p">]</span> <span class="o">=</span> <span class="n">Balance</span><span class="p">(</span><span class="n">bal</span><span class="p">,</span> <span class="n">bal</span> <span class="o">*</span> <span class="k">await</span> <span class="n">get_price</span><span class="p">(</span><span class="n">yfi</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">balances</span></div>
 
@@ -119,8 +119,10 @@
         <span class="k">if</span> <span class="n">block</span> <span class="ow">and</span> <span class="n">block</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_block</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">balances</span>
         <span class="c1"># NOTE: This only works for YFI based debt, must extend before using for other collaterals</span>
-        <span class="k">if</span> <span class="n">debt</span> <span class="o">:=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">unitVault</span><span class="o">.</span><span class="n">getTotalDebt</span><span class="o">.</span><span class="n">coroutine</span><span class="p">(</span><span class="n">yfi</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">block_identifier</span><span class="o">=</span><span class="n">block</span><span class="p">):</span>
-            <span class="n">debt</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="n">debt</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">18</span>
+        <span class="k">if</span> <span class="n">debt</span> <span class="o">:=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">unitVault</span><span class="o">.</span><span class="n">getTotalDebt</span><span class="o">.</span><span class="n">coroutine</span><span class="p">(</span>
+            <span class="n">yfi</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">block_identifier</span><span class="o">=</span><span class="n">block</span>
+        <span class="p">):</span>
+            <span class="n">debt</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="n">debt</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span><span class="o">**</span><span class="mi">18</span>
             <span class="n">balances</span><span class="p">[</span><span class="n">usdp</span><span class="p">]</span> <span class="o">=</span> <span class="n">Balance</span><span class="p">(</span><span class="n">debt</span><span class="p">,</span> <span class="n">debt</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">balances</span></div>
 </div>

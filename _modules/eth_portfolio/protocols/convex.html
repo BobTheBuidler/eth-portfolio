@@ -69,9 +69,9 @@
            <div itemprop="articleBody">
              
   <h1>Source code for eth_portfolio.protocols.convex</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">eth_portfolio.protocols._base</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ProtocolWithStakingABC</span><span class="p">,</span>
-                                           <span class="n">SingleTokenStakingPoolABC</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">y</span> <span class="kn">import</span> <span class="n">ERC20</span><span class="p">,</span> <span class="n">Network</span>
+<span></span><span class="kn">from</span> <span class="nn">y</span> <span class="kn">import</span> <span class="n">ERC20</span><span class="p">,</span> <span class="n">Network</span>
+
+<span class="kn">from</span> <span class="nn">eth_portfolio.protocols._base</span> <span class="kn">import</span> <span class="n">ProtocolWithStakingABC</span><span class="p">,</span> <span class="n">SingleTokenStakingPoolABC</span>
 
 
 <div class="viewcode-block" id="_CvxLockerV2">
@@ -82,21 +82,19 @@
     <span class="n">token</span> <span class="o">=</span> <span class="n">ERC20</span><span class="p">(</span><span class="s2">&quot;0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B&quot;</span><span class="p">)</span></div>
 
 
+
 <div class="viewcode-block" id="Convex">
 <a class="viewcode-back" href="../../../source/eth_portfolio.protocols.html#eth_portfolio.protocols.convex.Convex">[docs]</a>
 <span class="k">class</span> <span class="nc">Convex</span><span class="p">(</span><span class="n">ProtocolWithStakingABC</span><span class="p">):</span>
     <span class="n">networks</span> <span class="o">=</span> <span class="p">[</span><span class="n">Network</span><span class="o">.</span><span class="n">Mainnet</span><span class="p">]</span>
-    
+
 <div class="viewcode-block" id="Convex.__init__">
 <a class="viewcode-back" href="../../../source/eth_portfolio.protocols.html#eth_portfolio.protocols.convex.Convex.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pools</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">_CvxLockerV2</span><span class="p">()</span>
-        <span class="p">]</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pools</span> <span class="o">=</span> <span class="p">[</span><span class="n">_CvxLockerV2</span><span class="p">()]</span></div>
 </div>
 
-    
 </pre></div>
 
            </div>

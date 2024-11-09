@@ -69,8 +69,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for eth_portfolio.protocols.lending.compound</h1><div class="highlight"><pre>
-<span></span>
-<span class="kn">import</span> <span class="nn">asyncio</span>
+<span></span><span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">a_sync</span>
@@ -97,6 +96,7 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
+
 <div class="viewcode-block" id="Compound">
 <a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.compound.Compound">[docs]</a>
 <span class="k">class</span> <span class="nc">Compound</span><span class="p">(</span><span class="n">LendingProtocol</span><span class="p">):</span>
@@ -106,15 +106,24 @@
     <span class="nd">@alru_cache</span><span class="p">(</span><span class="n">ttl</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
     <span class="nd">@stuck_coro_debugger</span>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">underlyings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ERC20</span><span class="p">]:</span>
-        <span class="n">all_markets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">CToken</span><span class="p">]]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">comp</span><span class="o">.</span><span class="n">markets</span> <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">compound</span><span class="o">.</span><span class="n">trollers</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
-        <span class="n">markets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Contract</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">market</span><span class="o">.</span><span class="n">contract</span> <span class="k">for</span> <span class="n">troller</span> <span class="ow">in</span> <span class="n">all_markets</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">troller</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">_get_contract</span><span class="p">(</span><span class="n">market</span><span class="p">),</span> <span class="s1">&#39;borrowBalanceStored&#39;</span><span class="p">)]</span> <span class="c1"># this last part takes out xinv</span>
-        <span class="n">gas_token_markets</span> <span class="o">=</span> <span class="p">[</span><span class="n">market</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">markets</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">market</span><span class="p">,</span><span class="s1">&#39;underlying&#39;</span><span class="p">)]</span>
-        <span class="n">other_markets</span> <span class="o">=</span> <span class="p">[</span><span class="n">market</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">markets</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">market</span><span class="p">,</span><span class="s1">&#39;underlying&#39;</span><span class="p">)]</span>
+        <span class="n">all_markets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">CToken</span><span class="p">]]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
+            <span class="o">*</span><span class="p">[</span><span class="n">comp</span><span class="o">.</span><span class="n">markets</span> <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">compound</span><span class="o">.</span><span class="n">trollers</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="p">)</span>
+        <span class="n">markets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Contract</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">market</span><span class="o">.</span><span class="n">contract</span>
+            <span class="k">for</span> <span class="n">troller</span> <span class="ow">in</span> <span class="n">all_markets</span>
+            <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">troller</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">_get_contract</span><span class="p">(</span><span class="n">market</span><span class="p">),</span> <span class="s2">&quot;borrowBalanceStored&quot;</span><span class="p">)</span>
+        <span class="p">]</span>  <span class="c1"># this last part takes out xinv</span>
+        <span class="n">gas_token_markets</span> <span class="o">=</span> <span class="p">[</span><span class="n">market</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">markets</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">market</span><span class="p">,</span> <span class="s2">&quot;underlying&quot;</span><span class="p">)]</span>
+        <span class="n">other_markets</span> <span class="o">=</span> <span class="p">[</span><span class="n">market</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">markets</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">market</span><span class="p">,</span> <span class="s2">&quot;underlying&quot;</span><span class="p">)]</span>
 
         <span class="n">markets</span> <span class="o">=</span> <span class="n">gas_token_markets</span> <span class="o">+</span> <span class="n">other_markets</span>
-        <span class="n">underlyings</span> <span class="o">=</span> <span class="p">[</span><span class="n">weth</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">gas_token_markets</span><span class="p">]</span> <span class="o">+</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">market</span><span class="o">.</span><span class="n">underlying</span><span class="o">.</span><span class="n">coroutine</span><span class="p">()</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">other_markets</span><span class="p">])</span>
+        <span class="n">underlyings</span> <span class="o">=</span> <span class="p">[</span><span class="n">weth</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">gas_token_markets</span><span class="p">]</span> <span class="o">+</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
+            <span class="o">*</span><span class="p">[</span><span class="n">market</span><span class="o">.</span><span class="n">underlying</span><span class="o">.</span><span class="n">coroutine</span><span class="p">()</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">other_markets</span><span class="p">]</span>
+        <span class="p">)</span>
 
-        <span class="n">markets_zip</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">markets</span><span class="p">,</span><span class="n">underlyings</span><span class="p">)</span>
+        <span class="n">markets_zip</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">markets</span><span class="p">,</span> <span class="n">underlyings</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_markets</span><span class="p">,</span> <span class="n">underlyings</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">contract</span><span class="p">,</span> <span class="n">underlying</span> <span class="ow">in</span> <span class="n">markets_zip</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">underlying</span> <span class="o">!=</span> <span class="n">ZERO_ADDRESS</span><span class="p">:</span>
@@ -127,11 +136,12 @@
     <span class="k">async</span> <span class="k">def</span> <span class="nf">markets</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Contract</span><span class="p">]:</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">underlyings</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_markets</span>
-    
+
 <div class="viewcode-block" id="Compound._debt">
 <a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.compound.Compound._debt">[docs]</a>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_debt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenBalances</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="o">.</span><span class="n">trollers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># if ypricemagic doesn&#39;t support any Compound forks on current chain</span>
+        <span class="c1"># if ypricemagic doesn&#39;t support any Compound forks on current chain</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="o">.</span><span class="n">trollers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">TokenBalances</span><span class="p">()</span>
 
         <span class="n">address</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
@@ -144,18 +154,27 @@
         <span class="p">)</span>
 
         <span class="n">balances</span><span class="p">:</span> <span class="n">TokenBalances</span> <span class="o">=</span> <span class="n">TokenBalances</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">debts</span> <span class="o">:=</span> <span class="p">{</span><span class="n">underlying</span><span class="p">:</span> <span class="n">Decimal</span><span class="p">(</span><span class="n">debt</span><span class="p">)</span> <span class="o">/</span> <span class="n">scale</span> <span class="k">for</span> <span class="n">underlying</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">debt</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">underlyings</span><span class="p">,</span> <span class="n">underlying_scale</span><span class="p">,</span> <span class="n">debt_data</span><span class="p">)</span> <span class="k">if</span> <span class="n">debt</span><span class="p">}:</span>
+        <span class="k">if</span> <span class="n">debts</span> <span class="o">:=</span> <span class="p">{</span>
+            <span class="n">underlying</span><span class="p">:</span> <span class="n">Decimal</span><span class="p">(</span><span class="n">debt</span><span class="p">)</span> <span class="o">/</span> <span class="n">scale</span>
+            <span class="k">for</span> <span class="n">underlying</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">debt</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">underlyings</span><span class="p">,</span> <span class="n">underlying_scale</span><span class="p">,</span> <span class="n">debt_data</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">debt</span>
+        <span class="p">}:</span>
             <span class="k">async</span> <span class="k">for</span> <span class="n">underlying</span><span class="p">,</span> <span class="n">price</span> <span class="ow">in</span> <span class="n">map_prices</span><span class="p">(</span><span class="n">debts</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">):</span>
                 <span class="n">debt</span> <span class="o">=</span> <span class="n">debts</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">underlying</span><span class="p">)</span>
-                <span class="n">balances</span><span class="p">[</span><span class="n">underlying</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Balance</span><span class="p">(</span><span class="n">debt</span><span class="p">,</span> <span class="n">debt</span> <span class="o">*</span> <span class="n">Decimal</span><span class="p">(</span><span class="n">price</span><span class="p">))</span>
+                <span class="n">balances</span><span class="p">[</span><span class="n">underlying</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Balance</span><span class="p">(</span>
+                    <span class="n">debt</span><span class="p">,</span> <span class="n">debt</span> <span class="o">*</span> <span class="n">Decimal</span><span class="p">(</span><span class="n">price</span><span class="p">),</span> <span class="n">token</span><span class="o">=</span><span class="n">underlying</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span>
+                <span class="p">)</span>
         <span class="k">return</span> <span class="n">balances</span></div>
 </div>
+
 
 
 <div class="viewcode-block" id="_borrow_balance_stored">
 <a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.compound._borrow_balance_stored">[docs]</a>
 <span class="nd">@stuck_coro_debugger</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">_borrow_balance_stored</span><span class="p">(</span><span class="n">market</span><span class="p">:</span> <span class="n">Contract</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_borrow_balance_stored</span><span class="p">(</span>
+    <span class="n">market</span><span class="p">:</span> <span class="n">Contract</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="k">await</span> <span class="n">market</span><span class="o">.</span><span class="n">borrowBalanceStored</span><span class="o">.</span><span class="n">coroutine</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="p">),</span> <span class="n">block_identifier</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
