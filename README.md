@@ -7,12 +7,7 @@ Use `eth-portfolio` to output information about your portfolio in a streamlined,
 - This lib is still a WIP and the provided API is subject to change without notice.
 
 ### INSTALLATION:
-- You should start with a fresh virtual environment
-- First, install my modified version of toolcache since I am not permitted to include a git hash in a requirements.txt file
-```
-pip install git+https://github.com/BobTheBuidler/toolcache@patch-1
-```
-- Next, install the lib
+- You should start with a fresh virtual environment, and then just...
 ```
 pip install git+https://github.com/BobTheBuidler/eth-portfolio
 ```
