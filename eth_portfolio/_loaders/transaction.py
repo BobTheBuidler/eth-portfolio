@@ -163,7 +163,7 @@ async def get_transaction_by_nonce_and_block(
         2. Gnosis Safe deployments where the transaction's 'to' field is a specific address.
 
     Args:
-        address: The addresses of the accounts involved in the transaction.
+        address: The addresses of the accounts that sent the transaction.
         nonce: The nonce associated with the transaction creator.
         block: The block number from which to retrieve the transactions.
 
@@ -287,6 +287,16 @@ get_block_transactions = a_sync.SmartProcessingQueue(
     num_workers=1_000,
     name=f"{__name__}.get_block_transactions",
 )
+"""
+A smart processing queue that retrieves transactions from blocks with managable concurrency.
+
+This queue processes the retrieval of block transactions using a limited number of workers to handle potentially overwhelming volume of transactions.
+It wraps the _get_block_transactions function to provide efficient concurrent processing.
+
+Example:
+    >>> transactions = await get_block_transactions.process(block=12345678)
+    >>> [print(tx['hash']) for tx in transactions]
+"""
 
 
 def _get_num_chunks(range_size: int) -> int:
