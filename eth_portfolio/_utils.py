@@ -3,16 +3,17 @@ import importlib
 import inspect
 import logging
 import pkgutil
+import sqlite3
 from abc import abstractmethod
 from datetime import datetime
 from decimal import Decimal as _Decimal
 from functools import cached_property
 from types import ModuleType
-from typing import TYPE_CHECKING, AsyncGenerator, AsyncIterator, Dict, Generic, Iterator, List, Optional, Tuple, Union
+from typing import (TYPE_CHECKING, AsyncGenerator, AsyncIterator, Dict,
+                    Generic, Iterator, List, Optional, Tuple, TypeVar, Union)
 
 import a_sync
 import dank_mids
-import sqlite3
 from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
@@ -20,7 +21,8 @@ from eth_abi.exceptions import InsufficientDataBytes
 from pandas import DataFrame  # type: ignore
 from y import ERC20, Contract, Network
 from y.datatypes import Address, Block
-from y.exceptions import CantFetchParam, ContractNotVerified, NodeNotSynced, NonStandardERC20, PriceError, yPriceMagicError
+from y.exceptions import (CantFetchParam, ContractNotVerified, NodeNotSynced,
+                          NonStandardERC20, PriceError, yPriceMagicError)
 from y.prices.magic import get_price
 
 from eth_portfolio import _config
@@ -214,7 +216,6 @@ class _AiterMixin(a_sync.ASyncIterable[_T]):
     def _start_block(self) -> int:
         ...
 
-from typing import TypeVar
 _LT = TypeVar("_LT")
 
 class _LedgeredBase(a_sync.ASyncGenericBase, _AiterMixin[LedgerEntry], Generic[_LT]):

@@ -1,4 +1,3 @@
-
 import asyncio
 import logging
 import time
@@ -6,18 +5,19 @@ from functools import wraps
 from random import random
 from typing import Callable, TypeVar
 
+from a_sync._typing import AnyFn
 from pony.orm import OperationalError, TransactionError
 from typing_extensions import ParamSpec
 
-from a_sync._typing import AnyFn
-
-P = ParamSpec('P')
-T = TypeVar('T')
+P = ParamSpec("P")
+T = TypeVar("T")
 
 logger = logging.getLogger(__name__)
 
+
 def break_locks(fn: AnyFn[P, T]) -> AnyFn[P, T]:
     if asyncio.iscoroutinefunction(fn):
+
         @wraps(fn)
         async def break_locks_wrap(*args: P.args, **kwargs: P.kwargs) -> T:
             tries = 0
@@ -33,8 +33,9 @@ def break_locks(fn: AnyFn[P, T]) -> AnyFn[P, T]:
                     tries += 1
                     if tries > 5:
                         logger.warning("%s caught in err loop with %s", fn, e)
-            
+
     else:
+
         @wraps(fn)
         def break_locks_wrap(*args: P.args, **kwargs: P.kwargs) -> T:
             tries = 0
@@ -50,20 +51,24 @@ def break_locks(fn: AnyFn[P, T]) -> AnyFn[P, T]:
                     tries += 1
                     if tries > 5:
                         logger.warning("%s caught in err loop with %s", fn, e)
+
     return break_locks_wrap
+
 
 def requery_objs_on_diff_tx_err(fn: Callable[P, T]) -> Callable[P, T]:
     if asyncio.iscoroutinefunction(fn):
-        raise TypeError(f'{fn} must not be async')
+        raise TypeError(f"{fn} must not be async")
+
     @wraps(fn)
     def requery_wrap(*args: P.args, **kwargs: P.kwargs) -> T:
         while True:
             try:
                 return fn(*args, **kwargs)
             except TransactionError as e:
-                if str(e) != 'An attempt to mix objects belonging to different transactions':
+                if str(e) != "An attempt to mix objects belonging to different transactions":
                     raise e
                 # The error occurs if you committed new objs to the db and started a new transaction while still inside of a `db_session`,
                 # and then tried to use the newly committed objects in the next transaction. Now that the objects are in the db this will
                 # not reoccur. The next iteration will be successful.
+
     return requery_wrap

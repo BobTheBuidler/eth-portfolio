@@ -19,13 +19,15 @@ from pandas import DataFrame, concat  # type: ignore
 from web3 import Web3
 from y.datatypes import Address, Block
 
+from eth_portfolio import _argspec
 from eth_portfolio._decorators import set_end_block_if_none
 from eth_portfolio._ledgers.address import PandableLedgerEntryList
-from eth_portfolio._ledgers.portfolio import (PortfolioInternalTransfersLedger,
-                                              PortfolioLedgerBase,
-                                              PortfolioTokenTransfersLedger,
-                                              PortfolioTransactionsLedger)
-from eth_portfolio import _argspec
+from eth_portfolio._ledgers.portfolio import (
+    PortfolioInternalTransfersLedger,
+    PortfolioLedgerBase,
+    PortfolioTokenTransfersLedger,
+    PortfolioTransactionsLedger,
+)
 from eth_portfolio._utils import _LedgeredBase
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.constants import ADDRESSES
@@ -44,6 +46,7 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
     Attributes:
         _wallets: A checksummed dictionary of :class:`~eth_portfolio.address.PortfolioAddress` objects.
     """
+
     _wallets: ChecksumAddressDict[PortfolioAddress]
 
     def __init__(self, portfolio: "Portfolio", addresses: Iterable[Address]) -> None:
@@ -54,17 +57,19 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
             portfolio: The :class:`~eth_portfolio.Portfolio` instance to which this wallet belongs.
             addresses: An iterable of addresses to be included in the portfolio.
         """
-        self._wallets: ChecksumAddressDict[PortfolioAddress] = ChecksumAddressDict({
-            
-            address: PortfolioAddress(address, portfolio, asynchronous=portfolio.asynchronous)
-            for address in addresses
-        })
+        self._wallets: ChecksumAddressDict[PortfolioAddress] = ChecksumAddressDict()
         """
         A checksummed dictionary of :class:`~eth_portfolio.address.PortfolioAddress` objects.
 
         Type: 
             ChecksumAddressDict[PortfolioAddress]
         """
+
+        for address in addresses:
+            self._wallets[address] = PortfolioAddress(
+                address, portfolio, asynchronous=portfolio.asynchronous
+            )
+
     def __repr__(self) -> str:
         """
         Return a string representation of the PortfolioWallets instance.
@@ -160,6 +165,7 @@ class Portfolio(a_sync.ASyncGenericBase):
     - Has all attributes of a :class:`~eth_portfolio.address.PortfolioAddress`.
     - All calls to `function(*args, **kwargs)` will return `{address: PortfolioAddress(Address).function(*args, **kwargs)}`
     """
+
     def __init__(
         self,
         addresses: Addresses,
@@ -168,7 +174,7 @@ class Portfolio(a_sync.ASyncGenericBase):
         load_prices: bool = True,
         asynchronous: bool = False,
     ) -> None:
-        
+
         """
         Initialize a Portfolio instance.
 
@@ -178,7 +184,8 @@ class Portfolio(a_sync.ASyncGenericBase):
             >>> portfolio = Portfolio(addresses=["0xAddress1", "0xAddress2"])
             >>> print(portfolio)
         """
-        assert isinstance(start_block, int), f"`start_block` must be an integer, not {type(start_block)}"
+        if not isinstance(start_block, int):
+            raise TypeError(f"`start_block` must be an integer, not {type(start_block)}")
         assert start_block >= 0, "`start_block` must be >= 0"
         self._start_block = start_block
         """
@@ -191,19 +198,22 @@ class Portfolio(a_sync.ASyncGenericBase):
         A label for the portfolio. Defaults to "your portfolio"
         """
 
-        assert isinstance(load_prices, bool), f"`load_prices` must be a boolean, you passed {type(load_prices)}"
+        if not isinstance(load_prices, bool):
+            raise TypeError(f"`load_prices` must be a boolean, you passed {type(load_prices)}")
         self.load_prices: bool = load_prices
         """
         Whether to load prices. Defaults to True.
         """
 
-        assert isinstance(asynchronous, bool), f"`asynchronous` must be a boolean, you passed {type(asynchronous)}"
+        if not isinstance(asynchronous, bool):
+            raise TypeError(f"`asynchronous` must be a boolean, you passed {type(asynchronous)}")
         self.asynchronous: bool = asynchronous
         """
         Whether to use asynchronous operations. Defaults to False.
         """
 
-        assert isinstance(addresses, Iterable), f"`addresses` must be an iterable, not {type(addresses)}"
+        if not isinstance(addresses, Iterable):
+            raise TypeError(f"`addresses` must be an iterable, not {type(addresses)}")
         if isinstance(addresses, str):
             addresses = [addresses]
             """
@@ -252,7 +262,7 @@ class Portfolio(a_sync.ASyncGenericBase):
             >>> print(address)
         """
         return self.addresses[key]
-    
+
     def __iter__(self) -> Iterator[PortfolioAddress]:
         """
         Iterate over the :class:`~eth_portfolio.address.PortfolioAddress` objects.
@@ -266,7 +276,7 @@ class Portfolio(a_sync.ASyncGenericBase):
             ...     print(address)
         """
         yield from self.addresses
-    
+
     @property
     def transactions(self) -> PortfolioTransactionsLedger:
         """
@@ -281,7 +291,7 @@ class Portfolio(a_sync.ASyncGenericBase):
             >>> print(transactions)
         """
         return self.ledger.transactions
-    
+
     @property
     def internal_transfers(self) -> PortfolioInternalTransfersLedger:
         """
@@ -296,7 +306,7 @@ class Portfolio(a_sync.ASyncGenericBase):
             >>> print(internal_transfers)
         """
         return self.ledger.internal_transfers
-    
+
     @property
     def token_transfers(self) -> PortfolioTokenTransfersLedger:
         """
@@ -311,7 +321,7 @@ class Portfolio(a_sync.ASyncGenericBase):
             >>> print(token_transfers)
         """
         return self.ledger.token_transfers
-    
+
     async def describe(self, block: int) -> PortfolioBalances:
         """
         Returns a full snapshot of your portfolio at a given block.
@@ -328,13 +338,21 @@ class Portfolio(a_sync.ASyncGenericBase):
             >>> print(balances)
         """
         assert block
-        return PortfolioBalances(await a_sync.gather({address: address.describe(block, sync=False) for address in self}))
-    
-    
-async_functions = {name: obj for name, obj in PortfolioAddress.__dict__.items() if isinstance(obj, ASyncFunction)}
+        return PortfolioBalances(
+            await a_sync.gather({address: address.describe(block, sync=False) for address in self}),
+            block=block,
+        )
+
+
+async_functions = {
+    name: obj for name, obj in PortfolioAddress.__dict__.items() if isinstance(obj, ASyncFunction)
+}
 for func_name, func in async_functions.items():
     if not callable(getattr(PortfolioAddress, func_name)):
-        raise RuntimeError(f"A PortfolioAddress object should not have a non-callable attribute suffixed with '_async'")
+        raise RuntimeError(
+            f"A PortfolioAddress object should not have a non-callable attribute suffixed with '_async'"
+        )
+
     @a_sync.a_sync(default=func.default)
     @wraps(func)
     async def imported_func(self: Portfolio, *args: Any, **kwargs: Any) -> _argspec.get_return_type(getattr(PortfolioAddress, func_name)):  # type: ignore
@@ -354,7 +372,10 @@ for func_name, func in async_functions.items():
             >>> result = await portfolio.some_async_function(*args, **kwargs)
             >>> print(result)
         """
-        return await a_sync.gather({address: func(address, *args, **kwargs, sync=False) for address in self})
+        return await a_sync.gather(
+            {address: func(address, *args, **kwargs, sync=False) for address in self}
+        )
+
     setattr(Portfolio, func_name, imported_func)
     logger.debug("Ported %s from PortfolioAddress to Portfolio", func_name)
 
@@ -370,12 +391,14 @@ def _get_missing_cols_from_KeyError(e: KeyError) -> List[str]:
         A list of missing column names.
     """
     split = str(e).split("'")
-    return [split[i * 2 + 1] for i in range(len(split)//2)]
+    return [split[i * 2 + 1] for i in range(len(split) // 2)]
+
 
 class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
     """
     A container for all transactions, internal transfers, and token transfers to or from any of the wallets in your :class:`~eth_portfolio.Portfolio`.
     """
+
     def __init__(self, portfolio: "Portfolio") -> None:
         """
         Initialize a PortfolioLedger instance.
@@ -405,7 +428,9 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
         True if default mode is async, False if sync.
         """
 
-    async def all_entries(self, start_block: Block, end_block: Block) -> Dict[PortfolioAddress, Dict[str, PandableLedgerEntryList]]:
+    async def all_entries(
+        self, start_block: Block, end_block: Block
+    ) -> Dict[PortfolioAddress, Dict[str, PandableLedgerEntryList]]:
         """
         Returns a mapping containing all transactions, internal transfers, and token transfers to or from each wallet in your portfolio.
 
@@ -421,7 +446,9 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
             >>> entries = await portfolio.ledger.all_entries(start_block=1000000, end_block=1100000)
             >>> print(entries)
         """
-        return await a_sync.gather({address: address.all(start_block, end_block, sync=False) for address in self.portfolio})
+        return await a_sync.gather(
+            {address: address.all(start_block, end_block, sync=False) for address in self.portfolio}
+        )
 
     @set_end_block_if_none
     async def df(self, start_block: Block, end_block: Block, full: bool = False) -> DataFrame:
@@ -441,84 +468,93 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
             >>> df = await portfolio.ledger.df(start_block=1000000, end_block=1100000)
             >>> print(df)
         """
-        df = concat(await asyncio.gather(*(ledger.df(start_block, end_block, sync=False) for ledger in self._ledgers)))
+        df = concat(
+            await asyncio.gather(
+                *(ledger.df(start_block, end_block, sync=False) for ledger in self._ledgers)
+            )
+        )
 
         # Reorder columns
         while True:
             try:
                 if full:
-                    df = df[[
-                        'chainId',
-                        'blockNumber',
-                        'blockHash',
-                        'transactionIndex',
-                        'hash',
-                        'log_index',
-                        'nonce',
-                        'from',
-                        'to',
-                        'token',
-                        'token_address',
-                        'value',
-                        'price',
-                        'value_usd',
-                        'gas',
-                        'gasPrice',
-                        'gasUsed',
-                        'maxFeePerGas',
-                        'maxPriorityFeePerGas',
-                        'type',
-                        'callType',
-                        'traceAddress',
-                        'subtraces',
-                        'output',
-                        'error',
-                        'result',
-                        'address',
-                        'code',
-                        'init',
-                        'r',
-                        's',
-                        'v',
-                        'input',
-                    ]]
+                    df = df[
+                        [
+                            "chainId",
+                            "blockNumber",
+                            "blockHash",
+                            "transactionIndex",
+                            "hash",
+                            "log_index",
+                            "nonce",
+                            "from",
+                            "to",
+                            "token",
+                            "token_address",
+                            "value",
+                            "price",
+                            "value_usd",
+                            "gas",
+                            "gasPrice",
+                            "gasUsed",
+                            "maxFeePerGas",
+                            "maxPriorityFeePerGas",
+                            "type",
+                            "callType",
+                            "traceAddress",
+                            "subtraces",
+                            "output",
+                            "error",
+                            "result",
+                            "address",
+                            "code",
+                            "init",
+                            "r",
+                            "s",
+                            "v",
+                            "input",
+                        ]
+                    ]
                 else:
-                    df = df[[
-                        'chainId',
-                        'blockNumber',
-                        'hash',
-                        'from',
-                        'to',
-                        'token',
-                        'token_address',
-                        'value',
-                        'price',
-                        'value_usd',
-                        'gas',
-                        'gasPrice',
-                        'gasUsed',
-                        'maxFeePerGas',
-                        'maxPriorityFeePerGas',
-                        'type',
-                        'callType',
-                        'traceAddress',
-                        'subtraces',
-                        'output',
-                        'error',
-                        'result',
-                        'address',
-                    ]]
-                    df = df[df['value'] != 0]
+                    df = df[
+                        [
+                            "chainId",
+                            "blockNumber",
+                            "hash",
+                            "from",
+                            "to",
+                            "token",
+                            "token_address",
+                            "value",
+                            "price",
+                            "value_usd",
+                            "gas",
+                            "gasPrice",
+                            "gasUsed",
+                            "maxFeePerGas",
+                            "maxPriorityFeePerGas",
+                            "type",
+                            "callType",
+                            "traceAddress",
+                            "subtraces",
+                            "output",
+                            "error",
+                            "result",
+                            "address",
+                        ]
+                    ]
+                    df = df[df["value"] != 0]
                 break
             except KeyError as e:
                 for column in _get_missing_cols_from_KeyError(e):
                     df[column] = None
-        
+
+        sort_cols = (
+            ["blockNumber", "transactionIndex", "log_index"] if full else ["blockNumber", "hash"]
+        )
+
         try:
-            if full:
-                return df.sort_values(["blockNumber", "transactionIndex", "log_index"]).reset_index(drop=True)
-            else:
-                return df.sort_values(['blockNumber','hash']).reset_index(drop=True)
+            return df.sort_values(sort_cols).reset_index(drop=True)
         except KeyError:
             logger.error(df)
             logger.error(df.columns)

@@ -13,7 +13,6 @@ from y.datatypes import Address, Block
 from eth_portfolio._utils import _get_price
 from eth_portfolio.typing import Balance
 
-
 logger = logging.getLogger(__name__)
 
 @eth_retry.auto_retry
