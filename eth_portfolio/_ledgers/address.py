@@ -437,7 +437,7 @@ async def get_transaction_status(txhash: str) -> Status:
 
     Args:
         txhash: The hash of the transaction.
-    
+
     Returns:
         The status of the transaction.
     """
