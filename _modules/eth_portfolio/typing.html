@@ -394,7 +394,7 @@
             <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s2"> is not a valid input for TokenBalances&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">balance</span> <span class="ow">in</span> <span class="n">seed</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">balance</span> <span class="ow">in</span> <span class="n">seed</span><span class="p">:</span>  <span class="c1"># type: ignore [misc]</span>
             <span class="bp">self</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">+=</span> <span class="n">balance</span></div>
 
 
@@ -813,7 +813,7 @@
                     <span class="sa">f</span><span class="s2">&quot;These objects are not from the same block (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">block</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">balances</span><span class="o">.</span><span class="n">block</span><span class="si">}</span><span class="s2">)&quot;</span>
                 <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__validateitem</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">balances</span><span class="p">)</span>
-            <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="n">balances</span></div>
+            <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="n">balances</span>  <span class="c1"># type: ignore [operator]</span></div>
 
 
     <span class="nd">@property</span>
@@ -932,10 +932,10 @@
         <span class="n">combined</span><span class="p">:</span> <span class="n">WalletBalances</span> <span class="o">=</span> <span class="n">WalletBalances</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">block</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">category</span><span class="p">,</span> <span class="n">balances</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">balances</span><span class="p">:</span>
-                <span class="n">combined</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">+=</span> <span class="n">balances</span>
+                <span class="n">combined</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">+=</span> <span class="n">balances</span>  <span class="c1"># type: ignore [operator]</span>
         <span class="k">for</span> <span class="n">category</span><span class="p">,</span> <span class="n">balances</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">balances</span><span class="p">:</span>
-                <span class="n">combined</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">+=</span> <span class="n">balances</span>
+                <span class="n">combined</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">+=</span> <span class="n">balances</span>  <span class="c1"># type: ignore [operator]</span>
         <span class="k">return</span> <span class="n">combined</span>
 
     <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WalletBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WalletBalances&quot;</span><span class="p">:</span>
@@ -1164,7 +1164,7 @@
         <span class="k">for</span> <span class="n">wallet</span><span class="p">,</span> <span class="n">wbalances</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">tbalances</span> <span class="ow">in</span> <span class="n">wbalances</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">tbalances</span><span class="p">:</span>
-                    <span class="n">inverted</span><span class="p">[</span><span class="n">label</span><span class="p">][</span><span class="n">wallet</span><span class="p">]</span> <span class="o">+=</span> <span class="n">tbalances</span>
+                    <span class="n">inverted</span><span class="p">[</span><span class="n">label</span><span class="p">][</span><span class="n">wallet</span><span class="p">]</span> <span class="o">+=</span> <span class="n">tbalances</span>  <span class="c1"># type: ignore [operator]</span>
         <span class="k">return</span> <span class="n">inverted</span>
 
     <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -1492,7 +1492,7 @@
         <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">wtbalances</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">wallet</span><span class="p">,</span> <span class="n">tbalances</span> <span class="ow">in</span> <span class="n">wtbalances</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">tbalances</span><span class="p">:</span>
-                    <span class="n">inverted</span><span class="p">[</span><span class="n">wallet</span><span class="p">][</span><span class="n">label</span><span class="p">]</span> <span class="o">+=</span> <span class="n">tbalances</span>
+                    <span class="n">inverted</span><span class="p">[</span><span class="n">wallet</span><span class="p">][</span><span class="n">label</span><span class="p">]</span> <span class="o">+=</span> <span class="n">tbalances</span>  <span class="c1"># type: ignore [operator]</span>
         <span class="k">return</span> <span class="n">inverted</span></div>
 
 
