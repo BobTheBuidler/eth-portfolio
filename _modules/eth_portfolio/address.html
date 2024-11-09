@@ -70,9 +70,8 @@
              
   <h1>Source code for eth_portfolio.address</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This module defines the :class:`~eth_portfolio.address.PortfolioAddress` class, which represents an address managed by the `eth-portfolio` system. </span>
-<span class="sd">The `eth-portfolio` acts as a manager of addresses, handling various lending protocols and external interactions.</span>
-<span class="sd">The :class:`~eth_portfolio.address.PortfolioAddress` class is designed to manage different aspects of an Ethereum address within the portfolio, </span>
+<span class="sd">This module defines the :class:`~PortfolioAddress` class, which represents an address managed by the `eth-portfolio` system. </span>
+<span class="sd">The :class:`~PortfolioAddress` class is designed to manage different aspects of an Ethereum address within the portfolio, </span>
 <span class="sd">such as transactions, transfers, balances, and interactions with both external and lending protocols. </span>
 
 <span class="sd">Key components and functionalities provided by the :class:`~eth_portfolio.address.PortfolioAddress` class include:</span>
@@ -146,14 +145,12 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The address being managed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">asynchronous</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`asynchronous` must be a boolean, you passed </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">asynchronous</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">asynchronous</span> <span class="o">=</span> <span class="n">asynchronous</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Flag indicating if the operations are asynchronous.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">load_prices</span> <span class="o">=</span> <span class="n">portfolio</span><span class="o">.</span><span class="n">load_prices</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Indicates if price loading is enabled.</span>
@@ -165,12 +162,10 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Ledger for tracking transactions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">internal_transfers</span> <span class="o">=</span> <span class="n">AddressInternalTransfersLedger</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Ledger for tracking internal transfers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">token_transfers</span> <span class="o">=</span> <span class="n">AddressTokenTransfersLedger</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Ledger for tracking token transfers.</span>
