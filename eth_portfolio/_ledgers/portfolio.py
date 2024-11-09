@@ -41,6 +41,24 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
         return self.portfolio._start_block
 
     def _get_and_yield(self, start_block: int, end_block: int) -> AsyncIterator[T]:
+        """
+        Asynchronously yields ledger entries for each address in the portfolio for the specified block range.
+
+        This method is crucial for efficient data retrieval across multiple addresses, as it:
+        - Utilizes asynchronous iteration to process addresses concurrently.
+        - Reduces memory usage by yielding entries one at a time.
+
+        Args:
+            start_block: The starting block for the ledger query.
+            end_block: The ending block for the ledger query.
+
+        Yields:
+            Individual ledger entries of type T for each address in the portfolio.
+
+        Example:
+            >>> async for entry in ledger._get_and_yield(start_block=1000000, end_block=1100000):
+            ...     print(entry)
+        """
         aiterators = [
             getattr(address, self.property_name)[start_block:end_block]
             for address in self.portfolio
@@ -82,8 +100,23 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
     @set_end_block_if_none
     async def df(self, start_block: Block, end_block: Block) -> DataFrame:
         """
-        Returns a DataFrame with all entries for this ledger.
-        NOTE: Override this method if you want to do something special with the dataframe
+        Returns a DataFrame containing all entries for this ledger.
+
+        This method provides an easy way to access your data in a standardized, clean format
+        for further analysis and reporting.
+
+        NOTE: Subclasses may override this method for type-specific DataFrame processing.
+
+        Args:
+            start_block: The starting block for the query.
+            end_block: The ending block for the query.
+
+        Returns:
+            A DataFrame containing processed ledger entries.
+
+        Example:
+            >>> df = await ledger.df(start_block=1000000, end_block=1100000)
+            >>> print(df)
         """
         df = await self._df_base(start_block, end_block)
         if len(df) > 0:
@@ -162,16 +195,64 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
 
 
 class PortfolioTransactionsLedger(PortfolioLedgerBase[TransactionsList, Transaction]):
+    """
+    The :class:`~eth_portfolio._ledgers.PortfolioTransactionsLedger` class manages Ethereum
+    transaction entries across all addresses in a portfolio. It aggregates and processes
+    transactions for the entire portfolio within specified block ranges.
+
+    In the eth-portfolio ecosystem, this class is essential for:
+    - Providing a comprehensive view of all Ethereum transactions across multiple addresses.
+    - Supporting portfolio-wide analysis and reporting of transaction history.
+    - Enabling efficient querying of transaction data for specific time periods or block ranges.
+
+    Example:
+        >>> ledger = PortfolioTransactionsLedger(portfolio=Portfolio(addresses=["0x1234...", "0xABCD..."]))
+        >>> df = await ledger.df(start_block=10000000, end_block=12000000)
+        >>> print(df)
+    """
+
     property_name = "transactions"
 
 
 class PortfolioTokenTransfersLedger(PortfolioLedgerBase[TokenTransfersList, TokenTransfer]):
+    """
+    The :class:`~eth_portfolio._ledgers.PortfolioTokenTransfersLedger` class manages ERC20 token
+    transfer entries across all addresses in a portfolio. It aggregates and processes
+    token transfers for the entire portfolio within specified block ranges.
+
+    In the eth-portfolio ecosystem, this class is crucial for:
+    - Tracking all ERC20 token movements across multiple addresses in a portfolio.
+    - Facilitating token balance calculations and portfolio valuation.
+    - Supporting analysis of token transfer patterns and history.
+
+    Example:
+        >>> ledger = PortfolioTokenTransfersLedger(portfolio=Portfolio(addresses=["0x1234...", "0xABCD..."]))
+        >>> df = await ledger.df(start_block=10000000, end_block=12000000)
+        >>> print(df)
+    """
+
     property_name = "token_transfers"
 
 
 class PortfolioInternalTransfersLedger(
     PortfolioLedgerBase[InternalTransfersList, InternalTransfer]
 ):
+    """
+    The :class:`~eth_portfolio._ledgers.PortfolioInternalTransfersLedger` class manages internal
+    transfer entries across all addresses in a portfolio. It aggregates and processes internal transfers
+    for the entire portfolio within specified block ranges.
+
+    In the eth-portfolio ecosystem, this class plays a vital role in:
+    - Tracking internal Ethereum transfers between addresses within the same portfolio.
+    - Providing insights into complex transactions that involve multiple internal transfers.
+    - Supporting accurate portfolio analysis of internal transfer data from EVM traces.
+
+    Example:
+        >>> ledger = PortfolioInternalTransfersLedger(portfolio=Portfolio(addresses=["0x1234...", "0xABCD..."]))
+        >>> df = await ledger.df(start_block=10000000, end_block=12000000)
+        >>> print(df)
+    """
+
     property_name = "internal_transfers"
 
     @set_end_block_if_none
@@ -202,8 +283,22 @@ class PortfolioInternalTransfersLedger(
     @classmethod
     def _deduplicate_df(cls, df: DataFrame) -> DataFrame:
         """
-        We cant use drop_duplicates when one of the columns, `traceAddress`, contains lists.
-        We must first convert the lists to strings
+        Deduplicates the DataFrame.
+
+        This deduplication is essential for ensuring accurate portfolio analysis by removing
+        duplicate entries due to transfers between addresses within the same portfolio.
+
+        Args:
+            df: The DataFrame to deduplicate.
+
+        Returns:
+            A deduplicated DataFrame.
+
+        Example:
+            >>> deduped_df = PortfolioInternalTransfersLedger._deduplicate_df(df)
+            >>> print(deduped_df)
         """
         df = df.reset_index(drop=True)
+        # We cant use drop_duplicates when one of the columns, `traceAddress`, contains lists.
+        # We must first convert the lists to strings
         return df.loc[df.astype(str).drop_duplicates().index]
