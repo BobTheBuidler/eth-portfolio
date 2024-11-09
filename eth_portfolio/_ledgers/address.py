@@ -180,7 +180,7 @@ class AddressLedgerBase(
                 break
             yield obj
             yielded.add(obj)
-        async for obj in self._get_new_objects(start_block, end_block):
+        async for obj in self._get_new_objects(start_block, end_block):  # type: ignore [assignment, misc]
             if obj not in yielded:
                 yield obj
                 yielded.add(obj)
@@ -212,7 +212,7 @@ class AddressLedgerBase(
         """
         objects = self._list_type()
         async for obj in self[start_block:end_block]:
-            objects.append(obj)
+            objects.append(obj)  # type: ignore [arg-type]
         return objects
 
     @stuck_coro_debugger
@@ -228,7 +228,7 @@ class AddressLedgerBase(
         """
         start_block = 0 if self.cached_thru is None else self.cached_thru + 1
         end_block = await get_buffered_chain_height()
-        return self[start_block, end_block]
+        return self[start_block, end_block]  # type: ignore [index, return-value]
 
     @set_end_block_if_none
     @stuck_coro_debugger
@@ -382,17 +382,15 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         """
         if self.cached_thru and end_block < self.cached_thru:
             return
-        end_block_nonce = await get_nonce_at_block(self.address, end_block)
-        nonces = list(range(self.cached_thru_nonce + 1, end_block_nonce + 1))
-
-        if nonces:
+        end_block_nonce: int = await get_nonce_at_block(self.address, end_block)
+        if nonces := list(range(self.cached_thru_nonce + 1, end_block_nonce + 1)):
             coros = [
                 _loaders.load_transaction(self.address, nonce, self.load_prices) for nonce in nonces
             ]
 
             objects = []
             transaction: Transaction
-            async for nonce, transaction in a_sync.as_completed(
+            async for nonce, transaction in a_sync.as_completed(  # type: ignore [assignment]
                 coros, aiter=True, tqdm=True, desc=f"Transactions        {self.address}"
             ):
                 if transaction:
