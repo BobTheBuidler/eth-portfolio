@@ -29,27 +29,29 @@ from y._decorators import stuck_coro_debugger
 from y.datatypes import Address, Block
 
 from eth_portfolio import protocols
-from eth_portfolio._ledgers.address import (AddressInternalTransfersLedger,
-                                            AddressLedgerBase,
-                                            AddressTokenTransfersLedger,
-                                            AddressTransactionsLedger,
-                                            PandableLedgerEntryList)
+from eth_portfolio._ledgers.address import (
+    AddressInternalTransfersLedger,
+    AddressLedgerBase,
+    AddressTokenTransfersLedger,
+    AddressTransactionsLedger,
+    PandableLedgerEntryList,
+)
 from eth_portfolio._loaders import balances
 from eth_portfolio._utils import _LedgeredBase, _get_price
-from eth_portfolio.typing import (Balance, RemoteTokenBalances, TokenBalances,
-                                  WalletBalances)
+from eth_portfolio.typing import Balance, RemoteTokenBalances, TokenBalances, WalletBalances
 
 if TYPE_CHECKING:
     from eth_portfolio.portfolio import Portfolio
 
 logger = logging.getLogger(__name__)
 
+
 class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     """
     Represents a portfolio address within the eth-portfolio system.
     """
-    
-    def __init__(self, address: Address, portfolio: "Portfolio", asynchronous: bool = False) -> None: # type: ignore
+
+    def __init__(self, address: Address, portfolio: "Portfolio", asynchronous: bool = False) -> None:  # type: ignore
         """
         Initializes the PortfolioAddress instance.
 
@@ -69,36 +71,36 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         """
         The address being managed.
         """
-        
+
         if not isinstance(asynchronous, bool):
             raise TypeError(f"`asynchronous` must be a boolean, you passed {type(asynchronous)}")
         self.asynchronous = asynchronous
         """
         Flag indicating if the operations are asynchronous.
         """
-        
+
         self.load_prices = portfolio.load_prices
         """
         Indicates if price loading is enabled.
         """
-        
+
         super().__init__(portfolio._start_block)
-        
+
         self.transactions = AddressTransactionsLedger(self)
         """
         Ledger for tracking transactions.
         """
-        
+
         self.internal_transfers = AddressInternalTransfersLedger(self)
         """
         Ledger for tracking internal transfers.
         """
-        
+
         self.token_transfers = AddressTokenTransfersLedger(self)
         """
         Ledger for tracking token transfers.
         """
-    
+
     def __str__(self) -> str:
         """
         Returns the string representation of the address.
@@ -116,7 +118,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
             The string representation.
         """
         return f"<{self.__class__.__name__} address={self.address} at {hex(id(self))}>"
-    
+
     def __eq__(self, other: object) -> bool:
         """
         Checks equality with another object.
@@ -132,7 +134,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         elif isinstance(other, str):
             return self.address == convert.to_address(other)
         return False
-    
+
     def __hash__(self) -> int:
         """
         Returns the hash of the address.
@@ -141,9 +143,9 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
             The hash value.
         """
         return hash(self.address)
-    
+
     # Primary functions
-    
+
     @stuck_coro_debugger
     async def describe(self, block: int) -> WalletBalances:
         """
@@ -163,13 +165,18 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         """
         if not isinstance(block, int):
             raise TypeError(f"Block must be an integer. You passed {type(block)} {block}")
-        data = await a_sync.gather({
-            "assets": self.assets(block, sync=False), 
-            "debt": self.debt(block, sync=False), 
+        coros = {
+            "assets": self.assets(block, sync=False),
+            "debt": self.debt(block, sync=False),
             "external": self.external_balances(block, sync=False),
-        })
+        }
+        data = await a_sync.gather(coros)
+        for ds in data.values():
+            assert ds.block, ds
+            for t, d in ds.items():
+                assert d.block, ds
         return WalletBalances(data, block=block)
-    
+
     @stuck_coro_debugger
     async def assets(self, block: Optional[Block] = None) -> TokenBalances:
         """
@@ -185,7 +192,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
             >>> assets = await address.assets(12345678)
         """
         return await self.balances(block=block, sync=False)
-    
+
     @stuck_coro_debugger
     async def debt(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         """
@@ -201,7 +208,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
             >>> debt = await address.debt(12345678)
         """
         return await protocols.lending.debt(self.address, block=block)
-    
+
     @stuck_coro_debugger
     async def external_balances(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         """
@@ -216,10 +223,13 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         Examples:
             >>> external_balances = await address.external_balances(12345678)
         """
-        return sum(await asyncio.gather(self.staking(block, sync=False), self.collateral(block, sync=False)))
+        balances = await asyncio.gather(
+            self.staking(block, sync=False), self.collateral(block, sync=False)
+        )
+        return sum(balances)
 
     # Assets
-    
+
     @stuck_coro_debugger
     async def balances(self, block: Optional[Block]) -> TokenBalances:
         """
@@ -258,9 +268,14 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         """
         if balance := await dank_mids.eth.get_balance(self.address, block_identifier=block):
             price = await _get_price(y.WRAPPED_GAS_COIN, block)
-            return Balance(balance.scaled, round(balance.scaled * price, 18), token=y.EEE_ADDRESS, block=block)
+            return Balance(
+                balance.scaled,
+                round(balance.scaled * price, 18),
+                token=y.EEE_ADDRESS,
+                block=block,
+            )
         return Balance(token=y.EEE_ADDRESS, block=block)
-    
+
     @stuck_coro_debugger
     async def token_balances(self, block) -> TokenBalances:
         """
@@ -277,16 +292,16 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         """
         try:
             data = a_sync.map(
-                balances.load_token_balance, 
+                balances.load_token_balance,
                 self.token_transfers._yield_tokens_at_block(block=block),
-                address=self.address, 
+                address=self.address,
                 block=block,
             )
             return TokenBalances(await data, block=block)
         except MappingIsEmptyError:
             return TokenBalances(block=block)
-   
-    @stuck_coro_debugger 
+
+    @stuck_coro_debugger
     async def collateral(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         """
         Retrieves all balances held by lending protocols on behalf of the wallet at a given block.
@@ -301,7 +316,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
             >>> collateral = await address.collateral(12345678)
         """
         return await protocols.lending.collateral(self.address, block=block)
-    
+
     @stuck_coro_debugger
     async def staking(self, block: Optional[Block] = None) -> RemoteTokenBalances:
         """
@@ -317,9 +332,9 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
             >>> staking_balances = await address.staking(12345678)
         """
         return await protocols.balances(self.address, block=block)
-    
+
     # Ledger Entries
-    
+
     @stuck_coro_debugger
     async def all(self, start_block: Block, end_block: Block) -> Dict[str, PandableLedgerEntryList]:
         """
@@ -335,8 +350,11 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         Examples:
             >>> all_entries = await address.all(12000000, 12345678)
         """
-        return await a_sync.gather({
+        coros = {
             "transactions": self.transactions.get(start_block, end_block, sync=False),
-            "internal_transactions": self.internal_transfers.get(start_block, end_block, sync=False),
+            "internal_transactions": self.internal_transfers.get(
+                start_block, end_block, sync=False
+            ),
             "token_transfers": self.token_transfers.get(start_block, end_block, sync=False),
-        })
+        }
+        return await a_sync.gather(coros)

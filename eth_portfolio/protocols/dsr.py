@@ -1,10 +1,10 @@
 import asyncio
 from typing import Optional
 
-from dank_mids.structs.data import Decimal
 from y import Contract, Network, dai
 from y.datatypes import Address, Block
 
+from eth_portfolio._decimal import Decimal
 from eth_portfolio.protocols._base import ProtocolABC
 from eth_portfolio.typing import Balance, TokenBalances
 
@@ -23,7 +23,7 @@ class MakerDSR(ProtocolABC):
             self._exchange_rate(block),
         )
         if pie:
-            dai_in_dsr = pie * exchange_rate / 10 ** 18
+            dai_in_dsr = pie * exchange_rate / 10**18
             balances[dai] = Balance(dai_in_dsr, dai_in_dsr, token=dai, block=block)
         return balances
 

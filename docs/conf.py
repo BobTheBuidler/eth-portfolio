@@ -32,6 +32,7 @@ intersphinx_mapping = {
     "a_sync": ("https://bobthebuidler.github.io/ez-a-sync", None),
     "brownie": ("https://eth-brownie.readthedocs.io/en/stable", None),
     "checksum_dict": ("https://bobthebuidler.github.io/checksum_dict", None),
+    "dictstruct": ("https://bobthebuidler.github.io/dictstruct", None),
     "msgspec": ("https://jcristharif.com/msgspec/", None),
     "pandas": ("https://pandas.pydata.org/docs/", None),
     "pony": ("https://docs.ponyorm.org/", None),

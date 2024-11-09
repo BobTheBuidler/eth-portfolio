@@ -25,25 +25,42 @@ without managing or altering any underlying assets.
 """
 
 from functools import cached_property
-from typing import (Any, Callable, DefaultDict, Dict, Iterable, List, Literal, 
-                    Optional, Tuple, TypedDict, TypeVar, Union, final)
+from typing import (
+    Any,
+    Callable,
+    DefaultDict,
+    Dict,
+    Iterable,
+    List,
+    Literal,
+    Optional,
+    Tuple,
+    TypedDict,
+    TypeVar,
+    Union,
+    final,
+)
 
 from checksum_dict import DefaultChecksumDict
-from dank_mids.structs import DictStruct
-from dank_mids.structs.data import Decimal
-from msgspec import UNSET
+from dictstruct import DictStruct
 from pandas import DataFrame, concat
 from typing_extensions import ParamSpec, Self
 from y.datatypes import Address, Block
 
-_T = TypeVar('_T')
-_I = TypeVar('_I')
-_P = ParamSpec('_P')
+from eth_portfolio._decimal import Decimal
+
+
+_T = TypeVar("_T")
+_I = TypeVar("_I")
+_P = ParamSpec("_P")
 
 Fn = Callable[_P, _T]
 
+
 @final
-class Balance(DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=True, forbid_unknown_fields=True):
+class Balance(
+    DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=True, forbid_unknown_fields=True
+):
     """
     Represents the balance of a single token, including its token amount and equivalent USD value.
 
@@ -76,17 +93,17 @@ class Balance(DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=Tr
     """
     The block from which the balance was taken, if known.
     """
-    
+
     @property
     def usd(self) -> Decimal:
-        """ 
-        An alias for `usd_value`. Returns the USD value of the token amount. 
+        """
+        An alias for `usd_value`. Returns the USD value of the token amount.
         """
         return self.usd_value
-    
-    def __add__(self, other: 'Balance') -> 'Balance':
+
+    def __add__(self, other: "Balance") -> "Balance":
         """
-        Adds two :class:`~eth_portfolio.typing.Balance` objects together. It is the user's responsibility to ensure that the two 
+        Adds two :class:`~eth_portfolio.typing.Balance` objects together. It is the user's responsibility to ensure that the two
         :class:`~eth_portfolio.typing.Balance` instances represent the same token.
 
         Args:
@@ -111,12 +128,16 @@ class Balance(DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=Tr
         if not isinstance(other, Balance):
             raise TypeError(f"{other} is not a `Balance` object")
         if self.token != other.token:
-            raise ValueError(f"These Balance objects represent balances of different tokens ({self.token} and {other.token})")
+            raise ValueError(
+                f"These Balance objects represent balances of different tokens ({self.token} and {other.token})"
+            )
         if self.block != other.block:
-            raise ValueError(f"These Balance objects represent balances from different blocks ({self.block} and {other.block})")
+            raise ValueError(
+                f"These Balance objects represent balances from different blocks ({self.block} and {other.block})"
+            )
         try:
             return Balance(
-                balance=self.balance + other.balance, 
+                balance=self.balance + other.balance,
                 usd_value=self.usd_value + other.usd_value,
                 token=self.token,
                 block=self.block,
@@ -124,8 +145,8 @@ class Balance(DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=Tr
         except Exception as e:
             e.args = (f"Cannot add {self} and {other}: {e}", *e.args)
             raise
-    
-    def __radd__(self, other: Union['Balance', Literal[0]]) -> 'Balance':
+
+    def __radd__(self, other: Union["Balance", Literal[0]]) -> "Balance":
         """
         Supports the addition operation from the right side to enable use of `sum`.
 
@@ -146,10 +167,10 @@ class Balance(DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=Tr
             Decimal('100')
         """
         return self if other == 0 else self.__add__(other)  # type: ignore
-    
-    def __sub__(self, other: 'Balance') -> 'Balance':
+
+    def __sub__(self, other: "Balance") -> "Balance":
         """
-        Subtracts one :class:`~eth_portfolio.typing.Balance` object from another. It is the user's responsibility to ensure that 
+        Subtracts one :class:`~eth_portfolio.typing.Balance` object from another. It is the user's responsibility to ensure that
         the two :class:`~eth_portfolio.typing.Balance` instances represent the same token.
 
         Args:
@@ -172,19 +193,23 @@ class Balance(DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=Tr
         if not isinstance(other, Balance):
             raise TypeError(f"{other} is not a `Balance` object.")
         if self.token != other.token:
-            raise ValueError(f"These Balance objects represent balances of different tokens ({self.token} and {other.token})")
+            raise ValueError(
+                f"These Balance objects represent balances of different tokens ({self.token} and {other.token})"
+            )
         if self.block != other.block:
-            raise ValueError(f"These Balance objects represent balances from different blocks ({self.block} and {other.block})")
+            raise ValueError(
+                f"These Balance objects represent balances from different blocks ({self.block} and {other.block})"
+            )
         try:
             return Balance(
-                balance=self.balance - other.balance, 
+                balance=self.balance - other.balance,
                 usd_value=self.usd_value - other.usd_value,
                 token=self.token,
                 block=self.block,
             )
         except Exception as e:
             raise e.__class__(f"Cannot subtract {self} and {other}: {e}") from e
-    
+
     def __bool__(self) -> bool:
         """
         Evaluates the truth value of the :class:`~eth_portfolio.typing.Balance` object.
@@ -203,7 +228,7 @@ class Balance(DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=Tr
 ProtocolLabel = str
 
 Addresses = Union[Address, Iterable[Address]]
-TokenAddress = TypeVar('TokenAddress', bound=Address)
+TokenAddress = TypeVar("TokenAddress", bound=Address)
 
 
 class _SummableNonNumericMixin:
@@ -212,13 +237,14 @@ class _SummableNonNumericMixin:
 
     This class provides an interface for objects that can be used with `sum` but are not necessarily numeric.
     """
+
     def __add__(self, other: Self) -> Self:
         """
         Abstract method for adding two objects of the same type.
 
         Args:
             other: Another object of the same type.
-        
+
         Raises:
             NotImplementedError: If no `__add__` method was defined on the subclass.
 
@@ -256,14 +282,15 @@ class _SummableNonNumericMixin:
 
 _TBSeed = Union[Dict[Address, Balance], Iterable[Tuple[Address, Balance]]]
 
+
 class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
     """
     A specialized defaultdict subclass made for holding a mapping of ``token -> balance``.
 
-    Manages a collection of :class:`~eth_portfolio.typing.Balance` objects for multiple tokens, allowing for operations 
+    Manages a collection of :class:`~eth_portfolio.typing.Balance` objects for multiple tokens, allowing for operations
     such as summing balances across tokens.
 
-    The class uses token addresses as keys and :class:`~eth_portfolio.typing.Balance` objects as values. It supports 
+    The class uses token addresses as keys and :class:`~eth_portfolio.typing.Balance` objects as values. It supports
     arithmetic operations like addition and subtraction of token balances.
 
     Token addresses are checksummed automatically when adding items to the dict, and the default value for a token not present is an empty :class:`~eth_portfolio.typing.Balance` object.
@@ -276,6 +303,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
         >>> token_balances['0x123'].balance
         Decimal('100')
     """
+
     def __init__(self, seed: Optional[_TBSeed] = None, *, block: Optional[int] = None) -> None:
         super().__init__(Balance)
         self.block = block
@@ -287,10 +315,10 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
         for token, balance in seed:
             self[token] += balance
-    
+
     def __getitem__(self, key) -> Balance:
         return super().__getitem__(key) if key in self else Balance(token=key, block=self.block)
-    
+
     def __setitem__(self, key, value):
         """
         Sets the balance for a given token address.
@@ -309,9 +337,9 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
             Decimal('100')
         """
         if not isinstance(value, Balance):
-            raise TypeError(f'value must be a `Balance` object. You passed {value}') from None
+            raise TypeError(f"value must be a `Balance` object. You passed {value}") from None
         return super().__setitem__(key, value)
-    
+
     @property
     def dataframe(self) -> DataFrame:
         """
@@ -320,11 +348,16 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
         Returns:
             A DataFrame representation of the token balances.
         """
-        df = DataFrame({token: {"balance": balance.balance, "usd_value": balance.usd_value} for token, balance in self.items()}).T
+        df = DataFrame(
+            {
+                token: {"balance": balance.balance, "usd_value": balance.usd_value}
+                for token, balance in self.items()
+            }
+        ).T
         df.reset_index(inplace=True)
-        df.rename(columns = {'index': 'token'}, inplace = True)
+        df.rename(columns={"index": "token"}, inplace=True)
         return df
-    
+
     def sum_usd(self) -> Decimal:
         """
         Sums the USD values of all token balances.
@@ -339,7 +372,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
             Decimal('2000')
         """
         return Decimal(sum(balance.usd for balance in self.values()))
-    
+
     def __bool__(self) -> bool:
         """
         Evaluates the truth value of the :class:`~eth_portfolio.typing.TokenBalances` object.
@@ -362,8 +395,8 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
             The string representation of the token balances.
         """
         return f"TokenBalances{dict(self)}"
-    
-    def __add__(self, other: 'TokenBalances') -> 'TokenBalances':
+
+    def __add__(self, other: "TokenBalances") -> "TokenBalances":
         """
         Adds another :class:`~eth_portfolio.typing.TokenBalances` object to this one.
 
@@ -386,21 +419,31 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
         if not isinstance(other, TokenBalances):
             raise TypeError(f"{other} is not a TokenBalances object")
         if self.block != other.block:
-            raise ValueError(f"These TokenBalances objects are not from the same block ({self.block} and {other.block})")
+            raise ValueError(
+                f"These TokenBalances objects are not from the same block ({self.block} and {other.block})"
+            )
         # NOTE We need a new object to avoid mutating the inputs
         combined: TokenBalances = TokenBalances(block=self.block)
         for token, balance in self.items():
             if balance:
-                combined._setitem_nochecksum(token, Balance(balance.balance, balance.usd_value, token=token, block=self.block))
+                combined._setitem_nochecksum(
+                    token,
+                    Balance(balance.balance, balance.usd_value, token=token, block=self.block),
+                )
         for token, balance in other.items():
             if balance:
                 if token in combined:
-                    combined._setitem_nochecksum(token, combined._getitem_nochecksum(token) + balance)
+                    combined._setitem_nochecksum(
+                        token, combined._getitem_nochecksum(token) + balance
+                    )
                 else:
-                    combined._setitem_nochecksum(token, Balance(balance.balance, balance.usd_value, token=token, block=self.block))
+                    combined._setitem_nochecksum(
+                        token,
+                        Balance(balance.balance, balance.usd_value, token=token, block=self.block),
+                    )
         return combined
-    
-    def __sub__(self, other: 'TokenBalances') -> 'TokenBalances':
+
+    def __sub__(self, other: "TokenBalances") -> "TokenBalances":
         """
         Subtracts another :class:`~eth_portfolio.typing.TokenBalances` object from this one.
 
@@ -423,7 +466,9 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
         if not isinstance(other, TokenBalances):
             raise TypeError(f"{other} is not a TokenBalances object")
         if self.block != other.block:
-            raise ValueError(f"These TokenBalances objects are not from the same block ({self.block} and {other.block})")
+            raise ValueError(
+                f"These TokenBalances objects are not from the same block ({self.block} and {other.block})"
+            )
         # NOTE We need a new object to avoid mutating the inputs
         subtracted: TokenBalances = TokenBalances(self, block=self.block)
         for token, balance in other.items():
@@ -433,20 +478,21 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
                 del subtracted[token]
         return subtracted
 
-    __slots__ = "block",
-    
+    __slots__ = ("block",)
+
 
 _RTBSeed = Dict[ProtocolLabel, TokenBalances]
 
+
 class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNonNumericMixin):
     """
-    Manages token balances across different protocols, extending the :class:`~eth_portfolio.typing.TokenBalances` functionality 
+    Manages token balances across different protocols, extending the :class:`~eth_portfolio.typing.TokenBalances` functionality
     to multiple protocols.
 
     The class uses protocol labels as keys and :class:`~eth_portfolio.typing.TokenBalances` objects as values.
 
     Args:
-        seed: An initial seed of remote token balances, either as a dictionary 
+        seed: An initial seed of remote token balances, either as a dictionary
             or an iterable of tuples.
 
     Example:
@@ -454,9 +500,10 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         >>> remote_balances['protocol1']['0x123'].balance
         Decimal('100')
     """
+
     def __init__(self, seed: Optional[_RTBSeed] = None, *, block: Optional[int] = None) -> None:
         super().__init__(lambda: TokenBalances(block=block))
-        self.block=block
+        self.block = block
         if seed is None:
             return
         if isinstance(seed, dict):
@@ -465,9 +512,11 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
         for remote, token_balances in seed:  # type: ignore [misc]
             if self.block != token_balances.block:
-                raise ValueError(f"These objects are not from the same block ({self.block} and {token_balances.block})")
+                raise ValueError(
+                    f"These objects are not from the same block ({self.block} and {token_balances.block})"
+                )
             self[remote] += token_balances  # type: ignore [has-type]
-    
+
     def __setitem__(self, protocol: str, value: TokenBalances):
         """
         Sets the token balances for a given protocol.
@@ -486,9 +535,9 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
             Decimal('100')
         """
         if not isinstance(value, TokenBalances):
-            raise TypeError(f'value must be a `TokenBalances` object. You passed {value}') from None
+            raise TypeError(f"value must be a `TokenBalances` object. You passed {value}") from None
         return super().__setitem__(protocol, value)
-    
+
     @property
     def dataframe(self) -> DataFrame:
         """
@@ -500,7 +549,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         dfs: List[DataFrame] = []
         for protocol, balances in self.items():
             df = balances.dataframe
-            df['protocol'] = protocol
+            df["protocol"] = protocol
             dfs.append(df)
         return concat(dfs).reset_index(drop=True) if dfs else DataFrame()
 
@@ -518,7 +567,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
             Decimal('2000')
         """
         return Decimal(sum(balance.sum_usd() for balance in self.values()))
-    
+
     def __bool__(self) -> bool:
         """
         Evaluates the truth value of the :class:`~eth_portfolio.typing.RemoteTokenBalances` object.
@@ -541,8 +590,8 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
             The string representation of the remote token balances.
         """
         return f"RemoteTokenBalances{dict(self)}"
-    
-    def __add__(self, other: 'RemoteTokenBalances') -> 'RemoteTokenBalances':
+
+    def __add__(self, other: "RemoteTokenBalances") -> "RemoteTokenBalances":
         """
         Adds another :class:`~eth_portfolio.typing.RemoteTokenBalances` object to this one.
 
@@ -565,7 +614,9 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         if not isinstance(other, RemoteTokenBalances):
             raise TypeError(f"{other} is not a RemoteTokenBalances object")
         if self.block != other.block:
-            raise ValueError(f"These RemoteTokenBalances objects are not from the same block ({self.block} and {other.block})")
+            raise ValueError(
+                f"These RemoteTokenBalances objects are not from the same block ({self.block} and {other.block})"
+            )
         # NOTE We need a new object to avoid mutating the inputs
         combined: RemoteTokenBalances = RemoteTokenBalances(block=self.block)
         for protocol, token_balances in self.items():
@@ -575,8 +626,8 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
             if token_balances:
                 combined[protocol] += token_balances
         return combined
-    
-    def __sub__(self, other: 'RemoteTokenBalances') -> 'RemoteTokenBalances':
+
+    def __sub__(self, other: "RemoteTokenBalances") -> "RemoteTokenBalances":
         """
         Subtracts another :class:`~eth_portfolio.typing.RemoteTokenBalances` object from this one.
 
@@ -599,7 +650,9 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         if not isinstance(other, RemoteTokenBalances):
             raise TypeError(f"{other} is not a RemoteTokenBalances object")
         if self.block != other.block:
-            raise ValueError(f"These RemoteTokenBalances objects are not from the same block ({self.block} and {other.block})")
+            raise ValueError(
+                f"These RemoteTokenBalances objects are not from the same block ({self.block} and {other.block})"
+            )
         # NOTE We need a new object to avoid mutating the inputs
         subtracted: RemoteTokenBalances = RemoteTokenBalances(self, block=self.block)
         for protocol, token_balances in other.items():
@@ -614,11 +667,14 @@ CategoryLabel = Literal["assets", "debt", "external"]
 
 _WBSeed = Union[Dict[CategoryLabel, TokenBalances], Iterable[Tuple[CategoryLabel, TokenBalances]]]
 
-class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalances]], _SummableNonNumericMixin):
+
+class WalletBalances(
+    Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalances]], _SummableNonNumericMixin
+):
     """
     Organizes token balances into categories such as assets, debts, and external balances for a single wallet.
 
-    The class uses categories as keys (`assets`, `debt`, `external`) and :class:`~eth_portfolio.typing.TokenBalances` or :class:`~eth_portfolio.typing.RemoteTokenBalances` 
+    The class uses categories as keys (`assets`, `debt`, `external`) and :class:`~eth_portfolio.typing.TokenBalances` or :class:`~eth_portfolio.typing.RemoteTokenBalances`
     objects as values.
 
     Args:
@@ -629,13 +685,19 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         >>> wallet_balances['assets']['0x123'].balance
         Decimal('100')
     """
-    def __init__(self, seed: Optional[Union["WalletBalances", _WBSeed]] = None, *, block: Optional[int] = None) -> None:
+
+    def __init__(
+        self,
+        seed: Optional[Union["WalletBalances", _WBSeed]] = None,
+        *,
+        block: Optional[int] = None,
+    ) -> None:
         super().__init__()
         self.block = block
-        self._keys = 'assets', 'debt', 'external'
-        self['assets'] = TokenBalances(block=block)
-        self['debt'] = RemoteTokenBalances(block=block)
-        self['external'] = RemoteTokenBalances(block=block)
+        self._keys = "assets", "debt", "external"
+        self["assets"] = TokenBalances(block=block)
+        self["debt"] = RemoteTokenBalances(block=block)
+        self["external"] = RemoteTokenBalances(block=block)
 
         if seed is None:
             return
@@ -645,10 +707,12 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
             raise TypeError(f"{seed} is not a valid input for WalletBalances")
         for key, balances in seed:  # type: ignore
             if self.block != balances.block:
-                raise ValueError(f"These objects are not from the same block ({self.block} and {balances.block})")
+                raise ValueError(
+                    f"These objects are not from the same block ({self.block} and {balances.block})"
+                )
             self.__validateitem(key, balances)
-            self[key] += balances            
-        
+            self[key] += balances
+
     @property
     def assets(self) -> TokenBalances:
         """
@@ -657,8 +721,8 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         Returns:
             :class:`~eth_portfolio.typing.TokenBalances`: The :class:`~eth_portfolio.typing.TokenBalances` object representing the wallet's assets.
         """
-        return self['assets']  # type: ignore
-    
+        return self["assets"]  # type: ignore
+
     @property
     def debt(self) -> RemoteTokenBalances:
         """
@@ -667,8 +731,8 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         Returns:
             :class:`~eth_portfolio.typing.RemoteTokenBalances`: The :class:`~eth_portfolio.typing.RemoteTokenBalances` object representing the wallet's debts.
         """
-        return self['debt']
-    
+        return self["debt"]
+
     @property
     def external(self) -> RemoteTokenBalances:
         """
@@ -677,8 +741,8 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         Returns:
             :class:`~eth_portfolio.typing.RemoteTokenBalances`: The :class:`~eth_portfolio.typing.RemoteTokenBalances` object representing the wallet's external balances.
         """
-        return self['external']
-    
+        return self["external"]
+
     @property
     def dataframe(self) -> DataFrame:
         """
@@ -690,10 +754,10 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         dfs: List[DataFrame] = []
         for category, category_bals in self.items():
             df = category_bals.dataframe
-            df['category'] = category
+            df["category"] = category
             dfs.append(df)
         return concat(dfs).reset_index(drop=True) if dfs else DataFrame()
-    
+
     def sum_usd(self) -> Decimal:
         """
         Sums the USD values of the wallet's assets, debts, and external balances.
@@ -708,7 +772,7 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
             Decimal('2000')
         """
         return self.assets.sum_usd() - self.debt.sum_usd() + self.external.sum_usd()
-    
+
     def __bool__(self) -> bool:
         """
         Evaluates the truth value of the :class:`~eth_portfolio.typing.WalletBalances` object.
@@ -722,7 +786,7 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
             False
         """
         return any(self.values())
-    
+
     def __repr__(self) -> str:
         """
         Returns a string representation of the :class:`~eth_portfolio.typing.WalletBalances` object.
@@ -732,7 +796,7 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         """
         return f"WalletBalances {dict(self)}"
 
-    def __add__(self, other: 'WalletBalances') -> 'WalletBalances':
+    def __add__(self, other: "WalletBalances") -> "WalletBalances":
         """
         Adds another :class:`~eth_portfolio.typing.WalletBalances` object to this one.
 
@@ -755,7 +819,9 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         if not isinstance(other, WalletBalances):
             raise TypeError(f"{other} is not a WalletBalances object")
         if self.block != other.block:
-            raise ValueError(f"These WalletBalances objects are not from the same block ({self.block} and {other.block})")
+            raise ValueError(
+                f"These WalletBalances objects are not from the same block ({self.block} and {other.block})"
+            )
         # NOTE We need a new object to avoid mutating the inputs
         combined: WalletBalances = WalletBalances(block=self.block)
         for category, balances in self.items():
@@ -765,8 +831,8 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
             if balances:
                 combined[category] += balances
         return combined
-    
-    def __sub__(self, other: 'WalletBalances') -> 'WalletBalances':
+
+    def __sub__(self, other: "WalletBalances") -> "WalletBalances":
         """
         Subtracts another :class:`~eth_portfolio.typing.WalletBalances` object from this one.
 
@@ -789,7 +855,9 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         if not isinstance(other, WalletBalances):
             raise TypeError(f"{other} is not a WalletBalances object")
         if self.block != other.block:
-            raise ValueError(f"These WalletBalances objects are not from the same block ({self.block} and {other.block})")
+            raise ValueError(
+                f"These WalletBalances objects are not from the same block ({self.block} and {other.block})"
+            )
         # We need a new object to avoid mutating the inputs
         subtracted: WalletBalances = WalletBalances(self, block=self.block)
         for category, balances in other.items():
@@ -798,7 +866,7 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
             if not balances:
                 del subtracted[category]
         return subtracted
-    
+
     def __getitem__(self, key: CategoryLabel) -> Union[TokenBalances, RemoteTokenBalances]:
         """
         Retrieves the balance associated with the given category key.
@@ -821,7 +889,9 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         self.__validatekey(key)
         return super().__getitem__(key)
 
-    def __setitem__(self, key: CategoryLabel, value: Union[TokenBalances, RemoteTokenBalances]) -> None:
+    def __setitem__(
+        self, key: CategoryLabel, value: Union[TokenBalances, RemoteTokenBalances]
+    ) -> None:
         """
         Sets the balance associated with the given category key.
 
@@ -841,11 +911,11 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
         """
         self.__validateitem(key, value)
         return super().__setitem__(key, value)
-    
+
     def __validatekey(self, key: CategoryLabel) -> None:
         """
-        Validates that the given key is a valid category. 
-        
+        Validates that the given key is a valid category.
+
         Valid keys: "assets", "debt", "external"
 
         Args:
@@ -855,7 +925,9 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
             KeyError: If the key is not a valid category.
         """
         if key not in self._keys:
-            raise KeyError(f"{key} is not a valid key for WalletBalances. Valid keys are: {self._keys}")
+            raise KeyError(
+                f"{key} is not a valid key for WalletBalances. Valid keys are: {self._keys}"
+            )
 
     def __validateitem(self, key: CategoryLabel, item: Any) -> None:
         """
@@ -870,21 +942,26 @@ class WalletBalances(Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalance
             TypeError: If the item is not a valid balance type for the category.
         """
         self.__validatekey(key)
-        if key == 'assets':
+        if key == "assets":
             if not isinstance(item, TokenBalances):
-                raise TypeError(f'{item} is not a valid value for "{key}". Must be a TokenBalances object.')
-        elif key in ['debt', 'external']:
+                raise TypeError(
+                    f'{item} is not a valid value for "{key}". Must be a TokenBalances object.'
+                )
+        elif key in ["debt", "external"]:
             if not isinstance(item, RemoteTokenBalances):
-                raise TypeError(f'{item} is not a valid value for "{key}". Must be a RemoteTokenBalances object.')
+                raise TypeError(
+                    f'{item} is not a valid value for "{key}". Must be a RemoteTokenBalances object.'
+                )
         else:
-            raise NotImplementedError(f'key {key} is not yet implemented.')
+            raise NotImplementedError(f"key {key} is not yet implemented.")
 
 
 _PBSeed = Union[Dict[Address, WalletBalances], Iterable[Tuple[Address, WalletBalances]]]
 
+
 class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumericMixin):
     """
-    Aggregates :class:`~eth_portfolio.typing.WalletBalances` for multiple wallets, providing operations to sum 
+    Aggregates :class:`~eth_portfolio.typing.WalletBalances` for multiple wallets, providing operations to sum
     balances across an entire portfolio.
 
     The class uses wallet addresses as keys and :class:`~eth_portfolio.typing.WalletBalances` objects as values.
@@ -897,6 +974,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         >>> portfolio_balances['0x123']['assets']['0x456'].balance
         Decimal('100')
     """
+
     def __init__(self, seed: Optional[_PBSeed] = None, *, block: Optional[int] = None) -> None:
         super().__init__(lambda: WalletBalances(block=block))
         self.block = block
@@ -908,14 +986,18 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             raise TypeError(f"{seed} is not a valid input for PortfolioBalances")
         for wallet, balances in seed:
             if self.block != balances.block:
-                raise ValueError(f"These objects are not from the same block ({self.block} and {balances.block})")
+                raise ValueError(
+                    f"These objects are not from the same block ({self.block} and {balances.block})"
+                )
             self[wallet] += balances
-    
+
     def __setitem__(self, key, value):
         if not isinstance(value, WalletBalances):
-            raise TypeError(f'value must be a `WalletBalances` object. You passed {value}') from None
+            raise TypeError(
+                f"value must be a `WalletBalances` object. You passed {value}"
+            ) from None
         return super().__setitem__(key, value)
-    
+
     @property
     def dataframe(self) -> DataFrame:
         """
@@ -927,10 +1009,10 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         dfs: List[DataFrame] = []
         for wallet, balances in self.items():
             df = balances.dataframe
-            df['wallet'] = wallet
+            df["wallet"] = wallet
             dfs.append(df)
         return concat(dfs).reset_index(drop=True) if dfs else DataFrame()
-    
+
     def sum_usd(self) -> Decimal:
         """
         Sums the USD values of all wallet balances in the portfolio.
@@ -945,7 +1027,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             Decimal('2000')
         """
         return sum(balances.sum_usd() for balances in self.values())  # type: ignore
-    
+
     @cached_property
     def inverted(self) -> "PortfolioBalancesByCategory":
         """
@@ -966,7 +1048,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
                 if tbalances:
                     inverted[label][wallet] += tbalances
         return inverted
-    
+
     def __bool__(self) -> bool:
         """
         Evaluates the truth value of the :class:`~eth_portfolio.typing.PortfolioBalances` object.
@@ -989,8 +1071,8 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             The string representation of the portfolio balances.
         """
         return f"WalletBalances{dict(self)}"
-    
-    def __add__(self, other: 'PortfolioBalances') -> 'PortfolioBalances':
+
+    def __add__(self, other: "PortfolioBalances") -> "PortfolioBalances":
         """
         Adds another :class:`~eth_portfolio.typing.PortfolioBalances` object to this one.
 
@@ -1013,7 +1095,9 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         if not isinstance(other, PortfolioBalances):
             raise TypeError(f"{other} is not a PortfolioBalances object")
         if self.block != other.block:
-            raise ValueError(f"These PortfolioBalances objects are not from the same block ({self.block} and {other.block})")
+            raise ValueError(
+                f"These PortfolioBalances objects are not from the same block ({self.block} and {other.block})"
+            )
         # NOTE We need a new object to avoid mutating the inputs
         combined: PortfolioBalances = PortfolioBalances(block=self.block)
         for wallet, balance in self.items():
@@ -1023,8 +1107,8 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             if balance:
                 combined._setitem_nochecksum(wallet, combined._getitem_nochecksum(wallet) + balance)
         return combined
-    
-    def __sub__(self, other: 'PortfolioBalances') -> 'PortfolioBalances':
+
+    def __sub__(self, other: "PortfolioBalances") -> "PortfolioBalances":
         """
         Subtracts another :class:`~eth_portfolio.typing.PortfolioBalances` object from this one.
 
@@ -1047,7 +1131,9 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         if not isinstance(other, PortfolioBalances):
             raise TypeError(f"{other} is not a PortfolioBalances object")
         if self.block != other.block:
-            raise ValueError(f"These PortfolioBalances objects are not from the same block ({self.block} and {other.block})")
+            raise ValueError(
+                f"These PortfolioBalances objects are not from the same block ({self.block} and {other.block})"
+            )
         # We need a new object to avoid mutating the inputs
         subtracted: PortfolioBalances = PortfolioBalances(self, block=self.block)
         for protocol, balances in other.items():
@@ -1057,20 +1143,21 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
                 del subtracted[protocol]
         return subtracted
 
-    __slots__ = "block",
+    __slots__ = ("block",)
 
 
 _WTBInput = Union[Dict[Address, TokenBalances], Iterable[Tuple[Address, TokenBalances]]]
 
-class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericMixin):
-    #Since PortfolioBalances key lookup is:    ``wallet   -> category -> token    -> balance``
-    #We need a new structure for key pattern:  ``wallet   -> token    -> balance``
 
-    #WalletBalancesRaw fills this role.
+class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericMixin):
+    # Since PortfolioBalances key lookup is:    ``wallet   -> category -> token    -> balance``
+    # We need a new structure for key pattern:  ``wallet   -> token    -> balance``
+
+    # WalletBalancesRaw fills this role.
     """
     A structure for key pattern `wallet -> token -> balance`.
 
-    This class is similar to :class:`~eth_portfolio.typing.WalletBalances` but optimized for key lookups by wallet and token directly. 
+    This class is similar to :class:`~eth_portfolio.typing.WalletBalances` but optimized for key lookups by wallet and token directly.
     It manages :class:`~eth_portfolio.typing.TokenBalances` objects for multiple wallets.
 
     Args:
@@ -1080,7 +1167,8 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
         >>> raw_balances = WalletBalancesRaw({'0x123': TokenBalances({'0x456': Balance(Decimal('100'), Decimal('2000'))})})
         >>> raw_balances['0x123']['0x456'].balance
         Decimal('100')
-    """ 
+    """
+
     def __init__(self, seed: Optional[_WTBInput] = None, *, block: Optional[int] = None) -> None:
         super().__init__(lambda: TokenBalances(block=block))
         self.block = block
@@ -1092,9 +1180,11 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
             raise TypeError(f"{seed} is not a valid input for WalletBalancesRaw")
         for wallet, balances in seed:
             if self.block != balances.block:
-                raise ValueError(f"These objects are not from the same block ({self.block} and {balances.block})")
+                raise ValueError(
+                    f"These objects are not from the same block ({self.block} and {balances.block})"
+                )
             self[wallet] += balances
-    
+
     def __bool__(self) -> bool:
         """
         Evaluates the truth value of the :class:`~eth_portfolio.typing.WalletBalancesRaw` object.
@@ -1117,8 +1207,8 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
             The string representation of the raw wallet balances.
         """
         return f"WalletBalances{dict(self)}"
-    
-    def __add__(self, other: 'WalletBalancesRaw') -> 'WalletBalancesRaw':
+
+    def __add__(self, other: "WalletBalancesRaw") -> "WalletBalancesRaw":
         """
         Adds another :class:`~eth_portfolio.typing.WalletBalancesRaw` object to this one.
 
@@ -1141,7 +1231,9 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
         if not isinstance(other, WalletBalancesRaw):
             raise TypeError(f"{other} is not a WalletBalancesRaw object")
         if self.block != other.block:
-            raise ValueError(f"These WalletBalancesRaw objects are not from the same block ({self.block} and {other.block})")
+            raise ValueError(
+                f"These WalletBalancesRaw objects are not from the same block ({self.block} and {other.block})"
+            )
         # NOTE We need a new object to avoid mutating the inputs
         combined: WalletBalancesRaw = WalletBalancesRaw(block=self.block)
         for wallet, balance in self.items():
@@ -1151,8 +1243,8 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
             if balance:
                 combined._setitem_nochecksum(wallet, combined._getitem_nochecksum(wallet) + balance)
         return combined
-    
-    def __sub__(self, other: 'WalletBalancesRaw') -> 'WalletBalancesRaw':
+
+    def __sub__(self, other: "WalletBalancesRaw") -> "WalletBalancesRaw":
         """
         Subtracts another :class:`~eth_portfolio.typing.WalletBalancesRaw` object from this one.
 
@@ -1175,7 +1267,9 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
         if not isinstance(other, WalletBalancesRaw):
             raise TypeError(f"{other} is not a WalletBalancesRaw object")
         if self.block != other.block:
-            raise ValueError(f"These WalletBalancesRaw objects are not from the same block ({self.block} and {other.block})")
+            raise ValueError(
+                f"These WalletBalancesRaw objects are not from the same block ({self.block} and {other.block})"
+            )
         # NOTE We need a new object to avoid mutating the inputs
         subtracted: WalletBalancesRaw = WalletBalancesRaw(self, block=other.block)
         for wallet, balances in other.items():
@@ -1186,17 +1280,22 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
                 del subtracted[wallet]
         return subtracted
 
-    __slots__ = "block",
-    
+    __slots__ = ("block",)
 
-_CBInput = Union[Dict[CategoryLabel, WalletBalancesRaw], Iterable[Tuple[CategoryLabel, WalletBalancesRaw]]]
 
-class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw], _SummableNonNumericMixin):
+_CBInput = Union[
+    Dict[CategoryLabel, WalletBalancesRaw], Iterable[Tuple[CategoryLabel, WalletBalancesRaw]]
+]
+
+
+class PortfolioBalancesByCategory(
+    DefaultDict[CategoryLabel, WalletBalancesRaw], _SummableNonNumericMixin
+):
     """
-    Provides an inverted view of :class:`~eth_portfolio.typing.PortfolioBalances`, allowing access by category first, 
+    Provides an inverted view of :class:`~eth_portfolio.typing.PortfolioBalances`, allowing access by category first,
     then by wallet and token.
 
-    The class uses category labels as keys (`assets`, `debt`, `external`) and :class:`~eth_portfolio.typing.WalletBalancesRaw` 
+    The class uses category labels as keys (`assets`, `debt`, `external`) and :class:`~eth_portfolio.typing.WalletBalancesRaw`
     objects as values.
 
     Args:
@@ -1206,7 +1305,8 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
         >>> pb_by_category = PortfolioBalancesByCategory({'assets': WalletBalancesRaw({'0x123': TokenBalances({'0x456': Balance(Decimal('100'), Decimal('2000'))})})})
         >>> pb_by_category['assets']['0x123']['0x456'].balance
         Decimal('100')
-    """ 
+    """
+
     def __init__(self, seed: Optional[_CBInput] = None, *, block: Optional[int] = None) -> None:
         super().__init__(lambda: WalletBalancesRaw(block=block))
         self.block = block
@@ -1218,7 +1318,9 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
             raise TypeError(f"{seed} is not a valid input for PortfolioBalancesByCategory")
         for label, balances in seed:  # type: ignore
             if self.block != balances.block:
-                raise ValueError(f"These objects are not from the same block ({self.block} and {balances.block})")
+                raise ValueError(
+                    f"These objects are not from the same block ({self.block} and {balances.block})"
+                )
             self[label] += balances
 
     @property
@@ -1229,8 +1331,8 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
         Returns:
             :class:`~eth_portfolio.typing.WalletBalancesRaw`: The :class:`~eth_portfolio.typing.WalletBalancesRaw` object representing the asset balances.
         """
-        return self['assets']
-    
+        return self["assets"]
+
     @property
     def debt(self) -> WalletBalancesRaw:
         """
@@ -1239,8 +1341,8 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
         Returns:
             :class:`~eth_portfolio.typing.WalletBalancesRaw`: The :class:`~eth_portfolio.typing.WalletBalancesRaw` object representing the debt balances.
         """
-        return self['debt']
-    
+        return self["debt"]
+
     def invert(self) -> "PortfolioBalances":
         """
         Inverts the portfolio balances by category to group by wallet first.
@@ -1260,7 +1362,7 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
                 if tbalances:
                     inverted[wallet][label] += tbalances
         return inverted
-    
+
     def __bool__(self) -> bool:
         """
         Evaluates the truth value of the :class:`~eth_portfolio.typing.PortfolioBalancesByCategory` object.
@@ -1283,8 +1385,8 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
             The string representation of the portfolio balances by category.
         """
         return f"PortfolioBalancesByCategory{dict(self)}"
-    
-    def __add__(self, other: 'PortfolioBalancesByCategory') -> 'PortfolioBalancesByCategory':
+
+    def __add__(self, other: "PortfolioBalancesByCategory") -> "PortfolioBalancesByCategory":
         """
         Adds another :class:`~eth_portfolio.typing.PortfolioBalancesByCategory` object to this one.
 
@@ -1307,7 +1409,9 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
         if not isinstance(other, PortfolioBalancesByCategory):
             raise TypeError(f"{other} is not a PortfolioBalancesByCategory object")
         if self.block != other.block:
-            raise ValueError(f"These PortfolioBalancesByCategory objects are not from the same block ({self.block} and {other.block})")
+            raise ValueError(
+                f"These PortfolioBalancesByCategory objects are not from the same block ({self.block} and {other.block})"
+            )
         # NOTE We need a new object to avoid mutating the inputs
         combined: PortfolioBalancesByCategory = PortfolioBalancesByCategory(block=self.block)
         for protocol, balances in self.items():
@@ -1317,8 +1421,8 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
             if balances:
                 combined[protocol] += balances
         return combined
-    
-    def __sub__(self, other: 'PortfolioBalancesByCategory') -> 'PortfolioBalancesByCategory':
+
+    def __sub__(self, other: "PortfolioBalancesByCategory") -> "PortfolioBalancesByCategory":
         """
         Subtracts another :class:`~eth_portfolio.typing.PortfolioBalancesByCategory` object from this one.
 
@@ -1341,9 +1445,13 @@ class PortfolioBalancesByCategory(DefaultDict[CategoryLabel, WalletBalancesRaw],
         if not isinstance(other, PortfolioBalancesByCategory):
             raise TypeError(f"{other} is not a PortfolioBalancesByCategory object")
         if self.block != other.block:
-            raise ValueError(f"These PortfolioBalancesByCategory objects are not from the same block ({self.block} and {other.block})")
+            raise ValueError(
+                f"These PortfolioBalancesByCategory objects are not from the same block ({self.block} and {other.block})"
+            )
         # NOTE We need a new object to avoid mutating the inputs
-        subtracted: PortfolioBalancesByCategory = PortfolioBalancesByCategory(self, block=self.block)
+        subtracted: PortfolioBalancesByCategory = PortfolioBalancesByCategory(
+            self, block=self.block
+        )
         for protocol, balances in other.items():
             subtracted[protocol] -= balances
         for protocol, balances in subtracted.items():
