@@ -37,6 +37,7 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
 
     @property
     def _start_block(self) -> int:
+        """Returns the start block for analysis of this portfolio."""
         return self.portfolio._start_block
 
     def _get_and_yield(self, start_block: int, end_block: int) -> AsyncIterator[T]:
@@ -53,6 +54,25 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
 
     @set_end_block_if_none
     async def get(self, start_block: Block, end_block: Block) -> Dict[Address, _LedgerEntryList]:
+        """
+        Fetches ledger entries for all portfolio addresses within the specified block range.
+
+        Args:
+            start_block: The starting block number for the query.
+            end_block: The ending block number for the query.
+
+        Returns:
+            A dictionary mapping each portfolio address to its corresponding ledger entries within the specified block range.
+
+        Note:
+            The @set_end_block_if_none decorator ensures that if end_block is not provided,
+            it defaults to the latest block.
+
+        Example:
+            >>> ledger = PortfolioTransactionsLedger(portfolio=portfolio)
+            >>> ledger_entries = await ledger.get(start_block=1000000, end_block=1100000)
+            >>> print("\n".join(f"Address {addr}: {len(entries)} entries" for addr, entries in ledger_entries.items()))
+        """
         coros = {
             address: cache.get(start_block, end_block, sync=False)
             for address, cache in self.object_caches.items()
@@ -71,20 +91,72 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
         return df
 
     async def _df_base(self, start_block: Block, end_block: Block) -> DataFrame:
+        """
+        Fetches and concatenates raw ledger data into a :class:`~DataFrame` for all addresses in the portfolio.
+
+        This method is a crucial part of the data processing pipeline, as it:
+        - Retrieves ledger entries for the specified block range across all portfolio addresses.
+        - Combines the data from multiple addresses into a single DataFrame.
+        - Serves as the foundation for further data cleaning and analysis.
+
+        Args:
+            start_block: The starting block number for the query.
+            end_block: The ending block number for the query.
+
+        Returns:
+            DataFrame: A concatenated DataFrame containing raw ledger entries from all addresses.
+
+        Example:
+            >>> df_base = await ledger._df_base(start_block=1000000, end_block=1100000)
+            >>> print(f"Total entries: {len(df_base)}", df_base.head(), sep="\n")
+
+        Note:
+            This method returns raw data that may contain duplicates or require further processing.
+            For cleaned and deduplicated data, use the `df()` method instead.
+        """
         data: Dict[Address, _LedgerEntryList] = await self.get(start_block, end_block, sync=False)
         return concat(pandable.df for pandable in data.values())
 
     @classmethod
     def _deduplicate_df(cls, df: DataFrame) -> DataFrame:
         """
-        Deduplicate the dataframe so transfers sending crypto to yourself are not double counted
-        NOTE: This can be overridden if needed.
+        Deduplicate the DataFrame to prevent double-counting of transfers within the portfolio.
+
+        This method is crucial for ensuring accurate portfolio analysis by removing duplicate entries
+        where transfers between owned addresses appear once in each result set.
+
+        Note:
+            - This method can be overridden in subclasses if needed.
+            - If the DataFrame contains columns with list-type values, they are converted to strings for comparison.
+
+        Args:
+            df: The DataFrame to deduplicate.
+
+        Returns:
+            A deduplicated version of the input DataFrame.
+
+        Example:
+            >>> original_df = pd.DataFrame(...)  # Your original DataFrame
+            >>> deduped_df = PortfolioLedgerBase._deduplicate_df(original_df)
+            >>> print(f"Original rows: {len(original_df)}, Deduplicated rows: {len(deduped_df)}")
         """
-        # If there is a value of list type in the DataFrame, it must be converted to a string for comparison.
         return df.loc[df.astype(str).drop_duplicates().index]
 
     @classmethod
     def _cleanup_df(cls, df: DataFrame) -> DataFrame:
+        """
+        Cleans up the DataFrame by deduplicating and sorting it by block number.
+
+        Args:
+            df: The DataFrame to clean up.
+
+        Returns:
+            A cleaned and deduplicated DataFrame sorted by block number.
+
+        Example:
+            >>> cleaned_df = ledger._cleanup_df(df)
+            >>> print(cleaned_df)
+        """
         df = cls._deduplicate_df(df)
         return df.sort_values(["blockNumber"]).reset_index(drop=True)
 
@@ -104,7 +176,20 @@ class PortfolioInternalTransfersLedger(
 
     @set_end_block_if_none
     async def df(self, start_block: Block, end_block: Block) -> DataFrame:
-        """Returns a DataFrame containing all internal transfers to or from any of the wallets in your portfolio."""
+        """
+        Returns a DataFrame containing all internal transfers to or from any of the addresses in the portfolio.
+
+        Args:
+            start_block: The starting block for the query.
+            end_block: The ending block for the query.
+
+        Returns:
+            A DataFrame containing processed internal transfer entries.
+
+        Example:
+            >>> df = await ledger.df(start_block=10000000, end_block=12000000)
+            >>> print(df)
+        """
         df = await self._df_base(start_block, end_block)
         if len(df) > 0:
             df.rename(
