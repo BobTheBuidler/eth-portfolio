@@ -427,7 +427,21 @@ trace_filter = a_sync.Semaphore(64, __name__ + ".trace_semaphore")(
     eth_retry.auto_retry(dank_mids.eth.trace_filter)
 )
 
-get_transaction_status = alru_cache(maxsize=None)(dank_mids.eth.get_transaction_status)
+
+@alru_cache(maxsize=None)
+async def get_transaction_status(txhash: str) -> Status:
+    """
+    Retrieves the status for a transaction.
+
+    This function is cached to disk to reduce resource usage.
+
+    Args:
+        txhash: The hash of the transaction.
+    
+    Returns:
+        The status of the transaction.
+    """
+    return await dank_mids.eth.get_transaction_status(txhash)
 
 
 @cache_to_disk
@@ -436,6 +450,8 @@ get_transaction_status = alru_cache(maxsize=None)(dank_mids.eth.get_transaction_
 async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     """
     Retrieves traces from the web3 provider using the given parameters.
+
+    This function is cached to disk to reduce resource usage.
 
     Args:
         filter_params: The parameters for the trace filter.
