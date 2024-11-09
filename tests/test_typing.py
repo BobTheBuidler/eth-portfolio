@@ -1,6 +1,7 @@
-from decimal import Decimal
-
 import pytest
+from pandas import DataFrame
+
+from eth_portfolio._decimal import Decimal
 from eth_portfolio.typing import (
     Balance,
     PortfolioBalances,
@@ -10,7 +11,6 @@ from eth_portfolio.typing import (
     WalletBalances,
     WalletBalancesRaw,
 )
-from pandas import DataFrame
 
 # Define constants for Ethereum addresses
 ADDRESS_1 = "0x0000000000000000000000000000000000000001"
