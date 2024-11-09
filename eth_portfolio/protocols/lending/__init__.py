@@ -36,7 +36,7 @@ async def collateral(address: Address, block: Optional[Block] = None) -> RemoteT
 @stuck_coro_debugger
 async def debt(address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
     if not protocols:
-        return RemoteTokenBalances()
+        return RemoteTokenBalances(block=block)
     protocol_debts = a_sync.map(
         lambda protocol: protocol.debt(address, block),
         protocols,

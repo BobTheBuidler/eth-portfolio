@@ -16,7 +16,7 @@ protocols: List[StakingPoolABC] = _get_protocols_for_submodule()  # type: ignore
 @a_sync.future
 async def balances(address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
     if not protocols:
-        return RemoteTokenBalances()
+        return RemoteTokenBalances(block=block)
     protocol_balances = a_sync.map(
         lambda protocol: protocol.balances(address, block),
         protocols,
