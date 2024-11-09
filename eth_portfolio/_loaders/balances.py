@@ -1,3 +1,24 @@
+"""
+This module provides an asynchronous helper function for fetching ERC20 token balances with USD values.
+
+Key features:
+- Fetches ERC20 token balances for specified addresses and blocks
+- Calculates USD values based on current token prices
+- Handles non-standard ERC20 tokens gracefully
+- Implements automatic retries for network-related issues
+- Uses efficient async operations for improved performance
+
+Main Classes and Functions:
+- :func:`~eth_portfolio.loaders.balances.load_token_balance`: Fetches ERC20 token balance and USD value.
+
+Example:
+    >>> import asyncio
+    >>> async def main():
+    ...     dai_balance = await load_token_balance(token=dai_contract, address='0x5678...', block=12345678)
+    ...     print(f"ETH: {eth_balance.balance} (${eth_balance.value}), DAI: {dai_balance.balance} (${dai_balance.value})")
+    >>> asyncio.run(main())
+"""
+
 import logging
 from decimal import InvalidOperation
 
