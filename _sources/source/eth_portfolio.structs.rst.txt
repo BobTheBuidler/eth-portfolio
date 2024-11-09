@@ -1,0 +1,29 @@
+eth\_portfolio.structs package
+==============================
+
+Submodules
+----------
+
+eth\_portfolio.structs.modified module
+--------------------------------------
+
+.. automodule:: eth_portfolio.structs.modified
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+eth\_portfolio.structs.structs module
+-------------------------------------
+
+.. automodule:: eth_portfolio.structs.structs
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: eth_portfolio.structs
+   :members:
+   :undoc-members:
+   :show-inheritance:
