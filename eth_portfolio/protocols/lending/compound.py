@@ -83,7 +83,9 @@ class Compound(LendingProtocol):
         }:
             async for underlying, price in map_prices(debts, block=block):
                 debt = debts.pop(underlying)
-                balances[underlying] += Balance(debt, debt * Decimal(price))
+                balances[underlying] += Balance(
+                    debt, debt * Decimal(price), token=underlying.address, block=block
+                )
         return balances
 
 

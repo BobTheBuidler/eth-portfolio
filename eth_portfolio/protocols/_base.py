@@ -102,5 +102,7 @@ class SingleTokenStakingPoolABC(StakingPoolABC, metaclass=abc.ABCMeta):
             if balance:
                 scale, price = await asyncio.gather(self.scale, self.price(block, sync=False))
                 balance /= scale  # type: ignore
-                balances[self.token.address] = Balance(balance, balance * Decimal(price))
+                balances[self.token.address] = Balance(
+                    balance, balance * Decimal(price), token=self.token.address, block=block
+                )
         return balances

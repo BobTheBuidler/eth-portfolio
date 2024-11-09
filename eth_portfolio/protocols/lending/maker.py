@@ -9,8 +9,7 @@ from y.contracts import Contract
 from y.datatypes import Address, Block
 
 from eth_portfolio._utils import Decimal
-from eth_portfolio.protocols.lending._base import \
-    LendingProtocolWithLockedCollateral
+from eth_portfolio.protocols.lending._base import LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import Balance, TokenBalances
 
 try:

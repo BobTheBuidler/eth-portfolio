@@ -6,8 +6,7 @@ from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
 
-from eth_portfolio.protocols.lending._base import \
-    LendingProtocolWithLockedCollateral
+from eth_portfolio.protocols.lending._base import LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import Balance, TokenBalances
 
 lusd = "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0"
@@ -35,7 +34,9 @@ class Liquity(LendingProtocolWithLockedCollateral):
         if eth_collateral_balance:
             eth_collateral_balance /= 10**18
             value = eth_collateral_balance * await get_price(EEE_ADDRESS, block, sync=False)
-            balances[EEE_ADDRESS] = Balance(eth_collateral_balance, value)
+            balances[EEE_ADDRESS] = Balance(
+                eth_collateral_balance, value, token=EEE_ADDRESS, block=block
+            )
         return balances
 
     @stuck_coro_debugger
