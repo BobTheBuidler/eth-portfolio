@@ -1,38 +1,31 @@
-
 import logging
-from decimal import Decimal, InvalidOperation
-from typing import Optional
+from decimal import InvalidOperation
 
-import dank_mids
-import eth_retry
-from y import ERC20, NonStandardERC20, get_price
+import y
 from y._decorators import stuck_coro_debugger
-from y.constants import WRAPPED_GAS_COIN
 from y.datatypes import Address, Block
 
+from eth_portfolio._decimal import Decimal
 from eth_portfolio._utils import _get_price
 from eth_portfolio.typing import Balance
 
 logger = logging.getLogger(__name__)
 
-@eth_retry.auto_retry
-@stuck_coro_debugger
-async def load_eth_balance(address: Address, block: Optional[Block]) -> Balance:
-    balance = Decimal(await dank_mids.eth.get_balance(address, block_identifier=block)) / Decimal(10**18)
-    value = round(balance * Decimal(await get_price(WRAPPED_GAS_COIN, block, sync=False) if balance else 0), 18)
-    return Balance(balance, value)
 
 @stuck_coro_debugger
-async def load_token_balance(token: ERC20, address: Address, block: Block) -> Balance:
+async def load_token_balance(token: y.ERC20, address: Address, block: Block) -> Balance:
     try:
         balance = await token.balance_of_readable(address, block, sync=False)
-    except NonStandardERC20:
+    except y.NonStandardERC20:
         logger.warning("NonStandardERC20 exc for %s", token)
         balance = 0
     if not balance:
-        return Balance()
+        return Balance(token=token.address, block=block)
     price = await _get_price(token, block)
-    return Balance(round(Decimal(balance), 18), _calc_value(balance, price))
+    return Balance(
+        round(Decimal(balance), 18), _calc_value(balance, price), token=token.address, block=block
+    )
+
 
 def _calc_value(balance, price) -> Decimal:
     if price is None:

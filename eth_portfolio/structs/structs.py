@@ -7,7 +7,6 @@ The classes are designed to provide a consistent and flexible interface for work
 import logging
 from functools import cached_property
 from typing import (
-    TYPE_CHECKING,
     Any,
     ClassVar,
     Dict,
@@ -20,21 +19,23 @@ from typing import (
     final,
 )
 
+import evmspec
 from brownie import chain
-from dank_mids.structs.trace import Type
 from dictstruct import DictStruct
-from evmspec import FilterTrace, Transaction1559, Transaction2930, TransactionLegacy
-from evmspec.data import Address
+from evmspec.data import Address, BlockHash, TransactionHash, Wei
+from evmspec.trace import reward
 from evmspec.transaction import AccessListEntry
 from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
+from y._db.log import Log
+from y._decorators import stuck_coro_debugger
+from y.constants import EEE_ADDRESS
 from y.datatypes import Block
 
 from eth_portfolio._decimal import Decimal
-
-if TYPE_CHECKING:
-    from y._db.utils.logs import ArrayEncodableLog
+from eth_portfolio._utils import _get_price
+from eth_portfolio.structs.modified import ModifiedTrace, _modified_trace_type_map
 
 
 logger = logging.getLogger(__name__)
@@ -50,7 +51,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
     """
 
     @property
-    def _evm_object(self) -> Union["Transaction", "InternalTransfer", "TokenTransfer"]:
+    def _evm_object(self) -> Union[evmspec.Transaction, evmspec.FilterTrace, Log]:
         """
         The EVM object associated with {cls_name}, exactly as it was received from the RPC.
         """
@@ -92,29 +93,6 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
                 attr.__doc__ = attr.__doc__.replace("{cls_name}", cls.__name__)
 
 
-class ArrayEncodableTransactionLegacy(TransactionLegacy, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):  # type: ignore [call-arg]
-    ...
-
-
-class ArrayEncodableTransaction2930(Transaction2930, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):  # type: ignore [call-arg]
-    ...
-
-
-class ArrayEncodableTransaction1559(Transaction1559, array_like=True, frozen=True, kw_only=True, forbid_unknown_fields=True):  # type: ignore [call-arg]
-    ...
-
-
-ArrayEncodableTransaction = Union[
-    ArrayEncodableTransactionLegacy, ArrayEncodableTransaction2930, ArrayEncodableTransaction1559
-]
-
-_types_mapping = {
-    TransactionLegacy: ArrayEncodableTransactionLegacy,
-    Transaction2930: ArrayEncodableTransaction2930,
-    Transaction1559: ArrayEncodableTransaction1559,
-}
-
-
 def _get_init_kwargs(original_struct: Struct) -> Dict[str, Any]:
     kwargs = {}
     for key in original_struct.__struct_fields__:
@@ -125,8 +103,7 @@ def _get_init_kwargs(original_struct: Struct) -> Dict[str, Any]:
     return kwargs
 
 
-@final
-class Transaction(
+class _TransactionBase(
     _LedgerEntryBase,
     kw_only=True,
     frozen=True,
@@ -143,7 +120,7 @@ class Transaction(
     including gas parameters, signature components, and transaction-specific data.
 
     Example:
-        >>> tx = Transaction(tx=ArrayEncodableTransaction1559(...))
+        >>> tx = Transaction(tx=Transaction1559(...))
         >>> tx.chainid
         Network.Mainnet
         >>> tx.type
@@ -160,38 +137,26 @@ class Transaction(
     @classmethod
     def from_rpc_response(
         cls,
-        transaction: Union[TransactionLegacy, Transaction2930, Transaction1559],
+        transaction: evmspec.Transaction,
         *,
         price: Optional[Decimal] = None,
         value_usd: Optional[Decimal] = None,
     ) -> "Transaction":
-        try:
-            new_type = _types_mapping[type(transaction)]
-        except KeyError as e:
-            raise TypeError(type(transaction), transaction) from e
-        try:
-            return cls(
-                transaction=new_type(**_get_init_kwargs(transaction)),
-                price=price,
-                value_usd=value_usd,
-            )
-        except TypeError as e:  # NOTE keep this around later to help in case new fields are added
-            raise TypeError(*e.args, new_type.__qualname__, {**transaction}) from e
-
-    transaction: ArrayEncodableTransaction
-    """
-    The transaction object received by calling eth_getTransactionByHash.
-    """
+        return cls(
+            transaction=transaction,
+            price=price,
+            value_usd=value_usd,
+        )
 
     @property
-    def hash(self) -> HexBytes:
+    def hash(self) -> TransactionHash:
         """
         The unique transaction hash.
         """
         return self.transaction.hash
 
     @property
-    def block_hash(self) -> HexBytes:
+    def block_hash(self) -> BlockHash:
         """
         The hash of the block that includes this Transaction.
         """
@@ -239,7 +204,7 @@ class Transaction(
         """
         The value/amount of cryptocurrency transferred in the transaction, scaled to a human-readable decimal value.
         """
-        return self.transaction.value.scaled
+        return Wei(self.transaction.value).scaled
 
     @property
     def gas(self) -> int:
@@ -311,9 +276,45 @@ class Transaction(
         """
         return self.transaction.yParity
 
+    @property
+    def __db_primary_key__(self):
+        return {"from_address": (chain.id, self.from_address), "nonce": self.nonce}
 
-class ArrayEncodableFilterTrace(FilterTrace, frozen=True, kw_only=True, array_like=True, forbid_unknown_fields=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
-    ...
+
+@final
+class Transaction(
+    _TransactionBase,
+    kw_only=True,
+    frozen=True,
+    array_like=True,
+    forbid_unknown_fields=True,
+    omit_defaults=True,
+    repr_omit_defaults=True,
+    dict=True,
+):
+
+    transaction: evmspec.Transaction
+    """
+    The transaction object received by calling eth_getTransactionByHash.
+    """
+
+
+@final
+class TransactionRLP(
+    _TransactionBase,
+    kw_only=True,
+    frozen=True,
+    array_like=True,
+    forbid_unknown_fields=True,
+    omit_defaults=True,
+    repr_omit_defaults=True,
+    dict=True,
+):
+
+    transaction: evmspec.TransactionRLP
+    """
+    The transaction object received by calling eth_getTransactionByHash.
+    """
 
 
 @final
@@ -334,7 +335,7 @@ class InternalTransfer(
     the execution of a single transaction.
 
     Example:
-        >>> internal_tx = InternalTransfer(trace=ArrayEncodableFilterTrace(...), ...)
+        >>> internal_tx = InternalTransfer(trace=evmspec.FilterTrace(...), ...)
         >>> internal_tx.type
         'call'
         >>> internal_tx.trace_address
@@ -343,18 +344,54 @@ class InternalTransfer(
         21000
     """
 
-    @classmethod
-    def from_trace(
-        cls,
-        trace: FilterTrace,
-        price: Optional[Decimal] = None,
-        value_usd: Optional[Decimal] = None,
-    ) -> "InternalTransfer":
-        return cls(
-            trace=ArrayEncodableFilterTrace(**_get_init_kwargs(trace)),
-            price=price,
-            value_usd=value_usd,
-        )
+    @staticmethod
+    @stuck_coro_debugger
+    async def from_trace(trace: evmspec.FilterTrace, load_prices: bool) -> "InternalTransfer":
+        """
+        Asynchronously processes a raw internal transfer dictionary into an InternalTransfer object.
+
+        This function is the core of the internal transfer processing pipeline. It handles
+        various types of transfers, including special cases like block and uncle rewards.
+        It also filters out certain transfers (e.g., to Gnosis Safe Singleton) and verifies
+        transaction success for non-reward transfers.
+
+        The function performs several data transformations:
+        - Value and gas conversions
+        - Optional USD price loading
+        - Field standardization
+
+        Args:
+            transfer: A dictionary containing the raw internal transfer data. Expected to have keys such as
+                    'type', 'transactionHash', 'blockNumber', 'from', 'to', 'value', 'gas', 'gasUsed', 'traceAddress'.
+            load_prices: Flag to determine whether to load USD prices for the transfer value.
+
+        Returns:
+            A processed InternalTransfer object.
+
+        Example:
+            >>> transfer = {"type": "call", "transactionHash": "0x123...", "blockNumber": 15537393, "from": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "to": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", "value": "0x10", "gas": "0x5208", "gasUsed": "0x5208", "traceAddress": [0]}
+            >>> internal_tx = await load_internal_transfer(transfer=transfer, load_prices=True); print(internal_tx)
+
+        Note:
+            - Transfers to the Gnosis Safe Singleton (0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552) are filtered out
+            as they typically don't represent actual value transfers.
+            - The `traceAddress` is converted to a string for consistent representation across different scenarios.
+            - For block and uncle rewards, `gas` is set to 0 as these are not regular transactions.
+            - When loading prices, the `EEE_ADDRESS` constant is used, which represents the native currency of the chain.
+
+        Integration with eth_portfolio ecosystem:
+            - Uses the InternalTransfer struct from eth_portfolio.structs for standardized output.
+            - Utilizes utility functions from eth_portfolio._loaders.utils and eth_portfolio._utils.
+            - Interacts with the global 'chain' object from the brownie library for chain ID.
+        """
+
+        modified_cls = _modified_trace_type_map[type(trace)]
+        args = {"trace": modified_cls(**_get_init_kwargs(trace))}
+        if load_prices:
+            price = await _get_price(EEE_ADDRESS, trace.block)
+            args["price"] = price
+            args["value_usd"] = round(trace.action.value.scaled * price, 18)
+        return InternalTransfer(**args)
 
     entry_type: ClassVar[Literal["internal_transfer"]] = "internal_transfer"
     """
@@ -362,10 +399,10 @@ class InternalTransfer(
     """
 
     @property
-    def _evm_object(self) -> ArrayEncodableFilterTrace:
+    def _evm_object(self) -> ModifiedTrace:
         return self.trace
 
-    trace: ArrayEncodableFilterTrace
+    trace: ModifiedTrace
     """
     The raw trace object associated with this internal transfer.
     """
@@ -391,7 +428,7 @@ class InternalTransfer(
         """
         return (
             f"{self.trace.action.rewardType.name} reward"
-            if self.trace.type == Type.reward
+            if isinstance(self.trace, reward.Trace)
             else self.trace.transactionHash
         )
 
@@ -403,12 +440,13 @@ class InternalTransfer(
         return self.trace.action.sender
 
     @property
-    def to_address(self) -> Address:
+    def to_address(self) -> Optional[Address]:
         """
         The address to which the internal transfer was sent, if applicable.
         """
+        action = self.trace.action
         # NOTE: for block reward transfers, the recipient is 'author'
-        return self.trace.action.author if self.trace.type == Type.reward else self.trace.action.to
+        return action.author if isinstance(action, reward.Action) else action.to
 
     @property
     def value(self) -> Decimal:
@@ -418,7 +456,7 @@ class InternalTransfer(
         return self.trace.action.value.scaled
 
     @property
-    def type(self) -> Type:
+    def type(self) -> Literal["call", "create", "reward", "suicide"]:
         return self.trace.type
 
     @property
@@ -440,7 +478,7 @@ class InternalTransfer(
         """
         The amount of gas allocated for this internal operation.
         """
-        return 0 if self.trace.type == Type.reward else self.trace.action.gas
+        return 0 if isinstance(self.trace, reward.Trace) else self.trace.action.gas
 
     @property
     def gas_used(self) -> int:
@@ -537,21 +575,21 @@ class TokenTransfer(
     Constant indicating this value transfer is a token transfer entry.
     """
 
-    log: "ArrayEncodableLog"
+    log: Log
     """
     The log associated with this token transfer.
     """
 
     @property
     def from_address(self) -> Address:
-        return Address.checksum(self.log.topic1[-20:])
+        return self.log.topic1.as_address
 
     @property
     def to_address(self) -> Address:
-        return Address.checksum(self.log.topic2[-20:])
+        return self.log.topic2.as_address
 
     @property
-    def _evm_object(self) -> "ArrayEncodableLog":
+    def _evm_object(self) -> Log:
         return self.log
 
     transaction_index: int

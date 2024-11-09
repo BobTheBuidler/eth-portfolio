@@ -1,21 +1,26 @@
 import asyncio
 import logging
 from contextlib import suppress
-from decimal import Decimal
 from functools import lru_cache
-from typing import Dict, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple, Union
 
+import evmspec
+import y._db.common
 import y._db.config as config
 from a_sync import a_sync
 from brownie import chain
-from msgspec import json
+from evmspec.data import _decode_hook
+from msgspec import ValidationError, json
 from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush, select
+from y.exceptions import reraise_excs_with_extra_context
 
 from eth_portfolio._db import entities
 from eth_portfolio._db.decorators import break_locks, requery_objs_on_diff_tx_err
 from eth_portfolio._db.entities import db
-from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
+from eth_portfolio._decimal import Decimal
+from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction, TransactionRLP
+from eth_portfolio.typing import _P, _T, Fn
 
 logger = logging.getLogger(__name__)
 
@@ -34,10 +39,10 @@ try:
     db.generate_mapping(create_tables=True)
 except OperationalError as e:
     if not str(e).startswith("no such column:"):
-        raise e
+        raise
     raise OperationalError(
         "Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script"
-    )
+    ) from e
 
 from y._db.decorators import a_sync_write_db_session_cached, retry_locked
 from y._db.entities import Address, Block, Chain, Contract, Token, insert
@@ -51,7 +56,9 @@ from y.constants import EEE_ADDRESS
 from y.exceptions import NonStandardERC20
 from y.contracts import is_contract
 
-robust_db_session = lambda callable: retry_locked(break_locks(db_session(callable)))
+
+def robust_db_session(fn: Fn[_P, _T]) -> Fn[_P, _T]:
+    return retry_locked(break_locks(db_session(fn)))
 
 
 @a_sync(default="async")
@@ -252,19 +259,29 @@ def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
     transactions = transactions_known_at_startup()
     pk = ((chain.id, sender), nonce)
     if pk in transactions:
-        return json.decode(transactions[pk], type=Transaction)
+        return decode_transaction(transactions[pk])
     entity: entities.Transaction
-    if entity := entities.Transaction.get(from_address=(chain.id, sender), nonce=nonce):
-        return json.decode(entity.raw, type=Transaction)
+    if entity := entities.Transaction.get(from_address=pk[0], nonce=pk[1]):
+        return decode_transaction(entity.raw)
+
+
+def decode_transaction(data: bytes) -> Union[Transaction, TransactionRLP]:
+    try:
+        try:
+            return json.decode(data, type=Transaction, dec_hook=_decode_hook)
+        except ValidationError as e:
+            if str(e) == "Object missing required field `type` - at `$[2]`":
+                return json.decode(data, type=TransactionRLP, dec_hook=_decode_hook)
+            raise
+    except Exception as e:
+        e.args = *e.args, json.decode(data)
+        raise
 
 
 @a_sync(default="async")
 @robust_db_session
 def delete_transaction(transaction: Transaction) -> None:
-    if entity := entities.Transaction.get(
-        from_address=(chain.id, transaction.from_address),
-        nonce=transaction.nonce,
-    ):
+    if entity := entities.Transaction.get(**transaction.__db_primary_key__):
         entity.delete()
 
 
@@ -281,53 +298,48 @@ async def insert_transaction(transaction: Transaction) -> None:
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def _insert_transaction(transaction: Transaction) -> None:
-    entities.Transaction(
-        block=(chain.id, transaction.block_number),
-        transaction_index=transaction.transaction_index,
-        hash=transaction.hash,
-        nonce=transaction.nonce,
-        from_address=(chain.id, transaction.from_address),
-        to_address=(chain.id, transaction.to_address) if transaction.to_address else None,
-        value=transaction.value,
-        price=transaction.price,
-        value_usd=transaction.value_usd,
-        type=transaction.type,
-        gas=transaction.gas,
-        gas_price=transaction.gas_price,
-        max_fee_per_gas=transaction.max_fee_per_gas,
-        max_priority_fee_per_gas=transaction.max_priority_fee_per_gas,
-        input=transaction.input,
-        r=transaction.r,
-        s=transaction.s,
-        v=transaction.v,
-        access_list=json.encode(transaction.access_list) if transaction.access_list else None,
-        raw=json.encode(transaction),
-    )
+    with reraise_excs_with_extra_context(transaction):
+        entities.Transaction(
+            **transaction.__db_primary_key__,
+            block=(chain.id, transaction.block_number),
+            transaction_index=transaction.transaction_index,
+            hash=transaction.hash.hex(),
+            to_address=(chain.id, transaction.to_address) if transaction.to_address else None,
+            value=transaction.value,
+            price=transaction.price,
+            value_usd=transaction.value_usd,
+            type=getattr(transaction, "type", None),
+            gas=transaction.gas,
+            gas_price=transaction.gas_price,
+            max_fee_per_gas=getattr(transaction, "max_fee_per_gas", None),
+            max_priority_fee_per_gas=getattr(transaction, "max_priority_fee_per_gas", None),
+            raw=json.encode(transaction, enc_hook=enc_hook),
+        )
 
 
 @a_sync(default="async")
 @robust_db_session
-def get_internal_transfer(trace: dict) -> Optional[InternalTransfer]:
-    block = trace["blockNumber"]
+def get_internal_transfer(trace: evmspec.FilterTrace) -> Optional[InternalTransfer]:
+    block = trace.blockNumber
     entity: entities.InternalTransfer
     if entity := entities.InternalTransfer.get(
         block=(chain.id, block),
-        transaction_index=trace["transactionPosition"],
-        hash=trace["transactionHash"],
-        type=trace["type"],
-        call_type=trace["call_type"],
-        from_address=(chain.id, trace["from"]),
-        to_address=(chain.id, trace["to"]),
-        value=Decimal(int(trace["value"], 16)) / Decimal(10**18),
-        trace_address=(chain.id, trace["trace_address"]),
-        gas=int(trace["gas"], 16),
-        gas_used=int(trace["gas_used"], 16) if "gas_used" in trace else None,
-        input=trace["input"],
-        output=trace["output"],
-        subtraces=trace["subtraces"],
-        address=(chain.id, trace["address"]),
+        transaction_index=trace.transactionPosition,
+        hash=trace.transactionHash,
+        type=trace.type.name,
+        call_type=trace.callType,
+        from_address=(chain.id, trace.sender),
+        to_address=(chain.id, trace.to),
+        value=trace.value.scaled,
+        trace_address=(chain.id, trace.traceAddress),
+        gas=trace.gas,
+        gas_used=trace.gasUsed if "gasUsed" in trace else None,
+        input=trace.input,
+        output=trace.output,
+        subtraces=trace.subtraces,
+        address=(chain.id, trace.address),
     ):
-        return json.decode(entity.raw, type=InternalTransfer)
+        return json.decode(entity.raw, type=InternalTransfer, dec_hook=_decode_hook)
 
 
 @a_sync(default="async")
@@ -354,13 +366,9 @@ def delete_internal_transfer(transfer: InternalTransfer) -> None:
 
 
 async def insert_internal_transfer(transfer: InternalTransfer) -> None:
-    coros = [
-        ensure_block(transfer.block_number),
-        ensure_address(transfer.from_address),
-        ensure_address(transfer.to_address),
-        ensure_address(transfer.trace_address),
-        ensure_address(transfer.address),
-    ]
+    coros = [ensure_block(transfer.block_number), ensure_address(transfer.from_address)]
+    if to_address := getattr(transfer, "to_address", None):
+        coros.append(ensure_address(to_address))
     await asyncio.gather(*coros)
     await _insert_internal_transfer(transfer)
 
@@ -379,32 +387,28 @@ def _insert_internal_transfer(transfer: InternalTransfer) -> None:
         value=transfer.value,
         price=transfer.price,
         value_usd=transfer.value_usd,
-        trace_address=(chain.id, transfer.trace_address),
+        trace_address=str(transfer.trace_address),
         gas=transfer.gas,
         gas_used=transfer.gas_used,
-        input=transfer.input,
-        output=transfer.output,
-        subtraces=transfer.subtraces,
-        address=(chain.id, transfer.address),
-        raw=json.encode(transfer),
+        raw=json.encode(transfer, enc_hook=enc_hook),
     )
 
 
 @a_sync(default="async")
 @robust_db_session
-def get_token_transfer(transfer_log: dict) -> Optional[TokenTransfer]:
-    block = transfer_log["blockNumber"]
-    transfers = token_transfers_known_at_startup()
-    pk = ((chain.id, block), transfer_log["transactionIndex"], transfer_log["logIndex"])
-    if pk in transfers:
-        return json.decode(transfers[pk], type=TokenTransfer)
+def get_token_transfer(transfer: evmspec.log.Log) -> Optional[TokenTransfer]:
+    pk = {
+        "block": (chain.id, transfer.blockNumber),
+        "transaction_index": transfer.transactionIndex,
+        "log_index": transfer.logIndex,
+    }
+    if obj := token_transfers_known_at_startup().get(tuple(pk.values())):
+        with reraise_excs_with_extra_context(obj):
+            return json.decode(obj, type=TokenTransfer, dec_hook=_decode_hook)
     entity: entities.TokenTransfer
-    if entity := entities.TokenTransfer.get(
-        block=(chain.id, block),
-        transaction_index=transfer_log["transactionIndex"],
-        log_index=transfer_log["logIndex"],
-    ):
-        return json.decode(entity.raw, type=TokenTransfer)
+    if entity := entities.TokenTransfer.get(**pk):
+        with reraise_excs_with_extra_context(entity):
+            return json.decode(entity.raw, type=TokenTransfer, dec_hook=_decode_hook)
 
 
 _TPK = Tuple[Tuple[int, str], int]
@@ -413,12 +417,12 @@ _TPK = Tuple[Tuple[int, str], int]
 @lru_cache(maxsize=None)
 def transactions_known_at_startup() -> Dict[_TPK, bytes]:
     transfers = {}
+    obj: Tuple[int, str, int, bytes]
     for obj in select(
         (t.from_address.chain.id, t.from_address.address, t.nonce, t.raw)
         for t in entities.Transaction  # type: ignore [attr-defined]
         if t.from_address.chain.id == chain.id
     ):
-        obj: Tuple[int, str, int, bytes]
         chainid, from_address, nonce, raw = obj
         pk = ((chainid, from_address), nonce)
         transfers[pk] = raw
@@ -431,12 +435,12 @@ _TTPK = Tuple[Tuple[int, int], int, int]
 @lru_cache(maxsize=None)
 def token_transfers_known_at_startup() -> Dict[_TTPK, bytes]:
     transfers = {}
+    obj: Tuple[int, int, int, int, bytes]
     for obj in select(
         (t.block.chain.id, t.block.number, t.transaction_index, t.log_index, t.raw)
-        for t in entities.TokenTransfer
+        for t in entities.TokenTransfer  # type: ignore [attr-defined]
         if t.block.chain.id == chain.id
     ):
-        obj: Tuple[int, int, int, int, bytes]
         chainid, block, tx_index, log_index, raw = obj
         pk = ((chainid, block), tx_index, log_index)
         transfers[pk] = raw
@@ -469,23 +473,26 @@ async def insert_token_transfer(token_transfer: TokenTransfer) -> None:
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
+    entities.TokenTransfer(
+        block=(chain.id, token_transfer.block_number),
+        transaction_index=token_transfer.transaction_index,
+        log_index=token_transfer.log_index,
+        hash=token_transfer.hash.hex(),
+        token=(chain.id, token_transfer.token_address),
+        from_address=(chain.id, token_transfer.from_address),
+        to_address=(chain.id, token_transfer.to_address),
+        value=token_transfer.value,
+        price=token_transfer.price,
+        value_usd=token_transfer.value_usd,
+        raw=json.encode(token_transfer, enc_hook=enc_hook),
+    )
+    commit()
+
+
+def enc_hook(obj: Any) -> Any:
     try:
-        # Now requery and use the values
-        entities.TokenTransfer(
-            block=(chain.id, token_transfer.block_number),
-            transaction_index=token_transfer.transaction_index,
-            log_index=token_transfer.log_index,
-            hash=token_transfer.hash,
-            token=(chain.id, token_transfer.token_address),
-            from_address=(chain.id, token_transfer.from_address),
-            to_address=(chain.id, token_transfer.to_address),
-            value=token_transfer.value,
-            price=token_transfer.price,
-            value_usd=token_transfer.value_usd,
-            raw=json.encode(token_transfer),
-        )
-        commit()
-    except Exception as e:
-        if "numeric field overflow" not in str(e):
-            raise e
-        # NOTE: We can just leave this out of the db for now, figure out how to better handle before we start loading ranges from db
+        return y._db.common.enc_hook(obj)
+    except TypeError:
+        if type(obj) is Decimal:
+            return obj.jsonify()
+        raise TypeError(type(obj), obj)

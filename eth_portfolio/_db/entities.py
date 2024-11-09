@@ -1,7 +1,14 @@
-from decimal import Decimal
+import typing
+from functools import cached_property
 
+from evmspec.transaction import AccessListEntry
+from hexbytes import HexBytes
+from msgspec import json
 from pony.orm import Optional, PrimaryKey, Required, Set, composite_key
 from y._db.entities import Address, Block, Contract, Token, db
+
+from eth_portfolio import structs
+from eth_portfolio._decimal import Decimal
 
 
 class BlockExtended(Block):
@@ -17,8 +24,6 @@ class AddressExtended(Address):
     internal_transfers_received = Set("InternalTransfer", lazy=True, reverse="to_address")
     token_transfers_sent = Set("TokenTransfer", lazy=True, reverse="from_address")
     token_transfers_received = Set("TokenTransfer", lazy=True, reverse="to_address")
-    traces = Set("InternalTransfer", lazy=True, reverse="trace_address")
-    _not_sure_what_this_field_is = Set("InternalTransfer", lazy=True, reverse="address")
 
 
 class ContractExtended(Contract, AddressExtended):
@@ -39,7 +44,6 @@ class Transaction(db.Entity):
     value = Required(Decimal, 38, 18, lazy=True)
     price = Optional(Decimal, 38, 18, lazy=True)
     value_usd = Optional(Decimal, 38, 18, lazy=True)
-    access_list = Optional(bytes, lazy=True)
 
     nonce = Required(int, lazy=True)
     type = Optional(int, lazy=True)
@@ -47,15 +51,44 @@ class Transaction(db.Entity):
     gas_price = Required(Decimal, 38, 1, lazy=True)
     max_fee_per_gas = Optional(Decimal, 38, 1, lazy=True)
     max_priority_fee_per_gas = Optional(Decimal, 38, 1, lazy=True)
-    input = Required(str, lazy=True)
-    r = Required(str, lazy=True)
-    s = Required(str, lazy=True)
-    v = Required(int, lazy=True)
-    y_parity = Optional(int, lazy=True)
 
     composite_key(block, transaction_index)
 
     raw = Required(bytes, lazy=True)
+
+    @cached_property
+    def decoded(self) -> structs.Transaction:
+        return json.decode(self.raw, type=structs.Transaction)
+
+    @property
+    def input(self) -> HexBytes:
+        structs.Transaction.input.__doc__
+        return self.decoded.input
+
+    @property
+    def r(self) -> HexBytes:
+        structs.Transaction.r.__doc__
+        return self.decoded.r
+
+    @property
+    def s(self) -> HexBytes:
+        structs.Transaction.s.__doc__
+        return self.decoded.s
+
+    @property
+    def v(self) -> int:
+        structs.Transaction.v.__doc__
+        return self.decoded.v
+
+    @property
+    def access_list(self) -> typing.List[AccessListEntry]:
+        structs.Transaction.access_list.__doc__
+        return self.decoded.access_list
+
+    @property
+    def y_parity(self) -> typing.Optional[int]:
+        structs.TokenTransfer.y_parity.__doc__
+        return self.decoded.y_parity
 
 
 class InternalTransfer(db.Entity):
@@ -78,14 +111,9 @@ class InternalTransfer(db.Entity):
     # unique
     type = Required(str, lazy=True)
     call_type = Required(str, lazy=True)
-    trace_address = Required(AddressExtended, lazy=True, reverse="traces")
+    trace_address = Required(str, lazy=True)
     gas = Required(Decimal, 38, 1, lazy=True)
     gas_used = Optional(Decimal, 38, 1, lazy=True)
-    code = Optional(str, lazy=True)
-    input = Optional(str, lazy=True)
-    output = Optional(str, lazy=True)
-    subtraces = Required(int, lazy=True)
-    address = Required(AddressExtended, lazy=True, reverse="_not_sure_what_this_field_is")
 
     composite_key(
         block,
@@ -99,14 +127,34 @@ class InternalTransfer(db.Entity):
         trace_address,
         gas,
         gas_used,
-        code,
-        input,
-        output,
-        subtraces,
-        address,
     )
 
     raw = Required(bytes, lazy=True)
+
+    @cached_property
+    def decoded(self) -> structs.InternalTransfer:
+        structs.InternalTransfer.__doc__
+        return json.decode(self.raw, type=structs.InternalTransfer)
+
+    @property
+    def code(self) -> HexBytes:
+        structs.InternalTransfer.code.__doc__
+        return self.decoded.code
+
+    @property
+    def input(self) -> HexBytes:
+        structs.InternalTransfer.input.__doc__
+        return self.decoded.input
+
+    @property
+    def output(self) -> HexBytes:
+        structs.InternalTransfer.output.__doc__
+        return self.decoded.output
+
+    @property
+    def subtraces(self) -> int:
+        structs.InternalTransfer.subtraces.__doc__
+        return self.decoded.subtraces
 
 
 class TokenTransfer(db.Entity):
@@ -131,3 +179,7 @@ class TokenTransfer(db.Entity):
     composite_key(block, transaction_index, log_index)
 
     raw = Required(bytes, lazy=True)
+
+    @cached_property
+    def decoded(self) -> structs.TokenTransfer:
+        return json.decode(self.raw, type=structs.TokenTransfer)

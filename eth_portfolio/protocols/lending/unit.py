@@ -1,12 +1,11 @@
 from typing import Optional
 
-from dank_mids.structs.data import Decimal
 from y import Contract, Network, get_price
 from y._decorators import stuck_coro_debugger
 from y.datatypes import Address, Block
 
-from eth_portfolio.protocols.lending._base import \
-    LendingProtocolWithLockedCollateral
+from eth_portfolio._decimal import Decimal
+from eth_portfolio.protocols.lending._base import LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import Balance, TokenBalances
 
 # NOTE: This only works for YFI collateral, must extend before using for other collaterals
@@ -28,8 +27,10 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
             return balances
         bal = await self.unitVault.collaterals.coroutine(yfi, address, block_identifier=block)
         if bal:
-            bal = Decimal(bal) / 10 ** 18
-            balances[yfi] = Balance(bal, bal * await get_price(yfi, block, sync=False), token=yfi, block=block)
+            bal = Decimal(bal) / 10**18
+            balances[yfi] = Balance(
+                bal, bal * await get_price(yfi, block, sync=False), token=yfi, block=block
+            )
         return balances
 
     @stuck_coro_debugger
@@ -38,7 +39,9 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
         if block and block < self.start_block:
             return balances
         # NOTE: This only works for YFI based debt, must extend before using for other collaterals
-        if debt := await self.unitVault.getTotalDebt.coroutine(yfi, address, block_identifier=block):
-            debt = Decimal(debt) / 10 ** 18
+        if debt := await self.unitVault.getTotalDebt.coroutine(
+            yfi, address, block_identifier=block
+        ):
+            debt = Decimal(debt) / 10**18
             balances[usdp] = Balance(debt, debt, token=usdp, block=block)
         return balances
