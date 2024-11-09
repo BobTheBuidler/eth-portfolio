@@ -62,7 +62,7 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
         logger.debug("%s yield thru %s complete", self, block)
 
     async def _extend(self, objs: List[evmspec.log.Log]) -> None:
-        shitcoins = SHITCOINS.get(chain.id, [])
+        shitcoins = SHITCOINS.get(chain.id, set())
         for log in objs:
             if log.address in shitcoins:
                 continue

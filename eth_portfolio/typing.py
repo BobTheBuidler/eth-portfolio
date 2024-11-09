@@ -313,7 +313,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
             seed = seed.items()
         if not isinstance(seed, Iterable):
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
-        for token, balance in seed:
+        for token, balance in seed:  # type: ignore [misc]
             self[token] += balance
 
     def __getitem__(self, key) -> Balance:
@@ -711,7 +711,7 @@ class WalletBalances(
                     f"These objects are not from the same block ({self.block} and {balances.block})"
                 )
             self.__validateitem(key, balances)
-            self[key] += balances
+            self[key] += balances  # type: ignore [operator]
 
     @property
     def assets(self) -> TokenBalances:
@@ -826,10 +826,10 @@ class WalletBalances(
         combined: WalletBalances = WalletBalances(block=self.block)
         for category, balances in self.items():
             if balances:
-                combined[category] += balances
+                combined[category] += balances  # type: ignore [operator]
         for category, balances in other.items():
             if balances:
-                combined[category] += balances
+                combined[category] += balances  # type: ignore [operator]
         return combined
 
     def __sub__(self, other: "WalletBalances") -> "WalletBalances":
@@ -1046,7 +1046,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         for wallet, wbalances in self.items():
             for label, tbalances in wbalances.items():
                 if tbalances:
-                    inverted[label][wallet] += tbalances
+                    inverted[label][wallet] += tbalances  # type: ignore [operator]
         return inverted
 
     def __bool__(self) -> bool:
@@ -1360,7 +1360,7 @@ class PortfolioBalancesByCategory(
         for label, wtbalances in self.items():
             for wallet, tbalances in wtbalances.items():
                 if tbalances:
-                    inverted[wallet][label] += tbalances
+                    inverted[wallet][label] += tbalances  # type: ignore [operator]
         return inverted
 
     def __bool__(self) -> bool:

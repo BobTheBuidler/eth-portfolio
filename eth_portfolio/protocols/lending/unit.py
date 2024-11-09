@@ -25,7 +25,7 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
         balances: TokenBalances = TokenBalances(block=block)
         if block and block < self.start_block:
             return balances
-        bal = await self.unitVault.collaterals.coroutine(yfi, address, block_identifier=block)
+        bal: int = await self.unitVault.collaterals.coroutine(yfi, address, block_identifier=block)
         if bal:
             bal = Decimal(bal) / 10**18
             balances[yfi] = Balance(

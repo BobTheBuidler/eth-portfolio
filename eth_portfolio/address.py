@@ -221,7 +221,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         balances = await asyncio.gather(
             self.staking(block, sync=False), self.collateral(block, sync=False)
         )
-        return sum(balances)
+        return sum(balances)  # type: ignore [arg-type, return-value]
 
     # Assets
 
