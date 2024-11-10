@@ -10,12 +10,10 @@ SOME_TOKEN = "0x0000000000000000000000000000000000000002"
 SOME_OTHER_TOKEN = "0x0000000000000000000000000000000000000003"
 
 
-class MockProtocolA(AsyncMock):
-    ...
+class MockProtocolA(AsyncMock): ...
 
 
-class MockProtocolB(AsyncMock):
-    ...
+class MockProtocolB(AsyncMock): ...
 
 
 @patch("a_sync.map")

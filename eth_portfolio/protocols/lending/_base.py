@@ -22,8 +22,7 @@ class LendingProtocol(metaclass=abc.ABCMeta):
         return await self._debt(address, block)  # type: ignore
 
     @abc.abstractmethod
-    async def _debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        ...
+    async def _debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances: ...
 
 
 class LendingProtocolWithLockedCollateral(LendingProtocol, ProtocolABC):

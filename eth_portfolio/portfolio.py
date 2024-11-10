@@ -174,7 +174,6 @@ class Portfolio(a_sync.ASyncGenericBase):
         load_prices: bool = True,
         asynchronous: bool = False,
     ) -> None:
-
         """
         Initialize a Portfolio instance.
 
