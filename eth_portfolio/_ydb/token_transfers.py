@@ -44,8 +44,7 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
         return f"<{self.__class__.__module__}.{self.__class__.__name__} address={self.address}>"
 
     @abc.abstractproperty
-    def _topics(self) -> List:
-        ...
+    def _topics(self) -> List: ...
 
     @a_sync.ASyncIterator.wrap
     async def yield_thru_block(self, block) -> AsyncIterator["asyncio.Task[TokenTransfer]"]:

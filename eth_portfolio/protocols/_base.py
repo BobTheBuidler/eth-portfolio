@@ -20,8 +20,7 @@ class ProtocolABC(metaclass=abc.ABCMeta):
         return await self._balances(address, block=block)
 
     @abc.abstractmethod
-    async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        ...
+    async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances: ...
 
 
 class ProtocolWithStakingABC(ProtocolABC, metaclass=abc.ABCMeta):
