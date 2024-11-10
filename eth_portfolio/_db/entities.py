@@ -5,25 +5,25 @@ from evmspec.transaction import AccessListEntry
 from hexbytes import HexBytes
 from msgspec import json
 from pony.orm import Optional, PrimaryKey, Required, Set, composite_key
-from y._db.entities import Address, Block, Contract, Token, db
+from y._db.entities import Address, Block, Contract, DbEntity, Token
 
 from eth_portfolio import structs
 from eth_portfolio._decimal import Decimal
 
 
 class BlockExtended(Block):
-    transactions = Set("Transaction", lazy=True, reverse="block")
-    internal_transfers = Set("InternalTransfer", lazy=True, reverse="block")
-    token_transfers = Set("TokenTransfer", lazy=True, reverse="block")
+    transactions: Set["Transaction"] = Set("Transaction", lazy=True, reverse="block")
+    internal_transfers: Set["InternalTransfer"] = Set("InternalTransfer", lazy=True, reverse="block")
+    token_transfers: Set["TokenTransfer"] = Set("TokenTransfer", lazy=True, reverse="block")
 
 
 class AddressExtended(Address):
-    transactions_sent = Set("Transaction", lazy=True, reverse="from_address")
-    transactions_received = Set("Transaction", lazy=True, reverse="to_address")
-    internal_transfers_sent = Set("InternalTransfer", lazy=True, reverse="from_address")
-    internal_transfers_received = Set("InternalTransfer", lazy=True, reverse="to_address")
-    token_transfers_sent = Set("TokenTransfer", lazy=True, reverse="from_address")
-    token_transfers_received = Set("TokenTransfer", lazy=True, reverse="to_address")
+    transactions_sent: Set["Transaction"] = Set("Transaction", lazy=True, reverse="from_address")
+    transactions_received: Set["Transaction"] = Set("Transaction", lazy=True, reverse="to_address")
+    internal_transfers_sent: Set["InternalTransfer"] = Set("InternalTransfer", lazy=True, reverse="from_address")
+    internal_transfers_received: Set["InternalTransfer"] = Set("InternalTransfer", lazy=True, reverse="to_address")
+    token_transfers_sent: Set["TokenTransfer"] = Set("TokenTransfer", lazy=True, reverse="from_address")
+    token_transfers_received: Set["TokenTransfer"] = Set("TokenTransfer", lazy=True, reverse="to_address")
 
 
 class ContractExtended(Contract, AddressExtended):
@@ -31,10 +31,10 @@ class ContractExtended(Contract, AddressExtended):
 
 
 class TokenExtended(Token, AddressExtended):
-    transfers = Set("TokenTransfer", lazy=True, reverse="token")
+    transfers: Set["TokenTransfer"] = Set("TokenTransfer", lazy=True, reverse="token")
 
 
-class Transaction(db.Entity):
+class Transaction(DbEntity):
     _id = PrimaryKey(int, auto=True)
     block = Required(BlockExtended, lazy=True, reverse="transactions")
     transaction_index = Required(int, lazy=True)
@@ -91,7 +91,7 @@ class Transaction(db.Entity):
         return self.decoded.y_parity
 
 
-class InternalTransfer(db.Entity):
+class InternalTransfer(DbEntity):
     _id = PrimaryKey(int, auto=True)
 
     # common
@@ -157,7 +157,7 @@ class InternalTransfer(db.Entity):
         return self.decoded.subtraces
 
 
-class TokenTransfer(db.Entity):
+class TokenTransfer(DbEntity):
     _id = PrimaryKey(int, auto=True)
 
     # common
