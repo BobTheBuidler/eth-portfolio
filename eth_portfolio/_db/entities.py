@@ -12,28 +12,33 @@ from eth_portfolio._decimal import Decimal
 
 
 class BlockExtended(Block):
-    transactions: Set["Transaction"] = Set("Transaction", lazy=True, reverse="block")
-    internal_transfers: Set["InternalTransfer"] = Set(
-        "InternalTransfer", lazy=True, reverse="block"
-    )
-    token_transfers: Set["TokenTransfer"] = Set("TokenTransfer", lazy=True, reverse="block")
+    if typing.TYPE_CHECKING:
+        # if we execute this code we get `TypeError: 'type' object is not subscriptable`
+        transactions: Set["Transaction"]
+        internal_transfers: Set["InternalTransfer"]
+        token_transfers: Set["TokenTransfer"]
+
+    transactions = Set("Transaction", lazy=True, reverse="block")
+    internal_transfers = Set("InternalTransfer", lazy=True, reverse="block")
+    token_transfers = Set("TokenTransfer", lazy=True, reverse="block")
 
 
 class AddressExtended(Address):
-    transactions_sent: Set["Transaction"] = Set("Transaction", lazy=True, reverse="from_address")
-    transactions_received: Set["Transaction"] = Set("Transaction", lazy=True, reverse="to_address")
-    internal_transfers_sent: Set["InternalTransfer"] = Set(
-        "InternalTransfer", lazy=True, reverse="from_address"
-    )
-    internal_transfers_received: Set["InternalTransfer"] = Set(
-        "InternalTransfer", lazy=True, reverse="to_address"
-    )
-    token_transfers_sent: Set["TokenTransfer"] = Set(
-        "TokenTransfer", lazy=True, reverse="from_address"
-    )
-    token_transfers_received: Set["TokenTransfer"] = Set(
-        "TokenTransfer", lazy=True, reverse="to_address"
-    )
+    if typing.TYPE_CHECKING:
+        # if we execute this code we get `TypeError: 'type' object is not subscriptable`
+        transactions_sent: Set["Transaction"]
+        transactions_received: Set["Transaction"]
+        internal_transfers_sent: Set["InternalTransfer"]
+        internal_transfers_received: Set["InternalTransfer"]
+        token_transfers_sent: Set["TokenTransfer"]
+        token_transfers_received: Set["TokenTransfer"]
+
+    transactions_sent = Set("Transaction", lazy=True, reverse="from_address")
+    transactions_received = Set("Transaction", lazy=True, reverse="to_address")
+    internal_transfers_sent = Set("InternalTransfer", lazy=True, reverse="from_address")
+    internal_transfers_received = Set("InternalTransfer", lazy=True, reverse="to_address")
+    token_transfers_sent = Set("TokenTransfer", lazy=True, reverse="from_address")
+    token_transfers_received = Set("TokenTransfer", lazy=True, reverse="to_address")
 
 
 class ContractExtended(Contract, AddressExtended):
@@ -41,7 +46,11 @@ class ContractExtended(Contract, AddressExtended):
 
 
 class TokenExtended(Token, AddressExtended):
-    transfers: Set["TokenTransfer"] = Set("TokenTransfer", lazy=True, reverse="token")
+    if typing.TYPE_CHECKING:
+        # if we execute this code we get `TypeError: 'type' object is not subscriptable`
+        transfers: Set["TokenTransfer"]
+
+    transfers = Set("TokenTransfer", lazy=True, reverse="token")
 
 
 class Transaction(DbEntity):
