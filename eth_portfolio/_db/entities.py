@@ -17,11 +17,9 @@ class BlockExtended(Block):
         transactions: Set["Transaction"]
         internal_transfers: Set["InternalTransfer"]
         token_transfers: Set["TokenTransfer"]
-        
+
     transactions = Set("Transaction", lazy=True, reverse="block")
-    internal_transfers = Set(
-        "InternalTransfer", lazy=True, reverse="block"
-    )
+    internal_transfers = Set("InternalTransfer", lazy=True, reverse="block")
     token_transfers = Set("TokenTransfer", lazy=True, reverse="block")
 
 
@@ -34,21 +32,13 @@ class AddressExtended(Address):
         internal_transfers_received: Set["InternalTransfer"]
         token_transfers_sent: Set["TokenTransfer"]
         token_transfers_received: Set["TokenTransfer"]
-        
+
     transactions_sent = Set("Transaction", lazy=True, reverse="from_address")
     transactions_received = Set("Transaction", lazy=True, reverse="to_address")
-    internal_transfers_sent = Set(
-        "InternalTransfer", lazy=True, reverse="from_address"
-    )
-    internal_transfers_received = Set(
-        "InternalTransfer", lazy=True, reverse="to_address"
-    )
-    token_transfers_sent = Set(
-        "TokenTransfer", lazy=True, reverse="from_address"
-    )
-    token_transfers_received = Set(
-        "TokenTransfer", lazy=True, reverse="to_address"
-    )
+    internal_transfers_sent = Set("InternalTransfer", lazy=True, reverse="from_address")
+    internal_transfers_received = Set("InternalTransfer", lazy=True, reverse="to_address")
+    token_transfers_sent = Set("TokenTransfer", lazy=True, reverse="from_address")
+    token_transfers_received = Set("TokenTransfer", lazy=True, reverse="to_address")
 
 
 class ContractExtended(Contract, AddressExtended):
