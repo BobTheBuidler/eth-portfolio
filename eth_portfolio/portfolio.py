@@ -185,7 +185,10 @@ class Portfolio(a_sync.ASyncGenericBase):
         """
         if not isinstance(start_block, int):
             raise TypeError(f"`start_block` must be an integer, not {type(start_block)}")
-        assert start_block >= 0, "`start_block` must be >= 0"
+        if start_block < 0:
+            raise ValueError("`start_block` must be >= 0")
+        super().__init__()
+        
         self._start_block = start_block
         """
         The starting block number. Defaults to 0.
