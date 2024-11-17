@@ -34,6 +34,7 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
             address.address: getattr(address, self.property_name) for address in portfolio
         }
         self.portfolio = portfolio
+        super().__init__()
 
     @property
     def _start_block(self) -> int:
