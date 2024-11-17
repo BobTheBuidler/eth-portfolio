@@ -188,7 +188,7 @@ class Portfolio(a_sync.ASyncGenericBase):
         if start_block < 0:
             raise ValueError("`start_block` must be >= 0")
         super().__init__()
-        
+
         self._start_block = start_block
         """
         The starting block number. Defaults to 0.
