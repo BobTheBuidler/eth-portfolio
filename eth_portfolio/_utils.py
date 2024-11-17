@@ -273,6 +273,7 @@ class _LedgeredBase(a_sync.ASyncGenericBase, _AiterMixin["LedgerEntry"], Generic
 
     def __init__(self, start_block: int) -> None:
         self.start_block = start_block
+        super().__init__()
 
     @property
     def _start_block(self) -> int:

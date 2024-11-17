@@ -93,6 +93,8 @@ class AddressLedgerBase(
         # TODO replace the following line with an abc implementation.
         # assert isinstance(portfolio_address, PortfolioAddress), f"address must be a PortfolioAddress. try passing in PortfolioAddress({portfolio_address}) instead."
 
+        super().__init__()
+
         self.portfolio_address = portfolio_address
         """
         The portfolio address this ledger belongs to.
