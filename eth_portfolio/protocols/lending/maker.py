@@ -2,6 +2,7 @@ import asyncio
 from typing import List, Optional
 
 from async_lru import alru_cache
+from dank_mids.exceptions import Revert
 from eth_typing import HexStr
 from y import Contract, Network, contract_creation_block_async, get_price
 from y._decorators import stuck_coro_debugger
@@ -80,7 +81,10 @@ class Maker(LendingProtocolWithLockedCollateral):
 
     async def get_ilks(self, block: Optional[int]) -> List[HexStr]:
         """List all ilks (cdp keys of sorts) for MakerDAO"""
-        return await self.ilk_registry.list.coroutine(block_identifier=block)
+        try:
+            return await self.ilk_registry.list.coroutine(block_identifier=block)
+        except Revert:
+            return []
 
     @alru_cache
     async def get_gem(self, ilk: bytes) -> str:
