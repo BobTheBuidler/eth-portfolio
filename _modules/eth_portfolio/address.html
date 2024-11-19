@@ -1,0 +1,492 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eth_portfolio.address &mdash; eth-portfolio  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            eth-portfolio
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../source/modules.html">eth_portfolio</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">eth-portfolio</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">eth_portfolio.address</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for eth_portfolio.address</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module defines the :class:`~PortfolioAddress` class, which represents an address managed by the `eth-portfolio` system. </span>
+<span class="sd">The :class:`~PortfolioAddress` class is designed to manage different aspects of an Ethereum address within the portfolio, </span>
+<span class="sd">such as transactions, transfers, balances, and interactions with both external and lending protocols. </span>
+
+<span class="sd">Key components and functionalities provided by the :class:`~eth_portfolio.address.PortfolioAddress` class include:</span>
+<span class="sd">- Handling Ethereum and token balances</span>
+<span class="sd">- Managing debt and collateral from lending protocols</span>
+<span class="sd">- Tracking transactions and transfers (both internal and token transfers)</span>
+<span class="sd">- Providing comprehensive balance descriptions at specific block heights</span>
+
+<span class="sd">The class leverages asynchronous operations using the `a_sync` library to efficiently gather and process data. </span>
+<span class="sd">It also integrates with various submodules from `eth-portfolio` to load balances, manage ledgers, and interact </span>
+<span class="sd">with external protocols.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">a_sync</span>
+<span class="kn">import</span> <span class="nn">dank_mids</span>
+<span class="kn">import</span> <span class="nn">eth_retry</span>
+<span class="kn">import</span> <span class="nn">y</span>
+<span class="kn">from</span> <span class="nn">a_sync.exceptions</span> <span class="kn">import</span> <span class="n">MappingIsEmptyError</span>
+<span class="kn">from</span> <span class="nn">y</span> <span class="kn">import</span> <span class="n">convert</span>
+<span class="kn">from</span> <span class="nn">y._decorators</span> <span class="kn">import</span> <span class="n">stuck_coro_debugger</span>
+<span class="kn">from</span> <span class="nn">y.datatypes</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">Block</span>
+
+<span class="kn">from</span> <span class="nn">eth_portfolio</span> <span class="kn">import</span> <span class="n">protocols</span>
+<span class="kn">from</span> <span class="nn">eth_portfolio._ledgers.address</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AddressInternalTransfersLedger</span><span class="p">,</span>
+    <span class="n">AddressLedgerBase</span><span class="p">,</span>
+    <span class="n">AddressTokenTransfersLedger</span><span class="p">,</span>
+    <span class="n">AddressTransactionsLedger</span><span class="p">,</span>
+    <span class="n">PandableLedgerEntryList</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">eth_portfolio._loaders</span> <span class="kn">import</span> <span class="n">balances</span>
+<span class="kn">from</span> <span class="nn">eth_portfolio._utils</span> <span class="kn">import</span> <span class="n">_LedgeredBase</span><span class="p">,</span> <span class="n">_get_price</span>
+<span class="kn">from</span> <span class="nn">eth_portfolio.typing</span> <span class="kn">import</span> <span class="n">Balance</span><span class="p">,</span> <span class="n">RemoteTokenBalances</span><span class="p">,</span> <span class="n">TokenBalances</span><span class="p">,</span> <span class="n">WalletBalances</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">eth_portfolio.portfolio</span> <span class="kn">import</span> <span class="n">Portfolio</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PortfolioAddress">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.address.PortfolioAddress">[docs]</a>
+<span class="k">class</span> <span class="nc">PortfolioAddress</span><span class="p">(</span><span class="n">_LedgeredBase</span><span class="p">[</span><span class="n">AddressLedgerBase</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a portfolio address within the eth-portfolio system.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PortfolioAddress.__init__">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.address.PortfolioAddress.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">,</span> <span class="n">portfolio</span><span class="p">:</span> <span class="s2">&quot;Portfolio&quot;</span><span class="p">,</span> <span class="n">asynchronous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the PortfolioAddress instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            address: The address to manage.</span>
+<span class="sd">            portfolio: The portfolio instance managing this address.</span>
+<span class="sd">            asynchronous (optional): Flag for asynchronous operation. Defaults to False.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If `asynchronous` is not a boolean.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; portfolio = Portfolio()</span>
+<span class="sd">            &gt;&gt;&gt; address = PortfolioAddress(&#39;0x1234...&#39;, portfolio)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">convert</span><span class="o">.</span><span class="n">to_address</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The address being managed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">asynchronous</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`asynchronous` must be a boolean, you passed </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">asynchronous</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">asynchronous</span> <span class="o">=</span> <span class="n">asynchronous</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Flag indicating if the operations are asynchronous.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_prices</span> <span class="o">=</span> <span class="n">portfolio</span><span class="o">.</span><span class="n">load_prices</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Indicates if price loading is enabled.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">portfolio</span><span class="o">.</span><span class="n">_start_block</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span> <span class="o">=</span> <span class="n">AddressTransactionsLedger</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ledger for tracking transactions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">internal_transfers</span> <span class="o">=</span> <span class="n">AddressInternalTransfersLedger</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ledger for tracking internal transfers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">token_transfers</span> <span class="o">=</span> <span class="n">AddressTokenTransfersLedger</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ledger for tracking token transfers.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the string representation of the address.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The address as a string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">address</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the string representation of the PortfolioAddress instance.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The string representation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> address=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="si">}</span><span class="s2"> at </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks equality with another object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other: The object to compare with.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            True if equal, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">PortfolioAddress</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">address</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">==</span> <span class="n">convert</span><span class="o">.</span><span class="n">to_address</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the hash of the address.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The hash value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">)</span>
+
+    <span class="c1"># Primary functions</span>
+
+<div class="viewcode-block" id="PortfolioAddress.describe">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.address.PortfolioAddress.describe">[docs]</a>
+    <span class="nd">@stuck_coro_debugger</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">describe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WalletBalances</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Describes all of the wallet&#39;s balances at a given block.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            block: The block number.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`~eth_portfolio.typing.WalletBalances`: The wallet balances.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If block is not an integer.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; wallet_balances = await address.describe(12345678)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Block must be an integer. You passed </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">block</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">block</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">coros</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;assets&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">assets</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="s2">&quot;debt&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">debt</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="s2">&quot;external&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">external_balances</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">a_sync</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">coros</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">assert</span> <span class="n">ds</span><span class="o">.</span><span class="n">block</span><span class="p">,</span> <span class="n">ds</span>
+            <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">block</span><span class="p">,</span> <span class="n">ds</span>
+        <span class="k">return</span> <span class="n">WalletBalances</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PortfolioAddress.assets">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.address.PortfolioAddress.assets">[docs]</a>
+    <span class="nd">@stuck_coro_debugger</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">assets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenBalances</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the balances for every asset in the wallet at a given block.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            block (optional): The block number to query. Defaults to None, which uses the latest block.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`~eth_portfolio.typing.TokenBalances`: The asset balances at `block`.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; assets = await address.assets(12345678)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">balances</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PortfolioAddress.debt">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.address.PortfolioAddress.debt">[docs]</a>
+    <span class="nd">@stuck_coro_debugger</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">debt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RemoteTokenBalances</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves all debt balances for the wallet at a given block.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            block (optional): The block number. Defaults to None, which uses the latest block.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`~eth_portfolio.typing.RemoteTokenBalances`: The debt balances at `block`.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; debt = await address.debt(12345678)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">protocols</span><span class="o">.</span><span class="n">lending</span><span class="o">.</span><span class="n">debt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PortfolioAddress.external_balances">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.address.PortfolioAddress.external_balances">[docs]</a>
+    <span class="nd">@stuck_coro_debugger</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">external_balances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RemoteTokenBalances</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the balances owned by the wallet, but not held *in* the wallet, at a given block.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            block (optional): The block number. Defaults to None, which uses the latest block.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`~eth_portfolio.typing.RemoteTokenBalances`: The external balances.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; external_balances = await address.external_balances(12345678)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">balances</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">staking</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">collateral</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">balances</span><span class="p">)</span>  <span class="c1"># type: ignore [arg-type, return-value]</span></div>
+
+
+    <span class="c1"># Assets</span>
+
+<div class="viewcode-block" id="PortfolioAddress.balances">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.address.PortfolioAddress.balances">[docs]</a>
+    <span class="nd">@stuck_coro_debugger</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">balances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">TokenBalances</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves balances for all assets in the wallet at a given block.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            block: The block number.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`~eth_portfolio.typing.TokenBalances`: The balances.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; balances = await address.balances(12345678)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">eth_balance</span><span class="p">,</span> <span class="n">token_balances</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eth_balance</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">token_balances</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">token_balances</span><span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">EEE_ADDRESS</span><span class="p">]</span> <span class="o">=</span> <span class="n">eth_balance</span>
+        <span class="k">return</span> <span class="n">token_balances</span></div>
+
+
+<div class="viewcode-block" id="PortfolioAddress.eth_balance">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.address.PortfolioAddress.eth_balance">[docs]</a>
+    <span class="nd">@eth_retry</span><span class="o">.</span><span class="n">auto_retry</span>
+    <span class="nd">@stuck_coro_debugger</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">eth_balance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Balance</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the ETH balance for the wallet at a given block.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            block: The block number.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`~eth_portfolio.typing.Balance`: The ETH balance at `block`.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; eth_balance = await address.eth_balance(12345678)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">balance</span> <span class="o">:=</span> <span class="k">await</span> <span class="n">dank_mids</span><span class="o">.</span><span class="n">eth</span><span class="o">.</span><span class="n">get_balance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">block_identifier</span><span class="o">=</span><span class="n">block</span><span class="p">):</span>
+            <span class="n">price</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_get_price</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">WRAPPED_GAS_COIN</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Balance</span><span class="p">(</span>
+                <span class="n">balance</span><span class="o">.</span><span class="n">scaled</span><span class="p">,</span>
+                <span class="nb">round</span><span class="p">(</span><span class="n">balance</span><span class="o">.</span><span class="n">scaled</span> <span class="o">*</span> <span class="n">price</span><span class="p">,</span> <span class="mi">18</span><span class="p">),</span>
+                <span class="n">token</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">EEE_ADDRESS</span><span class="p">,</span>
+                <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">Balance</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">EEE_ADDRESS</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PortfolioAddress.token_balances">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.address.PortfolioAddress.token_balances">[docs]</a>
+    <span class="nd">@stuck_coro_debugger</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">token_balances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenBalances</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the balances for all tokens in the wallet at a given block.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            block: The block number.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`~eth_portfolio.typing.TokenBalances`: The token balances at `block`.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; token_balances = await address.token_balances(12345678)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">a_sync</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+                <span class="n">balances</span><span class="o">.</span><span class="n">load_token_balance</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">token_transfers</span><span class="o">.</span><span class="n">_yield_tokens_at_block</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">),</span>
+                <span class="n">address</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span>
+                <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">TokenBalances</span><span class="p">(</span><span class="k">await</span> <span class="n">data</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">MappingIsEmptyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">TokenBalances</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PortfolioAddress.collateral">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.address.PortfolioAddress.collateral">[docs]</a>
+    <span class="nd">@stuck_coro_debugger</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">collateral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RemoteTokenBalances</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves all balances held by lending protocols on behalf of the wallet at a given block.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            block (optional): The block number. Defaults to None, which uses the latest block.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`~eth_portfolio.typing.RemoteTokenBalances`: The collateral balances.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; collateral = await address.collateral(12345678)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">protocols</span><span class="o">.</span><span class="n">lending</span><span class="o">.</span><span class="n">collateral</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PortfolioAddress.staking">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.address.PortfolioAddress.staking">[docs]</a>
+    <span class="nd">@stuck_coro_debugger</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">staking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RemoteTokenBalances</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves all balances staked in protocols supported by eth_portfolio on behalf of the wallet at a given block.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            block (optional): The block number. Defaults to None, which uses the latest block.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`~eth_portfolio.typing.RemoteTokenBalances`: The staked balances.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; staking_balances = await address.staking(12345678)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">protocols</span><span class="o">.</span><span class="n">balances</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span></div>
+
+
+    <span class="c1"># Ledger Entries</span>
+
+<div class="viewcode-block" id="PortfolioAddress.all">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.address.PortfolioAddress.all">[docs]</a>
+    <span class="nd">@stuck_coro_debugger</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_block</span><span class="p">:</span> <span class="n">Block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">:</span> <span class="n">Block</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PandableLedgerEntryList</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves all ledger entries between two blocks.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start_block: The starting block number.</span>
+<span class="sd">            end_block: The ending block number.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dict[str, :class:`~eth_portfolio._ledgers.address.PandableLedgerEntryList`]: The ledger entries.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; all_entries = await address.all(12000000, 12345678)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">coros</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;transactions&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="s2">&quot;internal_transactions&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal_transfers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;token_transfers&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_transfers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">a_sync</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">coros</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, BobTheBuidler.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
