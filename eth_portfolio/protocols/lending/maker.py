@@ -3,10 +3,9 @@ from typing import List, Optional
 
 from async_lru import alru_cache
 from eth_typing import HexStr
-from y import Network, get_price
+from y import Contract, Network, contract_creation_block_async, get_price
 from y._decorators import stuck_coro_debugger
 from y.constants import dai
-from y.contracts import Contract
 from y.datatypes import Address, Block
 
 from eth_portfolio._utils import Decimal
