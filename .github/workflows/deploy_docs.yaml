@@ -26,9 +26,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install wheel
-          pip install --no-build-isolation "Cython<3" "pyyaml==5.4.1"
-          pip install "Cython>=3" -r requirements.txt
-          pip install sphinx sphinx-rtd-theme
+          pip install sphinx sphinx-rtd-theme -r requirements.txt
 
       - name: Setup brownie networks
         run: |
