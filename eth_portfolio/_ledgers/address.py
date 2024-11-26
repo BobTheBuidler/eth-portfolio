@@ -173,6 +173,15 @@ class AddressLedgerBase(
         Yields:
             AsyncGenerator[T, None]: An async generator of ledger entries.
         """
+        if self.objects and end_block and self.objects[-1].block_number > end_block:
+            for object in self.objects:
+                block = obj.block_number
+                if block < start_block:
+                    continue
+                elif block > end_block:
+                    return
+                yield obj
+        
         yielded = set()
         for obj in self.objects:
             block = obj.block_number
