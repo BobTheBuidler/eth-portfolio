@@ -173,6 +173,18 @@ class AddressLedgerBase(
         Yields:
             AsyncGenerator[T, None]: An async generator of ledger entries.
         """
+        num_yielded = 0
+
+        async def unblock_loop() -> None:
+            """
+            Let the event loop run at least once for every 1000
+            objects yielded so it doesn't get too congested.
+            """
+            nonlocal num_yielded
+            num_yielded += 1
+            if num_yielded % 1000 == 0:
+                await asyncio.sleep(0)
+            
         if self.objects and end_block and self.objects[-1].block_number > end_block:
             for object in self.objects:
                 block = obj.block_number
@@ -181,6 +193,7 @@ class AddressLedgerBase(
                 elif block > end_block:
                     return
                 yield obj
+                await unblock_loop()
         
         yielded = set()
         for obj in self.objects:
@@ -191,10 +204,12 @@ class AddressLedgerBase(
                 break
             yield obj
             yielded.add(obj)
+            await unblock_loop()
         async for obj in self._get_new_objects(start_block, end_block):  # type: ignore [assignment, misc]
             if obj not in yielded:
                 yield obj
                 yielded.add(obj)
+                await unblock_loop()
         for obj in self.objects:
             block = obj.block_number
             if block < start_block:
@@ -204,6 +219,7 @@ class AddressLedgerBase(
             if obj not in yielded:
                 yield obj
                 yielded.add(obj)
+                await unblock_loop()
 
     @set_end_block_if_none
     @stuck_coro_debugger
