@@ -630,9 +630,10 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         """
         yielded = set()
         async for transfer in self[:block]:
-            if transfer.token_address not in yielded:
-                yielded.add(transfer.token_address)
-                yield ERC20(transfer.token_address, asynchronous=self.asynchronous)
+            address = transfer.token_address
+            if address not in yielded:
+                yielded.add(address)
+                yield ERC20(address, asynchronous=self.asynchronous)
 
     @set_end_block_if_none
     @stuck_coro_debugger
