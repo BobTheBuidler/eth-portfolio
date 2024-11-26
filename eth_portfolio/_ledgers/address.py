@@ -184,7 +184,7 @@ class AddressLedgerBase(
             num_yielded += 1
             if num_yielded % 1000 == 0:
                 await asyncio.sleep(0)
-            
+
         if self.objects and end_block and self.objects[-1].block_number > end_block:
             for object in self.objects:
                 block = obj.block_number
@@ -194,7 +194,7 @@ class AddressLedgerBase(
                     return
                 yield obj
                 await unblock_loop()
-        
+
         yielded = set()
         for obj in self.objects:
             block = obj.block_number
@@ -589,7 +589,9 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             self.cached_thru = end_block
 
 
-_yield_tokens_semaphore = a_sync.Semaphore(10, name="eth_portfolio._ledgers.address._yield_tokens_semaphore")
+_yield_tokens_semaphore = a_sync.Semaphore(
+    10, name="eth_portfolio._ledgers.address._yield_tokens_semaphore"
+)
 
 
 class TokenTransfersList(PandableList[TokenTransfer]):

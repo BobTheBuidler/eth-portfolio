@@ -58,7 +58,7 @@ class Maker(LendingProtocolWithLockedCollateral):
     async def _debt(self, address: Address, block: Optional[int] = None) -> TokenBalances:
         if block is not None and block <= await contract_creation_block_async(self.ilk_registry):
             return TokenBalances(block=block)
-            
+
         ilks, urn = await asyncio.gather(self.get_ilks(block), self._urn(address))
 
         data = await asyncio.gather(

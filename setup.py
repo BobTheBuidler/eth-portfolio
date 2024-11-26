@@ -17,9 +17,7 @@ setup(
     author_email="bobthebuidlerdefi@gmail.com",
     url="https://github.com/BobTheBuidler/eth-portfolio",
     install_requires=requirements,
-    setup_requires=[
-        "setuptools_scm", "cython"
-    ],
+    setup_requires=["setuptools_scm", "cython"],
     package_data={
         "eth_portfolio": ["py.typed"],
     },
