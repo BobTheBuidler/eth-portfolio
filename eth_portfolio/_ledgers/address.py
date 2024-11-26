@@ -573,6 +573,9 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             self.cached_thru = end_block
 
 
+_yield_tokens_semaphore = a_sync.Semaphore(10, name="eth_portfolio._ledgers.address._yield_tokens_semaphore")
+
+
 class TokenTransfersList(PandableList[TokenTransfer]):
     """
     A list subclass for token transfer entries that can convert to a :class:`DataFrame`.
@@ -628,12 +631,13 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         Yields:
             AsyncIterator[ERC20]: An async iterator of ERC20 tokens.
         """
-        yielded = set()
-        async for transfer in self[:block]:
-            address = transfer.token_address
-            if address not in yielded:
-                yielded.add(address)
-                yield ERC20(address, asynchronous=self.asynchronous)
+        async with _yield_tokens_semaphore:
+            yielded = set()
+            async for transfer in self[:block]:
+                address = transfer.token_address
+                if address not in yielded:
+                    yielded.add(address)
+                    yield ERC20(address, asynchronous=self.asynchronous)
 
     @set_end_block_if_none
     @stuck_coro_debugger
