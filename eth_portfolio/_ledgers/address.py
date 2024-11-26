@@ -186,39 +186,39 @@ class AddressLedgerBase(
                 await asyncio.sleep(0)
 
         if self.objects and end_block and self.objects[-1].block_number > end_block:
-            for object in self.objects:
-                block = obj.block_number
+            for ledger_entry in self.objects:
+                block = ledger_entry.block_number
                 if block < start_block:
                     continue
                 elif block > end_block:
                     return
-                yield obj
+                yield ledger_entry
                 await unblock_loop()
 
         yielded = set()
-        for obj in self.objects:
-            block = obj.block_number
+        for ledger_entry in self.objects:
+            block = ledger_entry.block_number
             if block < start_block:
                 continue
             elif end_block and block > end_block:
                 break
-            yield obj
-            yielded.add(obj)
+            yield ledger_entry
+            yielded.add(ledger_entry)
             await unblock_loop()
-        async for obj in self._get_new_objects(start_block, end_block):  # type: ignore [assignment, misc]
-            if obj not in yielded:
-                yield obj
-                yielded.add(obj)
+        async for ledger_entry in self._get_new_objects(start_block, end_block):  # type: ignore [assignment, misc]
+            if ledger_entry not in yielded:
+                yield ledger_entry
+                yielded.add(ledger_entry)
                 await unblock_loop()
-        for obj in self.objects:
-            block = obj.block_number
+        for ledger_entry in self.objects:
+            block = ledger_entry.block_number
             if block < start_block:
                 continue
             elif end_block and block > end_block:
                 break
-            if obj not in yielded:
-                yield obj
-                yielded.add(obj)
+            if ledger_entry not in yielded:
+                yield ledger_entry
+                yielded.add(ledger_entry)
                 await unblock_loop()
 
     @set_end_block_if_none
@@ -237,10 +237,10 @@ class AddressLedgerBase(
         Examples:
             >>> entries = await ledger.get(12000000, 12345678)
         """
-        objects = self._list_type()
-        async for obj in self[start_block:end_block]:
-            objects.append(obj)  # type: ignore [arg-type]
-        return objects
+        entries = self._list_type()
+        async for ledger_entry in self[start_block:end_block]:
+            entries.append(ledger_entry)  # type: ignore [arg-type]
+        return entries
 
     @stuck_coro_debugger
     async def new(self) -> _LedgerEntryList:
@@ -271,8 +271,8 @@ class AddressLedgerBase(
             AsyncIterator[T]: An async iterator of new ledger entries.
         """
         async with self._lock:
-            async for obj in self._load_new_objects(start_block, end_block):
-                yield obj
+            async for ledger_entry in self._load_new_objects(start_block, end_block):
+                yield ledger_entry
 
     @abc.abstractmethod
     async def _load_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[T]:
@@ -415,13 +415,13 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
                 _loaders.load_transaction(self.address, nonce, self.load_prices) for nonce in nonces
             ]
 
-            objects = []
+            transactions = []
             transaction: Transaction
             async for nonce, transaction in a_sync.as_completed(  # type: ignore [assignment]
                 coros, aiter=True, tqdm=True, desc=f"Transactions        {self.address}"
             ):
                 if transaction:
-                    objects.append(transaction)
+                    transactions.append(transaction)
                     yield transaction
                 elif nonce == 0 and self.cached_thru_nonce == -1:
                     # Gnosis safes
@@ -430,8 +430,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
                     # NOTE Are we sure this is the correct way to handle this scenario? Are we sure it will ever even occur with the new gnosis handling?
                     logger.warning("No transaction with nonce %s for %s", nonce, self.address)
 
-            if objects:
-                self.objects.extend(objects)
+            if transactions:
+                self.objects.extend(transactions)
             if self.objects:
                 self.objects.sort(key=lambda t: t.nonce)
                 self.cached_thru_nonce = self.objects[-1].nonce
@@ -572,15 +572,15 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             for traces in generator_function(trace_filter_coros)
             for trace in await traces
         ]:
-            objects = []
-            async for obj in a_sync.as_completed(
+            internal_transfers = []
+            async for internal_transfer in a_sync.as_completed(
                 tasks, aiter=True, tqdm=True, desc=f"Internal Transfers  {self.address}"
             ):
-                if obj:
-                    objects.append(obj)
-                    yield obj
-            if objects:
-                self.objects.extend(objects)
+                if internal_transfer:
+                    internal_transfers.append(internal_transfer)
+                    yield internal_transfer
+            if internal_transfers:
+                self.objects.extend(internal_transfers)
             self.objects.sort(key=lambda t: (t.block_number, t.transaction_index))
 
         if self.cached_from is None or start_block < self.cached_from:
@@ -683,14 +683,14 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
             async for task in self._transfers.yield_thru_block(end_block)
             if start_block <= task.block
         ]:
-            objects = []
-            async for obj in a_sync.as_completed(
+            token_transfers = []
+            async for token_transfer in a_sync.as_completed(
                 tasks, aiter=True, tqdm=True, desc=f"Token Transfers     {self.address}"
             ):
-                if obj:
-                    objects.append(obj)
-                    yield obj
-            if objects:
+                if token_transfer:
+                    token_transfers.append(token_transfer)
+                    yield token_transfer
+            if token_transfers:
                 self.objects.extend(objects)
             self.objects.sort(key=lambda t: (t.block_number, t.transaction_index, t.log_index))
 
