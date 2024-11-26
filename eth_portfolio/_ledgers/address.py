@@ -691,7 +691,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
                     token_transfers.append(token_transfer)
                     yield token_transfer
             if token_transfers:
-                self.objects.extend(objects)
+                self.objects.extend(token_transfers)
             self.objects.sort(key=lambda t: (t.block_number, t.transaction_index, t.log_index))
 
         if self.cached_from is None or start_block < self.cached_from:
