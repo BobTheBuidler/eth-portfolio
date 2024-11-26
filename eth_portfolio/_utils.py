@@ -60,13 +60,9 @@ async def get_buffered_chain_height() -> int:
 
 
 class PandableList(List[_T]):
-    def __init__(self):
-        super().__init__()
-
     @cached_property
     def df(self) -> DataFrame:
         return self._df()
-
     def _df(self) -> DataFrame:
         """Override this method if you need to manipulate your dataframe before returning it."""
         return DataFrame(self)
