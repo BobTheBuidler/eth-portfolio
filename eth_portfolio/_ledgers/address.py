@@ -237,10 +237,7 @@ class AddressLedgerBase(
         Examples:
             >>> entries = await ledger.get(12000000, 12345678)
         """
-        entries = self._list_type()
-        async for ledger_entry in self[start_block:end_block]:
-            entries.append(ledger_entry)  # type: ignore [arg-type]
-        return entries
+        return self._list_type([ledger_entry async for ledger_entry in self[start_block:end_block]])
 
     @stuck_coro_debugger
     async def new(self) -> _LedgerEntryList:
