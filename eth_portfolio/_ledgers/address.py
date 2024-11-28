@@ -675,11 +675,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
             await e.load_remaining()
             return
 
-        if tasks := [
-            task
-            async for task in self._transfers.yield_thru_block(end_block)
-            if start_block <= task.block
-        ]:
+        if tasks := [task async for task in self._transfers.yield_thru_block(end_block)]:
             token_transfers = []
             async for token_transfer in a_sync.as_completed(
                 tasks, aiter=True, tqdm=True, desc=f"Token Transfers     {self.address}"
