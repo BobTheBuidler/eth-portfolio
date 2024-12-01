@@ -1,5 +1,7 @@
+build/
 cache/
 env/
+eth_portfolio.egg-info/
 .env
 .mypy_cache/
 .hypothesis
