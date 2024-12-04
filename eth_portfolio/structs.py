@@ -25,7 +25,7 @@ from dank_mids.structs.trace import Type
 from dictstruct import DictStruct
 from evmspec import FilterTrace, Transaction1559, Transaction2930, TransactionLegacy
 from evmspec.data import Address
-from evmspec.transaction import AccessListEntry
+from evmspec.structs.transaction import AccessListEntry
 from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
