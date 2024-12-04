@@ -60,7 +60,7 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
             yield task
         logger.debug("%s yield thru %s complete", self, block)
 
-    async def _extend(self, objs: List[evmspec.log.Log]) -> None:
+    async def _extend(self, objs: List[evmspec.Log]) -> None:
         shitcoins = SHITCOINS.get(chain.id, set())
         for log in objs:
             if log.address in shitcoins:

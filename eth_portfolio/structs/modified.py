@@ -1,6 +1,6 @@
 from typing import Union
 
-from evmspec.trace import call, create, reward, suicide
+from evmspec.structs.trace import call, create, reward, suicide
 
 
 class CallTrace(

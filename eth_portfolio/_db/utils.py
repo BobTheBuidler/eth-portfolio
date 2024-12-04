@@ -396,7 +396,7 @@ def _insert_internal_transfer(transfer: InternalTransfer) -> None:
 
 @a_sync(default="async")
 @robust_db_session
-def get_token_transfer(transfer: evmspec.log.Log) -> Optional[TokenTransfer]:
+def get_token_transfer(transfer: evmspec.Log) -> Optional[TokenTransfer]:
     pk = {
         "block": (chain.id, transfer.blockNumber),
         "transaction_index": transfer.transactionIndex,

@@ -215,7 +215,7 @@ class ReceiptContractAddress(msgspec.Struct):
 
 
 class ReceiptLogs(msgspec.Struct):
-    logs: List[evmspec.log.Log]
+    logs: List[evmspec.Log]
 
 
 @alru_cache(maxsize=None)

@@ -1,7 +1,7 @@
 import typing
 from functools import cached_property
 
-from evmspec.transaction import AccessListEntry
+from evmspec.structs.transaction import AccessListEntry
 from hexbytes import HexBytes
 from msgspec import json
 from pony.orm import Optional, PrimaryKey, Required, Set, composite_key

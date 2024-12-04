@@ -23,8 +23,8 @@ import evmspec
 from brownie import chain
 from dictstruct import DictStruct
 from evmspec.data import Address, BlockHash, TransactionHash, Wei
-from evmspec.trace import reward
-from evmspec.transaction import AccessListEntry
+from evmspec.structs.trace import reward
+from evmspec.structs.transaction import AccessListEntry
 from hexbytes import HexBytes
 from msgspec import Struct
 from y import Network
