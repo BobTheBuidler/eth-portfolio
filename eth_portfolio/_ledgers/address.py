@@ -33,9 +33,8 @@ import eth_retry
 from async_lru import alru_cache
 from dank_mids.eth import TraceFilterParams
 from evmspec import FilterTrace
-from evmspec.receipt import Status
-from evmspec.trace.call import Trace as CallTrace
-from evmspec.trace.reward import Trace as RewardTrace
+from evmspec.structs.receipt import Status
+from evmspec.structs.trace import call, reward
 from pandas import DataFrame  # type: ignore
 from y import ERC20
 from y._decorators import stuck_coro_debugger
@@ -492,12 +491,12 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
         # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
         # that actually transmitted value to the singleton even though they appear to.
         if (
-            isinstance(trace, CallTrace)
+            isinstance(trace, call.Trace)
             and trace.action.to == "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
         ):  # Gnosis Safe Singleton 1.3.0
             continue
 
-        if not isinstance(trace, RewardTrace):
+        if not isinstance(trace, reward.Trace):
             # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
             check_status_tasks[trace.transactionHash]
 
@@ -507,7 +506,7 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     return [
         trace
         for trace in traces
-        if isinstance(trace, RewardTrace)
+        if isinstance(trace, reward.Trace)
         or await check_status_tasks[trace.transactionHash] == Status.success
     ]
 
