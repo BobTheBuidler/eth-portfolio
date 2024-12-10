@@ -38,7 +38,7 @@ Nonces = DefaultDict[Nonce, Block]
 
 nonces: DefaultDict[Address, Nonces] = defaultdict(lambda: defaultdict(int))
 
-_semaphore = a_sync.Semaphore(10_000, name="load transaction db semaphore"
+_semaphore = a_sync.Semaphore(10_000, name="load transaction db semaphore")
 
 @eth_retry.auto_retry
 @stuck_coro_debugger
