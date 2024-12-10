@@ -6,6 +6,7 @@ The functions defined here use various async operations to retrieve transaction 
 The primary focus of this module is to support eth-portfolio's internal operations such as loading transactions by address and nonce, retrieving transaction details from specific blocks, and managing transaction-related data.
 """
 
+import asyncio
 import logging
 from collections import defaultdict
 from typing import DefaultDict, Dict, List, Optional, Tuple
