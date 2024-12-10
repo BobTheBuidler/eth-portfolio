@@ -96,7 +96,9 @@ async def load_transaction(
     return nonce, transaction
 
 
-_nonce_cache_semaphores: DefaultDict[Address, asyncio.Semaphore] = defaultdict(lambda: asyncio.Semaphore(100))
+_nonce_cache_semaphores: DefaultDict[Address, asyncio.Semaphore] = defaultdict(
+    lambda: asyncio.Semaphore(100)
+)
 
 
 async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
