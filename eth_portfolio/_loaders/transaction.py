@@ -110,7 +110,7 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
             del highest_known_nonce_lower_than_query, block_at_known_nonce
         else:
             lo = 0
-        
+
         if known_nonces_greater_than_query := [n for n in nonces[address] if n > nonce]:
             highest_known_nonce_greater_than_query = max(known_nonces_greater_than_query)
             block_at_known_nonce = nonces[address][highest_known_nonce_greater_than_query]
