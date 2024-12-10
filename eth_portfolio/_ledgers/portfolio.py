@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING, AsyncIterator, Dict, Generic, TypeVar
+from typing import TYPE_CHECKING, AsyncIterator, Dict, Generic, Optional, TypeVar
 
 import a_sync
 from pandas import DataFrame, concat  # type: ignore
