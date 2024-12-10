@@ -257,7 +257,7 @@ class AddressLedgerBase(
         self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
     ) -> AsyncIterator[T]:
         address = self.portfolio_address.address
-        async for obj in self[start_block or self._start_block : end_block]:
+        async for obj in self[start_block: end_block]:
             if obj.from_address == address:
                 yield obj
 
@@ -265,7 +265,7 @@ class AddressLedgerBase(
         self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
     ) -> AsyncIterator[T]:
         address = self.portfolio_address.address
-        async for obj in self[start_block or self._start_block : end_block]:
+        async for obj in self[start_block: end_block]:
             if obj.from_address != address:
                 yield obj
 
