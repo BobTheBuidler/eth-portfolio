@@ -112,10 +112,10 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
             lo = 0
 
         if known_nonces_greater_than_query := [n for n in nonces[address] if n > nonce]:
-            highest_known_nonce_greater_than_query = max(known_nonces_greater_than_query)
-            block_at_known_nonce = nonces[address][highest_known_nonce_greater_than_query]
+            lowest_known_nonce_greater_than_query = min(known_nonces_greater_than_query)
+            block_at_known_nonce = nonces[address][lowest_known_nonce_greater_than_query]
             hi = block_at_known_nonce
-            del highest_known_nonce_greater_than_query, block_at_known_nonce
+            del lowest_known_nonce_greater_than_query, block_at_known_nonce
 
         del known_nonces_less_than_query, known_nonces_greater_than_query
 
