@@ -100,7 +100,7 @@ _nonce_cache_locks: DefaultDict[Address, asyncio.Lock] = defaultdict(asyncio.Loc
 
 async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
     hi = await dank_mids.eth.block_number
-    
+
     async with _nonce_cache_locks[address]:
         if known_nonces_lower_than_query := [n for n in nonces[address] if n < nonce]:
             highest_known_nonce_lower_than_query_nonce = max(known_nonces_lower_than_query)
@@ -109,26 +109,28 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
             del highest_known_nonce_lower_than_query_nonce, block_at_known_nonce
         else:
             lo = 0
-            
+
         del known_nonces_lower_than_query
-    
+
         # lets find the general area first before we proceed with our binary search
         range_size = hi - lo + 1
         if range_size > 4:
             num_chunks = _get_num_chunks(range_size)
             chunk_size = range_size // num_chunks
-            points: Dict[int, Nonce] = await a_sync.gather({
-                point: get_nonce_at_block(address, point)
-                for point in (lo + i * chunk_size for i in range(num_chunks))
-            })
-            
+            points: Dict[int, Nonce] = await a_sync.gather(
+                {
+                    point: get_nonce_at_block(address, point)
+                    for point in (lo + i * chunk_size for i in range(num_chunks))
+                }
+            )
+
             for block, _nonce in points.items():
                 if _nonce >= nonce:
                     break
                 lo = block
-                
+
             del num_chunks, chunk_size, points, block
-            
+
         del range_size
 
     while True:
