@@ -124,6 +124,22 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
             df = self._cleanup_df(df)
         return df
 
+    async def sent(
+        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+    ) -> AsyncIterator[T]:
+        portfolio_addresses = set(self.portfolio.addresses.keys())
+        async for obj in self[start_block:end_block]:
+            if obj.from_address in portfolio_addresses and obj.to_address not in portfolio_addresses:
+                yield obj
+
+    async def received(
+        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+    ) -> AsyncIterator[T]:
+        portfolio_addresses = set(self.portfolio.addresses.keys())
+        async for obj in self[start_block:end_block]:
+            if obj.to_address in portfolio_addresses and obj.from_address not in portfolio_addresses:
+                yield obj
+                
     async def _df_base(self, start_block: Block, end_block: Block) -> DataFrame:
         """
         Fetches and concatenates raw ledger data into a :class:`~DataFrame` for all addresses in the portfolio.
