@@ -9,7 +9,7 @@ This file is part of a larger system that includes modules for handling portfoli
 import asyncio
 import logging
 from functools import wraps
-from typing import Any, Dict, Iterable, Iterator, List, Tuple, Union
+from typing import Any, Dict, Iterable, Iterator, List, Optional, Tuple, Union
 
 import a_sync
 from a_sync.a_sync import ASyncFunction
