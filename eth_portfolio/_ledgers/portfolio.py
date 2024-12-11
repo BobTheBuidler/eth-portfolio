@@ -25,10 +25,53 @@ T = TypeVar("T")
 
 
 class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_LedgerEntryList, T]):
+    """
+    The :class:`~eth_portfolio._ledgers.PortfolioLedgerBase` class provides
+    an abstract base for fetching and processing ledger entries across multiple Ethereum addresses
+    in a portfolio. It defines common methods and properties for portfolio-wide ledger operations.
+
+    This class is a key component in the eth-portfolio ecosystem, serving as:
+    - An abstraction layer between address-specific ledgers and portfolio-wide data management.
+    - A foundation for standardized data processing across different ledger types.
+    - A base for implementing asynchronous operations for efficient data retrieval.
+
+    Attributes:
+        property_name: The name of the ledger property (e.g., 'transactions', 'token_transfers', 'internal_transfers').
+        portfolio: The portfolio containing the addresses to be queried.
+        object_caches: A dictionary mapping Ethereum addresses to their respective address-specific ledgers.
+
+    Example:
+        >>> ledger = PortfolioLedgerBase(portfolio=Portfolio(addresses=["0x1234...", "0xABCD..."]))
+    """
+
     property_name: str
     object_caches: Dict[Address, AddressLedgerBase[_LedgerEntryList, T]]
 
     def __init__(self, portfolio: "Portfolio"):  # type: ignore
+        """
+        Initializes the :class:`~eth_portfolio._ledgers.PortfolioLedgerBase` class.
+
+        This constructor is crucial in the eth-portfolio ecosystem as it:
+        - Sets up the foundation for portfolio-wide ledger management.
+        - Establishes connections between portfolio addresses and their respective ledgers.
+        - Ensures proper initialization for subclasses handling different ledger types.
+
+        Args:
+            portfolio: The :class:`~eth_portfolio.portfolio.Portfolio` instance containing the Ethereum addresses to be managed.
+
+        Raises:
+            AssertionError: If the subclass does not define a `property_name`, which is essential
+                            for identifying the specific ledger type (e.g., transactions, token transfers).
+
+        Example:
+            >>> from eth_portfolio.portfolio import Portfolio
+            >>> from eth_portfolio._ledgers import PortfolioTransactionsLedger
+            >>> ledger = PortfolioTransactionsLedger(portfolio=Portfolio(addresses=["0x1234...", "0xABCD..."]))
+
+        Note:
+            Subclasses must define a `property_name` attribute to specify the type of ledger
+            they manage (e.g., 'transactions', 'token_transfers', 'internal_transfers').
+        """
         assert hasattr(self, "property_name"), "Subclasses must define a property_name"
         self.object_caches = {
             address.address: getattr(address, self.property_name) for address in portfolio
