@@ -448,7 +448,9 @@ class InternalTransfersList(PandableList[InternalTransfer]):
 @eth_retry.auto_retry
 async def trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTrace]:
     try:
-        return await dank_mids.eth.trace_filter({"fromBlock": fromBlock, "toBlock": toBlock, **kwargs})
+        return await dank_mids.eth.trace_filter(
+            {"fromBlock": fromBlock, "toBlock": toBlock, **kwargs}
+        )
     except ClientResponseError as e:
         if e.status != HTTPStatus.SERVICE_UNAVAILABLE or toBlock == fromBlock:
             raise
@@ -457,11 +459,11 @@ async def trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTra
         chunk_size = range_size // 2
         halfway = fromBlock + chunk_size
         results = await asyncio.gather(
-            trace_filter(fromBlock=fromBlock, toBlock=halfway, **kwargs), 
-            trace_filter(fromBlock=halfway+1, toBlock=toBlock, **kwargs),
+            trace_filter(fromBlock=fromBlock, toBlock=halfway, **kwargs),
+            trace_filter(fromBlock=halfway + 1, toBlock=toBlock, **kwargs),
         )
         return results[0] + results[1]
-        
+
 
 @alru_cache(maxsize=None)
 async def get_transaction_status(txhash: str) -> Status:
