@@ -35,10 +35,12 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
 
     __slots__ = "address", "_load_prices"
 
-    def __init__(self, address: Address, from_block: int, load_prices: bool = False):
+    def __init__(
+        self, address: Address, from_block: int, load_prices: bool = False, is_reusable: bool = True
+    ):
         self.address = address
         self._load_prices = load_prices
-        super().__init__(topics=self._topics, from_block=from_block)
+        super().__init__(topics=self._topics, from_block=from_block, is_reusable=is_reusable)
 
     def __repr__(self) -> str:
         return f"<{self.__class__.__module__}.{self.__class__.__name__} address={self.address}>"
@@ -46,19 +48,30 @@ class _TokenTransfers(ProcessedEvents["asyncio.Task[TokenTransfer]"]):
     @abc.abstractproperty
     def _topics(self) -> List: ...
 
-    @a_sync.ASyncIterator.wrap
-    async def yield_thru_block(self, block) -> AsyncIterator["asyncio.Task[TokenTransfer]"]:
-        logger.debug("%s yielding all objects thru block %s", self, block)
-        async for task in self._objects_thru(block=block):
-            logger.debug(
-                "yielding %s at block %s [thru: %s, lock: %s]",
-                task,
-                task.block,
-                block,
-                self._lock.value,
-            )
-            yield task
-        logger.debug("%s yield thru %s complete", self, block)
+    def yield_thru_block(self, block) -> AsyncIterator["asyncio.Task[TokenTransfer]"]:
+        debug_logs = logger.isEnabledFor(logging.DEBUG)
+        if debug_logs is False:
+            return self._objects_thru(block=block)
+
+        async def yield_thru_block_with_debug_logs() -> (
+            AsyncIterator["asyncio.Task[TokenTransfer]"]
+        ):
+            logger._log(logging.DEBUG, "%s yielding all objects thru block %s", (self, block))
+            async for task in self._objects_thru(block=block):
+                logger._log(
+                    logging.DEBUG,
+                    "yielding %s at block %s [thru: %s, lock: %s]",
+                    (
+                        task,
+                        task.block,
+                        block,
+                        self._lock.value,
+                    ),
+                )
+                yield task
+            logger._log(logging.DEBUG, "%s yield thru %s complete", (self, block))
+
+        return yield_thru_block_with_debug_logs()
 
     async def _extend(self, objs: List[evmspec.Log]) -> None:
         shitcoins = SHITCOINS.get(chain.id, set())
@@ -109,9 +122,15 @@ class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
     NOTE: These do not come back in chronologcal order.
     """
 
-    def __init__(self, address: Address, from_block: int, load_prices: bool = False):
-        self.transfers_in = InboundTokenTransfers(address, from_block, load_prices=load_prices)
-        self.transfers_out = OutboundTokenTransfers(address, from_block, load_prices=load_prices)
+    def __init__(
+        self, address: Address, from_block: int, load_prices: bool = False, is_reusable: bool = True
+    ):
+        self.transfers_in = InboundTokenTransfers(
+            address, from_block, load_prices=load_prices, is_reusable=is_reusable
+        )
+        self.transfers_out = OutboundTokenTransfers(
+            address, from_block, load_prices=load_prices, is_reusable=is_reusable
+        )
 
     def __aiter__(self):
         return self.yield_thru_block(chain.height).__aiter__()
