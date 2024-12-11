@@ -460,9 +460,25 @@ class InternalTransfersList(PandableList[InternalTransfer]):
     """
 
 
-trace_filter = a_sync.Semaphore(64, __name__ + ".trace_semaphore")(
-    eth_retry.auto_retry(dank_mids.eth.trace_filter)
-)
+@a_sync.Semaphore(64, __name__ + ".trace_semaphore")
+@eth_retry.auto_retry
+async def trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTrace]:
+    try:
+        return await dank_mids.eth.trace_filter(
+            {"fromBlock": fromBlock, "toBlock": toBlock, **kwargs}
+        )
+    except ClientResponseError as e:
+        if e.status != HTTPStatus.SERVICE_UNAVAILABLE or toBlock == fromBlock:
+            raise
+
+        range_size = toBlock - fromBlock + 1
+        chunk_size = range_size // 2
+        halfway = fromBlock + chunk_size
+        results = await asyncio.gather(
+            trace_filter(fromBlock=fromBlock, toBlock=halfway, **kwargs),
+            trace_filter(fromBlock=halfway + 1, toBlock=toBlock, **kwargs),
+        )
+        return results[0] + results[1]
 
 
 @alru_cache(maxsize=None)
@@ -500,7 +516,7 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
 
     check_status_tasks = a_sync.TaskMapping(get_transaction_status)
 
-    for trace in await trace_filter(filter_params):
+    for trace in await trace_filter(**filter_params):
         if "error" in trace:
             continue
 
