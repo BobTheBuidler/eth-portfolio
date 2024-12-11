@@ -253,6 +253,22 @@ class AddressLedgerBase(
         end_block = await get_buffered_chain_height()
         return self[start_block, end_block]  # type: ignore [index, return-value]
 
+    async def sent(
+        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+    ) -> AsyncIterator[T]:
+        address = self.portfolio_address.address
+        async for obj in self[start_block:end_block]:
+            if obj.from_address == address:
+                yield obj
+
+    async def received(
+        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+    ) -> AsyncIterator[T]:
+        address = self.portfolio_address.address
+        async for obj in self[start_block:end_block]:
+            if obj.from_address != address:
+                yield obj
+
     @set_end_block_if_none
     @stuck_coro_debugger
     async def _get_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[T]:

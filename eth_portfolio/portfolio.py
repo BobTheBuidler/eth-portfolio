@@ -9,7 +9,7 @@ This file is part of a larger system that includes modules for handling portfoli
 import asyncio
 import logging
 from functools import wraps
-from typing import Any, Dict, Iterable, Iterator, List, Tuple, Union
+from typing import Any, AsyncIterator, Dict, Iterable, Iterator, List, Optional, Tuple, Union
 
 import a_sync
 from a_sync.a_sync import ASyncFunction
@@ -31,6 +31,7 @@ from eth_portfolio._ledgers.portfolio import (
 from eth_portfolio._utils import _LedgeredBase
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.constants import ADDRESSES
+from eth_portfolio.structs import LedgerEntry
 from eth_portfolio.typing import Addresses, PortfolioBalances
 
 logger = logging.getLogger(__name__)
@@ -345,6 +346,18 @@ class Portfolio(a_sync.ASyncGenericBase):
             block=block,
         )
 
+    async def sent(
+        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+    ) -> AsyncIterator[LedgerEntry]:
+        async for obj in self.ledger.sent(start_block, end_block):
+            yield obj
+
+    async def received(
+        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+    ) -> AsyncIterator[LedgerEntry]:
+        async for obj in self.ledger.received(start_block, end_block):
+            yield obj
+
 
 async_functions = {
     name: obj for name, obj in PortfolioAddress.__dict__.items() if isinstance(obj, ASyncFunction)
@@ -561,6 +574,28 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
             logger.error(df)
             logger.error(df.columns)
             raise
+
+    async def sent(
+        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+    ) -> AsyncIterator[LedgerEntry]:
+        portfolio_addresses = set(self.portfolio.addresses.keys())
+        async for obj in self[start_block:end_block]:
+            if (
+                obj.from_address in portfolio_addresses
+                and obj.to_address not in portfolio_addresses
+            ):
+                yield obj
+
+    async def received(
+        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+    ) -> AsyncIterator[LedgerEntry]:
+        portfolio_addresses = set(self.portfolio.addresses.keys())
+        async for obj in self[start_block:end_block]:
+            if (
+                obj.to_address in portfolio_addresses
+                and obj.from_address not in portfolio_addresses
+            ):
+                yield obj
 
 
 # Use this var for a convenient way to set up your portfolio using env vars.

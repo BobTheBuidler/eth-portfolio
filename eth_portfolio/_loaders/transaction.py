@@ -6,9 +6,10 @@ The functions defined here use various async operations to retrieve transaction 
 The primary focus of this module is to support eth-portfolio's internal operations such as loading transactions by address and nonce, retrieving transaction details from specific blocks, and managing transaction-related data.
 """
 
+import asyncio
 import logging
 from collections import defaultdict
-from typing import Awaitable, DefaultDict, Dict, List, Optional, Tuple
+from typing import DefaultDict, Dict, List, Optional, Tuple
 
 import a_sync
 import dank_mids
@@ -38,6 +39,8 @@ Nonces = DefaultDict[Nonce, Block]
 
 nonces: DefaultDict[Address, Nonces] = defaultdict(lambda: defaultdict(int))
 
+_semaphore = a_sync.Semaphore(10_000, name="load transaction db semaphore")
+
 
 @eth_retry.auto_retry
 @stuck_coro_debugger
@@ -63,11 +66,12 @@ async def load_transaction(
         >>> print(await load_transaction(address="0x1234567890abcdef1234567890abcdef12345678", nonce=5, load_prices=True))
         (5, Transaction(...))
     """
-    if transaction := await db.get_transaction(address, nonce):
-        if load_prices and transaction.price is None:
-            await db.delete_transaction(transaction)
-        else:
-            return nonce, transaction
+    async with _semaphore:
+        if transaction := await db.get_transaction(address, nonce):
+            if load_prices and transaction.price is None:
+                await db.delete_transaction(transaction)
+            else:
+                return nonce, transaction
 
     block = await get_block_for_nonce(address, nonce)
     tx = await get_transaction_by_nonce_and_block(address, nonce, block)
@@ -92,31 +96,54 @@ async def load_transaction(
     return nonce, transaction
 
 
+_nonce_cache_semaphores: DefaultDict[Address, asyncio.Semaphore] = defaultdict(
+    lambda: asyncio.Semaphore(100)
+)
+
+
 async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
-    if known_nonces_lower_than_query := [n for n in nonces[address] if n < nonce]:
-        highest_known_nonce_lower_than_query_nonce = max(known_nonces_lower_than_query)
-        block_at_known_nonce = nonces[address][highest_known_nonce_lower_than_query_nonce]
-        lo = block_at_known_nonce
-    else:
-        lo = 0
+    hi = None
 
-    hi = await dank_mids.eth.block_number
+    async with _nonce_cache_semaphores[address]:
+        if known_nonces_less_than_query := [n for n in nonces[address] if n < nonce]:
+            highest_known_nonce_lower_than_query = max(known_nonces_less_than_query)
+            block_at_known_nonce = nonces[address][highest_known_nonce_lower_than_query]
+            lo = block_at_known_nonce
+            del highest_known_nonce_lower_than_query, block_at_known_nonce
+        else:
+            lo = 0
 
-    # lets find the general area first before we proceed with our binary search
-    range_size = hi - lo + 1
-    if range_size > 4:
-        num_chunks = _get_num_chunks(range_size)
-        chunk_size = range_size // num_chunks
-        coros: Dict[int, Awaitable[Nonce]] = {
-            point: get_nonce_at_block(address, point)
-            for point in [lo + i * chunk_size for i in range(num_chunks)]
-        }
-        points: Dict[int, Nonce] = await a_sync.gather(coros)
+        if known_nonces_greater_than_query := [n for n in nonces[address] if n > nonce]:
+            lowest_known_nonce_greater_than_query = min(known_nonces_greater_than_query)
+            block_at_known_nonce = nonces[address][lowest_known_nonce_greater_than_query]
+            hi = block_at_known_nonce
+            del lowest_known_nonce_greater_than_query, block_at_known_nonce
 
-        for block, _nonce in points.items():
-            if _nonce >= nonce:
-                break
-            lo = block
+        del known_nonces_less_than_query, known_nonces_greater_than_query
+
+        # lets find the general area first before we proceed with our binary search
+        range_size = hi - lo + 1
+        if range_size > 4:
+            num_chunks = _get_num_chunks(range_size)
+            chunk_size = range_size // num_chunks
+            points: Dict[int, Nonce] = await a_sync.gather(
+                {
+                    point: get_nonce_at_block(address, point)
+                    for point in (lo + i * chunk_size for i in range(num_chunks))
+                }
+            )
+
+            for block, _nonce in points.items():
+                if _nonce >= nonce:
+                    hi = block
+                    break
+                lo = block
+
+            del num_chunks, chunk_size, points, block
+
+        del range_size
+
+    hi = hi or await dank_mids.eth.block_number
 
     while True:
         _nonce = await get_nonce_at_block(address, lo)
