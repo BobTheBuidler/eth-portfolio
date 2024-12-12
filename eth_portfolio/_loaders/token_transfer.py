@@ -9,6 +9,7 @@ from typing import Optional
 import a_sync
 import dank_mids
 import msgspec
+from async_lru import alru_cache
 from evmspec.data import TransactionIndex
 from pony.orm import TransactionIntegrityError, UnexpectedError
 from y import ERC20
