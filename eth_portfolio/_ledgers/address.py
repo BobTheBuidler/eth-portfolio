@@ -13,6 +13,7 @@ import abc
 import asyncio
 import logging
 from functools import partial
+from http import HTTPStatus
 from itertools import product
 from typing import (
     TYPE_CHECKING,
