@@ -37,7 +37,7 @@ def cache_to_disk(fn: AnyFn[P, T]) -> AnyFn[P, T]:
                         return pickle.loads(await f.read())
                         
             async_result: T = await fn(*args, **kwargs)
-            await __cache_write(cache_path, result)
+            await __cache_write(cache_path, async_result)
             return async_result
 
     else:
