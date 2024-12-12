@@ -30,6 +30,7 @@ from typing import (
 import a_sync
 import dank_mids
 import eth_retry
+from aiohttp import ClientResponseError
 from async_lru import alru_cache
 from dank_mids.eth import TraceFilterParams
 from evmspec import FilterTrace
