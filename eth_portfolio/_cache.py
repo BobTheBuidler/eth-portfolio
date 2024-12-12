@@ -13,7 +13,7 @@ from a_sync._typing import AnyFn, P, T
 from brownie import chain
 
 BASE_PATH = f"./cache/{chain.id}/"
-EXECUTOR = a_sync.PruningThreadPoolExecutor(32, name="eth_portfolio cache decorator")
+EXECUTOR = a_sync.PruningThreadPoolExecutor(32)
 
 def cache_to_disk(fn: AnyFn[P, T]) -> AnyFn[P, T]:
     module = fn.__module__.replace(".", "/")
