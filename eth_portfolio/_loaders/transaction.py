@@ -309,11 +309,7 @@ async def _get_block_transactions(block: Block) -> List[evmspec.Transaction]:
     return await dank_mids.eth.get_transactions(block)
 
 
-get_block_transactions = a_sync.SmartProcessingQueue(
-    _get_block_transactions,
-    num_workers=1_000,
-    name=f"{__name__}.get_block_transactions",
-)
+get_block_transactions = a_sync.SmartProcessingQueue(_get_block_transactions, 1_000)
 """
 A smart processing queue that retrieves transactions from blocks with managable concurrency.
 
