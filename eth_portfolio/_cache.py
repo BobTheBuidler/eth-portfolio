@@ -13,7 +13,7 @@ from a_sync._typing import AnyFn, P, T
 from brownie import chain
 
 BASE_PATH = f"./cache/{chain.id}/"
-
+EXECUTOR = a_sync.PruningThreadPoolExecutor(32, name="eth_portfolio cache decorator")
 
 def cache_to_disk(fn: AnyFn[P, T]) -> AnyFn[P, T]:
     module = fn.__module__.replace(".", "/")
@@ -31,12 +31,13 @@ def cache_to_disk(fn: AnyFn[P, T]) -> AnyFn[P, T]:
         @functools.wraps(fn)
         async def disk_cache_wrap(*args: P.args, **kwargs: P.kwargs) -> T:
             cache_path = get_cache_file_path(args, kwargs)
-            if await aiofiles.os.path.exists(cache_path):
-                async with aiofiles.open(cache_path, "rb") as f:
+            if await aiofiles.os.path.exists(cache_path, executor=EXECUTOR):
+                async with aiofiles.open(cache_path, "rb", executor=EXECUTOR) as f:
                     with contextlib.suppress(EOFError):
                         return pickle.loads(await f.read())
+                        
             async_result: T = await fn(*args, **kwargs)
-            _cache_write(cache_path, async_result)
+            await __cache_write(cache_path, result)
             return async_result
 
     else:
@@ -50,19 +51,18 @@ def cache_to_disk(fn: AnyFn[P, T]) -> AnyFn[P, T]:
                         return pickle.load(f)
 
             sync_result: T = fn(*args, **kwargs)  # type: ignore [assignment, return-value]
-            _cache_write(cache_path, sync_result)
+            try:
+                a_sync.create_task(
+                    coro=__cache_write(cache_path, result),
+                    skip_gc_until_done=True,
+                )
+            except RuntimeError:
+                pass
             return sync_result
 
     return disk_cache_wrap
 
 
-def _cache_write(cache_path: str, result: Any) -> None:
-    a_sync.create_task(
-        coro=__cache_write(cache_path, result),
-        skip_gc_until_done=True,
-    )
-
-
 async def __cache_write(cache_path: str, result: Any) -> None:
-    async with aiofiles.open(cache_path, "wb") as f:
+    async with aiofiles.open(cache_path, "wb", executor=EXECUTOR) as f:
         await f.write(pickle.dumps(result))
