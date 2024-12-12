@@ -16,8 +16,4 @@ async def _get_transaction_receipt(txhash: HexStr) -> msgspec.Raw:
     )
 
 
-get_transaction_receipt = a_sync.SmartProcessingQueue(
-    _get_transaction_receipt,
-    num_workers=1000,
-    name=__name__ + ".get_transaction_receipt",
-)
+get_transaction_receipt = a_sync.SmartProcessingQueue(_get_transaction_receipt, 1000)
