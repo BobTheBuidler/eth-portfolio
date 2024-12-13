@@ -15,6 +15,7 @@ from brownie import chain
 BASE_PATH = f"./cache/{chain.id}/"
 EXECUTOR = a_sync.PruningThreadPoolExecutor(32)
 
+
 def cache_to_disk(fn: AnyFn[P, T]) -> AnyFn[P, T]:
     module = fn.__module__.replace(".", "/")
     cache_path_for_fn = BASE_PATH + module + "/" + fn.__name__
@@ -35,7 +36,7 @@ def cache_to_disk(fn: AnyFn[P, T]) -> AnyFn[P, T]:
                 async with aiofiles.open(cache_path, "rb", executor=EXECUTOR) as f:
                     with contextlib.suppress(EOFError):
                         return pickle.loads(await f.read())
-                        
+
             async_result: T = await fn(*args, **kwargs)
             await __cache_write(cache_path, async_result)
             return async_result
