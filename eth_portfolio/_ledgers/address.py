@@ -473,14 +473,10 @@ async def trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTra
         if e.status != HTTPStatus.SERVICE_UNAVAILABLE or toBlock == fromBlock:
             raise
 
-        try:
-            range_size = toBlock - fromBlock + 1
-        except TypeError as e:
-            e.args = *e.args, fromBlock, toBlock
-            raise
+        range_size = int(toBlock, 16) - int(fromBlock, 16) + 1
 
         chunk_size = range_size // 2
-        halfway = fromBlock + chunk_size
+        halfway = int(fromBlock, 16) + chunk_size
         results = await asyncio.gather(
             trace_filter(fromBlock=fromBlock, toBlock=halfway, **kwargs),
             trace_filter(fromBlock=halfway + 1, toBlock=toBlock, **kwargs),
