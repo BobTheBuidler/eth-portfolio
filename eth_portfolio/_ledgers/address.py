@@ -465,23 +465,32 @@ class InternalTransfersList(PandableList[InternalTransfer]):
 @a_sync.Semaphore(64, __name__ + ".trace_semaphore")
 @eth_retry.auto_retry
 async def trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTrace]:
-    try:
-        return await dank_mids.eth.trace_filter(
-            {"fromBlock": fromBlock, "toBlock": toBlock, **kwargs}
-        )
-    except ClientResponseError as e:
-        if e.status != HTTPStatus.SERVICE_UNAVAILABLE or toBlock == fromBlock:
-            raise
-
-        range_size = int(toBlock, 16) - int(fromBlock, 16) + 1
-
-        chunk_size = range_size // 2
-        halfway = int(fromBlock, 16) + chunk_size
-        results = await asyncio.gather(
-            trace_filter(fromBlock=fromBlock, toBlock=halfway, **kwargs),
-            trace_filter(fromBlock=halfway + 1, toBlock=toBlock, **kwargs),
-        )
-        return results[0] + results[1]
+    while True:
+        try:
+            return await dank_mids.eth.trace_filter(
+                {"fromBlock": fromBlock, "toBlock": toBlock, **kwargs}
+            )
+        except ClientResponseError as e:
+            if e.status != HTTPStatus.SERVICE_UNAVAILABLE or toBlock == fromBlock:
+                raise
+    
+            from_block = int(fromBlock, 16)
+            range_size = int(toBlock, 16) - from_block + 1
+            chunk_size = range_size // 2
+            halfway = from_block + chunk_size
+            
+            results = await asyncio.gather(
+                trace_filter(fromBlock=fromBlock, toBlock=halfway, **kwargs),
+                trace_filter(fromBlock=halfway + 1, toBlock=toBlock, **kwargs),
+            )
+            return results[0] + results[1]
+        except TypeError as e:
+            # This is some intermittent error I need to debug in dank_mids, I think it occurs when we get rate limited
+            if str(e) != "a bytes-like object is required, not 'NoneType'":
+                raise
+            await asyncio.sleep(0.5)
+            # remove this logger when I know there are no looping issues
+            logger.info("call failed, trying again")
 
 
 @alru_cache(maxsize=None)
