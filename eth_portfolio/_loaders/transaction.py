@@ -96,11 +96,11 @@ async def load_transaction(
     return nonce, transaction
 
 
-_nonce_cache_semaphores: DefaultDict[Address, asyncio.Semaphore] = defaultdict(
-    lambda: asyncio.Semaphore(100)
-)
 _nonce_semaphores: DefaultDict[Address, asyncio.Semaphore] = defaultdict(
     lambda: asyncio.Semaphore(50_000)
+)
+_nonce_cache_semaphores: DefaultDict[Address, asyncio.Semaphore] = defaultdict(
+    lambda: asyncio.Semaphore(100)
 )
 
 
