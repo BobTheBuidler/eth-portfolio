@@ -30,7 +30,6 @@ class Decimal(decimal.Decimal):
             string = string[:-1]
 
         if type(self)(scientific_notation) == self and len(scientific_notation) < len(string):
-            raise Exception("will this ever actually run?", self, scientific_notation)
             return scientific_notation
 
         if not string:
