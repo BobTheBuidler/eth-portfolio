@@ -467,23 +467,7 @@ class InternalTransfersList(PandableList[InternalTransfer]):
 async def trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTrace]:
     while True:
         try:
-            return await dank_mids.eth.trace_filter(
-                {"fromBlock": fromBlock, "toBlock": toBlock, **kwargs}
-            )
-        except ClientResponseError as e:
-            if e.status != HTTPStatus.SERVICE_UNAVAILABLE or toBlock == fromBlock:
-                raise
-
-            from_block = int(fromBlock, 16)
-            range_size = int(toBlock, 16) - from_block + 1
-            chunk_size = range_size // 2
-            halfway = from_block + chunk_size
-
-            results = await asyncio.gather(
-                trace_filter(fromBlock=fromBlock, toBlock=halfway, **kwargs),
-                trace_filter(fromBlock=halfway + 1, toBlock=toBlock, **kwargs),
-            )
-            return results[0] + results[1]
+            return await _trace_filter(fromBlock, toBlock, **kwargs)
         except TypeError as e:
             # This is some intermittent error I need to debug in dank_mids, I think it occurs when we get rate limited
             if str(e) != "a bytes-like object is required, not 'NoneType'":
@@ -491,6 +475,27 @@ async def trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTra
             await asyncio.sleep(0.5)
             # remove this logger when I know there are no looping issues
             logger.info("call failed, trying again")
+
+
+async def _trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTrace]:
+    try:
+        return await dank_mids.eth.trace_filter(
+            {"fromBlock": fromBlock, "toBlock": toBlock, **kwargs}
+        )
+    except ClientResponseError as e:
+        if e.status != HTTPStatus.SERVICE_UNAVAILABLE or toBlock == fromBlock:
+            raise
+
+        from_block = int(fromBlock, 16)
+        range_size = int(toBlock, 16) - from_block + 1
+        chunk_size = range_size // 2
+        halfway = from_block + chunk_size
+
+        results = await asyncio.gather(
+            _trace_filter(fromBlock=fromBlock, toBlock=halfway, **kwargs),
+            _trace_filter(fromBlock=halfway + 1, toBlock=toBlock, **kwargs),
+        )
+        return results[0] + results[1]
 
 
 @alru_cache(maxsize=None)
