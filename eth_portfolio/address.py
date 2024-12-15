@@ -50,7 +50,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     Represents a portfolio address within the eth-portfolio system.
     """
 
-    def __init__(self, address: Address, portfolio: "Portfolio", asynchronous: bool = False) -> None:  # type: ignore
+    def __init__(self, address: Address, portfolio: "Portfolio", num_workers_transactions: int = 25_000, asynchronous: bool = False) -> None:  # type: ignore
         """
         Initializes the PortfolioAddress instance.
 
@@ -83,7 +83,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
 
         super().__init__(portfolio._start_block)
 
-        self.transactions = AddressTransactionsLedger(self)
+        self.transactions = AddressTransactionsLedger(self, num_workers_transactions)
         """
         Ledger for tracking transactions.
         """
