@@ -99,6 +99,9 @@ async def load_transaction(
 _nonce_cache_semaphores: DefaultDict[Address, asyncio.Semaphore] = defaultdict(
     lambda: asyncio.Semaphore(100)
 )
+_nonce_semaphores: DefaultDict[Address, asyncio.Semaphore] = defaultdict(
+    lambda: asyncio.Semaphore(50_000)
+)
 
 
 async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
@@ -143,26 +146,29 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
 
         del range_size
 
-    hi = hi or await dank_mids.eth.block_number
+    
+    async with _nonce_semaphores[address]:
 
-    while True:
-        _nonce = await get_nonce_at_block(address, lo)
-
-        if _nonce < nonce:
-            old_lo = lo
-            lo += int((hi - lo) / 2) or 1
-            logger.debug("Nonce at %s is %s, checking higher block %s", old_lo, _nonce, lo)
-            continue
-
-        prev_block_nonce: int = await get_nonce_at_block(address, lo - 1)
-        if prev_block_nonce >= nonce:
-            hi = lo
-            lo = int(lo / 2)
-            logger.debug("Nonce at %s is %s, checking lower block %s", hi, _nonce, lo)
-            continue
-
-        logger.debug("Found nonce %s at block %s", nonce, lo)
-        return lo
+        hi = hi or await dank_mids.eth.block_number
+    
+        while True:
+            _nonce = await get_nonce_at_block(address, lo)
+    
+            if _nonce < nonce:
+                old_lo = lo
+                lo += int((hi - lo) / 2) or 1
+                logger.debug("Nonce at %s is %s, checking higher block %s", old_lo, _nonce, lo)
+                continue
+    
+            prev_block_nonce: int = await get_nonce_at_block(address, lo - 1)
+            if prev_block_nonce >= nonce:
+                hi = lo
+                lo = int(lo / 2)
+                logger.debug("Nonce at %s is %s, checking lower block %s", hi, _nonce, lo)
+                continue
+    
+            logger.debug("Found nonce %s at block %s", nonce, lo)
+            return lo
 
 
 async def _insert_to_db(transaction: structs.Transaction, load_prices: bool) -> None:
