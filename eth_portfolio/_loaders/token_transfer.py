@@ -155,7 +155,7 @@ async def get_symbol(token: ERC20) -> Optional[str]:
 @alru_cache(ttl=60 * 60)
 @stuck_coro_debugger
 @cache_to_disk
-async def _get_transaction_index(hash: str) -> int:
+async def get_transaction_index(hash: str) -> int:
     """
     Retrieves the transaction index for a given transaction hash, with results cached to disk.
 
@@ -173,9 +173,6 @@ async def _get_transaction_index(hash: str) -> int:
     return msgspec.json.decode(
         receipt_bytes, type=HasTxIndex, dec_hook=TransactionIndex._decode_hook
     ).transactionIndex
-
-
-get_transaction_index = a_sync.SmartProcessingQueue(_get_transaction_index, 1000)
 
 
 class HasTxIndex(msgspec.Struct):
