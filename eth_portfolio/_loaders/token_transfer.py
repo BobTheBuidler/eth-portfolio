@@ -68,7 +68,7 @@ async def load_token_transfer(
         if load_prices is False or transfer.price:
             return transfer
         await db.delete_token_transfer(transfer)
-        
+
     if transfer_log.address in _non_standard_erc20:
         logger.debug("%s is not a standard ERC20 token, skipping.", log.address)
         return None
@@ -87,21 +87,23 @@ async def load_token_transfer(
 
         # This will be mem cached so no need to include it in the gather and add a bunch of overhead
         symbol = await get_symbol(token)
-        
+
         tx_index_coro = get_transaction_index(transfer_log.transactionHash.hex())
         coro_results = {"token": symbol}
-        
+
         try:
             if load_prices:
                 coro_results.update(
-                    await a_sync.gather({
-                        "transaction_index": tx_index_coro,
-                        "price": _get_price(token.address, transfer_log.blockNumber),
-                    })
+                    await a_sync.gather(
+                        {
+                            "transaction_index": tx_index_coro,
+                            "price": _get_price(token.address, transfer_log.blockNumber),
+                        }
+                    )
                 )
             else:
                 coro_results["transaction_index"] = await tx_index_coro
-                
+
         except Exception as e:
             logger.error(
                 f"%s %s for %s %s at block %s:",
