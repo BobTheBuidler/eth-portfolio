@@ -581,7 +581,8 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
         portfolio_addresses = set(self.portfolio.addresses.keys())
         async for obj in self[start_block:end_block]:
             if (
-                obj.from_address in portfolio_addresses
+                obj.value
+                and obj.from_address in portfolio_addresses
                 and obj.to_address not in portfolio_addresses
             ):
                 yield obj
@@ -592,7 +593,8 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
         portfolio_addresses = set(self.portfolio.addresses.keys())
         async for obj in self[start_block:end_block]:
             if (
-                obj.to_address in portfolio_addresses
+                obj.value
+                and obj.to_address in portfolio_addresses
                 and obj.from_address not in portfolio_addresses
             ):
                 yield obj
