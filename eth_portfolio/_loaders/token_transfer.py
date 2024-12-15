@@ -84,10 +84,10 @@ async def load_token_transfer(
                 logger.debug("%s for %s, skipping.", e, transfer_log)
                 _non_standard_erc20.add(transfer_log.address)
                 return None
-    
+
             # This will be mem cached so no need to include it in the gather and add a bunch of overhead
             symbol = await get_symbol(token)
-    
+
             tx_index_coro = get_transaction_index(transfer_log.transactionHash.hex())
             coro_results = {"token": symbol}
 
