@@ -152,7 +152,7 @@ async def get_symbol(token: ERC20) -> Optional[str]:
         return None
 
 
-@alru_cache(ttl=60*60)
+@alru_cache(ttl=60 * 60)
 @stuck_coro_debugger
 @cache_to_disk
 async def _get_transaction_index(hash: str) -> int:
