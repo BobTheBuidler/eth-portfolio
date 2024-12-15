@@ -68,38 +68,53 @@ async def load_token_transfer(
         if load_prices is False or transfer.price:
             return transfer
         await db.delete_token_transfer(transfer)
+        
+    if transfer_log.address in _non_standard_erc20:
+        logger.debug("%s is not a standard ERC20 token, skipping.", log.address)
+        return None
 
     async with token_transfer_semaphore[transfer_log.block]:
         token = ERC20(transfer_log.address, asynchronous=True)
 
-        coros = {
-            "scale": token.scale,
-            "token": get_symbol(token),
-            "transaction_index": get_transaction_index(transfer_log.transactionHash.hex()),
-        }
-
-        if load_prices:
-            coros["price"] = _get_price(token.address, transfer_log.blockNumber)
-
         try:
-            coro_results = await a_sync.gather(coros)
+            # This will be mem cached so no need to gather and add a bunch of overhead
+            scale = await token.scale
         except NonStandardERC20 as e:
-            # NOTE: if we cant fetch scale or symbol or both, this is probably either a shitcoin or an NFT (which we don't support at this time)
+            # NOTE: if we cant fetch scale, this is probably either a shitcoin or an NFT (which we don't support at this time)
             logger.debug("%s for %s, skipping.", e, transfer_log)
-            return None
-        except Exception as e:
-            try:
-                logger.error(
-                    f"{e.__class__.__name__} {e} for {await get_symbol(token)} {transfer_log.address} at block {transfer_log.blockNumber}:"
-                )
-                logger.exception(e)
-            except NonStandardERC20 as e:
-                logger.error(
-                    f"{e.__class__.__name__} {e} for {transfer_log.address} at block {transfer_log.blockNumber}."
-                )
+            _non_standard_erc20.add(transfer_log.address)
             return None
 
-        value = Decimal(transfer_log.data.as_uint256) / coro_results.pop("scale")
+        # This will be mem cached so no need to include it in the gather and add a bunch of overhead
+        symbol = await get_symbol(token)
+        
+        tx_index_coro = get_transaction_index(transfer_log.transactionHash.hex())
+        coro_results = {"token": symbol}
+        
+        try:
+            if load_prices:
+                coro_results.update(
+                    await a_sync.gather({
+                        "transaction_index": tx_index_coro,
+                        "price": _get_price(token.address, transfer_log.blockNumber),
+                    })
+                )
+            else:
+                coro_results["transaction_index"] = await tx_index_coro
+                
+        except Exception as e:
+            logger.error(
+                f"%s %s for %s %s at block %s:",
+                e.__class__.__name__,
+                e,
+                await get_symbol(token) or token.address,
+                transfer_log.address,
+                transfer_log.blockNumber,
+            )
+            logger.exception(e)
+            return None
+
+        value = Decimal(transfer_log.data.as_uint256) / scale
 
         if price := coro_results.get("price"):
             coro_results["value_usd"] = round(value * price, 18)
@@ -131,6 +146,9 @@ async def _insert_to_db(transfer: TokenTransfer, load_prices: bool) -> None:
             pass
 
 
+_non_standard_erc20 = set()
+
+
 @stuck_coro_debugger
 async def get_symbol(token: ERC20) -> Optional[str]:
     """
@@ -146,9 +164,12 @@ async def get_symbol(token: ERC20) -> Optional[str]:
     Returns:
         The token's symbol as a string if successfully retrieved, or None if the token does not implement a standard symbol method.
     """
+    if token.address in _non_standard_erc20:
+        return None
     try:
         return await token.__symbol__
     except NonStandardERC20:
+        _non_standard_erc20.add(token.address)
         return None
 
 
