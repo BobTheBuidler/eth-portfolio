@@ -75,23 +75,22 @@ async def load_token_transfer(
 
     async with token_transfer_semaphore[transfer_log.block]:
         token = ERC20(transfer_log.address, asynchronous=True)
-
         try:
-            # This will be mem cached so no need to gather and add a bunch of overhead
-            scale = await token.scale
-        except NonStandardERC20 as e:
-            # NOTE: if we cant fetch scale, this is probably either a shitcoin or an NFT (which we don't support at this time)
-            logger.debug("%s for %s, skipping.", e, transfer_log)
-            _non_standard_erc20.add(transfer_log.address)
-            return None
+            try:
+                # This will be mem cached so no need to gather and add a bunch of overhead
+                scale = await token.scale
+            except NonStandardERC20 as e:
+                # NOTE: if we cant fetch scale, this is probably either a shitcoin or an NFT (which we don't support at this time)
+                logger.debug("%s for %s, skipping.", e, transfer_log)
+                _non_standard_erc20.add(transfer_log.address)
+                return None
+    
+            # This will be mem cached so no need to include it in the gather and add a bunch of overhead
+            symbol = await get_symbol(token)
+    
+            tx_index_coro = get_transaction_index(transfer_log.transactionHash.hex())
+            coro_results = {"token": symbol}
 
-        # This will be mem cached so no need to include it in the gather and add a bunch of overhead
-        symbol = await get_symbol(token)
-
-        tx_index_coro = get_transaction_index(transfer_log.transactionHash.hex())
-        coro_results = {"token": symbol}
-
-        try:
             if load_prices:
                 coro_results.update(
                     await a_sync.gather(
