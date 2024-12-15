@@ -108,7 +108,7 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
     hi = None
 
     async with _nonce_semaphores[address]:
-        
+
         async with _nonce_cache_semaphores[address]:
             if known_nonces_less_than_query := [n for n in nonces[address] if n < nonce]:
                 highest_known_nonce_lower_than_query = max(known_nonces_less_than_query)
@@ -117,15 +117,15 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
                 del highest_known_nonce_lower_than_query, block_at_known_nonce
             else:
                 lo = 0
-    
+
             if known_nonces_greater_than_query := [n for n in nonces[address] if n > nonce]:
                 lowest_known_nonce_greater_than_query = min(known_nonces_greater_than_query)
                 block_at_known_nonce = nonces[address][lowest_known_nonce_greater_than_query]
                 hi = block_at_known_nonce
                 del lowest_known_nonce_greater_than_query, block_at_known_nonce
-    
+
             del known_nonces_less_than_query, known_nonces_greater_than_query
-    
+
             # lets find the general area first before we proceed with our binary search
             range_size = hi - lo + 1
             if range_size > 4:
@@ -137,18 +137,17 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
                         for point in (lo + i * chunk_size for i in range(num_chunks))
                     }
                 )
-    
+
                 for block, _nonce in points.items():
                     if _nonce >= nonce:
                         hi = block
                         break
                     lo = block
-    
+
                 del num_chunks, chunk_size, points, block
-    
+
             del range_size
 
-        
         hi = hi or await dank_mids.eth.block_number
 
         while True:
