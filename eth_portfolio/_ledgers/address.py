@@ -394,7 +394,6 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     """
 
     _list_type = TransactionsList
-    _workers = ()
     __slots__ = ("cached_thru_nonce", "_queue", "_ready", "_num_workers", "_workers")
 
     def __init__(self, portfolio_address: "PortfolioAddress", num_workers: int = 25_000):
@@ -412,6 +411,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         self._queue = asyncio.Queue()
         self._ready = asyncio.Queue()
         self._num_workers = num_workers
+        self._workers = ()
 
     @set_end_block_if_none
     @stuck_coro_debugger
