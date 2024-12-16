@@ -19,6 +19,7 @@ from typing import (
     TYPE_CHECKING,
     AsyncGenerator,
     AsyncIterator,
+    Callable,
     Generic,
     List,
     NoReturn,
@@ -392,6 +393,8 @@ class TransactionsList(PandableList[Transaction]):
             df.gasPrice = df.gasPrice.apply(int)
         return df
 
+
+Nonce = int
 
 class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]):
     """
