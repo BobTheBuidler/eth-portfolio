@@ -1,6 +1,6 @@
 from abc import abstractproperty
 from asyncio import Task, create_task, sleep
-from logging import getLogger
+from logging import DEBUG, getLogger
 from typing import AsyncIterator, List
 
 import a_sync
