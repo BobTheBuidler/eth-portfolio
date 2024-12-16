@@ -2,9 +2,8 @@ import functools
 import inspect
 import os
 from hashlib import md5
-from os import makedirs, path
-from os.path import exists as _path_exists
-from os.path import join as _path_join
+from os import makedirs
+from os.path import exists, join
 from pickle import dumps, load, loads
 from typing import Any
 
@@ -26,7 +25,7 @@ def cache_to_disk(fn: AnyFn[P, T]) -> AnyFn[P, T]:
     def get_cache_file_path(args, kwargs):
         # Create a unique filename based on the function arguments
         key = md5(dumps((args, sorted(kwargs.items())))).hexdigest()
-        return _path_join(cache_path_for_fn, f"{key}.json")
+        return join(cache_path_for_fn, f"{key}.json")
 
     makedirs(cache_path_for_fn, exist_ok=True)
 
@@ -51,7 +50,7 @@ def cache_to_disk(fn: AnyFn[P, T]) -> AnyFn[P, T]:
         @functools.wraps(fn)
         def disk_cache_wrap(*args: P.args, **kwargs: P.kwargs) -> T:
             cache_path = get_cache_file_path(args, kwargs)
-            if _path_exists(cache_path):
+            if exists(cache_path):
                 with open(cache_path, "rb") as f:
                     try:
                         return load(f)
