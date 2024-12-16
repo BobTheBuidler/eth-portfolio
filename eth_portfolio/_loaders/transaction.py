@@ -7,6 +7,7 @@ The primary focus of this module is to support eth-portfolio's internal operatio
 """
 
 import asyncio
+import itertools
 import logging
 from collections import defaultdict
 from typing import DefaultDict, Dict, List, Optional, Tuple
@@ -39,8 +40,6 @@ Nonces = DefaultDict[Nonce, Block]
 
 nonces: DefaultDict[Address, Nonces] = defaultdict(lambda: defaultdict(int))
 
-_semaphore = a_sync.Semaphore(10_000, name="load transaction db semaphore")
-
 
 @eth_retry.auto_retry
 @stuck_coro_debugger
@@ -66,12 +65,11 @@ async def load_transaction(
         >>> print(await load_transaction(address="0x1234567890abcdef1234567890abcdef12345678", nonce=5, load_prices=True))
         (5, Transaction(...))
     """
-    async with _semaphore:
-        if transaction := await db.get_transaction(address, nonce):
-            if load_prices and transaction.price is None:
-                await db.delete_transaction(transaction)
-            else:
-                return nonce, transaction
+    if transaction := await db.get_transaction(address, nonce):
+        if load_prices and transaction.price is None:
+            await db.delete_transaction(transaction)
+        else:
+            return nonce, transaction
 
     block = await get_block_for_nonce(address, nonce)
     tx = await get_transaction_by_nonce_and_block(address, nonce, block)
@@ -96,78 +94,90 @@ async def load_transaction(
     return nonce, transaction
 
 
-_nonce_semaphores: DefaultDict[Address, asyncio.Semaphore] = defaultdict(
-    lambda: asyncio.Semaphore(50_000)
-)
-_nonce_cache_semaphores: DefaultDict[Address, asyncio.Semaphore] = defaultdict(
-    lambda: asyncio.Semaphore(100)
-)
+@alru_cache(maxsize=None, ttl=5)
+async def _get_block_number():
+    return await dank_mids.eth.block_number
+
+
+_nonce_cache_locks: DefaultDict[Address, asyncio.Lock] = defaultdict(asyncio.Lock)
 
 
 async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
     hi = None
+    async with _nonce_cache_locks[address]:
+        highest_known_nonce_lower_than_query = None
+        lowest_known_nonce_greater_than_query = None
 
-    async with _nonce_semaphores[address]:
+        # it is impossible for n to == nonce
+        for less_than, ns in itertools.groupby(nonces[address], lambda n: n < nonce):
+            if less_than:
+                max_value = max(ns)
+                if (
+                    highest_known_nonce_lower_than_query is None
+                    or max_value > highest_known_nonce_lower_than_query
+                ):
+                    highest_known_nonce_lower_than_query = max_value
 
-        async with _nonce_cache_semaphores[address]:
-            if known_nonces_less_than_query := [n for n in nonces[address] if n < nonce]:
-                highest_known_nonce_lower_than_query = max(known_nonces_less_than_query)
-                block_at_known_nonce = nonces[address][highest_known_nonce_lower_than_query]
-                lo = block_at_known_nonce
-                del highest_known_nonce_lower_than_query, block_at_known_nonce
             else:
-                lo = 0
+                min_value = min(ns)
+                if (
+                    lowest_known_nonce_greater_than_query is None
+                    or min_value < lowest_known_nonce_greater_than_query
+                ):
+                    lowest_known_nonce_greater_than_query = min_value
 
-            if known_nonces_greater_than_query := [n for n in nonces[address] if n > nonce]:
-                lowest_known_nonce_greater_than_query = min(known_nonces_greater_than_query)
-                block_at_known_nonce = nonces[address][lowest_known_nonce_greater_than_query]
-                hi = block_at_known_nonce
-                del lowest_known_nonce_greater_than_query, block_at_known_nonce
+        if highest_known_nonce_lower_than_query is not None:
+            lo = nonces[address][highest_known_nonce_lower_than_query]
+        else:
+            lo = 0
 
-            del known_nonces_less_than_query, known_nonces_greater_than_query
+        if lowest_known_nonce_greater_than_query is not None:
+            hi = nonces[address][lowest_known_nonce_greater_than_query]
 
-            # lets find the general area first before we proceed with our binary search
-            range_size = hi - lo + 1
-            if range_size > 4:
-                num_chunks = _get_num_chunks(range_size)
-                chunk_size = range_size // num_chunks
-                points: Dict[int, Nonce] = await a_sync.gather(
-                    {
-                        point: get_nonce_at_block(address, point)
-                        for point in (lo + i * chunk_size for i in range(num_chunks))
-                    }
-                )
+        del highest_known_nonce_lower_than_query, lowest_known_nonce_greater_than_query
 
-                for block, _nonce in points.items():
-                    if _nonce >= nonce:
-                        hi = block
-                        break
-                    lo = block
+        # lets find the general area first before we proceed with our binary search
+        range_size = hi - lo + 1
+        if range_size > 4:
+            num_chunks = _get_num_chunks(range_size)
+            chunk_size = range_size // num_chunks
+            points: Dict[int, Nonce] = await a_sync.gather(
+                {
+                    point: get_nonce_at_block(address, point)
+                    for point in (lo + i * chunk_size for i in range(num_chunks))
+                }
+            )
 
-                del num_chunks, chunk_size, points, block
+            for block, _nonce in points.items():
+                if _nonce >= nonce:
+                    hi = block
+                    break
+                lo = block
 
-            del range_size
+            del num_chunks, chunk_size, points, block
 
-        hi = hi or await dank_mids.eth.block_number
+        del range_size
 
-        while True:
-            _nonce = await get_nonce_at_block(address, lo)
+    hi = hi or await _get_block_number()
 
-            if _nonce < nonce:
-                old_lo = lo
-                lo += int((hi - lo) / 2) or 1
-                logger.debug("Nonce at %s is %s, checking higher block %s", old_lo, _nonce, lo)
-                continue
+    while True:
+        _nonce = await get_nonce_at_block(address, lo)
 
-            prev_block_nonce: int = await get_nonce_at_block(address, lo - 1)
-            if prev_block_nonce >= nonce:
-                hi = lo
-                lo = int(lo / 2)
-                logger.debug("Nonce at %s is %s, checking lower block %s", hi, _nonce, lo)
-                continue
+        if _nonce < nonce:
+            old_lo = lo
+            lo += int((hi - lo) / 2) or 1
+            logger.debug("Nonce at %s is %s, checking higher block %s", old_lo, _nonce, lo)
+            continue
 
-            logger.debug("Found nonce %s at block %s", nonce, lo)
-            return lo
+        prev_block_nonce: int = await get_nonce_at_block(address, lo - 1)
+        if prev_block_nonce >= nonce:
+            hi = lo
+            lo = int(lo / 2)
+            logger.debug("Nonce at %s is %s, checking lower block %s", hi, _nonce, lo)
+            continue
+
+        logger.debug("Found nonce %s at block %s", nonce, lo)
+        return lo
 
 
 async def _insert_to_db(transaction: structs.Transaction, load_prices: bool) -> None:

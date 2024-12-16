@@ -50,7 +50,13 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
 
     _wallets: ChecksumAddressDict[PortfolioAddress]
 
-    def __init__(self, portfolio: "Portfolio", addresses: Iterable[Address]) -> None:
+    def __init__(
+        self,
+        addresses: Iterable[Address],
+        start_block: Block,
+        load_prices: bool,
+        num_workers_transactions: int,
+    ) -> None:
         """
         Initialize a PortfolioWallets instance.
 
@@ -68,7 +74,11 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
 
         for address in addresses:
             self._wallets[address] = PortfolioAddress(
-                address, portfolio, asynchronous=portfolio.asynchronous
+                address,
+                start_block,
+                load_prices,
+                num_workers_transactions=num_workers_transactions,
+                asynchronous=portfolio.asynchronous,
             )
 
     def __repr__(self) -> str:
@@ -159,6 +169,9 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         return self._wallets.items()
 
 
+_DEFAULT_LABEL = "your portfolio"
+
+
 class Portfolio(a_sync.ASyncGenericBase):
     """
     Used to export information about a group of :class:`~eth_portfolio.address.PortfolioAddress` objects.
@@ -167,12 +180,33 @@ class Portfolio(a_sync.ASyncGenericBase):
     - All calls to `function(*args, **kwargs)` will return `{address: PortfolioAddress(Address).function(*args, **kwargs)}`
     """
 
+    label: str = _DEFAULT_LABEL
+    """
+    A label for the portfolio. Defaults to "your portfolio"
+    """
+
+    load_prices: bool = True
+    """
+    Whether to load prices. Defaults to True.
+    """
+
+    asynchronous: bool = False
+    """
+    Whether to use asynchronous operations. Defaults to False.
+    """
+
+    _start_block = 0
+    """
+    The starting block number. Defaults to 0.
+    """
+
     def __init__(
         self,
         addresses: Addresses,
         start_block: int = 0,
-        label: str = "your portfolio",
+        label: str = _DEFAULT_LABEL,
         load_prices: bool = True,
+        num_workers_transactions: int = 25_000,
         asynchronous: bool = False,
     ) -> None:
         """
@@ -190,40 +224,31 @@ class Portfolio(a_sync.ASyncGenericBase):
             raise ValueError("`start_block` must be >= 0")
         super().__init__()
 
-        self._start_block = start_block
-        """
-        The starting block number. Defaults to 0.
-        """
+        if start_block:
+            self._start_block = start_block
 
         assert isinstance(label, str), f"`label` must be a string, you passed {type(label)}"
-        self.label = label
-        """
-        A label for the portfolio. Defaults to "your portfolio"
-        """
+        if label != _DEFAULT_LABEL:
+            self.label = label
 
-        if not isinstance(load_prices, bool):
+        if load_prices is False:
+            self.load_prices = False
+        elif load_prices is not True:
             raise TypeError(f"`load_prices` must be a boolean, you passed {type(load_prices)}")
-        self.load_prices: bool = load_prices
-        """
-        Whether to load prices. Defaults to True.
-        """
 
-        if not isinstance(asynchronous, bool):
+        if asynchronous is True:
+            self.asynchronous = True
+        elif asynchronous is not False:
             raise TypeError(f"`asynchronous` must be a boolean, you passed {type(asynchronous)}")
-        self.asynchronous: bool = asynchronous
-        """
-        Whether to use asynchronous operations. Defaults to False.
-        """
 
-        if not isinstance(addresses, Iterable):
-            raise TypeError(f"`addresses` must be an iterable, not {type(addresses)}")
         if isinstance(addresses, str):
             addresses = [addresses]
-            """
-            The addresses to include in your portfolio
-            """
+        elif not isinstance(addresses, Iterable):
+            raise TypeError(f"`addresses` must be an iterable, not {type(addresses)}")
 
-        self.addresses = PortfolioWallets(self, addresses)
+        self.addresses = PortfolioWallets(
+            addresses, start_block, load_prices, num_workers_transactions
+        )
         """
         A container for the :class:`~eth_portfolio.Portfolio`'s :class:`~eth_portfolio.address.PortfolioAddress` objects.
         

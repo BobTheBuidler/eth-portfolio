@@ -19,8 +19,10 @@ from typing import (
     TYPE_CHECKING,
     AsyncGenerator,
     AsyncIterator,
+    Callable,
     Generic,
     List,
+    NoReturn,
     Optional,
     Tuple,
     Type,
@@ -34,10 +36,12 @@ import eth_retry
 from aiohttp import ClientResponseError
 from async_lru import alru_cache
 from dank_mids.eth import TraceFilterParams
+from eth_typing import ChecksumAddress
 from evmspec import FilterTrace
 from evmspec.structs.receipt import Status
 from evmspec.structs.trace import call, reward
 from pandas import DataFrame  # type: ignore
+from tqdm import tqdm
 from y import ERC20
 from y._decorators import stuck_coro_debugger
 from y.datatypes import Block
@@ -46,7 +50,7 @@ from y.utils.events import BATCH_SIZE
 from eth_portfolio import _exceptions, _loaders
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._decorators import set_end_block_if_none
-from eth_portfolio._loaders.transaction import get_nonce_at_block
+from eth_portfolio._loaders.transaction import get_nonce_at_block, load_transaction
 from eth_portfolio._utils import PandableList, _AiterMixin, get_buffered_chain_height
 from eth_portfolio._ydb.token_transfers import TokenTransfers
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
@@ -145,6 +149,9 @@ class AddressLedgerBase(
             The hash value.
         """
         return hash(self.address)
+
+    def __repr__(self) -> str:
+        return f"<{type(self).__name__} for {self.address} at {hex(id(self))}>"
 
     @abc.abstractproperty
     def _list_type(self) -> Type[_LedgerEntryList]:
@@ -387,15 +394,18 @@ class TransactionsList(PandableList[Transaction]):
         return df
 
 
+Nonce = int
+
+
 class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]):
     """
     A ledger for managing transaction entries.
     """
 
     _list_type = TransactionsList
-    __slots__ = ("cached_thru_nonce",)
+    __slots__ = ("cached_thru_nonce", "_queue", "_ready", "_num_workers", "_workers")
 
-    def __init__(self, portfolio_address: "PortfolioAddress"):
+    def __init__(self, portfolio_address: "PortfolioAddress", num_workers: int = 25_000):
         """
         Initializes the AddressTransactionsLedger instance.
 
@@ -407,6 +417,13 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         """
         The nonce through which all transactions have been loaded into memory.
         """
+        self._queue = asyncio.Queue()
+        self._ready = asyncio.Queue()
+        self._num_workers = num_workers
+        self._workers = []
+
+    def __del__(self) -> None:
+        self.__stop_workers()
 
     @set_end_block_if_none
     @stuck_coro_debugger
@@ -425,16 +442,18 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             return
         end_block_nonce: int = await get_nonce_at_block(self.address, end_block)
         if nonces := list(range(self.cached_thru_nonce + 1, end_block_nonce + 1)):
-            coros = [
-                _loaders.load_transaction(self.address, nonce, self.load_prices) for nonce in nonces
-            ]
+            for nonce in nonces:
+                self._queue.put_nowait(nonce)
+
+            self._ensure_workers(min(len(nonces), self._num_workers))
 
             transactions = []
-            transaction: Transaction
-            async for nonce, transaction in a_sync.as_completed(  # type: ignore [assignment]
-                coros, aiter=True, tqdm=True, desc=f"Transactions        {self.address}"
-            ):
+            transaction: Optional[Transaction]
+            for _ in tqdm(nonces, desc=f"Transactions        {self.address}"):
+                nonce, transaction = await self._ready.get()
                 if transaction:
+                    if isinstance(transaction, Exception):
+                        raise transaction
                     transactions.append(transaction)
                     yield transaction
                 elif nonce == 0 and self.cached_thru_nonce == -1:
@@ -443,6 +462,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
                 else:
                     # NOTE Are we sure this is the correct way to handle this scenario? Are we sure it will ever even occur with the new gnosis handling?
                     logger.warning("No transaction with nonce %s for %s", nonce, self.address)
+
+            self.__stop_workers()
 
             if transactions:
                 self.objects.extend(transactions)
@@ -454,6 +475,50 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             self.cached_from = 0
         if self.cached_thru is None or end_block > self.cached_thru:
             self.cached_thru = end_block
+
+    def _ensure_workers(self, num_workers: int) -> None:
+        len_workers = len(self._workers)
+        if len_workers < num_workers:
+            logger.info("ensuring %s workers for %s", num_workers, self)
+
+            create_task = asyncio.create_task
+            worker_fn = self.__worker_fn
+            address = self.address
+            load_prices = self.load_prices
+            queue_get = stuck_coro_debugger(self._queue.get)
+            put_ready = self._ready.put_nowait
+
+            self._workers.extend(
+                create_task(worker_fn(address, load_prices, queue_get, put_ready))
+                for _ in range(num_workers - len_workers)
+            )
+            logger.info(f"{self} workers: {self._workers}")
+
+    @staticmethod
+    async def __worker_fn(
+        address: ChecksumAddress,
+        load_prices: bool,
+        queue_get: Callable[[], Nonce],
+        put_ready: Callable[[Nonce, Optional[Transaction]], None],
+    ) -> NoReturn:
+        try:
+            while True:
+                nonce = await queue_get()
+                try:
+                    put_ready(await load_transaction(address, nonce, load_prices))
+                except Exception as e:
+                    put_ready((nonce, e))
+        except Exception as e:
+            logger.error(f"%s in %s __worker_coro", type(e), self)
+            logger.exception(e)
+            raise
+
+    def __stop_workers(self) -> None:
+        logger.info("stopping workers for %s", self)
+        workers = self._workers
+        pop_next = workers.pop
+        for _ in range(len(workers)):
+            pop_next().cancel()
 
 
 class InternalTransfersList(PandableList[InternalTransfer]):
