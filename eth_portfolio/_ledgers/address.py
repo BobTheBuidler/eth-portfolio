@@ -148,6 +148,9 @@ class AddressLedgerBase(
         """
         return hash(self.address)
 
+    def __repr__(self) -> str:
+        return f"<{type(self).__name__} for {self.address} at {hex(id(self))}>"
+        
     @abc.abstractproperty
     def _list_type(self) -> Type[_LedgerEntryList]:
         """
