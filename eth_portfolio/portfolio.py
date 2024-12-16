@@ -50,7 +50,9 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
 
     _wallets: ChecksumAddressDict[PortfolioAddress]
 
-    def __init__(self, portfolio: "Portfolio", addresses: Iterable[Address], num_workers_transactions: int) -> None:
+    def __init__(
+        self, portfolio: "Portfolio", addresses: Iterable[Address], num_workers_transactions: int
+    ) -> None:
         """
         Initialize a PortfolioWallets instance.
 
@@ -68,7 +70,10 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
 
         for address in addresses:
             self._wallets[address] = PortfolioAddress(
-                address, portfolio, num_workers_transactions=num_workers_transactions, asynchronous=portfolio.asynchronous
+                address,
+                portfolio,
+                num_workers_transactions=num_workers_transactions,
+                asynchronous=portfolio.asynchronous,
             )
 
     def __repr__(self) -> str:
