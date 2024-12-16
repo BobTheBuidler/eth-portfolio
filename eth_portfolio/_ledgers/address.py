@@ -480,7 +480,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
                 ready_queue.put_nowait(nonce, e)
 
     def __del__(self):
-        for _ in range(len(self._workers)):
+        for _ in range(self._num_workers):
             self._workers.pop().cancel()
 
 
