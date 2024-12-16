@@ -476,7 +476,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         load_prices = self.load_prices
         get_next_job = queue.get
         put_result = ready_queue.put_nowait
-        
+
         while True:
             nonce = await get_next_job()
             try:
