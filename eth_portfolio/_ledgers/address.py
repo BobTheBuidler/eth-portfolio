@@ -393,7 +393,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     """
 
     _list_type = TransactionsList
-    __slots__ = ("cached_thru_nonce", "_queue", "_ready", "_num_workers")
+    _workers = ()
+    __slots__ = ("cached_thru_nonce", "_queue", "_ready", "_num_workers", "_workers")
 
     def __init__(self, portfolio_address: "PortfolioAddress", num_workers: int = 25_000):
         """
@@ -464,12 +465,14 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         if not self._workers:
             queue = self._queue
             ready = self._ready
+            worker_coro = self.__worker_coro
             self._workers = tuple(
-                asyncio.create_task(self.__worker(queue, ready)) for _ in range(self._num_workers)
+                asyncio.create_task(worker_coro(queue, ready))
+                for _ in range(self._num_workers)
             )
 
     @staticmethod
-    def __worker(queue: asyncio.Queue, ready_queue: asyncio.Queue) -> NoReturn:
+    def __worker_coro(queue: asyncio.Queue, ready_queue: asyncio.Queue) -> NoReturn:
         address = self.address
         load_prices = self.load_prices
         while True:
