@@ -471,6 +471,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     def _ensure_workers(self, num_workers: int) -> None:
         len_workers = len(self._workers)
         if len_workers < num_workers:
+            logger.info("ensuring %s workers for %s", num_workers, self)
             queue = self._queue
             ready = self._ready
             create_task = asyncio.create_task
