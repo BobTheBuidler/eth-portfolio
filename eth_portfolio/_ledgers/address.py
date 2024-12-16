@@ -429,7 +429,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         end_block_nonce: int = await get_nonce_at_block(self.address, end_block)
         if nonces := list(range(self.cached_thru_nonce + 1, end_block_nonce + 1)):
             for nonce in nonces:
-                self._queue.put_nowait((self.address, nonce, self.load_prices))
+                self._queue.put_nowait(nonce)
 
             self._ensure_workers()
 
@@ -462,20 +462,20 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
 
     def _ensure_workers(self) -> None:
         if not self._workers:
-            get = self._queue.get
-            self._workers = tuple(
-                asyncio.create_task(self.__worker(self._queue, self._ready_queue))
-                for _ in range(self._num_workers)
-            )
+            queue = self._queue
+            ready = self._ready
+            self._workers = tuple(asyncio.create_task(self.__worker(queue, ready)) for _ in range(self._num_workers))
 
     @staticmethod
     def __worker(queue: asyncio.Queue, ready_queue: asyncio.Queue) -> NoReturn:
+        address = self.address
+        load_prices = self.load_prices
         while True:
-            address, nonce, load_prices = await queue.get()
+            nonce = await queue.get()
             try:
                 ready_queue.put_nowait(await load_transaction(address, nonce, load_prices))
             except Exception as e:
-                ready_queue.put_nowait(e)
+                ready_queue.put_nowait(nonce, e)
 
     def __del__(self):
         for _ in range(len(self._workers)):
