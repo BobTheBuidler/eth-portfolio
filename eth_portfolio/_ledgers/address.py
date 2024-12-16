@@ -515,8 +515,10 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
 
     def __stop_workers(self) -> None:
         logger.info("stopping workers for %s", self)
-        for _ in range(len(_workers)):
-            self._workers.pop().cancel()
+        workers = self._workers
+        pop_next = workers.pop
+        for _ in range(len(workers)):
+            pop_next().cancel()
 
 
 class InternalTransfersList(PandableList[InternalTransfer]):
