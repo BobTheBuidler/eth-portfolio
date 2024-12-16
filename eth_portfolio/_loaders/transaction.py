@@ -101,30 +101,31 @@ _nonce_cache_semaphores: DefaultDict[Address, asyncio.Semaphore] = defaultdict(
 async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
     hi = None
     async with _nonce_cache_semaphores[address]:
-        known_nonces_less_than_query = []
-        known_nonces_greater_than_query = []
+        highest_known_nonce_lower_than_query = None
+        lowest_known_nonce_greater_than_query = None
         for n in nonces[address]:
             if n < nonce:
-                known_nonces_less_than_query.append(n)
-            else:
-                # it is impossible for n to == nonce
-                known_nonces_greater_than_query.append(n)
+                if (
+                    highest_known_nonce_lower_than_query is None 
+                    or n > highest_known_nonce_lower_than_query
+                ):
+                    highest_known_nonce_lower_than_query = n
+            # it is impossible for n to == nonce
+            elif (
+                lowest_known_nonce_greater_than_query is None 
+                or n < lowest_known_nonce_greater_than_query
+            ):
+                lowest_known_nonce_greater_than_query = n
                 
-        if known_nonces_less_than_query:
-            highest_known_nonce_lower_than_query = max(known_nonces_less_than_query)
-            block_at_known_nonce = nonces[address][highest_known_nonce_lower_than_query]
-            lo = block_at_known_nonce
-            del highest_known_nonce_lower_than_query, block_at_known_nonce
+        if highest_known_nonce_lower_than_query is not None:
+            lo = nonces[address][highest_known_nonce_lower_than_query]
         else:
             lo = 0
 
-        if known_nonces_greater_than_query:
-            lowest_known_nonce_greater_than_query = min(known_nonces_greater_than_query)
-            block_at_known_nonce = nonces[address][lowest_known_nonce_greater_than_query]
-            hi = block_at_known_nonce
-            del lowest_known_nonce_greater_than_query, block_at_known_nonce
+        if lowest_known_nonce_greater_than_query is not None:
+            hi = nonces[address][lowest_known_nonce_greater_than_query]
 
-        del known_nonces_less_than_query, known_nonces_greater_than_query
+        del highest_known_nonce_lower_than_query, lowest_known_nonce_greater_than_query
 
         # lets find the general area first before we proceed with our binary search
         range_size = hi - lo + 1
