@@ -487,11 +487,16 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         put_result = ready_queue.put_nowait
 
         while True:
-            nonce = await get_next_job()
             try:
-                put_result(await load_transaction(address, nonce, load_prices))
+                nonce = await get_next_job()
+                try:
+                    put_result(await load_transaction(address, nonce, load_prices))
+                except Exception as e:
+                    put_result((nonce, e))
             except Exception as e:
-                put_result(nonce, e)
+                logger.error(f"%s in %s __worker_coro", type(e), self)
+                logger.exception(e)
+                raise
 
     def __stop_workers(self) -> None:
         for _ in range(len(_workers)):
