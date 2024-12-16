@@ -39,8 +39,6 @@ Nonces = DefaultDict[Nonce, Block]
 
 nonces: DefaultDict[Address, Nonces] = defaultdict(lambda: defaultdict(int))
 
-_semaphore = a_sync.Semaphore(10_000, name="load transaction db semaphore")
-
 
 @eth_retry.auto_retry
 @stuck_coro_debugger
@@ -66,12 +64,11 @@ async def load_transaction(
         >>> print(await load_transaction(address="0x1234567890abcdef1234567890abcdef12345678", nonce=5, load_prices=True))
         (5, Transaction(...))
     """
-    async with _semaphore:
-        if transaction := await db.get_transaction(address, nonce):
-            if load_prices and transaction.price is None:
-                await db.delete_transaction(transaction)
-            else:
-                return nonce, transaction
+    if transaction := await db.get_transaction(address, nonce):
+        if load_prices and transaction.price is None:
+            await db.delete_transaction(transaction)
+        else:
+            return nonce, transaction
 
     block = await get_block_for_nonce(address, nonce)
     tx = await get_transaction_by_nonce_and_block(address, nonce, block)
