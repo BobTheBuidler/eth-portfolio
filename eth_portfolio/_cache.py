@@ -69,7 +69,7 @@ def cache_to_disk(fn: AnyFn[P, T]) -> AnyFn[P, T]:
             return sync_result
 
     return disk_cache_wrap
-    
+
 
 async def __cache_write(cache_path: str, result: Any) -> None:
     result = dumps(result)
