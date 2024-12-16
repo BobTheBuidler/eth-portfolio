@@ -396,6 +396,7 @@ class TransactionsList(PandableList[Transaction]):
 
 Nonce = int
 
+
 class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]):
     """
     A ledger for managing transaction entries.
