@@ -90,7 +90,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
 
         super().__init__(start_block)
 
-        self.transactions = AddressTransactionsLedger(self)
+        self.transactions = AddressTransactionsLedger(self, num_workers_transactions)
         """
         Ledger for tracking transactions.
         """
