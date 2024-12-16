@@ -7,6 +7,7 @@ The primary focus of this module is to support eth-portfolio's internal operatio
 """
 
 import asyncio
+import itertools
 import logging
 from collections import defaultdict
 from typing import DefaultDict, Dict, List, Optional, Tuple
@@ -103,19 +104,24 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
     async with _nonce_cache_semaphores[address]:
         highest_known_nonce_lower_than_query = None
         lowest_known_nonce_greater_than_query = None
-        for n in nonces[address]:
-            if n < nonce:
+        
+        # it is impossible for n to == nonce
+        for less_than, ns in itertools.groupby(nonces[address], lambda n: n < nonce):
+            if less_than:
+                max_value = max(ns)
                 if (
-                    highest_known_nonce_lower_than_query is None 
-                    or n > highest_known_nonce_lower_than_query
+                    highest_known_nonce_lower_than_query is None
+                    or max_value > highest_known_nonce_lower_than_query
                 ):
-                    highest_known_nonce_lower_than_query = n
-            # it is impossible for n to == nonce
-            elif (
-                lowest_known_nonce_greater_than_query is None 
-                or n < lowest_known_nonce_greater_than_query
-            ):
-                lowest_known_nonce_greater_than_query = n
+                    highest_known_nonce_lower_than_query = max_value
+            
+            else:
+                min_value = min(ns)
+                if (
+                    lowest_known_nonce_greater_than_query is None 
+                    or min_value < lowest_known_nonce_greater_than_query
+                ):
+                    lowest_known_nonce_greater_than_query = min_value
                 
         if highest_known_nonce_lower_than_query is not None:
             lo = nonces[address][highest_known_nonce_lower_than_query]
