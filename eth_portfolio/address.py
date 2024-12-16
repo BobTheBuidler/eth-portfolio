@@ -51,11 +51,11 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     """
 
     def __init__(
-        self, 
-        address: Address, 
+        self,
+        address: Address,
         start_block: Block,
         load_prices: bool,
-        num_workers_transactions: int = 25_000, 
+        num_workers_transactions: int = 25_000,
         asynchronous: bool = False,
     ) -> None:  # type: ignore
         """
