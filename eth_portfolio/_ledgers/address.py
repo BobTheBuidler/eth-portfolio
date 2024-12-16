@@ -482,6 +482,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             self._workers.extend(
                 create_task(worker_coro(queue, ready)) for _ in range(num_workers - len_workers)
             )
+            logger.info(f"{self} workers: {self._workers}")
 
     @staticmethod
     async def __worker_coro(queue: asyncio.Queue, ready_queue: asyncio.Queue) -> NoReturn:
@@ -490,17 +491,17 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         get_next_job = queue.get
         put_result = ready_queue.put_nowait
 
-        while True:
-            try:
+        try:
+            while True:
                 nonce = await get_next_job()
                 try:
                     put_result(await load_transaction(address, nonce, load_prices))
                 except Exception as e:
                     put_result((nonce, e))
-            except Exception as e:
-                logger.error(f"%s in %s __worker_coro", type(e), self)
-                logger.exception(e)
-                raise
+        except Exception as e:
+            logger.error(f"%s in %s __worker_coro", type(e), self)
+            logger.exception(e)
+            raise
 
     def __stop_workers(self) -> None:
         logger.info("stopping workers for %s", self)
