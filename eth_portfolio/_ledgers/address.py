@@ -395,7 +395,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     _list_type = TransactionsList
     __slots__ = ("cached_thru_nonce", "_queue", "_ready", "_num_workers")
 
-    def __init__(self, portfolio_address: "PortfolioAddress", num_workers: int = 50_000):
+    def __init__(self, portfolio_address: "PortfolioAddress", num_workers: int = 25_000):
         """
         Initializes the AddressTransactionsLedger instance.
 
