@@ -51,7 +51,11 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
     _wallets: ChecksumAddressDict[PortfolioAddress]
 
     def __init__(
-        self, addresses: Iterable[Address], start_block: Block, load_prices: bool, num_workers_transactions: int
+        self,
+        addresses: Iterable[Address],
+        start_block: Block,
+        load_prices: bool,
+        num_workers_transactions: int,
     ) -> None:
         """
         Initialize a PortfolioWallets instance.
@@ -238,7 +242,9 @@ class Portfolio(a_sync.ASyncGenericBase):
         elif not isinstance(addresses, Iterable):
             raise TypeError(f"`addresses` must be an iterable, not {type(addresses)}")
 
-        self.addresses = PortfolioWallets(self, addresses, start_block, load_prices, num_workers_transactions)
+        self.addresses = PortfolioWallets(
+            self, addresses, start_block, load_prices, num_workers_transactions
+        )
         """
         A container for the :class:`~eth_portfolio.Portfolio`'s :class:`~eth_portfolio.address.PortfolioAddress` objects.
         
