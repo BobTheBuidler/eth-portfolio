@@ -101,7 +101,16 @@ _nonce_cache_semaphores: DefaultDict[Address, asyncio.Semaphore] = defaultdict(
 async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
     hi = None
     async with _nonce_cache_semaphores[address]:
-        if known_nonces_less_than_query := [n for n in nonces[address] if n < nonce]:
+        known_nonces_less_than_query = []
+        known_nonces_greater_than_query = []
+        for n in nonces[address]:
+            if n < nonce:
+                known_nonces_less_than_query.append(n)
+            else:
+                # it is impossible for n to == nonce
+                known_nonces_greater_than_query.append(n)
+                
+        if known_nonces_less_than_query:
             highest_known_nonce_lower_than_query = max(known_nonces_less_than_query)
             block_at_known_nonce = nonces[address][highest_known_nonce_lower_than_query]
             lo = block_at_known_nonce
@@ -109,7 +118,7 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
         else:
             lo = 0
 
-        if known_nonces_greater_than_query := [n for n in nonces[address] if n > nonce]:
+        if known_nonces_greater_than_query:
             lowest_known_nonce_greater_than_query = min(known_nonces_greater_than_query)
             block_at_known_nonce = nonces[address][lowest_known_nonce_greater_than_query]
             hi = block_at_known_nonce
