@@ -94,14 +94,12 @@ async def load_transaction(
     return nonce, transaction
 
 
-_nonce_cache_semaphores: DefaultDict[Address, asyncio.Semaphore] = defaultdict(
-    lambda: asyncio.Semaphore(100)
-)
+_nonce_cache_locks: DefaultDict[Address, asyncio.Semaphore] = defaultdict(asyncio.Lock)
 
 
 async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
     hi = None
-    async with _nonce_cache_semaphores[address]:
+    async with _nonce_cache_locks[address]:
         highest_known_nonce_lower_than_query = None
         lowest_known_nonce_greater_than_query = None
 
