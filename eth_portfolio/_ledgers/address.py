@@ -393,7 +393,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     """
 
     _list_type = TransactionsList
-    __slots__ = ("cached_thru_nonce",)
+    __slots__ = ("cached_thru_nonce", "_queue", "_ready")
 
     def __init__(self, portfolio_address: "PortfolioAddress"):
         """
@@ -404,6 +404,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         """
         super().__init__(portfolio_address)
         self.cached_thru_nonce = -1
+        _queue = asyncio.Queue()
+        _ready = asyncio.Queue()
         """
         The nonce through which all transactions have been loaded into memory.
         """
@@ -425,24 +427,19 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             return
         end_block_nonce: int = await get_nonce_at_block(self.address, end_block)
         if nonces := list(range(self.cached_thru_nonce + 1, end_block_nonce + 1)):
-            coros = [
-                _loaders.load_transaction(self.address, nonce, self.load_prices) for nonce in nonces
-            ]
+            for nonce in nonces:
+                self._queue.put_nowait((self.address, nonce, self.load_prices))
+
+            self._ensure_workers()
 
             transactions = []
-            transaction: Transaction
-            async for nonce, transaction in a_sync.as_completed(  # type: ignore [assignment]
-                coros, aiter=True, tqdm=True, desc=f"Transactions        {self.address}"
-            ):
+            for _ in tqdm(nonces, desc=f"Transactions        {self.address}"):
+                transaction: Optional[Transaction] = await self._ready.get()
                 if transaction:
+                    if isinstance(transaction, Exception):
+                        raise transaction
                     transactions.append(transaction)
                     yield transaction
-                elif nonce == 0 and self.cached_thru_nonce == -1:
-                    # Gnosis safes
-                    self.cached_thru_nonce = 0
-                else:
-                    # NOTE Are we sure this is the correct way to handle this scenario? Are we sure it will ever even occur with the new gnosis handling?
-                    logger.warning("No transaction with nonce %s for %s", nonce, self.address)
 
             if transactions:
                 self.objects.extend(transactions)
@@ -455,6 +452,24 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         if self.cached_thru is None or end_block > self.cached_thru:
             self.cached_thru = end_block
 
+    def _ensure_workers(self) -> None:
+        if not self._workers:
+            get = self._queue.get
+            self._workers = tuple(asyncio.create_task(self.__worker(self._queue, self._ready_queue)) for _ in range(50_000))
+
+    @staticmethod
+    def __worker(queue: asyncio.Queue, ready_queue: asyncio.Queue) -> NoReturn:
+        while True:
+            address, nonce, load_prices = await queue.get()
+            try:
+                ready_queue.put_nowait(await load_transaction(address, nonce, load_prices))
+            except Exception as e:
+                ready_queue.put_nowait(e)
+
+    def __del__(self):
+        for _ in range(len(self._workers)):
+            self._workers.pop().cancel()
+            
 
 class InternalTransfersList(PandableList[InternalTransfer]):
     """
