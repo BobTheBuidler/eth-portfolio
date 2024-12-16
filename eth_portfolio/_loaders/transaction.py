@@ -104,7 +104,7 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
     async with _nonce_cache_semaphores[address]:
         highest_known_nonce_lower_than_query = None
         lowest_known_nonce_greater_than_query = None
-        
+
         # it is impossible for n to == nonce
         for less_than, ns in itertools.groupby(nonces[address], lambda n: n < nonce):
             if less_than:
@@ -114,15 +114,15 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
                     or max_value > highest_known_nonce_lower_than_query
                 ):
                     highest_known_nonce_lower_than_query = max_value
-            
+
             else:
                 min_value = min(ns)
                 if (
-                    lowest_known_nonce_greater_than_query is None 
+                    lowest_known_nonce_greater_than_query is None
                     or min_value < lowest_known_nonce_greater_than_query
                 ):
                     lowest_known_nonce_greater_than_query = min_value
-                
+
         if highest_known_nonce_lower_than_query is not None:
             lo = nonces[address][highest_known_nonce_lower_than_query]
         else:
