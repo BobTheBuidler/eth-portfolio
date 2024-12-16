@@ -476,16 +476,17 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         len_workers = len(self._workers)
         if len_workers < num_workers:
             logger.info("ensuring %s workers for %s", num_workers, self)
-            
+
             create_task = asyncio.create_task
             worker_fn = self.__worker_fn
             address = self.address
             load_prices = self.load_prices
             queue_get = stuck_coro_debugger(self._queue.get)
             put_ready = self._ready.put_nowait
-            
+
             self._workers.extend(
-                create_task(worker_fn(address, load_prices, queue_get, put_ready)) for _ in range(num_workers - len_workers)
+                create_task(worker_fn(address, load_prices, queue_get, put_ready))
+                for _ in range(num_workers - len_workers)
             )
             logger.info(f"{self} workers: {self._workers}")
 
@@ -493,7 +494,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     async def __worker_fn(
         address: ChecksumAddress,
         load_prices: bool,
-        queue_get: Callable[[], Nonce], 
+        queue_get: Callable[[], Nonce],
         put_ready: Callable[[Nonce, Optional[structs.Transaction]], None],
     ) -> NoReturn:
         try:
