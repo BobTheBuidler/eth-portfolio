@@ -181,6 +181,10 @@ class Portfolio(a_sync.ASyncGenericBase):
     """
 
     label: str = _DEFAULT_LABEL
+    """
+    A label for the portfolio. Defaults to "your portfolio"
+    """
+
     start_block = 0
     """
     The starting block number. Defaults to 0.
