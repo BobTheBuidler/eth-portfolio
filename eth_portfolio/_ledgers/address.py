@@ -474,7 +474,9 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             ready = self._ready
             create_task = asyncio.create_task
             worker_coro = self.__worker_coro
-            self._workers.extend(create_task(worker_coro(queue, ready)) for _ in range(num_workers - len_workers))
+            self._workers.extend(
+                create_task(worker_coro(queue, ready)) for _ in range(num_workers - len_workers)
+            )
 
     @staticmethod
     async def __worker_coro(queue: asyncio.Queue, ready_queue: asyncio.Queue) -> NoReturn:
