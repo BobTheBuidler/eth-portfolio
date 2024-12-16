@@ -37,10 +37,10 @@ def break_locks(fn: AnyFn[P, T]) -> AnyFn[P, T]:
 
                     if debug_logs_enabled is None:
                         debug_logs_enabled = __logger_is_enabled_for(DEBUG)
-                        
+
                     if debug_logs_enabled is True:
                         __logger_log(DEBUG, "%s.%s %s", (fn.__module__, fn.__name__, e))
-                        
+
                     await aio_sleep(tries * random())
                     tries += 1
                     if tries > 5:
@@ -58,13 +58,13 @@ def break_locks(fn: AnyFn[P, T]) -> AnyFn[P, T]:
                 except OperationalError as e:
                     if str(e) != "database is locked":
                         raise e
-                        
+
                     if debug_logs_enabled is None:
                         debug_logs_enabled = __logger_is_enabled_for(DEBUG)
-                        
+
                     if debug_logs_enabled is True:
                         __logger_log(DEBUG, "%s.%s %s", (fn.__module__, fn.__name__, e))
-                        
+
                     time_sleep(tries * random())
                     tries += 1
                     if tries > 5:
