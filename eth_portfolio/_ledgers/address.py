@@ -393,9 +393,9 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     """
 
     _list_type = TransactionsList
-    __slots__ = ("cached_thru_nonce", "_queue", "_ready")
+    __slots__ = ("cached_thru_nonce", "_queue", "_ready", "_num_workers")
 
-    def __init__(self, portfolio_address: "PortfolioAddress"):
+    def __init__(self, portfolio_address: "PortfolioAddress", num_workers: int = 50_000):
         """
         Initializes the AddressTransactionsLedger instance.
 
@@ -404,11 +404,12 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         """
         super().__init__(portfolio_address)
         self.cached_thru_nonce = -1
-        _queue = asyncio.Queue()
-        _ready = asyncio.Queue()
         """
         The nonce through which all transactions have been loaded into memory.
         """
+        self._queue = asyncio.Queue()
+        self._ready = asyncio.Queue()
+        self._num_workers = num_workers
 
     @set_end_block_if_none
     @stuck_coro_debugger
@@ -433,13 +434,20 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             self._ensure_workers()
 
             transactions = []
+            transaction: Optional[Transaction]
             for _ in tqdm(nonces, desc=f"Transactions        {self.address}"):
-                transaction: Optional[Transaction] = await self._ready.get()
+                nonce, transaction = await self._ready.get()
                 if transaction:
                     if isinstance(transaction, Exception):
                         raise transaction
                     transactions.append(transaction)
                     yield transaction
+                elif nonce == 0 and self.cached_thru_nonce == -1:
+                    # Gnosis safes
+                    self.cached_thru_nonce = 0
+                else:
+                    # NOTE Are we sure this is the correct way to handle this scenario? Are we sure it will ever even occur with the new gnosis handling?
+                    logger.warning("No transaction with nonce %s for %s", nonce, self.address)
 
             if transactions:
                 self.objects.extend(transactions)
@@ -457,7 +465,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             get = self._queue.get
             self._workers = tuple(
                 asyncio.create_task(self.__worker(self._queue, self._ready_queue))
-                for _ in range(50_000)
+                for _ in range(self._num_workers)
             )
 
     @staticmethod
