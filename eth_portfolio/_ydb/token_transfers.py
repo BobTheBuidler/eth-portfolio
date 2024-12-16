@@ -53,6 +53,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
         if not _logger_is_enabled_for(DEBUG):
             async for task in self._objects_thru(block=block):
                 yield task
+            return
                 
         _logger_log(DEBUG, "%s yielding all objects thru block %s", (self, block))
         async for task in self._objects_thru(block=block):
