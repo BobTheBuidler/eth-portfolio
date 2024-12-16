@@ -19,8 +19,7 @@ EXECUTOR = PruningThreadPoolExecutor(32)
 
 
 def cache_to_disk(fn: AnyFn[P, T]) -> AnyFn[P, T]:
-    module = fn.__module__.replace(".", "/")
-    cache_path_for_fn = BASE_PATH + module + "/" + fn.__name__
+    cache_path_for_fn = f"{BASE_PATH}{fn.__module__.replace('.', '/')}/{fn.__name__}"
 
     def get_cache_file_path(args, kwargs):
         # Create a unique filename based on the function arguments
