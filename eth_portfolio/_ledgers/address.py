@@ -411,7 +411,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         self._queue = asyncio.Queue()
         self._ready = asyncio.Queue()
         self._num_workers = num_workers
-        self._workers = ()
+        self._workers = []
 
     @set_end_block_if_none
     @stuck_coro_debugger
@@ -433,7 +433,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             for nonce in nonces:
                 self._queue.put_nowait(nonce)
 
-            self._ensure_workers()
+            self._ensure_workers(min(len(nonces), self._num_workers))
 
             transactions = []
             transaction: Optional[Transaction]
@@ -462,13 +462,14 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         if self.cached_thru is None or end_block > self.cached_thru:
             self.cached_thru = end_block
 
-    def _ensure_workers(self) -> None:
-        if not self._workers:
+    def _ensure_workers(self, num_workers: int) -> None:
+        len_workers = len(self._workers)
+        if len_workers < num_workers:
             queue = self._queue
             ready = self._ready
             worker_coro = self.__worker_coro
-            self._workers = tuple(
-                asyncio.create_task(worker_coro(queue, ready)) for _ in range(self._num_workers)
+            self._workers.extend(
+                asyncio.create_task(worker_coro(queue, ready)) for _ in range(num_workers - len_workers)
             )
 
     @staticmethod
