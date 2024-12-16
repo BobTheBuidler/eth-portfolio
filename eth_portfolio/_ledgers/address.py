@@ -455,7 +455,10 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     def _ensure_workers(self) -> None:
         if not self._workers:
             get = self._queue.get
-            self._workers = tuple(asyncio.create_task(self.__worker(self._queue, self._ready_queue)) for _ in range(50_000))
+            self._workers = tuple(
+                asyncio.create_task(self.__worker(self._queue, self._ready_queue))
+                for _ in range(50_000)
+            )
 
     @staticmethod
     def __worker(queue: asyncio.Queue, ready_queue: asyncio.Queue) -> NoReturn:
@@ -469,7 +472,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     def __del__(self):
         for _ in range(len(self._workers)):
             self._workers.pop().cancel()
-            
+
 
 class InternalTransfersList(PandableList[InternalTransfer]):
     """
