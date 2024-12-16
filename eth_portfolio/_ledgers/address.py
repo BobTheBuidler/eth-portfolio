@@ -471,15 +471,18 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             )
 
     @staticmethod
-    def __worker_coro(queue: asyncio.Queue, ready_queue: asyncio.Queue) -> NoReturn:
+    async def __worker_coro(queue: asyncio.Queue, ready_queue: asyncio.Queue) -> NoReturn:
         address = self.address
         load_prices = self.load_prices
+        get_next_job = queue.get
+        put_result = ready_queue.put_nowait
+        
         while True:
-            nonce = await queue.get()
+            nonce = await get_next_job()
             try:
-                ready_queue.put_nowait(await load_transaction(address, nonce, load_prices))
+                put_result(await load_transaction(address, nonce, load_prices))
             except Exception as e:
-                ready_queue.put_nowait(nonce, e)
+                put_result(nonce, e)
 
     def __del__(self):
         for _ in range(self._num_workers):
