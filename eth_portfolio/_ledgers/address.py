@@ -413,6 +413,9 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         self._num_workers = num_workers
         self._workers = []
 
+    def __del__(self) -> None:
+        self.__stop_workers()
+
     @set_end_block_if_none
     @stuck_coro_debugger
     async def _load_new_objects(self, _: Block, end_block: Block) -> AsyncIterator[Transaction]:  # type: ignore [override]
@@ -451,6 +454,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
                     # NOTE Are we sure this is the correct way to handle this scenario? Are we sure it will ever even occur with the new gnosis handling?
                     logger.warning("No transaction with nonce %s for %s", nonce, self.address)
 
+            self.__stop_workers()
+
             if transactions:
                 self.objects.extend(transactions)
             if self.objects:
@@ -467,11 +472,9 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         if len_workers < num_workers:
             queue = self._queue
             ready = self._ready
+            create_task = asyncio.create_task
             worker_coro = self.__worker_coro
-            self._workers.extend(
-                asyncio.create_task(worker_coro(queue, ready))
-                for _ in range(num_workers - len_workers)
-            )
+            self._workers.extend(create_task(worker_coro(queue, ready)) for _ in range(num_workers - len_workers))
 
     @staticmethod
     async def __worker_coro(queue: asyncio.Queue, ready_queue: asyncio.Queue) -> NoReturn:
@@ -487,8 +490,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             except Exception as e:
                 put_result(nonce, e)
 
-    def __del__(self):
-        for _ in range(self._num_workers):
+    def __stop_workers(self) -> None:
+        for _ in range(len(_workers)):
             self._workers.pop().cancel()
 
 
