@@ -21,6 +21,7 @@ from typing import (
     AsyncIterator,
     Generic,
     List,
+    NoReturn,
     Optional,
     Tuple,
     Type,
