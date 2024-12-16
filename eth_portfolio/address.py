@@ -50,7 +50,14 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     Represents a portfolio address within the eth-portfolio system.
     """
 
-    def __init__(self, address: Address, portfolio: "Portfolio", num_workers_transactions: int = 25_000, asynchronous: bool = False) -> None:  # type: ignore
+    def __init__(
+        self, 
+        address: Address, 
+        start_block: Block,
+        load_prices: bool,
+        num_workers_transactions: int = 25_000, 
+        asynchronous: bool = False,
+    ) -> None:  # type: ignore
         """
         Initializes the PortfolioAddress instance.
 
@@ -76,12 +83,12 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         """
         Flag indicating if the operations are asynchronous.
         """
-        self.load_prices = portfolio.load_prices
+        self.load_prices = load_prices
         """
         Indicates if price loading is enabled.
         """
 
-        super().__init__(portfolio._start_block)
+        super().__init__(start_block)
 
         self.transactions = AddressTransactionsLedger(self)
         """
