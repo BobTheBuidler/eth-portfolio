@@ -499,7 +499,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         address: ChecksumAddress,
         load_prices: bool,
         queue_get: Callable[[], Nonce],
-        put_ready: Callable[[Nonce, Optional[structs.Transaction]], None],
+        put_ready: Callable[[Nonce, Optional[Transaction]], None],
     ) -> NoReturn:
         try:
             while True:
