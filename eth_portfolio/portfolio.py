@@ -246,9 +246,7 @@ class Portfolio(a_sync.ASyncGenericBase):
         elif not isinstance(addresses, Iterable):
             raise TypeError(f"`addresses` must be an iterable, not {type(addresses)}")
 
-        self.addresses = PortfolioWallets(
-            self, addresses, start_block, load_prices, num_workers_transactions
-        )
+        self.addresses = PortfolioWallets(addresses, start_block, load_prices, num_workers_transactions)
         """
         A container for the :class:`~eth_portfolio.Portfolio`'s :class:`~eth_portfolio.address.PortfolioAddress` objects.
         
