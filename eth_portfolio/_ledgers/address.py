@@ -464,7 +464,9 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         if not self._workers:
             queue = self._queue
             ready = self._ready
-            self._workers = tuple(asyncio.create_task(self.__worker(queue, ready)) for _ in range(self._num_workers))
+            self._workers = tuple(
+                asyncio.create_task(self.__worker(queue, ready)) for _ in range(self._num_workers)
+            )
 
     @staticmethod
     def __worker(queue: asyncio.Queue, ready_queue: asyncio.Queue) -> NoReturn:
