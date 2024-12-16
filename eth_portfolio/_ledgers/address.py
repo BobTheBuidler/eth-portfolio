@@ -469,7 +469,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             ready = self._ready
             worker_coro = self.__worker_coro
             self._workers.extend(
-                asyncio.create_task(worker_coro(queue, ready)) for _ in range(num_workers - len_workers)
+                asyncio.create_task(worker_coro(queue, ready))
+                for _ in range(num_workers - len_workers)
             )
 
     @staticmethod
