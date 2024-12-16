@@ -50,7 +50,7 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
 
     _wallets: ChecksumAddressDict[PortfolioAddress]
 
-    def __init__(self, portfolio: "Portfolio", addresses: Iterable[Address]) -> None:
+    def __init__(self, portfolio: "Portfolio", addresses: Iterable[Address], num_workers_transactions: int) -> None:
         """
         Initialize a PortfolioWallets instance.
 
@@ -68,7 +68,7 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
 
         for address in addresses:
             self._wallets[address] = PortfolioAddress(
-                address, portfolio, asynchronous=portfolio.asynchronous
+                address, portfolio, num_workers_transactions=num_workers_transactions, asynchronous=portfolio.asynchronous
             )
 
     def __repr__(self) -> str:
@@ -173,6 +173,7 @@ class Portfolio(a_sync.ASyncGenericBase):
         start_block: int = 0,
         label: str = "your portfolio",
         load_prices: bool = True,
+        num_workers_transactions: int = 25_000,
         asynchronous: bool = False,
     ) -> None:
         """
@@ -223,7 +224,7 @@ class Portfolio(a_sync.ASyncGenericBase):
             The addresses to include in your portfolio
             """
 
-        self.addresses = PortfolioWallets(self, addresses)
+        self.addresses = PortfolioWallets(self, addresses, num_workers_transactions)
         """
         A container for the :class:`~eth_portfolio.Portfolio`'s :class:`~eth_portfolio.address.PortfolioAddress` objects.
         
