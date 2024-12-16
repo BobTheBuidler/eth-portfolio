@@ -185,11 +185,6 @@ class Portfolio(a_sync.ASyncGenericBase):
     A label for the portfolio. Defaults to "your portfolio"
     """
 
-    start_block = 0
-    """
-    The starting block number. Defaults to 0.
-    """
-
     load_prices: bool = True
     """
     Whether to load prices. Defaults to True.
@@ -198,6 +193,11 @@ class Portfolio(a_sync.ASyncGenericBase):
     asynchronous: bool = False
     """
     Whether to use asynchronous operations. Defaults to False.
+    """
+
+    _start_block = 0
+    """
+    The starting block number. Defaults to 0.
     """
 
     def __init__(
