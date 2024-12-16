@@ -39,6 +39,7 @@ from evmspec import FilterTrace
 from evmspec.structs.receipt import Status
 from evmspec.structs.trace import call, reward
 from pandas import DataFrame  # type: ignore
+from tqdm import tqdm
 from y import ERC20
 from y._decorators import stuck_coro_debugger
 from y.datatypes import Block
