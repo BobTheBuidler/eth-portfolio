@@ -94,6 +94,11 @@ async def load_transaction(
     return nonce, transaction
 
 
+@alru_cache(maxsize=None, ttl=5)
+async def _get_block_number():
+    return await dank_mids.eth.block_number
+
+
 _nonce_cache_locks: DefaultDict[Address, asyncio.Lock] = defaultdict(asyncio.Lock)
 
 
@@ -153,7 +158,7 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
 
         del range_size
 
-    hi = hi or await dank_mids.eth.block_number
+    hi = hi or await _get_block_number()
 
     while True:
         _nonce = await get_nonce_at_block(address, lo)
