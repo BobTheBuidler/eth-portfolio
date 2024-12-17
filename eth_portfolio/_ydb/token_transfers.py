@@ -1,4 +1,4 @@
-from abc import abstractproperty
+from abc import abstractmethod
 from asyncio import Task, create_task, sleep
 from logging import DEBUG, getLogger
 from typing import AsyncIterator, List
@@ -11,7 +11,7 @@ from eth_utils import encode_hex
 from y.datatypes import Address
 from y.utils.events import ProcessedEvents
 
-from eth_portfolio import _loaders
+from eth_portfolio._loaders import load_token_transfer
 from eth_portfolio._shitcoins import SHITCOINS
 from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.structs import TokenTransfer
@@ -45,10 +45,11 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
     def __repr__(self) -> str:
         return f"<{self.__class__.__module__}.{self.__class__.__name__} address={self.address}>"
 
-    @abstractproperty
+    @property
+    @abstractmethod
     def _topics(self) -> List: ...
 
-    @a_sync.ASyncIterator.wrap
+    @a_sync.ASyncIterator.wrap  # type: ignore [call-overload]
     async def yield_thru_block(self, block) -> AsyncIterator["Task[TokenTransfer]"]:
         if not _logger_is_enabled_for(DEBUG):
             async for task in self._objects_thru(block=block):
@@ -67,6 +68,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
 
     async def _extend(self, objs: List[evmspec.Log]) -> None:
         shitcoins = SHITCOINS.get(chain.id, set())
+        append_loader_task = self._objects.append
         done = 0
         for log in objs:
             if log.address in shitcoins:
@@ -74,11 +76,11 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
             # save i/o
             array_encodable_log = y._db.log.Log(**log)
             task = create_task(
-                coro=_loaders.load_token_transfer(array_encodable_log, self._load_prices),
+                coro=load_token_transfer(array_encodable_log, self._load_prices),
                 name="load_token_transfer",
             )
             task.block = log.block  # type: ignore [attr-defined]
-            self._objects.append(task)
+            append_loader_task(task)
             done += 1
             # Make sure the event loop doesn't get blocked
             if done % 100 == 0:
