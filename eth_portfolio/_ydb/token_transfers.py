@@ -78,7 +78,6 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
             array_encodable_log = y._db.log.Log(**log)
             task = create_task(
                 coro=load_token_transfer(array_encodable_log, self._load_prices),
-                name="load_token_transfer",
             )
             task.block = log.block  # type: ignore [attr-defined]
             append_loader_task(task)

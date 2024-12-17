@@ -487,8 +487,10 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             put_ready = self._ready.put_nowait
 
             self._workers.extend(
-                create_task(worker_fn(address, load_prices, queue_get, put_ready))
-                for _ in range(num_workers - len_workers)
+                create_task(
+                    coro=worker_fn(address, load_prices, queue_get, put_ready),
+                    name=f"AddressTransactionsLedger worker {i} for {address}")
+                for i in range(num_workers - len_workers)
             )
 
     @staticmethod
