@@ -480,8 +480,6 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     def _ensure_workers(self, num_workers: int) -> None:
         len_workers = len(self._workers)
         if len_workers < num_workers:
-            logger.info("ensuring %s workers for %s", num_workers, self)
-
             worker_fn = self.__worker_fn
             address = self.address
             load_prices = self.load_prices
@@ -492,7 +490,6 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
                 create_task(worker_fn(address, load_prices, queue_get, put_ready))
                 for _ in range(num_workers - len_workers)
             )
-            logger.info(f"{self} workers: {self._workers}")
 
     @staticmethod
     async def __worker_fn(
