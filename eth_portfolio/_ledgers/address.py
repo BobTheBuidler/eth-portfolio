@@ -487,8 +487,10 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             put_ready = self._ready.put_nowait
 
             self._workers.extend(
-                create_task(worker_fn(address, load_prices, queue_get, put_ready))
-                for _ in range(num_workers - len_workers)
+                create_task(
+                    coro=worker_fn(address, load_prices, queue_get, put_ready),
+                    name=f"AddressTransactionsLedger worker {i} for {address}")
+                for i in range(num_workers - len_workers)
             )
 
     @staticmethod
@@ -664,37 +666,58 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             for direction, (start, end) in product(["toAddress", "fromAddress"], block_ranges)
         ]
 
-        
         # NOTE: We only want tqdm progress bar when there is work to do
         if len(block_ranges) == 1:
             generator_function = a_sync.as_completed
         else:
             generator_function = partial(  # type: ignore [assignment]
                 a_sync.as_completed, tqdm=True, desc=f"Trace Filters       {self.address}"
-            )            
-
-        if tasks := [
-            create_task(
-                coro=InternalTransfer.from_trace(trace, self.load_prices),
-                name="InternalTransfer.from_trace",
             )
-            for traces in generator_function(trace_filter_coros)
-            for trace in await traces
-        ]:
+
+        traces = []
+        async for chunk in generator_function(trace_filter_coros, aiter=True):
+            traces.extend(chunk)
+
+        if traces:
             internal_transfers = []
             append_transfer = internal_transfers.append
+            load = InternalTransfer.from_trace
+            tqdm_desc = f"Internal Transfers  {self.address}"
             done = 0
 
-            async for internal_transfer in a_sync.as_completed(
-                tasks, aiter=True, tqdm=True, desc=f"Internal Transfers  {self.address}"
-            ):
-                if internal_transfer:
-                    append_transfer(internal_transfer)
-                    yield internal_transfer
-
-                done += 1
-                if done % 100 == 0:
+            if self.load_prices:
+                tasks = []
+                while traces:
+                    tasks.extend(
+                        create_task(load(trace, load_prices=True)) for trace in traces[:1000]
+                    )
+                    traces = traces[1000:]
+                    # let the tasks start sending calls to your node now
+                    # without waiting for all tasks to be created
                     await sleep(0)
+
+                async for internal_transfer in a_sync.as_completed(
+                    tasks, aiter=True, tqdm=True, desc=tqdm_desc
+                ):
+                    if internal_transfer is not None:
+                        append_transfer(internal_transfer)
+                        yield internal_transfer
+
+                    done += 1
+                    if done % 100 == 0:
+                        await sleep(0)
+
+            else:
+                pop_next_trace = traces.pop
+                for _ in tqdm(tuple(range(len(traces))), desc=tqdm_desc):
+                    internal_transfer = await load(pop_next_trace(), load_prices=False)
+                    if internal_transfer is not None:
+                        append_transfer(internal_transfer)
+                        yield internal_transfer
+
+                    done += 1
+                    if done % 100 == 0:
+                        await sleep(0)
 
             if internal_transfers:
                 self.objects.extend(internal_transfers)
