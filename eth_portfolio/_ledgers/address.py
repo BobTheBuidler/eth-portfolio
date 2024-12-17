@@ -691,7 +691,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
                 if internal_transfer:
                     append_transfer(internal_transfer)
                     yield internal_transfer
-                    
+
                 done += 1
                 if done % 100 == 0:
                     await sleep(0)
