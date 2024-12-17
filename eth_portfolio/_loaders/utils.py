@@ -1,7 +1,7 @@
-import a_sync
 import dank_mids
 import eth_retry
 import msgspec
+from a_sync import SmartProcessingQueue
 from async_lru import alru_cache
 from eth_typing import HexStr
 from y._decorators import stuck_coro_debugger
@@ -16,4 +16,4 @@ async def _get_transaction_receipt(txhash: HexStr) -> msgspec.Raw:
     )
 
 
-get_transaction_receipt = a_sync.SmartProcessingQueue(_get_transaction_receipt, 1000)
+get_transaction_receipt = SmartProcessingQueue(_get_transaction_receipt, 1000)
