@@ -811,7 +811,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
                 if token_transfer:
                     append_token_transfer(token_transfer)
                     yield token_transfer
-                
+
                 # Don't let the event loop get congested
                 done += 1
                 if done % 100 == 0:
