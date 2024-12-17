@@ -673,7 +673,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             generator_function = partial(  # type: ignore [assignment]
                 a_sync.as_completed, tqdm=True, desc=f"Trace Filters       {self.address}"
             )
-        
+
         traces = []
         async for chunk in generator_function(trace_filter_coros, aiter=True):
             traces.extend(chunk)
@@ -695,7 +695,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
                     # let the tasks start sending calls to your node now
                     # without waiting for all tasks to be created
                     await sleep(0)
-                    
+
                 async for internal_transfer in a_sync.as_completed(
                     tasks, aiter=True, tqdm=True, desc=tqdm_desc
                 ):
