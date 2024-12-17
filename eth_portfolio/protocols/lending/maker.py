@@ -1,4 +1,4 @@
-import asyncio
+from asyncio import gather
 from typing import List, Optional
 
 from async_lru import alru_cache
@@ -37,14 +37,14 @@ class Maker(LendingProtocolWithLockedCollateral):
 
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        ilks, urn = await asyncio.gather(self.get_ilks(block), self._urn(address))
+        ilks, urn = await gather(self.get_ilks(block), self._urn(address))
 
-        gem_coros = asyncio.gather(*[self.get_gem(str(ilk)) for ilk in ilks])
-        ink_coros = asyncio.gather(
+        gem_coros = gather(*[self.get_gem(str(ilk)) for ilk in ilks])
+        ink_coros = gather(
             *[self.vat.urns.coroutine(ilk, urn, block_identifier=block) for ilk in ilks]
         )
 
-        gems, ink_data = await asyncio.gather(gem_coros, ink_coros)
+        gems, ink_data = await gather(gem_coros, ink_coros)
 
         balances: TokenBalances = TokenBalances(block=block)
         for token, data in zip(gems, ink_data):
@@ -59,11 +59,11 @@ class Maker(LendingProtocolWithLockedCollateral):
         if block is not None and block <= await contract_creation_block_async(self.ilk_registry):
             return TokenBalances(block=block)
 
-        ilks, urn = await asyncio.gather(self.get_ilks(block), self._urn(address))
+        ilks, urn = await gather(self.get_ilks(block), self._urn(address))
 
-        data = await asyncio.gather(
+        data = await gather(
             *[
-                asyncio.gather(
+                gather(
                     self.vat.urns.coroutine(ilk, urn, block_identifier=block),
                     self.vat.ilks.coroutine(ilk, block_identifier=block),
                 )

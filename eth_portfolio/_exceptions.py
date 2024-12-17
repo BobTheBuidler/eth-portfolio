@@ -1,4 +1,4 @@
-import asyncio
+from asyncio import gather
 from typing import TYPE_CHECKING
 
 from y.datatypes import Block
@@ -18,7 +18,7 @@ class BlockRangeOutOfBounds(Exception):
         self.end_block = end_block
 
     async def load_remaining(self) -> None:
-        return await asyncio.gather(
+        return await gather(
             self.ledger._load_new_objects(self.start_block, self.ledger.cached_thru - 1),
             self.ledger._load_new_objects(self.ledger.cached_from + 1, self.end_block),
         )

@@ -1,5 +1,4 @@
-import asyncio
-import logging
+from asyncio import gather, get_event_loop
 from contextlib import suppress
 from functools import lru_cache
 from typing import Any, Dict, Optional, Tuple, Union
@@ -141,7 +140,7 @@ def is_token(address) -> bool:
 
 async def _is_token(address) -> bool:
     # just breaking a weird lock, dont mind me
-    if retval := await asyncio.get_event_loop().run_in_executor(process, __is_token, address):
+    if retval := await get_event_loop().run_in_executor(process, __is_token, address):
         logger.debug("%s is token")
     else:
         logger.debug("%s is not token")
@@ -153,7 +152,7 @@ def __is_token(address) -> bool:
         erc = ERC20(address, asynchronous=True)
         if all(
             get_event_loop().run_until_complete(
-                asyncio.gather(erc._symbol(), erc._name(), erc.total_supply_readable())
+                gather(erc._symbol(), erc._name(), erc.total_supply_readable())
             )
         ):
             return True
@@ -287,10 +286,11 @@ def delete_transaction(transaction: Transaction) -> None:
 
 async def insert_transaction(transaction: Transaction) -> None:
     # Make sure these are in the db so below we can call them and use the results all in one transaction
-    coros = [ensure_block(transaction.block_number), ensure_address(transaction.from_address)]
-    if transaction.to_address:
-        coros.append(ensure_address(transaction.to_address))
-    await asyncio.gather(*coros)
+    coros = [ensure_block(transaction.block_number), ensure_address(transaction.from_address)]  # type: ignore [arg-type]
+    address = transaction.to_address
+    if address is not None:
+        coros.append(ensure_address(address))
+    await gather(*coros)
     await _insert_transaction(transaction)
 
 
@@ -369,7 +369,7 @@ async def insert_internal_transfer(transfer: InternalTransfer) -> None:
     coros = [ensure_block(transfer.block_number), ensure_address(transfer.from_address)]
     if to_address := getattr(transfer, "to_address", None):
         coros.append(ensure_address(to_address))
-    await asyncio.gather(*coros)
+    await gather(*coros)
     await _insert_internal_transfer(transfer)
 
 
@@ -465,7 +465,7 @@ async def insert_token_transfer(token_transfer: TokenTransfer) -> None:
         ensure_address(token_transfer.from_address),
         ensure_address(token_transfer.to_address),
     ]
-    await asyncio.gather(*coros)
+    await gather(*coros)
     await _insert_token_transfer(token_transfer)
 
 

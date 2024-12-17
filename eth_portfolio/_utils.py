@@ -21,8 +21,8 @@ from typing import (
     Union,
 )
 
-import a_sync
 import dank_mids
+from a_sync import ASyncGenericBase, ASyncIterable, ASyncIterator, as_yielded
 from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
@@ -229,22 +229,21 @@ def _unpack_indicies(indicies: Union[Block, Tuple[Block, Block]]) -> Tuple[Block
     return start_block, end_block
 
 
-class _AiterMixin(a_sync.ASyncIterable[_T]):
-    __doc__ = a_sync.ASyncIterable.__doc__
+class _AiterMixin(ASyncIterable[_T]):
 
     def __aiter__(self) -> AsyncIterator[_T]:
         return self[self._start_block : chain.height].__aiter__()
 
-    def __getitem__(self, slice: slice) -> a_sync.ASyncIterator[_T]:
+    def __getitem__(self, slice: slice) -> ASyncIterator[_T]:
         if slice.start is not None and not isinstance(slice.start, (int, datetime)):
             raise TypeError(f"start must be int or datetime. you passed {slice.start}")
         if slice.stop and not isinstance(slice.stop, (int, datetime)):
             raise TypeError(f"start must be int or datetime. you passed {slice.start}")
         if slice.step is not None:
             raise ValueError("You cannot use a step here.")
-        return a_sync.ASyncIterator(self._get_and_yield(slice.start or 0, slice.stop))
+        return ASyncIterator(self._get_and_yield(slice.start or 0, slice.stop))
 
-    def yield_forever(self) -> a_sync.ASyncIterator[_T]:
+    def yield_forever(self) -> ASyncIterator[_T]:
         return self[self._start_block : None]
 
     @abstractmethod
@@ -261,7 +260,7 @@ class _AiterMixin(a_sync.ASyncIterable[_T]):
 _LT = TypeVar("_LT")
 
 
-class _LedgeredBase(a_sync.ASyncGenericBase, _AiterMixin["LedgerEntry"], Generic[_LT]):
+class _LedgeredBase(ASyncGenericBase, _AiterMixin["LedgerEntry"], Generic[_LT]):
     """A mixin class for things with ledgers"""
 
     transactions: _LT
@@ -285,4 +284,4 @@ class _LedgeredBase(a_sync.ASyncGenericBase, _AiterMixin["LedgerEntry"], Generic
     def _get_and_yield(
         self, start_block: Block, end_block: Block
     ) -> AsyncGenerator["LedgerEntry", None]:
-        return a_sync.as_yielded(*(ledger[start_block:end_block] for ledger in self._ledgers))  # type: ignore [return-value,index]
+        return as_yielded(*(ledger[start_block:end_block] for ledger in self._ledgers))  # type: ignore [return-value,index]
