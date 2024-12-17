@@ -682,13 +682,16 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             done = 0
 
             if self.load_prices:
-                tasks = (
-                    create_task(
-                        coro=load(trace, load_prices=True), name="InternalTransfer.from_trace"
+                tasks = []
+                while traces:
+                    tasks.extend(
+                        create_task(load(trace, load_prices=True)) for trace in traces[:1000]
                     )
-                    for trace in traces
-                )
-                del traces
+                    traces = traces[1000:]
+                    # let the tasks start sending calls to your node now
+                    # without waiting for all tasks to be created
+                    await sleep(0)
+                    
                 async for internal_transfer in a_sync.as_completed(
                     tasks, aiter=True, tqdm=True, desc=tqdm_desc
                 ):
