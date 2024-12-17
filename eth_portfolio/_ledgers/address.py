@@ -664,14 +664,13 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             for direction, (start, end) in product(["toAddress", "fromAddress"], block_ranges)
         ]
 
-        
         # NOTE: We only want tqdm progress bar when there is work to do
         if len(block_ranges) == 1:
             generator_function = a_sync.as_completed
         else:
             generator_function = partial(  # type: ignore [assignment]
                 a_sync.as_completed, tqdm=True, desc=f"Trace Filters       {self.address}"
-            )            
+            )
 
         if traces := [
             trace for traces in generator_function(trace_filter_coros) for trace in await traces

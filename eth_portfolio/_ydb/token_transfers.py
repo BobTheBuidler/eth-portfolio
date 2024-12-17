@@ -134,6 +134,6 @@ class TokenTransfers(ASyncIterable[TokenTransfer]):
         return ASyncIterator(
             as_yielded(
                 self.transfers_in.yield_thru_block(block),
-                self.transfers_out.yield_thru_block(block)
+                self.transfers_out.yield_thru_block(block),
             )
         )

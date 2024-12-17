@@ -225,9 +225,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         Examples:
             >>> external_balances = await address.external_balances(12345678)
         """
-        balances = await gather(
-            self.staking(block, sync=False), self.collateral(block, sync=False)
-        )
+        balances = await gather(self.staking(block, sync=False), self.collateral(block, sync=False))
         return sum(balances)  # type: ignore [arg-type, return-value]
 
     # Assets
