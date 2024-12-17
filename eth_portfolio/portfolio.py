@@ -6,8 +6,8 @@ The :class:`~eth_portfolio.Portfolio` class leverages the `a_sync` library to su
 This file is part of a larger system that includes modules for handling portfolio addresses, ledger entries, and other related tasks.
 """
 
-import asyncio
 import logging
+from asyncio import gather
 from functools import wraps
 from typing import Any, AsyncIterator, Dict, Iterable, Iterator, List, Optional, Tuple, Union
 
@@ -509,7 +509,7 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
             >>> print(df)
         """
         df = concat(
-            await asyncio.gather(
+            await gather(
                 *(ledger.df(start_block, end_block, sync=False) for ledger in self._ledgers)
             )
         )

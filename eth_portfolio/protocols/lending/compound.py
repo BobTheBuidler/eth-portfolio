@@ -1,4 +1,4 @@
-import asyncio
+from asyncio import gather
 from typing import List, Optional
 
 import a_sync
@@ -30,7 +30,7 @@ class Compound(LendingProtocol):
     @alru_cache(ttl=300)
     @stuck_coro_debugger
     async def underlyings(self) -> List[ERC20]:
-        all_markets: List[List[CToken]] = await asyncio.gather(
+        all_markets: List[List[CToken]] = await gather(
             *[comp.markets for comp in compound.trollers.values()]
         )
         markets: List[Contract] = [
@@ -43,7 +43,7 @@ class Compound(LendingProtocol):
         other_markets = [market for market in markets if hasattr(market, "underlying")]
 
         markets = gas_token_markets + other_markets
-        underlyings = [weth for market in gas_token_markets] + await asyncio.gather(
+        underlyings = [weth for market in gas_token_markets] + await gather(
             *[market.underlying.coroutine() for market in other_markets]
         )
 
@@ -69,10 +69,10 @@ class Compound(LendingProtocol):
         address = str(address)
         markets: List[Contract]
         underlyings: List[ERC20]
-        markets, underlyings = await asyncio.gather(*[self.markets(), self.underlyings()])
-        debt_data, underlying_scale = await asyncio.gather(
-            asyncio.gather(*[_borrow_balance_stored(market, address, block) for market in markets]),
-            asyncio.gather(*[underlying.__scale__ for underlying in underlyings]),
+        markets, underlyings = await gather(*[self.markets(), self.underlyings()])
+        debt_data, underlying_scale = await gather(
+            gather(*[_borrow_balance_stored(market, address, block) for market in markets]),
+            gather(*[underlying.__scale__ for underlying in underlyings]),
         )
 
         balances: TokenBalances = TokenBalances(block=block)

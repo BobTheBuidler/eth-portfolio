@@ -1,5 +1,5 @@
-import asyncio
 import logging
+from asyncio import gather
 from typing import Optional, Set
 
 from async_lru import alru_cache
@@ -50,7 +50,7 @@ async def _unwrap_token(token) -> str:
         underlying = await YearnInspiredVault(token, asynchronous=True).underlying
         return await _unwrap_token(underlying)
     if curve and (pool := await curve.get_pool(token)):
-        pool_tokens = set(await asyncio.gather(*[_unwrap_token(coin) for coin in await pool.coins]))
+        pool_tokens = set(await gather(*[_unwrap_token(coin) for coin in await pool.coins]))
         if pool_bucket := _pool_bucket(pool_tokens):
             return pool_bucket  # type: ignore
     if aave and await aave.is_atoken(token):

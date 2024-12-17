@@ -1,4 +1,4 @@
-import asyncio
+from asyncio import gather
 from typing import Optional
 
 from y import Contract, Network, dai
@@ -18,7 +18,7 @@ class MakerDSR(ProtocolABC):
 
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         balances = TokenBalances(block=block)
-        pie, exchange_rate = await asyncio.gather(
+        pie, exchange_rate = await gather(
             self.dsr_manager.pieOf.coroutine(address, block_identifier=block),
             self._exchange_rate(block),
         )

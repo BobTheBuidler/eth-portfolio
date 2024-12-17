@@ -1,5 +1,5 @@
 import abc
-import asyncio
+from asyncio import gather
 from typing import List, Optional
 
 import a_sync
@@ -28,7 +28,7 @@ class ProtocolWithStakingABC(ProtocolABC, metaclass=abc.ABCMeta):
 
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        return sum(await asyncio.gather(*[pool.balances(address, block) for pool in self.pools]))  # type: ignore
+        return sum(await gather(*[pool.balances(address, block) for pool in self.pools]))  # type: ignore
 
 
 class StakingPoolABC(ProtocolABC, metaclass=abc.ABCMeta):
@@ -99,7 +99,7 @@ class SingleTokenStakingPoolABC(StakingPoolABC, metaclass=abc.ABCMeta):
         if self.should_check(block):
             balance = Decimal(await self(address, block=block))  # type: ignore
             if balance:
-                scale, price = await asyncio.gather(self.scale, self.price(block, sync=False))
+                scale, price = await gather(self.scale, self.price(block, sync=False))
                 balance /= scale  # type: ignore
                 balances[self.token.address] = Balance(
                     balance, balance * Decimal(price), token=self.token.address, block=block

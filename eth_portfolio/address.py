@@ -14,8 +14,8 @@ It also integrates with various submodules from `eth-portfolio` to load balances
 with external protocols.
 """
 
-import asyncio
 import logging
+from asyncio import gather
 from typing import TYPE_CHECKING, Dict, Optional
 
 import a_sync
@@ -225,7 +225,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         Examples:
             >>> external_balances = await address.external_balances(12345678)
         """
-        balances = await asyncio.gather(
+        balances = await gather(
             self.staking(block, sync=False), self.collateral(block, sync=False)
         )
         return sum(balances)  # type: ignore [arg-type, return-value]
@@ -246,7 +246,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         Examples:
             >>> balances = await address.balances(12345678)
         """
-        eth_balance, token_balances = await asyncio.gather(
+        eth_balance, token_balances = await gather(
             self.eth_balance(block, sync=False),
             self.token_balances(block, sync=False),
         )
