@@ -675,7 +675,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             )
 
         if tasks := [
-            asyncio.create_task(
+            create_task(
                 coro=InternalTransfer.from_trace(trace, self.load_prices),
                 name="InternalTransfer.from_trace",
             )
