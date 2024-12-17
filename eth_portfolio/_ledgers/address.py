@@ -10,8 +10,8 @@ and processing without blocking, thus improving the overall responsiveness and p
 """
 
 import abc
-import asyncio
 import logging
+from asyncio import Lock, Queue, create_task, gather, sleep
 from functools import partial
 from http import HTTPStatus
 from itertools import product
@@ -136,9 +136,9 @@ class AddressLedgerBase(
         The block through which all entries for this ledger have been loaded into memory.
         """
 
-        self._lock = asyncio.Lock()
+        self._lock = Lock()
         """
-        asyncio.Lock: Lock for synchronizing access to ledger entries.
+        Lock: Lock for synchronizing access to ledger entries.
         """
 
     def __hash__(self) -> int:
@@ -191,7 +191,7 @@ class AddressLedgerBase(
             nonlocal num_yielded
             num_yielded += 1
             if num_yielded % 1000 == 0:
-                await asyncio.sleep(0)
+                await sleep(0)
 
         if self.objects and end_block and self.objects[-1].block_number > end_block:
             for ledger_entry in self.objects:
@@ -417,8 +417,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         """
         The nonce through which all transactions have been loaded into memory.
         """
-        self._queue = asyncio.Queue()
-        self._ready = asyncio.Queue()
+        self._queue = Queue()
+        self._ready = Queue()
         self._num_workers = num_workers
         self._workers = []
 
@@ -481,7 +481,6 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         if len_workers < num_workers:
             logger.info("ensuring %s workers for %s", num_workers, self)
 
-            create_task = asyncio.create_task
             worker_fn = self.__worker_fn
             address = self.address
             load_prices = self.load_prices
@@ -537,7 +536,7 @@ async def trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTra
             # This is some intermittent error I need to debug in dank_mids, I think it occurs when we get rate limited
             if str(e) != "a bytes-like object is required, not 'NoneType'":
                 raise
-            await asyncio.sleep(0.5)
+            await sleep(0.5)
             # remove this logger when I know there are no looping issues
             logger.info("call failed, trying again")
 
@@ -556,7 +555,7 @@ async def _trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTr
         chunk_size = range_size // 2
         halfway = from_block + chunk_size
 
-        results = await asyncio.gather(
+        results = await gather(
             _trace_filter(fromBlock=fromBlock, toBlock=halfway, **kwargs),
             _trace_filter(fromBlock=halfway + 1, toBlock=toBlock, **kwargs),
         )
@@ -691,6 +690,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
                     yield internal_transfer
             if internal_transfers:
                 self.objects.extend(internal_transfers)
+
             self.objects.sort(key=lambda t: (t.block_number, t.transaction_index))
 
         if self.cached_from is None or start_block < self.cached_from:
