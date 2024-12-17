@@ -4,7 +4,6 @@ Defines the data classes used to represent the various types of value-transfer a
 The classes are designed to provide a consistent and flexible interface for working with blockchain data. Instance attributes can be fetched with either dot notation or key lookup. Classes are compatible with the standard dictionary interface.
 """
 
-import logging
 from functools import cached_property
 from typing import (
     Any,
@@ -36,9 +35,6 @@ from y.datatypes import Block
 from eth_portfolio._decimal import Decimal
 from eth_portfolio._utils import _get_price
 from eth_portfolio.structs.modified import ModifiedTrace, _modified_trace_type_map
-
-
-logger = logging.getLogger(__name__)
 
 
 class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
@@ -347,6 +343,7 @@ class InternalTransfer(
     @staticmethod
     @stuck_coro_debugger
     async def from_trace(trace: evmspec.FilterTrace, load_prices: bool) -> "InternalTransfer":
+        # sourcery skip: simplify-boolean-comparison
         """
         Asynchronously processes a raw internal transfer dictionary into an InternalTransfer object.
 
@@ -386,12 +383,14 @@ class InternalTransfer(
         """
 
         modified_cls = _modified_trace_type_map[type(trace)]
-        args = {"trace": modified_cls(**_get_init_kwargs(trace))}
-        if load_prices:
-            price = await _get_price(EEE_ADDRESS, trace.block)
-            args["price"] = price
-            args["value_usd"] = round(trace.action.value.scaled * price, 18)
-        return InternalTransfer(**args)
+        modified_trace = modified_cls(**_get_init_kwargs(trace))
+
+        if load_prices is False:
+            return InternalTransfer(trace=modified_trace)
+
+        price = await _get_price(EEE_ADDRESS, trace.block)
+        value_usd = round(trace.action.value.scaled * price, 18)
+        return InternalTransfer(trace=modified_trace, price=price, value_usd=value_usd)
 
     entry_type: ClassVar[Literal["internal_transfer"]] = "internal_transfer"
     """
