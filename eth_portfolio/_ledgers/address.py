@@ -9,12 +9,12 @@ These classes leverage the `a_sync` library to support both synchronous and asyn
 and processing without blocking, thus improving the overall responsiveness and performance of portfolio operations.
 """
 
-import abc
-import logging
+from abc import ABCMeta, abstractmethod
 from asyncio import Lock, Queue, create_task, gather, sleep
 from functools import partial
 from http import HTTPStatus
 from itertools import product
+from logging import getLogger
 from typing import (
     TYPE_CHECKING,
     AsyncGenerator,
@@ -58,7 +58,7 @@ from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 if TYPE_CHECKING:
     from eth_portfolio.address import PortfolioAddress
 
-logger = logging.getLogger(__name__)
+logger = getLogger(__name__)
 
 
 T = TypeVar("T")
@@ -70,7 +70,7 @@ PandableLedgerEntryList = Union["TransactionsList", "InternalTransfersList", "To
 
 
 class AddressLedgerBase(
-    a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_LedgerEntryList, T], metaclass=abc.ABCMeta
+    a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_LedgerEntryList, T], metaclass=ABCMeta
 ):
     """
     Abstract base class for address ledgers in the eth-portfolio system.
@@ -153,7 +153,8 @@ class AddressLedgerBase(
     def __repr__(self) -> str:
         return f"<{type(self).__name__} for {self.address} at {hex(id(self))}>"
 
-    @abc.abstractproperty
+    @property
+    @abstractmethod
     def _list_type(self) -> Type[_LedgerEntryList]:
         """
         Type of list used to store ledger entries.
@@ -295,7 +296,7 @@ class AddressLedgerBase(
             async for ledger_entry in self._load_new_objects(start_block, end_block):
                 yield ledger_entry
 
-    @abc.abstractmethod
+    @abstractmethod
     async def _load_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[T]:
         """
         Abstract method to load new ledger entries between the specified blocks.
@@ -669,12 +670,12 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
         generator_function = a_sync.as_completed
         # NOTE: We only want tqdm progress bar when there is work to do
         if len(block_ranges) > 1:
-            generator_function = partial(
+            generator_function = partial(  # type: ignore [assignment]
                 generator_function, tqdm=True, desc=f"Trace Filters       {self.address}"
             )
 
         if tasks := [
-            asyncio.create_task(
+            create_task(
                 coro=InternalTransfer.from_trace(trace, self.load_prices),
                 name="InternalTransfer.from_trace",
             )
@@ -799,17 +800,26 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         if tasks := [
             task
             async for task in self._transfers.yield_thru_block(end_block)
-            if start_block <= task.block
+            if start_block <= task.block  # type: ignore [attr-defined]
         ]:
             token_transfers = []
+            append_token_transfer = token_transfers.append
+            done = 0
             async for token_transfer in a_sync.as_completed(
                 tasks, aiter=True, tqdm=True, desc=f"Token Transfers     {self.address}"
             ):
                 if token_transfer:
-                    token_transfers.append(token_transfer)
+                    append_token_transfer(token_transfer)
                     yield token_transfer
+
+                # Don't let the event loop get congested
+                done += 1
+                if done % 100 == 0:
+                    await sleep(0)
+
             if token_transfers:
                 self.objects.extend(token_transfers)
+
             self.objects.sort(key=lambda t: (t.block_number, t.transaction_index, t.log_index))
 
         if self.cached_from is None or start_block < self.cached_from:

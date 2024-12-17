@@ -191,7 +191,13 @@ async def get_transaction_index(hash: str) -> int:
     Returns:
         The zero-based index of the transaction within its block.
     """
-    receipt_bytes = await get_transaction_receipt(hash)
+    while True:
+        receipt_bytes = await get_transaction_receipt(hash)
+        if receipt_bytes is not None:
+            # TODO: debug why this happens, its something inside of dank_mids
+            break
+        logger.info("get_transaction_index failed, retrying...")
+
     return msgspec.json.decode(
         receipt_bytes, type=HasTxIndex, dec_hook=TransactionIndex._decode_hook
     ).transactionIndex
