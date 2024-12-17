@@ -3,9 +3,10 @@ from asyncio import Task, create_task, sleep
 from logging import DEBUG, getLogger
 from typing import AsyncIterator, List
 
-import a_sync
+import dank_mids
 import evmspec
 import y._db.log
+from a_sync import ASyncIterable, ASyncIterator, as_yielded
 from brownie import chain
 from eth_utils import encode_hex
 from y.datatypes import Address
@@ -49,7 +50,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
     @abstractmethod
     def _topics(self) -> List: ...
 
-    @a_sync.ASyncIterator.wrap  # type: ignore [call-overload]
+    @ASyncIterator.wrap  # type: ignore [call-overload]
     async def yield_thru_block(self, block) -> AsyncIterator["Task[TokenTransfer]"]:
         if not _logger_is_enabled_for(DEBUG):
             async for task in self._objects_thru(block=block):
@@ -115,7 +116,7 @@ class OutboundTokenTransfers(_TokenTransfers):
         return [TRANSFER_SIGS, encode_address(self.address)]
 
 
-class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
+class TokenTransfers(ASyncIterable[TokenTransfer]):
     """
     A container that fetches and iterates over all token transfers for a particular wallet address.
     NOTE: These do not come back in chronologcal order.
@@ -125,13 +126,14 @@ class TokenTransfers(a_sync.ASyncIterable[TokenTransfer]):
         self.transfers_in = InboundTokenTransfers(address, from_block, load_prices=load_prices)
         self.transfers_out = OutboundTokenTransfers(address, from_block, load_prices=load_prices)
 
-    def __aiter__(self):
-        return self.yield_thru_block(chain.height).__aiter__()
+    async def __aiter__(self):
+        async for transfer in self.yield_thru_block(await dank_mids.eth.block_number):
+            yield transfer
 
-    def yield_thru_block(self, block: int) -> a_sync.ASyncIterator["Task[TokenTransfer]"]:
-        return a_sync.ASyncIterator(
-            a_sync.as_yielded(
+    def yield_thru_block(self, block: int) -> ASyncIterator["Task[TokenTransfer]"]:
+        return ASyncIterator(
+            as_yielded(
                 self.transfers_in.yield_thru_block(block),
-                self.transfers_out.yield_thru_block(block),
+                self.transfers_out.yield_thru_block(block)
             )
         )
