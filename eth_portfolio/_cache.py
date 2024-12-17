@@ -40,7 +40,15 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
                         pass
 
             async_result: T = await fn(*args, **kwargs)
-            await __cache_write(cache_path, async_result)
+            try:
+                await __cache_write(cache_path, async_result)
+            except OSError as e:
+                # I was having some weird issues in docker that I don't want to debug,
+                # so I'm going to assume you have another means to let you know you're
+                # out of disk space and will pass right on through here so my script
+                # can continue
+                if e.strerror != "No space left on device":
+                    raise
             return async_result
 
     else:
