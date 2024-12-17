@@ -9,6 +9,7 @@ import y._db.config as config
 from a_sync import a_sync
 from brownie import chain
 from evmspec.data import _decode_hook
+from logging import getLogger
 from msgspec import ValidationError, json
 from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush, select
@@ -21,7 +22,7 @@ from eth_portfolio._decimal import Decimal
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction, TransactionRLP
 from eth_portfolio.typing import _P, _T, Fn
 
-logger = logging.getLogger(__name__)
+logger = getLogger(__name__)
 
 
 def __bind():
