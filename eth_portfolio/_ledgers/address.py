@@ -671,10 +671,12 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             generator_function = partial(  # type: ignore [assignment]
                 a_sync.as_completed, tqdm=True, desc=f"Trace Filters       {self.address}"
             )
+        
+        traces = []
+        async for chunk in generator_function(trace_filter_coros, aiter=True):
+            traces.extend(chunk)
 
-        if traces := [
-            trace for traces in generator_function(trace_filter_coros) for trace in await traces
-        ]:
+        if traces:
             internal_transfers = []
             append_transfer = internal_transfers.append
             load = InternalTransfer.from_trace
