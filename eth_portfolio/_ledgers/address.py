@@ -682,12 +682,20 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             for trace in await traces
         ]:
             internal_transfers = []
+            append_transfer = internal_transfers.append
+            done = 0
+
             async for internal_transfer in a_sync.as_completed(
                 tasks, aiter=True, tqdm=True, desc=f"Internal Transfers  {self.address}"
             ):
                 if internal_transfer:
-                    internal_transfers.append(internal_transfer)
+                    append_transfer(internal_transfer)
                     yield internal_transfer
+
+                done += 1
+                if done % 100 == 0:
+                    await sleep(0)
+
             if internal_transfers:
                 self.objects.extend(internal_transfers)
 
