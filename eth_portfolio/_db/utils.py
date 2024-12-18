@@ -1,13 +1,14 @@
 from asyncio import create_task, gather, get_event_loop
 from contextlib import suppress
 from functools import lru_cache
-from typing import Any, Dict, Iterable, Optional, Tuple, Union
+from typing import Any, Dict, Optional, Tuple, Union
 
 import evmspec
 import y._db.common
 import y._db.config as config
 from a_sync import PruningThreadPoolExecutor, a_sync
 from brownie import chain
+from eth_typing import ChecksumAddress
 from evmspec.data import _decode_hook
 from logging import getLogger
 from msgspec import ValidationError, json
@@ -175,7 +176,7 @@ def __is_token(address) -> bool:
 
 @a_sync(default="async", executor=_address_executor)
 @robust_db_session
-def get_address(address: str) -> entities.AddressExtended:
+def get_address(address: ChecksumAddress) -> entities.AddressExtended:
     entity_type = entities.TokenExtended
     entity = entities.Address.get(chain=chain.id, address=address)
     """ TODO: fix this later
@@ -211,20 +212,20 @@ def get_address(address: str) -> entities.AddressExtended:
 
 @a_sync(default="async", executor=_address_executor)
 @db_session_cached
-def ensure_address(address: str) -> None:
+def ensure_address(address: ChecksumAddress) -> None:
     get_address(address, sync=True)
 
 
 @a_sync(default="async", executor=_address_executor)
 @db_session_cached
-def ensure_addresses(addresses: Iterable[str]) -> None:
+def ensure_addresses(*addresses: ChecksumAddress) -> None:
     for address in addresses:
         ensure_address(address, sync=True)
 
 
 @a_sync(default="async", executor=_token_executor)
 @robust_db_session
-def get_token(address: str) -> entities.TokenExtended:
+def get_token(address: ChecksumAddress) -> entities.TokenExtended:
     if t := entities.TokenExtended.get(chain=chain.id, address=address):
         return t
     kwargs = {}
@@ -271,13 +272,13 @@ def get_token(address: str) -> entities.TokenExtended:
 
 @a_sync(default="async", executor=_token_executor)
 @db_session_cached
-def ensure_token(token_address: str) -> None:
+def ensure_token(token_address: ChecksumAddress) -> None:
     get_token(token_address, sync=True)
 
 
 @a_sync(default="async", executor=_transaction_read_executor)
 @robust_db_session
-def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
+def get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Transaction]:
     transactions = transactions_known_at_startup()
     pk = ((chain.id, sender), nonce)
     if pk in transactions:
@@ -439,13 +440,13 @@ def get_token_transfer(transfer: evmspec.Log) -> Optional[TokenTransfer]:
             return json.decode(entity.raw, type=TokenTransfer, dec_hook=_decode_hook)
 
 
-_TPK = Tuple[Tuple[int, str], int]
+_TPK = Tuple[Tuple[int, ChecksumAddress], int]
 
 
 @lru_cache(maxsize=None)
 def transactions_known_at_startup() -> Dict[_TPK, bytes]:
     transfers = {}
-    obj: Tuple[int, str, int, bytes]
+    obj: Tuple[int, ChecksumAddress, int, bytes]
     for obj in select(
         (t.from_address.chain.id, t.from_address.address, t.nonce, t.raw)
         for t in entities.Transaction  # type: ignore [attr-defined]
