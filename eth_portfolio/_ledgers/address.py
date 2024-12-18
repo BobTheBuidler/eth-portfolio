@@ -446,7 +446,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             for i, nonce in enumerate(nonces):
                 self._queue.put_nowait(nonce)
 
-                # Keep the event loop relatively unblocked 
+                # Keep the event loop relatively unblocked
                 # and let the rpc start doing work asap
                 if i % 1000:
                     await sleep(0)
@@ -497,7 +497,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             self._workers.extend(
                 create_task(
                     coro=worker_fn(address, load_prices, queue_get, put_ready),
-                    name=f"AddressTransactionsLedger worker {i} for {address}")
+                    name=f"AddressTransactionsLedger worker {i} for {address}",
+                )
                 for i in range(num_workers - len_workers)
             )
 
@@ -601,9 +602,7 @@ async def get_traces(filter_params: TraceFilterParams) -> Tuple[FilterTrace, ...
     Returns:
         The list of traces.
     """
-    return await _check_traces(
-        await trace_filter(**filter_params)
-    )
+    return await _check_traces(await trace_filter(**filter_params))
 
 
 @stuck_coro_debugger
@@ -618,7 +617,7 @@ async def _check_traces(traces: List[FilterTrace]) -> Tuple[FilterTrace, ...]:
         # Make sure we don't block up the event loop
         if i % 500:
             await sleep(0)
-            
+
         if "error" in trace:
             continue
 
