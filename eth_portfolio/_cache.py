@@ -13,7 +13,7 @@ from aiofiles import open as _aio_open
 from brownie import chain
 
 BASE_PATH = f"./cache/{chain.id}/"
-EXECUTOR = PruningThreadPoolExecutor(32)
+EXECUTOR = PruningThreadPoolExecutor(32, "eth-portfolio-cache-decorator")
 
 
 def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:

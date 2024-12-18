@@ -6,7 +6,7 @@ from typing import Any, Dict, Optional, Tuple, Union
 import evmspec
 import y._db.common
 import y._db.config as config
-from a_sync import a_sync
+from a_sync import PruningThreadPoolExecutor, a_sync
 from brownie import chain
 from evmspec.data import _decode_hook
 from logging import getLogger
@@ -57,11 +57,21 @@ from y.exceptions import NonStandardERC20
 from y.contracts import is_contract
 
 
+_block_executor = PruningThreadPoolExecutor(4, "eth-portfolio block")
+_token_executor = PruningThreadPoolExecutor(4, "eth-portfolio token")
+_address_executor = PruningThreadPoolExecutor(4, "eth-portfolio address")
+_transaction_read_executor = PruningThreadPoolExecutor(16, "eth-portfolio-transaction-read")
+_transaction_write_executor = PruningThreadPoolExecutor(4, "eth-portfolio-transaction-write")
+_token_transfer_read_executor = PruningThreadPoolExecutor(16, "eth-portfolio-token-transfer-read")
+_token_transfer_write_executor = PruningThreadPoolExecutor(4, "eth-portfolio-token-transfer-write")
+_internal_transfer_read_executor = PruningThreadPoolExecutor(16, "eth-portfolio-internal-transfer read")
+_internal_transfer_write_executor = PruningThreadPoolExecutor(4, "eth-portfolio-internal-transfer write")
+
 def robust_db_session(fn: Fn[_P, _T]) -> Fn[_P, _T]:
     return retry_locked(break_locks(db_session(fn)))
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_block_executor)
 @robust_db_session
 def get_block(block: int) -> entities.BlockExtended:
     if b := entities.BlockExtended.get(chain=chain.id, number=block):
@@ -160,7 +170,7 @@ def __is_token(address) -> bool:
     return False
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_address_executor)
 @robust_db_session
 def get_address(address: str) -> entities.AddressExtended:
     entity_type = entities.TokenExtended
@@ -201,7 +211,7 @@ def ensure_address(address: str) -> None:
     get_address(address, sync=True)
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_token_executor)
 @robust_db_session
 def get_token(address: str) -> entities.TokenExtended:
     if t := entities.TokenExtended.get(chain=chain.id, address=address):
@@ -253,7 +263,7 @@ def ensure_token(token_address: str) -> None:
     get_token(token_address, sync=True)
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_transaction_read_executor)
 @robust_db_session
 def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
     transactions = transactions_known_at_startup()
@@ -278,7 +288,7 @@ def decode_transaction(data: bytes) -> Union[Transaction, TransactionRLP]:
         raise
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_transaction_write_executor)
 @robust_db_session
 def delete_transaction(transaction: Transaction) -> None:
     if entity := entities.Transaction.get(**transaction.__db_primary_key__):
@@ -295,7 +305,7 @@ async def insert_transaction(transaction: Transaction) -> None:
     await _insert_transaction(transaction)
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_transaction_write_executor)
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def _insert_transaction(transaction: Transaction) -> None:
@@ -318,7 +328,7 @@ def _insert_transaction(transaction: Transaction) -> None:
         )
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_internal_transfer_read_executor)
 @robust_db_session
 def get_internal_transfer(trace: evmspec.FilterTrace) -> Optional[InternalTransfer]:
     block = trace.blockNumber
@@ -343,7 +353,7 @@ def get_internal_transfer(trace: evmspec.FilterTrace) -> Optional[InternalTransf
         return json.decode(entity.raw, type=InternalTransfer, dec_hook=_decode_hook)
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_internal_transfer_write_executor)
 @robust_db_session
 def delete_internal_transfer(transfer: InternalTransfer) -> None:
     if entity := entities.InternalTransfer.get(
@@ -374,7 +384,7 @@ async def insert_internal_transfer(transfer: InternalTransfer) -> None:
     await _insert_internal_transfer(transfer)
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_internal_transfer_write_executor)
 @robust_db_session
 def _insert_internal_transfer(transfer: InternalTransfer) -> None:
     entities.InternalTransfer(
@@ -395,7 +405,7 @@ def _insert_internal_transfer(transfer: InternalTransfer) -> None:
     )
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_token_transfer_read_executor)
 @robust_db_session
 def get_token_transfer(transfer: evmspec.Log) -> Optional[TokenTransfer]:
     pk = {
@@ -448,7 +458,7 @@ def token_transfers_known_at_startup() -> Dict[_TTPK, bytes]:
     return transfers
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_token_transfer_write_executor)
 @robust_db_session
 def delete_token_transfer(token_transfer: TokenTransfer) -> None:
     if entity := entities.TokenTransfer.get(
@@ -470,7 +480,7 @@ async def insert_token_transfer(token_transfer: TokenTransfer) -> None:
     await _insert_token_transfer(token_transfer)
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_token_transfer_write_executor)
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
