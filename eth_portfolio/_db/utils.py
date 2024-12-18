@@ -70,6 +70,8 @@ _internal_transfer_write_executor = PruningThreadPoolExecutor(4, "eth-portfolio-
 def robust_db_session(fn: Fn[_P, _T]) -> Fn[_P, _T]:
     return retry_locked(break_locks(db_session(fn)))
 
+db_session_cached = lambda func: retry_locked(lru_cache(maxsize=None)(db_session(retry_locked(func))))
+
 
 @a_sync(default="async", executor=_block_executor)
 @robust_db_session
@@ -124,7 +126,8 @@ def get_block(block: int) -> entities.BlockExtended:
     return entities.BlockExtended.get(chain=chain.id, number=block)
 
 
-@a_sync_write_db_session_cached
+@a_sync(default="async", executor=_block_executor)
+@db_session_cached
 def ensure_block(block: int) -> None:
     get_block(block, sync=True)
 
@@ -206,7 +209,8 @@ def get_address(address: str) -> entities.AddressExtended:
     )
 
 
-@a_sync_write_db_session_cached
+@a_sync(default="async", executor=_address_executor)
+@db_session_cached
 def ensure_address(address: str) -> None:
     get_address(address, sync=True)
 
@@ -258,7 +262,8 @@ def get_token(address: str) -> entities.TokenExtended:
     ) or entities.TokenExtended.get(chain=chain.id, address=address)
 
 
-@a_sync_write_db_session_cached
+@a_sync(default="async", executor=_token_executor)
+@db_session_cached
 def ensure_token(token_address: str) -> None:
     get_token(token_address, sync=True)
 
