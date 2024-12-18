@@ -535,6 +535,7 @@ class InternalTransfersList(PandableList[InternalTransfer]):
 
 
 @a_sync.Semaphore(64, __name__ + ".trace_semaphore")
+@stuck_coro_debugger
 @eth_retry.auto_retry
 async def trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTrace]:
     while True:
@@ -588,7 +589,6 @@ async def get_transaction_status(txhash: str) -> Status:
 
 @cache_to_disk
 @eth_retry.auto_retry
-@stuck_coro_debugger
 async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     """
     Retrieves traces from the web3 provider using the given parameters.
@@ -601,11 +601,20 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     Returns:
         The list of traces.
     """
-    traces = []
+    return await _check_traces(
+        await await trace_filter(**filter_params)
+    )
+
+
+@stuck_coro_debugger
+@eth_retry.auto_retry
+async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
+    good_traces = []
+    append = good_traces.append
 
     check_status_tasks = a_sync.TaskMapping(get_transaction_status)
 
-    for trace in await trace_filter(**filter_params):
+    for trace in traces:
         if "error" in trace:
             continue
 
@@ -621,12 +630,12 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
             # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
             check_status_tasks[trace.transactionHash]
 
-        traces.append(trace)
+        append(trace)
 
     # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
     return [
         trace
-        for trace in traces
+        for trace in good_traces
         if isinstance(trace, reward.Trace)
         or await check_status_tasks[trace.transactionHash] == Status.success
     ]
