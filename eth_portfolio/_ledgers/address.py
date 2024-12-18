@@ -589,7 +589,7 @@ async def get_transaction_status(txhash: str) -> Status:
 
 @cache_to_disk
 @eth_retry.auto_retry
-async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
+async def get_traces(filter_params: TraceFilterParams) -> Tuple[FilterTrace, ...]:
     """
     Retrieves traces from the web3 provider using the given parameters.
 
@@ -602,19 +602,23 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
         The list of traces.
     """
     return await _check_traces(
-        await await trace_filter(**filter_params)
+        await trace_filter(**filter_params)
     )
 
 
 @stuck_coro_debugger
 @eth_retry.auto_retry
-async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
+async def _check_traces(traces: List[FilterTrace]) -> Tuple[FilterTrace, ...]:
     good_traces = []
     append = good_traces.append
 
     check_status_tasks = a_sync.TaskMapping(get_transaction_status)
 
-    for trace in traces:
+    for i, trace in enumerate(traces):
+        # Make sure we don't block up the event loop
+        if i % 500:
+            await sleep(0)
+            
         if "error" in trace:
             continue
 
@@ -633,12 +637,12 @@ async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
         append(trace)
 
     # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
-    return [
+    return tuple(
         trace
         for trace in good_traces
         if isinstance(trace, reward.Trace)
         or await check_status_tasks[trace.transactionHash] == Status.success
-    ]
+    )
 
 
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
