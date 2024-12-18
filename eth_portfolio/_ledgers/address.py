@@ -590,7 +590,7 @@ async def get_transaction_status(txhash: str) -> Status:
 
 @cache_to_disk
 @eth_retry.auto_retry
-async def get_traces(filter_params: TraceFilterParams) -> Tuple[FilterTrace, ...]:
+async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     """
     Retrieves traces from the web3 provider using the given parameters.
 
@@ -607,7 +607,7 @@ async def get_traces(filter_params: TraceFilterParams) -> Tuple[FilterTrace, ...
 
 @stuck_coro_debugger
 @eth_retry.auto_retry
-async def _check_traces(traces: List[FilterTrace]) -> Tuple[FilterTrace, ...]:
+async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
     good_traces = []
     append = good_traces.append
 
@@ -636,12 +636,12 @@ async def _check_traces(traces: List[FilterTrace]) -> Tuple[FilterTrace, ...]:
         append(trace)
 
     # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
-    return tuple(
+    return [
         trace
         for trace in good_traces
         if isinstance(trace, reward.Trace)
         or await check_status_tasks[trace.transactionHash] == Status.success
-    )
+    ]
 
 
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
