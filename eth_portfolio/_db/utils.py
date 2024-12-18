@@ -44,7 +44,7 @@ except OperationalError as e:
         "Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script"
     ) from e
 
-from y._db.decorators import a_sync_write_db_session_cached, retry_locked
+from y._db.decorators import retry_locked
 from y._db.entities import Address, Block, Chain, Contract, Token, insert
 
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
