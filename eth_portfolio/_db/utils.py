@@ -490,8 +490,27 @@ def delete_token_transfer(token_transfer: TokenTransfer) -> None:
 async def insert_token_transfer(token_transfer: TokenTransfer) -> None:
     # two tasks and a coroutine like this should be faster than gather
     block_task = create_task(ensure_block(token_transfer.block_number))
-    token_task = create_task(ensure_token(token_transfer.token_address))
-    await ensure_addresses(token_transfer.to_address, token_transfer.from_address)
+    while True:
+        try:
+            token_task = create_task(ensure_token(token_transfer.token_address))
+        except KeyError:
+            # This KeyError comes from a bug in cachetools.ttl_cache
+            # TODO: move this handler into evmspec
+            pass
+        else:
+            break
+
+    while True:
+        try:
+            address_coro = ensure_addresses(token_transfer.to_address, token_transfer.from_address)
+        except KeyError:
+            # This KeyError comes from a bug in cachetools.ttl_cache
+            # TODO: move this handler into evmspec
+            pass
+        else:
+            break
+
+    await address_coro
     await block_task
     await token_task
     await _insert_token_transfer(token_transfer)
