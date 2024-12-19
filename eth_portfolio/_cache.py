@@ -51,7 +51,7 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
                         if loaded % 50 == 0:
                             await sleep(0)
                 except Exception as e:
-                    fut.set_result(e)
+                    fut.set_exception(e)
 
         workers = []
 
