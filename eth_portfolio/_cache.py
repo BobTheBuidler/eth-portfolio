@@ -1,6 +1,6 @@
 import functools
 import inspect
-from asyncio import Queue, get_event_loop
+from asyncio import Queue, get_event_loop, sleep
 from hashlib import md5
 from logging import getLogger
 from os import makedirs
@@ -33,15 +33,26 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
     makedirs(cache_path_for_fn, exist_ok=True)
 
     if inspect.iscoroutinefunction(fn):
+
+        quick_loads = set(dumps(x) for x in (None, [], ()))
+        slow_loaded = 0
         queue = Queue()
 
         @log_broken
         async def cache_deco_worker_coro(func) -> NoReturn:
+            nonlocal slow_loaded
             while True:
                 fut, cache_path, args, kwargs = await queue.get()
                 try:
                     async with _aio_open(cache_path, "rb", executor=EXECUTOR) as f:
-                        fut.set_result(loads(await f.read()))
+                        b = await f.read()
+                        fut.set_result(loads(b))
+                        if b not in quick_loads:
+                            slow_loaded += 1
+                            # unpickling traces can block up the event loop when we load them from disk
+                            # lets not do that
+                            if slow_loaded % 50 == 0:
+                                await sleep(0)
                 except Exception as e:
                     fut.set_result(e)
 
