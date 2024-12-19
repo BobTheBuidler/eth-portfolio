@@ -283,8 +283,12 @@ async def get_nonce_at_block(address: Address, block: Block) -> int:
         >>> print(f"The nonce at block {block} is {nonce}.")
 
     """
+    nonce = None
     try:
-        nonce = await dank_mids.eth.get_transaction_count(address, block_identifier=block) - 1
+        # This is a temp fix for a bug in dank mids
+        # TODO move this into dank
+        while nonce is None:
+            nonce = await dank_mids.eth.get_transaction_count(address, block_identifier=block) - 1
         _update_nonces(address, nonce, block)
         return nonce
     except ValueError as e:
