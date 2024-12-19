@@ -81,13 +81,14 @@ class AddressLedgerBase(
         "asynchronous",
         "cached_from",
         "cached_thru",
+        "exclude_zero_value",
         "load_prices",
         "objects",
         "portfolio_address",
         "_lock",
     )
 
-    def __init__(self, portfolio_address: "PortfolioAddress") -> None:
+    def __init__(self, portfolio_address: "PortfolioAddress", exclude_zero_value: bool = True) -> None:
         """
         Initializes the AddressLedgerBase instance.
 
@@ -114,6 +115,8 @@ class AddressLedgerBase(
         """
         Flag indicating if the operations are asynchronous.
         """
+
+        self.exclude_zero_value = exclude_zero_value
 
         self.load_prices = self.portfolio_address.load_prices
         """
@@ -293,7 +296,10 @@ class AddressLedgerBase(
             AsyncIterator[T]: An async iterator of new ledger entries.
         """
         async with self._lock:
+            exclude_zero = self.exclude_zero_value
             async for ledger_entry in self._load_new_objects(start_block, end_block):
+                if exclude_zero and not ledger_entry.value:
+                    continue
                 yield ledger_entry
 
     @abstractmethod
@@ -590,7 +596,12 @@ async def get_transaction_status(txhash: str) -> Status:
 
 @cache_to_disk
 @eth_retry.auto_retry
-async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
+async def get_traces(
+    filter_params: TraceFilterParams, 
+    exclude_zero_value: bool, 
+    # TODO implement exclude_errors
+    exclude_errors: bool = True,
+) -> List[FilterTrace]:
     """
     Retrieves traces from the web3 provider using the given parameters.
 
@@ -602,32 +613,38 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     Returns:
         The list of traces.
     """
-    return await _check_traces(await trace_filter(**filter_params))
+    return await _check_traces(
+        await trace_filter(**filter_params), 
+        exclude_zero_value,
+        exclude_errors,
+    )
 
 
 @stuck_coro_debugger
 @eth_retry.auto_retry
-async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
+async def _check_traces(traces: List[FilterTrace], exclude_zero_value: bool, exclude_errors: bool) -> List[FilterTrace]:
     good_traces = []
     append = good_traces.append
+    
+    if exclude_errors:
+        traces = (trace for trace in traces if not hasattr(trace, "error"))
+    if exclude_zero_value:
+        traces = (trace for trace in traces if trace.value)
 
+    traces = (
+        trace for trace in traces 
+        # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
+        # that actually transmitted value to the singleton even though they appear to.
+        if not isinstance(trace, call.Trace) 
+        and trace.action.to == "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"  # Gnosis Safe Singleton 1.3.0
+    )
+    
     check_status_tasks = a_sync.TaskMapping(get_transaction_status)
-
+        
     for i, trace in enumerate(traces):
         # Make sure we don't block up the event loop
         if i % 500:
             await sleep(0)
-
-        if "error" in trace:
-            continue
-
-        # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
-        # that actually transmitted value to the singleton even though they appear to.
-        if (
-            isinstance(trace, call.Trace)
-            and trace.action.to == "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-        ):  # Gnosis Safe Singleton 1.3.0
-            continue
 
         if not isinstance(trace, reward.Trace):
             # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
@@ -681,8 +698,9 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             [hex(i), hex(i + BATCH_SIZE - 1)] for i in range(start_block, end_block, BATCH_SIZE)
         ]
 
+        exclude_zero = self.exclude_zero_value
         trace_filter_coros = [
-            get_traces({direction: [self.address], "fromBlock": start, "toBlock": end})
+            get_traces({direction: [self.address], "fromBlock": start, "toBlock": end}, exclude_zero)
             for direction, (start, end) in product(["toAddress", "fromAddress"], block_ranges)
         ]
 
