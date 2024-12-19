@@ -44,7 +44,7 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
                     except Exception as e:
                         fut.set_result(e)
             except Exception as e:
-                logger.error(f"{type(e).__name__} in {self}:")
+                logger.error(f"{type(e).__name__} in {fn}:")
                 logger.exception(e)
                 raise
 
