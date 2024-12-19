@@ -53,7 +53,7 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
             fut = get_event_loop().create_future()
             queue.put_nowait((fut, cache_path, args, kwargs))
             if not workers:
-                workers.extend(create_task(cache_deco_worker_coro(fn)) for _ in range(1000))
+                workers.extend(create_task(cache_deco_worker_coro(fn)) for _ in range(100))
             try:
                 return await fut
             except (FileNotFoundError, EOFError):
