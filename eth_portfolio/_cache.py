@@ -1,14 +1,18 @@
 import functools
 import inspect
+from asyncio import PriorityQueue, get_event_loop, sleep
 from hashlib import md5
+from logging import getLogger
 from os import makedirs
 from os.path import exists, join
 from pickle import dumps, load, loads
-from typing import Any, Callable
+from random import random
+from typing import Any, Callable, NoReturn
 
 from a_sync import PruningThreadPoolExecutor
 from a_sync._typing import P, T
 from a_sync.asyncio import create_task
+from a_sync.primitives.queue import log_broken
 from aiofiles import open as _aio_open
 from brownie import chain
 
@@ -18,7 +22,9 @@ EXECUTOR = PruningThreadPoolExecutor(32, "eth-portfolio-cache-decorator")
 
 def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
     # sourcery skip: use-contextlib-suppress
-    cache_path_for_fn = f"{BASE_PATH}{fn.__module__.replace('.', '/')}/{fn.__name__}"
+    name = fn.__name__
+    cache_path_for_fn = f"{BASE_PATH}{fn.__module__.replace('.', '/')}/{name}"
+    logger = getLogger(f"eth_portfolio.cache_to_disk.{name}")
 
     def get_cache_file_path(args, kwargs):
         # Create a unique filename based on the function arguments
@@ -29,15 +35,33 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
 
     if inspect.iscoroutinefunction(fn):
 
+        queue = PriorityQueue()
+
+        @log_broken
+        async def cache_deco_worker_coro(func) -> NoReturn:
+            while True:
+                _, fut, cache_path, args, kwargs = await queue.get()
+                try:
+                    async with _aio_open(cache_path, "rb", executor=EXECUTOR) as f:
+                        fut.set_result(loads(await f.read()))
+                except Exception as e:
+                    fut.set_exception(e)
+
+        workers = []
+
         @functools.wraps(fn)
         async def disk_cache_wrap(*args: P.args, **kwargs: P.kwargs) -> T:
             cache_path = get_cache_file_path(args, kwargs)
             if await EXECUTOR.run(exists, cache_path):
-                async with _aio_open(cache_path, "rb", executor=EXECUTOR) as f:
-                    try:
-                        return loads(await f.read())
-                    except EOFError:
-                        pass
+                fut = get_event_loop().create_future()
+                # we intentionally mix up the order to break up heavy load block ranges
+                queue.put_nowait((random(), fut, cache_path, args, kwargs))
+                if not workers:
+                    workers.extend(create_task(cache_deco_worker_coro(fn)) for _ in range(100))
+                try:
+                    return await fut
+                except EOFError:
+                    pass
 
             async_result: T = await fn(*args, **kwargs)
             try:
@@ -49,19 +73,17 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
                 # can continue
                 if e.strerror != "No space left on device":
                     raise
-            return async_result
 
     else:
 
         @functools.wraps(fn)
         def disk_cache_wrap(*args: P.args, **kwargs: P.kwargs) -> T:
             cache_path = get_cache_file_path(args, kwargs)
-            if exists(cache_path):
+            try:
                 with open(cache_path, "rb") as f:
-                    try:
-                        return load(f)
-                    except EOFError:
-                        pass
+                    return load(f)
+            except (FileNotFoundError, EOFError):
+                pass
 
             sync_result: T = fn(*args, **kwargs)  # type: ignore [assignment, return-value]
             try:
