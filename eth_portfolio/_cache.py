@@ -33,7 +33,7 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
 
     if inspect.iscoroutinefunction(fn):
         queue = Queue()
-    
+
         async def cache_deco_worker_coro() -> NoReturn:
             try:
                 while True:
@@ -46,7 +46,7 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
                                     return loads(await f.read())
                                 except EOFError:
                                     pass
-            
+
                         async_result: T = await fn(*args, **kwargs)
                         try:
                             await __cache_write(cache_path, async_result)
