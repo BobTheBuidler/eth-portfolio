@@ -102,9 +102,6 @@ async def load_token_transfer(
                 )
             else:
                 coro_results["transaction_index"] = await tx_index_coro
-
-            if coro_results["transaction_index"] is None:
-                raise TypeError(None, coro_results, transfer_log)
                 
         except Exception as e:
             logger.error(
@@ -201,12 +198,9 @@ async def get_transaction_index(hash: str) -> int:
             break
         logger.info("get_transaction_index failed, retrying...")
 
-    i = msgspec.json.decode(
+    return msgspec.json.decode(
         receipt_bytes, type=HasTxIndex, dec_hook=TransactionIndex._decode_hook
     ).transactionIndex
-    if i is None:
-        raise TypeError(i, msgspec.json.decode(receipt_bytes))
-    return i
 
 
 class HasTxIndex(msgspec.Struct):
