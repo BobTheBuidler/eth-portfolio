@@ -80,11 +80,8 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
             cache_path = get_cache_file_path(args, kwargs)
             try:
                 with open(cache_path, "rb") as f:
-                    try:
-                        return load(f)
-                    except EOFError:
-                        pass
-            except FileNotFoundError:
+                    return load(f)
+            except (FileNotFoundError, EOFError):
                 pass
 
             sync_result: T = fn(*args, **kwargs)  # type: ignore [assignment, return-value]
