@@ -103,6 +103,9 @@ async def load_token_transfer(
             else:
                 coro_results["transaction_index"] = await tx_index_coro
 
+            if coro_results["transaction_index"] is None:
+                raise TypeError(None, coro_results, transfer_log)
+                
         except Exception as e:
             logger.error(
                 f"%s %s for %s %s at block %s:",
