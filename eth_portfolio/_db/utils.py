@@ -1,4 +1,4 @@
-from asyncio import gather, get_event_loop
+from asyncio import create_task, gather, get_event_loop
 from contextlib import suppress
 from functools import lru_cache
 from typing import Any, Dict, Optional, Tuple, Union
@@ -6,8 +6,9 @@ from typing import Any, Dict, Optional, Tuple, Union
 import evmspec
 import y._db.common
 import y._db.config as config
-from a_sync import a_sync
+from a_sync import PruningThreadPoolExecutor, a_sync
 from brownie import chain
+from eth_typing import ChecksumAddress
 from evmspec.data import _decode_hook
 from logging import getLogger
 from msgspec import ValidationError, json
@@ -44,7 +45,7 @@ except OperationalError as e:
         "Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script"
     ) from e
 
-from y._db.decorators import a_sync_write_db_session_cached, retry_locked
+from y._db.decorators import retry_locked
 from y._db.entities import Address, Block, Chain, Contract, Token, insert
 
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
@@ -57,11 +58,23 @@ from y.exceptions import NonStandardERC20
 from y.contracts import is_contract
 
 
+_block_executor = PruningThreadPoolExecutor(4, "eth-portfolio block")
+_token_executor = PruningThreadPoolExecutor(4, "eth-portfolio token")
+_address_executor = PruningThreadPoolExecutor(4, "eth-portfolio address")
+_transaction_read_executor = PruningThreadPoolExecutor(16, "eth-portfolio-transaction-read")
+_transaction_write_executor = PruningThreadPoolExecutor(4, "eth-portfolio-transaction-write")
+_token_transfer_read_executor = PruningThreadPoolExecutor(16, "eth-portfolio-token-transfer-read")
+_token_transfer_write_executor = PruningThreadPoolExecutor(4, "eth-portfolio-token-transfer-write")
+_internal_transfer_read_executor = PruningThreadPoolExecutor(16, "eth-portfolio-internal-transfer read")
+_internal_transfer_write_executor = PruningThreadPoolExecutor(4, "eth-portfolio-internal-transfer write")
+
 def robust_db_session(fn: Fn[_P, _T]) -> Fn[_P, _T]:
     return retry_locked(break_locks(db_session(fn)))
 
+db_session_cached = lambda func: retry_locked(lru_cache(maxsize=None)(db_session(retry_locked(func))))
 
-@a_sync(default="async")
+
+@a_sync(default="async", executor=_block_executor)
 @robust_db_session
 def get_block(block: int) -> entities.BlockExtended:
     if b := entities.BlockExtended.get(chain=chain.id, number=block):
@@ -114,7 +127,8 @@ def get_block(block: int) -> entities.BlockExtended:
     return entities.BlockExtended.get(chain=chain.id, number=block)
 
 
-@a_sync_write_db_session_cached
+@a_sync(default="async", executor=_block_executor)
+@db_session_cached
 def ensure_block(block: int) -> None:
     get_block(block, sync=True)
 
@@ -160,9 +174,9 @@ def __is_token(address) -> bool:
     return False
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_address_executor)
 @robust_db_session
-def get_address(address: str) -> entities.AddressExtended:
+def get_address(address: ChecksumAddress) -> entities.AddressExtended:
     entity_type = entities.TokenExtended
     entity = entities.Address.get(chain=chain.id, address=address)
     """ TODO: fix this later
@@ -196,14 +210,22 @@ def get_address(address: str) -> entities.AddressExtended:
     )
 
 
-@a_sync_write_db_session_cached
-def ensure_address(address: str) -> None:
+@a_sync(default="async", executor=_address_executor)
+@db_session_cached
+def ensure_address(address: ChecksumAddress) -> None:
     get_address(address, sync=True)
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_address_executor)
+@db_session_cached
+def ensure_addresses(*addresses: ChecksumAddress) -> None:
+    for address in addresses:
+        ensure_address(address, sync=True)
+
+
+@a_sync(default="async", executor=_token_executor)
 @robust_db_session
-def get_token(address: str) -> entities.TokenExtended:
+def get_token(address: ChecksumAddress) -> entities.TokenExtended:
     if t := entities.TokenExtended.get(chain=chain.id, address=address):
         return t
     kwargs = {}
@@ -248,14 +270,15 @@ def get_token(address: str) -> entities.TokenExtended:
     ) or entities.TokenExtended.get(chain=chain.id, address=address)
 
 
-@a_sync_write_db_session_cached
-def ensure_token(token_address: str) -> None:
+@a_sync(default="async", executor=_token_executor)
+@db_session_cached
+def ensure_token(token_address: ChecksumAddress) -> None:
     get_token(token_address, sync=True)
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_transaction_read_executor)
 @robust_db_session
-def get_transaction(sender: str, nonce: int) -> Optional[Transaction]:
+def get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Transaction]:
     transactions = transactions_known_at_startup()
     pk = ((chain.id, sender), nonce)
     if pk in transactions:
@@ -278,7 +301,7 @@ def decode_transaction(data: bytes) -> Union[Transaction, TransactionRLP]:
         raise
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_transaction_write_executor)
 @robust_db_session
 def delete_transaction(transaction: Transaction) -> None:
     if entity := entities.Transaction.get(**transaction.__db_primary_key__):
@@ -287,15 +310,17 @@ def delete_transaction(transaction: Transaction) -> None:
 
 async def insert_transaction(transaction: Transaction) -> None:
     # Make sure these are in the db so below we can call them and use the results all in one transaction
-    coros = [ensure_block(transaction.block_number), ensure_address(transaction.from_address)]  # type: ignore [arg-type]
-    address = transaction.to_address
-    if address is not None:
-        coros.append(ensure_address(address))
-    await gather(*coros)
+    # NOTE: this create task -> await coro -> await task pattern is faster than a 2-task gather
+    block_task = create_task(ensure_block(transaction.block_number))
+    if to_address := transaction.to_address:
+        await ensure_addresses(to_address, transaction.from_address)
+    else:
+        await ensure_address(transaction.from_address)
+    await block_task
     await _insert_transaction(transaction)
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_transaction_write_executor)
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def _insert_transaction(transaction: Transaction) -> None:
@@ -318,7 +343,7 @@ def _insert_transaction(transaction: Transaction) -> None:
         )
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_internal_transfer_read_executor)
 @robust_db_session
 def get_internal_transfer(trace: evmspec.FilterTrace) -> Optional[InternalTransfer]:
     block = trace.blockNumber
@@ -343,7 +368,7 @@ def get_internal_transfer(trace: evmspec.FilterTrace) -> Optional[InternalTransf
         return json.decode(entity.raw, type=InternalTransfer, dec_hook=_decode_hook)
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_internal_transfer_write_executor)
 @robust_db_session
 def delete_internal_transfer(transfer: InternalTransfer) -> None:
     if entity := entities.InternalTransfer.get(
@@ -367,14 +392,17 @@ def delete_internal_transfer(transfer: InternalTransfer) -> None:
 
 
 async def insert_internal_transfer(transfer: InternalTransfer) -> None:
-    coros = [ensure_block(transfer.block_number), ensure_address(transfer.from_address)]
+    # NOTE: this create task -> await coro -> await task pattern is faster than a 2-task gather
+    block_task = create_task(ensure_block(transfer.block_number))
     if to_address := getattr(transfer, "to_address", None):
-        coros.append(ensure_address(to_address))
-    await gather(*coros)
+        await ensure_addresses(to_address, transfer.from_address)
+    else:
+        await ensure_address(transfer.from_address)
+    await block_task
     await _insert_internal_transfer(transfer)
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_internal_transfer_write_executor)
 @robust_db_session
 def _insert_internal_transfer(transfer: InternalTransfer) -> None:
     entities.InternalTransfer(
@@ -395,7 +423,7 @@ def _insert_internal_transfer(transfer: InternalTransfer) -> None:
     )
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_token_transfer_read_executor)
 @robust_db_session
 def get_token_transfer(transfer: evmspec.Log) -> Optional[TokenTransfer]:
     pk = {
@@ -412,13 +440,13 @@ def get_token_transfer(transfer: evmspec.Log) -> Optional[TokenTransfer]:
             return json.decode(entity.raw, type=TokenTransfer, dec_hook=_decode_hook)
 
 
-_TPK = Tuple[Tuple[int, str], int]
+_TPK = Tuple[Tuple[int, ChecksumAddress], int]
 
 
 @lru_cache(maxsize=None)
 def transactions_known_at_startup() -> Dict[_TPK, bytes]:
     transfers = {}
-    obj: Tuple[int, str, int, bytes]
+    obj: Tuple[int, ChecksumAddress, int, bytes]
     for obj in select(
         (t.from_address.chain.id, t.from_address.address, t.nonce, t.raw)
         for t in entities.Transaction  # type: ignore [attr-defined]
@@ -448,7 +476,7 @@ def token_transfers_known_at_startup() -> Dict[_TTPK, bytes]:
     return transfers
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_token_transfer_write_executor)
 @robust_db_session
 def delete_token_transfer(token_transfer: TokenTransfer) -> None:
     if entity := entities.TokenTransfer.get(
@@ -460,17 +488,35 @@ def delete_token_transfer(token_transfer: TokenTransfer) -> None:
 
 
 async def insert_token_transfer(token_transfer: TokenTransfer) -> None:
-    coros = [
-        ensure_block(token_transfer.block_number),
-        ensure_token(token_transfer.token_address),
-        ensure_address(token_transfer.from_address),
-        ensure_address(token_transfer.to_address),
-    ]
-    await gather(*coros)
+    # two tasks and a coroutine like this should be faster than gather
+    block_task = create_task(ensure_block(token_transfer.block_number))
+    while True:
+        try:
+            token_task = create_task(ensure_token(token_transfer.token_address))
+        except KeyError:
+            # This KeyError comes from a bug in cachetools.ttl_cache
+            # TODO: move this handler into evmspec
+            pass
+        else:
+            break
+
+    while True:
+        try:
+            address_coro = ensure_addresses(token_transfer.to_address, token_transfer.from_address)
+        except KeyError:
+            # This KeyError comes from a bug in cachetools.ttl_cache
+            # TODO: move this handler into evmspec
+            pass
+        else:
+            break
+
+    await address_coro
+    await block_task
+    await token_task
     await _insert_token_transfer(token_transfer)
 
 
-@a_sync(default="async")
+@a_sync(default="async", executor=_token_transfer_write_executor)
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def _insert_token_transfer(token_transfer: TokenTransfer) -> None:

@@ -56,5 +56,3 @@ INTL_STABLECOINS = {
         "0x269895a3dF4D73b077Fc823dD6dA1B95f72Aaf9B",  # sKRW
     },
 }.get(chain.id, set())
-
-sync_threads = PruningThreadPoolExecutor(8)
