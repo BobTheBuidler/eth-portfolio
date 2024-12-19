@@ -88,7 +88,9 @@ class AddressLedgerBase(
         "_lock",
     )
 
-    def __init__(self, portfolio_address: "PortfolioAddress", exclude_zero_value: bool = True) -> None:
+    def __init__(
+        self, portfolio_address: "PortfolioAddress", exclude_zero_value: bool = True
+    ) -> None:
         """
         Initializes the AddressLedgerBase instance.
 
@@ -597,8 +599,8 @@ async def get_transaction_status(txhash: str) -> Status:
 @cache_to_disk
 @eth_retry.auto_retry
 async def get_traces(
-    filter_params: TraceFilterParams, 
-    exclude_zero_value: bool, 
+    filter_params: TraceFilterParams,
+    exclude_zero_value: bool,
     # TODO implement exclude_errors
     exclude_errors: bool = True,
 ) -> List[FilterTrace]:
@@ -614,7 +616,7 @@ async def get_traces(
         The list of traces.
     """
     return await _check_traces(
-        await trace_filter(**filter_params), 
+        await trace_filter(**filter_params),
         exclude_zero_value,
         exclude_errors,
     )
@@ -622,25 +624,29 @@ async def get_traces(
 
 @stuck_coro_debugger
 @eth_retry.auto_retry
-async def _check_traces(traces: List[FilterTrace], exclude_zero_value: bool, exclude_errors: bool) -> List[FilterTrace]:
+async def _check_traces(
+    traces: List[FilterTrace], exclude_zero_value: bool, exclude_errors: bool
+) -> List[FilterTrace]:
     good_traces = []
     append = good_traces.append
-    
+
     if exclude_errors:
         traces = (trace for trace in traces if not hasattr(trace, "error"))
     if exclude_zero_value:
         traces = (trace for trace in traces if trace.value)
 
     traces = (
-        trace for trace in traces 
+        trace
+        for trace in traces
         # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
         # that actually transmitted value to the singleton even though they appear to.
-        if not isinstance(trace, call.Trace) 
-        and trace.action.to == "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"  # Gnosis Safe Singleton 1.3.0
+        if not isinstance(trace, call.Trace)
+        and trace.action.to
+        == "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"  # Gnosis Safe Singleton 1.3.0
     )
-    
+
     check_status_tasks = a_sync.TaskMapping(get_transaction_status)
-        
+
     for i, trace in enumerate(traces):
         # Make sure we don't block up the event loop
         if i % 500:
@@ -700,7 +706,9 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
 
         exclude_zero = self.exclude_zero_value
         trace_filter_coros = [
-            get_traces({direction: [self.address], "fromBlock": start, "toBlock": end}, exclude_zero)
+            get_traces(
+                {direction: [self.address], "fromBlock": start, "toBlock": end}, exclude_zero
+            )
             for direction, (start, end) in product(["toAddress", "fromAddress"], block_ranges)
         ]
 
