@@ -65,13 +65,21 @@ _transaction_read_executor = PruningThreadPoolExecutor(16, "eth-portfolio-transa
 _transaction_write_executor = PruningThreadPoolExecutor(4, "eth-portfolio-transaction-write")
 _token_transfer_read_executor = PruningThreadPoolExecutor(16, "eth-portfolio-token-transfer-read")
 _token_transfer_write_executor = PruningThreadPoolExecutor(4, "eth-portfolio-token-transfer-write")
-_internal_transfer_read_executor = PruningThreadPoolExecutor(16, "eth-portfolio-internal-transfer read")
-_internal_transfer_write_executor = PruningThreadPoolExecutor(4, "eth-portfolio-internal-transfer write")
+_internal_transfer_read_executor = PruningThreadPoolExecutor(
+    16, "eth-portfolio-internal-transfer read"
+)
+_internal_transfer_write_executor = PruningThreadPoolExecutor(
+    4, "eth-portfolio-internal-transfer write"
+)
+
 
 def robust_db_session(fn: Fn[_P, _T]) -> Fn[_P, _T]:
     return retry_locked(break_locks(db_session(fn)))
 
-db_session_cached = lambda func: retry_locked(lru_cache(maxsize=None)(db_session(retry_locked(func))))
+
+db_session_cached = lambda func: retry_locked(
+    lru_cache(maxsize=None)(db_session(retry_locked(func)))
+)
 
 
 @a_sync(default="async", executor=_block_executor)
