@@ -465,6 +465,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             self._ensure_workers(min(len_nonces, self._num_workers))
 
             transactions = []
+            exclude_zero = self.exclude_zero_value
             transaction: Optional[Transaction]
             for _ in tqdm(range(len_nonces), desc=f"Transactions        {self.address}"):
                 nonce, transaction = await self._ready.get()
@@ -521,7 +522,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             while True:
                 nonce = await queue_get()
                 try:
-                    put_ready(await load_transaction(address, nonce, load_prices))
+                    put_ready(await load_transaction(address, nonce, load_prices, exclude_zero))
                 except Exception as e:
                     put_ready((nonce, e))
         except Exception as e:
