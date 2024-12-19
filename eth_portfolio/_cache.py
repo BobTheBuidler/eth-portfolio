@@ -1,11 +1,12 @@
 import functools
 import inspect
-from asyncio import Queue, get_event_loop, sleep
+from asyncio import PriorityQueue, get_event_loop, sleep
 from hashlib import md5
 from logging import getLogger
 from os import makedirs
 from os.path import exists, join
 from pickle import dumps, load, loads
+from random import random
 from typing import Any, Callable, NoReturn
 
 from a_sync import PruningThreadPoolExecutor
@@ -34,12 +35,12 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
 
     if inspect.iscoroutinefunction(fn):
 
-        queue = Queue()
+        queue = PriorityQueue()
 
         @log_broken
         async def cache_deco_worker_coro(func) -> NoReturn:
             while True:
-                fut, cache_path, args, kwargs = await queue.get()
+                _, fut, cache_path, args, kwargs = await queue.get()
                 try:
                     async with _aio_open(cache_path, "rb", executor=EXECUTOR) as f:
                         fut.set_result(loads(await f.read()))
@@ -53,7 +54,8 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
             cache_path = get_cache_file_path(args, kwargs)
             if await EXECUTOR.run(exists, cache_path):
                 fut = get_event_loop().create_future()
-                queue.put_nowait((fut, cache_path, args, kwargs))
+                # we intentionally mix up the order to break up heavy load block ranges
+                queue.put_nowait((random(), fut, cache_path, args, kwargs))
                 if not workers:
                     workers.extend(create_task(cache_deco_worker_coro(fn)) for _ in range(100))
                 try:
