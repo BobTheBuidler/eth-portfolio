@@ -119,7 +119,7 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
                     highest_known_nonce_lower_than_query = max_value
 
             else:
-                min_value = min(ns)
+                min_value = min(n for n ns if n > nonce)
                 if (
                     lowest_known_nonce_greater_than_query is None
                     or min_value < lowest_known_nonce_greater_than_query
