@@ -35,21 +35,14 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
     if inspect.iscoroutinefunction(fn):
 
         queue = Queue()
-        loaded = 0
 
         @log_broken
         async def cache_deco_worker_coro(func) -> NoReturn:
-            nonlocal loaded
             while True:
                 fut, cache_path, args, kwargs = await queue.get()
                 try:
                     async with _aio_open(cache_path, "rb", executor=EXECUTOR) as f:
                         fut.set_result(loads(await f.read()))
-                        loaded += 1
-                        # unpickling traces can block up the event loop when we load them from disk
-                        # lets not do that
-                        if loaded % 50 == 0:
-                            await sleep(0)
                 except Exception as e:
                     fut.set_exception(e)
 
