@@ -1,6 +1,6 @@
 import functools
 import inspect
-from asyncio import Queue
+from asyncio import Queue, get_event_loop
 from hashlib import md5
 from logging import getLogger
 from os import makedirs
