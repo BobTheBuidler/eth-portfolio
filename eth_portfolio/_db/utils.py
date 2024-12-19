@@ -287,12 +287,11 @@ def ensure_token(token_address: ChecksumAddress) -> None:
 @a_sync(default="async", executor=_transaction_read_executor)
 @robust_db_session
 def get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Transaction]:
-    transactions = transactions_known_at_startup()
-    pk = ((chain.id, sender), nonce)
-    if pk in transactions:
-        return decode_transaction(transactions[pk])
+    transactions = transactions_known_at_startup(chain.id, sender)
+    if nonce in transactions:
+        return decode_transaction(transactions.pop(nonce))
     entity: entities.Transaction
-    if entity := entities.Transaction.get(from_address=pk[0], nonce=pk[1]):
+    if entity := entities.Transaction.get(from_address=chain.id, nonce=sender):
         return decode_transaction(entity.raw)
 
 
@@ -452,17 +451,17 @@ _TPK = Tuple[Tuple[int, ChecksumAddress], int]
 
 
 @lru_cache(maxsize=None)
-def transactions_known_at_startup() -> Dict[_TPK, bytes]:
+def transactions_known_at_startup(chainid: int, from_address: ChecksumAddress) -> Dict[_TPK, bytes]:
     transfers = {}
     obj: Tuple[int, ChecksumAddress, int, bytes]
     for obj in select(
-        (t.from_address.chain.id, t.from_address.address, t.nonce, t.raw)
+        (t.from_address.address, t.nonce, t.raw)
         for t in entities.Transaction  # type: ignore [attr-defined]
-        if t.from_address.chain.id == chain.id
+        if t.from_address.chain.id == chainid
+        and t.from_address.address == from_address
     ):
-        chainid, from_address, nonce, raw = obj
-        pk = ((chainid, from_address), nonce)
-        transfers[pk] = raw
+        nonce, raw = obj
+        transfers[nonce] = raw
     return transfers
 
 
