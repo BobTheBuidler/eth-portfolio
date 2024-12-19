@@ -73,6 +73,7 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
                 # can continue
                 if e.strerror != "No space left on device":
                     raise
+            return async_result
 
     else:
 
