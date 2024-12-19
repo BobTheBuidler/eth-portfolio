@@ -53,16 +53,13 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
         @functools.wraps(fn)
         async def disk_cache_wrap(*args: P.args, **kwargs: P.kwargs) -> T:
             cache_path = get_cache_file_path(args, kwargs)
+            fut = get_event_loop().create_future()
+            queue.put_nowait((fut, cache_path, args, kwargs))
+            if workers is None:
+                workers = tuple(create_task(cache_deco_worker_coro()) for _ in range(1000))
             try:
-                fut = get_event_loop().create_future()
-                queue.put_nowait((fut, cache_path, args, kwargs))
-                if workers is None:
-                    workers = tuple(create_task(cache_deco_worker_coro()) for _ in range(1000))
-                try:
-                    return await fut
-                except EOFError:
-                    pass
-            except FileNotFoundError:
+                return await fut
+            except (FileNotFoundError, EOFError):
                 pass
 
             async_result: T = await fn(*args, **kwargs)
