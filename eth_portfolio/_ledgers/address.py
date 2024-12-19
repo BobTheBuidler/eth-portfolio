@@ -472,6 +472,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
                 if transaction:
                     if isinstance(transaction, Exception):
                         raise transaction
+                    if exclude_zero and not transaction.value:
+                        continue
                     transactions.append(transaction)
                     yield transaction
                 elif nonce == 0 and self.cached_thru_nonce == -1:
