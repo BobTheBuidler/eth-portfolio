@@ -479,6 +479,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             if self.objects:
                 self.objects.sort(key=lambda t: t.nonce)
                 self.cached_thru_nonce = self.objects[-1].nonce
+                assert self.cached_thru_nonce, self.objects[-1]
 
         if self.cached_from is None:
             self.cached_from = 0
