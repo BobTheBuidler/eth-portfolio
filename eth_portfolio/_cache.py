@@ -48,7 +48,7 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
                 logger.exception(e)
                 raise
 
-        workers = tuple(create_task(cache_deco_worker_coro()) for _ in range(1000))
+        workers = None
 
         @functools.wraps(fn)
         async def disk_cache_wrap(*args: P.args, **kwargs: P.kwargs) -> T:
@@ -56,6 +56,8 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
             try:
                 fut = get_event_loop().create_future()
                 queue.put_nowait((fut, cache_path, args, kwargs))
+                if workers is None:
+                    workers = tuple(create_task(cache_deco_worker_coro()) for _ in range(1000))
                 try:
                     return await fut
                 except EOFError:
