@@ -39,8 +39,6 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
                 while True:
                     fut, cache_path, args, kwargs = await queue.get()
                     try:
-                        cache_path = 
-                        if await EXECUTOR.run(exists, cache_path):
                         async with _aio_open(cache_path, "rb", executor=EXECUTOR) as f:
                             fut.set_result(loads(await f.read()))
                     except Exception as e:
@@ -55,13 +53,15 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
         @functools.wraps(fn)
         async def disk_cache_wrap(*args: P.args, **kwargs: P.kwargs) -> T:
             cache_path = get_cache_file_path(args, kwargs)
-            if await EXECUTOR.run(exists, cache_path):
+            try:
                 fut = get_event_loop().create_future()
                 queue.put_nowait((fut, cache_path, args, kwargs))
                 try:
                     return await fut
                 except EOFError:
                     pass
+            except FileNotFoundError:
+                pass
 
             async_result: T = await fn(*args, **kwargs)
             try:
@@ -79,12 +79,14 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
         @functools.wraps(fn)
         def disk_cache_wrap(*args: P.args, **kwargs: P.kwargs) -> T:
             cache_path = get_cache_file_path(args, kwargs)
-            if exists(cache_path):
+            try:
                 with open(cache_path, "rb") as f:
                     try:
                         return load(f)
                     except EOFError:
                         pass
+            except FileNotFoundError:
+                pass
 
             sync_result: T = fn(*args, **kwargs)  # type: ignore [assignment, return-value]
             try:
