@@ -605,7 +605,7 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     Returns:
         The list of traces.
     """
-    async with _trace_semaphores[sorted((filter_params.get("toAddress), filter_params.get("fromAddress))]:
+    async with _trace_semaphores[sorted(filter_params.get(x) for x in ("toAddress", "fromAddress))]:
         return await _check_traces(await trace_filter(**filter_params))
 
 
