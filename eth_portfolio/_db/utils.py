@@ -455,7 +455,7 @@ def transactions_known_at_startup(chainid: int, from_address: ChecksumAddress) -
     transfers = {}
     obj: Tuple[int, ChecksumAddress, int, bytes]
     for obj in select(
-        (t.from_address.address, t.nonce, t.raw)
+        (t.nonce, t.raw)
         for t in entities.Transaction  # type: ignore [attr-defined]
         if t.from_address.chain.id == chainid and t.from_address.address == from_address
     ):
