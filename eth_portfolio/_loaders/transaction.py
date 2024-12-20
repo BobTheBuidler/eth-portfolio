@@ -109,7 +109,7 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
         lowest_known_nonce_greater_than_query = None
 
         # it is impossible for n to == nonce
-        for less_than, ns in itertools.groupby(nonces[address], lambda n: n < nonce):
+        for less_than, ns in itertools.groupby(filter(lambda n: n != nonce, nonces[address]), lambda n: n < nonce):
             if less_than:
                 max_value = max(ns)
                 if (
@@ -119,7 +119,10 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
                     highest_known_nonce_lower_than_query = max_value
 
             else:
-                min_value = min(filter(lambda n: n > nonce, ns))
+                try:
+                    min_value = min(filter(lambda n: n > nonce, ns))
+                except ValueError:
+                    continue
                 if (
                     lowest_known_nonce_greater_than_query is None
                     or min_value < lowest_known_nonce_greater_than_query
