@@ -204,5 +204,5 @@ async def get_transaction_index(hash: str) -> int:
     ).transactionIndex
 
 
-class HasTxIndex(msgspec.Struct):
+class HasTxIndex(Struct):
     transactionIndex: TransactionIndex
