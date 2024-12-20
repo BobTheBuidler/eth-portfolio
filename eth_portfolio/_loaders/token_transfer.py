@@ -29,8 +29,9 @@ from eth_portfolio.structs import TokenTransfer
 logger = getLogger(__name__)
 
 token_transfer_semaphore = BlockSemaphore(
-    10_000, name="eth_portfolio.token_transfers"
-)  # Some arbitrary number
+    20_000, # Some arbitrary number
+    name="eth_portfolio.token_transfers",
+)
 """A semaphore that regulates the concurrent processing of token transfers by processing lower blocks first."""
 
 
