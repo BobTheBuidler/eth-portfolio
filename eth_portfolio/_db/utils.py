@@ -454,29 +454,32 @@ _TPK = Tuple[Tuple[int, ChecksumAddress], int]
 def transactions_known_at_startup(chainid: int, from_address: ChecksumAddress) -> Dict[_TPK, bytes]:
     transfers = {}
     obj: Tuple[int, ChecksumAddress, int, bytes]
-    for obj in select(
+    for nonce, raw in select(
         (t.nonce, t.raw)
         for t in entities.Transaction  # type: ignore [attr-defined]
         if t.from_address.chain.id == chainid and t.from_address.address == from_address
     ):
-        nonce, raw = obj
         transfers[nonce] = raw
     return transfers
 
 
-_TTPK = Tuple[Tuple[int, int], int, int]
+_TokenTransferPK = Tuple[Tuple[int, int], int, int]
 
 
 @lru_cache(maxsize=None)
-def token_transfers_known_at_startup() -> Dict[_TTPK, bytes]:
+def token_transfers_known_at_startup() -> Dict[_TokenTransferPK, bytes]:
+    chainid: int
+    block: int
+    tx_index: int
+    log_index: int
+    raw: bytes
+    
     transfers = {}
-    obj: Tuple[int, int, int, int, bytes]
-    for obj in select(
+    for chainid, block, tx_index, log_index, raw in select(
         (t.block.chain.id, t.block.number, t.transaction_index, t.log_index, t.raw)
         for t in entities.TokenTransfer  # type: ignore [attr-defined]
         if t.block.chain.id == chain.id
     ):
-        chainid, block, tx_index, log_index, raw = obj
         pk = ((chainid, block), tx_index, log_index)
         transfers[pk] = raw
     return transfers
