@@ -61,12 +61,12 @@ from y.contracts import is_contract
 _block_executor = PruningThreadPoolExecutor(4, "eth-portfolio block")
 _token_executor = PruningThreadPoolExecutor(4, "eth-portfolio token")
 _address_executor = PruningThreadPoolExecutor(4, "eth-portfolio address")
-_transaction_read_executor = PruningThreadPoolExecutor(12, "eth-portfolio-transaction-read")
+_transaction_read_executor = PruningThreadPoolExecutor(10, "eth-portfolio-transaction-read")
 _transaction_write_executor = PruningThreadPoolExecutor(4, "eth-portfolio-transaction-write")
-_token_transfer_read_executor = PruningThreadPoolExecutor(12, "eth-portfolio-token-transfer-read")
+_token_transfer_read_executor = PruningThreadPoolExecutor(10, "eth-portfolio-token-transfer-read")
 _token_transfer_write_executor = PruningThreadPoolExecutor(4, "eth-portfolio-token-transfer-write")
 _internal_transfer_read_executor = PruningThreadPoolExecutor(
-    16, "eth-portfolio-internal-transfer read"
+    10, "eth-portfolio-internal-transfer read"
 )
 _internal_transfer_write_executor = PruningThreadPoolExecutor(
     4, "eth-portfolio-internal-transfer write"
