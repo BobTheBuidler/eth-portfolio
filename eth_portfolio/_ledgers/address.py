@@ -589,7 +589,7 @@ async def get_transaction_status(txhash: str) -> Status:
     return await dank_mids.eth.get_transaction_status(txhash)
 
 
-_trace_semaphores = defaultdict(lambda: a_sync.Semaphore(32, __name__ + ".trace_semaphore"))
+_trace_semaphores = defaultdict(lambda: a_sync.Semaphore(16, __name__ + ".trace_semaphore"))
 
 @cache_to_disk
 @eth_retry.auto_retry
@@ -605,8 +605,7 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     Returns:
         The list of traces.
     """
-    address = filter_params.get("toAddress) or filter_params.get("fromAddress")
-    async with _trace_semaphores[address]:
+    async with _trace_semaphores[sorted((filter_params.get("toAddress), filter_params.get("fromAddress))]:
         return await _check_traces(await trace_filter(**filter_params))
 
 
