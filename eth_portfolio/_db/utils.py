@@ -291,7 +291,7 @@ def get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Transaction
     if nonce in transactions:
         return decode_transaction(transactions.pop(nonce))
     entity: entities.Transaction
-    if entity := entities.Transaction.get(from_address=(chain.id, sender), nonce=sender):
+    if entity := entities.Transaction.get(from_address=(chain.id, sender), nonce=nonce):
         return decode_transaction(entity.raw)
 
 
