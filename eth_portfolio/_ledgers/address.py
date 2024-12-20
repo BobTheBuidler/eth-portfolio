@@ -42,7 +42,7 @@ from evmspec.structs.receipt import Status
 from evmspec.structs.trace import call, reward
 from pandas import DataFrame  # type: ignore
 from tqdm import tqdm
-from y import ERC20
+from y import ERC20, Network
 from y._decorators import stuck_coro_debugger
 from y.datatypes import Block
 from y.utils.events import BATCH_SIZE
@@ -602,6 +602,9 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     Returns:
         The list of traces.
     """
+    if chain.id == Network.Polygon:
+        logger.warning("polygon doesnt support trace_filter method, must develop alternate solution")
+        return []
     return await _check_traces(await trace_filter(**filter_params))
 
 
