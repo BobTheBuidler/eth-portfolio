@@ -593,7 +593,7 @@ _trace_semaphores = defaultdict(lambda: a_sync.Semaphore(32))
 
 @cache_to_disk
 @eth_retry.auto_retry
-async def get_traces(address: ChecksumAddress, filter_params: TraceFilterParams) -> List[FilterTrace]:
+async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     """
     Retrieves traces from the web3 provider using the given parameters.
 
