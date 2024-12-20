@@ -589,7 +589,7 @@ async def get_transaction_status(txhash: str) -> Status:
     return await dank_mids.eth.get_transaction_status(txhash)
 
 
-_trace_semaphores = defaultdict(lambda: a_sync.Semaphore(32))
+_trace_semaphores = defaultdict(lambda: a_sync.Semaphore(32, __name__ + ".trace_semaphore"))
 
 @cache_to_disk
 @eth_retry.auto_retry
