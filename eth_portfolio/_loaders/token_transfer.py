@@ -10,7 +10,7 @@ from a_sync import create_task, gather
 from async_lru import alru_cache
 from dank_mids import BlockSemaphore
 from evmspec.data import TransactionIndex
-from msgspec import Struct
+from msgspec import Struct, ValidationError
 from msgspec.json import decode
 from pony.orm import TransactionIntegrityError, UnexpectedError
 from y import ERC20
@@ -200,9 +200,12 @@ async def get_transaction_index(hash: str) -> int:
             break
         logger.info("get_transaction_index failed, retrying...")
 
-    return decode(
-        receipt_bytes, type=HasTxIndex, dec_hook=TransactionIndex._decode_hook
-    ).transactionIndex
+    try:
+        return decode(
+            receipt_bytes, type=HasTxIndex, dec_hook=TransactionIndex._decode_hook
+        ).transactionIndex
+    except ValidationError as e:
+        raise TypeError(e, receipt_bytes, decode(receipt_bytes) from e
 
 
 class HasTxIndex(Struct):
