@@ -35,6 +35,7 @@ import dank_mids
 import eth_retry
 from aiohttp import ClientResponseError
 from async_lru import alru_cache
+from brownie import chain
 from dank_mids.eth import TraceFilterParams
 from eth_typing import ChecksumAddress
 from evmspec import FilterTrace
