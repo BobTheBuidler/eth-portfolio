@@ -205,7 +205,7 @@ async def get_transaction_index(hash: str) -> int:
             receipt_bytes, type=HasTxIndex, dec_hook=TransactionIndex._decode_hook
         ).transactionIndex
     except ValidationError as e:
-        new = TypeError(e, receipt_bytes, decode(receipt_bytes)
+        new = TypeError(e, receipt_bytes, decode(receipt_bytes))
         logger.exception(new)
         raise new from e
         
