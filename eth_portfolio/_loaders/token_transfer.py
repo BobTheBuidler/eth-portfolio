@@ -3,14 +3,15 @@ This module orchestrates the process of loading and processing token transfers w
 """
 
 import decimal
-import logging
+from logging import getLogger
 from typing import Optional
 
-import a_sync
-import dank_mids
-import msgspec
+from a_sync import create_task, gather
 from async_lru import alru_cache
+from dank_mids import BlockSemaphore
 from evmspec.data import TransactionIndex
+from msgspec import Struct
+from msgspec.json import decode
 from pony.orm import TransactionIntegrityError, UnexpectedError
 from y import ERC20
 from y._db.log import Log
@@ -25,9 +26,9 @@ from eth_portfolio._utils import _get_price
 from eth_portfolio.structs import TokenTransfer
 
 
-logger = logging.getLogger(__name__)
+logger = getLogger(__name__)
 
-token_transfer_semaphore = dank_mids.BlockSemaphore(
+token_transfer_semaphore = BlockSemaphore(
     10_000, name="eth_portfolio.token_transfers"
 )  # Some arbitrary number
 """A semaphore that regulates the concurrent processing of token transfers by processing lower blocks first."""
@@ -93,7 +94,7 @@ async def load_token_transfer(
 
             if load_prices:
                 coro_results.update(
-                    await a_sync.gather(
+                    await gather(
                         {
                             "transaction_index": tx_index_coro,
                             "price": _get_price(token.address, transfer_log.blockNumber),
@@ -122,7 +123,7 @@ async def load_token_transfer(
 
         transfer = TokenTransfer(log=transfer_log, value=value, **coro_results)
 
-        a_sync.create_task(
+        create_task(
             _insert_to_db(transfer, load_prices),
             skip_gc_until_done=True,
         )
@@ -198,7 +199,7 @@ async def get_transaction_index(hash: str) -> int:
             break
         logger.info("get_transaction_index failed, retrying...")
 
-    return msgspec.json.decode(
+    return decode(
         receipt_bytes, type=HasTxIndex, dec_hook=TransactionIndex._decode_hook
     ).transactionIndex
 
