@@ -8,8 +8,8 @@ The primary focus of this module is to support eth-portfolio's internal operatio
 
 import asyncio
 import itertools
-import logging
 from collections import defaultdict
+from logging import DEBUG, getLogger
 from typing import DefaultDict, Dict, List, Optional, Tuple
 
 import a_sync
@@ -33,7 +33,7 @@ from eth_portfolio._db import utils as db
 from eth_portfolio._decimal import Decimal
 from eth_portfolio._loaders.utils import get_transaction_receipt
 
-logger = logging.getLogger(__name__)
+logger = getLogger(__name__)
 
 Nonce = int
 Nonces = DefaultDict[Nonce, Block]
@@ -163,23 +163,36 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
 
     hi = hi or await _get_block_number()
 
+    debug_logs_enabled = logger.isEnabledFor(DEBUG)
     while True:
         _nonce = await get_nonce_at_block(address, lo)
 
         if _nonce < nonce:
             old_lo = lo
             lo += int((hi - lo) / 2) or 1
-            logger.debug("Nonce at %s is %s, checking higher block %s", old_lo, _nonce, lo)
+            if debug_logs_enabled:
+                logger._log(
+                    DEBUG, 
+                    "Nonce for %s at %s is %s, checking higher block %s", 
+                    (address, old_lo, _nonce, lo),
+                )
             continue
 
         prev_block_nonce: int = await get_nonce_at_block(address, lo - 1)
         if prev_block_nonce >= nonce:
             hi = lo
             lo = int(lo / 2)
-            logger.debug("Nonce at %s is %s, checking lower block %s", hi, _nonce, lo)
+            if debug_logs_enabled:
+                logger._log(
+                    DEBUG, 
+                    "Nonce for %s at %s is %s, checking lower block %s", 
+                    (address, hi, _nonce, lo),
+                )
             continue
 
-        logger.debug("Found nonce %s at block %s", nonce, lo)
+        if debug_logs_enabled:
+            logger._log(DEBUG, "Found nonce %s for %s at block %s", (nonce, address, lo))
+            
         return lo
 
 
