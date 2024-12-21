@@ -294,9 +294,6 @@ async def get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Trans
 @a_sync(default="async", executor=_transaction_read_executor)
 @robust_db_session
 def __get_transaction_bytes_from_db(sender: ChecksumAddress, nonce: int) -> Optional[bytes]:
-    transactions = transactions_known_at_startup(chain.id, sender, sync=True)
-    if data := in transactions:
-        return transactions.pop(nonce)
     entity: entities.Transaction
     if entity := entities.Transaction.get(from_address=(chain.id, sender), nonce=nonce):
         return entity.raw
