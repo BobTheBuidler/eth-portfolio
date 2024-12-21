@@ -103,15 +103,13 @@ _nonce_cache_locks: DefaultDict[Address, asyncio.Lock] = defaultdict(asyncio.Loc
 
 
 async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
-    hi = None
     async with _nonce_cache_locks[address]:
         highest_known_nonce_lower_than_query = None
         lowest_known_nonce_greater_than_query = None
 
         # it is impossible for n to == nonce
-        for less_than, ns in itertools.groupby(
-            filter(lambda n: n != nonce, nonces[address]), lambda n: n < nonce
-        ):
+        filtered = filter(lambda n: n != nonce, nonces[address])
+        for less_than, ns in itertools.groupby(filtered, lambda n: n < nonce):
             if less_than:
                 max_value = max(ns)
                 if (
@@ -121,10 +119,7 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
                     highest_known_nonce_lower_than_query = max_value
 
             else:
-                try:
-                    min_value = min(filter(lambda n: n > nonce, ns))
-                except ValueError:
-                    continue
+                min_value = min(ns)
                 if (
                     lowest_known_nonce_greater_than_query is None
                     or min_value < lowest_known_nonce_greater_than_query
@@ -138,6 +133,8 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
 
         if lowest_known_nonce_greater_than_query is not None:
             hi = nonces[address][lowest_known_nonce_greater_than_query]
+        else:
+            hi = await _get_block_number()
 
         del highest_known_nonce_lower_than_query, lowest_known_nonce_greater_than_query
 
@@ -162,8 +159,6 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
             del num_chunks, chunk_size, points, block
 
         del range_size
-
-    hi = hi or await _get_block_number()
 
     debug_logs_enabled = logger.isEnabledFor(DEBUG)
     while True:
