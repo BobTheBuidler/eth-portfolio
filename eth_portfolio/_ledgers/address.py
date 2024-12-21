@@ -610,7 +610,7 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
         logger.warning("polygon doesnt support trace_filter method, must develop alternate solution")
         return []
     semaphore_key = tuple(
-        sorted((filter_params.get(x, [""]) for x in ("toAddress", "fromAddress")))
+        sorted(tuple(filter_params.get(x, ("",)) for x in ("toAddress", "fromAddress")))
     )
     async with _trace_semaphores[semaphore_key]:
         return await _check_traces(await trace_filter(**filter_params))
