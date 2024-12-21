@@ -11,6 +11,7 @@ and processing without blocking, thus improving the overall responsiveness and p
 
 from abc import ABCMeta, abstractmethod
 from asyncio import Lock, Queue, create_task, gather, sleep
+from collections import defaultdict
 from functools import partial
 from http import HTTPStatus
 from itertools import product
@@ -536,7 +537,7 @@ class InternalTransfersList(PandableList[InternalTransfer]):
     """
 
 
-@a_sync.Semaphore(64, __name__ + ".trace_semaphore")
+@a_sync.Semaphore(128, __name__ + ".trace_filter")
 @stuck_coro_debugger
 @eth_retry.auto_retry
 async def trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTrace]:
@@ -589,6 +590,8 @@ async def get_transaction_status(txhash: str) -> Status:
     return await dank_mids.eth.get_transaction_status(txhash)
 
 
+_trace_semaphores = defaultdict(lambda: a_sync.Semaphore(16, __name__ + ".trace_semaphore"))
+
 @cache_to_disk
 @eth_retry.auto_retry
 async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
@@ -606,7 +609,8 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     if chain.id == Network.Polygon:
         logger.warning("polygon doesnt support trace_filter method, must develop alternate solution")
         return []
-    return await _check_traces(await trace_filter(**filter_params))
+    async with _trace_semaphores[sorted(filter_params.get(x) for x in ("toAddress", "fromAddress))]:
+        return await _check_traces(await trace_filter(**filter_params))
 
 
 @stuck_coro_debugger
