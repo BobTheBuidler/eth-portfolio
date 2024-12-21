@@ -286,8 +286,8 @@ def ensure_token(token_address: ChecksumAddress) -> None:
 
 async def get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Transaction]:
     transactions = await transactions_known_at_startup(chain.id, sender)
-    if nonce in transactions:
-        return decode_transaction(transactions.pop(nonce))
+    if data := transactions.pop(nonce, None):
+        return decode_transaction(data)
     return await _get_transaction(sender, nonce)
 
     
