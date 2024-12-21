@@ -461,6 +461,7 @@ _TPK = Tuple[Tuple[int, ChecksumAddress], int]
 
 
 @a_sync(default="async", executor=_transaction_read_executor, ram_cache_maxsize=None)
+@robust_db_session
 def transactions_known_at_startup(chainid: int, from_address: ChecksumAddress) -> Dict[_TPK, bytes]:
     return dict(
         select(
@@ -475,6 +476,7 @@ _TokenTransferPK = Tuple[Tuple[int, int], int, int]
 
 
 @a_sync(default="async", executor=_transaction_read_executor, ram_cache_maxsize=None)
+@robust_db_session
 def token_transfers_known_at_startup() -> Dict[_TokenTransferPK, bytes]:
     chainid: int
     block: int
