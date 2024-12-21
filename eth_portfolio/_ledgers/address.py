@@ -408,7 +408,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     _list_type = TransactionsList
     __slots__ = ("cached_thru_nonce", "_queue", "_ready", "_num_workers", "_workers")
 
-    def __init__(self, portfolio_address: "PortfolioAddress", num_workers: int = 10_000):
+    def __init__(self, portfolio_address: "PortfolioAddress", num_workers: int = 1000):
         """
         Initializes the AddressTransactionsLedger instance.
 
@@ -592,6 +592,7 @@ async def get_transaction_status(txhash: str) -> Status:
 
 _trace_semaphores = defaultdict(lambda: a_sync.Semaphore(16, __name__ + ".trace_semaphore"))
 
+
 @cache_to_disk
 @eth_retry.auto_retry
 async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
@@ -607,7 +608,9 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
         The list of traces.
     """
     if chain.id == Network.Polygon:
-        logger.warning("polygon doesnt support trace_filter method, must develop alternate solution")
+        logger.warning(
+            "polygon doesnt support trace_filter method, must develop alternate solution"
+        )
         return []
     semaphore_key = tuple(
         sorted(tuple(filter_params.get(x, ("",)) for x in ("toAddress", "fromAddress")))

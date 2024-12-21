@@ -55,7 +55,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         address: Address,
         start_block: Block,
         load_prices: bool,
-        num_workers_transactions: int = 10_000,
+        num_workers_transactions: int = 1000,
         asynchronous: bool = False,
     ) -> None:  # type: ignore
         """

@@ -109,7 +109,9 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
         lowest_known_nonce_greater_than_query = None
 
         # it is impossible for n to == nonce
-        for less_than, ns in itertools.groupby(filter(lambda n: n != nonce, nonces[address]), lambda n: n < nonce):
+        for less_than, ns in itertools.groupby(
+            filter(lambda n: n != nonce, nonces[address]), lambda n: n < nonce
+        ):
             if less_than:
                 max_value = max(ns)
                 if (
@@ -172,8 +174,8 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
             lo += int((hi - lo) / 2) or 1
             if debug_logs_enabled:
                 logger._log(
-                    DEBUG, 
-                    "Nonce for %s at %s is %s, checking higher block %s", 
+                    DEBUG,
+                    "Nonce for %s at %s is %s, checking higher block %s",
                     (address, old_lo, _nonce, lo),
                 )
             continue
@@ -184,15 +186,15 @@ async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
             lo = int(lo / 2)
             if debug_logs_enabled:
                 logger._log(
-                    DEBUG, 
-                    "Nonce for %s at %s is %s, checking lower block %s", 
+                    DEBUG,
+                    "Nonce for %s at %s is %s, checking lower block %s",
                     (address, hi, _nonce, lo),
                 )
             continue
 
         if debug_logs_enabled:
             logger._log(DEBUG, "Found nonce %s for %s at block %s", (nonce, address, lo))
-            
+
         return lo
 
 

@@ -38,8 +38,10 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
     makedirs(cache_path_for_fn, exist_ok=True)
 
     if inspect.iscoroutinefunction(fn):
-        read_executor = PruningThreadPoolExecutor(8, f"{_THREAD_NAME_PREFIX}-{fn.__qualname__}-read")
-        
+        read_executor = PruningThreadPoolExecutor(
+            8, f"{_THREAD_NAME_PREFIX}-{fn.__qualname__}-read"
+        )
+
         queue = PriorityQueue()
 
         @log_broken
