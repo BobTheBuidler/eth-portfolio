@@ -1,3 +1,4 @@
+import threading
 from asyncio import create_task, gather, get_event_loop
 from contextlib import suppress
 from functools import lru_cache
@@ -457,21 +458,23 @@ def __get_token_transfer_bytes_from_db(pk: dict) -> Optional[bytes]:
 
 _TPK = Tuple[Tuple[int, ChecksumAddress], int]
 
+_transactions_startup_lock = threading.Lock()
 
 @a_sync(default="async", executor=_transaction_read_executor, ram_cache_maxsize=None)
 @lru_cache(maxsize=None)
 def transactions_known_at_startup(chainid: int, from_address: ChecksumAddress) -> Dict[_TPK, bytes]:
-    return dict(
-        select(
-            (t.nonce, t.raw)
-            for t in entities.Transaction  # type: ignore [attr-defined]
-            if t.from_address.chain.id == chainid and t.from_address.address == from_address
+    with _transactions_startup_lock:
+        return dict(
+            select(
+                (t.nonce, t.raw)
+                for t in entities.Transaction  # type: ignore [attr-defined]
+                if t.from_address.chain.id == chainid and t.from_address.address == from_address
+            )
         )
-    )
 
 
 _TokenTransferPK = Tuple[Tuple[int, int], int, int]
-
+_token_transfers_startup_lock = threading.Lock()
 
 @a_sync(default="async", executor=_transaction_read_executor, ram_cache_maxsize=None)
 @lru_cache(maxsize=None)
@@ -482,15 +485,16 @@ def token_transfers_known_at_startup() -> Dict[_TokenTransferPK, bytes]:
     log_index: int
     raw: bytes
 
-    transfers = {}
-    for chainid, block, tx_index, log_index, raw in select(
-        (t.block.chain.id, t.block.number, t.transaction_index, t.log_index, t.raw)
-        for t in entities.TokenTransfer  # type: ignore [attr-defined]
-        if t.block.chain.id == chain.id
-    ):
-        pk = ((chainid, block), tx_index, log_index)
-        transfers[pk] = raw
-    return transfers
+    with _token_transfers_startup_lock:
+        transfers = {}
+        for chainid, block, tx_index, log_index, raw in select(
+            (t.block.chain.id, t.block.number, t.transaction_index, t.log_index, t.raw)
+            for t in entities.TokenTransfer  # type: ignore [attr-defined]
+            if t.block.chain.id == chain.id
+        ):
+            pk = ((chainid, block), tx_index, log_index)
+            transfers[pk] = raw
+        return transfers
 
 
 @a_sync(default="async", executor=_token_transfer_write_executor)
