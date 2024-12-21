@@ -568,8 +568,8 @@ async def _trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTr
         halfway = from_block + chunk_size
 
         results = await gather(
-            _trace_filter(fromBlock=fromBlock, toBlock=halfway, **kwargs),
-            _trace_filter(fromBlock=halfway + 1, toBlock=toBlock, **kwargs),
+            _trace_filter(fromBlock=fromBlock, toBlock=hex(halfway), **kwargs),
+            _trace_filter(fromBlock=hex(halfway + 1), toBlock=toBlock, **kwargs),
         )
         return results[0] + results[1]
 
