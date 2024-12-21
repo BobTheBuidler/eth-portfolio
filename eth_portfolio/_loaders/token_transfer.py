@@ -29,7 +29,7 @@ from eth_portfolio.structs import TokenTransfer
 logger = getLogger(__name__)
 
 token_transfer_semaphore = BlockSemaphore(
-    20_000, # Some arbitrary number
+    20_000,  # Some arbitrary number
     name="eth_portfolio.token_transfers",
 )
 """A semaphore that regulates the concurrent processing of token transfers by processing lower blocks first."""
@@ -104,7 +104,7 @@ async def load_token_transfer(
                 )
             else:
                 coro_results["transaction_index"] = await tx_index_coro
-                
+
         except Exception as e:
             logger.error(
                 f"%s %s for %s %s at block %s:",
@@ -208,7 +208,6 @@ async def get_transaction_index(hash: str) -> int:
         new = TypeError(e, receipt_bytes, decode(receipt_bytes))
         logger.exception(new)
         raise new from e
-        
 
 
 class HasTxIndex(Struct):

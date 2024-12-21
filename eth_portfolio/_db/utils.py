@@ -473,7 +473,7 @@ def token_transfers_known_at_startup() -> Dict[_TokenTransferPK, bytes]:
     tx_index: int
     log_index: int
     raw: bytes
-    
+
     transfers = {}
     for chainid, block, tx_index, log_index, raw in select(
         (t.block.chain.id, t.block.number, t.transaction_index, t.log_index, t.raw)
