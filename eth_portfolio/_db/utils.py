@@ -297,7 +297,7 @@ _decoded = 0
 
 async def _yield_to_loop():
     """dont let the event loop get congested, let your rpc begin work asap"""
-    global
+    global _decoded
     _decoded += 1
     if _decoded % 1000 == 0:
         await sleep(0)
