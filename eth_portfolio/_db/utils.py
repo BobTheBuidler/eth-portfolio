@@ -291,7 +291,7 @@ async def get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Trans
     if data:
         return decode_transaction(data)
 
-    
+
 @a_sync(default="async", executor=_transaction_read_executor)
 @robust_db_session
 def __get_transaction_bytes_from_db(sender: ChecksumAddress, nonce: int) -> Optional[bytes]:
@@ -442,7 +442,9 @@ async def get_token_transfer(transfer: evmspec.Log) -> Optional[TokenTransfer]:
         "log_index": transfer.logIndex,
     }
     startup_xfers = await token_transfers_known_at_startup()
-    data = startup_xfers.pop(tuple(pk.values()), None) or await __get_token_transfer_bytes_from_db(pk)
+    data = startup_xfers.pop(tuple(pk.values()), None) or await __get_token_transfer_bytes_from_db(
+        pk
+    )
     if data:
         with reraise_excs_with_extra_context(data):
             return json.decode(data, type=TokenTransfer, dec_hook=_decode_hook)
@@ -460,6 +462,7 @@ _TPK = Tuple[Tuple[int, ChecksumAddress], int]
 
 _transactions_startup_lock = threading.Lock()
 
+
 @a_sync(default="async", executor=_transaction_read_executor, ram_cache_maxsize=None)
 @lru_cache(maxsize=None)
 def transactions_known_at_startup(chainid: int, from_address: ChecksumAddress) -> Dict[_TPK, bytes]:
@@ -475,6 +478,7 @@ def transactions_known_at_startup(chainid: int, from_address: ChecksumAddress) -
 
 _TokenTransferPK = Tuple[Tuple[int, int], int, int]
 _token_transfers_startup_lock = threading.Lock()
+
 
 @a_sync(default="async", executor=_transaction_read_executor, ram_cache_maxsize=None)
 @lru_cache(maxsize=None)
