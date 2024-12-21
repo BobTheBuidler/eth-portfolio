@@ -285,21 +285,21 @@ def ensure_token(token_address: ChecksumAddress) -> None:
 
 
 async def get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Transaction]:
-    transactions = await transactions_known_at_startup(chain.id, sender)
-    if data := transactions.pop(nonce, None):
+    startup_txs = await transactions_known_at_startup(chain.id, sender)
+    data = startup_txs.pop(nonce, None) or await __get_transaction_bytes_from_db(sender, nonce)
+    if data:
         return decode_transaction(data)
-    return await _get_transaction(sender, nonce)
 
     
 @a_sync(default="async", executor=_transaction_read_executor)
 @robust_db_session
-def _get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Transaction]:
+def __get_transaction_bytes_from_db(sender: ChecksumAddress, nonce: int) -> Optional[bytes]:
     transactions = transactions_known_at_startup(chain.id, sender, sync=True)
-    if nonce in transactions:
-        return decode_transaction(transactions.pop(nonce))
+    if data := in transactions:
+        return transactions.pop(nonce)
     entity: entities.Transaction
     if entity := entities.Transaction.get(from_address=(chain.id, sender), nonce=nonce):
-        return decode_transaction(entity.raw)
+        return entity.raw
 
 
 def decode_transaction(data: bytes) -> Union[Transaction, TransactionRLP]:
@@ -443,10 +443,11 @@ async def get_token_transfer(transfer: evmspec.Log) -> Optional[TokenTransfer]:
         "transaction_index": transfer.transactionIndex,
         "log_index": transfer.logIndex,
     }
-    db_transfers = await token_transfers_known_at_startup()
-    data = db_transfers.pop(tuple(pk.values()), None) or await __get_token_transfer_bytes_from_db(pk)
-    with reraise_excs_with_extra_context(tt_bytes):
-        return json.decode(tt_bytes, type=TokenTransfer, dec_hook=_decode_hook)
+    startup_xfers = await token_transfers_known_at_startup()
+    data = startup_xfers.pop(tuple(pk.values()), None) or await __get_token_transfer_bytes_from_db(pk)
+    if data:
+        with reraise_excs_with_extra_context(data):
+            return json.decode(data, type=TokenTransfer, dec_hook=_decode_hook)
 
 
 @a_sync(default="async", executor=_token_transfer_read_executor)
