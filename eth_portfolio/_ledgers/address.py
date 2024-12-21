@@ -36,6 +36,7 @@ import dank_mids
 import eth_retry
 from aiohttp import ClientResponseError
 from async_lru import alru_cache
+from brownie import chain
 from dank_mids.eth import TraceFilterParams
 from eth_typing import ChecksumAddress
 from evmspec import FilterTrace
@@ -43,7 +44,7 @@ from evmspec.structs.receipt import Status
 from evmspec.structs.trace import call, reward
 from pandas import DataFrame  # type: ignore
 from tqdm import tqdm
-from y import ERC20
+from y import ERC20, Network
 from y._decorators import stuck_coro_debugger
 from y.datatypes import Block
 from y.utils.events import BATCH_SIZE
@@ -605,6 +606,9 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     Returns:
         The list of traces.
     """
+    if chain.id == Network.Polygon:
+        logger.warning("polygon doesnt support trace_filter method, must develop alternate solution")
+        return []
     async with _trace_semaphores[sorted(filter_params.get(x) for x in ("toAddress", "fromAddress))]:
         return await _check_traces(await trace_filter(**filter_params))
 
