@@ -206,7 +206,7 @@ class Portfolio(a_sync.ASyncGenericBase):
         start_block: int = 0,
         label: str = _DEFAULT_LABEL,
         load_prices: bool = True,
-        num_workers_transactions: int = 25_000,
+        num_workers_transactions: int = 10_000,
         asynchronous: bool = False,
     ) -> None:
         """
