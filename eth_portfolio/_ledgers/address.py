@@ -691,6 +691,12 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             await e.load_remaining()
             return
 
+        # TODO: figure out where this float comes from and raise a TypeError there
+        if isinstance(start_block, float) and int(start_block) == start_block:
+            start_block = int(start_block)
+        if isinstance(end_block, float) and int(end_block) == end_block:
+            end_block = int(end_block)
+            
         block_ranges = [
             [hex(i), hex(i + BATCH_SIZE - 1)] for i in range(start_block, end_block, BATCH_SIZE)
         ]
