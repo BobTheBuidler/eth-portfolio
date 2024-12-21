@@ -301,7 +301,6 @@ async def _yield_to_loop():
     _decoded += 1
     if _decoded % 1000 == 0:
         await sleep(0)
-    return decoded
 
 
 @a_sync(default="async", executor=_transaction_read_executor)
