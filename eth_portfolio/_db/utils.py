@@ -20,7 +20,12 @@ from y.exceptions import reraise_excs_with_extra_context
 
 from eth_portfolio._db import entities
 from eth_portfolio._db.decorators import break_locks, requery_objs_on_diff_tx_err
-from eth_portfolio._db.entities import AddressExtended, BlockExtended, ContractExtended, TokenExtended
+from eth_portfolio._db.entities import (
+    AddressExtended,
+    BlockExtended,
+    ContractExtended,
+    TokenExtended,
+)
 from eth_portfolio._decimal import Decimal
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction, TransactionRLP
 from eth_portfolio.typing import _P, _T, Fn
