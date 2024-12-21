@@ -75,7 +75,6 @@
 <span class="sd">The classes are designed to provide a consistent and flexible interface for working with blockchain data. Instance attributes can be fetched with either dot notation or key lookup. Classes are compatible with the standard dictionary interface.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">Any</span><span class="p">,</span>
@@ -94,8 +93,8 @@
 <span class="kn">from</span> <span class="nn">brownie</span> <span class="kn">import</span> <span class="n">chain</span>
 <span class="kn">from</span> <span class="nn">dictstruct</span> <span class="kn">import</span> <span class="n">DictStruct</span>
 <span class="kn">from</span> <span class="nn">evmspec.data</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">BlockHash</span><span class="p">,</span> <span class="n">TransactionHash</span><span class="p">,</span> <span class="n">Wei</span>
-<span class="kn">from</span> <span class="nn">evmspec.trace</span> <span class="kn">import</span> <span class="n">reward</span>
-<span class="kn">from</span> <span class="nn">evmspec.transaction</span> <span class="kn">import</span> <span class="n">AccessListEntry</span>
+<span class="kn">from</span> <span class="nn">evmspec.structs.trace</span> <span class="kn">import</span> <span class="n">reward</span>
+<span class="kn">from</span> <span class="nn">evmspec.structs.transaction</span> <span class="kn">import</span> <span class="n">AccessListEntry</span>
 <span class="kn">from</span> <span class="nn">hexbytes</span> <span class="kn">import</span> <span class="n">HexBytes</span>
 <span class="kn">from</span> <span class="nn">msgspec</span> <span class="kn">import</span> <span class="n">Struct</span>
 <span class="kn">from</span> <span class="nn">y</span> <span class="kn">import</span> <span class="n">Network</span>
@@ -107,9 +106,6 @@
 <span class="kn">from</span> <span class="nn">eth_portfolio._decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
 <span class="kn">from</span> <span class="nn">eth_portfolio._utils</span> <span class="kn">import</span> <span class="n">_get_price</span>
 <span class="kn">from</span> <span class="nn">eth_portfolio.structs.modified</span> <span class="kn">import</span> <span class="n">ModifiedTrace</span><span class="p">,</span> <span class="n">_modified_trace_type_map</span>
-
-
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="_LedgerEntryBase">
@@ -440,6 +436,7 @@
     <span class="nd">@staticmethod</span>
     <span class="nd">@stuck_coro_debugger</span>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">from_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">:</span> <span class="n">evmspec</span><span class="o">.</span><span class="n">FilterTrace</span><span class="p">,</span> <span class="n">load_prices</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;InternalTransfer&quot;</span><span class="p">:</span>
+        <span class="c1"># sourcery skip: simplify-boolean-comparison</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Asynchronously processes a raw internal transfer dictionary into an InternalTransfer object.</span>
 
@@ -479,12 +476,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">modified_cls</span> <span class="o">=</span> <span class="n">_modified_trace_type_map</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">trace</span><span class="p">)]</span>
-        <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;trace&quot;</span><span class="p">:</span> <span class="n">modified_cls</span><span class="p">(</span><span class="o">**</span><span class="n">_get_init_kwargs</span><span class="p">(</span><span class="n">trace</span><span class="p">))}</span>
-        <span class="k">if</span> <span class="n">load_prices</span><span class="p">:</span>
-            <span class="n">price</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_get_price</span><span class="p">(</span><span class="n">EEE_ADDRESS</span><span class="p">,</span> <span class="n">trace</span><span class="o">.</span><span class="n">block</span><span class="p">)</span>
-            <span class="n">args</span><span class="p">[</span><span class="s2">&quot;price&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">price</span>
-            <span class="n">args</span><span class="p">[</span><span class="s2">&quot;value_usd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">trace</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">scaled</span> <span class="o">*</span> <span class="n">price</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">InternalTransfer</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span></div>
+        <span class="n">modified_trace</span> <span class="o">=</span> <span class="n">modified_cls</span><span class="p">(</span><span class="o">**</span><span class="n">_get_init_kwargs</span><span class="p">(</span><span class="n">trace</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">load_prices</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">InternalTransfer</span><span class="p">(</span><span class="n">trace</span><span class="o">=</span><span class="n">modified_trace</span><span class="p">)</span>
+
+        <span class="n">price</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_get_price</span><span class="p">(</span><span class="n">EEE_ADDRESS</span><span class="p">,</span> <span class="n">trace</span><span class="o">.</span><span class="n">block</span><span class="p">)</span>
+        <span class="n">value_usd</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">trace</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">scaled</span> <span class="o">*</span> <span class="n">price</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">InternalTransfer</span><span class="p">(</span><span class="n">trace</span><span class="o">=</span><span class="n">modified_trace</span><span class="p">,</span> <span class="n">price</span><span class="o">=</span><span class="n">price</span><span class="p">,</span> <span class="n">value_usd</span><span class="o">=</span><span class="n">value_usd</span><span class="p">)</span></div>
 
 
     <span class="n">entry_type</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;internal_transfer&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;internal_transfer&quot;</span>

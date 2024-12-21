@@ -655,7 +655,7 @@ with external protocols.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.__aiter__">
 <span class="sig-name descname"><span class="pre">__aiter__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AsyncIterator</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.__aiter__" title="Link to this definition"></a></dt>
-<dd><p>Return an async iterator that yields {obj} from the {cls}.</p>
+<dd><p>Return an async iterator that yields <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects from the ASyncIterable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AsyncIterator" title="(in Python v3.13)"><em>AsyncIterator</em></a>[<em>_T</em>]</p>
@@ -678,14 +678,17 @@ with external protocols.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">portfolio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asynchronous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/address.html#PortfolioAddress.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_prices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_workers_transactions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asynchronous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/address.html#PortfolioAddress.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initializes the PortfolioAddress instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>) – The address to manage.</p></li>
-<li><p><strong>portfolio</strong> (<a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><em>Portfolio</em></a>) – The portfolio instance managing this address.</p></li>
+<li><p><strong>portfolio</strong> – The portfolio instance managing this address.</p></li>
 <li><p><strong>asynchronous</strong> (<em>optional</em>) – Flag for asynchronous operation. Defaults to False.</p></li>
+<li><p><strong>start_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em>)</p></li>
+<li><p><strong>load_prices</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>num_workers_transactions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -705,7 +708,7 @@ with external protocols.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.__iter__">
 <span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.__iter__" title="Link to this definition"></a></dt>
-<dd><p>Return an iterator that yields {obj} from the {cls}.</p>
+<dd><p>Return an iterator that yields <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects from the ASyncIterable.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Synchronous iteration leverages <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterator</span></code>, which uses <code class="xref py py-meth docutils literal notranslate"><span class="pre">asyncio.BaseEventLoop.run_until_complete()</span></code> to fetch items.
@@ -723,13 +726,13 @@ and should consider asynchronous iteration using <a class="reference internal" h
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.filter">
 <span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ViewFn</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="s"><span class="pre">'ASyncFilter[T]'</span></span></span></span><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.filter" title="Link to this definition"></a></dt>
-<dd><p>Filters the {obj} yielded by the {cls} based on a function.</p>
+<dd><p>Filters the <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects yielded by the ASyncIterable based on a function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>function</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.13)"><em>Callable</em></a><em>[</em><em>[</em><em>T</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Awaitable" title="(in Python v3.13)"><em>Awaitable</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>]</em><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.13)"><em>Callable</em></a><em>[</em><em>[</em><em>T</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>]</em>) – A function that returns a boolean that indicates if an item should be included in the filtered result. Can be sync or async.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncFilter</span></code> that yields the filtered {obj} from the {cls}.</p>
+<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncFilter</span></code> that yields the filtered <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects from the ASyncIterable.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://bobthebuidler.github.io/ez-a-sync/source/a_sync.html#a_sync.iter.ASyncFilter" title="(in ez-a-sync)"><em>ASyncFilter</em></a>[<em>T</em>]</p>
@@ -740,7 +743,7 @@ and should consider asynchronous iteration using <a class="reference internal" h
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.sort">
 <span class="sig-name descname"><span class="pre">sort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SortKey</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="s"><span class="pre">'ASyncSorter[T]'</span></span></span></span><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.sort" title="Link to this definition"></a></dt>
-<dd><p>Sort the {obj} yielded by the {cls}.</p>
+<dd><p>Sort the <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects yielded by the ASyncIterable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -749,7 +752,7 @@ and should consider asynchronous iteration using <a class="reference internal" h
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncSorter</span></code> that will yield the {obj} yielded from this {cls}, but sorted.</p>
+<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncSorter</span></code> that will yield the <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects yielded from this ASyncIterable, but sorted.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://bobthebuidler.github.io/ez-a-sync/source/a_sync.html#a_sync.iter.ASyncSorter" title="(in ez-a-sync)"><em>ASyncSorter</em></a>[<em>T</em>]</p>
@@ -979,10 +982,10 @@ and should consider asynchronous iteration using <a class="reference internal" h
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.materialized">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">materialized</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.materialized" title="Link to this definition"></a></dt>
-<dd><p>Synchronously iterate through the {cls} and return all {obj}.</p>
+<dd><p>Synchronously iterate through the ASyncIterable and return all <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A list of the {obj} yielded by the {cls}.</p>
+<dd class="field-odd"><p>A list of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects yielded by the ASyncIterable.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1103,7 +1106,7 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addresses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'your</span> <span class="pre">portfolio'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_prices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asynchronous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/portfolio.html#Portfolio.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addresses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'your</span> <span class="pre">portfolio'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_prices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_workers_transactions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asynchronous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/portfolio.html#Portfolio.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialize a Portfolio instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1112,6 +1115,7 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 <li><p><strong>start_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
 <li><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
 <li><p><strong>load_prices</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>num_workers_transactions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
 <li><p><strong>asynchronous</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
 </ul>
 </dd>
@@ -1146,9 +1150,41 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 </div>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.received">
+<span class="sig-name descname"><span class="pre">received</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/portfolio.html#Portfolio.received"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.received" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>end_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AsyncIterator" title="(in Python v3.13)"><em>AsyncIterator</em></a>[<a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.Transaction" title="eth_portfolio.structs.structs.Transaction"><em>Transaction</em></a> | <a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.InternalTransfer" title="eth_portfolio.structs.structs.InternalTransfer"><em>InternalTransfer</em></a> | <a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.TokenTransfer" title="eth_portfolio.structs.structs.TokenTransfer"><em>TokenTransfer</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.sent">
+<span class="sig-name descname"><span class="pre">sent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/portfolio.html#Portfolio.sent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.sent" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>end_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AsyncIterator" title="(in Python v3.13)"><em>AsyncIterator</em></a>[<a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.Transaction" title="eth_portfolio.structs.structs.Transaction"><em>Transaction</em></a> | <a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.InternalTransfer" title="eth_portfolio.structs.structs.InternalTransfer"><em>InternalTransfer</em></a> | <a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.TokenTransfer" title="eth_portfolio.structs.structs.TokenTransfer"><em>TokenTransfer</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio._start_block">
-<span class="sig-name descname"><span class="pre">_start_block</span></span><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio._start_block" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_start_block</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio._start_block" title="Link to this definition"></a></dt>
 <dd><p>The starting block number. Defaults to 0.</p>
 </dd></dl>
 
@@ -1165,7 +1201,7 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.asynchronous">
-<span class="sig-name descname"><span class="pre">asynchronous</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.asynchronous" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">asynchronous</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.asynchronous" title="Link to this definition"></a></dt>
 <dd><p>Whether to use asynchronous operations. Defaults to False.</p>
 </dd></dl>
 
@@ -1214,7 +1250,7 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.label">
-<span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.label" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'your</span> <span class="pre">portfolio'</span></em><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.label" title="Link to this definition"></a></dt>
 <dd><p>A label for the portfolio. Defaults to “your portfolio”</p>
 </dd></dl>
 
@@ -1230,7 +1266,7 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.Portfolio.load_prices">
-<span class="sig-name descname"><span class="pre">load_prices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.load_prices" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">load_prices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#eth_portfolio.portfolio.Portfolio.load_prices" title="Link to this definition"></a></dt>
 <dd><p>Whether to load prices. Defaults to True.</p>
 </dd></dl>
 
@@ -1306,7 +1342,7 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.__aiter__">
 <span class="sig-name descname"><span class="pre">__aiter__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AsyncIterator</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.__aiter__" title="Link to this definition"></a></dt>
-<dd><p>Return an async iterator that yields {obj} from the {cls}.</p>
+<dd><p>Return an async iterator that yields <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects from the ASyncIterable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AsyncIterator" title="(in Python v3.13)"><em>AsyncIterator</em></a>[<em>_T</em>]</p>
@@ -1344,7 +1380,7 @@ The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_por
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.__iter__">
 <span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.__iter__" title="Link to this definition"></a></dt>
-<dd><p>Return an iterator that yields {obj} from the {cls}.</p>
+<dd><p>Return an iterator that yields <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects from the ASyncIterable.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Synchronous iteration leverages <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncIterator</span></code>, which uses <code class="xref py py-meth docutils literal notranslate"><span class="pre">asyncio.BaseEventLoop.run_until_complete()</span></code> to fetch items.
@@ -1362,13 +1398,13 @@ and should consider asynchronous iteration using <a class="reference internal" h
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.filter">
 <span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ViewFn</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="s"><span class="pre">'ASyncFilter[T]'</span></span></span></span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.filter" title="Link to this definition"></a></dt>
-<dd><p>Filters the {obj} yielded by the {cls} based on a function.</p>
+<dd><p>Filters the <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects yielded by the ASyncIterable based on a function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>function</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.13)"><em>Callable</em></a><em>[</em><em>[</em><em>T</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Awaitable" title="(in Python v3.13)"><em>Awaitable</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>]</em><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.13)"><em>Callable</em></a><em>[</em><em>[</em><em>T</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>]</em>) – A function that returns a boolean that indicates if an item should be included in the filtered result. Can be sync or async.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncFilter</span></code> that yields the filtered {obj} from the {cls}.</p>
+<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncFilter</span></code> that yields the filtered <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects from the ASyncIterable.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://bobthebuidler.github.io/ez-a-sync/source/a_sync.html#a_sync.iter.ASyncFilter" title="(in ez-a-sync)"><em>ASyncFilter</em></a>[<em>T</em>]</p>
@@ -1377,9 +1413,41 @@ and should consider asynchronous iteration using <a class="reference internal" h
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.received">
+<span class="sig-name descname"><span class="pre">received</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/portfolio.html#PortfolioLedger.received"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.received" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>end_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AsyncIterator" title="(in Python v3.13)"><em>AsyncIterator</em></a>[<a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.Transaction" title="eth_portfolio.structs.structs.Transaction"><em>Transaction</em></a> | <a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.InternalTransfer" title="eth_portfolio.structs.structs.InternalTransfer"><em>InternalTransfer</em></a> | <a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.TokenTransfer" title="eth_portfolio.structs.structs.TokenTransfer"><em>TokenTransfer</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.sent">
+<span class="sig-name descname"><span class="pre">sent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/portfolio.html#PortfolioLedger.sent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.sent" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>end_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AsyncIterator" title="(in Python v3.13)"><em>AsyncIterator</em></a>[<a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.Transaction" title="eth_portfolio.structs.structs.Transaction"><em>Transaction</em></a> | <a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.InternalTransfer" title="eth_portfolio.structs.structs.InternalTransfer"><em>InternalTransfer</em></a> | <a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.TokenTransfer" title="eth_portfolio.structs.structs.TokenTransfer"><em>TokenTransfer</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.sort">
 <span class="sig-name descname"><span class="pre">sort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SortKey</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="s"><span class="pre">'ASyncSorter[T]'</span></span></span></span><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.sort" title="Link to this definition"></a></dt>
-<dd><p>Sort the {obj} yielded by the {cls}.</p>
+<dd><p>Sort the <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects yielded by the ASyncIterable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1388,7 +1456,7 @@ and should consider asynchronous iteration using <a class="reference internal" h
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncSorter</span></code> that will yield the {obj} yielded from this {cls}, but sorted.</p>
+<dd class="field-even"><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">ASyncSorter</span></code> that will yield the <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects yielded from this ASyncIterable, but sorted.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://bobthebuidler.github.io/ez-a-sync/source/a_sync.html#a_sync.iter.ASyncSorter" title="(in ez-a-sync)"><em>ASyncSorter</em></a>[<em>T</em>]</p>
@@ -1485,10 +1553,10 @@ and should consider asynchronous iteration using <a class="reference internal" h
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioLedger.materialized">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">materialized</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioLedger.materialized" title="Link to this definition"></a></dt>
-<dd><p>Synchronously iterate through the {cls} and return all {obj}.</p>
+<dd><p>Synchronously iterate through the ASyncIterable and return all <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A list of the {obj} yielded by the {cls}.</p>
+<dd class="field-odd"><p>A list of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code> objects yielded by the ASyncIterable.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1526,7 +1594,7 @@ You should not initialize these. They are created automatically during <a class=
 <dd><p>A checksummed dictionary of <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>checksum_dict.base.ChecksumAddressDict[<a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress">eth_portfolio.address.PortfolioAddress</a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://bobthebuidler.github.io/checksum_dict/source/checksum_dict.html#checksum_dict.base.ChecksumAddressDict" title="(in checksum_dict)">checksum_dict.base.ChecksumAddressDict</a>[<a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress">eth_portfolio.address.PortfolioAddress</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1550,13 +1618,16 @@ You should not initialize these. They are created automatically during <a class=
 
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.portfolio.PortfolioWallets.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">portfolio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addresses</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/portfolio.html#PortfolioWallets.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioWallets.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addresses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_prices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_workers_transactions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/portfolio.html#PortfolioWallets.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.portfolio.PortfolioWallets.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialize a PortfolioWallets instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>portfolio</strong> (<a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><em>Portfolio</em></a>) – The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a> instance to which this wallet belongs.</p></li>
+<li><p><strong>portfolio</strong> – The <a class="reference internal" href="#eth_portfolio.Portfolio" title="eth_portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a> instance to which this wallet belongs.</p></li>
 <li><p><strong>addresses</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.13)"><em>Iterable</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a><em>]</em>) – An iterable of addresses to be included in the portfolio.</p></li>
+<li><p><strong>start_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em>)</p></li>
+<li><p><strong>load_prices</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>num_workers_transactions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -1644,7 +1715,7 @@ Raises KeyError if the dict is empty.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">_wallets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ChecksumAddressDict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><span class="pre">PortfolioAddress</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_wallets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://bobthebuidler.github.io/checksum_dict/source/checksum_dict.html#checksum_dict.base.ChecksumAddressDict" title="(in checksum_dict)"><span class="pre">ChecksumAddressDict</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><span class="pre">PortfolioAddress</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
 <dd><p>A checksummed dictionary of <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> objects.</p>
 <dl class="simple">
 <dt>Type:</dt><dd><p>ChecksumAddressDict[PortfolioAddress]</p>
@@ -2319,7 +2390,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>transaction</strong> (<em>TransactionLegacy</em><em> | </em><em>Transaction2930</em><em> | </em><em>Transaction1559</em>)</p></li>
+<li><p><strong>transaction</strong> (<em>TransactionLegacy</em><em> | </em><em>Transaction2930</em><em> | </em><em>Transaction1559</em><em> | </em><em>Transaction4844</em>)</p></li>
 <li><p><strong>price</strong> (<em>Decimal</em><em> | </em><em>None</em>)</p></li>
 <li><p><strong>value_usd</strong> (<em>Decimal</em><em> | </em><em>None</em>)</p></li>
 </ul>
@@ -2419,7 +2490,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.structs.Transaction._evm_object">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.Transaction._evm_object" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction4844</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.Transaction._evm_object" title="Link to this definition"></a></dt>
 <dd><p>The EVM object associated with {cls_name}, exactly as it was received from the RPC.</p>
 </dd></dl>
 
@@ -2527,7 +2598,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.Transaction.transaction">
-<span class="sig-name descname"><span class="pre">transaction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span></em><a class="headerlink" href="#eth_portfolio.structs.Transaction.transaction" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">transaction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction4844</span></em><a class="headerlink" href="#eth_portfolio.structs.Transaction.transaction" title="Link to this definition"></a></dt>
 <dd><p>The transaction object received by calling eth_getTransactionByHash.</p>
 </dd></dl>
 
@@ -2632,7 +2703,7 @@ None for chains that don’t specify transaction types.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>transaction</strong> (<em>TransactionLegacy</em><em> | </em><em>Transaction2930</em><em> | </em><em>Transaction1559</em>)</p></li>
+<li><p><strong>transaction</strong> (<em>TransactionLegacy</em><em> | </em><em>Transaction2930</em><em> | </em><em>Transaction1559</em><em> | </em><em>Transaction4844</em>)</p></li>
 <li><p><strong>price</strong> (<em>Decimal</em><em> | </em><em>None</em>)</p></li>
 <li><p><strong>value_usd</strong> (<em>Decimal</em><em> | </em><em>None</em>)</p></li>
 </ul>
@@ -2732,7 +2803,7 @@ None for chains that don’t specify transaction types.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.structs.TransactionRLP._evm_object">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.TransactionRLP._evm_object" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction4844</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.TransactionRLP._evm_object" title="Link to this definition"></a></dt>
 <dd><p>The EVM object associated with {cls_name}, exactly as it was received from the RPC.</p>
 </dd></dl>
 
@@ -3097,7 +3168,7 @@ without managing or altering any underlying assets.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalances">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.typing.</span></span><span class="sig-name descname"><span class="pre">PortfolioBalances</span></span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#PortfolioBalances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalances" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultChecksumDict</span></code>[<a class="reference internal" href="#eth_portfolio.typing.WalletBalances" title="eth_portfolio.typing.WalletBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalances</span></code></a>], <a class="reference internal" href="#eth_portfolio.typing._SummableNonNumericMixin" title="eth_portfolio.typing._SummableNonNumericMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">_SummableNonNumericMixin</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://bobthebuidler.github.io/checksum_dict/source/checksum_dict.html#checksum_dict.default.DefaultChecksumDict" title="(in checksum_dict)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultChecksumDict</span></code></a>[<a class="reference internal" href="#eth_portfolio.typing.WalletBalances" title="eth_portfolio.typing.WalletBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalances</span></code></a>], <a class="reference internal" href="#eth_portfolio.typing._SummableNonNumericMixin" title="eth_portfolio.typing._SummableNonNumericMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">_SummableNonNumericMixin</span></code></a></p>
 <p>Aggregates <a class="reference internal" href="#eth_portfolio.typing.WalletBalances" title="eth_portfolio.typing.WalletBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalances</span></code></a> for multiple wallets, providing operations to sum
 balances across an entire portfolio.</p>
 <p>The class uses wallet addresses as keys and <a class="reference internal" href="#eth_portfolio.typing.WalletBalances" title="eth_portfolio.typing.WalletBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalances</span></code></a> objects as values.</p>
@@ -3498,7 +3569,7 @@ Raises KeyError if the dict is empty.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="eth_portfolio.typing.TokenBalances">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.typing.</span></span><span class="sig-name descname"><span class="pre">TokenBalances</span></span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#TokenBalances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.TokenBalances" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultChecksumDict</span></code>[<a class="reference internal" href="#eth_portfolio.typing.Balance" title="eth_portfolio.typing.Balance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Balance</span></code></a>], <a class="reference internal" href="#eth_portfolio.typing._SummableNonNumericMixin" title="eth_portfolio.typing._SummableNonNumericMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">_SummableNonNumericMixin</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://bobthebuidler.github.io/checksum_dict/source/checksum_dict.html#checksum_dict.default.DefaultChecksumDict" title="(in checksum_dict)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultChecksumDict</span></code></a>[<a class="reference internal" href="#eth_portfolio.typing.Balance" title="eth_portfolio.typing.Balance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Balance</span></code></a>], <a class="reference internal" href="#eth_portfolio.typing._SummableNonNumericMixin" title="eth_portfolio.typing._SummableNonNumericMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">_SummableNonNumericMixin</span></code></a></p>
 <p>A specialized defaultdict subclass made for holding a mapping of <code class="docutils literal notranslate"><span class="pre">token</span> <span class="pre">-&gt;</span> <span class="pre">balance</span></code>.</p>
 <p>Manages a collection of <a class="reference internal" href="#eth_portfolio.typing.Balance" title="eth_portfolio.typing.Balance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Balance</span></code></a> objects for multiple tokens, allowing for operations
 such as summing balances across tokens.</p>
@@ -3806,7 +3877,7 @@ Raises KeyError if the dict is empty.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalancesRaw">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.typing.</span></span><span class="sig-name descname"><span class="pre">WalletBalancesRaw</span></span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#WalletBalancesRaw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.WalletBalancesRaw" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultChecksumDict</span></code>[<a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a>], <a class="reference internal" href="#eth_portfolio.typing._SummableNonNumericMixin" title="eth_portfolio.typing._SummableNonNumericMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">_SummableNonNumericMixin</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://bobthebuidler.github.io/checksum_dict/source/checksum_dict.html#checksum_dict.default.DefaultChecksumDict" title="(in checksum_dict)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultChecksumDict</span></code></a>[<a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a>], <a class="reference internal" href="#eth_portfolio.typing._SummableNonNumericMixin" title="eth_portfolio.typing._SummableNonNumericMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">_SummableNonNumericMixin</span></code></a></p>
 <p>A structure for key pattern <cite>wallet -&gt; token -&gt; balance</cite>.</p>
 <p>This class is similar to <a class="reference internal" href="#eth_portfolio.typing.WalletBalances" title="eth_portfolio.typing.WalletBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalances</span></code></a> but optimized for key lookups by wallet and token directly.
 It manages <a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a> objects for multiple wallets.</p>
@@ -3945,7 +4016,7 @@ Raises KeyError if the dict is empty.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addresses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'your</span> <span class="pre">portfolio'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_prices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asynchronous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/portfolio.html#Portfolio.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.Portfolio.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addresses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'your</span> <span class="pre">portfolio'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_prices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_workers_transactions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asynchronous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/portfolio.html#Portfolio.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.Portfolio.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialize a Portfolio instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -3954,6 +4025,7 @@ Raises KeyError if the dict is empty.</p>
 <li><p><strong>start_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
 <li><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
 <li><p><strong>load_prices</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>num_workers_transactions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
 <li><p><strong>asynchronous</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
 </ul>
 </dd>
@@ -3988,9 +4060,41 @@ Raises KeyError if the dict is empty.</p>
 </div>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.Portfolio.received">
+<span class="sig-name descname"><span class="pre">received</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/portfolio.html#Portfolio.received"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.Portfolio.received" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>end_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AsyncIterator" title="(in Python v3.13)"><em>AsyncIterator</em></a>[<a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.Transaction" title="eth_portfolio.structs.structs.Transaction"><em>Transaction</em></a> | <a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.InternalTransfer" title="eth_portfolio.structs.structs.InternalTransfer"><em>InternalTransfer</em></a> | <a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.TokenTransfer" title="eth_portfolio.structs.structs.TokenTransfer"><em>TokenTransfer</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.Portfolio.sent">
+<span class="sig-name descname"><span class="pre">sent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/portfolio.html#Portfolio.sent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.Portfolio.sent" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>end_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AsyncIterator" title="(in Python v3.13)"><em>AsyncIterator</em></a>[<a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.Transaction" title="eth_portfolio.structs.structs.Transaction"><em>Transaction</em></a> | <a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.InternalTransfer" title="eth_portfolio.structs.structs.InternalTransfer"><em>InternalTransfer</em></a> | <a class="reference internal" href="eth_portfolio.structs.html#eth_portfolio.structs.structs.TokenTransfer" title="eth_portfolio.structs.structs.TokenTransfer"><em>TokenTransfer</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio._start_block">
-<span class="sig-name descname"><span class="pre">_start_block</span></span><a class="headerlink" href="#eth_portfolio.Portfolio._start_block" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_start_block</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#eth_portfolio.Portfolio._start_block" title="Link to this definition"></a></dt>
 <dd><p>The starting block number. Defaults to 0.</p>
 </dd></dl>
 
@@ -4007,7 +4111,7 @@ Raises KeyError if the dict is empty.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio.asynchronous">
-<span class="sig-name descname"><span class="pre">asynchronous</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#eth_portfolio.Portfolio.asynchronous" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">asynchronous</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#eth_portfolio.Portfolio.asynchronous" title="Link to this definition"></a></dt>
 <dd><p>Whether to use asynchronous operations. Defaults to False.</p>
 </dd></dl>
 
@@ -4056,7 +4160,7 @@ Raises KeyError if the dict is empty.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio.label">
-<span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#eth_portfolio.Portfolio.label" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'your</span> <span class="pre">portfolio'</span></em><a class="headerlink" href="#eth_portfolio.Portfolio.label" title="Link to this definition"></a></dt>
 <dd><p>A label for the portfolio. Defaults to “your portfolio”</p>
 </dd></dl>
 
@@ -4072,7 +4176,7 @@ Raises KeyError if the dict is empty.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.Portfolio.load_prices">
-<span class="sig-name descname"><span class="pre">load_prices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#eth_portfolio.Portfolio.load_prices" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">load_prices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#eth_portfolio.Portfolio.load_prices" title="Link to this definition"></a></dt>
 <dd><p>Whether to load prices. Defaults to True.</p>
 </dd></dl>
 

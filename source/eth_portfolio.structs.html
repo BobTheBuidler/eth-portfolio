@@ -258,7 +258,9 @@
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.block" title="Link to this definition"></a></dt>
 <dd><p>A shorthand getter for ‘blockNumber’.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">block</span>
 <span class="go">123456</span>
 </pre></div>
@@ -270,7 +272,9 @@
 <span class="sig-name descname"><span class="pre">blockHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.blockHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockHash</span>
 <span class="go">&#39;0xabc...&#39;</span>
 </pre></div>
@@ -282,7 +286,9 @@
 <span class="sig-name descname"><span class="pre">blockNumber</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.blockNumber" title="Link to this definition"></a></dt>
 <dd><p>The number of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockNumber</span>
 <span class="go">123456</span>
 </pre></div>
@@ -307,7 +313,9 @@
 <span class="sig-name descname"><span class="pre">subtraces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">uint</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.subtraces" title="Link to this definition"></a></dt>
 <dd><p>The number of traces of internal transactions that occurred during this transaction.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">subtraces</span>
 <span class="go">2</span>
 </pre></div>
@@ -319,7 +327,9 @@
 <span class="sig-name descname"><span class="pre">traceAddress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">uint</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.traceAddress" title="Link to this definition"></a></dt>
 <dd><p>The trace addresses (array) representing the path of the call within the trace tree.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">traceAddress</span>
 <span class="go">[0, 1]</span>
 </pre></div>
@@ -331,7 +341,9 @@
 <span class="sig-name descname"><span class="pre">transactionHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.transactionHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the transaction being traced.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionHash</span>
 <span class="go">&#39;0xdef...&#39;</span>
 </pre></div>
@@ -343,7 +355,9 @@
 <span class="sig-name descname"><span class="pre">transactionPosition</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.transactionPosition" title="Link to this definition"></a></dt>
 <dd><p>The position of the transaction in the block.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionPosition</span>
 <span class="go">1</span>
 </pre></div>
@@ -353,7 +367,14 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.modified.CallTrace.type">
 <span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'call'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'call'</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.type" title="Link to this definition"></a></dt>
-<dd><p>A class variable indicating the trace type as “call”.</p>
+<dd><p>A class-level constant identifying the trace type as a contract call trace.</p>
+<p>This attribute is used to distinguish this trace from other types of traces
+within the Ethereum Virtual Machine (EVM).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Trace</span><span class="o">.</span><span class="n">type</span>
+<span class="go">&#39;call&#39;</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>
@@ -505,7 +526,15 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.modified.CreateTrace._action">
 <span class="sig-name descname"><span class="pre">_action</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Raw</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace._action" title="Link to this definition"></a></dt>
-<dd><p>The raw create action data, following the parity format.</p>
+<dd><p>The raw action data for contract creation, stored as a <a class="reference external" href="https://jcristharif.com/msgspec/api.html#msgspec.Raw" title="(in msgspec)"><code class="xref py py-class docutils literal notranslate"><span class="pre">msgspec.Raw</span></code></a> type.</p>
+<p>This field holds the raw data that will be decoded into an <code class="xref py py-class docutils literal notranslate"><span class="pre">Action</span></code> object
+using the <a class="reference internal" href="#eth_portfolio.structs.modified.CreateTrace.action" title="eth_portfolio.structs.modified.CreateTrace.action"><code class="xref py py-attr docutils literal notranslate"><span class="pre">action</span></code></a> property.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#eth_portfolio.structs.modified.CreateTrace.action" title="eth_portfolio.structs.modified.CreateTrace.action"><code class="xref py py-attr docutils literal notranslate"><span class="pre">action</span></code></a> for decoding this raw data.</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py property">
@@ -528,7 +557,9 @@ of the contract creation process.</p>
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.block" title="Link to this definition"></a></dt>
 <dd><p>A shorthand getter for ‘blockNumber’.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">block</span>
 <span class="go">123456</span>
 </pre></div>
@@ -540,7 +571,9 @@ of the contract creation process.</p>
 <span class="sig-name descname"><span class="pre">blockHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.blockHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockHash</span>
 <span class="go">&#39;0xabc...&#39;</span>
 </pre></div>
@@ -552,7 +585,9 @@ of the contract creation process.</p>
 <span class="sig-name descname"><span class="pre">blockNumber</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.blockNumber" title="Link to this definition"></a></dt>
 <dd><p>The number of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockNumber</span>
 <span class="go">123456</span>
 </pre></div>
@@ -564,7 +599,9 @@ of the contract creation process.</p>
 <span class="sig-name descname"><span class="pre">error</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.error" title="Link to this definition"></a></dt>
 <dd><p>An error message if an error occurred during the execution of the transaction. Defaults to UNSET.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="n">UNSET</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">UNSET</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">error</span>
 <span class="go">UNSET</span>
 </pre></div>
@@ -575,6 +612,15 @@ of the contract creation process.</p>
 <dt class="sig sig-object py" id="eth_portfolio.structs.modified.CreateTrace.result">
 <span class="sig-name descname"><span class="pre">result</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Result</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.result" title="Link to this definition"></a></dt>
 <dd><p>The result object, adhering to the parity format, containing deployment details.</p>
+<p>This includes the address and bytecode of the deployed contract, which are
+essential for verifying the deployment was successful and retrieving the
+contract’s code.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code> for more details on the result structure.</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py attribute">
@@ -582,7 +628,9 @@ of the contract creation process.</p>
 <span class="sig-name descname"><span class="pre">subtraces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">uint</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.subtraces" title="Link to this definition"></a></dt>
 <dd><p>The number of traces of internal transactions that occurred during this transaction.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">subtraces</span>
 <span class="go">2</span>
 </pre></div>
@@ -594,7 +642,9 @@ of the contract creation process.</p>
 <span class="sig-name descname"><span class="pre">traceAddress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">uint</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.traceAddress" title="Link to this definition"></a></dt>
 <dd><p>The trace addresses (array) representing the path of the call within the trace tree.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">traceAddress</span>
 <span class="go">[0, 1]</span>
 </pre></div>
@@ -606,7 +656,9 @@ of the contract creation process.</p>
 <span class="sig-name descname"><span class="pre">transactionHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.transactionHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the transaction being traced.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionHash</span>
 <span class="go">&#39;0xdef...&#39;</span>
 </pre></div>
@@ -618,7 +670,9 @@ of the contract creation process.</p>
 <span class="sig-name descname"><span class="pre">transactionPosition</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.transactionPosition" title="Link to this definition"></a></dt>
 <dd><p>The position of the transaction in the block.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionPosition</span>
 <span class="go">1</span>
 </pre></div>
@@ -628,7 +682,15 @@ of the contract creation process.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.modified.CreateTrace.type">
 <span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'create'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'create'</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.type" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>A class-level constant identifying the trace type as a contract creation trace.</p>
+<p>This attribute is used to distinguish this trace from other types of traces
+within the Ethereum Virtual Machine (EVM).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Trace</span><span class="o">.</span><span class="n">type</span>
+<span class="go">&#39;create&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
 
 </dd></dl>
 
@@ -808,7 +870,9 @@ decoding hook to convert the raw action data into a structured
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.block" title="Link to this definition"></a></dt>
 <dd><p>A shorthand getter for ‘blockNumber’.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">block</span>
 <span class="go">123456</span>
 </pre></div>
@@ -820,7 +884,9 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">blockHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.blockHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockHash</span>
 <span class="go">&#39;0xabc...&#39;</span>
 </pre></div>
@@ -832,7 +898,9 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">blockNumber</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.blockNumber" title="Link to this definition"></a></dt>
 <dd><p>The number of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockNumber</span>
 <span class="go">123456</span>
 </pre></div>
@@ -844,7 +912,9 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">error</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.error" title="Link to this definition"></a></dt>
 <dd><p>An error message if an error occurred during the execution of the transaction. Defaults to UNSET.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="n">UNSET</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">UNSET</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">error</span>
 <span class="go">UNSET</span>
 </pre></div>
@@ -856,7 +926,9 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">subtraces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">uint</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.subtraces" title="Link to this definition"></a></dt>
 <dd><p>The number of traces of internal transactions that occurred during this transaction.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">subtraces</span>
 <span class="go">2</span>
 </pre></div>
@@ -868,7 +940,9 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">traceAddress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">uint</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.traceAddress" title="Link to this definition"></a></dt>
 <dd><p>The trace addresses (array) representing the path of the call within the trace tree.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">traceAddress</span>
 <span class="go">[0, 1]</span>
 </pre></div>
@@ -880,7 +954,9 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">transactionHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.transactionHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the transaction being traced.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionHash</span>
 <span class="go">&#39;0xdef...&#39;</span>
 </pre></div>
@@ -892,7 +968,9 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">transactionPosition</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.transactionPosition" title="Link to this definition"></a></dt>
 <dd><p>The position of the transaction in the block.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionPosition</span>
 <span class="go">1</span>
 </pre></div>
@@ -902,7 +980,15 @@ decoding hook to convert the raw action data into a structured
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.modified.RewardTrace.type">
 <span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'reward'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'reward'</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.type" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>A class-level constant identifying the trace type as a reward trace.</p>
+<p>This attribute is used to distinguish this trace from other types of traces
+within the Ethereum Virtual Machine (EVM).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Trace</span><span class="o">.</span><span class="n">type</span>
+<span class="go">&#39;reward&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
 
 </dd></dl>
 
@@ -1061,7 +1147,9 @@ decoding hook to convert the raw action data into a structured
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.block" title="Link to this definition"></a></dt>
 <dd><p>A shorthand getter for ‘blockNumber’.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">block</span>
 <span class="go">123456</span>
 </pre></div>
@@ -1073,7 +1161,9 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">blockHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.blockHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockHash</span>
 <span class="go">&#39;0xabc...&#39;</span>
 </pre></div>
@@ -1085,7 +1175,9 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">blockNumber</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.blockNumber" title="Link to this definition"></a></dt>
 <dd><p>The number of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockNumber</span>
 <span class="go">123456</span>
 </pre></div>
@@ -1097,7 +1189,9 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">error</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.error" title="Link to this definition"></a></dt>
 <dd><p>An error message if an error occurred during the execution of the transaction. Defaults to UNSET.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="n">UNSET</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">UNSET</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">error</span>
 <span class="go">UNSET</span>
 </pre></div>
@@ -1107,8 +1201,7 @@ decoding hook to convert the raw action data into a structured
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.modified.SuicideTrace.result">
 <span class="sig-name descname"><span class="pre">result</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.result" title="Link to this definition"></a></dt>
-<dd><p>Explicitly set to None, indicating no meaningful result is expected
-from a contract self-destruct operation.</p>
+<dd><p>Explicitly set to None, indicating no meaningful result is expected from a contract self-destruct operation.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1116,7 +1209,9 @@ from a contract self-destruct operation.</p>
 <span class="sig-name descname"><span class="pre">subtraces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">uint</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.subtraces" title="Link to this definition"></a></dt>
 <dd><p>The number of traces of internal transactions that occurred during this transaction.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">subtraces</span>
 <span class="go">2</span>
 </pre></div>
@@ -1128,7 +1223,9 @@ from a contract self-destruct operation.</p>
 <span class="sig-name descname"><span class="pre">traceAddress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">uint</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.traceAddress" title="Link to this definition"></a></dt>
 <dd><p>The trace addresses (array) representing the path of the call within the trace tree.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">traceAddress</span>
 <span class="go">[0, 1]</span>
 </pre></div>
@@ -1140,7 +1237,9 @@ from a contract self-destruct operation.</p>
 <span class="sig-name descname"><span class="pre">transactionHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.transactionHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the transaction being traced.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionHash</span>
 <span class="go">&#39;0xdef...&#39;</span>
 </pre></div>
@@ -1152,7 +1251,9 @@ from a contract self-destruct operation.</p>
 <span class="sig-name descname"><span class="pre">transactionPosition</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.transactionPosition" title="Link to this definition"></a></dt>
 <dd><p>The position of the transaction in the block.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">_FilterTraceBase</span><span class="p">(</span><span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionPosition</span>
 <span class="go">1</span>
 </pre></div>
@@ -1162,7 +1263,14 @@ from a contract self-destruct operation.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.modified.SuicideTrace.type">
 <span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'suicide'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'suicide'</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.type" title="Link to this definition"></a></dt>
-<dd><p>The constant literal denoting the trace type as ‘suicide’.</p>
+<dd><p>A class-level constant identifying the trace type as a contract suicide trace.</p>
+<p>This attribute is used to distinguish this trace from other types of traces
+within the Ethereum Virtual Machine (EVM).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Trace</span><span class="o">.</span><span class="n">type</span>
+<span class="go">&#39;suicide&#39;</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>
@@ -1834,7 +1942,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>transaction</strong> (<em>TransactionLegacy</em><em> | </em><em>Transaction2930</em><em> | </em><em>Transaction1559</em>)</p></li>
+<li><p><strong>transaction</strong> (<em>TransactionLegacy</em><em> | </em><em>Transaction2930</em><em> | </em><em>Transaction1559</em><em> | </em><em>Transaction4844</em>)</p></li>
 <li><p><strong>price</strong> (<em>Decimal</em><em> | </em><em>None</em>)</p></li>
 <li><p><strong>value_usd</strong> (<em>Decimal</em><em> | </em><em>None</em>)</p></li>
 </ul>
@@ -1934,7 +2042,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.structs.structs.Transaction._evm_object">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.structs.Transaction._evm_object" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction4844</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.structs.Transaction._evm_object" title="Link to this definition"></a></dt>
 <dd><p>The EVM object associated with {cls_name}, exactly as it was received from the RPC.</p>
 </dd></dl>
 
@@ -2042,7 +2150,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.structs.Transaction.transaction">
-<span class="sig-name descname"><span class="pre">transaction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span></em><a class="headerlink" href="#eth_portfolio.structs.structs.Transaction.transaction" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">transaction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction4844</span></em><a class="headerlink" href="#eth_portfolio.structs.structs.Transaction.transaction" title="Link to this definition"></a></dt>
 <dd><p>The transaction object received by calling eth_getTransactionByHash.</p>
 </dd></dl>
 
@@ -2147,7 +2255,7 @@ None for chains that don’t specify transaction types.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>transaction</strong> (<em>TransactionLegacy</em><em> | </em><em>Transaction2930</em><em> | </em><em>Transaction1559</em>)</p></li>
+<li><p><strong>transaction</strong> (<em>TransactionLegacy</em><em> | </em><em>Transaction2930</em><em> | </em><em>Transaction1559</em><em> | </em><em>Transaction4844</em>)</p></li>
 <li><p><strong>price</strong> (<em>Decimal</em><em> | </em><em>None</em>)</p></li>
 <li><p><strong>value_usd</strong> (<em>Decimal</em><em> | </em><em>None</em>)</p></li>
 </ul>
@@ -2247,7 +2355,7 @@ None for chains that don’t specify transaction types.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.structs.structs.TransactionRLP._evm_object">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.structs.TransactionRLP._evm_object" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction4844</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.structs.TransactionRLP._evm_object" title="Link to this definition"></a></dt>
 <dd><p>The EVM object associated with {cls_name}, exactly as it was received from the RPC.</p>
 </dd></dl>
 
@@ -2558,7 +2666,7 @@ None for chains that don’t specify transaction types.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.structs.structs._LedgerEntryBase._evm_object">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.structs._LedgerEntryBase._evm_object" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction4844</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.structs._LedgerEntryBase._evm_object" title="Link to this definition"></a></dt>
 <dd><p>The EVM object associated with {cls_name}, exactly as it was received from the RPC.</p>
 </dd></dl>
 
@@ -2663,7 +2771,7 @@ including gas parameters, signature components, and transaction-specific data.</
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>transaction</strong> (<em>TransactionLegacy</em><em> | </em><em>Transaction2930</em><em> | </em><em>Transaction1559</em>)</p></li>
+<li><p><strong>transaction</strong> (<em>TransactionLegacy</em><em> | </em><em>Transaction2930</em><em> | </em><em>Transaction1559</em><em> | </em><em>Transaction4844</em>)</p></li>
 <li><p><strong>price</strong> (<em>Decimal</em><em> | </em><em>None</em>)</p></li>
 <li><p><strong>value_usd</strong> (<em>Decimal</em><em> | </em><em>None</em>)</p></li>
 </ul>
@@ -2763,7 +2871,7 @@ including gas parameters, signature components, and transaction-specific data.</
 
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.structs.structs._TransactionBase._evm_object">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.structs._TransactionBase._evm_object" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction4844</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.structs._TransactionBase._evm_object" title="Link to this definition"></a></dt>
 <dd><p>The EVM object associated with {cls_name}, exactly as it was received from the RPC.</p>
 </dd></dl>
 
@@ -3593,7 +3701,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>transaction</strong> (<em>TransactionLegacy</em><em> | </em><em>Transaction2930</em><em> | </em><em>Transaction1559</em>)</p></li>
+<li><p><strong>transaction</strong> (<em>TransactionLegacy</em><em> | </em><em>Transaction2930</em><em> | </em><em>Transaction1559</em><em> | </em><em>Transaction4844</em>)</p></li>
 <li><p><strong>price</strong> (<em>Decimal</em><em> | </em><em>None</em>)</p></li>
 <li><p><strong>value_usd</strong> (<em>Decimal</em><em> | </em><em>None</em>)</p></li>
 </ul>
@@ -3693,7 +3801,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.structs.Transaction._evm_object">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.Transaction._evm_object" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction4844</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.Transaction._evm_object" title="Link to this definition"></a></dt>
 <dd><p>The EVM object associated with {cls_name}, exactly as it was received from the RPC.</p>
 </dd></dl>
 
@@ -3801,7 +3909,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.structs.Transaction.transaction">
-<span class="sig-name descname"><span class="pre">transaction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span></em><a class="headerlink" href="#eth_portfolio.structs.Transaction.transaction" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">transaction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction4844</span></em><a class="headerlink" href="#eth_portfolio.structs.Transaction.transaction" title="Link to this definition"></a></dt>
 <dd><p>The transaction object received by calling eth_getTransactionByHash.</p>
 </dd></dl>
 
@@ -3906,7 +4014,7 @@ None for chains that don’t specify transaction types.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>transaction</strong> (<em>TransactionLegacy</em><em> | </em><em>Transaction2930</em><em> | </em><em>Transaction1559</em>)</p></li>
+<li><p><strong>transaction</strong> (<em>TransactionLegacy</em><em> | </em><em>Transaction2930</em><em> | </em><em>Transaction1559</em><em> | </em><em>Transaction4844</em>)</p></li>
 <li><p><strong>price</strong> (<em>Decimal</em><em> | </em><em>None</em>)</p></li>
 <li><p><strong>value_usd</strong> (<em>Decimal</em><em> | </em><em>None</em>)</p></li>
 </ul>
@@ -4006,7 +4114,7 @@ None for chains that don’t specify transaction types.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="eth_portfolio.structs.TransactionRLP._evm_object">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.TransactionRLP._evm_object" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_evm_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionLegacy</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction2930</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction1559</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Transaction4844</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Trace</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Log</span></em><a class="headerlink" href="#eth_portfolio.structs.TransactionRLP._evm_object" title="Link to this definition"></a></dt>
 <dd><p>The EVM object associated with {cls_name}, exactly as it was received from the RPC.</p>
 </dd></dl>
 

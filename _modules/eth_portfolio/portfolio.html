@@ -77,10 +77,10 @@
 <span class="sd">This file is part of a larger system that includes modules for handling portfolio addresses, ledger entries, and other related tasks.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">asyncio</span> <span class="kn">import</span> <span class="n">gather</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">AsyncIterator</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">a_sync</span>
 <span class="kn">from</span> <span class="nn">a_sync.a_sync</span> <span class="kn">import</span> <span class="n">ASyncFunction</span>
@@ -102,6 +102,7 @@
 <span class="kn">from</span> <span class="nn">eth_portfolio._utils</span> <span class="kn">import</span> <span class="n">_LedgeredBase</span>
 <span class="kn">from</span> <span class="nn">eth_portfolio.address</span> <span class="kn">import</span> <span class="n">PortfolioAddress</span>
 <span class="kn">from</span> <span class="nn">eth_portfolio.constants</span> <span class="kn">import</span> <span class="n">ADDRESSES</span>
+<span class="kn">from</span> <span class="nn">eth_portfolio.structs</span> <span class="kn">import</span> <span class="n">LedgerEntry</span>
 <span class="kn">from</span> <span class="nn">eth_portfolio.typing</span> <span class="kn">import</span> <span class="n">Addresses</span><span class="p">,</span> <span class="n">PortfolioBalances</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -124,7 +125,13 @@
 
 <div class="viewcode-block" id="PortfolioWallets.__init__">
 <a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.portfolio.PortfolioWallets.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">portfolio</span><span class="p">:</span> <span class="s2">&quot;Portfolio&quot;</span><span class="p">,</span> <span class="n">addresses</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Address</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">addresses</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Address</span><span class="p">],</span>
+        <span class="n">start_block</span><span class="p">:</span> <span class="n">Block</span><span class="p">,</span>
+        <span class="n">load_prices</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">num_workers_transactions</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize a PortfolioWallets instance.</span>
 
@@ -142,7 +149,11 @@
 
         <span class="k">for</span> <span class="n">address</span> <span class="ow">in</span> <span class="n">addresses</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_wallets</span><span class="p">[</span><span class="n">address</span><span class="p">]</span> <span class="o">=</span> <span class="n">PortfolioAddress</span><span class="p">(</span>
-                <span class="n">address</span><span class="p">,</span> <span class="n">portfolio</span><span class="p">,</span> <span class="n">asynchronous</span><span class="o">=</span><span class="n">portfolio</span><span class="o">.</span><span class="n">asynchronous</span>
+                <span class="n">address</span><span class="p">,</span>
+                <span class="n">start_block</span><span class="p">,</span>
+                <span class="n">load_prices</span><span class="p">,</span>
+                <span class="n">num_workers_transactions</span><span class="o">=</span><span class="n">num_workers_transactions</span><span class="p">,</span>
+                <span class="n">asynchronous</span><span class="o">=</span><span class="n">portfolio</span><span class="o">.</span><span class="n">asynchronous</span><span class="p">,</span>
             <span class="p">)</span></div>
 
 
@@ -250,6 +261,9 @@
 
 
 
+<span class="n">_DEFAULT_LABEL</span> <span class="o">=</span> <span class="s2">&quot;your portfolio&quot;</span>
+
+
 <div class="viewcode-block" id="Portfolio">
 <a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.portfolio.Portfolio">[docs]</a>
 <span class="k">class</span> <span class="nc">Portfolio</span><span class="p">(</span><span class="n">a_sync</span><span class="o">.</span><span class="n">ASyncGenericBase</span><span class="p">):</span>
@@ -260,14 +274,35 @@
 <span class="sd">    - All calls to `function(*args, **kwargs)` will return `{address: PortfolioAddress(Address).function(*args, **kwargs)}`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="n">label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">_DEFAULT_LABEL</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A label for the portfolio. Defaults to &quot;your portfolio&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">load_prices</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Whether to load prices. Defaults to True.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">asynchronous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Whether to use asynchronous operations. Defaults to False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_start_block</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The starting block number. Defaults to 0.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="Portfolio.__init__">
 <a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.portfolio.Portfolio.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">addresses</span><span class="p">:</span> <span class="n">Addresses</span><span class="p">,</span>
         <span class="n">start_block</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="n">label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;your portfolio&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">_DEFAULT_LABEL</span><span class="p">,</span>
         <span class="n">load_prices</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">num_workers_transactions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10_000</span><span class="p">,</span>
         <span class="n">asynchronous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -285,40 +320,31 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`start_block` must be &gt;= 0&quot;</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_start_block</span> <span class="o">=</span> <span class="n">start_block</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The starting block number. Defaults to 0.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">start_block</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_start_block</span> <span class="o">=</span> <span class="n">start_block</span>
 
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;`label` must be a string, you passed </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">label</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        A label for the portfolio. Defaults to &quot;your portfolio&quot;</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">label</span> <span class="o">!=</span> <span class="n">_DEFAULT_LABEL</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">load_prices</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">load_prices</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_prices</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="n">load_prices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`load_prices` must be a boolean, you passed </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">load_prices</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">load_prices</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">load_prices</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Whether to load prices. Defaults to True.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">asynchronous</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">asynchronous</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">asynchronous</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">asynchronous</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`asynchronous` must be a boolean, you passed </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">asynchronous</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">asynchronous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">asynchronous</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Whether to use asynchronous operations. Defaults to False.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">addresses</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`addresses` must be an iterable, not </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">addresses</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">addresses</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">addresses</span> <span class="o">=</span> <span class="p">[</span><span class="n">addresses</span><span class="p">]</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            The addresses to include in your portfolio</span>
-<span class="sd">            &quot;&quot;&quot;</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">addresses</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`addresses` must be an iterable, not </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">addresses</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">addresses</span> <span class="o">=</span> <span class="n">PortfolioWallets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addresses</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addresses</span> <span class="o">=</span> <span class="n">PortfolioWallets</span><span class="p">(</span>
+            <span class="n">addresses</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">load_prices</span><span class="p">,</span> <span class="n">num_workers_transactions</span>
+        <span class="p">)</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A container for the :class:`~eth_portfolio.Portfolio`&#39;s :class:`~eth_portfolio.address.PortfolioAddress` objects.</span>
 <span class="sd">        </span>
@@ -449,6 +475,24 @@
             <span class="k">await</span> <span class="n">a_sync</span><span class="o">.</span><span class="n">gather</span><span class="p">({</span><span class="n">address</span><span class="p">:</span> <span class="n">address</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">address</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">}),</span>
             <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">,</span>
         <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Portfolio.sent">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.portfolio.Portfolio.sent">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">sent</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">start_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">LedgerEntry</span><span class="p">]:</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ledger</span><span class="o">.</span><span class="n">sent</span><span class="p">(</span><span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">obj</span></div>
+
+
+<div class="viewcode-block" id="Portfolio.received">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.portfolio.Portfolio.received">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">received</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">start_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">LedgerEntry</span><span class="p">]:</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ledger</span><span class="o">.</span><span class="n">received</span><span class="p">(</span><span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">obj</span></div>
 </div>
 
 
@@ -588,7 +632,7 @@
 <span class="sd">            &gt;&gt;&gt; print(df)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span>
-            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
+            <span class="k">await</span> <span class="n">gather</span><span class="p">(</span>
                 <span class="o">*</span><span class="p">(</span><span class="n">ledger</span><span class="o">.</span><span class="n">df</span><span class="p">(</span><span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">ledger</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledgers</span><span class="p">)</span>
             <span class="p">)</span>
         <span class="p">)</span>
@@ -678,6 +722,36 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
             <span class="k">raise</span></div>
+
+
+<div class="viewcode-block" id="PortfolioLedger.sent">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.portfolio.PortfolioLedger.sent">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">sent</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">start_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">LedgerEntry</span><span class="p">]:</span>
+        <span class="n">portfolio_addresses</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">portfolio</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">[</span><span class="n">start_block</span><span class="p">:</span><span class="n">end_block</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">value</span>
+                <span class="ow">and</span> <span class="n">obj</span><span class="o">.</span><span class="n">from_address</span> <span class="ow">in</span> <span class="n">portfolio_addresses</span>
+                <span class="ow">and</span> <span class="n">obj</span><span class="o">.</span><span class="n">to_address</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">portfolio_addresses</span>
+            <span class="p">):</span>
+                <span class="k">yield</span> <span class="n">obj</span></div>
+
+
+<div class="viewcode-block" id="PortfolioLedger.received">
+<a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.portfolio.PortfolioLedger.received">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">received</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">start_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">LedgerEntry</span><span class="p">]:</span>
+        <span class="n">portfolio_addresses</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">portfolio</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">[</span><span class="n">start_block</span><span class="p">:</span><span class="n">end_block</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">value</span>
+                <span class="ow">and</span> <span class="n">obj</span><span class="o">.</span><span class="n">to_address</span> <span class="ow">in</span> <span class="n">portfolio_addresses</span>
+                <span class="ow">and</span> <span class="n">obj</span><span class="o">.</span><span class="n">from_address</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">portfolio_addresses</span>
+            <span class="p">):</span>
+                <span class="k">yield</span> <span class="n">obj</span></div>
 </div>
 
 
