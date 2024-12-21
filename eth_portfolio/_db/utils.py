@@ -284,10 +284,17 @@ def ensure_token(token_address: ChecksumAddress) -> None:
     get_token(token_address, sync=True)
 
 
+async def get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Transaction]:
+    transactions = await transactions_known_at_startup(chain.id, sender)
+    if nonce in transactions:
+        return decode_transaction(transactions.pop(nonce))
+    return await _get_transaction(sender, nonce)
+
+    
 @a_sync(default="async", executor=_transaction_read_executor)
 @robust_db_session
-def get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Transaction]:
-    transactions = transactions_known_at_startup(chain.id, sender)
+def _get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Transaction]:
+    transactions = transactions_known_at_startup(chain.id, sender, sync=True)
     if nonce in transactions:
         return decode_transaction(transactions.pop(nonce))
     entity: entities.Transaction
@@ -430,42 +437,45 @@ def _insert_internal_transfer(transfer: InternalTransfer) -> None:
     )
 
 
-@a_sync(default="async", executor=_token_transfer_read_executor)
-@robust_db_session
-def get_token_transfer(transfer: evmspec.Log) -> Optional[TokenTransfer]:
+async def get_token_transfer(transfer: evmspec.Log) -> Optional[TokenTransfer]:
     pk = {
         "block": (chain.id, transfer.blockNumber),
         "transaction_index": transfer.transactionIndex,
         "log_index": transfer.logIndex,
     }
-    if obj := token_transfers_known_at_startup().get(tuple(pk.values())):
-        with reraise_excs_with_extra_context(obj):
-            return json.decode(obj, type=TokenTransfer, dec_hook=_decode_hook)
+    db_transfers = await token_transfers_known_at_startup()
+    data = db_transfers.pop(tuple(pk.values()), None) or await __get_token_transfer_bytes_from_db(pk)
+    with reraise_excs_with_extra_context(tt_bytes):
+        return json.decode(tt_bytes, type=TokenTransfer, dec_hook=_decode_hook)
+
+
+@a_sync(default="async", executor=_token_transfer_read_executor)
+@robust_db_session
+def __get_token_transfer_bytes_from_db(pk: dict) -> Optional[bytes]:
     entity: entities.TokenTransfer
     if entity := entities.TokenTransfer.get(**pk):
-        with reraise_excs_with_extra_context(entity):
-            return json.decode(entity.raw, type=TokenTransfer, dec_hook=_decode_hook)
+        return entity.raw
 
 
 _TPK = Tuple[Tuple[int, ChecksumAddress], int]
 
 
+@a_sync(default="async", executor=_transaction_read_executor, ram_cache_maxsize=None)
 @lru_cache(maxsize=None)
 def transactions_known_at_startup(chainid: int, from_address: ChecksumAddress) -> Dict[_TPK, bytes]:
-    transfers = {}
-    obj: Tuple[int, ChecksumAddress, int, bytes]
-    for nonce, raw in select(
-        (t.nonce, t.raw)
-        for t in entities.Transaction  # type: ignore [attr-defined]
-        if t.from_address.chain.id == chainid and t.from_address.address == from_address
-    ):
-        transfers[nonce] = raw
-    return transfers
+    return dict(
+        select(
+            (t.nonce, t.raw)
+            for t in entities.Transaction  # type: ignore [attr-defined]
+            if t.from_address.chain.id == chainid and t.from_address.address == from_address
+        )
+    )
 
 
 _TokenTransferPK = Tuple[Tuple[int, int], int, int]
 
 
+@a_sync(default="async", executor=_transaction_read_executor, ram_cache_maxsize=None)
 @lru_cache(maxsize=None)
 def token_transfers_known_at_startup() -> Dict[_TokenTransferPK, bytes]:
     chainid: int
