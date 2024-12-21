@@ -288,7 +288,20 @@ async def get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Trans
     startup_txs = await transactions_known_at_startup(chain.id, sender)
     data = startup_txs.pop(nonce, None) or await __get_transaction_bytes_from_db(sender, nonce)
     if data:
+        await _yield_to_loop()
         return decode_transaction(data)
+
+
+_decoded = 0
+
+
+async def _yield_to_loop():
+    """dont let the event loop get congested, let your rpc begin work asap"""
+    global
+    _decoded += 1
+    if _decoded % 1000 == 0:
+        await sleep(0)
+    return decoded
 
 
 @a_sync(default="async", executor=_transaction_read_executor)
@@ -445,6 +458,7 @@ async def get_token_transfer(transfer: evmspec.Log) -> Optional[TokenTransfer]:
         pk
     )
     if data:
+        await _yield_to_loop()
         with reraise_excs_with_extra_context(data):
             return json.decode(data, type=TokenTransfer, dec_hook=_decode_hook)
 
