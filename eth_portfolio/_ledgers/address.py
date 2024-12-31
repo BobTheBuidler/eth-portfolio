@@ -188,12 +188,12 @@ class AddressLedgerBase(
 
         async def unblock_loop() -> None:
             """
-            Let the event loop run at least once for every 1000
+            Let the event loop run at least once for every 100
             objects yielded so it doesn't get too congested.
             """
             nonlocal num_yielded
             num_yielded += 1
-            if num_yielded % 1000 == 0:
+            if num_yielded % 100 == 0:
                 await sleep(0)
 
         if self.objects and end_block and self.objects[-1].block_number > end_block:
