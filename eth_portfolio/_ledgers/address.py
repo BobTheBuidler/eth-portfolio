@@ -38,7 +38,7 @@ from aiohttp import ClientResponseError
 from async_lru import alru_cache
 from brownie import chain
 from dank_mids.eth import TraceFilterParams
-from eth_typing import ChecksumAddress
+from eth_typing import ChecksumAddress, HexStr
 from evmspec import FilterTrace
 from evmspec.structs.receipt import Status
 from evmspec.structs.trace import call, reward
@@ -540,20 +540,11 @@ class InternalTransfersList(PandableList[InternalTransfer]):
 @a_sync.Semaphore(128, __name__ + ".trace_filter")
 @stuck_coro_debugger
 @eth_retry.auto_retry
-async def trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTrace]:
-    while True:
-        try:
-            return await _trace_filter(fromBlock, toBlock, **kwargs)
-        except TypeError as e:
-            # This is some intermittent error I need to debug in dank_mids, I think it occurs when we get rate limited
-            if str(e) != "a bytes-like object is required, not 'NoneType'":
-                raise
-            await sleep(0.5)
-            # remove this logger when I know there are no looping issues
-            logger.info("call failed, trying again")
+async def trace_filter(fromBlock: HexStr, toBlock: HexStr, **kwargs) -> List[FilterTrace]:
+    return await _trace_filter(fromBlock, toBlock, **kwargs)
 
 
-async def _trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTrace]:
+async def _trace_filter(fromBlock: HexStr, toBlock: HexStr, **kwargs) -> List[FilterTrace]:
     try:
         return await dank_mids.eth.trace_filter(
             {"fromBlock": fromBlock, "toBlock": toBlock, **kwargs}
@@ -561,17 +552,24 @@ async def _trace_filter(fromBlock: int, toBlock: int, **kwargs) -> List[FilterTr
     except ClientResponseError as e:
         if e.status != HTTPStatus.SERVICE_UNAVAILABLE or toBlock == fromBlock:
             raise
+    except TypeError as e:
+        # This is some intermittent error I need to debug in dank_mids, I think it occurs when we get rate limited
+        if str(e) != "a bytes-like object is required, not 'NoneType'":
+            raise
+        await sleep(0.5)
+        # remove this logger when I know there are no looping issues
+        logger.info("call failed, trying again")
 
-        from_block = int(fromBlock, 16)
-        range_size = int(toBlock, 16) - from_block + 1
-        chunk_size = range_size // 2
-        halfway = from_block + chunk_size
+    from_block = int(fromBlock, 16)
+    range_size = int(toBlock, 16) - from_block + 1
+    chunk_size = range_size // 2
+    halfway = from_block + chunk_size
 
-        results = await gather(
-            _trace_filter(fromBlock=fromBlock, toBlock=hex(halfway), **kwargs),
-            _trace_filter(fromBlock=hex(halfway + 1), toBlock=toBlock, **kwargs),
-        )
-        return results[0] + results[1]
+    results = await gather(
+        _trace_filter(fromBlock=fromBlock, toBlock=hex(halfway), **kwargs),
+        _trace_filter(fromBlock=hex(halfway + 1), toBlock=toBlock, **kwargs),
+    )
+    return results[0] + results[1]
 
 
 @alru_cache(maxsize=None)
@@ -658,6 +656,11 @@ async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
     ]
 
 
+BlockRange = Tuple[Block, Block]
+
+def _get_block_ranges(start_block: Block, end_block: Block) -> List[BlockRange]:
+    return [(i, i + BATCH_SIZE - 1) for i in range(start_block, end_block, BATCH_SIZE)]
+
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
     """
     A ledger for managing internal transfer entries.
@@ -697,12 +700,10 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
         if isinstance(end_block, float) and int(end_block) == end_block:
             end_block = int(end_block)
 
-        block_ranges = [
-            [hex(i), hex(i + BATCH_SIZE - 1)] for i in range(start_block, end_block, BATCH_SIZE)
-        ]
+        block_ranges = _get_block_ranges(start_block, end_block)
 
         trace_filter_coros = [
-            get_traces({direction: [self.address], "fromBlock": start, "toBlock": end})
+            get_traces({direction: [self.address], "fromBlock": hex(start), "toBlock": hex(end)})
             for direction, (start, end) in product(["toAddress", "fromAddress"], block_ranges)
         ]
 
