@@ -541,10 +541,10 @@ class InternalTransfersList(PandableList[InternalTransfer]):
 @stuck_coro_debugger
 @eth_retry.auto_retry
 async def trace_filter(fromBlock: HexStr, toBlock: HexStr, **kwargs) -> List[FilterTrace]:
-    return await _trace_filter(fromBlock, toBlock, **kwargs)
+    return await __trace_filter(fromBlock, toBlock, **kwargs)
 
 
-async def _trace_filter(fromBlock: HexStr, toBlock: HexStr, **kwargs) -> List[FilterTrace]:
+async def __trace_filter(fromBlock: HexStr, toBlock: HexStr, **kwargs) -> List[FilterTrace]:
     try:
         return await dank_mids.eth.trace_filter(
             {"fromBlock": fromBlock, "toBlock": toBlock, **kwargs}
@@ -566,8 +566,8 @@ async def _trace_filter(fromBlock: HexStr, toBlock: HexStr, **kwargs) -> List[Fi
     halfway = from_block + chunk_size
 
     results = await gather(
-        _trace_filter(fromBlock=fromBlock, toBlock=hex(halfway), **kwargs),
-        _trace_filter(fromBlock=hex(halfway + 1), toBlock=toBlock, **kwargs),
+        __trace_filter(fromBlock=fromBlock, toBlock=HexStr(hex(halfway)), **kwargs),
+        __trace_filter(fromBlock=HexStr(hex(halfway + 1)), toBlock=toBlock, **kwargs),
     )
     return results[0] + results[1]
 
