@@ -8,7 +8,7 @@ from y._decorators import stuck_coro_debugger
 
 
 @eth_retry.auto_retry
-@alru_cache(ttl=60 * 60)
+@alru_cache(maxsize=None, ttl=60 * 60)
 @stuck_coro_debugger
 async def _get_transaction_receipt(txhash: HexStr) -> msgspec.Raw:
     return await dank_mids.eth.get_transaction_receipt(
@@ -16,4 +16,4 @@ async def _get_transaction_receipt(txhash: HexStr) -> msgspec.Raw:
     )
 
 
-get_transaction_receipt = SmartProcessingQueue(_get_transaction_receipt, 1000)
+get_transaction_receipt = SmartProcessingQueue(_get_transaction_receipt, 5000)
