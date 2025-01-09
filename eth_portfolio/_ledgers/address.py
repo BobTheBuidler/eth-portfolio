@@ -590,7 +590,7 @@ async def get_transaction_status(txhash: str) -> Status:
 
 _trace_semaphores = defaultdict(lambda: a_sync.Semaphore(16, __name__ + ".trace_semaphore"))
 _check_trace_semaphores = defaultdict(
-    lambda: a_sync.Semaphore(20, __name__ + ".check_trace_semaphore")
+    lambda: a_sync.PrioritySemaphore(10, __name__ + ".check_trace_semaphore")
 )
 
 
@@ -620,7 +620,7 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
         traces = await trace_filter(**filter_params)
     if traces:
         # TODO refactor this, its horrible
-        async with _check_trace_semaphores[semaphore_key]:
+        async with _check_trace_semaphores[semaphore_key][len(traces)]:
             return await _check_traces(traces)
     else:
         return []
