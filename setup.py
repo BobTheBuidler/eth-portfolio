@@ -20,5 +20,32 @@ setup(
     setup_requires=["setuptools_scm", "cython"],
     package_data={
         "eth_portfolio": ["py.typed"],
-    },
+    ),
 )
+
+"""
+Installation
+------------
+To install the `eth-portfolio` package, you should start with a fresh virtual environment. 
+Due to the use of `setuptools_scm` for versioning, it is recommended to clone the repository first 
+to ensure the version can be determined correctly. 
+
+Example:
+    .. code-block:: bash
+
+        git clone https://github.com/BobTheBuidler/eth-portfolio.git
+        cd eth-portfolio
+        pip install .
+
+If you encounter issues with PyYaml and Cython, you can resolve them by installing specific versions:
+
+Example:
+    .. code-block:: bash
+
+        pip install wheel
+        pip install --no-build-isolation "Cython<3" "pyyaml==5.4.1"
+        pip install .
+
+See Also:
+    - :mod:`setuptools_scm`: For more information on versioning with setuptools_scm.
+"""
