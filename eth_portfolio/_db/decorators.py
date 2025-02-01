@@ -22,6 +22,33 @@ __logger_log = logger._log
 
 
 def break_locks(fn: AnyFn[P, T]) -> AnyFn[P, T]:
+    """
+    Decorator to handle database lock errors by retrying the function.
+
+    This decorator is designed to wrap functions that interact with a database
+    and may encounter `OperationalError` due to database locks. It will retry
+    the function until it succeeds or a non-lock-related error occurs.
+
+    Args:
+        fn: The function to be wrapped, which may be a coroutine or a regular function.
+
+    Returns:
+        The wrapped function that will retry on database lock errors.
+
+    Examples:
+        >>> @break_locks
+        ... def my_function():
+        ...     # Function logic that may encounter a database lock
+        ...     pass
+
+        >>> @break_locks
+        ... async def my_async_function():
+        ...     # Async function logic that may encounter a database lock
+        ...     pass
+
+    See Also:
+        - :func:`pony.orm.db_session`: For managing database sessions.
+    """
     if iscoroutinefunction(fn):
 
         @wraps(fn)
@@ -74,6 +101,32 @@ def break_locks(fn: AnyFn[P, T]) -> AnyFn[P, T]:
 
 
 def requery_objs_on_diff_tx_err(fn: Callable[P, T]) -> Callable[P, T]:
+    """
+    Decorator to handle transaction errors by retrying the function.
+
+    This decorator is designed to wrap functions that may encounter
+    `TransactionError` due to mixing objects from different transactions.
+    It will retry the function until it succeeds or a non-transaction-related
+    error occurs.
+
+    Args:
+        fn: The function to be wrapped, which must not be a coroutine.
+
+    Returns:
+        The wrapped function that will retry on transaction errors.
+
+    Raises:
+        TypeError: If the function is a coroutine.
+
+    Examples:
+        >>> @requery_objs_on_diff_tx_err
+        ... def my_function():
+        ...     # Function logic that may encounter a transaction error
+        ...     pass
+
+    See Also:
+        - :func:`pony.orm.db_session`: For managing database sessions.
+    """
     if iscoroutinefunction(fn):
         raise TypeError(f"{fn} must not be async")
 
