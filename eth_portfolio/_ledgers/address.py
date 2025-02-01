@@ -589,7 +589,7 @@ async def get_transaction_status(txhash: str) -> Status:
 
 
 _trace_semaphores = defaultdict(lambda: a_sync.Semaphore(16, __name__ + ".trace_semaphore"))
-_check_trace_semaphores = defaultdict(lambda: a_sync.Semaphore(16, __name__ + ".check_trace_semaphore"))
+_check_trace_semaphores = defaultdict(lambda: a_sync.Semaphore(100, __name__ + ".check_trace_semaphore"))
 
 
 @cache_to_disk
