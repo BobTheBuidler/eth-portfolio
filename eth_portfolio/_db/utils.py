@@ -14,6 +14,7 @@ from logging import getLogger
 from msgspec import ValidationError, json
 from multicall.utils import get_event_loop
 from pony.orm import BindingError, OperationalError, commit, db_session, flush, select
+from y import ENVIRONMENT_VARIABLES as ENVS
 from y._db.entities import db
 from y.constants import CHAINID
 from y.exceptions import reraise_excs_with_extra_context
@@ -65,18 +66,29 @@ from y.exceptions import NonStandardERC20
 from y.contracts import is_contract
 
 
-_block_executor = PruningThreadPoolExecutor(4, "eth-portfolio block")
-_token_executor = PruningThreadPoolExecutor(4, "eth-portfolio token")
-_address_executor = PruningThreadPoolExecutor(4, "eth-portfolio address")
-_transaction_read_executor = PruningThreadPoolExecutor(10, "eth-portfolio-transaction-read")
-_transaction_write_executor = PruningThreadPoolExecutor(4, "eth-portfolio-transaction-write")
-_token_transfer_read_executor = PruningThreadPoolExecutor(10, "eth-portfolio-token-transfer-read")
-_token_transfer_write_executor = PruningThreadPoolExecutor(4, "eth-portfolio-token-transfer-write")
+_big_pool_size = 4 if ENVS.DB_PROVIDER == "sqlite" else 10
+_small_pool_size = 2 if ENVS.DB_PROVIDER == "sqlite" else 4
+
+_block_executor = PruningThreadPoolExecutor(_small_pool_size, "eth-portfolio block")
+_token_executor = PruningThreadPoolExecutor(_small_pool_size, "eth-portfolio token")
+_address_executor = PruningThreadPoolExecutor(_small_pool_size, "eth-portfolio address")
+_transaction_read_executor = PruningThreadPoolExecutor(
+    _big_pool_size, "eth-portfolio-transaction-read"
+)
+_transaction_write_executor = PruningThreadPoolExecutor(
+    _small_pool_size, "eth-portfolio-transaction-write"
+)
+_token_transfer_read_executor = PruningThreadPoolExecutor(
+    _big_pool_size, "eth-portfolio-token-transfer-read"
+)
+_token_transfer_write_executor = PruningThreadPoolExecutor(
+    _small_pool_size, "eth-portfolio-token-transfer-write"
+)
 _internal_transfer_read_executor = PruningThreadPoolExecutor(
-    10, "eth-portfolio-internal-transfer read"
+    _big_pool_size, "eth-portfolio-internal-transfer read"
 )
 _internal_transfer_write_executor = PruningThreadPoolExecutor(
-    4, "eth-portfolio-internal-transfer write"
+    _small_pool_size, "eth-portfolio-internal-transfer write"
 )
 
 

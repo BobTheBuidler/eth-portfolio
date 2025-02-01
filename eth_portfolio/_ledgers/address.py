@@ -1,8 +1,8 @@
 """
-This module defines the :class:`~eth_portfolio.AddressLedgerBase`, :class:`~eth_portfolio.TransactionsList`, 
-:class:`~eth_portfolio.AddressTransactionsLedger`, :class:`~eth_portfolio.InternalTransfersList`, 
-:class:`~eth_portfolio.AddressInternalTransfersLedger`, :class:`~eth_portfolio.TokenTransfersList`, 
-and :class:`~eth_portfolio.AddressTokenTransfersLedger` classes. These classes manage and interact with ledger entries 
+This module defines the :class:`~eth_portfolio.AddressLedgerBase`, :class:`~eth_portfolio.TransactionsList`,
+:class:`~eth_portfolio.AddressTransactionsLedger`, :class:`~eth_portfolio.InternalTransfersList`,
+:class:`~eth_portfolio.AddressInternalTransfersLedger`, :class:`~eth_portfolio.TokenTransfersList`,
+and :class:`~eth_portfolio.AddressTokenTransfersLedger` classes. These classes manage and interact with ledger entries
 such as transactions, internal transfers, and token transfers associated with Ethereum addresses within the `eth-portfolio` system.
 
 These classes leverage the `a_sync` library to support both synchronous and asynchronous operations, allowing efficient data gathering
@@ -589,6 +589,9 @@ async def get_transaction_status(txhash: str) -> Status:
 
 
 _trace_semaphores = defaultdict(lambda: a_sync.Semaphore(16, __name__ + ".trace_semaphore"))
+_check_trace_semaphores = defaultdict(
+    lambda: a_sync.Semaphore(50, __name__ + ".check_trace_semaphore")
+)
 
 
 @cache_to_disk
@@ -614,7 +617,13 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
         sorted(tuple(filter_params.get(x, ("",))) for x in ("toAddress", "fromAddress"))
     )
     async with _trace_semaphores[semaphore_key]:
-        return await _check_traces(await trace_filter(**filter_params))
+        traces = await trace_filter(**filter_params)
+    if traces:
+        # TODO refactor this, its horrible
+        async with _check_trace_semaphores[semaphore_key]:
+            return await _check_traces(traces)
+    else:
+        return []
 
 
 @stuck_coro_debugger
@@ -658,8 +667,10 @@ async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
 
 BlockRange = Tuple[Block, Block]
 
+
 def _get_block_ranges(start_block: Block, end_block: Block) -> List[BlockRange]:
     return [(i, i + BATCH_SIZE - 1) for i in range(start_block, end_block, BATCH_SIZE)]
+
 
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
     """

@@ -1,26 +1,26 @@
 """
-This module defines a set of classes to represent and manipulate various levels of balance structures 
-within an Ethereum portfolio. The focus of these classes is on reading, aggregating, and summarizing 
+This module defines a set of classes to represent and manipulate various levels of balance structures
+within an Ethereum portfolio. The focus of these classes is on reading, aggregating, and summarizing
 balances, including the value in both tokens and their equivalent in USD.
 
 The main classes and their purposes are as follows:
 
 - :class:`~eth_portfolio.typing.Balance`: Represents the balance of a single token, including its token amount and equivalent USD value.
-- :class:`~eth_portfolio.typing.TokenBalances`: Manages a collection of :class:`~eth_portfolio.typing.Balance` objects for multiple tokens, providing operations 
+- :class:`~eth_portfolio.typing.TokenBalances`: Manages a collection of :class:`~eth_portfolio.typing.Balance` objects for multiple tokens, providing operations
   such as summing balances across tokens.
-- :class:`~eth_portfolio.typing.RemoteTokenBalances`: Extends :class:`~eth_portfolio.typing.TokenBalances` to manage balances across different protocols, enabling 
+- :class:`~eth_portfolio.typing.RemoteTokenBalances`: Extends :class:`~eth_portfolio.typing.TokenBalances` to manage balances across different protocols, enabling
   aggregation and analysis of balances by protocol.
-- :class:`~eth_portfolio.typing.WalletBalances`: Organizes token balances into categories such as assets, debts, and external balances 
-  for a single wallet. It combines :class:`~eth_portfolio.typing.TokenBalances` and :class:`~eth_portfolio.typing.RemoteTokenBalances` to provide a complete view 
+- :class:`~eth_portfolio.typing.WalletBalances`: Organizes token balances into categories such as assets, debts, and external balances
+  for a single wallet. It combines :class:`~eth_portfolio.typing.TokenBalances` and :class:`~eth_portfolio.typing.RemoteTokenBalances` to provide a complete view
   of a wallet's balances.
-- :class:`~eth_portfolio.typing.PortfolioBalances`: Aggregates :class:`~eth_portfolio.typing.WalletBalances` for multiple wallets, providing operations to sum 
+- :class:`~eth_portfolio.typing.PortfolioBalances`: Aggregates :class:`~eth_portfolio.typing.WalletBalances` for multiple wallets, providing operations to sum
   balances across an entire portfolio.
-- :class:`~eth_portfolio.typing.WalletBalancesRaw`: Similar to :class:`~eth_portfolio.typing.WalletBalances`, but with a key structure optimized for accessing 
+- :class:`~eth_portfolio.typing.WalletBalancesRaw`: Similar to :class:`~eth_portfolio.typing.WalletBalances`, but with a key structure optimized for accessing
   balances directly by wallet and token.
-- :class:`~eth_portfolio.typing.PortfolioBalancesByCategory`: Provides an inverted view of :class:`~eth_portfolio.typing.PortfolioBalances`, allowing access 
+- :class:`~eth_portfolio.typing.PortfolioBalancesByCategory`: Provides an inverted view of :class:`~eth_portfolio.typing.PortfolioBalances`, allowing access
   by category first, then by wallet and token.
 
-These classes are designed for efficient parsing, manipulation, and summarization of portfolio data, 
+These classes are designed for efficient parsing, manipulation, and summarization of portfolio data,
 without managing or altering any underlying assets.
 """
 
