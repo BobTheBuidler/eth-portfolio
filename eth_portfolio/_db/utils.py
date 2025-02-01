@@ -72,10 +72,18 @@ _small_pool_size = 2 if ENVS.DB_PROVIDER == "sqlite" else 4
 _block_executor = PruningThreadPoolExecutor(_small_pool_size, "eth-portfolio block")
 _token_executor = PruningThreadPoolExecutor(_small_pool_size, "eth-portfolio token")
 _address_executor = PruningThreadPoolExecutor(_small_pool_size, "eth-portfolio address")
-_transaction_read_executor = PruningThreadPoolExecutor(_big_pool_size, "eth-portfolio-transaction-read")
-_transaction_write_executor = PruningThreadPoolExecutor(_small_pool_size, "eth-portfolio-transaction-write")
-_token_transfer_read_executor = PruningThreadPoolExecutor(_big_pool_size, "eth-portfolio-token-transfer-read")
-_token_transfer_write_executor = PruningThreadPoolExecutor(_small_pool_size, "eth-portfolio-token-transfer-write")
+_transaction_read_executor = PruningThreadPoolExecutor(
+    _big_pool_size, "eth-portfolio-transaction-read"
+)
+_transaction_write_executor = PruningThreadPoolExecutor(
+    _small_pool_size, "eth-portfolio-transaction-write"
+)
+_token_transfer_read_executor = PruningThreadPoolExecutor(
+    _big_pool_size, "eth-portfolio-token-transfer-read"
+)
+_token_transfer_write_executor = PruningThreadPoolExecutor(
+    _small_pool_size, "eth-portfolio-token-transfer-write"
+)
 _internal_transfer_read_executor = PruningThreadPoolExecutor(
     _big_pool_size, "eth-portfolio-internal-transfer read"
 )
