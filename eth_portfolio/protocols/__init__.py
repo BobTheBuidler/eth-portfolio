@@ -46,8 +46,9 @@ async def balances(address: Address, block: Optional[Block] = None) -> RemoteTok
 
     The function constructs a :class:`~eth_portfolio.typing.RemoteTokenBalances` object
     initialized with a dictionary of protocol names and their corresponding balances.
-    The `protocol_balances` variable is a mapping of protocol names to their respective
-    balance data, which is then used to construct the :class:`~eth_portfolio.typing.RemoteTokenBalances` object.
+    The `protocol_balances` variable is an asynchronous mapping of protocol names to their respective
+    balance data, which is then used in an asynchronous comprehension to construct the
+    :class:`~eth_portfolio.typing.RemoteTokenBalances` object.
 
     See Also:
         - :class:`~eth_portfolio.typing.RemoteTokenBalances`: For more information on the return type.
