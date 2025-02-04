@@ -33,7 +33,8 @@ to ensure the version can be determined correctly.
 The `setup.py` file automatically handles the installation of `setuptools_scm` and `cython`, 
 so you do not need to install them manually before running the setup process. Additionally, 
 the `requirements.txt` file is used to specify additional dependencies that are installed via 
-the `install_requires` parameter.
+the `install_requires` parameter, excluding the last line of the file. Ensure that the last line 
+of `requirements.txt` is either intentionally left blank or does not contain a necessary dependency.
 
 Example:
     .. code-block:: bash
