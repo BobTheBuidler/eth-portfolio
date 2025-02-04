@@ -44,10 +44,11 @@ async def balances(address: Address, block: Optional[Block] = None) -> RemoteTok
         >>> remote_balances = balances(address, block).result()
         >>> print(remote_balances)
 
-    The function constructs a :class:`~eth_portfolio.typing.RemoteTokenBalances` object
-    initialized with a dictionary of protocol names and their corresponding balances.
-    The `protocol_balances` variable is an asynchronous mapping of protocol names to their respective
-    balance data, which is then used in an asynchronous comprehension to construct the
+    The function constructs a dictionary `data` initialized with protocol names
+    and their corresponding balances. The `protocol_balances` variable is an
+    asynchronous mapping of protocol names to their respective balance data,
+    which is then used in an asynchronous comprehension to construct the
+    dictionary `data`. This dictionary is subsequently used to initialize the
     :class:`~eth_portfolio.typing.RemoteTokenBalances` object.
 
     See Also:
