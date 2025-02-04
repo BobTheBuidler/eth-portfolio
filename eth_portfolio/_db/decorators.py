@@ -35,11 +35,15 @@ def break_locks(fn: AnyFn[P, T]) -> AnyFn[P, T]:
         fn: The function to be wrapped, which may be a coroutine or a regular function.
 
     Examples:
+        Basic usage with a regular function:
+        
         >>> @break_locks
         ... def my_function():
         ...     # Function logic that may encounter a database lock
         ...     pass
 
+        Basic usage with an asynchronous function:
+        
         >>> @break_locks
         ... async def my_async_function():
         ...     # Async function logic that may encounter a database lock
@@ -115,6 +119,8 @@ def requery_objs_on_diff_tx_err(fn: Callable[P, T]) -> Callable[P, T]:
         TypeError: If the function is a coroutine.
 
     Examples:
+        Basic usage with a function that may encounter transaction errors:
+        
         >>> @requery_objs_on_diff_tx_err
         ... def my_function():
         ...     # Function logic that may encounter a transaction error
