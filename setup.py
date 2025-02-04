@@ -31,7 +31,9 @@ Due to the use of :mod:`setuptools_scm` for versioning, it is recommended to clo
 to ensure the version can be determined correctly. 
 
 The `setup.py` file automatically handles the installation of `setuptools_scm` and `cython`, 
-so you do not need to install them manually before running the setup process.
+so you do not need to install them manually before running the setup process. Additionally, 
+the `requirements.txt` file is used to specify additional dependencies that are installed via 
+the `install_requires` parameter.
 
 Example:
     .. code-block:: bash
@@ -52,4 +54,5 @@ Example:
 See Also:
     - :mod:`setuptools_scm`: For more information on versioning with setuptools_scm.
     - :mod:`cython`: For more information on Cython.
+    - :mod:`requirements.txt`: For more information on managing dependencies.
 """
