@@ -30,13 +30,14 @@ class Compound(LendingProtocol):
     @alru_cache(ttl=300)
     @stuck_coro_debugger
     async def underlyings(self) -> List[ERC20]:
-        """Fetches the underlying ERC20 tokens for all Compound markets.
+        """
+        Fetches the underlying ERC20 tokens for all Compound markets.
 
         This method gathers all markets from the Compound protocol's trollers
-        and filters out those that do not have a `borrowBalanceStored` attribute.
-        It then separates markets into those that use the gas token and those
-        that have an underlying ERC20 token, fetching the underlying tokens
-        accordingly.
+        and filters out those that do not have a `borrowBalanceStored` attribute
+        by using the :func:`_get_contract` function. It then separates markets
+        into those that use the gas token and those that have an underlying
+        ERC20 token, fetching the underlying tokens accordingly.
 
         Returns:
             A list of :class:`~y.classes.common.ERC20` instances representing the underlying tokens.
