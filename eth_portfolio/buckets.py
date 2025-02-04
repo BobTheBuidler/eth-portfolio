@@ -19,6 +19,27 @@ OTHER_LONG_TERM_ASSETS: Set[Address] = {}.get(chain.id, set())
 
 
 async def get_token_bucket(token: AnyAddressType) -> str:
+    """Categorize a token into a specific bucket based on its type.
+
+    This function attempts to categorize a given token into predefined buckets
+    such as "Cash & cash equivalents", "ETH", "BTC", "Other long term assets",
+    or "Other short term assets". The categorization is based on the token's
+    characteristics and its presence in specific sets like `ETH_LIKE`, `BTC_LIKE`,
+    and `OTHER_LONG_TERM_ASSETS`.
+
+    Args:
+        token: The address of the token to categorize.
+
+    Returns:
+        A string representing the bucket category of the token.
+
+    Raises:
+        ValueError: If the token's source has not been verified.
+
+    Example:
+        >>> await get_token_bucket("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")
+        'Cash & cash equivalents'
+    """
     token = str(token)
     try:
         token = str(await _unwrap_token(token))
@@ -40,8 +61,29 @@ async def get_token_bucket(token: AnyAddressType) -> str:
 
 @alru_cache(maxsize=None)
 async def _unwrap_token(token) -> str:
-    """
-    Unwraps the base
+    """Recursively unwrap a token to its underlying asset.
+
+    This function attempts to unwrap a given token to its underlying asset by
+    checking if the token is a Yearn vault, a Curve pool, an Aave aToken, or a
+    Compound market. It recursively retrieves the underlying asset until it
+    reaches the base token.
+
+    Args:
+        token: The address of the token to unwrap.
+
+    Returns:
+        The address of the underlying asset.
+
+    Example:
+        >>> await _unwrap_token("0x5f18C75AbDAe578b483E5F43f12a39cF75b973a9")
+        '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+
+    See Also:
+        - :func:`y.prices.yearn.is_yearn_vault`
+        - :class:`y.prices.yearn.YearnInspiredVault`
+        - :class:`y.prices.stable_swap.curve`
+        - :class:`y.prices.lending.aave`
+        - :class:`y.prices.lending.compound.CToken`
     """
     if str(token) in {"ETH", "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"}:
         return token
@@ -64,6 +106,23 @@ async def _unwrap_token(token) -> str:
 
 
 def _pool_bucket(pool_tokens: set) -> Optional[str]:
+    """Determine the bucket for a set of pool tokens.
+
+    This function checks if a set of pool tokens belongs to specific categories
+    such as BTC-like, ETH-like, or stablecoins, and returns the corresponding
+    bucket.
+
+    Args:
+        pool_tokens: A set of token addresses representing the pool tokens.
+
+    Returns:
+        A string representing the bucket category of the pool tokens, or None if
+        no specific category is found.
+
+    Example:
+        >>> _pool_bucket({"0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"})
+        '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599'
+    """
     logger.debug("Pool tokens: %s", pool_tokens)
     if pool_tokens < BTC_LIKE:
         return list(BTC_LIKE)[0]
@@ -75,4 +134,19 @@ def _pool_bucket(pool_tokens: set) -> Optional[str]:
 
 
 def _is_stable(token: Address) -> bool:
+    """Check if a token is a stablecoin.
+
+    This function checks if a given token is present in the `STABLECOINS` or
+    `INTL_STABLECOINS` sets, indicating that it is a stablecoin.
+
+    Args:
+        token: The address of the token to check.
+
+    Returns:
+        True if the token is a stablecoin, False otherwise.
+
+    Example:
+        >>> _is_stable("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")
+        True
+    """
     return token in STABLECOINS or token in INTL_STABLECOINS
