@@ -27,9 +27,9 @@ def break_locks(fn: AnyFn[P, T]) -> AnyFn[P, T]:
 
     This decorator is designed to wrap functions that interact with a database
     and may encounter `OperationalError` due to database locks. It will retry
-    the function up to 5 times if a "database is locked" error occurs. After
-    5 attempts, a warning is logged, and the function will continue to retry
-    indefinitely until it succeeds or a non-lock-related error occurs.
+    the function indefinitely if a "database is locked" error occurs. After
+    5 attempts, a warning is logged, but the function will continue to retry
+    until it succeeds or a non-lock-related error occurs.
 
     Args:
         fn: The function to be wrapped, which may be a coroutine or a regular function.
