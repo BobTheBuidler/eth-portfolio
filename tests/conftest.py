@@ -17,7 +17,9 @@ if not network.is_connected():
 
 """
 This module configures the testing environment for the project by ensuring
-that the Brownie network is connected using the specified network.
+that the Brownie network is connected using the specified network. It also
+modifies the system path to include the current directory, allowing for
+importing modules from the project root.
 
 Environment Variables:
     PYTEST_NETWORK: The name of the Brownie network to use for testing. This
