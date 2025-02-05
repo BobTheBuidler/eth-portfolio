@@ -9,38 +9,8 @@ logger = logging.getLogger(__name__)
 
 
 class Decimal(decimal.Decimal):
-    """A subclass of :class:`decimal.Decimal` with additional functionality.
-
-    This class extends the :class:`decimal.Decimal` class to provide additional
-    methods for JSON serialization and arithmetic operations.
-
-    See Also:
-        - :class:`decimal.Decimal`
-    """
-
     def jsonify(self) -> Union[str, int]:
-        """Converts the Decimal to a JSON-friendly format.
-
-        This method attempts to represent the Decimal in the most compact form
-        possible for JSON serialization. It returns an integer if the Decimal
-        is equivalent to an integer, otherwise it returns a string in either
-        standard or scientific notation, depending on which is shorter.
-
-        Trailing zeros in the string representation are removed. If the
-        scientific notation is equivalent to the original Decimal and shorter
-        than the standard string representation, it is returned.
-
-        Raises:
-            Exception: If the resulting string representation is empty.
-
-        Examples:
-            >>> Decimal('123.4500').jsonify()
-            '123.45'
-            >>> Decimal('123000').jsonify()
-            123000
-            >>> Decimal('0.000123').jsonify()
-            '1.23E-4'
-        """
+        """Makes the Decimal as small as possible when converted to json."""
         string = str(self)
         integer = int(self)
 
@@ -98,23 +68,6 @@ class Decimal(decimal.Decimal):
 
 
 class Gwei(Decimal):
-    """A subclass of :class:`Decimal` representing Gwei values.
-
-    This class provides a property to convert Gwei to Wei.
-
-    See Also:
-        - :class:`Decimal`
-        - :class:`evmspec.data.Wei`
-    """
-
     @property
     def as_wei(self) -> Wei:
-        """Converts the Gwei value to Wei.
-
-        This property multiplies the Gwei value by 10^9 to convert it to Wei.
-
-        Examples:
-            >>> Gwei('1').as_wei
-            Wei(1000000000)
-        """
         return Wei(self * 10**9)
