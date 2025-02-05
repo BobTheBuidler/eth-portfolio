@@ -3039,6 +3039,30 @@ None for chains that don’t specify transaction types.</p>
 </section>
 <section id="module-eth_portfolio.structs">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-eth_portfolio.structs" title="Link to this heading"></a></h2>
+<p>This module provides the primary union type and specific ledger entry types used in the <cite>eth_portfolio</cite> package.</p>
+<p>The <cite>__all__</cite> list defines the public API for this module, which includes the main union type <cite>LedgerEntry</cite> and its specific types: <cite>Transaction</cite>, <cite>InternalTransfer</cite>, <cite>TokenTransfer</cite>, and <cite>TransactionRLP</cite>.</p>
+<p class="rubric">Examples</p>
+<p>Importing the main union type and specific ledger entry types:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">eth_portfolio.structs</span> <span class="kn">import</span> <span class="n">LedgerEntry</span><span class="p">,</span> <span class="n">Transaction</span><span class="p">,</span> <span class="n">InternalTransfer</span><span class="p">,</span> <span class="n">TokenTransfer</span><span class="p">,</span> <span class="n">TransactionRLP</span>
+</pre></div>
+</div>
+<p>Using the <cite>LedgerEntry</cite> union type to annotate a variable that can hold any ledger entry type:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span><span class="p">:</span> <span class="n">LedgerEntry</span> <span class="o">=</span> <span class="n">Transaction</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span> <span class="o">=</span> <span class="n">InternalTransfer</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span> <span class="o">=</span> <span class="n">TokenTransfer</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span> <span class="o">=</span> <span class="n">TransactionRLP</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#eth_portfolio.structs.structs.LedgerEntry" title="eth_portfolio.structs.structs.LedgerEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">LedgerEntry</span></code></a></p></li>
+<li><p><a class="reference internal" href="#eth_portfolio.structs.structs.Transaction" title="eth_portfolio.structs.structs.Transaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Transaction</span></code></a></p></li>
+<li><p><a class="reference internal" href="#eth_portfolio.structs.structs.InternalTransfer" title="eth_portfolio.structs.structs.InternalTransfer"><code class="xref py py-class docutils literal notranslate"><span class="pre">InternalTransfer</span></code></a></p></li>
+<li><p><a class="reference internal" href="#eth_portfolio.structs.structs.TokenTransfer" title="eth_portfolio.structs.structs.TokenTransfer"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenTransfer</span></code></a></p></li>
+<li><p><a class="reference internal" href="#eth_portfolio.structs.structs.TransactionRLP" title="eth_portfolio.structs.structs.TransactionRLP"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransactionRLP</span></code></a></p></li>
+</ul>
+</div>
 <dl class="py class">
 <dt class="sig sig-object py" id="eth_portfolio.structs.InternalTransfer">
 <em class="property"><span class="pre">final</span><span class="w"> </span><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.structs.</span></span><span class="sig-name descname"><span class="pre">InternalTransfer</span></span><a class="reference internal" href="../_modules/eth_portfolio/structs/structs.html#InternalTransfer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.structs.InternalTransfer" title="Link to this definition"></a></dt>
