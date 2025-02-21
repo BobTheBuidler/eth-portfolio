@@ -10,7 +10,8 @@ from y._decorators import stuck_coro_debugger
 @alru_cache(maxsize=None, ttl=60 * 60)
 @stuck_coro_debugger
 async def _get_transaction_receipt(txhash: HexStr) -> msgspec.Raw:
-    """Fetches the transaction receipt for a given transaction hash.
+    """
+    Fetches the transaction receipt for a given transaction hash.
 
     This function retrieves the transaction receipt from the Ethereum network
     using the provided transaction hash. It utilizes caching to store results
@@ -19,7 +20,7 @@ async def _get_transaction_receipt(txhash: HexStr) -> msgspec.Raw:
     in case of failures and to debug if the coroutine gets stuck.
 
     Args:
-        txhash (HexStr): The transaction hash for which to retrieve the receipt.
+        txhash: The transaction hash for which to retrieve the receipt.
 
     Returns:
         msgspec.Raw: The raw transaction receipt data.
@@ -39,7 +40,8 @@ async def _get_transaction_receipt(txhash: HexStr) -> msgspec.Raw:
     )
 
 get_transaction_receipt = SmartProcessingQueue(_get_transaction_receipt, 5000)
-"""A queue for processing transaction receipt requests.
+"""
+A queue for processing transaction receipt requests.
 
 This queue manages the processing of transaction receipt requests, allowing
 up to 5000 concurrent requests. It uses the `_get_transaction_receipt` function

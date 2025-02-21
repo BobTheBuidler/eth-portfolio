@@ -9,7 +9,8 @@ logger = logging.getLogger(__name__)
 
 
 class Decimal(decimal.Decimal):
-    """A subclass of :class:`decimal.Decimal` with additional functionality.
+    """
+    A subclass of :class:`decimal.Decimal` with additional functionality.
 
     This class extends the :class:`decimal.Decimal` class to provide additional
     methods for JSON serialization and arithmetic operations.
@@ -19,7 +20,8 @@ class Decimal(decimal.Decimal):
     """
 
     def jsonify(self) -> Union[str, int]:
-        """Converts the Decimal to a JSON-friendly format.
+        """
+        Converts the Decimal to a JSON-friendly format.
 
         This method attempts to represent the Decimal in the most compact form
         possible for JSON serialization. It returns an integer if the Decimal
@@ -98,7 +100,8 @@ class Decimal(decimal.Decimal):
 
 
 class Gwei(Decimal):
-    """A subclass of :class:`Decimal` representing Gwei values.
+    """
+    A subclass of :class:`Decimal` representing Gwei values.
 
     This class provides a property to convert Gwei to Wei.
 
@@ -109,7 +112,8 @@ class Gwei(Decimal):
 
     @property
     def as_wei(self) -> Wei:
-        """Converts the Gwei value to Wei.
+        """
+        Converts the Gwei value to Wei.
 
         This property multiplies the Gwei value by 10^9 to convert it to Wei.
 
