@@ -57,9 +57,10 @@ class Transaction(DbEntity):
     """
     Represents a transaction entity in the database.
 
-    This class provides properties to access decoded transaction data,
-    including input data, signature components, and access lists.
-
+    This class provides a property to access decoded transaction data,
+    which includes input data, signature components, and access lists.
+    The decoded data is accessed through the :attr:`decoded` property,
+    which returns a :class:`structs.Transaction` object.
 
     See Also:
         - :class:`BlockExtended`
@@ -114,6 +115,9 @@ class Transaction(DbEntity):
             >>> decoded_transaction = transaction.decoded
             >>> isinstance(decoded_transaction, structs.Transaction)
             True
+
+        See Also:
+            - :class:`structs.Transaction`
         """
         return json.decode(self.raw, type=structs.Transaction)
 
@@ -127,6 +131,9 @@ class Transaction(DbEntity):
             >>> input_data = transaction.input
             >>> isinstance(input_data, HexBytes)
             True
+
+        See Also:
+            - :attr:`structs.Transaction.input`
         """
         structs.Transaction.input.__doc__
         return self.decoded.input
@@ -141,6 +148,9 @@ class Transaction(DbEntity):
             >>> r_value = transaction.r
             >>> isinstance(r_value, HexBytes)
             True
+
+        See Also:
+            - :attr:`structs.Transaction.r`
         """
         structs.Transaction.r.__doc__
         return self.decoded.r
@@ -155,6 +165,9 @@ class Transaction(DbEntity):
             >>> s_value = transaction.s
             >>> isinstance(s_value, HexBytes)
             True
+
+        See Also:
+            - :attr:`structs.Transaction.s`
         """
         structs.Transaction.s.__doc__
         return self.decoded.s
@@ -169,6 +182,9 @@ class Transaction(DbEntity):
             >>> v_value = transaction.v
             >>> isinstance(v_value, int)
             True
+
+        See Also:
+            - :attr:`structs.Transaction.v`
         """
         structs.Transaction.v.__doc__
         return self.decoded.v
@@ -188,6 +204,7 @@ class Transaction(DbEntity):
 
         See Also:
             - :class:`AccessListEntry`
+            - :attr:`structs.Transaction.access_list`
         """
         structs.Transaction.access_list.__doc__
         return self.decoded.access_list
@@ -202,6 +219,9 @@ class Transaction(DbEntity):
             >>> y_parity_value = transaction.y_parity
             >>> isinstance(y_parity_value, (int, type(None)))
             True
+
+        See Also:
+            - :attr:`structs.Transaction.y_parity`
         """
         structs.Transaction.y_parity.__doc__
         return self.decoded.y_parity
@@ -283,6 +303,9 @@ class InternalTransfer(DbEntity):
             >>> decoded_transfer = internal_transfer.decoded
             >>> isinstance(decoded_transfer, structs.InternalTransfer)
             True
+
+        See Also:
+            - :class:`structs.InternalTransfer`
         """
         structs.InternalTransfer.__doc__
         return json.decode(self.raw, type=structs.InternalTransfer)
@@ -297,6 +320,9 @@ class InternalTransfer(DbEntity):
             >>> code_data = internal_transfer.code
             >>> isinstance(code_data, HexBytes)
             True
+
+        See Also:
+            - :attr:`structs.InternalTransfer.code`
         """
         structs.InternalTransfer.code.__doc__
         return self.decoded.code
@@ -311,6 +337,9 @@ class InternalTransfer(DbEntity):
             >>> input_data = internal_transfer.input
             >>> isinstance(input_data, HexBytes)
             True
+
+        See Also:
+            - :attr:`structs.InternalTransfer.input`
         """
         structs.InternalTransfer.input.__doc__
         return self.decoded.input
@@ -325,6 +354,9 @@ class InternalTransfer(DbEntity):
             >>> output_data = internal_transfer.output
             >>> isinstance(output_data, HexBytes)
             True
+
+        See Also:
+            - :attr:`structs.InternalTransfer.output`
         """
         structs.InternalTransfer.output.__doc__
         return self.decoded.output
@@ -339,6 +371,9 @@ class InternalTransfer(DbEntity):
             >>> subtraces_count = internal_transfer.subtraces
             >>> isinstance(subtraces_count, int)
             True
+
+        See Also:
+            - :attr:`structs.InternalTransfer.subtraces`
         """
         structs.InternalTransfer.subtraces.__doc__
         return self.decoded.subtraces
@@ -402,5 +437,8 @@ class TokenTransfer(DbEntity):
             >>> decoded_transfer = token_transfer.decoded
             >>> isinstance(decoded_transfer, structs.TokenTransfer)
             True
+
+        See Also:
+            - :class:`structs.TokenTransfer`
         """
         return json.decode(self.raw, type=structs.TokenTransfer)
