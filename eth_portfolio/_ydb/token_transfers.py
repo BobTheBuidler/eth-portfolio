@@ -35,11 +35,7 @@ _logger_log = logger._log
 
 class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
     """
-    A helper mixin that contains all logic for fetching token transfers for a particular wallet address.
-
-    Attributes:
-        address: The wallet address for which token transfers are fetched.
-        _load_prices: Indicates whether to load prices for the token transfers.
+    A helper mixin that contains all logic for fetching token transfers for a particular address.
 
     Examples:
         Fetching token transfers for a specific address:
@@ -56,6 +52,14 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
     __slots__ = "address", "_load_prices"
 
     def __init__(self, address: Address, from_block: int, load_prices: bool = False):
+        """
+        Initialize a _TokenTransfers instance.
+
+        Args:
+            address: The address for which token transfers are fetched.
+            from_block: The block number from which to start fetching token transfers.
+            load_prices: Indicates whether to load prices for the token transfers.
+        """
         self.address = address
         self._load_prices = load_prices
         super().__init__(topics=self._topics, from_block=from_block)
@@ -139,7 +143,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
 
 class InboundTokenTransfers(_TokenTransfers):
     """
-    A container that fetches and iterates over all inbound token transfers for a particular wallet address.
+    A container that fetches and iterates over all inbound token transfers for a particular address.
 
     Examples:
         Fetching inbound token transfers for a specific address:
@@ -159,7 +163,7 @@ class InboundTokenTransfers(_TokenTransfers):
 
 class OutboundTokenTransfers(_TokenTransfers):
     """
-    A container that fetches and iterates over all outbound token transfers for a particular wallet address.
+    A container that fetches and iterates over all outbound token transfers for a particular address.
 
     Examples:
         Fetching outbound token transfers for a specific address:
@@ -179,11 +183,7 @@ class OutboundTokenTransfers(_TokenTransfers):
 
 class TokenTransfers(ASyncIterable[TokenTransfer]):
     """
-    A container that fetches and iterates over all token transfers for a particular wallet address.
-
-    Attributes:
-        transfers_in: Container for inbound token transfers.
-        transfers_out: Container for outbound token transfers.
+    A container that fetches and iterates over all token transfers for a particular address.
 
     Examples:
         Fetching all token transfers for a specific address:
