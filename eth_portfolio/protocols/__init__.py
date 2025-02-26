@@ -16,7 +16,7 @@ protocols: List[StakingPoolABC] = _get_protocols_for_submodule()  # type: ignore
 @a_sync.future
 async def balances(address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
     """
-    Fetches token balances for a given address across various protocols.
+    Fetch token balances for a given address across various protocols.
 
     This function retrieves the token balances for a specified Ethereum address
     at a given block across all available protocols. It is decorated with
@@ -27,8 +27,8 @@ async def balances(address: Address, block: Optional[Block] = None) -> RemoteTok
     :class:`~eth_portfolio.typing.RemoteTokenBalances` object.
 
     Args:
-        address: The Ethereum address for which to fetch balances.
-        block: The block number at which to fetch balances.
+        address (Address): The Ethereum address for which to fetch balances.
+        block (Optional[Block]): The block number at which to fetch balances.
             If not provided, the latest block is used.
 
     Examples:
@@ -46,10 +46,10 @@ async def balances(address: Address, block: Optional[Block] = None) -> RemoteTok
         >>> print(remote_balances)
 
     The function constructs a dictionary `data` initialized with protocol class names
-    and their corresponding balances. The `protocol_balances` variable is an
-    asynchronous mapping of protocols to their respective balance data,
-    which is then used in an asynchronous comprehension to construct the
-    dictionary `data`. This dictionary is subsequently used to initialize the
+    and their corresponding balances. The `protocol_balances` variable is a
+    mapping of protocols to their respective balance data, which is then used
+    in an asynchronous comprehension to construct the dictionary `data`. This
+    dictionary is subsequently used to initialize the
     :class:`~eth_portfolio.typing.RemoteTokenBalances` object.
 
     See Also:
