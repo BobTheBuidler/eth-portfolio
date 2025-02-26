@@ -35,9 +35,10 @@ class Compound(LendingProtocol):
 
         This method gathers all markets from the Compound protocol's trollers
         and filters out those that do not have a `borrowBalanceStored` attribute
-        by using the :func:`_get_contract` function. It then separates markets
-        into those that use the native gas token and those that have an underlying
-        ERC20 token, fetching the underlying tokens accordingly.
+        by using the :func:`hasattr` function directly on the result of
+        :func:`_get_contract`. It then separates markets into those that use
+        the native gas token and those that have an underlying ERC20 token,
+        fetching the underlying tokens accordingly.
 
         Returns:
             A list of :class:`~y.classes.common.ERC20` instances representing the underlying tokens.
