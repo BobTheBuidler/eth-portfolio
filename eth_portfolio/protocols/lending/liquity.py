@@ -13,6 +13,26 @@ lusd = "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0"
 
 
 class Liquity(LendingProtocolWithLockedCollateral):
+    """
+    Represents the Liquity protocol, a decentralized borrowing protocol that allows users to draw loans against Ether collateral.
+
+    This class is a subclass of :class:`~eth_portfolio.protocols.lending._base.LendingProtocolWithLockedCollateral`, which means it maintains a debt balance for a user and holds collateral internally.
+
+    Attributes:
+        networks: The networks on which the protocol is available.
+        troveManager: The contract instance for the Trove Manager.
+        start_block: The block number from which the protocol starts.
+
+    Examples:
+        >>> liquity = Liquity()
+        >>> balances = await liquity._balances("0xYourAddress", 12345678)
+        >>> print(balances)
+
+    See Also:
+        - :class:`~eth_portfolio.protocols.lending._base.LendingProtocolWithLockedCollateral`
+        - :class:`~eth_portfolio.typing.TokenBalances`
+    """
+
     networks = [Network.Mainnet]
 
     def __init__(self) -> None:
@@ -22,10 +42,35 @@ class Liquity(LendingProtocolWithLockedCollateral):
     @alru_cache(maxsize=128)
     @stuck_coro_debugger
     async def get_trove(self, address: Address, block: Block) -> dict:
+        """
+        Retrieves the trove data for a given address at a specific block.
+
+        Args:
+            address: The Ethereum address of the user.
+            block: The block number to query.
+
+        Examples:
+            >>> trove_data = await liquity.get_trove("0xYourAddress", 12345678)
+            >>> print(trove_data)
+        """
         return await self.troveManager.Troves.coroutine(address, block_identifier=block)
 
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        """
+        Retrieves the collateral balances for a given address at a specific block.
+
+        Args:
+            address: The Ethereum address of the user.
+            block: The block number to query.
+
+        Examples:
+            >>> balances = await liquity._balances("0xYourAddress", 12345678)
+            >>> print(balances)
+
+        See Also:
+            - :class:`~eth_portfolio.typing.TokenBalances`
+        """
         balances: TokenBalances = TokenBalances(block=block)
         if block and block < self.start_block:
             return balances
@@ -41,6 +86,20 @@ class Liquity(LendingProtocolWithLockedCollateral):
 
     @stuck_coro_debugger
     async def _debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        """
+        Retrieves the debt balances for a given address at a specific block.
+
+        Args:
+            address: The Ethereum address of the user.
+            block: The block number to query.
+
+        Examples:
+            >>> debt_balances = await liquity._debt("0xYourAddress", 12345678)
+            >>> print(debt_balances)
+
+        See Also:
+            - :class:`~eth_portfolio.typing.TokenBalances`
+        """
         balances: TokenBalances = TokenBalances(block=block)
         if block and block < self.start_block:
             return balances
