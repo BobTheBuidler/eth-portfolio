@@ -26,12 +26,12 @@ class Decimal(decimal.Decimal):
 
         This method attempts to represent the :class:`Decimal` in the most compact form
         possible for JSON serialization. It returns an integer if the :class:`Decimal`
-        is equivalent to an integer, otherwise it returns a string in either
+        is exactly equal to an integer, otherwise it returns a string in either
         standard or scientific notation, depending on which is shorter.
 
-        If the integer representation is shorter than or equal to the scientific notation
-        plus two characters, the integer is returned. Otherwise, the method returns
-        the shorter of the standard string representation or the scientific notation.
+        If the integer representation is exactly equal to the :class:`Decimal`,
+        the integer is returned. Otherwise, the method returns the shorter of the
+        standard string representation or the scientific notation.
 
         Raises:
             Exception: If the resulting string representation is empty.
