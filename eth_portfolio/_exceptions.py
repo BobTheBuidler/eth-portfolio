@@ -17,6 +17,7 @@ class BlockRangeIsCached(Exception):
     Examples:
         >>> raise BlockRangeIsCached("Block range is already cached.")
     """
+
     pass
 
 

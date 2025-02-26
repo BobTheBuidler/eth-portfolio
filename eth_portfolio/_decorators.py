@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 def set_end_block_if_none(
-    func: Callable[Concatenate[_I, Block, Block, _P], _T]
+    func: Callable[Concatenate[_I, Block, Block, _P], _T],
 ) -> Callable[Concatenate[_I, Block, Optional[Block], _P], _T]:
     """
     Used to set `end_block` = `chain.height - _config.REORG_BUFFER` if `end_block` is None.

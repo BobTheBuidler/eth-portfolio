@@ -401,9 +401,7 @@ class TokenTransfer(DbEntity):
     "The index of the transaction within the block."
     hash = Required(str, lazy=True)
     "The hash of the token transfer."
-    from_address = Required(
-        AddressExtended, index=True, lazy=True, reverse="token_transfers_sent"
-    )
+    from_address = Required(AddressExtended, index=True, lazy=True, reverse="token_transfers_sent")
     "The address that sent the token transfer."
     to_address = Required(
         AddressExtended, index=True, lazy=True, reverse="token_transfers_received"
