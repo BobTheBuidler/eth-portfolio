@@ -22,17 +22,17 @@ class Decimal(decimal.Decimal):
 
     def jsonify(self) -> Union[str, int]:
         """
-        Converts the Decimal to a JSON-friendly format.
+        Converts the :class:`Decimal` to a JSON-friendly format.
 
-        This method attempts to represent the Decimal in the most compact form
-        possible for JSON serialization. It returns an integer if the Decimal
+        This method attempts to represent the :class:`Decimal` in the most compact form
+        possible for JSON serialization. It returns an integer if the :class:`Decimal`
         is equivalent to an integer, otherwise it returns a string in either
         standard or scientific notation, depending on which is shorter.
 
         Trailing zeros in the string representation are removed. If the
-        scientific notation is equivalent to the original Decimal and shorter
+        scientific notation is equivalent to the original :class:`Decimal` and shorter
         than the standard string representation, it is returned. If the integer
-        representation is shorter than the scientific notation plus two characters,
+        representation is shorter than or equal to the scientific notation plus two characters,
         the integer is returned.
 
         Raises:
@@ -47,6 +47,10 @@ class Decimal(decimal.Decimal):
             '1.23E-4'
             >>> Decimal('1000000').jsonify()
             1000000
+
+        See Also:
+            - :meth:`Decimal.__str__`: For converting :class:`Decimal` to a string.
+            - :meth:`Decimal.__int__`: For converting :class:`Decimal` to an integer.
         """
         string = str(self)
         integer = int(self)
@@ -75,7 +79,7 @@ class Decimal(decimal.Decimal):
 
     def __add__(self, other):
         """
-        Adds two Decimal values, ensuring the result is of type :class:`Decimal`.
+        Adds two :class:`Decimal` values, ensuring the result is of type :class:`Decimal`.
 
         Examples:
             >>> Decimal('1.1') + Decimal('2.2')
@@ -85,7 +89,7 @@ class Decimal(decimal.Decimal):
 
     def __radd__(self, other):
         """
-        Adds two Decimal values with reflected operands, ensuring the result is of type :class:`Decimal`.
+        Adds two :class:`Decimal` values with reflected operands, ensuring the result is of type :class:`Decimal`.
 
         Examples:
             >>> Decimal('1.1').__radd__(Decimal('2.2'))
@@ -95,7 +99,7 @@ class Decimal(decimal.Decimal):
 
     def __sub__(self, other):
         """
-        Subtracts two Decimal values, ensuring the result is of type :class:`Decimal`.
+        Subtracts two :class:`Decimal` values, ensuring the result is of type :class:`Decimal`.
 
         Examples:
             >>> Decimal('3.3') - Decimal('1.1')
@@ -105,7 +109,7 @@ class Decimal(decimal.Decimal):
 
     def __rsub__(self, other):
         """
-        Subtracts two Decimal values with reflected operands, ensuring the result is of type :class:`Decimal`.
+        Subtracts two :class:`Decimal` values with reflected operands, ensuring the result is of type :class:`Decimal`.
 
         Examples:
             >>> Decimal('3.3').__rsub__(Decimal('1.1'))
@@ -115,7 +119,7 @@ class Decimal(decimal.Decimal):
 
     def __mul__(self, other):
         """
-        Multiplies two Decimal values, ensuring the result is of type :class:`Decimal`.
+        Multiplies two :class:`Decimal` values, ensuring the result is of type :class:`Decimal`.
 
         Examples:
             >>> Decimal('2') * Decimal('3')
@@ -125,7 +129,7 @@ class Decimal(decimal.Decimal):
 
     def __rmul__(self, other):
         """
-        Multiplies two Decimal values with reflected operands, ensuring the result is of type :class:`Decimal`.
+        Multiplies two :class:`Decimal` values with reflected operands, ensuring the result is of type :class:`Decimal`.
 
         Examples:
             >>> Decimal('2').__rmul__(Decimal('3'))
@@ -135,7 +139,7 @@ class Decimal(decimal.Decimal):
 
     def __truediv__(self, other):
         """
-        Divides two Decimal values, ensuring the result is of type :class:`Decimal`.
+        Divides two :class:`Decimal` values, ensuring the result is of type :class:`Decimal`.
 
         Examples:
             >>> Decimal('6') / Decimal('3')
@@ -145,7 +149,7 @@ class Decimal(decimal.Decimal):
 
     def __rtruediv__(self, other):
         """
-        Divides two Decimal values with reflected operands, ensuring the result is of type :class:`Decimal`.
+        Divides two :class:`Decimal` values with reflected operands, ensuring the result is of type :class:`Decimal`.
 
         Examples:
             >>> Decimal('6').__rtruediv__(Decimal('3'))
@@ -155,7 +159,7 @@ class Decimal(decimal.Decimal):
 
     def __floordiv__(self, other):
         """
-        Performs floor division on two Decimal values, ensuring the result is of type :class:`Decimal`.
+        Performs floor division on two :class:`Decimal` values, ensuring the result is of type :class:`Decimal`.
 
         Examples:
             >>> Decimal('7') // Decimal('3')
@@ -165,7 +169,7 @@ class Decimal(decimal.Decimal):
 
     def __rfloordiv__(self, other):
         """
-        Performs floor division on two Decimal values with reflected operands, ensuring the result is of type :class:`Decimal`.
+        Performs floor division on two :class:`Decimal` values with reflected operands, ensuring the result is of type :class:`Decimal`.
 
         Examples:
             >>> Decimal('7').__rfloordiv__(Decimal('3'))
