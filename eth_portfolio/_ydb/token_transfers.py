@@ -81,7 +81,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
             block: The block number up to which token transfers are yielded.
 
         Yields:
-            Token transfers as :class:`~asyncio.Task` objects.
+            Tasks that resolve to :class:`~eth_portfolio.structs.TokenTransfer` objects.
 
         Examples:
             >>> async for transfer in transfers.yield_thru_block(1000000):
@@ -207,7 +207,7 @@ class TokenTransfers(ASyncIterable[TokenTransfer]):
         Asynchronously iterate over all token transfers.
 
         Yields:
-            Token transfers as :class:`~eth_portfolio.structs.TokenTransfer` objects.
+            :class:`~eth_portfolio.structs.TokenTransfer` objects.
 
         Examples:
             >>> async for transfer in token_transfers:
@@ -224,7 +224,7 @@ class TokenTransfers(ASyncIterable[TokenTransfer]):
             block: The block number up to which token transfers are yielded.
 
         Yields:
-            Token transfers as :class:`~asyncio.Task` objects.
+            Tasks that resolve to :class:`~eth_portfolio.structs.TokenTransfer` objects.
 
         Examples:
             >>> async for transfer in token_transfers.yield_thru_block(1000000):
