@@ -30,10 +30,9 @@ class Decimal(decimal.Decimal):
         standard or scientific notation, depending on which is shorter.
 
         Trailing zeros in the string representation are removed. If the
-        scientific notation is equivalent to the original :class:`Decimal` and shorter
-        than the standard string representation, it is returned. If the integer
-        representation is shorter than or equal to the scientific notation plus two characters,
-        the integer is returned.
+        scientific notation is shorter than the standard string representation,
+        it is returned. If the integer representation is shorter than or equal
+        to the scientific notation plus two characters, the integer is returned.
 
         Raises:
             Exception: If the resulting string representation is empty.
@@ -70,7 +69,7 @@ class Decimal(decimal.Decimal):
         while string[-1] == "0":
             string = string[:-1]
 
-        if type(self)(scientific_notation) == self and len(scientific_notation) < len(string):
+        if len(scientific_notation) < len(string):
             return scientific_notation
 
         if not string:
