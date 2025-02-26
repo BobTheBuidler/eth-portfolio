@@ -31,7 +31,9 @@ class Decimal(decimal.Decimal):
 
         Trailing zeros in the string representation are removed. If the
         scientific notation is equivalent to the original Decimal and shorter
-        than the standard string representation, it is returned.
+        than the standard string representation, it is returned. If the integer
+        representation is shorter than the scientific notation plus two characters,
+        the integer is returned.
 
         Raises:
             Exception: If the resulting string representation is empty.
@@ -43,6 +45,8 @@ class Decimal(decimal.Decimal):
             123000
             >>> Decimal('0.000123').jsonify()
             '1.23E-4'
+            >>> Decimal('1000000').jsonify()
+            1000000
         """
         string = str(self)
         integer = int(self)
