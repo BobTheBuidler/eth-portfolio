@@ -10,10 +10,11 @@ logger = logging.getLogger(__name__)
 
 class Decimal(decimal.Decimal):
     """
-    A subclass of :class:`decimal.Decimal` with additional functionality.
+    A subclass of :class:`decimal.Decimal` with additional functionality for JSON serialization.
 
-    This class extends the :class:`decimal.Decimal` class to provide additional
-    methods for JSON serialization and arithmetic operations.
+    This class extends the :class:`decimal.Decimal` class to provide an additional
+    method for JSON serialization. It also overrides arithmetic operations to ensure
+    that the result is of type :class:`Decimal`.
 
     See Also:
         - :class:`decimal.Decimal`
@@ -69,33 +70,103 @@ class Decimal(decimal.Decimal):
         return string
 
     def __add__(self, other):
+        """
+        Adds two Decimal values, ensuring the result is of type :class:`Decimal`.
+
+        Examples:
+            >>> Decimal('1.1') + Decimal('2.2')
+            Decimal('3.3')
+        """
         return type(self)(super().__add__(other))
 
     def __radd__(self, other):
+        """
+        Adds two Decimal values with reflected operands, ensuring the result is of type :class:`Decimal`.
+
+        Examples:
+            >>> Decimal('1.1').__radd__(Decimal('2.2'))
+            Decimal('3.3')
+        """
         return type(self)(super().__radd__(other))
 
     def __sub__(self, other):
+        """
+        Subtracts two Decimal values, ensuring the result is of type :class:`Decimal`.
+
+        Examples:
+            >>> Decimal('3.3') - Decimal('1.1')
+            Decimal('2.2')
+        """
         return type(self)(super().__sub__(other))
 
     def __rsub__(self, other):
+        """
+        Subtracts two Decimal values with reflected operands, ensuring the result is of type :class:`Decimal`.
+
+        Examples:
+            >>> Decimal('3.3').__rsub__(Decimal('1.1'))
+            Decimal('-2.2')
+        """
         return type(self)(super().__rsub__(other))
 
     def __mul__(self, other):
+        """
+        Multiplies two Decimal values, ensuring the result is of type :class:`Decimal`.
+
+        Examples:
+            >>> Decimal('2') * Decimal('3')
+            Decimal('6')
+        """
         return type(self)(super().__mul__(other))
 
     def __rmul__(self, other):
+        """
+        Multiplies two Decimal values with reflected operands, ensuring the result is of type :class:`Decimal`.
+
+        Examples:
+            >>> Decimal('2').__rmul__(Decimal('3'))
+            Decimal('6')
+        """
         return type(self)(super().__rmul__(other))
 
     def __truediv__(self, other):
+        """
+        Divides two Decimal values, ensuring the result is of type :class:`Decimal`.
+
+        Examples:
+            >>> Decimal('6') / Decimal('3')
+            Decimal('2')
+        """
         return type(self)(super().__truediv__(other))
 
     def __rtruediv__(self, other):
+        """
+        Divides two Decimal values with reflected operands, ensuring the result is of type :class:`Decimal`.
+
+        Examples:
+            >>> Decimal('6').__rtruediv__(Decimal('3'))
+            Decimal('0.5')
+        """
         return type(self)(super().__rtruediv__(other))
 
     def __floordiv__(self, other):
+        """
+        Performs floor division on two Decimal values, ensuring the result is of type :class:`Decimal`.
+
+        Examples:
+            >>> Decimal('7') // Decimal('3')
+            Decimal('2')
+        """
         return type(self)(super().__floordiv__(other))
 
     def __rfloordiv__(self, other):
+        """
+        Performs floor division on two Decimal values with reflected operands, ensuring the result is of type :class:`Decimal`.
+
+        Examples:
+            >>> Decimal('7').__rfloordiv__(Decimal('3'))
+            Decimal('0')
+        """
         return type(self)(super().__rfloordiv__(other))
 
 
