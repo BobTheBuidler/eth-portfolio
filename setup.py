@@ -1,3 +1,5 @@
+from setuptools import find_packages, setup  # type: ignore
+
 """
 Installation
 ------------
@@ -12,6 +14,8 @@ the `install_requires` parameter. Note that the last line of `requirements.txt` 
 from installation, so ensure that any necessary dependency is not placed on the last line.
 
 Example:
+    Clone the repository and install the package:
+
     .. code-block:: bash
 
         git clone https://github.com/BobTheBuidler/eth-portfolio.git
@@ -21,6 +25,8 @@ Example:
 If you encounter issues with :mod:`PyYaml` and :mod:`Cython`, you can resolve them by installing specific versions:
 
 Example:
+    Install specific versions of dependencies to resolve issues:
+
     .. code-block:: bash
 
         pip install wheel
@@ -32,7 +38,6 @@ See Also:
     - :mod:`cython`: For more information on Cython.
     - :mod:`requirements.txt`: For more information on managing dependencies.
 """
-from setuptools import find_packages, setup  # type: ignore
 
 with open("requirements.txt", "r") as f:
     requirements = list(map(str.strip, f.read().split("\n")))[:-1]
