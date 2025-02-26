@@ -7,12 +7,13 @@ To install the `eth-portfolio` package, you should start with a fresh virtual en
 Due to the use of :mod:`setuptools_scm` for versioning, it is recommended to clone the repository first 
 to ensure the version can be determined correctly. 
 
-The `setup.py` file automatically handles the installation of :mod:`setuptools_scm` and :mod:`cython`, 
-so you do not need to install them manually before running the setup process. Additionally, 
-the `requirements.txt` file is used to specify additional dependencies that are installed via 
-the `install_requires` parameter. Note that the last line of `requirements.txt` is typically an empty string 
-due to the split operation and is therefore excluded from installation. Ensure that any necessary dependency 
-is not placed on the last line before the empty line.
+The `setup.py` file specifies the installation of :mod:`setuptools_scm` and :mod:`cython` 
+via the `setup_requires` parameter. These dependencies must be available in your environment 
+before running the setup process. Additionally, the `requirements.txt` file is used to specify 
+additional dependencies that are installed via the `install_requires` parameter. Note that the 
+last line of `requirements.txt` is typically an empty string due to the split operation and is 
+therefore excluded from installation. Ensure that any necessary dependency is not placed on the 
+last line before the empty line.
 
 Example:
     Clone the repository and install the package:
