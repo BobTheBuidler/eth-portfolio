@@ -46,7 +46,7 @@ async def balances(address: Address, block: Optional[Block] = None) -> RemoteTok
         >>> print(remote_balances)
 
     The function constructs a dictionary `data` with protocol class names
-    as keys and their corresponding balances as values. The `protocol_balances`
+    as keys and their corresponding protocol balances as values. The `protocol_balances`
     variable is a mapping of protocols to their balance data, and it is used
     in an asynchronous comprehension to filter and construct the `data` dictionary.
     This dictionary is subsequently used to initialize the
