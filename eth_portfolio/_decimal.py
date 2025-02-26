@@ -29,8 +29,7 @@ class Decimal(decimal.Decimal):
         is equivalent to an integer, otherwise it returns a string in either
         standard or scientific notation, depending on which is shorter.
 
-        Trailing zeros in the string representation are removed. If the
-        scientific notation is shorter than the standard string representation,
+        If the scientific notation is shorter than the standard string representation,
         it is returned. If the integer representation is shorter than or equal
         to the scientific notation plus two characters, the integer is returned.
 
