@@ -1,7 +1,7 @@
 """
-This module connects to the Brownie network specified by the `PYTEST_NETWORK`
-environment variable. It also modifies the system path to include the current
-directory, allowing for importing modules from the project root.
+This module manages the connection to the Brownie network specified by the `PYTEST_NETWORK`
+environment variable. It also modifies the system path to include the current directory,
+allowing for importing modules from the project root.
 
 Environment Variables:
     PYTEST_NETWORK: The name of the Brownie network to use for testing. This
@@ -19,6 +19,8 @@ Examples:
         pytest
 
     This will connect to the specified Brownie network and run the tests.
+
+    If the network is already connected, it will not attempt to reconnect.
 
 See Also:
     - :mod:`brownie.network`: For more information on managing network connections with Brownie.
