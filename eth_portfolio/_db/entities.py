@@ -60,8 +60,8 @@ class Transaction(DbEntity):
     This class provides a property to access decoded transaction data,
     which includes input data, signature components, and access lists.
     The decoded data is accessed through the `decoded` property,
-    which returns a :class:`structs.Transaction` object decoded from the
-    `raw` attribute using :mod:`msgspec.json`.
+    which returns a :class:`evmspec.structs.transaction.Transaction` object
+    decoded from the `raw` attribute using :mod:`msgspec.json`.
 
     See Also:
         - :class:`BlockExtended`
@@ -110,7 +110,7 @@ class Transaction(DbEntity):
     @cached_property
     def decoded(self) -> structs.Transaction:
         """
-        Decodes the raw transaction data into a :class:`structs.Transaction` object.
+        Decodes the raw transaction data into a :class:`evmspec.structs.transaction.Transaction` object.
 
         The raw transaction data is stored in the `raw` attribute and is
         decoded using :mod:`msgspec.json`.
@@ -118,11 +118,11 @@ class Transaction(DbEntity):
         Example:
             >>> transaction = Transaction(...)
             >>> decoded_transaction = transaction.decoded
-            >>> isinstance(decoded_transaction, structs.Transaction)
+            >>> isinstance(decoded_transaction, evmspec.structs.transaction.Transaction)
             True
 
         See Also:
-            - :class:`structs.Transaction`
+            - :class:`evmspec.structs.transaction.Transaction`
             - :mod:`msgspec.json`
         """
         return json.decode(self.raw, type=structs.Transaction)
@@ -139,7 +139,7 @@ class Transaction(DbEntity):
             True
 
         See Also:
-            - :attr:`structs.Transaction.input`
+            - :attr:`evmspec.structs.transaction.Transaction.input`
         """
         structs.Transaction.input.__doc__
         return self.decoded.input
@@ -156,7 +156,7 @@ class Transaction(DbEntity):
             True
 
         See Also:
-            - :attr:`structs.Transaction.r`
+            - :attr:`evmspec.structs.transaction.Transaction.r`
         """
         structs.Transaction.r.__doc__
         return self.decoded.r
@@ -173,7 +173,7 @@ class Transaction(DbEntity):
             True
 
         See Also:
-            - :attr:`structs.Transaction.s`
+            - :attr:`evmspec.structs.transaction.Transaction.s`
         """
         structs.Transaction.s.__doc__
         return self.decoded.s
@@ -190,7 +190,7 @@ class Transaction(DbEntity):
             True
 
         See Also:
-            - :attr:`structs.Transaction.v`
+            - :attr:`evmspec.structs.transaction.Transaction.v`
         """
         structs.Transaction.v.__doc__
         return self.decoded.v
@@ -210,7 +210,7 @@ class Transaction(DbEntity):
 
         See Also:
             - :class:`AccessListEntry`
-            - :attr:`structs.Transaction.access_list`
+            - :attr:`evmspec.structs.transaction.Transaction.access_list`
         """
         structs.Transaction.access_list.__doc__
         return self.decoded.access_list
@@ -227,7 +227,7 @@ class Transaction(DbEntity):
             True
 
         See Also:
-            - :attr:`structs.Transaction.y_parity`
+            - :attr:`evmspec.structs.transaction.Transaction.y_parity`
         """
         structs.Transaction.y_parity.__doc__
         return self.decoded.y_parity
