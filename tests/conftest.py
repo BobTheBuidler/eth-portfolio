@@ -20,8 +20,6 @@ Examples:
 
     This will connect to the specified Brownie network and run the tests.
 
-    If the network is already connected, it will not attempt to reconnect.
-
 See Also:
     - :mod:`brownie.network`: For more information on managing network connections with Brownie.
     - :mod:`os`: For more information on interacting with the operating system.
