@@ -18,11 +18,6 @@ class Liquity(LendingProtocolWithLockedCollateral):
 
     This class is a subclass of :class:`~eth_portfolio.protocols.lending._base.LendingProtocolWithLockedCollateral`, which means it maintains a debt balance for a user and holds collateral internally.
 
-    Attributes:
-        networks: The networks on which the protocol is available.
-        troveManager: The contract instance for the Trove Manager.
-        start_block: The block number from which the protocol starts.
-
     Examples:
         >>> liquity = Liquity()
         >>> balances = await liquity._balances("0xYourAddress", 12345678)
@@ -34,10 +29,13 @@ class Liquity(LendingProtocolWithLockedCollateral):
     """
 
     networks = [Network.Mainnet]
+    """The networks on which the protocol is available."""
 
     def __init__(self) -> None:
         self.troveManager = Contract("0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2")
+        """The contract instance for the Trove Manager."""
         self.start_block = 12178557
+        """The block number from which the protocol starts."""
 
     @alru_cache(maxsize=128)
     @stuck_coro_debugger
@@ -46,8 +44,8 @@ class Liquity(LendingProtocolWithLockedCollateral):
         Retrieves the trove data for a given address at a specific block.
 
         Args:
-            address: The Ethereum address of the user.
-            block: The block number to query.
+            address (Address): The Ethereum address of the user.
+            block (Block): The block number to query.
 
         Examples:
             >>> trove_data = await liquity.get_trove("0xYourAddress", 12345678)
@@ -61,8 +59,8 @@ class Liquity(LendingProtocolWithLockedCollateral):
         Retrieves the collateral balances for a given address at a specific block.
 
         Args:
-            address: The Ethereum address of the user.
-            block: The block number to query.
+            address (Address): The Ethereum address of the user.
+            block (Optional[Block]): The block number to query.
 
         Examples:
             >>> balances = await liquity._balances("0xYourAddress", 12345678)
@@ -90,8 +88,8 @@ class Liquity(LendingProtocolWithLockedCollateral):
         Retrieves the debt balances for a given address at a specific block.
 
         Args:
-            address: The Ethereum address of the user.
-            block: The block number to query.
+            address (Address): The Ethereum address of the user.
+            block (Optional[Block]): The block number to query.
 
         Examples:
             >>> debt_balances = await liquity._debt("0xYourAddress", 12345678)
