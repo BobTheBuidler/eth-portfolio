@@ -59,14 +59,15 @@ class Transaction(DbEntity):
 
     This class provides a property to access decoded transaction data,
     which includes input data, signature components, and access lists.
-    The decoded data is accessed through the :attr:`decoded` property,
+    The decoded data is accessed through the `decoded` property,
     which returns a :class:`structs.Transaction` object decoded from the
-    :attr:`raw` attribute.
+    `raw` attribute using :mod:`msgspec.json`.
 
     See Also:
         - :class:`BlockExtended`
         - :class:`AddressExtended`
         - :class:`TokenTransfer`
+        - :mod:`msgspec.json`
     """
 
     _id = PrimaryKey(int, auto=True)
@@ -111,7 +112,7 @@ class Transaction(DbEntity):
         """
         Decodes the raw transaction data into a :class:`structs.Transaction` object.
 
-        The raw transaction data is stored in the :attr:`raw` attribute and is
+        The raw transaction data is stored in the `raw` attribute and is
         decoded using :mod:`msgspec.json`.
 
         Example:
@@ -122,6 +123,7 @@ class Transaction(DbEntity):
 
         See Also:
             - :class:`structs.Transaction`
+            - :mod:`msgspec.json`
         """
         return json.decode(self.raw, type=structs.Transaction)
 
