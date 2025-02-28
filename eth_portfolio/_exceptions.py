@@ -11,7 +11,7 @@ class BlockRangeIsCached(Exception):
     """
     Exception raised when a block range is already cached.
 
-    This exception is used to indicate that the requested block range
+    This exception indicates that the requested block range
     has already been loaded into memory and does not need to be fetched again.
 
     Examples:
@@ -25,10 +25,10 @@ class BlockRangeOutOfBounds(Exception):
     """
     Exception raised when a block range is out of bounds.
 
-    This exception is used to indicate that the requested block range
+    This exception indicates that the requested block range
     is outside the bounds of the cached data. It provides a method to
     handle the loading of the remaining ledger entries that are out of bounds
-    by invoking the appropriate method in the associated ledger.
+    by directly invoking the :meth:`_load_new_objects` method in the associated ledger.
 
     Args:
         start_block: The starting block number of the out-of-bounds range.
@@ -51,7 +51,7 @@ class BlockRangeOutOfBounds(Exception):
         """
         Asynchronously handles the loading of the remaining ledger entries that are out of bounds.
 
-        This method uses the :func:`asyncio.gather` function to invoke the 
+        This method uses the :func:`asyncio.gather` function to directly invoke the 
         :meth:`~eth_portfolio._ledgers.address.AddressLedgerBase._load_new_objects` 
         method of the associated ledger with block ranges that cover the entire requested range.
         Specifically, it fetches the ledger entries for the blocks from `start_block` to 
