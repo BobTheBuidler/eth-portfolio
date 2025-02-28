@@ -51,9 +51,11 @@ class BlockRangeOutOfBounds(Exception):
         """
         Asynchronously handles the loading of the remaining ledger entries that are out of bounds.
 
-        This method invokes the :meth:`~eth_portfolio._ledgers.address.AddressLedgerBase._load_new_objects`
-        method of the associated ledger to fetch the ledger entries for the blocks that are outside
-        the cached range, ensuring that the entire requested block range is covered.
+        This method uses the :func:`asyncio.gather` function to invoke the 
+        :meth:`~eth_portfolio._ledgers.address.AddressLedgerBase._load_new_objects` 
+        method of the associated ledger twice, with different block ranges. 
+        This ensures that the entire requested block range is covered by fetching 
+        the ledger entries for the blocks that are outside the cached range.
 
         Examples:
             >>> await exception.load_remaining()
