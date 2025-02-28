@@ -28,7 +28,7 @@ class BlockRangeOutOfBounds(Exception):
     This exception indicates that the requested block range
     is outside the bounds of the cached data. It provides a method to
     handle the loading of the remaining ledger entries that are out of bounds
-    by directly invoking the :meth:`_load_new_objects` method in the associated ledger.
+    by invoking the :meth:`load_remaining` method asynchronously.
 
     Args:
         start_block: The starting block number of the out-of-bounds range.
