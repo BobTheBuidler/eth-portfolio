@@ -86,13 +86,30 @@
 <div class="viewcode-block" id="Liquity">
 <a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.liquity.Liquity">[docs]</a>
 <span class="k">class</span> <span class="nc">Liquity</span><span class="p">(</span><span class="n">LendingProtocolWithLockedCollateral</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents the Liquity protocol, a decentralized borrowing protocol that allows users to draw loans against Ether collateral.</span>
+
+<span class="sd">    This class is a subclass of :class:`~eth_portfolio.protocols.lending._base.LendingProtocolWithLockedCollateral`, which means it maintains a debt balance for a user and holds collateral internally.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; liquity = Liquity()</span>
+<span class="sd">        &gt;&gt;&gt; balances = await liquity.balances(&quot;0xYourAddress&quot;, 12345678)</span>
+<span class="sd">        &gt;&gt;&gt; print(balances)</span>
+
+<span class="sd">    See Also:</span>
+<span class="sd">        - :class:`~eth_portfolio.protocols.lending._base.LendingProtocolWithLockedCollateral`</span>
+<span class="sd">        - :class:`~eth_portfolio.typing.TokenBalances`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">networks</span> <span class="o">=</span> <span class="p">[</span><span class="n">Network</span><span class="o">.</span><span class="n">Mainnet</span><span class="p">]</span>
 
 <div class="viewcode-block" id="Liquity.__init__">
 <a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.liquity.Liquity.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">troveManager</span> <span class="o">=</span> <span class="n">Contract</span><span class="p">(</span><span class="s2">&quot;0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">start_block</span> <span class="o">=</span> <span class="mi">12178557</span></div>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The contract instance for the Trove Manager.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_block</span> <span class="o">=</span> <span class="mi">12178557</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The block number from which the protocol starts.&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="Liquity.get_trove">
@@ -100,6 +117,17 @@
     <span class="nd">@alru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
     <span class="nd">@stuck_coro_debugger</span>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">get_trove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Block</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the trove data for a given address at a specific block.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            address: The Ethereum address of the user.</span>
+<span class="sd">            block: The block number to query.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; trove_data = await liquity.get_trove(&quot;0xYourAddress&quot;, 12345678)</span>
+<span class="sd">            &gt;&gt;&gt; print(trove_data)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">troveManager</span><span class="o">.</span><span class="n">Troves</span><span class="o">.</span><span class="n">coroutine</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">block_identifier</span><span class="o">=</span><span class="n">block</span><span class="p">)</span></div>
 
 
@@ -125,6 +153,20 @@
 <a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.liquity.Liquity._debt">[docs]</a>
     <span class="nd">@stuck_coro_debugger</span>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_debt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenBalances</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the debt balances for a given address at a specific block.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            address: The Ethereum address of the user.</span>
+<span class="sd">            block: The block number to query.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; debt_balances = await liquity._debt(&quot;0xYourAddress&quot;, 12345678)</span>
+<span class="sd">            &gt;&gt;&gt; print(debt_balances)</span>
+
+<span class="sd">        See Also:</span>
+<span class="sd">            - :class:`~eth_portfolio.typing.TokenBalances`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">balances</span><span class="p">:</span> <span class="n">TokenBalances</span> <span class="o">=</span> <span class="n">TokenBalances</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">block</span> <span class="ow">and</span> <span class="n">block</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_block</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">balances</span>

@@ -106,6 +106,28 @@
     <span class="nd">@alru_cache</span><span class="p">(</span><span class="n">ttl</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
     <span class="nd">@stuck_coro_debugger</span>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">underlyings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ERC20</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches the underlying ERC20 tokens for all Compound markets.</span>
+
+<span class="sd">        This method gathers all markets from the Compound protocol&#39;s trollers</span>
+<span class="sd">        and filters out those that do not have a `borrowBalanceStored` attribute</span>
+<span class="sd">        by using the :func:`hasattr` function directly on the result of</span>
+<span class="sd">        :func:`_get_contract`. It then separates markets into those that use</span>
+<span class="sd">        the native gas token and those that have an underlying ERC20 token,</span>
+<span class="sd">        fetching the underlying tokens accordingly.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of :class:`~y.classes.common.ERC20` instances representing the underlying tokens.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; compound = Compound()</span>
+<span class="sd">            &gt;&gt;&gt; underlyings = await compound.underlyings()</span>
+<span class="sd">            &gt;&gt;&gt; for token in underlyings:</span>
+<span class="sd">            ...     print(token.symbol)</span>
+
+<span class="sd">        See Also:</span>
+<span class="sd">            - :meth:`markets`: To get the list of market contracts.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">all_markets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">CToken</span><span class="p">]]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gather</span><span class="p">(</span>
             <span class="o">*</span><span class="p">[</span><span class="n">comp</span><span class="o">.</span><span class="n">markets</span> <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">compound</span><span class="o">.</span><span class="n">trollers</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
         <span class="p">)</span>
@@ -134,12 +156,52 @@
     <span class="nd">@a_sync</span><span class="o">.</span><span class="n">future</span>
     <span class="nd">@stuck_coro_debugger</span>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">markets</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Contract</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches the list of market contracts for the Compound protocol.</span>
+
+<span class="sd">        This method ensures that the underlying tokens are fetched first,</span>
+<span class="sd">        as they are used to determine the markets.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of :class:`~brownie.network.contract.Contract` instances representing the markets.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; compound = Compound()</span>
+<span class="sd">            &gt;&gt;&gt; markets = await compound.markets()</span>
+<span class="sd">            &gt;&gt;&gt; for market in markets:</span>
+<span class="sd">            ...     print(market.address)</span>
+
+<span class="sd">        See Also:</span>
+<span class="sd">            - :meth:`underlyings`: To get the list of underlying tokens.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">underlyings</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_markets</span>
 
 <div class="viewcode-block" id="Compound._debt">
 <a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.compound.Compound._debt">[docs]</a>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_debt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenBalances</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the debt balance for a given address in the Compound protocol.</span>
+
+<span class="sd">        This method fetches the borrow balance for each market and calculates</span>
+<span class="sd">        the debt in terms of the underlying token and its USD value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            address: The Ethereum address to calculate the debt for.</span>
+<span class="sd">            block: The block number to query. Defaults to the latest block.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A :class:`~eth_portfolio.typing.TokenBalances` object representing the debt balances.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; compound = Compound()</span>
+<span class="sd">            &gt;&gt;&gt; debt_balances = await compound._debt(&quot;0x1234567890abcdef1234567890abcdef12345678&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; for token, balance in debt_balances.items():</span>
+<span class="sd">            ...     print(f&quot;Token: {token}, Balance: {balance.balance}, USD Value: {balance.usd_value}&quot;)</span>
+
+<span class="sd">        See Also:</span>
+<span class="sd">            - :meth:`debt`: Public method to get the debt balances.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># if ypricemagic doesn&#39;t support any Compound forks on current chain</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="o">.</span><span class="n">trollers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">TokenBalances</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
@@ -175,6 +237,28 @@
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_borrow_balance_stored</span><span class="p">(</span>
     <span class="n">market</span><span class="p">:</span> <span class="n">Contract</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fetches the stored borrow balance for a given market and address.</span>
+
+<span class="sd">    This function attempts to call the `borrowBalanceStored` method on the</span>
+<span class="sd">    market contract. If the call reverts, it returns None.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        market: The market contract to query.</span>
+<span class="sd">        address: The Ethereum address to fetch the borrow balance for.</span>
+<span class="sd">        block: The block number to query. Defaults to the latest block.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The stored borrow balance as an integer, or None if the call reverts.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; market = Contract.from_explorer(&quot;0x1234567890abcdef1234567890abcdef12345678&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; balance = await _borrow_balance_stored(market, &quot;0xabcdefabcdefabcdefabcdefabcdefabcdef&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; print(balance)</span>
+
+<span class="sd">    See Also:</span>
+<span class="sd">        - :meth:`_debt`: Uses this function to calculate debt balances.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="k">await</span> <span class="n">market</span><span class="o">.</span><span class="n">borrowBalanceStored</span><span class="o">.</span><span class="n">coroutine</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="p">),</span> <span class="n">block_identifier</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
