@@ -48,8 +48,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
 
     @property
     @abstractmethod
-    def _topics(self) -> List:
-        ...
+    def _topics(self) -> List: ...
 
     @ASyncIterator.wrap  # type: ignore [call-overload]
     async def yield_thru_block(self, block) -> AsyncIterator["Task[TokenTransfer]"]:

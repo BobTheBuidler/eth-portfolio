@@ -253,8 +253,7 @@ class _AiterMixin(ASyncIterable[_T]):
 
     @property
     @abstractmethod
-    def _start_block(self) -> int:
-        ...
+    def _start_block(self) -> int: ...
 
 
 _LT = TypeVar("_LT")

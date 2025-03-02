@@ -1,7 +1,7 @@
 """
-This module defines the :class:`~PortfolioAddress` class, which represents an address managed by the `eth-portfolio` system. 
-The :class:`~PortfolioAddress` class is designed to manage different aspects of an Ethereum address within the portfolio, 
-such as transactions, transfers, balances, and interactions with both external and lending protocols. 
+This module defines the :class:`~PortfolioAddress` class, which represents an address managed by the `eth-portfolio` system.
+The :class:`~PortfolioAddress` class is designed to manage different aspects of an Ethereum address within the portfolio,
+such as transactions, transfers, balances, and interactions with both external and lending protocols.
 
 Key components and functionalities provided by the :class:`~eth_portfolio.address.PortfolioAddress` class include:
 - Handling Ethereum and token balances
@@ -9,8 +9,8 @@ Key components and functionalities provided by the :class:`~eth_portfolio.addres
 - Tracking transactions and transfers (both internal and token transfers)
 - Providing comprehensive balance descriptions at specific block heights
 
-The class leverages asynchronous operations using the `a_sync` library to efficiently gather and process data. 
-It also integrates with various submodules from `eth-portfolio` to load balances, manage ledgers, and interact 
+The class leverages asynchronous operations using the `a_sync` library to efficiently gather and process data.
+It also integrates with various submodules from `eth-portfolio` to load balances, manage ledgers, and interact
 with external protocols.
 """
 
