@@ -658,8 +658,10 @@ async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
 
 BlockRange = Tuple[Block, Block]
 
+
 def _get_block_ranges(start_block: Block, end_block: Block) -> List[BlockRange]:
     return [(i, i + BATCH_SIZE - 1) for i in range(start_block, end_block, BATCH_SIZE)]
+
 
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
     """
