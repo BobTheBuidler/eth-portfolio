@@ -70,28 +70,28 @@
              
   <h1>Source code for eth_portfolio.typing</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This module defines a set of classes to represent and manipulate various levels of balance structures </span>
-<span class="sd">within an Ethereum portfolio. The focus of these classes is on reading, aggregating, and summarizing </span>
+<span class="sd">This module defines a set of classes to represent and manipulate various levels of balance structures</span>
+<span class="sd">within an Ethereum portfolio. The focus of these classes is on reading, aggregating, and summarizing</span>
 <span class="sd">balances, including the value in both tokens and their equivalent in USD.</span>
 
 <span class="sd">The main classes and their purposes are as follows:</span>
 
 <span class="sd">- :class:`~eth_portfolio.typing.Balance`: Represents the balance of a single token, including its token amount and equivalent USD value.</span>
-<span class="sd">- :class:`~eth_portfolio.typing.TokenBalances`: Manages a collection of :class:`~eth_portfolio.typing.Balance` objects for multiple tokens, providing operations </span>
+<span class="sd">- :class:`~eth_portfolio.typing.TokenBalances`: Manages a collection of :class:`~eth_portfolio.typing.Balance` objects for multiple tokens, providing operations</span>
 <span class="sd">  such as summing balances across tokens.</span>
-<span class="sd">- :class:`~eth_portfolio.typing.RemoteTokenBalances`: Extends :class:`~eth_portfolio.typing.TokenBalances` to manage balances across different protocols, enabling </span>
+<span class="sd">- :class:`~eth_portfolio.typing.RemoteTokenBalances`: Extends :class:`~eth_portfolio.typing.TokenBalances` to manage balances across different protocols, enabling</span>
 <span class="sd">  aggregation and analysis of balances by protocol.</span>
-<span class="sd">- :class:`~eth_portfolio.typing.WalletBalances`: Organizes token balances into categories such as assets, debts, and external balances </span>
-<span class="sd">  for a single wallet. It combines :class:`~eth_portfolio.typing.TokenBalances` and :class:`~eth_portfolio.typing.RemoteTokenBalances` to provide a complete view </span>
+<span class="sd">- :class:`~eth_portfolio.typing.WalletBalances`: Organizes token balances into categories such as assets, debts, and external balances</span>
+<span class="sd">  for a single wallet. It combines :class:`~eth_portfolio.typing.TokenBalances` and :class:`~eth_portfolio.typing.RemoteTokenBalances` to provide a complete view</span>
 <span class="sd">  of a wallet&#39;s balances.</span>
-<span class="sd">- :class:`~eth_portfolio.typing.PortfolioBalances`: Aggregates :class:`~eth_portfolio.typing.WalletBalances` for multiple wallets, providing operations to sum </span>
+<span class="sd">- :class:`~eth_portfolio.typing.PortfolioBalances`: Aggregates :class:`~eth_portfolio.typing.WalletBalances` for multiple wallets, providing operations to sum</span>
 <span class="sd">  balances across an entire portfolio.</span>
-<span class="sd">- :class:`~eth_portfolio.typing.WalletBalancesRaw`: Similar to :class:`~eth_portfolio.typing.WalletBalances`, but with a key structure optimized for accessing </span>
+<span class="sd">- :class:`~eth_portfolio.typing.WalletBalancesRaw`: Similar to :class:`~eth_portfolio.typing.WalletBalances`, but with a key structure optimized for accessing</span>
 <span class="sd">  balances directly by wallet and token.</span>
-<span class="sd">- :class:`~eth_portfolio.typing.PortfolioBalancesByCategory`: Provides an inverted view of :class:`~eth_portfolio.typing.PortfolioBalances`, allowing access </span>
+<span class="sd">- :class:`~eth_portfolio.typing.PortfolioBalancesByCategory`: Provides an inverted view of :class:`~eth_portfolio.typing.PortfolioBalances`, allowing access</span>
 <span class="sd">  by category first, then by wallet and token.</span>
 
-<span class="sd">These classes are designed for efficient parsing, manipulation, and summarization of portfolio data, </span>
+<span class="sd">These classes are designed for efficient parsing, manipulation, and summarization of portfolio data,</span>
 <span class="sd">without managing or altering any underlying assets.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
