@@ -29,6 +29,7 @@ class Liquity(LendingProtocolWithLockedCollateral):
     """
 
     networks = [Network.Mainnet]
+    """The networks on which the protocol is available."""
 
     def __init__(self) -> None:
         self.troveManager = Contract("0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2")
@@ -54,6 +55,20 @@ class Liquity(LendingProtocolWithLockedCollateral):
 
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        """
+        Retrieves the collateral balances for a given address at a specific block.
+
+        Args:
+            address (Address): The Ethereum address of the user.
+            block (Optional[Block]): The block number to query.
+
+        Examples:
+            >>> balances = await liquity._balances("0xYourAddress", 12345678)
+            >>> print(balances)
+
+        See Also:
+            - :class:`~eth_portfolio.typing.TokenBalances`
+        """
         balances: TokenBalances = TokenBalances(block=block)
         if block and block < self.start_block:
             return balances
