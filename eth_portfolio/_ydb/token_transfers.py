@@ -34,11 +34,32 @@ _logger_log = logger._log
 
 
 class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
-    """A helper mixin that contains all logic for fetching token transfers for a particular wallet address"""
+    """
+    A helper mixin that contains all logic for fetching token transfers for a particular address.
+
+    Examples:
+        Fetching token transfers for a specific address:
+
+        >>> transfers = _TokenTransfers(address="0x123...", from_block=0, load_prices=True)
+        >>> async for transfer in transfers.yield_thru_block(1000000):
+        ...     print(transfer)
+
+    See Also:
+        - :class:`~eth_portfolio.structs.TokenTransfer`: For the structure of a token transfer.
+        - :func:`~eth_portfolio._loaders.load_token_transfer`: For loading token transfer data.
+    """
 
     __slots__ = "address", "_load_prices"
 
     def __init__(self, address: Address, from_block: int, load_prices: bool = False):
+        """
+        Initialize a _TokenTransfers instance.
+
+        Args:
+            address: The address for which token transfers are fetched.
+            from_block: The block number from which to start fetching token transfers.
+            load_prices: Indicates whether to load prices for the token transfers.
+        """
         self.address = address
         self._load_prices = load_prices
         super().__init__(topics=self._topics, from_block=from_block)
@@ -52,6 +73,19 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
 
     @ASyncIterator.wrap  # type: ignore [call-overload]
     async def yield_thru_block(self, block) -> AsyncIterator["Task[TokenTransfer]"]:
+        """
+        Yield token transfers up to a specified block.
+
+        Args:
+            block: The block number up to which token transfers are yielded.
+
+        Yields:
+            Tasks that resolve to :class:`~eth_portfolio.structs.TokenTransfer` objects.
+
+        Examples:
+            >>> async for transfer in transfers.yield_thru_block(1000000):
+            ...     print(transfer)
+        """
         if not _logger_is_enabled_for(DEBUG):
             async for task in self._objects_thru(block=block):
                 yield task
@@ -68,6 +102,15 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
         _logger_log(DEBUG, "%s yield thru %s complete", (self, block))
 
     async def _extend(self, objs: List[evmspec.Log]) -> None:
+        """
+        Extend the list of token transfers with new logs.
+
+        Args:
+            objs: A list of :class:`~evmspec.Log` objects representing token transfer logs.
+
+        Examples:
+            >>> await transfers._extend(logs)
+        """
         shitcoins = SHITCOINS.get(chain.id, set())
         append_loader_task = self._objects.append
         done = 0
@@ -98,7 +141,19 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
 
 
 class InboundTokenTransfers(_TokenTransfers):
-    """A container that fetches and iterates over all inbound token transfers for a particular wallet address"""
+    """
+    A container that fetches and iterates over all inbound token transfers for a particular address.
+
+    Examples:
+        Fetching inbound token transfers for a specific address:
+
+        >>> inbound_transfers = InboundTokenTransfers(address="0x123...", from_block=0, load_prices=True)
+        >>> async for transfer in inbound_transfers.yield_thru_block(1000000):
+        ...     print(transfer)
+
+    See Also:
+        - :class:`~eth_portfolio.structs.TokenTransfer`: For the structure of a token transfer.
+    """
 
     @property
     def _topics(self) -> List:
@@ -106,7 +161,19 @@ class InboundTokenTransfers(_TokenTransfers):
 
 
 class OutboundTokenTransfers(_TokenTransfers):
-    """A container that fetches and iterates over all outbound token transfers for a particular wallet address"""
+    """
+    A container that fetches and iterates over all outbound token transfers for a particular address.
+
+    Examples:
+        Fetching outbound token transfers for a specific address:
+
+        >>> outbound_transfers = OutboundTokenTransfers(address="0x123...", from_block=0, load_prices=True)
+        >>> async for transfer in outbound_transfers.yield_thru_block(1000000):
+        ...     print(transfer)
+
+    See Also:
+        - :class:`~eth_portfolio.structs.TokenTransfer`: For the structure of a token transfer.
+    """
 
     @property
     def _topics(self) -> List:
@@ -115,8 +182,19 @@ class OutboundTokenTransfers(_TokenTransfers):
 
 class TokenTransfers(ASyncIterable[TokenTransfer]):
     """
-    A container that fetches and iterates over all token transfers for a particular wallet address.
-    NOTE: These do not come back in chronologcal order.
+    A container that fetches and iterates over all token transfers for a particular address.
+
+    Examples:
+        Fetching all token transfers for a specific address:
+
+        >>> token_transfers = TokenTransfers(address="0x123...", from_block=0, load_prices=True)
+        >>> async for transfer in token_transfers:
+        ...     print(transfer)
+
+    See Also:
+        - :class:`~eth_portfolio.structs.TokenTransfer`: For the structure of a token transfer.
+        - :class:`~InboundTokenTransfers`: For fetching inbound token transfers.
+        - :class:`~OutboundTokenTransfers`: For fetching outbound token transfers.
     """
 
     def __init__(self, address: Address, from_block: int, load_prices: bool = False):
@@ -124,10 +202,33 @@ class TokenTransfers(ASyncIterable[TokenTransfer]):
         self.transfers_out = OutboundTokenTransfers(address, from_block, load_prices=load_prices)
 
     async def __aiter__(self):
+        """
+        Asynchronously iterate over all token transfers.
+
+        Yields:
+            :class:`~eth_portfolio.structs.TokenTransfer` objects.
+
+        Examples:
+            >>> async for transfer in token_transfers:
+            ...     print(transfer)
+        """
         async for transfer in self.yield_thru_block(await dank_mids.eth.block_number):
             yield transfer
 
     def yield_thru_block(self, block: int) -> ASyncIterator["Task[TokenTransfer]"]:
+        """
+        Yield token transfers up to a specified block.
+
+        Args:
+            block: The block number up to which token transfers are yielded.
+
+        Yields:
+            Tasks that resolve to :class:`~eth_portfolio.structs.TokenTransfer` objects.
+
+        Examples:
+            >>> async for transfer in token_transfers.yield_thru_block(1000000):
+            ...     print(transfer)
+        """
         return ASyncIterator(
             as_yielded(
                 self.transfers_in.yield_thru_block(block),
