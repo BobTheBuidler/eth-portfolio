@@ -9,29 +9,29 @@ logger = logging.getLogger(__name__)
 
 
 class Decimal(decimal.Decimal):
-    """A subclass of :class:`decimal.Decimal` with additional functionality.
+    """
+    A subclass of :class:`decimal.Decimal` with additional functionality for JSON serialization.
 
-    This class extends the :class:`decimal.Decimal` class to provide additional
-    methods for JSON serialization and arithmetic operations.
+    This class extends the :class:`decimal.Decimal` class to provide an additional
+    method for JSON serialization. It also overrides arithmetic operations to ensure
+    that the result is of type :class:`Decimal`.
 
     See Also:
         - :class:`decimal.Decimal`
     """
 
     def jsonify(self) -> Union[str, int]:
-        """Converts the Decimal to a JSON-friendly format.
+        """
+        Converts the :class:`Decimal` to a JSON-friendly format.
 
-        This method attempts to represent the Decimal in the most compact form
-        possible for JSON serialization. It returns an integer if the Decimal
-        is equivalent to an integer, otherwise it returns a string in either
+        This method attempts to represent the :class:`Decimal` in the most compact form
+        possible for JSON serialization. It returns an integer if the :class:`Decimal`
+        is exactly equal to an integer, otherwise it returns a string in either
         standard or scientific notation, depending on which is shorter.
 
-        Trailing zeros in the string representation are removed. If the
-        scientific notation is equivalent to the original Decimal and shorter
-        than the standard string representation, it is returned.
-
-        Raises:
-            Exception: If the resulting string representation is empty.
+        If the integer representation is exactly equal to the :class:`Decimal`,
+        the integer is returned. Otherwise, the method returns the shorter of the
+        standard string representation or the scientific notation.
 
         Examples:
             >>> Decimal('123.4500').jsonify()
@@ -40,6 +40,8 @@ class Decimal(decimal.Decimal):
             123000
             >>> Decimal('0.000123').jsonify()
             '1.23E-4'
+            >>> Decimal('1000000').jsonify()
+            1000000
         """
         string = str(self)
         integer = int(self)
@@ -62,8 +64,6 @@ class Decimal(decimal.Decimal):
         if type(self)(scientific_notation) == self and len(scientific_notation) < len(string):
             return scientific_notation
 
-        if not string:
-            raise Exception("no string", self)
         return string
 
     def __add__(self, other):
@@ -98,7 +98,8 @@ class Decimal(decimal.Decimal):
 
 
 class Gwei(Decimal):
-    """A subclass of :class:`Decimal` representing Gwei values.
+    """
+    A subclass of :class:`Decimal` representing Gwei values.
 
     This class provides a property to convert Gwei to Wei.
 
@@ -109,7 +110,8 @@ class Gwei(Decimal):
 
     @property
     def as_wei(self) -> Wei:
-        """Converts the Gwei value to Wei.
+        """
+        Converts the Gwei value to Wei.
 
         This property multiplies the Gwei value by 10^9 to convert it to Wei.
 
