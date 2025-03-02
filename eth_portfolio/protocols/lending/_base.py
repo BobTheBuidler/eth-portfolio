@@ -11,10 +11,19 @@ from eth_portfolio.typing import TokenBalances
 class LendingProtocol(metaclass=abc.ABCMeta):
     """
     Subclass this class for any protocol that maintains a debt balance for a user but doesn't maintain collateral internally.
-    Example: Aave, because the user holds on to their collateral in the form of erc-20 aTokens.
+    Example: Aave, because the user holds on to their collateral in the form of ERC-20 aTokens.
 
     You must define the following async method:
-        `_debt_async(self, address: Address, block: Optional[Block] = None)`
+        `_debt(self, address: Address, block: Optional[Block] = None)`
+
+    Example:
+        >>> class AaveProtocol(LendingProtocol):
+        ...     async def _debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        ...         # Implementation for fetching debt from Aave
+        ...         pass
+
+    See Also:
+        - :class:`LendingProtocolWithLockedCollateral`
     """
 
     @a_sync.future
@@ -31,6 +40,18 @@ class LendingProtocolWithLockedCollateral(LendingProtocol, ProtocolABC):
     Example: Maker, because collateral is locked up inside of Maker's smart contracts.
 
     You must define the following async methods:
-        - `_debt_async(self, address: Address, block: Optional[Block] = None)`
-        - `_balances_async(self, address: Address, block: Optional[Block] = None)`
+        - `_debt(self, address: Address, block: Optional[Block] = None)`
+        - `_balances(self, address: Address, block: Optional[Block] = None)`
+
+    Example:
+        >>> class MakerProtocol(LendingProtocolWithLockedCollateral):
+        ...     async def _debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        ...         # Implementation for fetching debt from Maker
+        ...         pass
+        ...     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+        ...         # Implementation for fetching balances from Maker
+        ...         pass
+
+    See Also:
+        - :class:`LendingProtocol`
     """

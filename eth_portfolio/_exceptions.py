@@ -8,7 +8,8 @@ if TYPE_CHECKING:
 
 
 class BlockRangeIsCached(Exception):
-    """Exception raised when a block range is already cached.
+    """
+    Exception raised when a block range is already cached.
 
     This exception is used to indicate that the requested block range
     has already been loaded into memory and does not need to be fetched again.
@@ -16,20 +17,23 @@ class BlockRangeIsCached(Exception):
     Examples:
         >>> raise BlockRangeIsCached("Block range is already cached.")
     """
+
     pass
 
 
 class BlockRangeOutOfBounds(Exception):
-    """Exception raised when a block range is out of bounds.
+    """
+    Exception raised when a block range is out of bounds.
 
     This exception is used to indicate that the requested block range
     is outside the bounds of the cached data. It provides a method to
-    load the remaining ledger entries that are out of bounds.
+    handle the loading of the remaining ledger entries that are out of bounds
+    by invoking the appropriate method in the associated ledger.
 
     Args:
-        start_block (Block): The starting block number of the out-of-bounds range.
-        end_block (Block): The ending block number of the out-of-bounds range.
-        ledger (AddressLedgerBase): The ledger associated with the block range.
+        start_block: The starting block number of the out-of-bounds range.
+        end_block: The ending block number of the out-of-bounds range.
+        ledger: The ledger associated with the block range.
 
     Examples:
         >>> raise BlockRangeOutOfBounds(100, 200, ledger)
@@ -44,9 +48,11 @@ class BlockRangeOutOfBounds(Exception):
         self.end_block = end_block
 
     async def load_remaining(self) -> None:
-        """Asynchronously loads the remaining ledger entries that are out of bounds.
+        """
+        Asynchronously handles the loading of the remaining ledger entries that are out of bounds.
 
-        This method fetches the ledger entries for the blocks that are outside
+        This method invokes the :meth:`~eth_portfolio._ledgers.address.AddressLedgerBase._load_new_objects`
+        method of the associated ledger to fetch the ledger entries for the blocks that are outside
         the cached range, ensuring that the entire requested block range is covered.
 
         Examples:
