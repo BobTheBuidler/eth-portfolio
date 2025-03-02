@@ -5,11 +5,11 @@ The `__all__` list defines the public API for this module, which includes the ma
 
 Examples:
     Importing the main union type and specific ledger entry types:
-    
+
     >>> from eth_portfolio.structs import LedgerEntry, Transaction, InternalTransfer, TokenTransfer, TransactionRLP
 
     Using the `LedgerEntry` union type to annotate a variable that can hold any ledger entry type:
-    
+
     >>> entry: LedgerEntry = Transaction(...)
     >>> entry = InternalTransfer(...)
     >>> entry = TokenTransfer(...)

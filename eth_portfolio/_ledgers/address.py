@@ -1,8 +1,8 @@
 """
-This module defines the :class:`~eth_portfolio.AddressLedgerBase`, :class:`~eth_portfolio.TransactionsList`, 
-:class:`~eth_portfolio.AddressTransactionsLedger`, :class:`~eth_portfolio.InternalTransfersList`, 
-:class:`~eth_portfolio.AddressInternalTransfersLedger`, :class:`~eth_portfolio.TokenTransfersList`, 
-and :class:`~eth_portfolio.AddressTokenTransfersLedger` classes. These classes manage and interact with ledger entries 
+This module defines the :class:`~eth_portfolio.AddressLedgerBase`, :class:`~eth_portfolio.TransactionsList`,
+:class:`~eth_portfolio.AddressTransactionsLedger`, :class:`~eth_portfolio.InternalTransfersList`,
+:class:`~eth_portfolio.AddressInternalTransfersLedger`, :class:`~eth_portfolio.TokenTransfersList`,
+and :class:`~eth_portfolio.AddressTokenTransfersLedger` classes. These classes manage and interact with ledger entries
 such as transactions, internal transfers, and token transfers associated with Ethereum addresses within the `eth-portfolio` system.
 
 These classes leverage the `a_sync` library to support both synchronous and asynchronous operations, allowing efficient data gathering
@@ -658,8 +658,10 @@ async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
 
 BlockRange = Tuple[Block, Block]
 
+
 def _get_block_ranges(start_block: Block, end_block: Block) -> List[BlockRange]:
     return [(i, i + BATCH_SIZE - 1) for i in range(start_block, end_block, BATCH_SIZE)]
+
 
 class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, InternalTransfer]):
     """
