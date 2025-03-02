@@ -28,7 +28,7 @@ class BlockRangeOutOfBounds(Exception):
     This exception indicates that the requested block range
     is outside the bounds of the cached data. It provides a method to
     handle the loading of the remaining ledger entries that are out of bounds
-    by invoking the :meth:`load_remaining` method asynchronously.
+    by invoking the appropriate method in the associated ledger.
 
     Args:
         start_block: The starting block number of the out-of-bounds range.
@@ -51,11 +51,9 @@ class BlockRangeOutOfBounds(Exception):
         """
         Asynchronously handles the loading of the remaining ledger entries that are out of bounds.
 
-        This method uses the :func:`asyncio.gather` function to directly invoke the 
-        :meth:`~eth_portfolio._ledgers.address.AddressLedgerBase._load_new_objects` 
-        method of the associated ledger with block ranges that cover the entire requested range.
-        Specifically, it fetches the ledger entries for the blocks from `start_block` to 
-        `ledger.cached_thru - 1` and from `ledger.cached_from + 1` to `end_block`.
+        This method invokes the :meth:`~eth_portfolio._ledgers.address.AddressLedgerBase._load_new_objects`
+        method of the associated ledger to fetch the ledger entries for the blocks that are outside
+        the cached range, ensuring that the entire requested block range is covered.
 
         Examples:
             >>> await exception.load_remaining()

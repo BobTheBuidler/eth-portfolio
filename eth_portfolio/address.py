@@ -1,3 +1,20 @@
+"""
+This module defines the :class:`~PortfolioAddress` class, which represents an address managed by the `eth-portfolio` system.
+The :class:`~PortfolioAddress` class is designed to manage different aspects of an Ethereum address within the portfolio,
+such as transactions, transfers, balances, and interactions with both external and lending protocols.
+
+Key components and functionalities provided by the :class:`~eth_portfolio.address.PortfolioAddress` class include:
+- Handling Ethereum and token balances
+- Managing debt and collateral from lending protocols
+- Tracking transactions and transfers (both internal and token transfers)
+- Providing comprehensive balance descriptions at specific block heights
+
+The class leverages asynchronous operations using the `a_sync` library to efficiently gather and process data.
+It also integrates with various submodules from `eth-portfolio` to load balances, manage ledgers, and interact
+with external protocols.
+"""
+
+import logging
 from asyncio import gather
 from typing import TYPE_CHECKING, Dict, Optional
 
@@ -58,11 +75,11 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         Initializes the :class:`~PortfolioAddress` instance.
 
         Args:
-            address (Address): The Ethereum address to manage.
-            start_block (Block): The block number from which to start tracking.
-            load_prices (bool): Flag indicating if price loading is enabled.
-            num_workers_transactions (int, optional): Number of workers for transaction processing. Defaults to 1000.
-            asynchronous (bool, optional): Flag for asynchronous operation. Defaults to False.
+            address: The Ethereum address to manage.
+            start_block: The block number from which to start tracking.
+            load_prices: Flag indicating if price loading is enabled.
+            num_workers_transactions (optional): Number of workers for transaction processing. Defaults to 1000.
+            asynchronous (optional): Flag for asynchronous operation. Defaults to False.
 
         Raises:
             TypeError: If `asynchronous` is not a boolean.

@@ -1,7 +1,7 @@
 """
-This module attempts to connect to the Brownie network specified by the `PYTEST_NETWORK`
-environment variable if it is not already connected. It also modifies the system path to 
-include the current directory, allowing for importing modules from the project root.
+This module connects to the Brownie network specified by the `PYTEST_NETWORK`
+environment variable. It also modifies the system path to include the current
+directory, allowing for importing modules from the project root.
 
 Environment Variables:
     PYTEST_NETWORK: The name of the Brownie network to use for testing. This

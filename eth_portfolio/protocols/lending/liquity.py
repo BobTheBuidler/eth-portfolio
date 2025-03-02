@@ -20,7 +20,7 @@ class Liquity(LendingProtocolWithLockedCollateral):
 
     Examples:
         >>> liquity = Liquity()
-        >>> balances = await liquity._balances("0xYourAddress", 12345678)
+        >>> balances = await liquity.balances("0xYourAddress", 12345678)
         >>> print(balances)
 
     See Also:
@@ -44,8 +44,8 @@ class Liquity(LendingProtocolWithLockedCollateral):
         Retrieves the trove data for a given address at a specific block.
 
         Args:
-            address (Address): The Ethereum address of the user.
-            block (Block): The block number to query.
+            address: The Ethereum address of the user.
+            block: The block number to query.
 
         Examples:
             >>> trove_data = await liquity.get_trove("0xYourAddress", 12345678)
@@ -88,8 +88,8 @@ class Liquity(LendingProtocolWithLockedCollateral):
         Retrieves the debt balances for a given address at a specific block.
 
         Args:
-            address (Address): The Ethereum address of the user.
-            block (Optional[Block]): The block number to query.
+            address: The Ethereum address of the user.
+            block: The block number to query.
 
         Examples:
             >>> debt_balances = await liquity._debt("0xYourAddress", 12345678)

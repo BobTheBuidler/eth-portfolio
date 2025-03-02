@@ -230,7 +230,6 @@ def _unpack_indicies(indicies: Union[Block, Tuple[Block, Block]]) -> Tuple[Block
 
 
 class _AiterMixin(ASyncIterable[_T]):
-
     def __aiter__(self) -> AsyncIterator[_T]:
         return self[self._start_block : chain.height].__aiter__()
 

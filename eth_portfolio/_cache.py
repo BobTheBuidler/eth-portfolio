@@ -1,6 +1,6 @@
 import functools
 import inspect
-from asyncio import PriorityQueue, get_event_loop, sleep
+from asyncio import PriorityQueue, Task, current_task, get_event_loop
 from concurrent.futures import Executor
 from hashlib import md5
 from logging import getLogger
@@ -8,7 +8,7 @@ from os import makedirs
 from os.path import exists, join
 from pickle import dumps, load, loads
 from random import random
-from typing import Any, Callable, NoReturn
+from typing import Any, Callable, List, NoReturn
 
 from a_sync import PruningThreadPoolExecutor
 from a_sync._typing import P, T
@@ -44,17 +44,21 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
 
         queue = PriorityQueue()
 
-        @log_broken
         async def cache_deco_worker_coro(func) -> NoReturn:
-            while True:
-                _, fut, cache_path, args, kwargs = await queue.get()
-                try:
-                    async with _aio_open(cache_path, "rb", executor=read_executor) as f:
-                        fut.set_result(loads(await f.read()))
-                except Exception as e:
-                    fut.set_exception(e)
+            try:
+                while True:
+                    _, fut, cache_path, args, kwargs = await queue.get()
+                    try:
+                        async with _aio_open(cache_path, "rb", executor=read_executor) as f:
+                            fut.set_result(loads(await f.read()))
+                    except Exception as e:
+                        fut.set_exception(e)
+            except Exception as e:
+                logger.error("%s for %s is broken!!!", current_task(), func)
+                logger.exception(e)
+                raise
 
-        workers = []
+        workers: List[Task[NoReturn]] = []
 
         @functools.wraps(fn)
         async def disk_cache_wrap(*args: P.args, **kwargs: P.kwargs) -> T:

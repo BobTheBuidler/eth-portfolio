@@ -33,9 +33,6 @@ class Decimal(decimal.Decimal):
         the integer is returned. Otherwise, the method returns the shorter of the
         standard string representation or the scientific notation.
 
-        Raises:
-            Exception: If the resulting string representation is empty.
-
         Examples:
             >>> Decimal('123.4500').jsonify()
             '123.45'
@@ -45,10 +42,6 @@ class Decimal(decimal.Decimal):
             '1.23E-4'
             >>> Decimal('1000000').jsonify()
             1000000
-
-        See Also:
-            - :meth:`Decimal.__str__`: For converting :class:`Decimal` to a string.
-            - :meth:`Decimal.__int__`: For converting :class:`Decimal` to an integer.
         """
         string = str(self)
         integer = int(self)
@@ -71,8 +64,6 @@ class Decimal(decimal.Decimal):
         if len(scientific_notation) < len(string):
             return scientific_notation
 
-        if not string:
-            raise Exception("no string", self)
         return string
 
     def __add__(self, other):

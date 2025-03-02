@@ -27,8 +27,8 @@ async def balances(address: Address, block: Optional[Block] = None) -> RemoteTok
     :class:`~eth_portfolio.typing.RemoteTokenBalances` object.
 
     Args:
-        address (Address): The Ethereum address for which to fetch balances.
-        block (Optional[Block]): The block number at which to fetch balances.
+        address: The Ethereum address for which to fetch balances.
+        block: The block number at which to fetch balances.
             If not provided, the latest block is used.
 
     Examples:
@@ -42,7 +42,7 @@ async def balances(address: Address, block: Optional[Block] = None) -> RemoteTok
 
         Fetching balances synchronously:
 
-        >>> remote_balances = balances(address, block).result()
+        >>> remote_balances = balances(address, block)
         >>> print(remote_balances)
 
     The function constructs a dictionary `data` with protocol class names
@@ -51,10 +51,6 @@ async def balances(address: Address, block: Optional[Block] = None) -> RemoteTok
     :func:`a_sync.map`. The asynchronous comprehension iterates over `protocol_balances`
     to filter and construct the `data` dictionary. This dictionary is subsequently used
     to initialize the :class:`~eth_portfolio.typing.RemoteTokenBalances` object.
-
-    See Also:
-        - :class:`~eth_portfolio.typing.RemoteTokenBalances`: For more information on the return type.
-        - :func:`a_sync.future`: For more information on the decorator used.
     """
     if not protocols:
         return RemoteTokenBalances(block=block)
