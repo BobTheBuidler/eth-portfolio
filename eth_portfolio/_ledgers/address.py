@@ -83,13 +83,16 @@ class AddressLedgerBase(
         "asynchronous",
         "cached_from",
         "cached_thru",
+        "exclude_zero_value",
         "load_prices",
         "objects",
         "portfolio_address",
         "_lock",
     )
 
-    def __init__(self, portfolio_address: "PortfolioAddress") -> None:
+    def __init__(
+        self, portfolio_address: "PortfolioAddress", exclude_zero_value: bool = True
+    ) -> None:
         """
         Initializes the AddressLedgerBase instance.
 
@@ -116,6 +119,8 @@ class AddressLedgerBase(
         """
         Flag indicating if the operations are asynchronous.
         """
+
+        self.exclude_zero_value = exclude_zero_value
 
         self.load_prices = self.portfolio_address.load_prices
         """
@@ -295,7 +300,10 @@ class AddressLedgerBase(
             AsyncIterator[T]: An async iterator of new ledger entries.
         """
         async with self._lock:
+            exclude_zero = self.exclude_zero_value
             async for ledger_entry in self._load_new_objects(start_block, end_block):
+                if exclude_zero and not ledger_entry.value:
+                    continue
                 yield ledger_entry
 
     @abstractmethod
@@ -459,12 +467,15 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             self._ensure_workers(min(len_nonces, self._num_workers))
 
             transactions = []
+            exclude_zero = self.exclude_zero_value
             transaction: Optional[Transaction]
             for _ in tqdm(range(len_nonces), desc=f"Transactions        {self.address}"):
                 nonce, transaction = await self._ready.get()
                 if transaction:
                     if isinstance(transaction, Exception):
                         raise transaction
+                    if exclude_zero and not transaction.value:
+                        continue
                     transactions.append(transaction)
                     yield transaction
                 elif nonce == 0 and self.cached_thru_nonce == -1:
@@ -515,7 +526,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             while True:
                 nonce = await queue_get()
                 try:
-                    put_ready(await load_transaction(address, nonce, load_prices))
+                    put_ready(await load_transaction(address, nonce, load_prices, exclude_zero))
                 except Exception as e:
                     put_ready((nonce, e))
         except Exception as e:
@@ -593,7 +604,12 @@ _trace_semaphores = defaultdict(lambda: a_sync.Semaphore(16, __name__ + ".trace_
 
 @cache_to_disk
 @eth_retry.auto_retry
-async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
+async def get_traces(
+    filter_params: TraceFilterParams,
+    exclude_zero_value: bool,
+    # TODO implement exclude_errors
+    exclude_errors: bool = True,
+) -> List[FilterTrace]:
     """
     Retrieves traces from the web3 provider using the given parameters.
 
@@ -614,14 +630,35 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
         sorted(tuple(filter_params.get(x, ("",))) for x in ("toAddress", "fromAddress"))
     )
     async with _trace_semaphores[semaphore_key]:
-        return await _check_traces(await trace_filter(**filter_params))
+        return await _check_traces(
+            await trace_filter(**filter_params),
+            exclude_zero_value,
+            exclude_errors,
+        )
 
 
 @stuck_coro_debugger
 @eth_retry.auto_retry
-async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
+async def _check_traces(
+    traces: List[FilterTrace], exclude_zero_value: bool, exclude_errors: bool
+) -> List[FilterTrace]:
     good_traces = []
     append = good_traces.append
+
+    if exclude_errors:
+        traces = (trace for trace in traces if not hasattr(trace, "error"))
+    if exclude_zero_value:
+        traces = (trace for trace in traces if trace.value)
+
+    traces = (
+        trace
+        for trace in traces
+        # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
+        # that actually transmitted value to the singleton even though they appear to.
+        if not isinstance(trace, call.Trace)
+        and trace.action.to
+        == "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"  # Gnosis Safe Singleton 1.3.0
+    )
 
     check_status_tasks = a_sync.TaskMapping(get_transaction_status)
 
@@ -629,17 +666,6 @@ async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
         # Make sure we don't block up the event loop
         if i % 500:
             await sleep(0)
-
-        if "error" in trace:
-            continue
-
-        # NOTE: Not sure why these appear, but I've yet to come across an internal transfer
-        # that actually transmitted value to the singleton even though they appear to.
-        if (
-            isinstance(trace, call.Trace)
-            and trace.action.to == "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-        ):  # Gnosis Safe Singleton 1.3.0
-            continue
 
         if not isinstance(trace, reward.Trace):
             # NOTE: We don't need to confirm block rewards came from a successful transaction, because they don't come from a transaction
@@ -704,8 +730,11 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
 
         block_ranges = _get_block_ranges(start_block, end_block)
 
+        exclude_zero = self.exclude_zero_value
         trace_filter_coros = [
-            get_traces({direction: [self.address], "fromBlock": hex(start), "toBlock": hex(end)})
+            get_traces(
+                {direction: [self.address], "fromBlock": start, "toBlock": end}, exclude_zero
+            )
             for direction, (start, end) in product(["toAddress", "fromAddress"], block_ranges)
         ]
 
