@@ -98,8 +98,8 @@
 <span class="sd">    This function attempts to categorize a given token into predefined buckets</span>
 <span class="sd">    such as &quot;Cash &amp; cash equivalents&quot;, &quot;ETH&quot;, &quot;BTC&quot;, &quot;Other long term assets&quot;,</span>
 <span class="sd">    or &quot;Other short term assets&quot;. The categorization is based on the token&#39;s</span>
-<span class="sd">    characteristics and its presence in specific sets like `ETH_LIKE`, `BTC_LIKE`,</span>
-<span class="sd">    and `OTHER_LONG_TERM_ASSETS`.</span>
+<span class="sd">    characteristics and its presence in specific sets like :data:`ETH_LIKE`, :data:`BTC_LIKE`,</span>
+<span class="sd">    and :data:`OTHER_LONG_TERM_ASSETS`.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        token: The address of the token to categorize.</span>
@@ -112,8 +112,15 @@
 <span class="sd">        does not match the expected pattern.</span>
 
 <span class="sd">    Example:</span>
+<span class="sd">        Categorize a stablecoin:</span>
+
 <span class="sd">        &gt;&gt;&gt; await get_token_bucket(&quot;0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&quot;)</span>
 <span class="sd">        &#39;Cash &amp; cash equivalents&#39;</span>
+
+<span class="sd">        Categorize an ETH-like token:</span>
+
+<span class="sd">        &gt;&gt;&gt; await get_token_bucket(&quot;0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&quot;)</span>
+<span class="sd">        &#39;ETH&#39;</span>
 
 <span class="sd">    See Also:</span>
 <span class="sd">        - :func:`_unwrap_token`</span>
@@ -156,6 +163,8 @@
 <span class="sd">        The address of the underlying asset.</span>
 
 <span class="sd">    Example:</span>
+<span class="sd">        Unwrap a Yearn vault token:</span>
+
 <span class="sd">        &gt;&gt;&gt; await _unwrap_token(&quot;0x5f18C75AbDAe578b483E5F43f12a39cF75b973a9&quot;)</span>
 <span class="sd">        &#39;0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&#39;</span>
 
@@ -202,6 +211,8 @@
 <span class="sd">        no specific category is found.</span>
 
 <span class="sd">    Example:</span>
+<span class="sd">        Determine the bucket for a BTC-like pool:</span>
+
 <span class="sd">        &gt;&gt;&gt; _pool_bucket({&quot;0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599&quot;})</span>
 <span class="sd">        &#39;0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599&#39;</span>
 
@@ -225,13 +236,15 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if a token is a stablecoin.</span>
 
-<span class="sd">    This function checks if a given token is present in the `STABLECOINS` or</span>
-<span class="sd">    `INTL_STABLECOINS` sets, indicating that it is a stablecoin.</span>
+<span class="sd">    This function checks if a given token is present in the :data:`STABLECOINS` or</span>
+<span class="sd">    :data:`INTL_STABLECOINS` sets, indicating that it is a stablecoin.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        token: The address of the token to check.</span>
 
 <span class="sd">    Example:</span>
+<span class="sd">        Check if a token is a stablecoin:</span>
+
 <span class="sd">        &gt;&gt;&gt; _is_stable(&quot;0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&quot;)</span>
 <span class="sd">        True</span>
 

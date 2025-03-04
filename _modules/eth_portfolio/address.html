@@ -87,7 +87,7 @@
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">asyncio</span> <span class="kn">import</span> <span class="n">gather</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">a_sync</span>
 <span class="kn">import</span> <span class="nn">dank_mids</span>
@@ -110,8 +110,6 @@
 <span class="kn">from</span> <span class="nn">eth_portfolio._utils</span> <span class="kn">import</span> <span class="n">_LedgeredBase</span><span class="p">,</span> <span class="n">_get_price</span>
 <span class="kn">from</span> <span class="nn">eth_portfolio.typing</span> <span class="kn">import</span> <span class="n">Balance</span><span class="p">,</span> <span class="n">RemoteTokenBalances</span><span class="p">,</span> <span class="n">TokenBalances</span><span class="p">,</span> <span class="n">WalletBalances</span>
 
-<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">eth_portfolio.portfolio</span> <span class="kn">import</span> <span class="n">Portfolio</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -121,6 +119,19 @@
 <span class="k">class</span> <span class="nc">PortfolioAddress</span><span class="p">(</span><span class="n">_LedgeredBase</span><span class="p">[</span><span class="n">AddressLedgerBase</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a portfolio address within the eth-portfolio system.</span>
+
+<span class="sd">    This class is designed to manage different aspects of an Ethereum address within the portfolio,</span>
+<span class="sd">    such as transactions, transfers, balances, and interactions with both external and lending protocols.</span>
+
+<span class="sd">    Key components and functionalities provided by the :class:`~eth_portfolio.address.PortfolioAddress` class include:</span>
+<span class="sd">    - Handling Ethereum and token balances</span>
+<span class="sd">    - Managing debt and collateral from lending protocols</span>
+<span class="sd">    - Tracking transactions and transfers (both internal and token transfers)</span>
+<span class="sd">    - Providing comprehensive balance descriptions at specific block heights</span>
+
+<span class="sd">    The class leverages asynchronous operations using the `a_sync` library to efficiently gather and process data.</span>
+<span class="sd">    It also integrates with various submodules from `eth-portfolio` to load balances, manage ledgers, and interact</span>
+<span class="sd">    with external protocols.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="PortfolioAddress.__init__">
@@ -134,19 +145,30 @@
         <span class="n">asynchronous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initializes the PortfolioAddress instance.</span>
+<span class="sd">        Initializes the :class:`~PortfolioAddress` instance.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            address: The address to manage.</span>
-<span class="sd">            portfolio: The portfolio instance managing this address.</span>
+<span class="sd">            address: The Ethereum address to manage.</span>
+<span class="sd">            start_block: The block number from which to start tracking.</span>
+<span class="sd">            load_prices: Flag indicating if price loading is enabled.</span>
+<span class="sd">            num_workers_transactions (optional): Number of workers for transaction processing. Defaults to 1000.</span>
 <span class="sd">            asynchronous (optional): Flag for asynchronous operation. Defaults to False.</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            TypeError: If `asynchronous` is not a boolean.</span>
 
 <span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; portfolio = Portfolio()</span>
-<span class="sd">            &gt;&gt;&gt; address = PortfolioAddress(&#39;0x1234...&#39;, portfolio)</span>
+<span class="sd">            &gt;&gt;&gt; address = PortfolioAddress(&#39;0x1234...&#39;, 0, True)</span>
+<span class="sd">            &gt;&gt;&gt; print(address)</span>
+
+<span class="sd">            &gt;&gt;&gt; address = PortfolioAddress(&#39;0x1234...&#39;, 0, False, num_workers_transactions=500, asynchronous=True)</span>
+<span class="sd">            &gt;&gt;&gt; print(address)</span>
+
+<span class="sd">        See Also:</span>
+<span class="sd">            - :class:`~eth_portfolio.portfolio.Portfolio`</span>
+<span class="sd">            - :class:`~eth_portfolio._ledgers.address.AddressTransactionsLedger`</span>
+<span class="sd">            - :class:`~eth_portfolio._ledgers.address.AddressInternalTransfersLedger`</span>
+<span class="sd">            - :class:`~eth_portfolio._ledgers.address.AddressTokenTransfersLedger`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">convert</span><span class="o">.</span><span class="n">to_address</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>

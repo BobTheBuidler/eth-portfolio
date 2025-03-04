@@ -634,6 +634,16 @@ with external protocols.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_LedgeredBase</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">AddressLedgerBase</span></code>]</p>
 <blockquote>
 <div><p>Represents a portfolio address within the eth-portfolio system.</p>
+<p>This class is designed to manage different aspects of an Ethereum address within the portfolio,
+such as transactions, transfers, balances, and interactions with both external and lending protocols.</p>
+<p>Key components and functionalities provided by the <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> class include:
+- Handling Ethereum and token balances
+- Managing debt and collateral from lending protocols
+- Tracking transactions and transfers (both internal and token transfers)
+- Providing comprehensive balance descriptions at specific block heights</p>
+<p>The class leverages asynchronous operations using the <cite>a_sync</cite> library to efficiently gather and process data.
+It also integrates with various submodules from <cite>eth-portfolio</cite> to load balances, manage ledgers, and interact
+with external protocols.</p>
 </div></blockquote>
 <p>When awaited, a list of all <code class="xref py py-class docutils literal notranslate"><span class="pre">AddressLedgerBase</span></code> will be returned.</p>
 <p class="rubric">Example</p>
@@ -672,16 +682,15 @@ with external protocols.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="eth_portfolio.address.PortfolioAddress.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_prices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_workers_transactions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asynchronous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/address.html#PortfolioAddress.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.address.PortfolioAddress.__init__" title="Link to this definition"></a></dt>
-<dd><p>Initializes the PortfolioAddress instance.</p>
+<dd><p>Initializes the <a class="reference internal" href="#eth_portfolio.address.PortfolioAddress" title="eth_portfolio.address.PortfolioAddress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioAddress</span></code></a> instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>) – The address to manage.</p></li>
-<li><p><strong>portfolio</strong> – The portfolio instance managing this address.</p></li>
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>) – The Ethereum address to manage.</p></li>
+<li><p><strong>start_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em>) – The block number from which to start tracking.</p></li>
+<li><p><strong>load_prices</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Flag indicating if price loading is enabled.</p></li>
+<li><p><strong>num_workers_transactions</strong> (<em>optional</em>) – Number of workers for transaction processing. Defaults to 1000.</p></li>
 <li><p><strong>asynchronous</strong> (<em>optional</em>) – Flag for asynchronous operation. Defaults to False.</p></li>
-<li><p><strong>start_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em>)</p></li>
-<li><p><strong>load_prices</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
-<li><p><strong>num_workers_transactions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -692,9 +701,22 @@ with external protocols.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">portfolio</span> <span class="o">=</span> <span class="n">Portfolio</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">address</span> <span class="o">=</span> <span class="n">PortfolioAddress</span><span class="p">(</span><span class="s1">&#39;0x1234...&#39;</span><span class="p">,</span> <span class="n">portfolio</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">address</span> <span class="o">=</span> <span class="n">PortfolioAddress</span><span class="p">(</span><span class="s1">&#39;0x1234...&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">address</span> <span class="o">=</span> <span class="n">PortfolioAddress</span><span class="p">(</span><span class="s1">&#39;0x1234...&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">num_workers_transactions</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">asynchronous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#eth_portfolio.portfolio.Portfolio" title="eth_portfolio.portfolio.Portfolio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Portfolio</span></code></a></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">AddressTransactionsLedger</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">AddressInternalTransfersLedger</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">AddressTokenTransfersLedger</span></code></p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -1049,8 +1071,8 @@ and should consider asynchronous iteration using <a class="reference internal" h
 <p>This function attempts to categorize a given token into predefined buckets
 such as “Cash &amp; cash equivalents”, “ETH”, “BTC”, “Other long term assets”,
 or “Other short term assets”. The categorization is based on the token’s
-characteristics and its presence in specific sets like <cite>ETH_LIKE</cite>, <cite>BTC_LIKE</cite>,
-and <cite>OTHER_LONG_TERM_ASSETS</cite>.</p>
+characteristics and its presence in specific sets like <code class="xref py py-data docutils literal notranslate"><span class="pre">ETH_LIKE</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">BTC_LIKE</span></code>,
+and <code class="xref py py-data docutils literal notranslate"><span class="pre">OTHER_LONG_TERM_ASSETS</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-network.html#brownie.network.contract.Contract" title="(in Brownie v1.20.3)"><em>Contract</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The address of the token to categorize.</p>
@@ -1069,8 +1091,14 @@ and <cite>OTHER_LONG_TERM_ASSETS</cite>.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
+<p>Categorize a stablecoin:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">get_token_bucket</span><span class="p">(</span><span class="s2">&quot;0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&quot;</span><span class="p">)</span>
 <span class="go">&#39;Cash &amp; cash equivalents&#39;</span>
+</pre></div>
+</div>
+<p>Categorize an ETH-like token:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">get_token_bucket</span><span class="p">(</span><span class="s2">&quot;0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&quot;</span><span class="p">)</span>
+<span class="go">&#39;ETH&#39;</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
