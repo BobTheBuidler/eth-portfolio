@@ -109,7 +109,7 @@
 
 
 <div class="viewcode-block" id="_LedgerEntryBase">
-<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs._LedgerEntryBase">[docs]</a>
+<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs._LedgerEntryBase">[docs]</a>
 <span class="k">class</span> <span class="nc">_LedgerEntryBase</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">omit_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">repr_omit_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>  <span class="c1"># type: ignore [call-arg]</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The :class:`~structs._LedgerEntryBase` class is a base class for ledger entries representing on-chain actions in a blockchain.</span>
@@ -164,7 +164,7 @@
 
 
 <div class="viewcode-block" id="_get_init_kwargs">
-<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs._get_init_kwargs">[docs]</a>
+<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs._get_init_kwargs">[docs]</a>
 <span class="k">def</span> <span class="nf">_get_init_kwargs</span><span class="p">(</span><span class="n">original_struct</span><span class="p">:</span> <span class="n">Struct</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">original_struct</span><span class="o">.</span><span class="n">__struct_fields__</span><span class="p">:</span>
@@ -177,7 +177,7 @@
 
 
 <div class="viewcode-block" id="_TransactionBase">
-<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs._TransactionBase">[docs]</a>
+<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs._TransactionBase">[docs]</a>
 <span class="k">class</span> <span class="nc">_TransactionBase</span><span class="p">(</span>
     <span class="n">_LedgerEntryBase</span><span class="p">,</span>
     <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -210,7 +210,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="_TransactionBase.from_rpc_response">
-<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs._TransactionBase.from_rpc_response">[docs]</a>
+<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs._TransactionBase.from_rpc_response">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_rpc_response</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span>
@@ -361,7 +361,7 @@
 
 
 <div class="viewcode-block" id="Transaction">
-<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.Transaction">[docs]</a>
+<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs.Transaction">[docs]</a>
 <span class="nd">@final</span>
 <span class="k">class</span> <span class="nc">Transaction</span><span class="p">(</span>
     <span class="n">_TransactionBase</span><span class="p">,</span>
@@ -382,7 +382,7 @@
 
 
 <div class="viewcode-block" id="TransactionRLP">
-<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.TransactionRLP">[docs]</a>
+<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs.TransactionRLP">[docs]</a>
 <span class="nd">@final</span>
 <span class="k">class</span> <span class="nc">TransactionRLP</span><span class="p">(</span>
     <span class="n">_TransactionBase</span><span class="p">,</span>
@@ -403,7 +403,7 @@
 
 
 <div class="viewcode-block" id="InternalTransfer">
-<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.InternalTransfer">[docs]</a>
+<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs.InternalTransfer">[docs]</a>
 <span class="nd">@final</span>
 <span class="k">class</span> <span class="nc">InternalTransfer</span><span class="p">(</span>
     <span class="n">_LedgerEntryBase</span><span class="p">,</span>
@@ -432,7 +432,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="InternalTransfer.from_trace">
-<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.InternalTransfer.from_trace">[docs]</a>
+<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs.InternalTransfer.from_trace">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="nd">@stuck_coro_debugger</span>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">from_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">:</span> <span class="n">evmspec</span><span class="o">.</span><span class="n">FilterTrace</span><span class="p">,</span> <span class="n">load_prices</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;InternalTransfer&quot;</span><span class="p">:</span>
@@ -635,7 +635,7 @@
 
 
 <div class="viewcode-block" id="TokenTransfer">
-<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.TokenTransfer">[docs]</a>
+<a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs.TokenTransfer">[docs]</a>
 <span class="nd">@final</span>
 <span class="k">class</span> <span class="nc">TokenTransfer</span><span class="p">(</span>
     <span class="n">_LedgerEntryBase</span><span class="p">,</span>

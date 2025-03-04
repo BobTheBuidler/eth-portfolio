@@ -45,14 +45,6 @@ eth\_portfolio.portfolio module
    :undoc-members:
    :show-inheritance:
 
-eth\_portfolio.structs module
------------------------------
-
-.. automodule:: eth_portfolio.structs
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 eth\_portfolio.typing module
 ----------------------------
 
