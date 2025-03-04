@@ -11,7 +11,7 @@ class BlockRangeIsCached(Exception):
     """
     Exception raised when a block range is already cached.
 
-    This exception is used to indicate that the requested block range
+    This exception indicates that the requested block range
     has already been loaded into memory and does not need to be fetched again.
 
     Examples:
@@ -25,7 +25,7 @@ class BlockRangeOutOfBounds(Exception):
     """
     Exception raised when a block range is out of bounds.
 
-    This exception is used to indicate that the requested block range
+    This exception indicates that the requested block range
     is outside the bounds of the cached data. It provides a method to
     handle the loading of the remaining ledger entries that are out of bounds
     by invoking the appropriate method in the associated ledger.

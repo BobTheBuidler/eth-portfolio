@@ -21,7 +21,8 @@ class MockProtocolB(AsyncMock):
 @patch("a_sync.map")
 @pytest.mark.asyncio
 async def test_balances_no_protocols(mock_map):
-    """Test the `balances` function with no protocols.
+    """
+    Test the `balances` function with no protocols.
 
     This test verifies that when there are no protocols in the
     `protocols.protocols` list, the `balances` function returns an
@@ -44,7 +45,8 @@ async def test_balances_no_protocols(mock_map):
 
 @pytest.mark.asyncio
 async def test_balances_with_protocols():
-    """Test the `balances` function with multiple protocols.
+    """
+    Test the `balances` function with multiple protocols.
 
     This test verifies that when there are multiple protocols in the
     `protocols.protocols` list, the `balances` function correctly
@@ -80,7 +82,8 @@ async def test_balances_with_protocols():
 
 @pytest.mark.asyncio
 async def test_balances_with_protocols_and_block():
-    """Test the `balances` function with protocols and a specific block.
+    """
+    Test the `balances` function with protocols and a specific block.
 
     This test verifies that when there are multiple protocols in the
     `protocols.protocols` list and a specific block is provided, the
