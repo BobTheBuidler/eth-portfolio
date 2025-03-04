@@ -25,8 +25,8 @@ async def get_token_bucket(token: AnyAddressType) -> str:
     This function attempts to categorize a given token into predefined buckets
     such as "Cash & cash equivalents", "ETH", "BTC", "Other long term assets",
     or "Other short term assets". The categorization is based on the token's
-    characteristics and its presence in specific sets like `ETH_LIKE`, `BTC_LIKE`,
-    and `OTHER_LONG_TERM_ASSETS`.
+    characteristics and its presence in specific sets like :data:`ETH_LIKE`, :data:`BTC_LIKE`,
+    and :data:`OTHER_LONG_TERM_ASSETS`.
 
     Args:
         token: The address of the token to categorize.
@@ -39,8 +39,15 @@ async def get_token_bucket(token: AnyAddressType) -> str:
         does not match the expected pattern.
 
     Example:
+        Categorize a stablecoin:
+
         >>> await get_token_bucket("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")
         'Cash & cash equivalents'
+
+        Categorize an ETH-like token:
+
+        >>> await get_token_bucket("0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE")
+        'ETH'
 
     See Also:
         - :func:`_unwrap_token`
@@ -82,6 +89,8 @@ async def _unwrap_token(token) -> str:
         The address of the underlying asset.
 
     Example:
+        Unwrap a Yearn vault token:
+
         >>> await _unwrap_token("0x5f18C75AbDAe578b483E5F43f12a39cF75b973a9")
         '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
 
@@ -128,6 +137,8 @@ def _pool_bucket(pool_tokens: set) -> Optional[str]:
         no specific category is found.
 
     Example:
+        Determine the bucket for a BTC-like pool:
+
         >>> _pool_bucket({"0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"})
         '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599'
 
@@ -151,13 +162,15 @@ def _is_stable(token: Address) -> bool:
     """
     Check if a token is a stablecoin.
 
-    This function checks if a given token is present in the `STABLECOINS` or
-    `INTL_STABLECOINS` sets, indicating that it is a stablecoin.
+    This function checks if a given token is present in the :data:`STABLECOINS` or
+    :data:`INTL_STABLECOINS` sets, indicating that it is a stablecoin.
 
     Args:
         token: The address of the token to check.
 
     Example:
+        Check if a token is a stablecoin:
+
         >>> _is_stable("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")
         True
 
