@@ -303,7 +303,7 @@ async def get_nonce_at_block(address: Address, block: Block) -> int:
         while nonce is None:
             nonce = await dank_mids.eth.get_transaction_count(address, block_identifier=block) - 1
             if nonce is None:
-                logger.info("Rec'd nonce %s for %s at block %s, retrying...", nonce, address, block")
+                logger.info("Rec'd nonce %s for %s at block %s, retrying...", nonce, address, block)
         _update_nonces(address, nonce, block)
         return nonce
     except ValueError as e:
