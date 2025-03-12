@@ -28,7 +28,7 @@ class ProtocolWithStakingABC(ProtocolABC, metaclass=abc.ABCMeta):
 
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        return sum(await gather(*[pool.balances(address, block) for pool in self.pools]))  # type: ignore
+        return sum(await gather(*(pool.balances(address, block) for pool in self.pools)))  # type: ignore
 
 
 class StakingPoolABC(ProtocolABC, metaclass=abc.ABCMeta):
