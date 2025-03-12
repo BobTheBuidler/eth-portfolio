@@ -39,9 +39,9 @@ class Maker(LendingProtocolWithLockedCollateral):
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         ilks, urn = await gather(self.get_ilks(block), self._urn(address))
 
-        gem_coros = gather(*[self.get_gem(str(ilk)) for ilk in ilks])
+        gem_coros = gather(*(self.get_gem(str(ilk)) for ilk in ilks))
         ink_coros = gather(
-            *[self.vat.urns.coroutine(ilk, urn, block_identifier=block) for ilk in ilks]
+            *(self.vat.urns.coroutine(ilk, urn, block_identifier=block) for ilk in ilks)
         )
 
         gems, ink_data = await gather(gem_coros, ink_coros)

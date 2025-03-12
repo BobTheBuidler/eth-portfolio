@@ -131,10 +131,10 @@ class Compound(LendingProtocol):
         address = str(address)
         markets: List[Contract]
         underlyings: List[ERC20]
-        markets, underlyings = await gather(*[self.markets(), self.underlyings()])
+        markets, underlyings = await gather(self.markets(), self.underlyings())
         debt_data, underlying_scale = await gather(
-            gather(*[_borrow_balance_stored(market, address, block) for market in markets]),
-            gather(*[underlying.__scale__ for underlying in underlyings]),
+            gather(*(_borrow_balance_stored(market, address, block) for market in markets)),
+            gather(*(underlying.__scale__ for underlying in underlyings)),
         )
 
         balances: TokenBalances = TokenBalances(block=block)
