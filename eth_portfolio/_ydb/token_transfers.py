@@ -131,4 +131,6 @@ class TokenTransfers(ASyncIterable[TokenTransfer]):
         return ASyncIterator(self._yield_thru_block(block))
 
     def __yield_thru_block(self, block: int) -> AsyncIterator["Task[TokenTransfer]"]:
-        return as_yielded(self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block))
+        return as_yielded(
+            self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block)
+        )
