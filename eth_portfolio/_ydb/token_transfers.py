@@ -124,13 +124,11 @@ class TokenTransfers(ASyncIterable[TokenTransfer]):
         self.transfers_out = OutboundTokenTransfers(address, from_block, load_prices=load_prices)
 
     async def __aiter__(self):
-        async for transfer in self.yield_thru_block(await dank_mids.eth.block_number):
+        async for transfer in self.__yield_thru_block(await dank_mids.eth.block_number):
             yield transfer
 
     def yield_thru_block(self, block: int) -> ASyncIterator["Task[TokenTransfer]"]:
-        return ASyncIterator(
-            as_yielded(
-                self.transfers_in.yield_thru_block(block),
-                self.transfers_out.yield_thru_block(block),
-            )
-        )
+        return ASyncIterator(self._yield_thru_block(block))
+
+    def __yield_thru_block(self, block: int) -> ASyncIterator["Task[TokenTransfer]"]:
+        return as_yielded(self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block))
