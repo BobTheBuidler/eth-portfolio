@@ -128,7 +128,7 @@ class TokenTransfers(ASyncIterable[TokenTransfer]):
             yield transfer
 
     def yield_thru_block(self, block: int) -> ASyncIterator["Task[TokenTransfer]"]:
-        return ASyncIterator(self._yield_thru_block(block))
+        return ASyncIterator(self.__yield_thru_block(block))
 
     def __yield_thru_block(self, block: int) -> AsyncIterator["Task[TokenTransfer]"]:
         return as_yielded(
