@@ -1,6 +1,7 @@
 from asyncio import gather
 from typing import List, Optional
 
+from a_sync import igather
 from async_lru import alru_cache
 from dank_mids.exceptions import Revert
 from eth_typing import HexStr
@@ -39,9 +40,9 @@ class Maker(LendingProtocolWithLockedCollateral):
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         ilks, urn = await gather(self.get_ilks(block), self._urn(address))
 
-        gem_coros = gather(*(self.get_gem(str(ilk)) for ilk in ilks))
-        ink_coros = gather(
-            *(self.vat.urns.coroutine(ilk, urn, block_identifier=block) for ilk in ilks)
+        gem_coros = igather(map(self.get_gem, map(str, ilks)))
+        ink_coros = igather(
+            self.vat.urns.coroutine(ilk, urn, block_identifier=block) for ilk in ilks
         )
 
         gems, ink_data = await gather(gem_coros, ink_coros)
@@ -61,14 +62,12 @@ class Maker(LendingProtocolWithLockedCollateral):
 
         ilks, urn = await gather(self.get_ilks(block), self._urn(address))
 
-        data = await gather(
-            *[
-                gather(
-                    self.vat.urns.coroutine(ilk, urn, block_identifier=block),
-                    self.vat.ilks.coroutine(ilk, block_identifier=block),
-                )
-                for ilk in ilks
-            ]
+        data = await igather(
+            gather(
+                self.vat.urns.coroutine(ilk, urn, block_identifier=block),
+                self.vat.ilks.coroutine(ilk, block_identifier=block),
+            )
+            for ilk in ilks
         )
 
         balances: TokenBalances = TokenBalances(block=block)

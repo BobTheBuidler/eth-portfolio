@@ -7,11 +7,11 @@ This file is part of a larger system that includes modules for handling portfoli
 """
 
 import logging
-from asyncio import gather
 from functools import wraps
 from typing import Any, AsyncIterator, Dict, Iterable, Iterator, List, Optional, Tuple, Union
 
 import a_sync
+from a_sync import igather
 from a_sync.a_sync import ASyncFunction
 from brownie import web3
 from checksum_dict import ChecksumAddressDict
@@ -509,8 +509,8 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
             >>> print(df)
         """
         df = concat(
-            await gather(
-                *(ledger.df(start_block, end_block, sync=False) for ledger in self._ledgers)
+            await igather(
+                ledger.df(start_block, end_block, sync=False) for ledger in self._ledgers
             )
         )
 
