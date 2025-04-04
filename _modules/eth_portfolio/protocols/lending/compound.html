@@ -73,6 +73,7 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">a_sync</span>
+<span class="kn">from</span> <span class="nn">a_sync</span> <span class="kn">import</span> <span class="n">igather</span>
 <span class="kn">from</span> <span class="nn">async_lru</span> <span class="kn">import</span> <span class="n">alru_cache</span>
 <span class="kn">from</span> <span class="nn">brownie</span> <span class="kn">import</span> <span class="n">ZERO_ADDRESS</span><span class="p">,</span> <span class="n">Contract</span>
 <span class="kn">from</span> <span class="nn">y</span> <span class="kn">import</span> <span class="n">ERC20</span><span class="p">,</span> <span class="n">Contract</span><span class="p">,</span> <span class="n">map_prices</span><span class="p">,</span> <span class="n">weth</span>
@@ -128,8 +129,8 @@
 <span class="sd">        See Also:</span>
 <span class="sd">            - :meth:`markets`: To get the list of market contracts.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">all_markets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">CToken</span><span class="p">]]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gather</span><span class="p">(</span>
-            <span class="o">*</span><span class="p">[</span><span class="n">comp</span><span class="o">.</span><span class="n">markets</span> <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">compound</span><span class="o">.</span><span class="n">trollers</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="n">all_markets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">CToken</span><span class="p">]]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">igather</span><span class="p">(</span>
+            <span class="n">comp</span><span class="o">.</span><span class="n">markets</span> <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">compound</span><span class="o">.</span><span class="n">trollers</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
         <span class="p">)</span>
         <span class="n">markets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Contract</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">market</span><span class="o">.</span><span class="n">contract</span>
@@ -141,8 +142,8 @@
         <span class="n">other_markets</span> <span class="o">=</span> <span class="p">[</span><span class="n">market</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">markets</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">market</span><span class="p">,</span> <span class="s2">&quot;underlying&quot;</span><span class="p">)]</span>
 
         <span class="n">markets</span> <span class="o">=</span> <span class="n">gas_token_markets</span> <span class="o">+</span> <span class="n">other_markets</span>
-        <span class="n">underlyings</span> <span class="o">=</span> <span class="p">[</span><span class="n">weth</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">gas_token_markets</span><span class="p">]</span> <span class="o">+</span> <span class="k">await</span> <span class="n">gather</span><span class="p">(</span>
-            <span class="o">*</span><span class="p">[</span><span class="n">market</span><span class="o">.</span><span class="n">underlying</span><span class="o">.</span><span class="n">coroutine</span><span class="p">()</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">other_markets</span><span class="p">]</span>
+        <span class="n">underlyings</span> <span class="o">=</span> <span class="p">[</span><span class="n">weth</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">gas_token_markets</span><span class="p">]</span> <span class="o">+</span> <span class="k">await</span> <span class="n">igather</span><span class="p">(</span>
+            <span class="n">market</span><span class="o">.</span><span class="n">underlying</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">other_markets</span>
         <span class="p">)</span>
 
         <span class="n">markets_zip</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">markets</span><span class="p">,</span> <span class="n">underlyings</span><span class="p">)</span>
@@ -211,8 +212,8 @@
         <span class="n">underlyings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ERC20</span><span class="p">]</span>
         <span class="n">markets</span><span class="p">,</span> <span class="n">underlyings</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gather</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">markets</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">underlyings</span><span class="p">())</span>
         <span class="n">debt_data</span><span class="p">,</span> <span class="n">underlying_scale</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gather</span><span class="p">(</span>
-            <span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">_borrow_balance_stored</span><span class="p">(</span><span class="n">market</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">markets</span><span class="p">)),</span>
-            <span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">underlying</span><span class="o">.</span><span class="n">__scale__</span> <span class="k">for</span> <span class="n">underlying</span> <span class="ow">in</span> <span class="n">underlyings</span><span class="p">)),</span>
+            <span class="n">igather</span><span class="p">(</span><span class="n">_borrow_balance_stored</span><span class="p">(</span><span class="n">market</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span> <span class="k">for</span> <span class="n">market</span> <span class="ow">in</span> <span class="n">markets</span><span class="p">),</span>
+            <span class="n">igather</span><span class="p">(</span><span class="n">underlying</span><span class="o">.</span><span class="n">__scale__</span> <span class="k">for</span> <span class="n">underlying</span> <span class="ow">in</span> <span class="n">underlyings</span><span class="p">),</span>
         <span class="p">)</span>
 
         <span class="n">balances</span><span class="p">:</span> <span class="n">TokenBalances</span> <span class="o">=</span> <span class="n">TokenBalances</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
