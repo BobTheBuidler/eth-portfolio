@@ -509,9 +509,7 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
             >>> print(df)
         """
         df = concat(
-            await igather(
-                ledger.df(start_block, end_block, sync=False) for ledger in self._ledgers
-            )
+            await igather(ledger.df(start_block, end_block, sync=False) for ledger in self._ledgers)
         )
 
         # Reorder columns
