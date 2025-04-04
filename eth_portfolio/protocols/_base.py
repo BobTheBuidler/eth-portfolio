@@ -3,6 +3,7 @@ from asyncio import gather
 from typing import List, Optional
 
 import a_sync
+from a_sync import igather
 from a_sync.a_sync import ASyncFunctionSyncDefault, HiddenMethod
 from brownie.network.contract import ContractCall
 from y import ERC20, Contract
@@ -28,7 +29,7 @@ class ProtocolWithStakingABC(ProtocolABC, metaclass=abc.ABCMeta):
 
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        return sum(await gather(*(pool.balances(address, block) for pool in self.pools)))  # type: ignore
+        return sum(await igather(pool.balances(address, block) for pool in self.pools))  # type: ignore
 
 
 class StakingPoolABC(ProtocolABC, metaclass=abc.ABCMeta):

@@ -2,6 +2,7 @@ from asyncio import gather
 from typing import List, Optional
 
 import a_sync
+from a_sync import igather
 from async_lru import alru_cache
 from brownie import ZERO_ADDRESS, Contract
 from y import ERC20, Contract, map_prices, weth
@@ -52,8 +53,8 @@ class Compound(LendingProtocol):
         See Also:
             - :meth:`markets`: To get the list of market contracts.
         """
-        all_markets: List[List[CToken]] = await gather(
-            *[comp.markets for comp in compound.trollers.values()]
+        all_markets: List[List[CToken]] = await igather(
+            comp.markets for comp in compound.trollers.values()
         )
         markets: List[Contract] = [
             market.contract
@@ -65,8 +66,8 @@ class Compound(LendingProtocol):
         other_markets = [market for market in markets if hasattr(market, "underlying")]
 
         markets = gas_token_markets + other_markets
-        underlyings = [weth for market in gas_token_markets] + await gather(
-            *[market.underlying.coroutine() for market in other_markets]
+        underlyings = [weth for market in gas_token_markets] + await igather(
+            market.underlying for market in other_markets
         )
 
         markets_zip = zip(markets, underlyings)
@@ -133,8 +134,8 @@ class Compound(LendingProtocol):
         underlyings: List[ERC20]
         markets, underlyings = await gather(self.markets(), self.underlyings())
         debt_data, underlying_scale = await gather(
-            gather(*(_borrow_balance_stored(market, address, block) for market in markets)),
-            gather(*(underlying.__scale__ for underlying in underlyings)),
+            igather(_borrow_balance_stored(market, address, block) for market in markets),
+            igather(underlying.__scale__ for underlying in underlyings),
         )
 
         balances: TokenBalances = TokenBalances(block=block)
