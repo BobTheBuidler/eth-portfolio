@@ -524,7 +524,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             raise
 
     def __stop_workers(self) -> None:
-        logger.info("stopping workers for %s", self)
+        logger.debug("stopping workers for %s", self)
         workers = self._workers
         pop_next = workers.pop
         for _ in range(len(workers)):
