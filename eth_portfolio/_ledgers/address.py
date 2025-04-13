@@ -615,7 +615,7 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     )
     async with _trace_semaphores[semaphore_key]:
         traces = await trace_filter(**filter_params)
-    return await _check_traces(traces)
+    return await _check_traces(traces) if traces else []
 
 
 @stuck_coro_debugger
