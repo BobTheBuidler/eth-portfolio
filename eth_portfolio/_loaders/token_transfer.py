@@ -71,12 +71,13 @@ async def load_token_transfer(
             return transfer
         await db.delete_token_transfer(transfer)
 
-    if transfer_log.address in _non_standard_erc20:
-        logger.debug("%s is not a standard ERC20 token, skipping.", log.address)
+    token_address = transfer_log.address
+    if token_address in _non_standard_erc20:
+        logger.debug("%s is not a standard ERC20 token, skipping.", token_address)
         return None
 
     async with token_transfer_semaphore[transfer_log.block]:
-        token = ERC20(transfer_log.address, asynchronous=True)
+        token = ERC20(token_address, asynchronous=True)
         try:
             try:
                 # This will be mem cached so no need to gather and add a bunch of overhead
@@ -84,7 +85,7 @@ async def load_token_transfer(
             except NonStandardERC20 as e:
                 # NOTE: if we cant fetch scale, this is probably either a shitcoin or an NFT (which we don't support at this time)
                 logger.debug("%s for %s, skipping.", e, transfer_log)
-                _non_standard_erc20.add(transfer_log.address)
+                _non_standard_erc20.add(token_address)
                 return None
 
             # This will be mem cached so no need to include it in the gather and add a bunch of overhead
@@ -111,7 +112,7 @@ async def load_token_transfer(
                 e.__class__.__name__,
                 e,
                 await get_symbol(token) or token.address,
-                transfer_log.address,
+                token_address,
                 transfer_log.blockNumber,
             )
             logger.exception(e)
