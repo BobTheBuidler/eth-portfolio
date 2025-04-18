@@ -297,7 +297,12 @@ async def get_nonce_at_block(address: Address, block: Block) -> int:
 
     """
     try:
-        nonce = await stuck_coro_debugger(dank_mids.eth.get_transaction_count)(address, block_identifier=block) - 1
+        nonce = (
+            await stuck_coro_debugger(dank_mids.eth.get_transaction_count)(
+                address, block_identifier=block
+            )
+            - 1
+        )
         _update_nonces(address, nonce, block)
         return nonce
     except ValueError as e:
