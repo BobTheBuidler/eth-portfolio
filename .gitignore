@@ -4,4 +4,5 @@ env/
 .mypy_cache/
 .hypothesis
 .pytest_cache
-__pycache__
+__pycache__/
+eth_portfolio.egg-info/
