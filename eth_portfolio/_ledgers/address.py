@@ -589,6 +589,9 @@ async def get_transaction_status(txhash: str) -> Status:
 
 
 _trace_semaphores = defaultdict(lambda: a_sync.Semaphore(16, __name__ + ".trace_semaphore"))
+_check_trace_semaphores = defaultdict(
+    lambda: a_sync.Semaphore(50, __name__ + ".check_trace_semaphore")
+)
 
 
 @cache_to_disk
@@ -615,7 +618,12 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
     )
     async with _trace_semaphores[semaphore_key]:
         traces = await trace_filter(**filter_params)
-    return await _check_traces(traces) if traces else []
+    if traces:
+        # TODO refactor this, its horrible
+        async with _check_trace_semaphores[semaphore_key]:
+            return await _check_traces(traces)
+    else:
+        return []
 
 
 @stuck_coro_debugger
