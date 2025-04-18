@@ -352,19 +352,19 @@ Example:
 
 def _get_num_chunks(range_size: int) -> int:
     if range_size >= 4096:
-        return 100
+        return 20  # 100
     elif range_size >= 2048:
-        return 80
+        return 16  # 80
     elif range_size >= 1024:
-        return 40
+        return 10  # 40
     elif range_size >= 512:
-        return 20
+        return 5  # 20
     elif range_size >= 256:
-        return 10
+        return 5  # 10
     elif range_size >= 128:
-        return 8
+        return 5  # 8
     elif range_size >= 64:
-        return 6
+        return 5  # 6
     elif range_size >= 32:
         return 5
     elif range_size >= 16:
