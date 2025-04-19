@@ -1,9 +1,6 @@
 # eth-portfolio
 Use `eth-portfolio` to output information about your portfolio in a streamlined, speed-optimized way.
 
-### NOTES:
-- This lib is still a WIP and the provided API is subject to change without notice.
-
 ### INSTALLATION:
 - You should start with a fresh virtual environment, and then just...
 ```
