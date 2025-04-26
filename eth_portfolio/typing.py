@@ -779,7 +779,7 @@ class WalletBalances(
             >>> total_usd
             Decimal('2000')
         """
-        return self.assets.sum_usd() - self.debt.sum_usd() + self.external.sum_usd()
+        return self.assets.sum_usd() - self.debt.sum_usd() + self.external.sum_usd()  # type: ignore [no-any-return]
 
     def __bool__(self) -> bool:
         """
@@ -918,7 +918,7 @@ class WalletBalances(
             Decimal('100')
         """
         self.__validateitem(key, value)
-        return super().__setitem__(key, value)
+        super().__setitem__(key, value)
 
     def __validatekey(self, key: CategoryLabel) -> None:
         """
@@ -967,7 +967,7 @@ class WalletBalances(
 _PBSeed = Union[Dict[ChecksumAddress, WalletBalances], List[Tuple[ChecksumAddress, WalletBalances]]]
 
 
-class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumericMixin):
+class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumericMixin):  # type: ignore [misc]
     """
     Aggregates :class:`~eth_portfolio.typing.WalletBalances` for multiple wallets, providing operations to sum
     balances across an entire portfolio.
@@ -1005,7 +1005,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         else:
             raise TypeError(f"{seed} is not a valid input for PortfolioBalances")
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: ChecksumAddress, value: WalletBalances) -> None:
         if not isinstance(value, WalletBalances):
             raise TypeError(
                 f"value must be a `WalletBalances` object. You passed {value}"
