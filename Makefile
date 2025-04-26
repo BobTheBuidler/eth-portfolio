@@ -8,4 +8,4 @@ docs:
 	sphinx-apidoc -o ./docs/source ./eth_portfolio
 
 mypyc:
-	mypyc eth_portfolio/typing.py --strict --pretty
+	mypyc eth_portfolio/typing.py --strict --pretty --disable-error-code unused-ignore
