@@ -58,8 +58,8 @@ Fn = Callable[_P, _T]
 
 # TODO: use dataclasses for this one so mypyc can compile it
 @final
-class Balance(  # type: ignore [call-arg, misc]
-    DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=True, forbid_unknown_fields=True
+class Balance(  # type: ignore [call-arg]
+    DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=True, forbid_unknown_fields=True  # type: ignore [misc]
 ):
     """
     Represents the balance of a single token, including its token amount and equivalent USD value.
@@ -340,7 +340,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):  # 
         """
         if not isinstance(value, Balance):
             raise TypeError(f"value must be a `Balance` object. You passed {value}") from None
-        return super().__setitem__(key, value)
+        super().__setitem__(key, value)
 
     @property
     def dataframe(self) -> DataFrame:
@@ -1010,7 +1010,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             raise TypeError(
                 f"value must be a `WalletBalances` object. You passed {value}"
             ) from None
-        return super().__setitem__(key, value)
+        super().__setitem__(key, value)
 
     @property
     def dataframe(self) -> DataFrame:
