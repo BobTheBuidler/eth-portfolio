@@ -35,7 +35,6 @@ from typing import (
     Literal,
     Optional,
     Tuple,
-    TypedDict,
     TypeVar,
     Union,
     final,
@@ -43,9 +42,9 @@ from typing import (
 
 from checksum_dict import DefaultChecksumDict
 from dictstruct import DictStruct
+from eth_typing import BlockNumber, ChecksumAddress
 from pandas import DataFrame, concat
 from typing_extensions import ParamSpec, Self
-from y.datatypes import Address, Block
 
 from eth_portfolio._decimal import Decimal
 
@@ -57,9 +56,10 @@ _P = ParamSpec("_P")
 Fn = Callable[_P, _T]
 
 
+# TODO: use dataclasses for this one so mypyc can compile it
 @final
-class Balance(
-    DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=True, forbid_unknown_fields=True
+class Balance(  # type: ignore [call-arg]
+    DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=True, forbid_unknown_fields=True  # type: ignore [misc]
 ):
     """
     Represents the balance of a single token, including its token amount and equivalent USD value.
@@ -84,12 +84,12 @@ class Balance(
     The USD equivalent value of the token amount.
     """
 
-    token: Address = None
+    token: Optional[ChecksumAddress] = None
     """
     The token the balance is of, if known.
     """
 
-    block: Block = None
+    block: Optional[BlockNumber] = None
     """
     The block from which the balance was taken, if known.
     """
@@ -166,7 +166,7 @@ class Balance(
             >>> sum_balance.balance
             Decimal('100')
         """
-        return self if other == 0 else self.__add__(other)  # type: ignore
+        return self if other == 0 else self + other
 
     def __sub__(self, other: "Balance") -> "Balance":
         """
@@ -227,8 +227,8 @@ class Balance(
 
 ProtocolLabel = str
 
-Addresses = Union[Address, Iterable[Address]]
-TokenAddress = TypeVar("TokenAddress", bound=Address)
+Addresses = Union[ChecksumAddress, Iterable[ChecksumAddress]]
+TokenAddress = TypeVar("TokenAddress", bound=ChecksumAddress)
 
 
 class _SummableNonNumericMixin:
@@ -270,20 +270,20 @@ class _SummableNonNumericMixin:
             ...     def __add__(self, other):
             ...         return Summable(self.value + other.value)
             ...     def __radd__(self, other):
-            ...         return self.__add__(other)
+            ...         return self + other
             >>> a = Summable(10)
             >>> b = Summable(20)
             >>> sum_result = a + b
             >>> sum_result.value
             30
         """
-        return self if other == 0 else self.__add__(other)  # type: ignore
+        return self if other == 0 else self + other
 
 
-_TBSeed = Union[Dict[Address, Balance], Iterable[Tuple[Address, Balance]]]
+_TBSeed = Union[Dict[ChecksumAddress, Balance], Iterable[Tuple[ChecksumAddress, Balance]]]
 
 
-class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
+class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):  # type: ignore [misc]
     """
     A specialized defaultdict subclass made for holding a mapping of ``token -> balance``.
 
@@ -309,17 +309,19 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
         self.block = block
         if seed is None:
             return
-        if isinstance(seed, dict):
-            seed = seed.items()
-        if not isinstance(seed, Iterable):
+        elif isinstance(seed, dict):
+            for token, balance in seed.items():
+                self[token] += balance
+        elif isinstance(seed, list):
+            for token, balance in seed:
+                self[token] += balance
+        else:
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
-        for token, balance in seed:  # type: ignore [misc]
-            self[token] += balance
 
-    def __getitem__(self, key) -> Balance:
+    def __getitem__(self, key: TokenAddress) -> Balance:
         return super().__getitem__(key) if key in self else Balance(token=key, block=self.block)
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: TokenAddress, value: Balance) -> None:
         """
         Sets the balance for a given token address.
 
@@ -338,7 +340,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
         """
         if not isinstance(value, Balance):
             raise TypeError(f"value must be a `Balance` object. You passed {value}") from None
-        return super().__setitem__(key, value)
+        super().__setitem__(key, value)
 
     @property
     def dataframe(self) -> DataFrame:
@@ -481,7 +483,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
     __slots__ = ("block",)
 
 
-_RTBSeed = Dict[ProtocolLabel, TokenBalances]
+_RTBSeed = Union[Dict[ProtocolLabel, TokenBalances], List[Tuple[ProtocolLabel, TokenBalances]]]
 
 
 class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNonNumericMixin):
@@ -506,18 +508,24 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         self.block = block
         if seed is None:
             return
-        if isinstance(seed, dict):
-            seed = seed.items()  # type: ignore [assignment]
-        if not isinstance(seed, Iterable):
+        elif isinstance(seed, dict):
+            for remote, token_balances in seed.items():  # type: ignore [misc]
+                if self.block != token_balances.block:
+                    raise ValueError(
+                        f"These objects are not from the same block ({self.block} and {token_balances.block})"
+                    )
+                self[remote] += token_balances  # type: ignore [has-type]
+        elif isinstance(seed, list):
+            for remote, token_balances in seed:  # type: ignore [misc]
+                if self.block != token_balances.block:
+                    raise ValueError(
+                        f"These objects are not from the same block ({self.block} and {token_balances.block})"
+                    )
+                self[remote] += token_balances  # type: ignore [has-type]
+        else:
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
-        for remote, token_balances in seed:  # type: ignore [misc]
-            if self.block != token_balances.block:
-                raise ValueError(
-                    f"These objects are not from the same block ({self.block} and {token_balances.block})"
-                )
-            self[remote] += token_balances  # type: ignore [has-type]
 
-    def __setitem__(self, protocol: str, value: TokenBalances):
+    def __setitem__(self, protocol: str, value: TokenBalances) -> None:
         """
         Sets the token balances for a given protocol.
 
@@ -721,7 +729,7 @@ class WalletBalances(
         Returns:
             :class:`~eth_portfolio.typing.TokenBalances`: The :class:`~eth_portfolio.typing.TokenBalances` object representing the wallet's assets.
         """
-        return self["assets"]  # type: ignore
+        return self["assets"]  # type: ignore [return-value]
 
     @property
     def debt(self) -> RemoteTokenBalances:
@@ -731,7 +739,7 @@ class WalletBalances(
         Returns:
             :class:`~eth_portfolio.typing.RemoteTokenBalances`: The :class:`~eth_portfolio.typing.RemoteTokenBalances` object representing the wallet's debts.
         """
-        return self["debt"]
+        return self["debt"]  # type: ignore [return-value]
 
     @property
     def external(self) -> RemoteTokenBalances:
@@ -741,7 +749,7 @@ class WalletBalances(
         Returns:
             :class:`~eth_portfolio.typing.RemoteTokenBalances`: The :class:`~eth_portfolio.typing.RemoteTokenBalances` object representing the wallet's external balances.
         """
-        return self["external"]
+        return self["external"]  # type: ignore [return-value]
 
     @property
     def dataframe(self) -> DataFrame:
@@ -771,7 +779,7 @@ class WalletBalances(
             >>> total_usd
             Decimal('2000')
         """
-        return self.assets.sum_usd() - self.debt.sum_usd() + self.external.sum_usd()
+        return self.assets.sum_usd() - self.debt.sum_usd() + self.external.sum_usd()  # type: ignore [no-any-return]
 
     def __bool__(self) -> bool:
         """
@@ -910,7 +918,7 @@ class WalletBalances(
             Decimal('100')
         """
         self.__validateitem(key, value)
-        return super().__setitem__(key, value)
+        super().__setitem__(key, value)
 
     def __validatekey(self, key: CategoryLabel) -> None:
         """
@@ -956,10 +964,10 @@ class WalletBalances(
             raise NotImplementedError(f"key {key} is not yet implemented.")
 
 
-_PBSeed = Union[Dict[Address, WalletBalances], Iterable[Tuple[Address, WalletBalances]]]
+_PBSeed = Union[Dict[ChecksumAddress, WalletBalances], List[Tuple[ChecksumAddress, WalletBalances]]]
 
 
-class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumericMixin):
+class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumericMixin):  # type: ignore [misc]
     """
     Aggregates :class:`~eth_portfolio.typing.WalletBalances` for multiple wallets, providing operations to sum
     balances across an entire portfolio.
@@ -980,23 +988,29 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         self.block = block
         if seed is None:
             return
-        if isinstance(seed, dict):
-            seed = seed.items()
-        if not isinstance(seed, Iterable):
+        elif isinstance(seed, dict):
+            for wallet, balances in seed.items():
+                if self.block != balances.block:
+                    raise ValueError(
+                        f"These objects are not from the same block ({self.block} and {balances.block})"
+                    )
+                self[wallet] += balances
+        elif isinstance(seed, list):
+            for wallet, balances in seed:
+                if self.block != balances.block:
+                    raise ValueError(
+                        f"These objects are not from the same block ({self.block} and {balances.block})"
+                    )
+                self[wallet] += balances
+        else:
             raise TypeError(f"{seed} is not a valid input for PortfolioBalances")
-        for wallet, balances in seed:
-            if self.block != balances.block:
-                raise ValueError(
-                    f"These objects are not from the same block ({self.block} and {balances.block})"
-                )
-            self[wallet] += balances
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: ChecksumAddress, value: WalletBalances) -> None:
         if not isinstance(value, WalletBalances):
             raise TypeError(
                 f"value must be a `WalletBalances` object. You passed {value}"
             ) from None
-        return super().__setitem__(key, value)
+        super().__setitem__(key, value)
 
     @property
     def dataframe(self) -> DataFrame:
@@ -1146,10 +1160,10 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
     __slots__ = ("block",)
 
 
-_WTBInput = Union[Dict[Address, TokenBalances], Iterable[Tuple[Address, TokenBalances]]]
+_WTBInput = Union[Dict[ChecksumAddress, TokenBalances], List[Tuple[ChecksumAddress, TokenBalances]]]
 
 
-class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericMixin):
+class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericMixin):  # type: ignore [misc]
     # Since PortfolioBalances key lookup is:    ``wallet   -> category -> token    -> balance``
     # We need a new structure for key pattern:  ``wallet   -> token    -> balance``
 
@@ -1174,16 +1188,22 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
         self.block = block
         if seed is None:
             return
-        if isinstance(seed, dict):
-            seed = seed.items()
-        if not isinstance(seed, Iterable):
+        elif isinstance(seed, dict):
+            for wallet, balances in seed.items():
+                if self.block != balances.block:
+                    raise ValueError(
+                        f"These objects are not from the same block ({self.block} and {balances.block})"
+                    )
+                self[wallet] += balances
+        elif isinstance(seed, list):
+            for wallet, balances in seed:
+                if self.block != balances.block:
+                    raise ValueError(
+                        f"These objects are not from the same block ({self.block} and {balances.block})"
+                    )
+                self[wallet] += balances
+        else:
             raise TypeError(f"{seed} is not a valid input for WalletBalancesRaw")
-        for wallet, balances in seed:
-            if self.block != balances.block:
-                raise ValueError(
-                    f"These objects are not from the same block ({self.block} and {balances.block})"
-                )
-            self[wallet] += balances
 
     def __bool__(self) -> bool:
         """
