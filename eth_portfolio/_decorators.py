@@ -2,7 +2,7 @@ import asyncio
 import functools
 import inspect
 import logging
-from typing import Callable, Optional
+from typing import AsyncGenerator, Callable, Optional, overload
 
 from brownie import chain
 from typing_extensions import Concatenate
@@ -13,6 +13,18 @@ from eth_portfolio._utils import get_buffered_chain_height
 from eth_portfolio.typing import _I, _P, _T
 
 logger = logging.getLogger(__name__)
+
+
+@overload
+def set_end_block_if_none(
+    func: Callable[Concatenate[_I, Block, Block, _P], AsyncGenerator[_T]],
+) -> Callable[Concatenate[_I, Block, Optional[Block], _P], AsyncGenerator[_T]]: ...
+
+
+@overload
+def set_end_block_if_none(
+    func: Callable[Concatenate[_I, Block, Block, _P], _T],
+) -> Callable[Concatenate[_I, Block, Optional[Block], _P], _T]: ...
 
 
 def set_end_block_if_none(
@@ -31,7 +43,7 @@ def set_end_block_if_none(
             end_block: Optional[Block],
             *args: _P.args,
             **kwargs: _P.kwargs,
-        ) -> _T:
+        ) -> AsyncGenerator[_T]:
             if end_block is None:
                 end_block = await get_buffered_chain_height()
                 logger.debug("end_block not provided, using %s", end_block)
