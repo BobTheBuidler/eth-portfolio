@@ -57,7 +57,7 @@ Fn = Callable[_P, _T]
 
 
 @final
-class Balance(
+class Balance(  # type: ignore [call-arg]
     DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=True, forbid_unknown_fields=True
 ):
     """
@@ -165,7 +165,7 @@ class Balance(
             >>> sum_balance.balance
             Decimal('100')
         """
-        return self if other == 0 else self.__add__(other)  # type: ignore
+        return self if other == 0 else self + other
 
     def __sub__(self, other: "Balance") -> "Balance":
         """
@@ -269,14 +269,14 @@ class _SummableNonNumericMixin:
             ...     def __add__(self, other):
             ...         return Summable(self.value + other.value)
             ...     def __radd__(self, other):
-            ...         return self.__add__(other)
+            ...         return self + other
             >>> a = Summable(10)
             >>> b = Summable(20)
             >>> sum_result = a + b
             >>> sum_result.value
             30
         """
-        return self if other == 0 else self.__add__(other)  # type: ignore
+        return self if other == 0 else self + other
 
 
 _TBSeed = Union[Dict[ChecksumAddress, Balance], Iterable[Tuple[ChecksumAddress, Balance]]]
