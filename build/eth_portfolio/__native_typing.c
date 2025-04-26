@@ -3187,7 +3187,7 @@ PyObject *CPyPy_Balance___usd(PyObject *self, PyObject *const *args, size_t narg
     PyObject *retval = CPyDef_Balance___usd(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "usd", 98, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "usd", 98, CPyStatic_globals);
     return NULL;
 }
 
@@ -3299,13 +3299,13 @@ PyObject *CPyDef_Balance_____add__(PyObject *cpy_r_self, PyObject *cpy_r_other) 
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 129, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 129, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r11 = CPyStatics[6]; /* ' is not a `Balance` object' */
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 129, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 129, CPyStatic_globals);
         goto CPyL51;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -3317,14 +3317,14 @@ PyObject *CPyDef_Balance_____add__(PyObject *cpy_r_self, PyObject *cpy_r_other) 
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 129, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 129, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 129, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 129, CPyStatic_globals);
         goto CPyL52;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -3332,14 +3332,14 @@ PyObject *CPyDef_Balance_____add__(PyObject *cpy_r_self, PyObject *cpy_r_other) 
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 129, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 129, CPyStatic_globals);
         goto CPyL52;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 129, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 129, CPyStatic_globals);
         goto CPyL50;
     }
     CPy_Unreachable();
@@ -3352,14 +3352,14 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r23);
     CPy_DECREF(cpy_r_r24);
     if (unlikely(cpy_r_r25 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 130, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 130, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r26 = PyObject_IsTrue(cpy_r_r25);
     CPy_DECREF(cpy_r_r25);
     cpy_r_r27 = cpy_r_r26 >= 0;
     if (unlikely(!cpy_r_r27)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 130, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 130, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r28 = cpy_r_r26;
@@ -3371,7 +3371,7 @@ CPyL8: ;
     cpy_r_r31 = PyObject_Str(cpy_r_r30);
     CPy_DECREF(cpy_r_r30);
     if (unlikely(cpy_r_r31 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 132, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 132, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r32 = CPyStatics[9]; /* ' and ' */
@@ -3380,7 +3380,7 @@ CPyL8: ;
     cpy_r_r34 = PyObject_Str(cpy_r_r33);
     CPy_DECREF(cpy_r_r33);
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 132, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 132, CPyStatic_globals);
         goto CPyL53;
     }
     cpy_r_r35 = CPyStatics[10]; /* ')' */
@@ -3388,14 +3388,14 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r31);
     CPy_DECREF(cpy_r_r34);
     if (unlikely(cpy_r_r36 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 132, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 132, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r37 = CPyModule_builtins;
     cpy_r_r38 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r39 = CPyObject_GetAttr(cpy_r_r37, cpy_r_r38);
     if (unlikely(cpy_r_r39 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 131, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 131, CPyStatic_globals);
         goto CPyL54;
     }
     PyObject *cpy_r_r40[1] = {cpy_r_r36};
@@ -3403,14 +3403,14 @@ CPyL8: ;
     cpy_r_r42 = _PyObject_Vectorcall(cpy_r_r39, cpy_r_r41, 1, 0);
     CPy_DECREF(cpy_r_r39);
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 131, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 131, CPyStatic_globals);
         goto CPyL54;
     }
     CPy_DECREF(cpy_r_r36);
     CPy_Raise(cpy_r_r42);
     CPy_DECREF(cpy_r_r42);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 131, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 131, CPyStatic_globals);
         goto CPyL50;
     }
     CPy_Unreachable();
@@ -3423,14 +3423,14 @@ CPyL18: ;
     CPy_DECREF(cpy_r_r43);
     CPy_DECREF(cpy_r_r44);
     if (unlikely(cpy_r_r45 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 134, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 134, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r46 = PyObject_IsTrue(cpy_r_r45);
     CPy_DECREF(cpy_r_r45);
     cpy_r_r47 = cpy_r_r46 >= 0;
     if (unlikely(!cpy_r_r47)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 134, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 134, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r48 = cpy_r_r46;
@@ -3442,7 +3442,7 @@ CPyL18: ;
     cpy_r_r51 = PyObject_Str(cpy_r_r50);
     CPy_DECREF(cpy_r_r50);
     if (unlikely(cpy_r_r51 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 136, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 136, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r52 = CPyStatics[9]; /* ' and ' */
@@ -3451,7 +3451,7 @@ CPyL18: ;
     cpy_r_r54 = PyObject_Str(cpy_r_r53);
     CPy_DECREF(cpy_r_r53);
     if (unlikely(cpy_r_r54 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 136, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 136, CPyStatic_globals);
         goto CPyL55;
     }
     cpy_r_r55 = CPyStatics[10]; /* ')' */
@@ -3459,14 +3459,14 @@ CPyL18: ;
     CPy_DECREF(cpy_r_r51);
     CPy_DECREF(cpy_r_r54);
     if (unlikely(cpy_r_r56 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 136, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 136, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r57 = CPyModule_builtins;
     cpy_r_r58 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r59 = CPyObject_GetAttr(cpy_r_r57, cpy_r_r58);
     if (unlikely(cpy_r_r59 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 135, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 135, CPyStatic_globals);
         goto CPyL56;
     }
     PyObject *cpy_r_r60[1] = {cpy_r_r56};
@@ -3474,14 +3474,14 @@ CPyL18: ;
     cpy_r_r62 = _PyObject_Vectorcall(cpy_r_r59, cpy_r_r61, 1, 0);
     CPy_DECREF(cpy_r_r59);
     if (unlikely(cpy_r_r62 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 135, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 135, CPyStatic_globals);
         goto CPyL56;
     }
     CPy_DECREF(cpy_r_r56);
     CPy_Raise(cpy_r_r62);
     CPy_DECREF(cpy_r_r62);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 135, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 135, CPyStatic_globals);
         goto CPyL50;
     }
     CPy_Unreachable();
@@ -3494,7 +3494,7 @@ CPyL28: ;
     CPy_DECREF(cpy_r_r63);
     CPy_DECREF(cpy_r_r64);
     if (unlikely(cpy_r_r65 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 140, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 140, CPyStatic_globals);
         goto CPyL32;
     } else
         goto CPyL57;
@@ -3507,7 +3507,7 @@ CPyL29: ;
     CPy_DECREF(cpy_r_r66);
     CPy_DECREF(cpy_r_r67);
     if (unlikely(cpy_r_r68 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 141, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 141, CPyStatic_globals);
         goto CPyL32;
     } else
         goto CPyL58;
@@ -3520,7 +3520,7 @@ CPyL30: ;
     CPy_DECREF(cpy_r_r70);
     cpy_r_r71 = CPyDef_Balance();
     if (unlikely(cpy_r_r71 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 139, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 139, CPyStatic_globals);
         goto CPyL32;
     }
     return cpy_r_r71;
@@ -3530,7 +3530,7 @@ CPyL32: ;
     cpy_r_r74 = CPyStatics[13]; /* 'Exception' */
     cpy_r_r75 = CPyObject_GetAttr(cpy_r_r73, cpy_r_r74);
     if (unlikely(cpy_r_r75 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 145, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 145, CPyStatic_globals);
         goto CPyL48;
     }
     cpy_r_r76 = CPy_ExceptionMatches(cpy_r_r75);
@@ -3540,19 +3540,19 @@ CPyL32: ;
     cpy_r_r78 = CPyStatics[14]; /* 'Cannot add ' */
     cpy_r_r79 = PyObject_Str(cpy_r_self);
     if (unlikely(cpy_r_r79 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 146, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 146, CPyStatic_globals);
         goto CPyL59;
     }
     cpy_r_r80 = CPyStatics[9]; /* ' and ' */
     cpy_r_r81 = PyObject_Str(cpy_r_other);
     if (unlikely(cpy_r_r81 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 146, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 146, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r82 = CPyStatics[15]; /* ': ' */
     cpy_r_r83 = PyObject_Str(cpy_r_r77);
     if (unlikely(cpy_r_r83 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 146, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 146, CPyStatic_globals);
         goto CPyL61;
     }
     cpy_r_r84 = CPyStr_Build(6, cpy_r_r78, cpy_r_r79, cpy_r_r80, cpy_r_r81, cpy_r_r82, cpy_r_r83);
@@ -3560,24 +3560,24 @@ CPyL32: ;
     CPy_DecRef(cpy_r_r81);
     CPy_DecRef(cpy_r_r83);
     if (unlikely(cpy_r_r84 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 146, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 146, CPyStatic_globals);
         goto CPyL59;
     }
     cpy_r_r85 = CPyStatics[16]; /* 'args' */
     cpy_r_r86 = CPyObject_GetAttr(cpy_r_r77, cpy_r_r85);
     if (unlikely(cpy_r_r86 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 146, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 146, CPyStatic_globals);
         goto CPyL62;
     }
     if (likely(PyTuple_Check(cpy_r_r86)))
         cpy_r_r87 = cpy_r_r86;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 146, CPyStatic_globals, "tuple", cpy_r_r86);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 146, CPyStatic_globals, "tuple", cpy_r_r86);
         goto CPyL62;
     }
     cpy_r_r88 = PyList_New(1);
     if (unlikely(cpy_r_r88 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 146, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 146, CPyStatic_globals);
         goto CPyL63;
     }
     cpy_r_r89 = (CPyPtr)&((PyListObject *)cpy_r_r88)->ob_item;
@@ -3586,7 +3586,7 @@ CPyL32: ;
     cpy_r_r91 = CPyList_Extend(cpy_r_r88, cpy_r_r87);
     CPy_DecRef(cpy_r_r87);
     if (unlikely(cpy_r_r91 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 146, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 146, CPyStatic_globals);
         goto CPyL64;
     } else
         goto CPyL65;
@@ -3594,7 +3594,7 @@ CPyL42: ;
     cpy_r_r92 = PyList_AsTuple(cpy_r_r88);
     CPy_DecRef(cpy_r_r88);
     if (unlikely(cpy_r_r92 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 146, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 146, CPyStatic_globals);
         goto CPyL59;
     }
     cpy_r_r93 = CPyStatics[16]; /* 'args' */
@@ -3603,7 +3603,7 @@ CPyL42: ;
     CPy_DecRef(cpy_r_r92);
     cpy_r_r95 = cpy_r_r94 >= 0;
     if (unlikely(!cpy_r_r95)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 146, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 146, CPyStatic_globals);
         goto CPyL48;
     }
     CPy_Reraise();
@@ -3721,7 +3721,7 @@ PyObject *CPyPy_Balance_____add__(PyObject *self, PyObject *const *args, size_t 
     PyObject *retval = CPyDef_Balance_____add__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 104, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 104, CPyStatic_globals);
     return NULL;
 }
 
@@ -3736,7 +3736,7 @@ PyObject *CPyDef_Balance_____radd__(PyObject *cpy_r_self, PyObject *cpy_r_other)
     cpy_r_r0 = CPyStatics[140]; /* 0 */
     cpy_r_r1 = PyObject_RichCompare(cpy_r_other, cpy_r_r0, 2);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__radd__", 169, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__radd__", 169, CPyStatic_globals);
         goto CPyL8;
     }
     if (unlikely(!PyBool_Check(cpy_r_r1))) {
@@ -3745,7 +3745,7 @@ PyObject *CPyDef_Balance_____radd__(PyObject *cpy_r_self, PyObject *cpy_r_other)
         cpy_r_r2 = cpy_r_r1 == Py_True;
     CPy_DECREF(cpy_r_r1);
     if (unlikely(cpy_r_r2 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__radd__", 169, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__radd__", 169, CPyStatic_globals);
         goto CPyL8;
     }
     if (!cpy_r_r2) goto CPyL4;
@@ -3757,13 +3757,13 @@ CPyL4: ;
     if (likely(Py_TYPE(cpy_r_other) == CPyType_Balance))
         cpy_r_r4 = cpy_r_other;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__radd__", 169, CPyStatic_globals, "eth_portfolio.typing.Balance", cpy_r_other);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__radd__", 169, CPyStatic_globals, "eth_portfolio.typing.Balance", cpy_r_other);
         goto CPyL8;
     }
     cpy_r_r5 = CPyDef_Balance_____add__(cpy_r_self, cpy_r_r4);
     CPy_DECREF(cpy_r_r4);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__radd__", 169, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__radd__", 169, CPyStatic_globals);
         goto CPyL8;
     }
     cpy_r_r3 = cpy_r_r5;
@@ -3808,7 +3808,7 @@ __LL15: ;
     PyObject *retval = CPyDef_Balance_____radd__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__radd__", 149, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__radd__", 149, CPyStatic_globals);
     return NULL;
 }
 
@@ -3912,13 +3912,13 @@ PyObject *CPyDef_Balance_____sub__(PyObject *cpy_r_self, PyObject *cpy_r_other) 
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 194, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 194, CPyStatic_globals);
         goto CPyL45;
     }
     cpy_r_r11 = CPyStatics[17]; /* ' is not a `Balance` object.' */
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 194, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 194, CPyStatic_globals);
         goto CPyL46;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -3930,14 +3930,14 @@ PyObject *CPyDef_Balance_____sub__(PyObject *cpy_r_self, PyObject *cpy_r_other) 
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 194, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 194, CPyStatic_globals);
         goto CPyL45;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 194, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 194, CPyStatic_globals);
         goto CPyL47;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -3945,14 +3945,14 @@ PyObject *CPyDef_Balance_____sub__(PyObject *cpy_r_self, PyObject *cpy_r_other) 
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 194, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 194, CPyStatic_globals);
         goto CPyL47;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 194, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 194, CPyStatic_globals);
         goto CPyL45;
     }
     CPy_Unreachable();
@@ -3965,14 +3965,14 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r23);
     CPy_DECREF(cpy_r_r24);
     if (unlikely(cpy_r_r25 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 195, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 195, CPyStatic_globals);
         goto CPyL45;
     }
     cpy_r_r26 = PyObject_IsTrue(cpy_r_r25);
     CPy_DECREF(cpy_r_r25);
     cpy_r_r27 = cpy_r_r26 >= 0;
     if (unlikely(!cpy_r_r27)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 195, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 195, CPyStatic_globals);
         goto CPyL45;
     }
     cpy_r_r28 = cpy_r_r26;
@@ -3984,7 +3984,7 @@ CPyL8: ;
     cpy_r_r31 = PyObject_Str(cpy_r_r30);
     CPy_DECREF(cpy_r_r30);
     if (unlikely(cpy_r_r31 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 197, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 197, CPyStatic_globals);
         goto CPyL45;
     }
     cpy_r_r32 = CPyStatics[9]; /* ' and ' */
@@ -3993,7 +3993,7 @@ CPyL8: ;
     cpy_r_r34 = PyObject_Str(cpy_r_r33);
     CPy_DECREF(cpy_r_r33);
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 197, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 197, CPyStatic_globals);
         goto CPyL48;
     }
     cpy_r_r35 = CPyStatics[10]; /* ')' */
@@ -4001,14 +4001,14 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r31);
     CPy_DECREF(cpy_r_r34);
     if (unlikely(cpy_r_r36 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 197, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 197, CPyStatic_globals);
         goto CPyL45;
     }
     cpy_r_r37 = CPyModule_builtins;
     cpy_r_r38 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r39 = CPyObject_GetAttr(cpy_r_r37, cpy_r_r38);
     if (unlikely(cpy_r_r39 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 196, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 196, CPyStatic_globals);
         goto CPyL49;
     }
     PyObject *cpy_r_r40[1] = {cpy_r_r36};
@@ -4016,14 +4016,14 @@ CPyL8: ;
     cpy_r_r42 = _PyObject_Vectorcall(cpy_r_r39, cpy_r_r41, 1, 0);
     CPy_DECREF(cpy_r_r39);
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 196, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 196, CPyStatic_globals);
         goto CPyL49;
     }
     CPy_DECREF(cpy_r_r36);
     CPy_Raise(cpy_r_r42);
     CPy_DECREF(cpy_r_r42);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 196, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 196, CPyStatic_globals);
         goto CPyL45;
     }
     CPy_Unreachable();
@@ -4036,14 +4036,14 @@ CPyL18: ;
     CPy_DECREF(cpy_r_r43);
     CPy_DECREF(cpy_r_r44);
     if (unlikely(cpy_r_r45 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 199, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 199, CPyStatic_globals);
         goto CPyL45;
     }
     cpy_r_r46 = PyObject_IsTrue(cpy_r_r45);
     CPy_DECREF(cpy_r_r45);
     cpy_r_r47 = cpy_r_r46 >= 0;
     if (unlikely(!cpy_r_r47)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 199, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 199, CPyStatic_globals);
         goto CPyL45;
     }
     cpy_r_r48 = cpy_r_r46;
@@ -4055,7 +4055,7 @@ CPyL18: ;
     cpy_r_r51 = PyObject_Str(cpy_r_r50);
     CPy_DECREF(cpy_r_r50);
     if (unlikely(cpy_r_r51 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 201, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 201, CPyStatic_globals);
         goto CPyL45;
     }
     cpy_r_r52 = CPyStatics[9]; /* ' and ' */
@@ -4064,7 +4064,7 @@ CPyL18: ;
     cpy_r_r54 = PyObject_Str(cpy_r_r53);
     CPy_DECREF(cpy_r_r53);
     if (unlikely(cpy_r_r54 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 201, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 201, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r55 = CPyStatics[10]; /* ')' */
@@ -4072,14 +4072,14 @@ CPyL18: ;
     CPy_DECREF(cpy_r_r51);
     CPy_DECREF(cpy_r_r54);
     if (unlikely(cpy_r_r56 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 201, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 201, CPyStatic_globals);
         goto CPyL45;
     }
     cpy_r_r57 = CPyModule_builtins;
     cpy_r_r58 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r59 = CPyObject_GetAttr(cpy_r_r57, cpy_r_r58);
     if (unlikely(cpy_r_r59 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 200, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 200, CPyStatic_globals);
         goto CPyL51;
     }
     PyObject *cpy_r_r60[1] = {cpy_r_r56};
@@ -4087,14 +4087,14 @@ CPyL18: ;
     cpy_r_r62 = _PyObject_Vectorcall(cpy_r_r59, cpy_r_r61, 1, 0);
     CPy_DECREF(cpy_r_r59);
     if (unlikely(cpy_r_r62 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 200, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 200, CPyStatic_globals);
         goto CPyL51;
     }
     CPy_DECREF(cpy_r_r56);
     CPy_Raise(cpy_r_r62);
     CPy_DECREF(cpy_r_r62);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 200, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 200, CPyStatic_globals);
         goto CPyL45;
     }
     CPy_Unreachable();
@@ -4107,7 +4107,7 @@ CPyL28: ;
     CPy_DECREF(cpy_r_r63);
     CPy_DECREF(cpy_r_r64);
     if (unlikely(cpy_r_r65 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 205, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 205, CPyStatic_globals);
         goto CPyL32;
     } else
         goto CPyL52;
@@ -4120,7 +4120,7 @@ CPyL29: ;
     CPy_DECREF(cpy_r_r66);
     CPy_DECREF(cpy_r_r67);
     if (unlikely(cpy_r_r68 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 206, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 206, CPyStatic_globals);
         goto CPyL32;
     } else
         goto CPyL53;
@@ -4133,7 +4133,7 @@ CPyL30: ;
     CPy_DECREF(cpy_r_r70);
     cpy_r_r71 = CPyDef_Balance();
     if (unlikely(cpy_r_r71 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 204, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 204, CPyStatic_globals);
         goto CPyL32;
     }
     return cpy_r_r71;
@@ -4143,7 +4143,7 @@ CPyL32: ;
     cpy_r_r74 = CPyStatics[13]; /* 'Exception' */
     cpy_r_r75 = CPyObject_GetAttr(cpy_r_r73, cpy_r_r74);
     if (unlikely(cpy_r_r75 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 210, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 210, CPyStatic_globals);
         goto CPyL43;
     }
     cpy_r_r76 = CPy_ExceptionMatches(cpy_r_r75);
@@ -4153,19 +4153,19 @@ CPyL32: ;
     cpy_r_r78 = CPyStatics[18]; /* 'Cannot subtract ' */
     cpy_r_r79 = PyObject_Str(cpy_r_self);
     if (unlikely(cpy_r_r79 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 211, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 211, CPyStatic_globals);
         goto CPyL54;
     }
     cpy_r_r80 = CPyStatics[9]; /* ' and ' */
     cpy_r_r81 = PyObject_Str(cpy_r_other);
     if (unlikely(cpy_r_r81 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 211, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 211, CPyStatic_globals);
         goto CPyL55;
     }
     cpy_r_r82 = CPyStatics[15]; /* ': ' */
     cpy_r_r83 = PyObject_Str(cpy_r_r77);
     if (unlikely(cpy_r_r83 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 211, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 211, CPyStatic_globals);
         goto CPyL56;
     }
     cpy_r_r84 = CPyStr_Build(6, cpy_r_r78, cpy_r_r79, cpy_r_r80, cpy_r_r81, cpy_r_r82, cpy_r_r83);
@@ -4173,7 +4173,7 @@ CPyL32: ;
     CPy_DecRef(cpy_r_r81);
     CPy_DecRef(cpy_r_r83);
     if (unlikely(cpy_r_r84 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 211, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 211, CPyStatic_globals);
         goto CPyL54;
     }
     cpy_r_r85 = CPyStatics[19]; /* '__class__' */
@@ -4181,7 +4181,7 @@ CPyL32: ;
     cpy_r_r87 = (PyObject **)&cpy_r_r86;
     cpy_r_r88 = PyObject_VectorcallMethod(cpy_r_r85, cpy_r_r87, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r88 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 211, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 211, CPyStatic_globals);
         goto CPyL57;
     }
     CPy_DecRef(cpy_r_r77);
@@ -4189,7 +4189,7 @@ CPyL32: ;
     CPy_Raise(cpy_r_r88);
     CPy_DecRef(cpy_r_r88);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 211, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 211, CPyStatic_globals);
         goto CPyL43;
     } else
         goto CPyL58;
@@ -4291,7 +4291,7 @@ PyObject *CPyPy_Balance_____sub__(PyObject *self, PyObject *const *args, size_t 
     PyObject *retval = CPyDef_Balance_____sub__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 171, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 171, CPyStatic_globals);
     return NULL;
 }
 
@@ -4312,7 +4312,7 @@ char CPyDef_Balance_____bool__(PyObject *cpy_r_self) {
     cpy_r_r2 = PyObject_RichCompare(cpy_r_r0, cpy_r_r1, 3);
     CPy_DECREF(cpy_r_r0);
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 225, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 225, CPyStatic_globals);
         goto CPyL8;
     }
     if (unlikely(!PyBool_Check(cpy_r_r2))) {
@@ -4321,7 +4321,7 @@ char CPyDef_Balance_____bool__(PyObject *cpy_r_self) {
         cpy_r_r3 = cpy_r_r2 == Py_True;
     CPy_DECREF(cpy_r_r2);
     if (unlikely(cpy_r_r3 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 225, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 225, CPyStatic_globals);
         goto CPyL8;
     }
     if (!cpy_r_r3) goto CPyL4;
@@ -4334,7 +4334,7 @@ CPyL4: ;
     cpy_r_r7 = PyObject_RichCompare(cpy_r_r5, cpy_r_r6, 3);
     CPy_DECREF(cpy_r_r5);
     if (unlikely(cpy_r_r7 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 225, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 225, CPyStatic_globals);
         goto CPyL8;
     }
     if (unlikely(!PyBool_Check(cpy_r_r7))) {
@@ -4343,7 +4343,7 @@ CPyL4: ;
         cpy_r_r8 = cpy_r_r7 == Py_True;
     CPy_DECREF(cpy_r_r7);
     if (unlikely(cpy_r_r8 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 225, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 225, CPyStatic_globals);
         goto CPyL8;
     }
     cpy_r_r4 = cpy_r_r8;
@@ -4376,7 +4376,7 @@ PyObject *CPyPy_Balance_____bool__(PyObject *self, PyObject *const *args, size_t
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 213, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 213, CPyStatic_globals);
     return NULL;
 }
 
@@ -4452,7 +4452,7 @@ PyObject *CPyPy_Balance_____mypyc_defaults_setup(PyObject *self, PyObject *const
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__mypyc_defaults_setup", -1, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__mypyc_defaults_setup", -1, CPyStatic_globals);
     return NULL;
 }
 
@@ -4465,13 +4465,13 @@ PyObject *CPyDef__SummableNonNumericMixin_____add__(PyObject *cpy_r_self, PyObje
     cpy_r_r1 = CPyStatics[21]; /* 'NotImplementedError' */
     cpy_r_r2 = CPyObject_GetAttr(cpy_r_r0, cpy_r_r1);
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 254, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 254, CPyStatic_globals);
         goto CPyL3;
     }
     CPy_Raise(cpy_r_r2);
     CPy_DECREF(cpy_r_r2);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 254, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 254, CPyStatic_globals);
         goto CPyL3;
     }
     CPy_Unreachable();
@@ -4505,7 +4505,7 @@ PyObject *CPyPy__SummableNonNumericMixin_____add__(PyObject *self, PyObject *con
     PyObject *retval = CPyDef__SummableNonNumericMixin_____add__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 241, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 241, CPyStatic_globals);
     return NULL;
 }
 
@@ -4520,7 +4520,7 @@ PyObject *CPyDef__SummableNonNumericMixin_____radd__(PyObject *cpy_r_self, PyObj
     cpy_r_r0 = CPyStatics[140]; /* 0 */
     cpy_r_r1 = PyObject_RichCompare(cpy_r_other, cpy_r_r0, 2);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__radd__", 280, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__radd__", 280, CPyStatic_globals);
         goto CPyL8;
     }
     if (unlikely(!PyBool_Check(cpy_r_r1))) {
@@ -4529,7 +4529,7 @@ PyObject *CPyDef__SummableNonNumericMixin_____radd__(PyObject *cpy_r_self, PyObj
         cpy_r_r2 = cpy_r_r1 == Py_True;
     CPy_DECREF(cpy_r_r1);
     if (unlikely(cpy_r_r2 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__radd__", 280, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__radd__", 280, CPyStatic_globals);
         goto CPyL8;
     }
     if (!cpy_r_r2) goto CPyL4;
@@ -4541,13 +4541,13 @@ CPyL4: ;
     if (likely(PyObject_TypeCheck(cpy_r_other, CPyType__SummableNonNumericMixin)))
         cpy_r_r4 = cpy_r_other;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__radd__", 280, CPyStatic_globals, "eth_portfolio.typing._SummableNonNumericMixin", cpy_r_other);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__radd__", 280, CPyStatic_globals, "eth_portfolio.typing._SummableNonNumericMixin", cpy_r_other);
         goto CPyL8;
     }
     cpy_r_r5 = CPY_GET_METHOD(cpy_r_self, CPyType__SummableNonNumericMixin, 0, eth_portfolio___typing____SummableNonNumericMixinObject, PyObject * (*)(PyObject *, PyObject *))(cpy_r_self, cpy_r_r4); /* __add__ */
     CPy_DECREF(cpy_r_r4);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__radd__", 280, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__radd__", 280, CPyStatic_globals);
         goto CPyL8;
     }
     cpy_r_r3 = cpy_r_r5;
@@ -4592,7 +4592,7 @@ __LL16: ;
     PyObject *retval = CPyDef__SummableNonNumericMixin_____radd__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__radd__", 256, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__radd__", 256, CPyStatic_globals);
     return NULL;
 }
 
@@ -4685,7 +4685,7 @@ CPyL4: ;
     cpy_r_r3 = CPyStatics[22]; /* 'super' */
     cpy_r_r4 = CPyObject_GetAttr(cpy_r_r2, cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 308, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 308, CPyStatic_globals);
         goto CPyL51;
     }
     cpy_r_r5 = (PyObject *)CPyType_TokenBalances;
@@ -4694,14 +4694,14 @@ CPyL4: ;
     cpy_r_r8 = _PyObject_Vectorcall(cpy_r_r4, cpy_r_r7, 2, 0);
     CPy_DECREF(cpy_r_r4);
     if (unlikely(cpy_r_r8 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 308, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 308, CPyStatic_globals);
         goto CPyL51;
     }
     cpy_r_r9 = CPyStatics[23]; /* '__init__' */
     cpy_r_r10 = CPyObject_GetAttr(cpy_r_r8, cpy_r_r9);
     CPy_DECREF(cpy_r_r8);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 308, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 308, CPyStatic_globals);
         goto CPyL51;
     }
     cpy_r_r11 = (PyObject *)CPyType_Balance;
@@ -4710,7 +4710,7 @@ CPyL4: ;
     cpy_r_r14 = _PyObject_Vectorcall(cpy_r_r10, cpy_r_r13, 1, 0);
     CPy_DECREF(cpy_r_r10);
     if (unlikely(cpy_r_r14 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 308, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 308, CPyStatic_globals);
         goto CPyL51;
     } else
         goto CPyL52;
@@ -4729,7 +4729,7 @@ CPyL10: ;
     cpy_r_r18 = PyObject_IsInstance(cpy_r_seed, cpy_r_r17);
     cpy_r_r19 = cpy_r_r18 >= 0;
     if (unlikely(!cpy_r_r19)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 312, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 312, CPyStatic_globals);
         goto CPyL54;
     }
     cpy_r_r20 = cpy_r_r18;
@@ -4737,7 +4737,7 @@ CPyL10: ;
     if (likely(PyDict_Check(cpy_r_seed)))
         cpy_r_r21 = cpy_r_seed;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 313, CPyStatic_globals, "dict", cpy_r_seed);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 313, CPyStatic_globals, "dict", cpy_r_seed);
         goto CPyL48;
     }
     cpy_r_r22 = 0;
@@ -4745,7 +4745,7 @@ CPyL10: ;
     cpy_r_r24 = cpy_r_r23 << 1;
     cpy_r_r25 = CPyDict_GetItemsIter(cpy_r_r21);
     if (unlikely(cpy_r_r25 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 313, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 313, CPyStatic_globals);
         goto CPyL55;
     }
 CPyL14: ;
@@ -4764,39 +4764,39 @@ CPyL14: ;
     cpy_r_balance = cpy_r_r30;
     cpy_r_r31 = CPyDef_TokenBalances_____getitem__(cpy_r_self, cpy_r_token);
     if (unlikely(cpy_r_r31 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 314, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 314, CPyStatic_globals);
         goto CPyL57;
     }
     cpy_r_r32 = PyNumber_InPlaceAdd(cpy_r_r31, cpy_r_balance);
     CPy_DECREF(cpy_r_r31);
     CPy_DECREF(cpy_r_balance);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 314, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 314, CPyStatic_globals);
         goto CPyL58;
     }
     if (likely(Py_TYPE(cpy_r_r32) == CPyType_Balance))
         cpy_r_r33 = cpy_r_r32;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 314, CPyStatic_globals, "eth_portfolio.typing.Balance", cpy_r_r32);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 314, CPyStatic_globals, "eth_portfolio.typing.Balance", cpy_r_r32);
         goto CPyL58;
     }
     cpy_r_r34 = CPyDef_TokenBalances_____setitem__(cpy_r_self, cpy_r_token, cpy_r_r33);
     CPy_DECREF(cpy_r_token);
     CPy_DECREF(cpy_r_r33);
     if (unlikely(cpy_r_r34 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 314, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 314, CPyStatic_globals);
         goto CPyL59;
     }
     cpy_r_r35 = CPyDict_CheckSize(cpy_r_r21, cpy_r_r24);
     if (unlikely(!cpy_r_r35)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 313, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 313, CPyStatic_globals);
         goto CPyL59;
     } else
         goto CPyL14;
 CPyL20: ;
     cpy_r_r36 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r36)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 313, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 313, CPyStatic_globals);
         goto CPyL48;
     } else
         goto CPyL47;
@@ -4805,7 +4805,7 @@ CPyL21: ;
     cpy_r_r38 = PyObject_IsInstance(cpy_r_seed, cpy_r_r37);
     cpy_r_r39 = cpy_r_r38 >= 0;
     if (unlikely(!cpy_r_r39)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 315, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 315, CPyStatic_globals);
         goto CPyL54;
     }
     cpy_r_r40 = cpy_r_r38;
@@ -4813,7 +4813,7 @@ CPyL21: ;
     if (likely(PyList_Check(cpy_r_seed)))
         cpy_r_r41 = cpy_r_seed;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 316, CPyStatic_globals, "list", cpy_r_seed);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 316, CPyStatic_globals, "list", cpy_r_seed);
         goto CPyL48;
     }
     cpy_r_r42 = 0;
@@ -4833,7 +4833,7 @@ CPyL25: ;
     cpy_r_r53 = PyObject_GetIter(cpy_r_r52);
     CPy_DECREF(cpy_r_r52);
     if (unlikely(cpy_r_r53 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 316, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 316, CPyStatic_globals);
         goto CPyL61;
     }
     cpy_r_r54 = PyIter_Next(cpy_r_r53);
@@ -4845,7 +4845,7 @@ CPyL28: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r55 = 0;
     if (unlikely(!cpy_r_r55)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 316, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 316, CPyStatic_globals);
         goto CPyL48;
     }
     CPy_Unreachable();
@@ -4860,7 +4860,7 @@ CPyL31: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r57 = 0;
     if (unlikely(!cpy_r_r57)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 316, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 316, CPyStatic_globals);
         goto CPyL48;
     }
     CPy_Unreachable();
@@ -4876,34 +4876,34 @@ CPyL34: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r59 = 0;
     if (unlikely(!cpy_r_r59)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 316, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 316, CPyStatic_globals);
         goto CPyL48;
     }
     CPy_Unreachable();
 CPyL36: ;
     cpy_r_r60 = CPyDef_TokenBalances_____getitem__(cpy_r_self, cpy_r_token);
     if (unlikely(cpy_r_r60 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 317, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 317, CPyStatic_globals);
         goto CPyL65;
     }
     cpy_r_r61 = PyNumber_InPlaceAdd(cpy_r_r60, cpy_r_balance);
     CPy_DECREF(cpy_r_r60);
     CPy_DECREF(cpy_r_balance);
     if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 317, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 317, CPyStatic_globals);
         goto CPyL66;
     }
     if (likely(Py_TYPE(cpy_r_r61) == CPyType_Balance))
         cpy_r_r62 = cpy_r_r61;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 317, CPyStatic_globals, "eth_portfolio.typing.Balance", cpy_r_r61);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 317, CPyStatic_globals, "eth_portfolio.typing.Balance", cpy_r_r61);
         goto CPyL66;
     }
     cpy_r_r63 = CPyDef_TokenBalances_____setitem__(cpy_r_self, cpy_r_token, cpy_r_r62);
     CPy_DECREF(cpy_r_token);
     CPy_DECREF(cpy_r_r62);
     if (unlikely(cpy_r_r63 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 317, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 317, CPyStatic_globals);
         goto CPyL61;
     }
     cpy_r_r64 = cpy_r_r42 + 2;
@@ -4913,21 +4913,21 @@ CPyL41: ;
     cpy_r_r65 = PyObject_Str(cpy_r_seed);
     CPy_DECREF(cpy_r_seed);
     if (unlikely(cpy_r_r65 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 319, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 319, CPyStatic_globals);
         goto CPyL48;
     }
     cpy_r_r66 = CPyStatics[24]; /* ' is not a valid input for TokenBalances' */
     cpy_r_r67 = CPyStr_Build(2, cpy_r_r65, cpy_r_r66);
     CPy_DECREF(cpy_r_r65);
     if (unlikely(cpy_r_r67 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 319, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 319, CPyStatic_globals);
         goto CPyL48;
     }
     cpy_r_r68 = CPyModule_builtins;
     cpy_r_r69 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r70 = CPyObject_GetAttr(cpy_r_r68, cpy_r_r69);
     if (unlikely(cpy_r_r70 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 319, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 319, CPyStatic_globals);
         goto CPyL67;
     }
     PyObject *cpy_r_r71[1] = {cpy_r_r67};
@@ -4935,14 +4935,14 @@ CPyL41: ;
     cpy_r_r73 = _PyObject_Vectorcall(cpy_r_r70, cpy_r_r72, 1, 0);
     CPy_DECREF(cpy_r_r70);
     if (unlikely(cpy_r_r73 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 319, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 319, CPyStatic_globals);
         goto CPyL67;
     }
     CPy_DECREF(cpy_r_r67);
     CPy_Raise(cpy_r_r73);
     CPy_DECREF(cpy_r_r73);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 319, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 319, CPyStatic_globals);
         goto CPyL48;
     }
     CPy_Unreachable();
@@ -5094,7 +5094,7 @@ __LL18: ;
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 307, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 307, CPyStatic_globals);
     return NULL;
 }
 
@@ -5125,14 +5125,14 @@ PyObject *CPyDef_TokenBalances_____getitem__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r2 = (PyObject **)&cpy_r_r1;
     cpy_r_r3 = PyObject_VectorcallMethod(cpy_r_r0, cpy_r_r2, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__getitem__", 322, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__getitem__", 322, CPyStatic_globals);
         goto CPyL12;
     }
     cpy_r_r4 = PyObject_IsTrue(cpy_r_r3);
     CPy_DECREF(cpy_r_r3);
     cpy_r_r5 = cpy_r_r4 >= 0;
     if (unlikely(!cpy_r_r5)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__getitem__", 322, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__getitem__", 322, CPyStatic_globals);
         goto CPyL12;
     }
     cpy_r_r6 = cpy_r_r4;
@@ -5141,7 +5141,7 @@ PyObject *CPyDef_TokenBalances_____getitem__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r8 = CPyStatics[22]; /* 'super' */
     cpy_r_r9 = CPyObject_GetAttr(cpy_r_r7, cpy_r_r8);
     if (unlikely(cpy_r_r9 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__getitem__", 322, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__getitem__", 322, CPyStatic_globals);
         goto CPyL12;
     }
     cpy_r_r10 = (PyObject *)CPyType_TokenBalances;
@@ -5150,14 +5150,14 @@ PyObject *CPyDef_TokenBalances_____getitem__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r13 = _PyObject_Vectorcall(cpy_r_r9, cpy_r_r12, 2, 0);
     CPy_DECREF(cpy_r_r9);
     if (unlikely(cpy_r_r13 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__getitem__", 322, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__getitem__", 322, CPyStatic_globals);
         goto CPyL12;
     }
     cpy_r_r14 = CPyStatics[26]; /* '__getitem__' */
     cpy_r_r15 = CPyObject_GetAttr(cpy_r_r13, cpy_r_r14);
     CPy_DECREF(cpy_r_r13);
     if (unlikely(cpy_r_r15 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__getitem__", 322, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__getitem__", 322, CPyStatic_globals);
         goto CPyL12;
     }
     PyObject *cpy_r_r16[1] = {cpy_r_key};
@@ -5165,7 +5165,7 @@ PyObject *CPyDef_TokenBalances_____getitem__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r18 = _PyObject_Vectorcall(cpy_r_r15, cpy_r_r17, 1, 0);
     CPy_DECREF(cpy_r_r15);
     if (unlikely(cpy_r_r18 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__getitem__", 322, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__getitem__", 322, CPyStatic_globals);
         goto CPyL12;
     }
     cpy_r_r19 = cpy_r_r18;
@@ -5176,7 +5176,7 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r20);
     cpy_r_r21 = CPyDef_Balance();
     if (unlikely(cpy_r_r21 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__getitem__", 322, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__getitem__", 322, CPyStatic_globals);
         goto CPyL12;
     }
     cpy_r_r19 = cpy_r_r21;
@@ -5184,7 +5184,7 @@ CPyL10: ;
     if (likely(Py_TYPE(cpy_r_r19) == CPyType_Balance))
         cpy_r_r22 = cpy_r_r19;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__getitem__", 322, CPyStatic_globals, "eth_portfolio.typing.Balance", cpy_r_r19);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__getitem__", 322, CPyStatic_globals, "eth_portfolio.typing.Balance", cpy_r_r19);
         goto CPyL12;
     }
     return cpy_r_r22;
@@ -5212,7 +5212,7 @@ PyObject *CPyPy_TokenBalances_____getitem__(PyObject *self, PyObject *const *arg
     PyObject *retval = CPyDef_TokenBalances_____getitem__(arg_self, arg_key);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__getitem__", 321, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__getitem__", 321, CPyStatic_globals);
     return NULL;
 }
 
@@ -5263,12 +5263,12 @@ char CPyDef_TokenBalances_____setitem__(PyObject *cpy_r_self, PyObject *cpy_r_ke
     cpy_r_r10 = (PyObject **)&cpy_r_r9;
     cpy_r_r11 = PyObject_VectorcallMethod(cpy_r_r8, cpy_r_r10, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r11 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 342, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 342, CPyStatic_globals);
         goto CPyL13;
     }
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 342, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 342, CPyStatic_globals);
         goto CPyL14;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -5280,14 +5280,14 @@ char CPyDef_TokenBalances_____setitem__(PyObject *cpy_r_self, PyObject *cpy_r_ke
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 342, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 342, CPyStatic_globals);
         goto CPyL13;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 342, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 342, CPyStatic_globals);
         goto CPyL15;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -5295,14 +5295,14 @@ char CPyDef_TokenBalances_____setitem__(PyObject *cpy_r_self, PyObject *cpy_r_ke
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 342, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 342, CPyStatic_globals);
         goto CPyL15;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 342, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 342, CPyStatic_globals);
         goto CPyL13;
     }
     CPy_Unreachable();
@@ -5311,7 +5311,7 @@ CPyL8: ;
     cpy_r_r24 = CPyStatics[22]; /* 'super' */
     cpy_r_r25 = CPyObject_GetAttr(cpy_r_r23, cpy_r_r24);
     if (unlikely(cpy_r_r25 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 343, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 343, CPyStatic_globals);
         goto CPyL13;
     }
     cpy_r_r26 = (PyObject *)CPyType_TokenBalances;
@@ -5320,14 +5320,14 @@ CPyL8: ;
     cpy_r_r29 = _PyObject_Vectorcall(cpy_r_r25, cpy_r_r28, 2, 0);
     CPy_DECREF(cpy_r_r25);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 343, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 343, CPyStatic_globals);
         goto CPyL13;
     }
     cpy_r_r30 = CPyStatics[28]; /* '__setitem__' */
     cpy_r_r31 = CPyObject_GetAttr(cpy_r_r29, cpy_r_r30);
     CPy_DECREF(cpy_r_r29);
     if (unlikely(cpy_r_r31 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 343, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 343, CPyStatic_globals);
         goto CPyL13;
     }
     PyObject *cpy_r_r32[2] = {cpy_r_key, cpy_r_value};
@@ -5335,7 +5335,7 @@ CPyL8: ;
     cpy_r_r34 = _PyObject_Vectorcall(cpy_r_r31, cpy_r_r33, 2, 0);
     CPy_DECREF(cpy_r_r31);
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 343, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 343, CPyStatic_globals);
         goto CPyL13;
     } else
         goto CPyL16;
@@ -5387,7 +5387,7 @@ PyObject *CPyPy_TokenBalances_____setitem__(PyObject *self, PyObject *const *arg
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 324, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 324, CPyStatic_globals);
     return NULL;
 }
 
@@ -5438,7 +5438,7 @@ PyObject *CPyDef_TokenBalances___dataframe(PyObject *cpy_r_self) {
     PyObject *cpy_r_r47;
     cpy_r_r0 = PyDict_New();
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 354, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 354, CPyStatic_globals);
         goto CPyL26;
     }
     cpy_r_r1 = CPyStatics[29]; /* 'items' */
@@ -5446,13 +5446,13 @@ PyObject *CPyDef_TokenBalances___dataframe(PyObject *cpy_r_self) {
     cpy_r_r3 = (PyObject **)&cpy_r_r2;
     cpy_r_r4 = PyObject_VectorcallMethod(cpy_r_r1, cpy_r_r3, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 356, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 356, CPyStatic_globals);
         goto CPyL27;
     }
     cpy_r_r5 = PyObject_GetIter(cpy_r_r4);
     CPy_DECREF(cpy_r_r4);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 354, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 354, CPyStatic_globals);
         goto CPyL27;
     }
 CPyL3: ;
@@ -5461,7 +5461,7 @@ CPyL3: ;
     cpy_r_r7 = PyObject_GetIter(cpy_r_r6);
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r7 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 354, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 354, CPyStatic_globals);
         goto CPyL29;
     }
     cpy_r_r8 = PyIter_Next(cpy_r_r7);
@@ -5473,7 +5473,7 @@ CPyL6: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r9 = 0;
     if (unlikely(!cpy_r_r9)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 354, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 354, CPyStatic_globals);
         goto CPyL26;
     }
     CPy_Unreachable();
@@ -5487,7 +5487,7 @@ CPyL9: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r11 = 0;
     if (unlikely(!cpy_r_r11)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 354, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 354, CPyStatic_globals);
         goto CPyL26;
     }
     CPy_Unreachable();
@@ -5502,7 +5502,7 @@ CPyL12: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r13 = 0;
     if (unlikely(!cpy_r_r13)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 354, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 354, CPyStatic_globals);
         goto CPyL26;
     }
     CPy_Unreachable();
@@ -5511,7 +5511,7 @@ CPyL14: ;
     cpy_r_r15 = CPyStatics[30]; /* 'balance' */
     cpy_r_r16 = CPyObject_GetAttr(cpy_r_r10, cpy_r_r15);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 355, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 355, CPyStatic_globals);
         goto CPyL33;
     }
     cpy_r_r17 = CPyStatics[31]; /* 'usd_value' */
@@ -5519,14 +5519,14 @@ CPyL14: ;
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r10, cpy_r_r18);
     CPy_DECREF(cpy_r_r10);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 355, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 355, CPyStatic_globals);
         goto CPyL34;
     }
     cpy_r_r20 = CPyDict_Build(2, cpy_r_r14, cpy_r_r16, cpy_r_r17, cpy_r_r19);
     CPy_DECREF(cpy_r_r16);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r20 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 355, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 355, CPyStatic_globals);
         goto CPyL35;
     }
     cpy_r_r21 = CPyDict_SetItem(cpy_r_r0, cpy_r_r8, cpy_r_r20);
@@ -5534,21 +5534,21 @@ CPyL14: ;
     CPy_DECREF(cpy_r_r20);
     cpy_r_r22 = cpy_r_r21 >= 0;
     if (unlikely(!cpy_r_r22)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 354, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 354, CPyStatic_globals);
         goto CPyL29;
     } else
         goto CPyL3;
 CPyL18: ;
     cpy_r_r23 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r23)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 354, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 354, CPyStatic_globals);
         goto CPyL27;
     }
     cpy_r_r24 = CPyStatic_globals;
     cpy_r_r25 = CPyStatics[32]; /* 'DataFrame' */
     cpy_r_r26 = CPyDict_GetItem(cpy_r_r24, cpy_r_r25);
     if (unlikely(cpy_r_r26 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 353, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 353, CPyStatic_globals);
         goto CPyL27;
     }
     PyObject *cpy_r_r27[1] = {cpy_r_r0};
@@ -5556,7 +5556,7 @@ CPyL18: ;
     cpy_r_r29 = _PyObject_Vectorcall(cpy_r_r26, cpy_r_r28, 1, 0);
     CPy_DECREF(cpy_r_r26);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 353, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 353, CPyStatic_globals);
         goto CPyL27;
     }
     CPy_DECREF(cpy_r_r0);
@@ -5564,7 +5564,7 @@ CPyL18: ;
     cpy_r_r31 = CPyObject_GetAttr(cpy_r_r29, cpy_r_r30);
     CPy_DECREF(cpy_r_r29);
     if (unlikely(cpy_r_r31 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 353, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 353, CPyStatic_globals);
         goto CPyL26;
     }
     cpy_r_r32 = CPyStatics[34]; /* 'reset_index' */
@@ -5574,7 +5574,7 @@ CPyL18: ;
     cpy_r_r36 = CPyStatics[141]; /* ('inplace',) */
     cpy_r_r37 = PyObject_VectorcallMethod(cpy_r_r32, cpy_r_r35, 9223372036854775809ULL, cpy_r_r36);
     if (unlikely(cpy_r_r37 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 359, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 359, CPyStatic_globals);
         goto CPyL36;
     } else
         goto CPyL37;
@@ -5583,7 +5583,7 @@ CPyL23: ;
     cpy_r_r39 = CPyStatics[37]; /* 'token' */
     cpy_r_r40 = CPyDict_Build(1, cpy_r_r38, cpy_r_r39);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 360, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 360, CPyStatic_globals);
         goto CPyL36;
     }
     cpy_r_r41 = CPyStatics[38]; /* 'rename' */
@@ -5593,7 +5593,7 @@ CPyL23: ;
     cpy_r_r45 = CPyStatics[142]; /* ('columns', 'inplace') */
     cpy_r_r46 = PyObject_VectorcallMethod(cpy_r_r41, cpy_r_r44, 9223372036854775809ULL, cpy_r_r45);
     if (unlikely(cpy_r_r46 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 360, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 360, CPyStatic_globals);
         goto CPyL38;
     } else
         goto CPyL39;
@@ -5680,7 +5680,7 @@ PyObject *CPyPy_TokenBalances___dataframe(PyObject *self, PyObject *const *args,
     PyObject *retval = CPyDef_TokenBalances___dataframe(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 346, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 346, CPyStatic_globals);
     return NULL;
 }
 
@@ -5710,13 +5710,13 @@ PyObject *CPyDef_TokenBalances___sum_usd(PyObject *cpy_r_self) {
     cpy_r_r4 = (PyObject **)&cpy_r_r3;
     cpy_r_r5 = PyObject_VectorcallMethod(cpy_r_r2, cpy_r_r4, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 376, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 376, CPyStatic_globals);
         goto CPyL11;
     }
     cpy_r_r6 = PyObject_GetIter(cpy_r_r5);
     CPy_DECREF(cpy_r_r5);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 376, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 376, CPyStatic_globals);
         goto CPyL11;
     }
 CPyL2: ;
@@ -5726,14 +5726,14 @@ CPyL2: ;
     cpy_r_r9 = CPyObject_GetAttr(cpy_r_r7, cpy_r_r8);
     CPy_DECREF(cpy_r_r7);
     if (unlikely(cpy_r_r9 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 376, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 376, CPyStatic_globals);
         goto CPyL13;
     }
     cpy_r_r10 = PyNumber_Add(cpy_r_r1, cpy_r_r9);
     CPy_DECREF(cpy_r_r1);
     CPy_DECREF(cpy_r_r9);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", -1, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", -1, CPyStatic_globals);
         goto CPyL14;
     }
     cpy_r_r1 = cpy_r_r10;
@@ -5741,14 +5741,14 @@ CPyL2: ;
 CPyL6: ;
     cpy_r_r11 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r11)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 376, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 376, CPyStatic_globals);
         goto CPyL11;
     }
     cpy_r_r12 = CPyStatic_globals;
     cpy_r_r13 = CPyStatics[20]; /* 'Decimal' */
     cpy_r_r14 = CPyDict_GetItem(cpy_r_r12, cpy_r_r13);
     if (unlikely(cpy_r_r14 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 376, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 376, CPyStatic_globals);
         goto CPyL11;
     }
     PyObject *cpy_r_r15[1] = {cpy_r_r1};
@@ -5756,7 +5756,7 @@ CPyL6: ;
     cpy_r_r17 = _PyObject_Vectorcall(cpy_r_r14, cpy_r_r16, 1, 0);
     CPy_DECREF(cpy_r_r14);
     if (unlikely(cpy_r_r17 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 376, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 376, CPyStatic_globals);
         goto CPyL11;
     }
     CPy_DECREF(cpy_r_r1);
@@ -5796,7 +5796,7 @@ PyObject *CPyPy_TokenBalances___sum_usd(PyObject *self, PyObject *const *args, s
     PyObject *retval = CPyDef_TokenBalances___sum_usd(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 363, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 363, CPyStatic_globals);
     return NULL;
 }
 
@@ -5816,14 +5816,14 @@ char CPyDef_TokenBalances_____bool__(PyObject *cpy_r_self) {
     cpy_r_r2 = (PyObject **)&cpy_r_r1;
     cpy_r_r3 = PyObject_VectorcallMethod(cpy_r_r0, cpy_r_r2, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 390, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 390, CPyStatic_globals);
         goto CPyL5;
     }
     cpy_r_r4 = CPyModule_builtins;
     cpy_r_r5 = CPyStatics[42]; /* 'any' */
     cpy_r_r6 = CPyObject_GetAttr(cpy_r_r4, cpy_r_r5);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 390, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 390, CPyStatic_globals);
         goto CPyL6;
     }
     PyObject *cpy_r_r7[1] = {cpy_r_r3};
@@ -5831,7 +5831,7 @@ char CPyDef_TokenBalances_____bool__(PyObject *cpy_r_self) {
     cpy_r_r9 = _PyObject_Vectorcall(cpy_r_r6, cpy_r_r8, 1, 0);
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r9 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 390, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 390, CPyStatic_globals);
         goto CPyL6;
     }
     CPy_DECREF(cpy_r_r3);
@@ -5841,7 +5841,7 @@ char CPyDef_TokenBalances_____bool__(PyObject *cpy_r_self) {
         cpy_r_r10 = cpy_r_r9 == Py_True;
     CPy_DECREF(cpy_r_r9);
     if (unlikely(cpy_r_r10 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 390, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 390, CPyStatic_globals);
         goto CPyL5;
     }
     return cpy_r_r10;
@@ -5875,7 +5875,7 @@ PyObject *CPyPy_TokenBalances_____bool__(PyObject *self, PyObject *const *args, 
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 378, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 378, CPyStatic_globals);
     return NULL;
 }
 
@@ -5888,19 +5888,19 @@ PyObject *CPyDef_TokenBalances_____repr__(PyObject *cpy_r_self) {
     cpy_r_r0 = CPyStatics[43]; /* 'TokenBalances' */
     cpy_r_r1 = CPyDict_FromAny(cpy_r_self);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 399, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 399, CPyStatic_globals);
         goto CPyL4;
     }
     cpy_r_r2 = PyObject_Str(cpy_r_r1);
     CPy_DECREF(cpy_r_r1);
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 399, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 399, CPyStatic_globals);
         goto CPyL4;
     }
     cpy_r_r3 = CPyStr_Build(2, cpy_r_r0, cpy_r_r2);
     CPy_DECREF(cpy_r_r2);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 399, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 399, CPyStatic_globals);
         goto CPyL4;
     }
     return cpy_r_r3;
@@ -5926,7 +5926,7 @@ PyObject *CPyPy_TokenBalances_____repr__(PyObject *self, PyObject *const *args, 
     PyObject *retval = CPyDef_TokenBalances_____repr__(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 392, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 392, CPyStatic_globals);
     return NULL;
 }
 
@@ -6051,13 +6051,13 @@ PyObject *CPyDef_TokenBalances_____add__(PyObject *cpy_r_self, PyObject *cpy_r_o
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 422, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 422, CPyStatic_globals);
         goto CPyL69;
     }
     cpy_r_r11 = CPyStatics[44]; /* ' is not a TokenBalances object' */
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 422, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 422, CPyStatic_globals);
         goto CPyL70;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -6069,14 +6069,14 @@ PyObject *CPyDef_TokenBalances_____add__(PyObject *cpy_r_self, PyObject *cpy_r_o
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 422, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 422, CPyStatic_globals);
         goto CPyL69;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 422, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 422, CPyStatic_globals);
         goto CPyL71;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -6084,14 +6084,14 @@ PyObject *CPyDef_TokenBalances_____add__(PyObject *cpy_r_self, PyObject *cpy_r_o
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 422, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 422, CPyStatic_globals);
         goto CPyL71;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 422, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 422, CPyStatic_globals);
         goto CPyL69;
     }
     CPy_Unreachable();
@@ -6104,7 +6104,7 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r23);
     CPy_DECREF(cpy_r_r24);
     if (unlikely(cpy_r_r25 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 423, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 423, CPyStatic_globals);
         goto CPyL69;
     }
     if (unlikely(!PyBool_Check(cpy_r_r25))) {
@@ -6113,7 +6113,7 @@ CPyL8: ;
         cpy_r_r26 = cpy_r_r25 == Py_True;
     CPy_DECREF(cpy_r_r25);
     if (unlikely(cpy_r_r26 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 423, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 423, CPyStatic_globals);
         goto CPyL69;
     }
     if (!cpy_r_r26) goto CPyL18;
@@ -6123,7 +6123,7 @@ CPyL8: ;
     cpy_r_r29 = PyObject_Str(cpy_r_r28);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 425, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 425, CPyStatic_globals);
         goto CPyL69;
     }
     cpy_r_r30 = CPyStatics[9]; /* ' and ' */
@@ -6132,7 +6132,7 @@ CPyL8: ;
     cpy_r_r32 = PyObject_Str(cpy_r_r31);
     CPy_DECREF(cpy_r_r31);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 425, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 425, CPyStatic_globals);
         goto CPyL72;
     }
     cpy_r_r33 = CPyStatics[10]; /* ')' */
@@ -6140,14 +6140,14 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r29);
     CPy_DECREF(cpy_r_r32);
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 425, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 425, CPyStatic_globals);
         goto CPyL69;
     }
     cpy_r_r35 = CPyModule_builtins;
     cpy_r_r36 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r37 = CPyObject_GetAttr(cpy_r_r35, cpy_r_r36);
     if (unlikely(cpy_r_r37 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 424, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 424, CPyStatic_globals);
         goto CPyL73;
     }
     PyObject *cpy_r_r38[1] = {cpy_r_r34};
@@ -6155,14 +6155,14 @@ CPyL8: ;
     cpy_r_r40 = _PyObject_Vectorcall(cpy_r_r37, cpy_r_r39, 1, 0);
     CPy_DECREF(cpy_r_r37);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 424, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 424, CPyStatic_globals);
         goto CPyL73;
     }
     CPy_DECREF(cpy_r_r34);
     CPy_Raise(cpy_r_r40);
     CPy_DECREF(cpy_r_r40);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 424, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 424, CPyStatic_globals);
         goto CPyL69;
     }
     CPy_Unreachable();
@@ -6173,7 +6173,7 @@ CPyL18: ;
     cpy_r_r43 = CPyDef_TokenBalances(cpy_r_r42, cpy_r_r41);
     CPy_DECREF(cpy_r_r41);
     if (unlikely(cpy_r_r43 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 428, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 428, CPyStatic_globals);
         goto CPyL69;
     }
     cpy_r_r44 = CPyStatics[29]; /* 'items' */
@@ -6181,13 +6181,13 @@ CPyL18: ;
     cpy_r_r46 = (PyObject **)&cpy_r_r45;
     cpy_r_r47 = PyObject_VectorcallMethod(cpy_r_r44, cpy_r_r46, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r47 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 429, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 429, CPyStatic_globals);
         goto CPyL74;
     }
     cpy_r_r48 = PyObject_GetIter(cpy_r_r47);
     CPy_DECREF(cpy_r_r47);
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 429, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 429, CPyStatic_globals);
         goto CPyL74;
     }
 CPyL21: ;
@@ -6196,7 +6196,7 @@ CPyL21: ;
     cpy_r_r50 = PyObject_GetIter(cpy_r_r49);
     CPy_DECREF(cpy_r_r49);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 429, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 429, CPyStatic_globals);
         goto CPyL76;
     }
     cpy_r_r51 = PyIter_Next(cpy_r_r50);
@@ -6208,7 +6208,7 @@ CPyL24: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r52 = 0;
     if (unlikely(!cpy_r_r52)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 429, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 429, CPyStatic_globals);
         goto CPyL69;
     }
     CPy_Unreachable();
@@ -6223,7 +6223,7 @@ CPyL27: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r54 = 0;
     if (unlikely(!cpy_r_r54)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 429, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 429, CPyStatic_globals);
         goto CPyL69;
     }
     CPy_Unreachable();
@@ -6239,7 +6239,7 @@ CPyL30: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r56 = 0;
     if (unlikely(!cpy_r_r56)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 429, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 429, CPyStatic_globals);
         goto CPyL69;
     }
     CPy_Unreachable();
@@ -6247,7 +6247,7 @@ CPyL32: ;
     cpy_r_r57 = PyObject_IsTrue(cpy_r_balance);
     cpy_r_r58 = cpy_r_r57 >= 0;
     if (unlikely(!cpy_r_r58)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 429, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 429, CPyStatic_globals);
         goto CPyL80;
     }
     cpy_r_r59 = cpy_r_r57;
@@ -6255,7 +6255,7 @@ CPyL32: ;
     cpy_r_r60 = CPyStatics[30]; /* 'balance' */
     cpy_r_r61 = CPyObject_GetAttr(cpy_r_balance, cpy_r_r60);
     if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 433, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 433, CPyStatic_globals);
         goto CPyL80;
     } else
         goto CPyL82;
@@ -6264,7 +6264,7 @@ CPyL35: ;
     cpy_r_r63 = CPyObject_GetAttr(cpy_r_balance, cpy_r_r62);
     CPy_DECREF(cpy_r_balance);
     if (unlikely(cpy_r_r63 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 433, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 433, CPyStatic_globals);
         goto CPyL83;
     } else
         goto CPyL84;
@@ -6274,7 +6274,7 @@ CPyL36: ;
     CPy_DECREF(cpy_r_r64);
     cpy_r_r65 = CPyDef_Balance();
     if (unlikely(cpy_r_r65 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 433, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 433, CPyStatic_globals);
         goto CPyL83;
     }
     cpy_r_r66 = CPyStatics[46]; /* '_setitem_nochecksum' */
@@ -6282,7 +6282,7 @@ CPyL36: ;
     cpy_r_r68 = (PyObject **)&cpy_r_r67;
     cpy_r_r69 = PyObject_VectorcallMethod(cpy_r_r66, cpy_r_r68, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r69 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 431, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 431, CPyStatic_globals);
         goto CPyL85;
     } else
         goto CPyL86;
@@ -6293,7 +6293,7 @@ CPyL38: ;
 CPyL39: ;
     cpy_r_r70 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r70)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 429, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 429, CPyStatic_globals);
         goto CPyL74;
     }
     cpy_r_r71 = CPyStatics[29]; /* 'items' */
@@ -6301,13 +6301,13 @@ CPyL39: ;
     cpy_r_r73 = (PyObject **)&cpy_r_r72;
     cpy_r_r74 = PyObject_VectorcallMethod(cpy_r_r71, cpy_r_r73, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r74 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 435, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 435, CPyStatic_globals);
         goto CPyL74;
     }
     cpy_r_r75 = PyObject_GetIter(cpy_r_r74);
     CPy_DECREF(cpy_r_r74);
     if (unlikely(cpy_r_r75 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 435, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 435, CPyStatic_globals);
         goto CPyL74;
     }
 CPyL42: ;
@@ -6316,7 +6316,7 @@ CPyL42: ;
     cpy_r_r77 = PyObject_GetIter(cpy_r_r76);
     CPy_DECREF(cpy_r_r76);
     if (unlikely(cpy_r_r77 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 435, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 435, CPyStatic_globals);
         goto CPyL88;
     }
     cpy_r_r78 = PyIter_Next(cpy_r_r77);
@@ -6328,7 +6328,7 @@ CPyL45: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r79 = 0;
     if (unlikely(!cpy_r_r79)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 435, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 435, CPyStatic_globals);
         goto CPyL69;
     }
     CPy_Unreachable();
@@ -6343,7 +6343,7 @@ CPyL48: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r81 = 0;
     if (unlikely(!cpy_r_r81)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 435, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 435, CPyStatic_globals);
         goto CPyL69;
     }
     CPy_Unreachable();
@@ -6359,7 +6359,7 @@ CPyL51: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r83 = 0;
     if (unlikely(!cpy_r_r83)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 435, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 435, CPyStatic_globals);
         goto CPyL69;
     }
     CPy_Unreachable();
@@ -6367,7 +6367,7 @@ CPyL53: ;
     cpy_r_r84 = PyObject_IsTrue(cpy_r_balance);
     cpy_r_r85 = cpy_r_r84 >= 0;
     if (unlikely(!cpy_r_r85)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 429, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 429, CPyStatic_globals);
         goto CPyL92;
     }
     cpy_r_r86 = cpy_r_r84;
@@ -6377,14 +6377,14 @@ CPyL53: ;
     cpy_r_r89 = (PyObject **)&cpy_r_r88;
     cpy_r_r90 = PyObject_VectorcallMethod(cpy_r_r87, cpy_r_r89, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r90 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 437, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 437, CPyStatic_globals);
         goto CPyL92;
     }
     cpy_r_r91 = PyObject_IsTrue(cpy_r_r90);
     CPy_DECREF(cpy_r_r90);
     cpy_r_r92 = cpy_r_r91 >= 0;
     if (unlikely(!cpy_r_r92)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 437, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 437, CPyStatic_globals);
         goto CPyL92;
     }
     cpy_r_r93 = cpy_r_r91;
@@ -6394,14 +6394,14 @@ CPyL53: ;
     cpy_r_r96 = (PyObject **)&cpy_r_r95;
     cpy_r_r97 = PyObject_VectorcallMethod(cpy_r_r94, cpy_r_r96, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r97 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 439, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 439, CPyStatic_globals);
         goto CPyL92;
     }
     cpy_r_r98 = PyNumber_Add(cpy_r_r97, cpy_r_balance);
     CPy_DECREF(cpy_r_r97);
     CPy_DECREF(cpy_r_balance);
     if (unlikely(cpy_r_r98 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 439, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 439, CPyStatic_globals);
         goto CPyL94;
     }
     cpy_r_r99 = CPyStatics[46]; /* '_setitem_nochecksum' */
@@ -6409,7 +6409,7 @@ CPyL53: ;
     cpy_r_r101 = (PyObject **)&cpy_r_r100;
     cpy_r_r102 = PyObject_VectorcallMethod(cpy_r_r99, cpy_r_r101, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r102 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 438, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 438, CPyStatic_globals);
         goto CPyL95;
     } else
         goto CPyL96;
@@ -6421,7 +6421,7 @@ CPyL62: ;
     cpy_r_r103 = CPyStatics[30]; /* 'balance' */
     cpy_r_r104 = CPyObject_GetAttr(cpy_r_balance, cpy_r_r103);
     if (unlikely(cpy_r_r104 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 444, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 444, CPyStatic_globals);
         goto CPyL92;
     } else
         goto CPyL97;
@@ -6430,7 +6430,7 @@ CPyL63: ;
     cpy_r_r106 = CPyObject_GetAttr(cpy_r_balance, cpy_r_r105);
     CPy_DECREF(cpy_r_balance);
     if (unlikely(cpy_r_r106 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 444, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 444, CPyStatic_globals);
         goto CPyL94;
     } else
         goto CPyL98;
@@ -6440,7 +6440,7 @@ CPyL64: ;
     CPy_DECREF(cpy_r_r107);
     cpy_r_r108 = CPyDef_Balance();
     if (unlikely(cpy_r_r108 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 444, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 444, CPyStatic_globals);
         goto CPyL94;
     }
     cpy_r_r109 = CPyStatics[46]; /* '_setitem_nochecksum' */
@@ -6448,7 +6448,7 @@ CPyL64: ;
     cpy_r_r111 = (PyObject **)&cpy_r_r110;
     cpy_r_r112 = PyObject_VectorcallMethod(cpy_r_r109, cpy_r_r111, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r112 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 442, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 442, CPyStatic_globals);
         goto CPyL99;
     } else
         goto CPyL100;
@@ -6459,7 +6459,7 @@ CPyL66: ;
 CPyL67: ;
     cpy_r_r113 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r113)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 435, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 435, CPyStatic_globals);
         goto CPyL74;
     }
     return cpy_r_r43;
@@ -6627,7 +6627,7 @@ PyObject *CPyPy_TokenBalances_____add__(PyObject *self, PyObject *const *args, s
     PyObject *retval = CPyDef_TokenBalances_____add__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 401, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 401, CPyStatic_globals);
     return NULL;
 }
 
@@ -6677,7 +6677,7 @@ PyObject *CPyPy_TokenBalances_____add___3___SummableNonNumericMixin_glue(PyObjec
     PyObject *retval = CPyDef_TokenBalances_____add___3___SummableNonNumericMixin_glue(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__add_____SummableNonNumericMixin_glue", -1, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__add_____SummableNonNumericMixin_glue", -1, CPyStatic_globals);
     return NULL;
 }
 
@@ -6773,13 +6773,13 @@ PyObject *CPyDef_TokenBalances_____sub__(PyObject *cpy_r_self, PyObject *cpy_r_o
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 469, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 469, CPyStatic_globals);
         goto CPyL47;
     }
     cpy_r_r11 = CPyStatics[44]; /* ' is not a TokenBalances object' */
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 469, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 469, CPyStatic_globals);
         goto CPyL48;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -6791,14 +6791,14 @@ PyObject *CPyDef_TokenBalances_____sub__(PyObject *cpy_r_self, PyObject *cpy_r_o
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 469, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 469, CPyStatic_globals);
         goto CPyL47;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 469, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 469, CPyStatic_globals);
         goto CPyL49;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -6806,14 +6806,14 @@ PyObject *CPyDef_TokenBalances_____sub__(PyObject *cpy_r_self, PyObject *cpy_r_o
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 469, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 469, CPyStatic_globals);
         goto CPyL49;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 469, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 469, CPyStatic_globals);
         goto CPyL47;
     }
     CPy_Unreachable();
@@ -6826,7 +6826,7 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r23);
     CPy_DECREF(cpy_r_r24);
     if (unlikely(cpy_r_r25 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 470, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 470, CPyStatic_globals);
         goto CPyL47;
     }
     if (unlikely(!PyBool_Check(cpy_r_r25))) {
@@ -6835,7 +6835,7 @@ CPyL8: ;
         cpy_r_r26 = cpy_r_r25 == Py_True;
     CPy_DECREF(cpy_r_r25);
     if (unlikely(cpy_r_r26 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 470, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 470, CPyStatic_globals);
         goto CPyL47;
     }
     if (!cpy_r_r26) goto CPyL18;
@@ -6845,7 +6845,7 @@ CPyL8: ;
     cpy_r_r29 = PyObject_Str(cpy_r_r28);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 472, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 472, CPyStatic_globals);
         goto CPyL47;
     }
     cpy_r_r30 = CPyStatics[9]; /* ' and ' */
@@ -6854,7 +6854,7 @@ CPyL8: ;
     cpy_r_r32 = PyObject_Str(cpy_r_r31);
     CPy_DECREF(cpy_r_r31);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 472, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 472, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r33 = CPyStatics[10]; /* ')' */
@@ -6862,14 +6862,14 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r29);
     CPy_DECREF(cpy_r_r32);
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 472, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 472, CPyStatic_globals);
         goto CPyL47;
     }
     cpy_r_r35 = CPyModule_builtins;
     cpy_r_r36 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r37 = CPyObject_GetAttr(cpy_r_r35, cpy_r_r36);
     if (unlikely(cpy_r_r37 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 471, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 471, CPyStatic_globals);
         goto CPyL51;
     }
     PyObject *cpy_r_r38[1] = {cpy_r_r34};
@@ -6877,14 +6877,14 @@ CPyL8: ;
     cpy_r_r40 = _PyObject_Vectorcall(cpy_r_r37, cpy_r_r39, 1, 0);
     CPy_DECREF(cpy_r_r37);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 471, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 471, CPyStatic_globals);
         goto CPyL51;
     }
     CPy_DECREF(cpy_r_r34);
     CPy_Raise(cpy_r_r40);
     CPy_DECREF(cpy_r_r40);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 471, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 471, CPyStatic_globals);
         goto CPyL47;
     }
     CPy_Unreachable();
@@ -6894,7 +6894,7 @@ CPyL18: ;
     cpy_r_r42 = CPyDef_TokenBalances(cpy_r_self, cpy_r_r41);
     CPy_DECREF(cpy_r_r41);
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 475, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 475, CPyStatic_globals);
         goto CPyL47;
     }
     cpy_r_r43 = CPyStatics[29]; /* 'items' */
@@ -6902,13 +6902,13 @@ CPyL18: ;
     cpy_r_r45 = (PyObject **)&cpy_r_r44;
     cpy_r_r46 = PyObject_VectorcallMethod(cpy_r_r43, cpy_r_r45, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r46 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 476, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 476, CPyStatic_globals);
         goto CPyL52;
     }
     cpy_r_r47 = PyObject_GetIter(cpy_r_r46);
     CPy_DECREF(cpy_r_r46);
     if (unlikely(cpy_r_r47 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 476, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 476, CPyStatic_globals);
         goto CPyL52;
     }
 CPyL21: ;
@@ -6917,7 +6917,7 @@ CPyL21: ;
     cpy_r_r49 = PyObject_GetIter(cpy_r_r48);
     CPy_DECREF(cpy_r_r48);
     if (unlikely(cpy_r_r49 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 476, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 476, CPyStatic_globals);
         goto CPyL54;
     }
     cpy_r_r50 = PyIter_Next(cpy_r_r49);
@@ -6929,7 +6929,7 @@ CPyL24: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r51 = 0;
     if (unlikely(!cpy_r_r51)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 476, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 476, CPyStatic_globals);
         goto CPyL47;
     }
     CPy_Unreachable();
@@ -6944,7 +6944,7 @@ CPyL27: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r53 = 0;
     if (unlikely(!cpy_r_r53)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 476, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 476, CPyStatic_globals);
         goto CPyL47;
     }
     CPy_Unreachable();
@@ -6960,46 +6960,46 @@ CPyL30: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r55 = 0;
     if (unlikely(!cpy_r_r55)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 476, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 476, CPyStatic_globals);
         goto CPyL47;
     }
     CPy_Unreachable();
 CPyL32: ;
     cpy_r_r56 = CPyDef_TokenBalances_____getitem__(cpy_r_r42, cpy_r_token);
     if (unlikely(cpy_r_r56 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 477, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 477, CPyStatic_globals);
         goto CPyL58;
     }
     cpy_r_r57 = PyNumber_InPlaceSubtract(cpy_r_r56, cpy_r_balance);
     CPy_DECREF(cpy_r_r56);
     CPy_DECREF(cpy_r_balance);
     if (unlikely(cpy_r_r57 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 477, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 477, CPyStatic_globals);
         goto CPyL59;
     }
     if (likely(Py_TYPE(cpy_r_r57) == CPyType_Balance))
         cpy_r_r58 = cpy_r_r57;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 477, CPyStatic_globals, "eth_portfolio.typing.Balance", cpy_r_r57);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 477, CPyStatic_globals, "eth_portfolio.typing.Balance", cpy_r_r57);
         goto CPyL59;
     }
     cpy_r_r59 = CPyDef_TokenBalances_____setitem__(cpy_r_r42, cpy_r_token, cpy_r_r58);
     CPy_DECREF(cpy_r_token);
     CPy_DECREF(cpy_r_r58);
     if (unlikely(cpy_r_r59 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 477, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 477, CPyStatic_globals);
         goto CPyL54;
     } else
         goto CPyL21;
 CPyL36: ;
     cpy_r_r60 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r60)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 476, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 476, CPyStatic_globals);
         goto CPyL52;
     }
     cpy_r_r61 = CPyDict_FromAny(cpy_r_r42);
     if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 478, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 478, CPyStatic_globals);
         goto CPyL52;
     }
     cpy_r_r62 = 0;
@@ -7007,7 +7007,7 @@ CPyL36: ;
     cpy_r_r64 = cpy_r_r63 << 1;
     cpy_r_r65 = CPyDict_GetItemsIter(cpy_r_r61);
     if (unlikely(cpy_r_r65 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 478, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 478, CPyStatic_globals);
         goto CPyL60;
     }
 CPyL39: ;
@@ -7025,7 +7025,7 @@ CPyL39: ;
     if (likely(Py_TYPE(cpy_r_r70) == CPyType_Balance))
         cpy_r_r71 = cpy_r_r70;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 478, CPyStatic_globals, "eth_portfolio.typing.Balance", cpy_r_r70);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 478, CPyStatic_globals, "eth_portfolio.typing.Balance", cpy_r_r70);
         goto CPyL62;
     }
     cpy_r_token = cpy_r_r69;
@@ -7034,7 +7034,7 @@ CPyL39: ;
     CPy_DECREF(cpy_r_balance);
     cpy_r_r73 = cpy_r_r72 >= 0;
     if (unlikely(!cpy_r_r73)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 476, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 476, CPyStatic_globals);
         goto CPyL63;
     }
     cpy_r_r74 = cpy_r_r72;
@@ -7043,20 +7043,20 @@ CPyL39: ;
     CPy_DECREF(cpy_r_token);
     cpy_r_r76 = cpy_r_r75 >= 0;
     if (unlikely(!cpy_r_r76)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 480, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 480, CPyStatic_globals);
         goto CPyL65;
     }
 CPyL44: ;
     cpy_r_r77 = CPyDict_CheckSize(cpy_r_r61, cpy_r_r64);
     if (unlikely(!cpy_r_r77)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 478, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 478, CPyStatic_globals);
         goto CPyL65;
     } else
         goto CPyL39;
 CPyL45: ;
     cpy_r_r78 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r78)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 478, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 478, CPyStatic_globals);
         goto CPyL52;
     }
     return cpy_r_r42;
@@ -7171,7 +7171,7 @@ PyObject *CPyPy_TokenBalances_____sub__(PyObject *self, PyObject *const *args, s
     PyObject *retval = CPyDef_TokenBalances_____sub__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 448, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 448, CPyStatic_globals);
     return NULL;
 }
 
@@ -7209,7 +7209,7 @@ PyObject *CPyPy___mypyc_lambda__0___3_init___3_RemoteTokenBalances_obj_____get__
     PyObject *retval = CPyDef___mypyc_lambda__0___3_init___3_RemoteTokenBalances_obj_____get__(arg___mypyc_self__, arg_instance, arg_owner);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__get__", -1, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__get__", -1, CPyStatic_globals);
     return NULL;
 }
 
@@ -7221,7 +7221,7 @@ PyObject *CPyDef___mypyc_lambda__0___3_init___3_RemoteTokenBalances_obj_____call
     PyObject *cpy_r_r4;
     cpy_r_r0 = ((eth_portfolio___typing_____mypyc_lambda__0___3_init___3_RemoteTokenBalances_objObject *)cpy_r___mypyc_self__)->___mypyc_env__;
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/typing.py", "<lambda>", "__mypyc_lambda__0___init___RemoteTokenBalances_obj", "__mypyc_env__", 507, CPyStatic_globals);
+        CPy_AttributeError("eth_portfolio\\typing.py", "<lambda>", "__mypyc_lambda__0___init___RemoteTokenBalances_obj", "__mypyc_env__", 507, CPyStatic_globals);
         goto CPyL4;
     }
     CPy_INCREF(cpy_r_r0);
@@ -7234,7 +7234,7 @@ CPyL1: ;
     }
     CPy_DECREF(cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<lambda>", 507, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<lambda>", 507, CPyStatic_globals);
         goto CPyL4;
     }
 CPyL2: ;
@@ -7242,7 +7242,7 @@ CPyL2: ;
     cpy_r_r3 = CPyDef_TokenBalances(cpy_r_r2, cpy_r_r1);
     CPy_DECREF(cpy_r_r1);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<lambda>", 507, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<lambda>", 507, CPyStatic_globals);
         goto CPyL4;
     }
     return cpy_r_r3;
@@ -7262,7 +7262,7 @@ PyObject *CPyPy___mypyc_lambda__0___3_init___3_RemoteTokenBalances_obj_____call_
     PyObject *retval = CPyDef___mypyc_lambda__0___3_init___3_RemoteTokenBalances_obj_____call__(arg___mypyc_self__);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "<lambda>", 507, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "<lambda>", 507, CPyStatic_globals);
     return NULL;
 }
 
@@ -7409,7 +7409,7 @@ CPyL2: ;
 CPyL4: ;
     cpy_r_r2 = CPyDef___init___3_RemoteTokenBalances_env();
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 506, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 506, CPyStatic_globals);
         goto CPyL77;
     }
     if (((eth_portfolio___typing_____init___3_RemoteTokenBalances_envObject *)cpy_r_r2)->_block != NULL) {
@@ -7418,14 +7418,14 @@ CPyL4: ;
     ((eth_portfolio___typing_____init___3_RemoteTokenBalances_envObject *)cpy_r_r2)->_block = cpy_r_block;
     cpy_r_r3 = 1;
     if (unlikely(!cpy_r_r3)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 506, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 506, CPyStatic_globals);
         goto CPyL78;
     }
     cpy_r_r4 = CPyModule_builtins;
     cpy_r_r5 = CPyStatics[22]; /* 'super' */
     cpy_r_r6 = CPyObject_GetAttr(cpy_r_r4, cpy_r_r5);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 507, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 507, CPyStatic_globals);
         goto CPyL78;
     }
     cpy_r_r7 = (PyObject *)CPyType_RemoteTokenBalances;
@@ -7434,19 +7434,19 @@ CPyL4: ;
     cpy_r_r10 = _PyObject_Vectorcall(cpy_r_r6, cpy_r_r9, 2, 0);
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 507, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 507, CPyStatic_globals);
         goto CPyL78;
     }
     cpy_r_r11 = CPyStatics[23]; /* '__init__' */
     cpy_r_r12 = CPyObject_GetAttr(cpy_r_r10, cpy_r_r11);
     CPy_DECREF(cpy_r_r10);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 507, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 507, CPyStatic_globals);
         goto CPyL78;
     }
     cpy_r_r13 = CPyDef___mypyc_lambda__0___3_init___3_RemoteTokenBalances_obj();
     if (unlikely(cpy_r_r13 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 507, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 507, CPyStatic_globals);
         goto CPyL79;
     }
     CPy_INCREF(cpy_r_r2);
@@ -7456,7 +7456,7 @@ CPyL4: ;
     ((eth_portfolio___typing_____mypyc_lambda__0___3_init___3_RemoteTokenBalances_objObject *)cpy_r_r13)->___mypyc_env__ = cpy_r_r2;
     cpy_r_r14 = 1;
     if (unlikely(!cpy_r_r14)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 507, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 507, CPyStatic_globals);
         goto CPyL80;
     }
     PyObject *cpy_r_r15[1] = {cpy_r_r13};
@@ -7464,7 +7464,7 @@ CPyL4: ;
     cpy_r_r17 = _PyObject_Vectorcall(cpy_r_r12, cpy_r_r16, 1, 0);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r17 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 507, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 507, CPyStatic_globals);
         goto CPyL81;
     } else
         goto CPyL82;
@@ -7478,7 +7478,7 @@ CPyL12: ;
     }
     CPy_DECREF(cpy_r_r2);
     if (unlikely(cpy_r_r18 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 508, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 508, CPyStatic_globals);
         goto CPyL83;
     }
 CPyL13: ;
@@ -7487,7 +7487,7 @@ CPyL13: ;
     CPy_DECREF(cpy_r_r18);
     cpy_r_r21 = cpy_r_r20 >= 0;
     if (unlikely(!cpy_r_r21)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 508, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 508, CPyStatic_globals);
         goto CPyL83;
     }
     cpy_r_r22 = (PyObject *)&_Py_NoneStruct;
@@ -7503,7 +7503,7 @@ CPyL16: ;
     cpy_r_r25 = PyObject_IsInstance(cpy_r_seed, cpy_r_r24);
     cpy_r_r26 = cpy_r_r25 >= 0;
     if (unlikely(!cpy_r_r26)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 511, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 511, CPyStatic_globals);
         goto CPyL83;
     }
     cpy_r_r27 = cpy_r_r25;
@@ -7511,7 +7511,7 @@ CPyL16: ;
     if (likely(PyDict_Check(cpy_r_seed)))
         cpy_r_r28 = cpy_r_seed;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 512, CPyStatic_globals, "dict", cpy_r_seed);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 512, CPyStatic_globals, "dict", cpy_r_seed);
         goto CPyL74;
     }
     cpy_r_r29 = 0;
@@ -7519,7 +7519,7 @@ CPyL16: ;
     cpy_r_r31 = cpy_r_r30 << 1;
     cpy_r_r32 = CPyDict_GetItemsIter(cpy_r_r28);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 512, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 512, CPyStatic_globals);
         goto CPyL85;
     }
 CPyL20: ;
@@ -7537,13 +7537,13 @@ CPyL20: ;
     if (likely(PyUnicode_Check(cpy_r_r36)))
         cpy_r_r38 = cpy_r_r36;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 512, CPyStatic_globals, "str", cpy_r_r36);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 512, CPyStatic_globals, "str", cpy_r_r36);
         goto CPyL87;
     }
     if (likely(Py_TYPE(cpy_r_r37) == CPyType_TokenBalances))
         cpy_r_r39 = cpy_r_r37;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 512, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r37);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 512, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r37);
         goto CPyL88;
     }
     cpy_r_remote = cpy_r_r38;
@@ -7551,7 +7551,7 @@ CPyL20: ;
     cpy_r_r40 = CPyStatics[48]; /* 'block' */
     cpy_r_r41 = CPyObject_GetAttr(cpy_r_self, cpy_r_r40);
     if (unlikely(cpy_r_r41 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 513, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 513, CPyStatic_globals);
         goto CPyL89;
     }
     if (PyLong_Check(cpy_r_r41))
@@ -7566,7 +7566,7 @@ CPyL20: ;
         cpy_r_r42 = NULL;
     }
     if (cpy_r_r42 != NULL) goto __LL19;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 513, CPyStatic_globals, "int or None", cpy_r_r41);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 513, CPyStatic_globals, "int or None", cpy_r_r41);
     goto CPyL89;
 __LL19: ;
     cpy_r_r43 = ((eth_portfolio___typing___TokenBalancesObject *)cpy_r_token_balances)->_block;
@@ -7575,7 +7575,7 @@ __LL19: ;
     CPy_DECREF(cpy_r_r42);
     CPy_DECREF(cpy_r_r43);
     if (unlikely(cpy_r_r44 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 513, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 513, CPyStatic_globals);
         goto CPyL89;
     }
     if (unlikely(!PyBool_Check(cpy_r_r44))) {
@@ -7584,7 +7584,7 @@ __LL19: ;
         cpy_r_r45 = cpy_r_r44 == Py_True;
     CPy_DECREF(cpy_r_r44);
     if (unlikely(cpy_r_r45 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 513, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 513, CPyStatic_globals);
         goto CPyL89;
     }
     if (cpy_r_r45) {
@@ -7596,7 +7596,7 @@ CPyL28: ;
     cpy_r_r47 = CPyStatics[48]; /* 'block' */
     cpy_r_r48 = CPyObject_GetAttr(cpy_r_self, cpy_r_r47);
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 515, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 515, CPyStatic_globals);
         goto CPyL91;
     }
     if (PyLong_Check(cpy_r_r48))
@@ -7611,13 +7611,13 @@ CPyL28: ;
         cpy_r_r49 = NULL;
     }
     if (cpy_r_r49 != NULL) goto __LL20;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 515, CPyStatic_globals, "int or None", cpy_r_r48);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 515, CPyStatic_globals, "int or None", cpy_r_r48);
     goto CPyL91;
 __LL20: ;
     cpy_r_r50 = PyObject_Str(cpy_r_r49);
     CPy_DECREF(cpy_r_r49);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 515, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 515, CPyStatic_globals);
         goto CPyL91;
     }
     cpy_r_r51 = CPyStatics[9]; /* ' and ' */
@@ -7627,7 +7627,7 @@ __LL20: ;
     cpy_r_r53 = PyObject_Str(cpy_r_r52);
     CPy_DECREF(cpy_r_r52);
     if (unlikely(cpy_r_r53 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 515, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 515, CPyStatic_globals);
         goto CPyL92;
     }
     cpy_r_r54 = CPyStatics[10]; /* ')' */
@@ -7635,14 +7635,14 @@ __LL20: ;
     CPy_DECREF(cpy_r_r50);
     CPy_DECREF(cpy_r_r53);
     if (unlikely(cpy_r_r55 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 515, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 515, CPyStatic_globals);
         goto CPyL74;
     }
     cpy_r_r56 = CPyModule_builtins;
     cpy_r_r57 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r58 = CPyObject_GetAttr(cpy_r_r56, cpy_r_r57);
     if (unlikely(cpy_r_r58 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 514, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 514, CPyStatic_globals);
         goto CPyL93;
     }
     PyObject *cpy_r_r59[1] = {cpy_r_r55};
@@ -7650,28 +7650,28 @@ __LL20: ;
     cpy_r_r61 = _PyObject_Vectorcall(cpy_r_r58, cpy_r_r60, 1, 0);
     CPy_DECREF(cpy_r_r58);
     if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 514, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 514, CPyStatic_globals);
         goto CPyL93;
     }
     CPy_DECREF(cpy_r_r55);
     CPy_Raise(cpy_r_r61);
     CPy_DECREF(cpy_r_r61);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 514, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 514, CPyStatic_globals);
         goto CPyL74;
     }
     CPy_Unreachable();
 CPyL37: ;
     cpy_r_r62 = CPyDict_GetItem(cpy_r_self, cpy_r_remote);
     if (unlikely(cpy_r_r62 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 517, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 517, CPyStatic_globals);
         goto CPyL89;
     }
     cpy_r_r63 = PyNumber_InPlaceAdd(cpy_r_r62, cpy_r_token_balances);
     CPy_DECREF(cpy_r_r62);
     CPy_DECREF(cpy_r_token_balances);
     if (unlikely(cpy_r_r63 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 517, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 517, CPyStatic_globals);
         goto CPyL94;
     }
     cpy_r_r64 = CPyDict_SetItem(cpy_r_self, cpy_r_remote, cpy_r_r63);
@@ -7679,19 +7679,19 @@ CPyL37: ;
     CPy_DECREF(cpy_r_r63);
     cpy_r_r65 = cpy_r_r64 >= 0;
     if (unlikely(!cpy_r_r65)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 517, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 517, CPyStatic_globals);
         goto CPyL95;
     }
     cpy_r_r66 = CPyDict_CheckSize(cpy_r_r28, cpy_r_r31);
     if (unlikely(!cpy_r_r66)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 512, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 512, CPyStatic_globals);
         goto CPyL95;
     } else
         goto CPyL20;
 CPyL41: ;
     cpy_r_r67 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r67)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 512, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 512, CPyStatic_globals);
         goto CPyL74;
     } else
         goto CPyL73;
@@ -7700,7 +7700,7 @@ CPyL42: ;
     cpy_r_r69 = PyObject_IsInstance(cpy_r_seed, cpy_r_r68);
     cpy_r_r70 = cpy_r_r69 >= 0;
     if (unlikely(!cpy_r_r70)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 518, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 518, CPyStatic_globals);
         goto CPyL83;
     }
     cpy_r_r71 = cpy_r_r69;
@@ -7708,7 +7708,7 @@ CPyL42: ;
     if (likely(PyList_Check(cpy_r_seed)))
         cpy_r_r72 = cpy_r_seed;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 519, CPyStatic_globals, "list", cpy_r_seed);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 519, CPyStatic_globals, "list", cpy_r_seed);
         goto CPyL74;
     }
     cpy_r_r73 = 0;
@@ -7770,7 +7770,7 @@ __LL22: ;
     }
     CPy_DECREF(cpy_r_r83);
     if (unlikely(cpy_r_r84.f0 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 519, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 519, CPyStatic_globals);
         goto CPyL97;
     }
     cpy_r_r85 = cpy_r_r84.f0;
@@ -7784,7 +7784,7 @@ __LL22: ;
     cpy_r_r87 = CPyStatics[48]; /* 'block' */
     cpy_r_r88 = CPyObject_GetAttr(cpy_r_self, cpy_r_r87);
     if (unlikely(cpy_r_r88 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 520, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 520, CPyStatic_globals);
         goto CPyL98;
     }
     if (PyLong_Check(cpy_r_r88))
@@ -7799,7 +7799,7 @@ __LL22: ;
         cpy_r_r89 = NULL;
     }
     if (cpy_r_r89 != NULL) goto __LL27;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 520, CPyStatic_globals, "int or None", cpy_r_r88);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 520, CPyStatic_globals, "int or None", cpy_r_r88);
     goto CPyL98;
 __LL27: ;
     cpy_r_r90 = ((eth_portfolio___typing___TokenBalancesObject *)cpy_r_token_balances)->_block;
@@ -7808,7 +7808,7 @@ __LL27: ;
     CPy_DECREF(cpy_r_r89);
     CPy_DECREF(cpy_r_r90);
     if (unlikely(cpy_r_r91 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 520, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 520, CPyStatic_globals);
         goto CPyL98;
     }
     if (unlikely(!PyBool_Check(cpy_r_r91))) {
@@ -7817,7 +7817,7 @@ __LL27: ;
         cpy_r_r92 = cpy_r_r91 == Py_True;
     CPy_DECREF(cpy_r_r91);
     if (unlikely(cpy_r_r92 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 520, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 520, CPyStatic_globals);
         goto CPyL98;
     }
     if (cpy_r_r92) {
@@ -7829,7 +7829,7 @@ CPyL53: ;
     cpy_r_r94 = CPyStatics[48]; /* 'block' */
     cpy_r_r95 = CPyObject_GetAttr(cpy_r_self, cpy_r_r94);
     if (unlikely(cpy_r_r95 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 522, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 522, CPyStatic_globals);
         goto CPyL91;
     }
     if (PyLong_Check(cpy_r_r95))
@@ -7844,13 +7844,13 @@ CPyL53: ;
         cpy_r_r96 = NULL;
     }
     if (cpy_r_r96 != NULL) goto __LL28;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 522, CPyStatic_globals, "int or None", cpy_r_r95);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 522, CPyStatic_globals, "int or None", cpy_r_r95);
     goto CPyL91;
 __LL28: ;
     cpy_r_r97 = PyObject_Str(cpy_r_r96);
     CPy_DECREF(cpy_r_r96);
     if (unlikely(cpy_r_r97 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 522, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 522, CPyStatic_globals);
         goto CPyL91;
     }
     cpy_r_r98 = CPyStatics[9]; /* ' and ' */
@@ -7860,7 +7860,7 @@ __LL28: ;
     cpy_r_r100 = PyObject_Str(cpy_r_r99);
     CPy_DECREF(cpy_r_r99);
     if (unlikely(cpy_r_r100 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 522, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 522, CPyStatic_globals);
         goto CPyL100;
     }
     cpy_r_r101 = CPyStatics[10]; /* ')' */
@@ -7868,14 +7868,14 @@ __LL28: ;
     CPy_DECREF(cpy_r_r97);
     CPy_DECREF(cpy_r_r100);
     if (unlikely(cpy_r_r102 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 522, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 522, CPyStatic_globals);
         goto CPyL74;
     }
     cpy_r_r103 = CPyModule_builtins;
     cpy_r_r104 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r105 = CPyObject_GetAttr(cpy_r_r103, cpy_r_r104);
     if (unlikely(cpy_r_r105 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 521, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 521, CPyStatic_globals);
         goto CPyL101;
     }
     PyObject *cpy_r_r106[1] = {cpy_r_r102};
@@ -7883,28 +7883,28 @@ __LL28: ;
     cpy_r_r108 = _PyObject_Vectorcall(cpy_r_r105, cpy_r_r107, 1, 0);
     CPy_DECREF(cpy_r_r105);
     if (unlikely(cpy_r_r108 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 521, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 521, CPyStatic_globals);
         goto CPyL101;
     }
     CPy_DECREF(cpy_r_r102);
     CPy_Raise(cpy_r_r108);
     CPy_DECREF(cpy_r_r108);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 521, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 521, CPyStatic_globals);
         goto CPyL74;
     }
     CPy_Unreachable();
 CPyL62: ;
     cpy_r_r109 = CPyDict_GetItem(cpy_r_self, cpy_r_remote);
     if (unlikely(cpy_r_r109 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 524, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 524, CPyStatic_globals);
         goto CPyL98;
     }
     cpy_r_r110 = PyNumber_InPlaceAdd(cpy_r_r109, cpy_r_token_balances);
     CPy_DECREF(cpy_r_r109);
     CPy_DECREF(cpy_r_token_balances);
     if (unlikely(cpy_r_r110 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 524, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 524, CPyStatic_globals);
         goto CPyL102;
     }
     cpy_r_r111 = CPyDict_SetItem(cpy_r_self, cpy_r_remote, cpy_r_r110);
@@ -7912,7 +7912,7 @@ CPyL62: ;
     CPy_DECREF(cpy_r_r110);
     cpy_r_r112 = cpy_r_r111 >= 0;
     if (unlikely(!cpy_r_r112)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 524, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 524, CPyStatic_globals);
         goto CPyL97;
     }
     cpy_r_r113 = cpy_r_r73 + 2;
@@ -7927,14 +7927,14 @@ CPyL66: ;
     cpy_r_r119 = (PyObject **)&cpy_r_r118;
     cpy_r_r120 = PyObject_VectorcallMethod(cpy_r_r117, cpy_r_r119, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r120 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 526, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 526, CPyStatic_globals);
         goto CPyL83;
     }
     CPy_DECREF(cpy_r_seed);
     cpy_r_r121 = CPyStatics[24]; /* ' is not a valid input for TokenBalances' */
     cpy_r_r122 = PyList_New(2);
     if (unlikely(cpy_r_r122 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 526, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 526, CPyStatic_globals);
         goto CPyL103;
     }
     cpy_r_r123 = (CPyPtr)&((PyListObject *)cpy_r_r122)->ob_item;
@@ -7946,14 +7946,14 @@ CPyL66: ;
     cpy_r_r126 = PyUnicode_Join(cpy_r_r114, cpy_r_r122);
     CPy_DECREF(cpy_r_r122);
     if (unlikely(cpy_r_r126 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 526, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 526, CPyStatic_globals);
         goto CPyL74;
     }
     cpy_r_r127 = CPyModule_builtins;
     cpy_r_r128 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r129 = CPyObject_GetAttr(cpy_r_r127, cpy_r_r128);
     if (unlikely(cpy_r_r129 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 526, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 526, CPyStatic_globals);
         goto CPyL104;
     }
     PyObject *cpy_r_r130[1] = {cpy_r_r126};
@@ -7961,14 +7961,14 @@ CPyL66: ;
     cpy_r_r132 = _PyObject_Vectorcall(cpy_r_r129, cpy_r_r131, 1, 0);
     CPy_DECREF(cpy_r_r129);
     if (unlikely(cpy_r_r132 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 526, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 526, CPyStatic_globals);
         goto CPyL104;
     }
     CPy_DECREF(cpy_r_r126);
     CPy_Raise(cpy_r_r132);
     CPy_DECREF(cpy_r_r132);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 526, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 526, CPyStatic_globals);
         goto CPyL74;
     }
     CPy_Unreachable();
@@ -8166,7 +8166,7 @@ __LL30: ;
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 506, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 506, CPyStatic_globals);
     return NULL;
 }
 
@@ -8218,12 +8218,12 @@ char CPyDef_RemoteTokenBalances_____setitem__(PyObject *cpy_r_self, PyObject *cp
     cpy_r_r10 = (PyObject **)&cpy_r_r9;
     cpy_r_r11 = PyObject_VectorcallMethod(cpy_r_r8, cpy_r_r10, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r11 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 546, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 546, CPyStatic_globals);
         goto CPyL14;
     }
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 546, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 546, CPyStatic_globals);
         goto CPyL15;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -8235,14 +8235,14 @@ char CPyDef_RemoteTokenBalances_____setitem__(PyObject *cpy_r_self, PyObject *cp
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 546, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 546, CPyStatic_globals);
         goto CPyL14;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 546, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 546, CPyStatic_globals);
         goto CPyL16;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -8250,14 +8250,14 @@ char CPyDef_RemoteTokenBalances_____setitem__(PyObject *cpy_r_self, PyObject *cp
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 546, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 546, CPyStatic_globals);
         goto CPyL16;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 546, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 546, CPyStatic_globals);
         goto CPyL14;
     }
     CPy_Unreachable();
@@ -8266,7 +8266,7 @@ CPyL8: ;
     cpy_r_r24 = CPyStatics[22]; /* 'super' */
     cpy_r_r25 = CPyObject_GetAttr(cpy_r_r23, cpy_r_r24);
     if (unlikely(cpy_r_r25 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 547, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 547, CPyStatic_globals);
         goto CPyL14;
     }
     cpy_r_r26 = (PyObject *)CPyType_RemoteTokenBalances;
@@ -8275,14 +8275,14 @@ CPyL8: ;
     cpy_r_r29 = _PyObject_Vectorcall(cpy_r_r25, cpy_r_r28, 2, 0);
     CPy_DECREF(cpy_r_r25);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 547, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 547, CPyStatic_globals);
         goto CPyL14;
     }
     cpy_r_r30 = CPyStatics[28]; /* '__setitem__' */
     cpy_r_r31 = CPyObject_GetAttr(cpy_r_r29, cpy_r_r30);
     CPy_DECREF(cpy_r_r29);
     if (unlikely(cpy_r_r31 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 547, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 547, CPyStatic_globals);
         goto CPyL14;
     }
     PyObject *cpy_r_r32[2] = {cpy_r_protocol, cpy_r_value};
@@ -8290,7 +8290,7 @@ CPyL8: ;
     cpy_r_r34 = _PyObject_Vectorcall(cpy_r_r31, cpy_r_r33, 2, 0);
     CPy_DECREF(cpy_r_r31);
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 547, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 547, CPyStatic_globals);
         goto CPyL14;
     }
     if (unlikely(cpy_r_r34 != Py_None)) {
@@ -8299,7 +8299,7 @@ CPyL8: ;
         cpy_r_r35 = 1;
     CPy_DECREF(cpy_r_r34);
     if (unlikely(cpy_r_r35 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 547, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 547, CPyStatic_globals);
         goto CPyL14;
     }
     return cpy_r_r35;
@@ -8352,7 +8352,7 @@ PyObject *CPyPy_RemoteTokenBalances_____setitem__(PyObject *self, PyObject *cons
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 528, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 528, CPyStatic_globals);
     return NULL;
 }
 
@@ -8399,7 +8399,7 @@ PyObject *CPyDef_RemoteTokenBalances___dataframe(PyObject *cpy_r_self) {
     PyObject *cpy_r_r41;
     cpy_r_r0 = PyList_New(0);
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 557, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 557, CPyStatic_globals);
         goto CPyL19;
     }
     cpy_r_r1 = 0;
@@ -8407,7 +8407,7 @@ PyObject *CPyDef_RemoteTokenBalances___dataframe(PyObject *cpy_r_self) {
     cpy_r_r3 = cpy_r_r2 << 1;
     cpy_r_r4 = CPyDict_GetItemsIter(cpy_r_self);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 558, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 558, CPyStatic_globals);
         goto CPyL20;
     }
 CPyL2: ;
@@ -8425,19 +8425,19 @@ CPyL2: ;
     if (likely(PyUnicode_Check(cpy_r_r8)))
         cpy_r_r10 = cpy_r_r8;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "dataframe", 558, CPyStatic_globals, "str", cpy_r_r8);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "dataframe", 558, CPyStatic_globals, "str", cpy_r_r8);
         goto CPyL22;
     }
     if (likely(Py_TYPE(cpy_r_r9) == CPyType_TokenBalances))
         cpy_r_r11 = cpy_r_r9;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "dataframe", 558, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r9);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "dataframe", 558, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r9);
         goto CPyL23;
     }
     cpy_r_r12 = CPyDef_TokenBalances___dataframe(cpy_r_r11);
     CPy_DECREF(cpy_r_r11);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 559, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 559, CPyStatic_globals);
         goto CPyL24;
     }
 CPyL6: ;
@@ -8446,26 +8446,26 @@ CPyL6: ;
     CPy_DECREF(cpy_r_r10);
     cpy_r_r15 = cpy_r_r14 >= 0;
     if (unlikely(!cpy_r_r15)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 560, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 560, CPyStatic_globals);
         goto CPyL25;
     }
     cpy_r_r16 = PyList_Append(cpy_r_r0, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     cpy_r_r17 = cpy_r_r16 >= 0;
     if (unlikely(!cpy_r_r17)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 561, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 561, CPyStatic_globals);
         goto CPyL26;
     }
     cpy_r_r18 = CPyDict_CheckSize(cpy_r_self, cpy_r_r3);
     if (unlikely(!cpy_r_r18)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 558, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 558, CPyStatic_globals);
         goto CPyL26;
     } else
         goto CPyL2;
 CPyL9: ;
     cpy_r_r19 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r19)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 558, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 558, CPyStatic_globals);
         goto CPyL20;
     }
     cpy_r_r20 = (CPyPtr)&((PyVarObject *)cpy_r_r0)->ob_size;
@@ -8477,7 +8477,7 @@ CPyL9: ;
     cpy_r_r25 = CPyStatics[52]; /* 'concat' */
     cpy_r_r26 = CPyDict_GetItem(cpy_r_r24, cpy_r_r25);
     if (unlikely(cpy_r_r26 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 562, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 562, CPyStatic_globals);
         goto CPyL20;
     }
     PyObject *cpy_r_r27[1] = {cpy_r_r0};
@@ -8485,7 +8485,7 @@ CPyL9: ;
     cpy_r_r29 = _PyObject_Vectorcall(cpy_r_r26, cpy_r_r28, 1, 0);
     CPy_DECREF(cpy_r_r26);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 562, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 562, CPyStatic_globals);
         goto CPyL20;
     }
     CPy_DECREF(cpy_r_r0);
@@ -8496,7 +8496,7 @@ CPyL9: ;
     cpy_r_r34 = CPyStatics[143]; /* ('drop',) */
     cpy_r_r35 = PyObject_VectorcallMethod(cpy_r_r30, cpy_r_r33, 9223372036854775809ULL, cpy_r_r34);
     if (unlikely(cpy_r_r35 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 562, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 562, CPyStatic_globals);
         goto CPyL28;
     }
     CPy_DECREF(cpy_r_r29);
@@ -8507,13 +8507,13 @@ CPyL15: ;
     cpy_r_r38 = CPyStatics[32]; /* 'DataFrame' */
     cpy_r_r39 = CPyDict_GetItem(cpy_r_r37, cpy_r_r38);
     if (unlikely(cpy_r_r39 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 562, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 562, CPyStatic_globals);
         goto CPyL19;
     }
     cpy_r_r40 = _PyObject_Vectorcall(cpy_r_r39, 0, 0, 0);
     CPy_DECREF(cpy_r_r39);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 562, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 562, CPyStatic_globals);
         goto CPyL19;
     }
     cpy_r_r36 = cpy_r_r40;
@@ -8579,7 +8579,7 @@ PyObject *CPyPy_RemoteTokenBalances___dataframe(PyObject *self, PyObject *const 
     PyObject *retval = CPyDef_RemoteTokenBalances___dataframe(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 550, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 550, CPyStatic_globals);
     return NULL;
 }
 
@@ -8613,7 +8613,7 @@ PyObject *CPyDef_RemoteTokenBalances___sum_usd(PyObject *cpy_r_self) {
     cpy_r_r4 = cpy_r_r3 << 1;
     cpy_r_r5 = CPyDict_GetValuesIter(cpy_r_self);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 577, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 577, CPyStatic_globals);
         goto CPyL12;
     }
 CPyL1: ;
@@ -8628,40 +8628,40 @@ CPyL1: ;
     if (likely(Py_TYPE(cpy_r_r9) == CPyType_TokenBalances))
         cpy_r_r10 = cpy_r_r9;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "sum_usd", 577, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r9);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "sum_usd", 577, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r9);
         goto CPyL14;
     }
     cpy_r_r11 = CPyDef_TokenBalances___sum_usd(cpy_r_r10);
     CPy_DECREF(cpy_r_r10);
     if (unlikely(cpy_r_r11 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 577, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 577, CPyStatic_globals);
         goto CPyL14;
     }
     cpy_r_r12 = PyNumber_Add(cpy_r_r1, cpy_r_r11);
     CPy_DECREF(cpy_r_r1);
     CPy_DECREF(cpy_r_r11);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", -1, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", -1, CPyStatic_globals);
         goto CPyL15;
     }
     cpy_r_r1 = cpy_r_r12;
     cpy_r_r13 = CPyDict_CheckSize(cpy_r_self, cpy_r_r4);
     if (unlikely(!cpy_r_r13)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 577, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 577, CPyStatic_globals);
         goto CPyL14;
     } else
         goto CPyL1;
 CPyL7: ;
     cpy_r_r14 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r14)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 577, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 577, CPyStatic_globals);
         goto CPyL12;
     }
     cpy_r_r15 = CPyStatic_globals;
     cpy_r_r16 = CPyStatics[20]; /* 'Decimal' */
     cpy_r_r17 = CPyDict_GetItem(cpy_r_r15, cpy_r_r16);
     if (unlikely(cpy_r_r17 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 577, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 577, CPyStatic_globals);
         goto CPyL12;
     }
     PyObject *cpy_r_r18[1] = {cpy_r_r1};
@@ -8669,7 +8669,7 @@ CPyL7: ;
     cpy_r_r20 = _PyObject_Vectorcall(cpy_r_r17, cpy_r_r19, 1, 0);
     CPy_DECREF(cpy_r_r17);
     if (unlikely(cpy_r_r20 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 577, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 577, CPyStatic_globals);
         goto CPyL12;
     }
     CPy_DECREF(cpy_r_r1);
@@ -8710,7 +8710,7 @@ PyObject *CPyPy_RemoteTokenBalances___sum_usd(PyObject *self, PyObject *const *a
     PyObject *retval = CPyDef_RemoteTokenBalances___sum_usd(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 564, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 564, CPyStatic_globals);
     return NULL;
 }
 
@@ -8725,14 +8725,14 @@ char CPyDef_RemoteTokenBalances_____bool__(PyObject *cpy_r_self) {
     char cpy_r_r8;
     cpy_r_r0 = CPyDict_ValuesView(cpy_r_self);
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 591, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 591, CPyStatic_globals);
         goto CPyL5;
     }
     cpy_r_r1 = CPyModule_builtins;
     cpy_r_r2 = CPyStatics[42]; /* 'any' */
     cpy_r_r3 = CPyObject_GetAttr(cpy_r_r1, cpy_r_r2);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 591, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 591, CPyStatic_globals);
         goto CPyL6;
     }
     PyObject *cpy_r_r4[1] = {cpy_r_r0};
@@ -8740,7 +8740,7 @@ char CPyDef_RemoteTokenBalances_____bool__(PyObject *cpy_r_self) {
     cpy_r_r6 = _PyObject_Vectorcall(cpy_r_r3, cpy_r_r5, 1, 0);
     CPy_DECREF(cpy_r_r3);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 591, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 591, CPyStatic_globals);
         goto CPyL6;
     }
     CPy_DECREF(cpy_r_r0);
@@ -8750,7 +8750,7 @@ char CPyDef_RemoteTokenBalances_____bool__(PyObject *cpy_r_self) {
         cpy_r_r7 = cpy_r_r6 == Py_True;
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r7 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 591, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 591, CPyStatic_globals);
         goto CPyL5;
     }
     return cpy_r_r7;
@@ -8784,7 +8784,7 @@ PyObject *CPyPy_RemoteTokenBalances_____bool__(PyObject *self, PyObject *const *
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 579, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 579, CPyStatic_globals);
     return NULL;
 }
 
@@ -8797,19 +8797,19 @@ PyObject *CPyDef_RemoteTokenBalances_____repr__(PyObject *cpy_r_self) {
     cpy_r_r0 = CPyStatics[54]; /* 'RemoteTokenBalances' */
     cpy_r_r1 = PyDict_Copy(cpy_r_self);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 600, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 600, CPyStatic_globals);
         goto CPyL4;
     }
     cpy_r_r2 = PyObject_Str(cpy_r_r1);
     CPy_DECREF(cpy_r_r1);
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 600, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 600, CPyStatic_globals);
         goto CPyL4;
     }
     cpy_r_r3 = CPyStr_Build(2, cpy_r_r0, cpy_r_r2);
     CPy_DECREF(cpy_r_r2);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 600, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 600, CPyStatic_globals);
         goto CPyL4;
     }
     return cpy_r_r3;
@@ -8835,7 +8835,7 @@ PyObject *CPyPy_RemoteTokenBalances_____repr__(PyObject *self, PyObject *const *
     PyObject *retval = CPyDef_RemoteTokenBalances_____repr__(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 593, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 593, CPyStatic_globals);
     return NULL;
 }
 
@@ -8946,13 +8946,13 @@ PyObject *CPyDef_RemoteTokenBalances_____add__(PyObject *cpy_r_self, PyObject *c
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 623, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 623, CPyStatic_globals);
         goto CPyL53;
     }
     cpy_r_r11 = CPyStatics[55]; /* ' is not a RemoteTokenBalances object' */
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 623, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 623, CPyStatic_globals);
         goto CPyL54;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -8964,14 +8964,14 @@ PyObject *CPyDef_RemoteTokenBalances_____add__(PyObject *cpy_r_self, PyObject *c
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 623, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 623, CPyStatic_globals);
         goto CPyL53;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 623, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 623, CPyStatic_globals);
         goto CPyL55;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -8979,14 +8979,14 @@ PyObject *CPyDef_RemoteTokenBalances_____add__(PyObject *cpy_r_self, PyObject *c
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 623, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 623, CPyStatic_globals);
         goto CPyL55;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 623, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 623, CPyStatic_globals);
         goto CPyL53;
     }
     CPy_Unreachable();
@@ -8994,7 +8994,7 @@ CPyL8: ;
     cpy_r_r23 = CPyStatics[48]; /* 'block' */
     cpy_r_r24 = CPyObject_GetAttr(cpy_r_self, cpy_r_r23);
     if (unlikely(cpy_r_r24 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 624, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 624, CPyStatic_globals);
         goto CPyL53;
     }
     if (PyLong_Check(cpy_r_r24))
@@ -9009,13 +9009,13 @@ CPyL8: ;
         cpy_r_r25 = NULL;
     }
     if (cpy_r_r25 != NULL) goto __LL31;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 624, CPyStatic_globals, "int or None", cpy_r_r24);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 624, CPyStatic_globals, "int or None", cpy_r_r24);
     goto CPyL53;
 __LL31: ;
     cpy_r_r26 = CPyStatics[48]; /* 'block' */
     cpy_r_r27 = CPyObject_GetAttr(cpy_r_other, cpy_r_r26);
     if (unlikely(cpy_r_r27 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 624, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 624, CPyStatic_globals);
         goto CPyL56;
     }
     if (PyLong_Check(cpy_r_r27))
@@ -9030,14 +9030,14 @@ __LL31: ;
         cpy_r_r28 = NULL;
     }
     if (cpy_r_r28 != NULL) goto __LL32;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 624, CPyStatic_globals, "int or None", cpy_r_r27);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 624, CPyStatic_globals, "int or None", cpy_r_r27);
     goto CPyL56;
 __LL32: ;
     cpy_r_r29 = PyObject_RichCompare(cpy_r_r25, cpy_r_r28, 3);
     CPy_DECREF(cpy_r_r25);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 624, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 624, CPyStatic_globals);
         goto CPyL53;
     }
     if (unlikely(!PyBool_Check(cpy_r_r29))) {
@@ -9046,7 +9046,7 @@ __LL32: ;
         cpy_r_r30 = cpy_r_r29 == Py_True;
     CPy_DECREF(cpy_r_r29);
     if (unlikely(cpy_r_r30 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 624, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 624, CPyStatic_globals);
         goto CPyL53;
     }
     if (!cpy_r_r30) goto CPyL26;
@@ -9055,7 +9055,7 @@ __LL32: ;
     cpy_r_r32 = CPyStatics[48]; /* 'block' */
     cpy_r_r33 = CPyObject_GetAttr(cpy_r_self, cpy_r_r32);
     if (unlikely(cpy_r_r33 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 626, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 626, CPyStatic_globals);
         goto CPyL53;
     }
     if (PyLong_Check(cpy_r_r33))
@@ -9070,20 +9070,20 @@ __LL32: ;
         cpy_r_r34 = NULL;
     }
     if (cpy_r_r34 != NULL) goto __LL33;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 626, CPyStatic_globals, "int or None", cpy_r_r33);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 626, CPyStatic_globals, "int or None", cpy_r_r33);
     goto CPyL53;
 __LL33: ;
     cpy_r_r35 = PyObject_Str(cpy_r_r34);
     CPy_DECREF(cpy_r_r34);
     if (unlikely(cpy_r_r35 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 626, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 626, CPyStatic_globals);
         goto CPyL53;
     }
     cpy_r_r36 = CPyStatics[9]; /* ' and ' */
     cpy_r_r37 = CPyStatics[48]; /* 'block' */
     cpy_r_r38 = CPyObject_GetAttr(cpy_r_other, cpy_r_r37);
     if (unlikely(cpy_r_r38 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 626, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 626, CPyStatic_globals);
         goto CPyL57;
     }
     if (PyLong_Check(cpy_r_r38))
@@ -9098,13 +9098,13 @@ __LL33: ;
         cpy_r_r39 = NULL;
     }
     if (cpy_r_r39 != NULL) goto __LL34;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 626, CPyStatic_globals, "int or None", cpy_r_r38);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 626, CPyStatic_globals, "int or None", cpy_r_r38);
     goto CPyL57;
 __LL34: ;
     cpy_r_r40 = PyObject_Str(cpy_r_r39);
     CPy_DECREF(cpy_r_r39);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 626, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 626, CPyStatic_globals);
         goto CPyL57;
     }
     cpy_r_r41 = CPyStatics[10]; /* ')' */
@@ -9112,14 +9112,14 @@ __LL34: ;
     CPy_DECREF(cpy_r_r35);
     CPy_DECREF(cpy_r_r40);
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 626, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 626, CPyStatic_globals);
         goto CPyL53;
     }
     cpy_r_r43 = CPyModule_builtins;
     cpy_r_r44 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r45 = CPyObject_GetAttr(cpy_r_r43, cpy_r_r44);
     if (unlikely(cpy_r_r45 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 625, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 625, CPyStatic_globals);
         goto CPyL58;
     }
     PyObject *cpy_r_r46[1] = {cpy_r_r42};
@@ -9127,14 +9127,14 @@ __LL34: ;
     cpy_r_r48 = _PyObject_Vectorcall(cpy_r_r45, cpy_r_r47, 1, 0);
     CPy_DECREF(cpy_r_r45);
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 625, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 625, CPyStatic_globals);
         goto CPyL58;
     }
     CPy_DECREF(cpy_r_r42);
     CPy_Raise(cpy_r_r48);
     CPy_DECREF(cpy_r_r48);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 625, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 625, CPyStatic_globals);
         goto CPyL53;
     }
     CPy_Unreachable();
@@ -9142,7 +9142,7 @@ CPyL26: ;
     cpy_r_r49 = CPyStatics[48]; /* 'block' */
     cpy_r_r50 = CPyObject_GetAttr(cpy_r_self, cpy_r_r49);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 629, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 629, CPyStatic_globals);
         goto CPyL53;
     }
     if (PyLong_Check(cpy_r_r50))
@@ -9157,7 +9157,7 @@ CPyL26: ;
         cpy_r_r51 = NULL;
     }
     if (cpy_r_r51 != NULL) goto __LL35;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 629, CPyStatic_globals, "int or None", cpy_r_r50);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 629, CPyStatic_globals, "int or None", cpy_r_r50);
     goto CPyL53;
 __LL35: ;
     cpy_r_r52 = (PyObject *)CPyType_RemoteTokenBalances;
@@ -9166,14 +9166,14 @@ __LL35: ;
     cpy_r_r55 = CPyStatics[144]; /* ('block',) */
     cpy_r_r56 = _PyObject_Vectorcall(cpy_r_r52, cpy_r_r54, 0, cpy_r_r55);
     if (unlikely(cpy_r_r56 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 629, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 629, CPyStatic_globals);
         goto CPyL59;
     }
     CPy_DECREF(cpy_r_r51);
     if (likely(PyDict_Check(cpy_r_r56)))
         cpy_r_r57 = cpy_r_r56;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 629, CPyStatic_globals, "dict", cpy_r_r56);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 629, CPyStatic_globals, "dict", cpy_r_r56);
         goto CPyL53;
     }
     cpy_r_r58 = 0;
@@ -9181,7 +9181,7 @@ __LL35: ;
     cpy_r_r60 = cpy_r_r59 << 1;
     cpy_r_r61 = CPyDict_GetItemsIter(cpy_r_self);
     if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 630, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 630, CPyStatic_globals);
         goto CPyL60;
     }
 CPyL31: ;
@@ -9199,33 +9199,33 @@ CPyL31: ;
     if (likely(PyUnicode_Check(cpy_r_r65)))
         cpy_r_r67 = cpy_r_r65;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 630, CPyStatic_globals, "str", cpy_r_r65);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 630, CPyStatic_globals, "str", cpy_r_r65);
         goto CPyL62;
     }
     if (likely(Py_TYPE(cpy_r_r66) == CPyType_TokenBalances))
         cpy_r_r68 = cpy_r_r66;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 630, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r66);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 630, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r66);
         goto CPyL63;
     }
     cpy_r_protocol = cpy_r_r67;
     cpy_r_token_balances = cpy_r_r68;
     cpy_r_r69 = CPyDef_TokenBalances_____bool__(cpy_r_token_balances);
     if (unlikely(cpy_r_r69 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 630, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 630, CPyStatic_globals);
         goto CPyL64;
     }
     if (!cpy_r_r69) goto CPyL65;
     cpy_r_r70 = CPyDict_GetItem(cpy_r_r57, cpy_r_protocol);
     if (unlikely(cpy_r_r70 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 632, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 632, CPyStatic_globals);
         goto CPyL64;
     }
     cpy_r_r71 = PyNumber_InPlaceAdd(cpy_r_r70, cpy_r_token_balances);
     CPy_DECREF(cpy_r_r70);
     CPy_DECREF(cpy_r_token_balances);
     if (unlikely(cpy_r_r71 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 632, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 632, CPyStatic_globals);
         goto CPyL66;
     }
     cpy_r_r72 = CPyDict_SetItem(cpy_r_r57, cpy_r_protocol, cpy_r_r71);
@@ -9233,20 +9233,20 @@ CPyL31: ;
     CPy_DECREF(cpy_r_r71);
     cpy_r_r73 = cpy_r_r72 >= 0;
     if (unlikely(!cpy_r_r73)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 632, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 632, CPyStatic_globals);
         goto CPyL67;
     }
 CPyL39: ;
     cpy_r_r74 = CPyDict_CheckSize(cpy_r_self, cpy_r_r60);
     if (unlikely(!cpy_r_r74)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 630, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 630, CPyStatic_globals);
         goto CPyL67;
     } else
         goto CPyL31;
 CPyL40: ;
     cpy_r_r75 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r75)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 630, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 630, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r76 = 0;
@@ -9254,7 +9254,7 @@ CPyL40: ;
     cpy_r_r78 = cpy_r_r77 << 1;
     cpy_r_r79 = CPyDict_GetItemsIter(cpy_r_other);
     if (unlikely(cpy_r_r79 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 633, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 633, CPyStatic_globals);
         goto CPyL60;
     }
 CPyL42: ;
@@ -9272,33 +9272,33 @@ CPyL42: ;
     if (likely(PyUnicode_Check(cpy_r_r83)))
         cpy_r_r85 = cpy_r_r83;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 633, CPyStatic_globals, "str", cpy_r_r83);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 633, CPyStatic_globals, "str", cpy_r_r83);
         goto CPyL69;
     }
     if (likely(Py_TYPE(cpy_r_r84) == CPyType_TokenBalances))
         cpy_r_r86 = cpy_r_r84;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 633, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r84);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 633, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r84);
         goto CPyL70;
     }
     cpy_r_protocol = cpy_r_r85;
     cpy_r_token_balances = cpy_r_r86;
     cpy_r_r87 = CPyDef_TokenBalances_____bool__(cpy_r_token_balances);
     if (unlikely(cpy_r_r87 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 630, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 630, CPyStatic_globals);
         goto CPyL71;
     }
     if (!cpy_r_r87) goto CPyL72;
     cpy_r_r88 = CPyDict_GetItem(cpy_r_r57, cpy_r_protocol);
     if (unlikely(cpy_r_r88 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 635, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 635, CPyStatic_globals);
         goto CPyL71;
     }
     cpy_r_r89 = PyNumber_InPlaceAdd(cpy_r_r88, cpy_r_token_balances);
     CPy_DECREF(cpy_r_r88);
     CPy_DECREF(cpy_r_token_balances);
     if (unlikely(cpy_r_r89 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 635, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 635, CPyStatic_globals);
         goto CPyL73;
     }
     cpy_r_r90 = CPyDict_SetItem(cpy_r_r57, cpy_r_protocol, cpy_r_r89);
@@ -9306,20 +9306,20 @@ CPyL42: ;
     CPy_DECREF(cpy_r_r89);
     cpy_r_r91 = cpy_r_r90 >= 0;
     if (unlikely(!cpy_r_r91)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 635, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 635, CPyStatic_globals);
         goto CPyL74;
     }
 CPyL50: ;
     cpy_r_r92 = CPyDict_CheckSize(cpy_r_other, cpy_r_r78);
     if (unlikely(!cpy_r_r92)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 633, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 633, CPyStatic_globals);
         goto CPyL74;
     } else
         goto CPyL42;
 CPyL51: ;
     cpy_r_r93 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r93)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 633, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 633, CPyStatic_globals);
         goto CPyL60;
     }
     return cpy_r_r57;
@@ -9442,7 +9442,7 @@ PyObject *CPyPy_RemoteTokenBalances_____add__(PyObject *self, PyObject *const *a
     PyObject *retval = CPyDef_RemoteTokenBalances_____add__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 602, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 602, CPyStatic_globals);
     return NULL;
 }
 
@@ -9513,7 +9513,7 @@ PyObject *CPyPy_RemoteTokenBalances_____add___3___SummableNonNumericMixin_glue(P
     PyObject *retval = CPyDef_RemoteTokenBalances_____add___3___SummableNonNumericMixin_glue(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__add_____SummableNonNumericMixin_glue", -1, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__add_____SummableNonNumericMixin_glue", -1, CPyStatic_globals);
     return NULL;
 }
 
@@ -9622,13 +9622,13 @@ PyObject *CPyDef_RemoteTokenBalances_____sub__(PyObject *cpy_r_self, PyObject *c
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 659, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 659, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r11 = CPyStatics[55]; /* ' is not a RemoteTokenBalances object' */
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 659, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 659, CPyStatic_globals);
         goto CPyL51;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -9640,14 +9640,14 @@ PyObject *CPyDef_RemoteTokenBalances_____sub__(PyObject *cpy_r_self, PyObject *c
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 659, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 659, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 659, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 659, CPyStatic_globals);
         goto CPyL52;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -9655,14 +9655,14 @@ PyObject *CPyDef_RemoteTokenBalances_____sub__(PyObject *cpy_r_self, PyObject *c
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 659, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 659, CPyStatic_globals);
         goto CPyL52;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 659, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 659, CPyStatic_globals);
         goto CPyL50;
     }
     CPy_Unreachable();
@@ -9670,7 +9670,7 @@ CPyL8: ;
     cpy_r_r23 = CPyStatics[48]; /* 'block' */
     cpy_r_r24 = CPyObject_GetAttr(cpy_r_self, cpy_r_r23);
     if (unlikely(cpy_r_r24 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 660, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 660, CPyStatic_globals);
         goto CPyL50;
     }
     if (PyLong_Check(cpy_r_r24))
@@ -9685,13 +9685,13 @@ CPyL8: ;
         cpy_r_r25 = NULL;
     }
     if (cpy_r_r25 != NULL) goto __LL36;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 660, CPyStatic_globals, "int or None", cpy_r_r24);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 660, CPyStatic_globals, "int or None", cpy_r_r24);
     goto CPyL50;
 __LL36: ;
     cpy_r_r26 = CPyStatics[48]; /* 'block' */
     cpy_r_r27 = CPyObject_GetAttr(cpy_r_other, cpy_r_r26);
     if (unlikely(cpy_r_r27 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 660, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 660, CPyStatic_globals);
         goto CPyL53;
     }
     if (PyLong_Check(cpy_r_r27))
@@ -9706,14 +9706,14 @@ __LL36: ;
         cpy_r_r28 = NULL;
     }
     if (cpy_r_r28 != NULL) goto __LL37;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 660, CPyStatic_globals, "int or None", cpy_r_r27);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 660, CPyStatic_globals, "int or None", cpy_r_r27);
     goto CPyL53;
 __LL37: ;
     cpy_r_r29 = PyObject_RichCompare(cpy_r_r25, cpy_r_r28, 3);
     CPy_DECREF(cpy_r_r25);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 660, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 660, CPyStatic_globals);
         goto CPyL50;
     }
     if (unlikely(!PyBool_Check(cpy_r_r29))) {
@@ -9722,7 +9722,7 @@ __LL37: ;
         cpy_r_r30 = cpy_r_r29 == Py_True;
     CPy_DECREF(cpy_r_r29);
     if (unlikely(cpy_r_r30 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 660, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 660, CPyStatic_globals);
         goto CPyL50;
     }
     if (!cpy_r_r30) goto CPyL26;
@@ -9731,7 +9731,7 @@ __LL37: ;
     cpy_r_r32 = CPyStatics[48]; /* 'block' */
     cpy_r_r33 = CPyObject_GetAttr(cpy_r_self, cpy_r_r32);
     if (unlikely(cpy_r_r33 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 662, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 662, CPyStatic_globals);
         goto CPyL50;
     }
     if (PyLong_Check(cpy_r_r33))
@@ -9746,20 +9746,20 @@ __LL37: ;
         cpy_r_r34 = NULL;
     }
     if (cpy_r_r34 != NULL) goto __LL38;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 662, CPyStatic_globals, "int or None", cpy_r_r33);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 662, CPyStatic_globals, "int or None", cpy_r_r33);
     goto CPyL50;
 __LL38: ;
     cpy_r_r35 = PyObject_Str(cpy_r_r34);
     CPy_DECREF(cpy_r_r34);
     if (unlikely(cpy_r_r35 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 662, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 662, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r36 = CPyStatics[9]; /* ' and ' */
     cpy_r_r37 = CPyStatics[48]; /* 'block' */
     cpy_r_r38 = CPyObject_GetAttr(cpy_r_other, cpy_r_r37);
     if (unlikely(cpy_r_r38 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 662, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 662, CPyStatic_globals);
         goto CPyL54;
     }
     if (PyLong_Check(cpy_r_r38))
@@ -9774,13 +9774,13 @@ __LL38: ;
         cpy_r_r39 = NULL;
     }
     if (cpy_r_r39 != NULL) goto __LL39;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 662, CPyStatic_globals, "int or None", cpy_r_r38);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 662, CPyStatic_globals, "int or None", cpy_r_r38);
     goto CPyL54;
 __LL39: ;
     cpy_r_r40 = PyObject_Str(cpy_r_r39);
     CPy_DECREF(cpy_r_r39);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 662, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 662, CPyStatic_globals);
         goto CPyL54;
     }
     cpy_r_r41 = CPyStatics[10]; /* ')' */
@@ -9788,14 +9788,14 @@ __LL39: ;
     CPy_DECREF(cpy_r_r35);
     CPy_DECREF(cpy_r_r40);
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 662, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 662, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r43 = CPyModule_builtins;
     cpy_r_r44 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r45 = CPyObject_GetAttr(cpy_r_r43, cpy_r_r44);
     if (unlikely(cpy_r_r45 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 661, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 661, CPyStatic_globals);
         goto CPyL55;
     }
     PyObject *cpy_r_r46[1] = {cpy_r_r42};
@@ -9803,14 +9803,14 @@ __LL39: ;
     cpy_r_r48 = _PyObject_Vectorcall(cpy_r_r45, cpy_r_r47, 1, 0);
     CPy_DECREF(cpy_r_r45);
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 661, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 661, CPyStatic_globals);
         goto CPyL55;
     }
     CPy_DECREF(cpy_r_r42);
     CPy_Raise(cpy_r_r48);
     CPy_DECREF(cpy_r_r48);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 661, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 661, CPyStatic_globals);
         goto CPyL50;
     }
     CPy_Unreachable();
@@ -9818,7 +9818,7 @@ CPyL26: ;
     cpy_r_r49 = CPyStatics[48]; /* 'block' */
     cpy_r_r50 = CPyObject_GetAttr(cpy_r_self, cpy_r_r49);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 665, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 665, CPyStatic_globals);
         goto CPyL50;
     }
     if (PyLong_Check(cpy_r_r50))
@@ -9833,7 +9833,7 @@ CPyL26: ;
         cpy_r_r51 = NULL;
     }
     if (cpy_r_r51 != NULL) goto __LL40;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 665, CPyStatic_globals, "int or None", cpy_r_r50);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 665, CPyStatic_globals, "int or None", cpy_r_r50);
     goto CPyL50;
 __LL40: ;
     cpy_r_r52 = (PyObject *)CPyType_RemoteTokenBalances;
@@ -9842,14 +9842,14 @@ __LL40: ;
     cpy_r_r55 = CPyStatics[144]; /* ('block',) */
     cpy_r_r56 = _PyObject_Vectorcall(cpy_r_r52, cpy_r_r54, 1, cpy_r_r55);
     if (unlikely(cpy_r_r56 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 665, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 665, CPyStatic_globals);
         goto CPyL56;
     }
     CPy_DECREF(cpy_r_r51);
     if (likely(PyDict_Check(cpy_r_r56)))
         cpy_r_r57 = cpy_r_r56;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 665, CPyStatic_globals, "dict", cpy_r_r56);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 665, CPyStatic_globals, "dict", cpy_r_r56);
         goto CPyL50;
     }
     cpy_r_r58 = 0;
@@ -9857,7 +9857,7 @@ __LL40: ;
     cpy_r_r60 = cpy_r_r59 << 1;
     cpy_r_r61 = CPyDict_GetItemsIter(cpy_r_other);
     if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 666, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 666, CPyStatic_globals);
         goto CPyL57;
     }
 CPyL31: ;
@@ -9875,27 +9875,27 @@ CPyL31: ;
     if (likely(PyUnicode_Check(cpy_r_r65)))
         cpy_r_r67 = cpy_r_r65;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 666, CPyStatic_globals, "str", cpy_r_r65);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 666, CPyStatic_globals, "str", cpy_r_r65);
         goto CPyL59;
     }
     if (likely(Py_TYPE(cpy_r_r66) == CPyType_TokenBalances))
         cpy_r_r68 = cpy_r_r66;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 666, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r66);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 666, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r66);
         goto CPyL60;
     }
     cpy_r_protocol = cpy_r_r67;
     cpy_r_token_balances = cpy_r_r68;
     cpy_r_r69 = CPyDict_GetItem(cpy_r_r57, cpy_r_protocol);
     if (unlikely(cpy_r_r69 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 667, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 667, CPyStatic_globals);
         goto CPyL61;
     }
     cpy_r_r70 = PyNumber_InPlaceSubtract(cpy_r_r69, cpy_r_token_balances);
     CPy_DECREF(cpy_r_r69);
     CPy_DECREF(cpy_r_token_balances);
     if (unlikely(cpy_r_r70 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 667, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 667, CPyStatic_globals);
         goto CPyL62;
     }
     cpy_r_r71 = CPyDict_SetItem(cpy_r_r57, cpy_r_protocol, cpy_r_r70);
@@ -9903,24 +9903,24 @@ CPyL31: ;
     CPy_DECREF(cpy_r_r70);
     cpy_r_r72 = cpy_r_r71 >= 0;
     if (unlikely(!cpy_r_r72)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 667, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 667, CPyStatic_globals);
         goto CPyL63;
     }
     cpy_r_r73 = CPyDict_CheckSize(cpy_r_other, cpy_r_r60);
     if (unlikely(!cpy_r_r73)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 666, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 666, CPyStatic_globals);
         goto CPyL63;
     } else
         goto CPyL31;
 CPyL38: ;
     cpy_r_r74 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r74)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 666, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 666, CPyStatic_globals);
         goto CPyL57;
     }
     cpy_r_r75 = PyDict_Copy(cpy_r_r57);
     if (unlikely(cpy_r_r75 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 668, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 668, CPyStatic_globals);
         goto CPyL57;
     }
     cpy_r_r76 = 0;
@@ -9928,7 +9928,7 @@ CPyL38: ;
     cpy_r_r78 = cpy_r_r77 << 1;
     cpy_r_r79 = CPyDict_GetItemsIter(cpy_r_r75);
     if (unlikely(cpy_r_r79 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 668, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 668, CPyStatic_globals);
         goto CPyL64;
     }
 CPyL41: ;
@@ -9946,13 +9946,13 @@ CPyL41: ;
     if (likely(PyUnicode_Check(cpy_r_r83)))
         cpy_r_r85 = cpy_r_r83;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 668, CPyStatic_globals, "str", cpy_r_r83);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 668, CPyStatic_globals, "str", cpy_r_r83);
         goto CPyL66;
     }
     if (likely(Py_TYPE(cpy_r_r84) == CPyType_TokenBalances))
         cpy_r_r86 = cpy_r_r84;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 668, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r84);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 668, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r84);
         goto CPyL67;
     }
     cpy_r_protocol = cpy_r_r85;
@@ -9960,7 +9960,7 @@ CPyL41: ;
     cpy_r_r87 = CPyDef_TokenBalances_____bool__(cpy_r_token_balances);
     CPy_DECREF(cpy_r_token_balances);
     if (unlikely(cpy_r_r87 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 666, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 666, CPyStatic_globals);
         goto CPyL68;
     }
     if (cpy_r_r87) goto CPyL69;
@@ -9968,20 +9968,20 @@ CPyL41: ;
     CPy_DECREF(cpy_r_protocol);
     cpy_r_r89 = cpy_r_r88 >= 0;
     if (unlikely(!cpy_r_r89)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 670, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 670, CPyStatic_globals);
         goto CPyL70;
     }
 CPyL47: ;
     cpy_r_r90 = CPyDict_CheckSize(cpy_r_r75, cpy_r_r78);
     if (unlikely(!cpy_r_r90)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 668, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 668, CPyStatic_globals);
         goto CPyL70;
     } else
         goto CPyL41;
 CPyL48: ;
     cpy_r_r91 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r91)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 668, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 668, CPyStatic_globals);
         goto CPyL57;
     }
     return cpy_r_r57;
@@ -10102,7 +10102,7 @@ PyObject *CPyPy_RemoteTokenBalances_____sub__(PyObject *self, PyObject *const *a
     PyObject *retval = CPyDef_RemoteTokenBalances_____sub__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 638, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 638, CPyStatic_globals);
     return NULL;
 }
 
@@ -10255,7 +10255,7 @@ CPyL4: ;
     cpy_r_r3 = CPyStatics[22]; /* 'super' */
     cpy_r_r4 = CPyObject_GetAttr(cpy_r_r2, cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 703, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 703, CPyStatic_globals);
         goto CPyL81;
     }
     cpy_r_r5 = (PyObject *)CPyType_WalletBalances;
@@ -10264,20 +10264,20 @@ CPyL4: ;
     cpy_r_r8 = _PyObject_Vectorcall(cpy_r_r4, cpy_r_r7, 2, 0);
     CPy_DECREF(cpy_r_r4);
     if (unlikely(cpy_r_r8 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 703, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 703, CPyStatic_globals);
         goto CPyL81;
     }
     cpy_r_r9 = CPyStatics[23]; /* '__init__' */
     cpy_r_r10 = CPyObject_GetAttr(cpy_r_r8, cpy_r_r9);
     CPy_DECREF(cpy_r_r8);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 703, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 703, CPyStatic_globals);
         goto CPyL81;
     }
     cpy_r_r11 = _PyObject_Vectorcall(cpy_r_r10, 0, 0, 0);
     CPy_DECREF(cpy_r_r10);
     if (unlikely(cpy_r_r11 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 703, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 703, CPyStatic_globals);
         goto CPyL81;
     } else
         goto CPyL82;
@@ -10286,7 +10286,7 @@ CPyL8: ;
     cpy_r_r13 = PyObject_SetAttr(cpy_r_self, cpy_r_r12, cpy_r_block);
     cpy_r_r14 = cpy_r_r13 >= 0;
     if (unlikely(!cpy_r_r14)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 704, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 704, CPyStatic_globals);
         goto CPyL81;
     }
     cpy_r_r15 = CPyStatics[57]; /* 'assets' */
@@ -10312,13 +10312,13 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r20);
     cpy_r_r22 = cpy_r_r21 >= 0;
     if (unlikely(!cpy_r_r22)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 705, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 705, CPyStatic_globals);
         goto CPyL81;
     }
     cpy_r_r23 = NULL;
     cpy_r_r24 = CPyDef_TokenBalances(cpy_r_r23, cpy_r_block);
     if (unlikely(cpy_r_r24 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 706, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 706, CPyStatic_globals);
         goto CPyL81;
     }
     cpy_r_r25 = CPyStatics[57]; /* 'assets' */
@@ -10326,7 +10326,7 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r24);
     cpy_r_r27 = cpy_r_r26 >= 0;
     if (unlikely(!cpy_r_r27)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 706, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 706, CPyStatic_globals);
         goto CPyL81;
     }
     cpy_r_r28 = (PyObject *)CPyType_RemoteTokenBalances;
@@ -10335,13 +10335,13 @@ CPyL8: ;
     cpy_r_r31 = CPyStatics[144]; /* ('block',) */
     cpy_r_r32 = _PyObject_Vectorcall(cpy_r_r28, cpy_r_r30, 0, cpy_r_r31);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 707, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 707, CPyStatic_globals);
         goto CPyL81;
     }
     if (likely(PyDict_Check(cpy_r_r32)))
         cpy_r_r33 = cpy_r_r32;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 707, CPyStatic_globals, "dict", cpy_r_r32);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 707, CPyStatic_globals, "dict", cpy_r_r32);
         goto CPyL81;
     }
     cpy_r_r34 = CPyStatics[58]; /* 'debt' */
@@ -10349,7 +10349,7 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r33);
     cpy_r_r36 = cpy_r_r35 >= 0;
     if (unlikely(!cpy_r_r36)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 707, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 707, CPyStatic_globals);
         goto CPyL81;
     }
     cpy_r_r37 = (PyObject *)CPyType_RemoteTokenBalances;
@@ -10358,14 +10358,14 @@ CPyL8: ;
     cpy_r_r40 = CPyStatics[144]; /* ('block',) */
     cpy_r_r41 = _PyObject_Vectorcall(cpy_r_r37, cpy_r_r39, 0, cpy_r_r40);
     if (unlikely(cpy_r_r41 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 708, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 708, CPyStatic_globals);
         goto CPyL81;
     }
     CPy_DECREF(cpy_r_block);
     if (likely(PyDict_Check(cpy_r_r41)))
         cpy_r_r42 = cpy_r_r41;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 708, CPyStatic_globals, "dict", cpy_r_r41);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 708, CPyStatic_globals, "dict", cpy_r_r41);
         goto CPyL83;
     }
     cpy_r_r43 = CPyStatics[59]; /* 'external' */
@@ -10373,7 +10373,7 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r42);
     cpy_r_r45 = cpy_r_r44 >= 0;
     if (unlikely(!cpy_r_r45)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 708, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 708, CPyStatic_globals);
         goto CPyL83;
     }
     cpy_r_r46 = (PyObject *)&_Py_NoneStruct;
@@ -10389,7 +10389,7 @@ CPyL20: ;
     cpy_r_r49 = PyObject_IsInstance(cpy_r_seed, cpy_r_r48);
     cpy_r_r50 = cpy_r_r49 >= 0;
     if (unlikely(!cpy_r_r50)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 712, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 712, CPyStatic_globals);
         goto CPyL83;
     }
     cpy_r_r51 = cpy_r_r49;
@@ -10397,13 +10397,13 @@ CPyL20: ;
     if (likely(PyDict_Check(cpy_r_seed)))
         cpy_r_r52 = cpy_r_seed;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 713, CPyStatic_globals, "dict", cpy_r_seed);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 713, CPyStatic_globals, "dict", cpy_r_seed);
         goto CPyL78;
     }
     cpy_r_r53 = CPyDict_ItemsView(cpy_r_r52);
     CPy_DECREF(cpy_r_r52);
     if (unlikely(cpy_r_r53 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 713, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 713, CPyStatic_globals);
         goto CPyL78;
     }
     cpy_r_seed = cpy_r_r53;
@@ -10412,14 +10412,14 @@ CPyL25: ;
     cpy_r_r55 = CPyStatics[61]; /* 'Iterable' */
     cpy_r_r56 = CPyDict_GetItem(cpy_r_r54, cpy_r_r55);
     if (unlikely(cpy_r_r56 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 714, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 714, CPyStatic_globals);
         goto CPyL83;
     }
     cpy_r_r57 = PyObject_IsInstance(cpy_r_seed, cpy_r_r56);
     CPy_DECREF(cpy_r_r56);
     cpy_r_r58 = cpy_r_r57 >= 0;
     if (unlikely(!cpy_r_r58)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 714, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 714, CPyStatic_globals);
         goto CPyL83;
     }
     cpy_r_r59 = cpy_r_r57;
@@ -10432,14 +10432,14 @@ CPyL25: ;
     cpy_r_r65 = (PyObject **)&cpy_r_r64;
     cpy_r_r66 = PyObject_VectorcallMethod(cpy_r_r63, cpy_r_r65, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r66 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 715, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 715, CPyStatic_globals);
         goto CPyL83;
     }
     CPy_DECREF(cpy_r_seed);
     cpy_r_r67 = CPyStatics[62]; /* ' is not a valid input for WalletBalances' */
     cpy_r_r68 = PyList_New(2);
     if (unlikely(cpy_r_r68 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 715, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 715, CPyStatic_globals);
         goto CPyL85;
     }
     cpy_r_r69 = (CPyPtr)&((PyListObject *)cpy_r_r68)->ob_item;
@@ -10451,14 +10451,14 @@ CPyL25: ;
     cpy_r_r72 = PyUnicode_Join(cpy_r_r60, cpy_r_r68);
     CPy_DECREF(cpy_r_r68);
     if (unlikely(cpy_r_r72 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 715, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 715, CPyStatic_globals);
         goto CPyL78;
     }
     cpy_r_r73 = CPyModule_builtins;
     cpy_r_r74 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r75 = CPyObject_GetAttr(cpy_r_r73, cpy_r_r74);
     if (unlikely(cpy_r_r75 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 715, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 715, CPyStatic_globals);
         goto CPyL86;
     }
     PyObject *cpy_r_r76[1] = {cpy_r_r72};
@@ -10466,14 +10466,14 @@ CPyL25: ;
     cpy_r_r78 = _PyObject_Vectorcall(cpy_r_r75, cpy_r_r77, 1, 0);
     CPy_DECREF(cpy_r_r75);
     if (unlikely(cpy_r_r78 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 715, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 715, CPyStatic_globals);
         goto CPyL86;
     }
     CPy_DECREF(cpy_r_r72);
     CPy_Raise(cpy_r_r78);
     CPy_DECREF(cpy_r_r78);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 715, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 715, CPyStatic_globals);
         goto CPyL78;
     }
     CPy_Unreachable();
@@ -10481,7 +10481,7 @@ CPyL35: ;
     cpy_r_r79 = PyObject_GetIter(cpy_r_seed);
     CPy_DECREF(cpy_r_seed);
     if (unlikely(cpy_r_r79 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 716, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 716, CPyStatic_globals);
         goto CPyL78;
     }
 CPyL36: ;
@@ -10512,13 +10512,13 @@ CPyL36: ;
     cpy_r_r81 = cpy_r_r80;
 __LL45: ;
     if (cpy_r_r81 != NULL) goto __LL44;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 716, CPyStatic_globals, "union[str, tuple[str, eth_portfolio.typing.TokenBalances]]", cpy_r_r80);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 716, CPyStatic_globals, "union[str, tuple[str, eth_portfolio.typing.TokenBalances]]", cpy_r_r80);
     goto CPyL88;
 __LL44: ;
     cpy_r_r82 = PyObject_GetIter(cpy_r_r81);
     CPy_DECREF(cpy_r_r81);
     if (unlikely(cpy_r_r82 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 716, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 716, CPyStatic_globals);
         goto CPyL88;
     }
     cpy_r_r83 = PyIter_Next(cpy_r_r82);
@@ -10530,7 +10530,7 @@ CPyL40: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r84 = 0;
     if (unlikely(!cpy_r_r84)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 716, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 716, CPyStatic_globals);
         goto CPyL78;
     }
     CPy_Unreachable();
@@ -10545,7 +10545,7 @@ CPyL43: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r86 = 0;
     if (unlikely(!cpy_r_r86)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 716, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 716, CPyStatic_globals);
         goto CPyL78;
     }
     CPy_Unreachable();
@@ -10561,7 +10561,7 @@ CPyL46: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r88 = 0;
     if (unlikely(!cpy_r_r88)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 716, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 716, CPyStatic_globals);
         goto CPyL78;
     }
     CPy_Unreachable();
@@ -10569,7 +10569,7 @@ CPyL48: ;
     cpy_r_r89 = CPyStatics[48]; /* 'block' */
     cpy_r_r90 = CPyObject_GetAttr(cpy_r_self, cpy_r_r89);
     if (unlikely(cpy_r_r90 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 717, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 717, CPyStatic_globals);
         goto CPyL92;
     }
     if (PyLong_Check(cpy_r_r90))
@@ -10584,7 +10584,7 @@ CPyL48: ;
         cpy_r_r91 = NULL;
     }
     if (cpy_r_r91 != NULL) goto __LL46;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 717, CPyStatic_globals, "int or None", cpy_r_r90);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 717, CPyStatic_globals, "int or None", cpy_r_r90);
     goto CPyL92;
 __LL46: ;
     cpy_r_r92 = (PyObject *)CPyType_TokenBalances;
@@ -10596,7 +10596,7 @@ __LL46: ;
     if (likely(Py_TYPE(cpy_r_balances) == CPyType_TokenBalances))
         cpy_r_r96 = cpy_r_balances;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 717, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_balances);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 717, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_balances);
         goto CPyL93;
     }
     cpy_r_r97 = ((eth_portfolio___typing___TokenBalancesObject *)cpy_r_r96)->_block;
@@ -10611,7 +10611,7 @@ CPyL53: ;
     cpy_r_r101 = CPyObject_GetAttr(cpy_r_r99, cpy_r_r100);
     CPy_DECREF(cpy_r_r99);
     if (unlikely(cpy_r_r101 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 717, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 717, CPyStatic_globals);
         goto CPyL93;
     }
     cpy_r_r98 = cpy_r_r101;
@@ -10620,7 +10620,7 @@ CPyL55: ;
     CPy_DECREF(cpy_r_r91);
     CPy_DECREF(cpy_r_r98);
     if (unlikely(cpy_r_r102 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 717, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 717, CPyStatic_globals);
         goto CPyL92;
     }
     if (unlikely(!PyBool_Check(cpy_r_r102))) {
@@ -10629,7 +10629,7 @@ CPyL55: ;
         cpy_r_r103 = cpy_r_r102 == Py_True;
     CPy_DECREF(cpy_r_r102);
     if (unlikely(cpy_r_r103 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 717, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 717, CPyStatic_globals);
         goto CPyL92;
     }
     if (cpy_r_r103) {
@@ -10641,7 +10641,7 @@ CPyL58: ;
     cpy_r_r105 = CPyStatics[48]; /* 'block' */
     cpy_r_r106 = CPyObject_GetAttr(cpy_r_self, cpy_r_r105);
     if (unlikely(cpy_r_r106 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 719, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 719, CPyStatic_globals);
         goto CPyL95;
     }
     if (PyLong_Check(cpy_r_r106))
@@ -10656,13 +10656,13 @@ CPyL58: ;
         cpy_r_r107 = NULL;
     }
     if (cpy_r_r107 != NULL) goto __LL47;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 719, CPyStatic_globals, "int or None", cpy_r_r106);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 719, CPyStatic_globals, "int or None", cpy_r_r106);
     goto CPyL95;
 __LL47: ;
     cpy_r_r108 = PyObject_Str(cpy_r_r107);
     CPy_DECREF(cpy_r_r107);
     if (unlikely(cpy_r_r108 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 719, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 719, CPyStatic_globals);
         goto CPyL95;
     }
     cpy_r_r109 = CPyStatics[9]; /* ' and ' */
@@ -10674,7 +10674,7 @@ __LL47: ;
     if (likely(Py_TYPE(cpy_r_balances) == CPyType_TokenBalances))
         cpy_r_r114 = cpy_r_balances;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 719, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_balances);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 719, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_balances);
         goto CPyL96;
     }
     cpy_r_r115 = ((eth_portfolio___typing___TokenBalancesObject *)cpy_r_r114)->_block;
@@ -10688,7 +10688,7 @@ CPyL64: ;
     cpy_r_r119 = CPyObject_GetAttr(cpy_r_r117, cpy_r_r118);
     CPy_DECREF(cpy_r_r117);
     if (unlikely(cpy_r_r119 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 719, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 719, CPyStatic_globals);
         goto CPyL96;
     }
     cpy_r_r116 = cpy_r_r119;
@@ -10696,7 +10696,7 @@ CPyL66: ;
     cpy_r_r120 = PyObject_Str(cpy_r_r116);
     CPy_DECREF(cpy_r_r116);
     if (unlikely(cpy_r_r120 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 719, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 719, CPyStatic_globals);
         goto CPyL96;
     }
     cpy_r_r121 = CPyStatics[10]; /* ')' */
@@ -10704,14 +10704,14 @@ CPyL66: ;
     CPy_DECREF(cpy_r_r108);
     CPy_DECREF(cpy_r_r120);
     if (unlikely(cpy_r_r122 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 719, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 719, CPyStatic_globals);
         goto CPyL78;
     }
     cpy_r_r123 = CPyModule_builtins;
     cpy_r_r124 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r125 = CPyObject_GetAttr(cpy_r_r123, cpy_r_r124);
     if (unlikely(cpy_r_r125 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 718, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 718, CPyStatic_globals);
         goto CPyL97;
     }
     PyObject *cpy_r_r126[1] = {cpy_r_r122};
@@ -10719,14 +10719,14 @@ CPyL66: ;
     cpy_r_r128 = _PyObject_Vectorcall(cpy_r_r125, cpy_r_r127, 1, 0);
     CPy_DECREF(cpy_r_r125);
     if (unlikely(cpy_r_r128 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 718, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 718, CPyStatic_globals);
         goto CPyL97;
     }
     CPy_DECREF(cpy_r_r122);
     CPy_Raise(cpy_r_r128);
     CPy_DECREF(cpy_r_r128);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 718, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 718, CPyStatic_globals);
         goto CPyL78;
     }
     CPy_Unreachable();
@@ -10736,21 +10736,21 @@ CPyL72: ;
     cpy_r_r131 = (PyObject **)&cpy_r_r130;
     cpy_r_r132 = PyObject_VectorcallMethod(cpy_r_r129, cpy_r_r131, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r132 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 721, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 721, CPyStatic_globals);
         goto CPyL92;
     } else
         goto CPyL98;
 CPyL73: ;
     cpy_r_r133 = CPyDict_GetItem(cpy_r_self, cpy_r_key);
     if (unlikely(cpy_r_r133 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 722, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 722, CPyStatic_globals);
         goto CPyL92;
     }
     cpy_r_r134 = PyNumber_InPlaceAdd(cpy_r_r133, cpy_r_balances);
     CPy_DECREF(cpy_r_r133);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r134 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 722, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 722, CPyStatic_globals);
         goto CPyL99;
     }
     cpy_r_r135 = CPyDict_SetItem(cpy_r_self, cpy_r_key, cpy_r_r134);
@@ -10758,14 +10758,14 @@ CPyL73: ;
     CPy_DECREF(cpy_r_r134);
     cpy_r_r136 = cpy_r_r135 >= 0;
     if (unlikely(!cpy_r_r136)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 722, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 722, CPyStatic_globals);
         goto CPyL88;
     } else
         goto CPyL36;
 CPyL76: ;
     cpy_r_r137 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r137)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 716, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 716, CPyStatic_globals);
         goto CPyL78;
     }
     return 1;
@@ -10916,7 +10916,7 @@ __LL49: ;
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 697, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 697, CPyStatic_globals);
     return NULL;
 }
 
@@ -10929,7 +10929,7 @@ PyObject *CPyDef_WalletBalances___assets(PyObject *cpy_r_self) {
     cpy_r_r0 = CPyStatics[57]; /* 'assets' */
     cpy_r_r1 = CPyDict_GetItem(cpy_r_self, cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "assets", 732, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "assets", 732, CPyStatic_globals);
         goto CPyL4;
     }
     if (Py_TYPE(cpy_r_r1) == CPyType_TokenBalances)
@@ -10944,13 +10944,13 @@ PyObject *CPyDef_WalletBalances___assets(PyObject *cpy_r_self) {
         cpy_r_r2 = NULL;
     }
     if (cpy_r_r2 != NULL) goto __LL50;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "assets", 732, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r1);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "assets", 732, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r1);
     goto CPyL4;
 __LL50: ;
     if (likely(Py_TYPE(cpy_r_r2) == CPyType_TokenBalances))
         cpy_r_r3 = cpy_r_r2;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "assets", 732, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r2);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "assets", 732, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r2);
         goto CPyL4;
     }
     return cpy_r_r3;
@@ -10976,7 +10976,7 @@ PyObject *CPyPy_WalletBalances___assets(PyObject *self, PyObject *const *args, s
     PyObject *retval = CPyDef_WalletBalances___assets(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "assets", 725, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "assets", 725, CPyStatic_globals);
     return NULL;
 }
 
@@ -10989,7 +10989,7 @@ PyObject *CPyDef_WalletBalances___debt(PyObject *cpy_r_self) {
     cpy_r_r0 = CPyStatics[58]; /* 'debt' */
     cpy_r_r1 = CPyDict_GetItem(cpy_r_self, cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "debt", 742, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "debt", 742, CPyStatic_globals);
         goto CPyL4;
     }
     if (Py_TYPE(cpy_r_r1) == CPyType_TokenBalances)
@@ -11004,13 +11004,13 @@ PyObject *CPyDef_WalletBalances___debt(PyObject *cpy_r_self) {
         cpy_r_r2 = NULL;
     }
     if (cpy_r_r2 != NULL) goto __LL51;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "debt", 742, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r1);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "debt", 742, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r1);
     goto CPyL4;
 __LL51: ;
     if (likely(PyDict_Check(cpy_r_r2)))
         cpy_r_r3 = cpy_r_r2;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "debt", 742, CPyStatic_globals, "dict", cpy_r_r2);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "debt", 742, CPyStatic_globals, "dict", cpy_r_r2);
         goto CPyL4;
     }
     return cpy_r_r3;
@@ -11036,7 +11036,7 @@ PyObject *CPyPy_WalletBalances___debt(PyObject *self, PyObject *const *args, siz
     PyObject *retval = CPyDef_WalletBalances___debt(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "debt", 735, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "debt", 735, CPyStatic_globals);
     return NULL;
 }
 
@@ -11049,7 +11049,7 @@ PyObject *CPyDef_WalletBalances___external(PyObject *cpy_r_self) {
     cpy_r_r0 = CPyStatics[59]; /* 'external' */
     cpy_r_r1 = CPyDict_GetItem(cpy_r_self, cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "external", 752, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "external", 752, CPyStatic_globals);
         goto CPyL4;
     }
     if (Py_TYPE(cpy_r_r1) == CPyType_TokenBalances)
@@ -11064,13 +11064,13 @@ PyObject *CPyDef_WalletBalances___external(PyObject *cpy_r_self) {
         cpy_r_r2 = NULL;
     }
     if (cpy_r_r2 != NULL) goto __LL52;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "external", 752, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r1);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "external", 752, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r1);
     goto CPyL4;
 __LL52: ;
     if (likely(PyDict_Check(cpy_r_r2)))
         cpy_r_r3 = cpy_r_r2;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "external", 752, CPyStatic_globals, "dict", cpy_r_r2);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "external", 752, CPyStatic_globals, "dict", cpy_r_r2);
         goto CPyL4;
     }
     return cpy_r_r3;
@@ -11096,7 +11096,7 @@ PyObject *CPyPy_WalletBalances___external(PyObject *self, PyObject *const *args,
     PyObject *retval = CPyDef_WalletBalances___external(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "external", 745, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "external", 745, CPyStatic_globals);
     return NULL;
 }
 
@@ -11153,7 +11153,7 @@ PyObject *CPyDef_WalletBalances___dataframe(PyObject *cpy_r_self) {
     PyObject *cpy_r_r50;
     cpy_r_r0 = PyList_New(0);
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 762, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 762, CPyStatic_globals);
         goto CPyL24;
     }
     cpy_r_r1 = 0;
@@ -11161,7 +11161,7 @@ PyObject *CPyDef_WalletBalances___dataframe(PyObject *cpy_r_self) {
     cpy_r_r3 = cpy_r_r2 << 1;
     cpy_r_r4 = CPyDict_GetItemsIter(cpy_r_self);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 763, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 763, CPyStatic_globals);
         goto CPyL25;
     }
 CPyL2: ;
@@ -11179,7 +11179,7 @@ CPyL2: ;
     if (likely(PyUnicode_Check(cpy_r_r8)))
         cpy_r_r10 = cpy_r_r8;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "dataframe", 763, CPyStatic_globals, "str", cpy_r_r8);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "dataframe", 763, CPyStatic_globals, "str", cpy_r_r8);
         goto CPyL27;
     }
     if (Py_TYPE(cpy_r_r9) == CPyType_TokenBalances)
@@ -11194,7 +11194,7 @@ CPyL2: ;
         cpy_r_r11 = NULL;
     }
     if (cpy_r_r11 != NULL) goto __LL53;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "dataframe", 763, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r9);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "dataframe", 763, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r9);
     goto CPyL28;
 __LL53: ;
     cpy_r_r12 = (PyObject *)CPyType_TokenBalances;
@@ -11205,13 +11205,13 @@ __LL53: ;
     if (likely(Py_TYPE(cpy_r_r11) == CPyType_TokenBalances))
         cpy_r_r16 = cpy_r_r11;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "dataframe", 764, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r11);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "dataframe", 764, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r11);
         goto CPyL29;
     }
     cpy_r_r17 = CPyDef_TokenBalances___dataframe(cpy_r_r16);
     CPy_DECREF(cpy_r_r16);
     if (unlikely(cpy_r_r17 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 764, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 764, CPyStatic_globals);
         goto CPyL29;
     }
 CPyL8: ;
@@ -11223,7 +11223,7 @@ CPyL9: ;
     cpy_r_r21 = CPyObject_GetAttr(cpy_r_r19, cpy_r_r20);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r21 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 764, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 764, CPyStatic_globals);
         goto CPyL29;
     }
     cpy_r_r18 = cpy_r_r21;
@@ -11234,26 +11234,26 @@ CPyL11: ;
     CPy_DECREF(cpy_r_r10);
     cpy_r_r24 = cpy_r_r23 >= 0;
     if (unlikely(!cpy_r_r24)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 765, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 765, CPyStatic_globals);
         goto CPyL30;
     }
     cpy_r_r25 = PyList_Append(cpy_r_r0, cpy_r_df);
     CPy_DECREF(cpy_r_df);
     cpy_r_r26 = cpy_r_r25 >= 0;
     if (unlikely(!cpy_r_r26)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 766, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 766, CPyStatic_globals);
         goto CPyL31;
     }
     cpy_r_r27 = CPyDict_CheckSize(cpy_r_self, cpy_r_r3);
     if (unlikely(!cpy_r_r27)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 763, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 763, CPyStatic_globals);
         goto CPyL31;
     } else
         goto CPyL2;
 CPyL14: ;
     cpy_r_r28 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r28)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 763, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 763, CPyStatic_globals);
         goto CPyL25;
     }
     cpy_r_r29 = (CPyPtr)&((PyVarObject *)cpy_r_r0)->ob_size;
@@ -11265,7 +11265,7 @@ CPyL14: ;
     cpy_r_r34 = CPyStatics[52]; /* 'concat' */
     cpy_r_r35 = CPyDict_GetItem(cpy_r_r33, cpy_r_r34);
     if (unlikely(cpy_r_r35 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 767, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 767, CPyStatic_globals);
         goto CPyL25;
     }
     PyObject *cpy_r_r36[1] = {cpy_r_r0};
@@ -11273,7 +11273,7 @@ CPyL14: ;
     cpy_r_r38 = _PyObject_Vectorcall(cpy_r_r35, cpy_r_r37, 1, 0);
     CPy_DECREF(cpy_r_r35);
     if (unlikely(cpy_r_r38 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 767, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 767, CPyStatic_globals);
         goto CPyL25;
     }
     CPy_DECREF(cpy_r_r0);
@@ -11284,7 +11284,7 @@ CPyL14: ;
     cpy_r_r43 = CPyStatics[143]; /* ('drop',) */
     cpy_r_r44 = PyObject_VectorcallMethod(cpy_r_r39, cpy_r_r42, 9223372036854775809ULL, cpy_r_r43);
     if (unlikely(cpy_r_r44 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 767, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 767, CPyStatic_globals);
         goto CPyL33;
     }
     CPy_DECREF(cpy_r_r38);
@@ -11295,13 +11295,13 @@ CPyL20: ;
     cpy_r_r47 = CPyStatics[32]; /* 'DataFrame' */
     cpy_r_r48 = CPyDict_GetItem(cpy_r_r46, cpy_r_r47);
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 767, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 767, CPyStatic_globals);
         goto CPyL24;
     }
     cpy_r_r49 = _PyObject_Vectorcall(cpy_r_r48, 0, 0, 0);
     CPy_DECREF(cpy_r_r48);
     if (unlikely(cpy_r_r49 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 767, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 767, CPyStatic_globals);
         goto CPyL24;
     }
     cpy_r_r45 = cpy_r_r49;
@@ -11367,7 +11367,7 @@ PyObject *CPyPy_WalletBalances___dataframe(PyObject *self, PyObject *const *args
     PyObject *retval = CPyDef_WalletBalances___dataframe(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 755, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 755, CPyStatic_globals);
     return NULL;
 }
 
@@ -11394,31 +11394,31 @@ PyObject *CPyDef_WalletBalances___sum_usd(PyObject *cpy_r_self) {
     cpy_r_r0 = CPyStatics[57]; /* 'assets' */
     cpy_r_r1 = CPyObject_GetAttr(cpy_r_self, cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 782, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 782, CPyStatic_globals);
         goto CPyL12;
     }
     if (likely(Py_TYPE(cpy_r_r1) == CPyType_TokenBalances))
         cpy_r_r2 = cpy_r_r1;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "sum_usd", 782, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r1);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "sum_usd", 782, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r1);
         goto CPyL12;
     }
     cpy_r_r3 = CPyDef_TokenBalances___sum_usd(cpy_r_r2);
     CPy_DECREF(cpy_r_r2);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 782, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 782, CPyStatic_globals);
         goto CPyL12;
     }
     cpy_r_r4 = CPyStatics[58]; /* 'debt' */
     cpy_r_r5 = CPyObject_GetAttr(cpy_r_self, cpy_r_r4);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 782, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 782, CPyStatic_globals);
         goto CPyL13;
     }
     if (likely(PyDict_Check(cpy_r_r5)))
         cpy_r_r6 = cpy_r_r5;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "sum_usd", 782, CPyStatic_globals, "dict", cpy_r_r5);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "sum_usd", 782, CPyStatic_globals, "dict", cpy_r_r5);
         goto CPyL13;
     }
     cpy_r_r7 = CPyStatics[66]; /* 'sum_usd' */
@@ -11426,7 +11426,7 @@ PyObject *CPyDef_WalletBalances___sum_usd(PyObject *cpy_r_self) {
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 782, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 782, CPyStatic_globals);
         goto CPyL14;
     }
     CPy_DECREF(cpy_r_r6);
@@ -11434,19 +11434,19 @@ PyObject *CPyDef_WalletBalances___sum_usd(PyObject *cpy_r_self) {
     CPy_DECREF(cpy_r_r3);
     CPy_DECREF(cpy_r_r10);
     if (unlikely(cpy_r_r11 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 782, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 782, CPyStatic_globals);
         goto CPyL12;
     }
     cpy_r_r12 = CPyStatics[59]; /* 'external' */
     cpy_r_r13 = CPyObject_GetAttr(cpy_r_self, cpy_r_r12);
     if (unlikely(cpy_r_r13 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 782, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 782, CPyStatic_globals);
         goto CPyL15;
     }
     if (likely(PyDict_Check(cpy_r_r13)))
         cpy_r_r14 = cpy_r_r13;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "sum_usd", 782, CPyStatic_globals, "dict", cpy_r_r13);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "sum_usd", 782, CPyStatic_globals, "dict", cpy_r_r13);
         goto CPyL15;
     }
     cpy_r_r15 = CPyStatics[66]; /* 'sum_usd' */
@@ -11454,7 +11454,7 @@ PyObject *CPyDef_WalletBalances___sum_usd(PyObject *cpy_r_self) {
     cpy_r_r17 = (PyObject **)&cpy_r_r16;
     cpy_r_r18 = PyObject_VectorcallMethod(cpy_r_r15, cpy_r_r17, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r18 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 782, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 782, CPyStatic_globals);
         goto CPyL16;
     }
     CPy_DECREF(cpy_r_r14);
@@ -11462,7 +11462,7 @@ PyObject *CPyDef_WalletBalances___sum_usd(PyObject *cpy_r_self) {
     CPy_DECREF(cpy_r_r11);
     CPy_DECREF(cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 782, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 782, CPyStatic_globals);
         goto CPyL12;
     }
     return cpy_r_r19;
@@ -11502,7 +11502,7 @@ PyObject *CPyPy_WalletBalances___sum_usd(PyObject *self, PyObject *const *args, 
     PyObject *retval = CPyDef_WalletBalances___sum_usd(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 769, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 769, CPyStatic_globals);
     return NULL;
 }
 
@@ -11517,14 +11517,14 @@ char CPyDef_WalletBalances_____bool__(PyObject *cpy_r_self) {
     char cpy_r_r8;
     cpy_r_r0 = CPyDict_ValuesView(cpy_r_self);
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 796, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 796, CPyStatic_globals);
         goto CPyL5;
     }
     cpy_r_r1 = CPyModule_builtins;
     cpy_r_r2 = CPyStatics[42]; /* 'any' */
     cpy_r_r3 = CPyObject_GetAttr(cpy_r_r1, cpy_r_r2);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 796, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 796, CPyStatic_globals);
         goto CPyL6;
     }
     PyObject *cpy_r_r4[1] = {cpy_r_r0};
@@ -11532,7 +11532,7 @@ char CPyDef_WalletBalances_____bool__(PyObject *cpy_r_self) {
     cpy_r_r6 = _PyObject_Vectorcall(cpy_r_r3, cpy_r_r5, 1, 0);
     CPy_DECREF(cpy_r_r3);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 796, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 796, CPyStatic_globals);
         goto CPyL6;
     }
     CPy_DECREF(cpy_r_r0);
@@ -11542,7 +11542,7 @@ char CPyDef_WalletBalances_____bool__(PyObject *cpy_r_self) {
         cpy_r_r7 = cpy_r_r6 == Py_True;
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r7 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 796, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 796, CPyStatic_globals);
         goto CPyL5;
     }
     return cpy_r_r7;
@@ -11576,7 +11576,7 @@ PyObject *CPyPy_WalletBalances_____bool__(PyObject *self, PyObject *const *args,
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 784, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 784, CPyStatic_globals);
     return NULL;
 }
 
@@ -11589,19 +11589,19 @@ PyObject *CPyDef_WalletBalances_____repr__(PyObject *cpy_r_self) {
     cpy_r_r0 = CPyStatics[67]; /* 'WalletBalances ' */
     cpy_r_r1 = PyDict_Copy(cpy_r_self);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 805, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 805, CPyStatic_globals);
         goto CPyL4;
     }
     cpy_r_r2 = PyObject_Str(cpy_r_r1);
     CPy_DECREF(cpy_r_r1);
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 805, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 805, CPyStatic_globals);
         goto CPyL4;
     }
     cpy_r_r3 = CPyStr_Build(2, cpy_r_r0, cpy_r_r2);
     CPy_DECREF(cpy_r_r2);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 805, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 805, CPyStatic_globals);
         goto CPyL4;
     }
     return cpy_r_r3;
@@ -11627,7 +11627,7 @@ PyObject *CPyPy_WalletBalances_____repr__(PyObject *self, PyObject *const *args,
     PyObject *retval = CPyDef_WalletBalances_____repr__(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 798, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 798, CPyStatic_globals);
     return NULL;
 }
 
@@ -11742,13 +11742,13 @@ PyObject *CPyDef_WalletBalances_____add__(PyObject *cpy_r_self, PyObject *cpy_r_
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 828, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 828, CPyStatic_globals);
         goto CPyL53;
     }
     cpy_r_r11 = CPyStatics[68]; /* ' is not a WalletBalances object' */
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 828, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 828, CPyStatic_globals);
         goto CPyL54;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -11760,14 +11760,14 @@ PyObject *CPyDef_WalletBalances_____add__(PyObject *cpy_r_self, PyObject *cpy_r_
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 828, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 828, CPyStatic_globals);
         goto CPyL53;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 828, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 828, CPyStatic_globals);
         goto CPyL55;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -11775,14 +11775,14 @@ PyObject *CPyDef_WalletBalances_____add__(PyObject *cpy_r_self, PyObject *cpy_r_
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 828, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 828, CPyStatic_globals);
         goto CPyL55;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 828, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 828, CPyStatic_globals);
         goto CPyL53;
     }
     CPy_Unreachable();
@@ -11790,7 +11790,7 @@ CPyL8: ;
     cpy_r_r23 = CPyStatics[48]; /* 'block' */
     cpy_r_r24 = CPyObject_GetAttr(cpy_r_self, cpy_r_r23);
     if (unlikely(cpy_r_r24 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 829, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 829, CPyStatic_globals);
         goto CPyL53;
     }
     if (PyLong_Check(cpy_r_r24))
@@ -11805,13 +11805,13 @@ CPyL8: ;
         cpy_r_r25 = NULL;
     }
     if (cpy_r_r25 != NULL) goto __LL54;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 829, CPyStatic_globals, "int or None", cpy_r_r24);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 829, CPyStatic_globals, "int or None", cpy_r_r24);
     goto CPyL53;
 __LL54: ;
     cpy_r_r26 = CPyStatics[48]; /* 'block' */
     cpy_r_r27 = CPyObject_GetAttr(cpy_r_other, cpy_r_r26);
     if (unlikely(cpy_r_r27 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 829, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 829, CPyStatic_globals);
         goto CPyL56;
     }
     if (PyLong_Check(cpy_r_r27))
@@ -11826,14 +11826,14 @@ __LL54: ;
         cpy_r_r28 = NULL;
     }
     if (cpy_r_r28 != NULL) goto __LL55;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 829, CPyStatic_globals, "int or None", cpy_r_r27);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 829, CPyStatic_globals, "int or None", cpy_r_r27);
     goto CPyL56;
 __LL55: ;
     cpy_r_r29 = PyObject_RichCompare(cpy_r_r25, cpy_r_r28, 3);
     CPy_DECREF(cpy_r_r25);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 829, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 829, CPyStatic_globals);
         goto CPyL53;
     }
     if (unlikely(!PyBool_Check(cpy_r_r29))) {
@@ -11842,7 +11842,7 @@ __LL55: ;
         cpy_r_r30 = cpy_r_r29 == Py_True;
     CPy_DECREF(cpy_r_r29);
     if (unlikely(cpy_r_r30 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 829, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 829, CPyStatic_globals);
         goto CPyL53;
     }
     if (!cpy_r_r30) goto CPyL26;
@@ -11851,7 +11851,7 @@ __LL55: ;
     cpy_r_r32 = CPyStatics[48]; /* 'block' */
     cpy_r_r33 = CPyObject_GetAttr(cpy_r_self, cpy_r_r32);
     if (unlikely(cpy_r_r33 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 831, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 831, CPyStatic_globals);
         goto CPyL53;
     }
     if (PyLong_Check(cpy_r_r33))
@@ -11866,20 +11866,20 @@ __LL55: ;
         cpy_r_r34 = NULL;
     }
     if (cpy_r_r34 != NULL) goto __LL56;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 831, CPyStatic_globals, "int or None", cpy_r_r33);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 831, CPyStatic_globals, "int or None", cpy_r_r33);
     goto CPyL53;
 __LL56: ;
     cpy_r_r35 = PyObject_Str(cpy_r_r34);
     CPy_DECREF(cpy_r_r34);
     if (unlikely(cpy_r_r35 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 831, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 831, CPyStatic_globals);
         goto CPyL53;
     }
     cpy_r_r36 = CPyStatics[9]; /* ' and ' */
     cpy_r_r37 = CPyStatics[48]; /* 'block' */
     cpy_r_r38 = CPyObject_GetAttr(cpy_r_other, cpy_r_r37);
     if (unlikely(cpy_r_r38 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 831, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 831, CPyStatic_globals);
         goto CPyL57;
     }
     if (PyLong_Check(cpy_r_r38))
@@ -11894,13 +11894,13 @@ __LL56: ;
         cpy_r_r39 = NULL;
     }
     if (cpy_r_r39 != NULL) goto __LL57;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 831, CPyStatic_globals, "int or None", cpy_r_r38);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 831, CPyStatic_globals, "int or None", cpy_r_r38);
     goto CPyL57;
 __LL57: ;
     cpy_r_r40 = PyObject_Str(cpy_r_r39);
     CPy_DECREF(cpy_r_r39);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 831, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 831, CPyStatic_globals);
         goto CPyL57;
     }
     cpy_r_r41 = CPyStatics[10]; /* ')' */
@@ -11908,14 +11908,14 @@ __LL57: ;
     CPy_DECREF(cpy_r_r35);
     CPy_DECREF(cpy_r_r40);
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 831, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 831, CPyStatic_globals);
         goto CPyL53;
     }
     cpy_r_r43 = CPyModule_builtins;
     cpy_r_r44 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r45 = CPyObject_GetAttr(cpy_r_r43, cpy_r_r44);
     if (unlikely(cpy_r_r45 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 830, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 830, CPyStatic_globals);
         goto CPyL58;
     }
     PyObject *cpy_r_r46[1] = {cpy_r_r42};
@@ -11923,14 +11923,14 @@ __LL57: ;
     cpy_r_r48 = _PyObject_Vectorcall(cpy_r_r45, cpy_r_r47, 1, 0);
     CPy_DECREF(cpy_r_r45);
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 830, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 830, CPyStatic_globals);
         goto CPyL58;
     }
     CPy_DECREF(cpy_r_r42);
     CPy_Raise(cpy_r_r48);
     CPy_DECREF(cpy_r_r48);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 830, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 830, CPyStatic_globals);
         goto CPyL53;
     }
     CPy_Unreachable();
@@ -11938,7 +11938,7 @@ CPyL26: ;
     cpy_r_r49 = CPyStatics[48]; /* 'block' */
     cpy_r_r50 = CPyObject_GetAttr(cpy_r_self, cpy_r_r49);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 834, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 834, CPyStatic_globals);
         goto CPyL53;
     }
     if (PyLong_Check(cpy_r_r50))
@@ -11953,7 +11953,7 @@ CPyL26: ;
         cpy_r_r51 = NULL;
     }
     if (cpy_r_r51 != NULL) goto __LL58;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 834, CPyStatic_globals, "int or None", cpy_r_r50);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 834, CPyStatic_globals, "int or None", cpy_r_r50);
     goto CPyL53;
 __LL58: ;
     cpy_r_r52 = (PyObject *)CPyType_WalletBalances;
@@ -11962,14 +11962,14 @@ __LL58: ;
     cpy_r_r55 = CPyStatics[144]; /* ('block',) */
     cpy_r_r56 = _PyObject_Vectorcall(cpy_r_r52, cpy_r_r54, 0, cpy_r_r55);
     if (unlikely(cpy_r_r56 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 834, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 834, CPyStatic_globals);
         goto CPyL59;
     }
     CPy_DECREF(cpy_r_r51);
     if (likely(PyDict_Check(cpy_r_r56)))
         cpy_r_r57 = cpy_r_r56;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 834, CPyStatic_globals, "dict", cpy_r_r56);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 834, CPyStatic_globals, "dict", cpy_r_r56);
         goto CPyL53;
     }
     cpy_r_r58 = 0;
@@ -11977,7 +11977,7 @@ __LL58: ;
     cpy_r_r60 = cpy_r_r59 << 1;
     cpy_r_r61 = CPyDict_GetItemsIter(cpy_r_self);
     if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 835, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 835, CPyStatic_globals);
         goto CPyL60;
     }
 CPyL31: ;
@@ -11995,7 +11995,7 @@ CPyL31: ;
     if (likely(PyUnicode_Check(cpy_r_r65)))
         cpy_r_r67 = cpy_r_r65;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 835, CPyStatic_globals, "str", cpy_r_r65);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 835, CPyStatic_globals, "str", cpy_r_r65);
         goto CPyL62;
     }
     if (Py_TYPE(cpy_r_r66) == CPyType_TokenBalances)
@@ -12010,7 +12010,7 @@ CPyL31: ;
         cpy_r_r68 = NULL;
     }
     if (cpy_r_r68 != NULL) goto __LL59;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 835, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r66);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 835, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r66);
     goto CPyL63;
 __LL59: ;
     cpy_r_category = cpy_r_r67;
@@ -12018,21 +12018,21 @@ __LL59: ;
     cpy_r_r69 = PyObject_IsTrue(cpy_r_balances);
     cpy_r_r70 = cpy_r_r69 >= 0;
     if (unlikely(!cpy_r_r70)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 835, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 835, CPyStatic_globals);
         goto CPyL64;
     }
     cpy_r_r71 = cpy_r_r69;
     if (!cpy_r_r71) goto CPyL65;
     cpy_r_r72 = CPyDict_GetItem(cpy_r_r57, cpy_r_category);
     if (unlikely(cpy_r_r72 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 837, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 837, CPyStatic_globals);
         goto CPyL64;
     }
     cpy_r_r73 = PyNumber_InPlaceAdd(cpy_r_r72, cpy_r_balances);
     CPy_DECREF(cpy_r_r72);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r73 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 837, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 837, CPyStatic_globals);
         goto CPyL66;
     }
     cpy_r_r74 = CPyDict_SetItem(cpy_r_r57, cpy_r_category, cpy_r_r73);
@@ -12040,20 +12040,20 @@ __LL59: ;
     CPy_DECREF(cpy_r_r73);
     cpy_r_r75 = cpy_r_r74 >= 0;
     if (unlikely(!cpy_r_r75)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 837, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 837, CPyStatic_globals);
         goto CPyL67;
     }
 CPyL39: ;
     cpy_r_r76 = CPyDict_CheckSize(cpy_r_self, cpy_r_r60);
     if (unlikely(!cpy_r_r76)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 835, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 835, CPyStatic_globals);
         goto CPyL67;
     } else
         goto CPyL31;
 CPyL40: ;
     cpy_r_r77 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r77)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 835, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 835, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r78 = 0;
@@ -12061,7 +12061,7 @@ CPyL40: ;
     cpy_r_r80 = cpy_r_r79 << 1;
     cpy_r_r81 = CPyDict_GetItemsIter(cpy_r_other);
     if (unlikely(cpy_r_r81 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 838, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 838, CPyStatic_globals);
         goto CPyL60;
     }
 CPyL42: ;
@@ -12079,7 +12079,7 @@ CPyL42: ;
     if (likely(PyUnicode_Check(cpy_r_r85)))
         cpy_r_r87 = cpy_r_r85;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 838, CPyStatic_globals, "str", cpy_r_r85);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 838, CPyStatic_globals, "str", cpy_r_r85);
         goto CPyL69;
     }
     if (Py_TYPE(cpy_r_r86) == CPyType_TokenBalances)
@@ -12094,7 +12094,7 @@ CPyL42: ;
         cpy_r_r88 = NULL;
     }
     if (cpy_r_r88 != NULL) goto __LL60;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 838, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r86);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 838, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r86);
     goto CPyL70;
 __LL60: ;
     cpy_r_category = cpy_r_r87;
@@ -12102,21 +12102,21 @@ __LL60: ;
     cpy_r_r89 = PyObject_IsTrue(cpy_r_balances);
     cpy_r_r90 = cpy_r_r89 >= 0;
     if (unlikely(!cpy_r_r90)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 835, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 835, CPyStatic_globals);
         goto CPyL71;
     }
     cpy_r_r91 = cpy_r_r89;
     if (!cpy_r_r91) goto CPyL72;
     cpy_r_r92 = CPyDict_GetItem(cpy_r_r57, cpy_r_category);
     if (unlikely(cpy_r_r92 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 840, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 840, CPyStatic_globals);
         goto CPyL71;
     }
     cpy_r_r93 = PyNumber_InPlaceAdd(cpy_r_r92, cpy_r_balances);
     CPy_DECREF(cpy_r_r92);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r93 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 840, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 840, CPyStatic_globals);
         goto CPyL73;
     }
     cpy_r_r94 = CPyDict_SetItem(cpy_r_r57, cpy_r_category, cpy_r_r93);
@@ -12124,20 +12124,20 @@ __LL60: ;
     CPy_DECREF(cpy_r_r93);
     cpy_r_r95 = cpy_r_r94 >= 0;
     if (unlikely(!cpy_r_r95)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 840, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 840, CPyStatic_globals);
         goto CPyL74;
     }
 CPyL50: ;
     cpy_r_r96 = CPyDict_CheckSize(cpy_r_other, cpy_r_r80);
     if (unlikely(!cpy_r_r96)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 838, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 838, CPyStatic_globals);
         goto CPyL74;
     } else
         goto CPyL42;
 CPyL51: ;
     cpy_r_r97 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r97)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 838, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 838, CPyStatic_globals);
         goto CPyL60;
     }
     return cpy_r_r57;
@@ -12260,7 +12260,7 @@ PyObject *CPyPy_WalletBalances_____add__(PyObject *self, PyObject *const *args, 
     PyObject *retval = CPyDef_WalletBalances_____add__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 807, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 807, CPyStatic_globals);
     return NULL;
 }
 
@@ -12331,7 +12331,7 @@ PyObject *CPyPy_WalletBalances_____add___3___SummableNonNumericMixin_glue(PyObje
     PyObject *retval = CPyDef_WalletBalances_____add___3___SummableNonNumericMixin_glue(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__add_____SummableNonNumericMixin_glue", -1, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__add_____SummableNonNumericMixin_glue", -1, CPyStatic_globals);
     return NULL;
 }
 
@@ -12442,13 +12442,13 @@ PyObject *CPyDef_WalletBalances_____sub__(PyObject *cpy_r_self, PyObject *cpy_r_
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 864, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 864, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r11 = CPyStatics[68]; /* ' is not a WalletBalances object' */
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 864, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 864, CPyStatic_globals);
         goto CPyL51;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -12460,14 +12460,14 @@ PyObject *CPyDef_WalletBalances_____sub__(PyObject *cpy_r_self, PyObject *cpy_r_
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 864, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 864, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 864, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 864, CPyStatic_globals);
         goto CPyL52;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -12475,14 +12475,14 @@ PyObject *CPyDef_WalletBalances_____sub__(PyObject *cpy_r_self, PyObject *cpy_r_
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 864, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 864, CPyStatic_globals);
         goto CPyL52;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 864, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 864, CPyStatic_globals);
         goto CPyL50;
     }
     CPy_Unreachable();
@@ -12490,7 +12490,7 @@ CPyL8: ;
     cpy_r_r23 = CPyStatics[48]; /* 'block' */
     cpy_r_r24 = CPyObject_GetAttr(cpy_r_self, cpy_r_r23);
     if (unlikely(cpy_r_r24 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 865, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 865, CPyStatic_globals);
         goto CPyL50;
     }
     if (PyLong_Check(cpy_r_r24))
@@ -12505,13 +12505,13 @@ CPyL8: ;
         cpy_r_r25 = NULL;
     }
     if (cpy_r_r25 != NULL) goto __LL61;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 865, CPyStatic_globals, "int or None", cpy_r_r24);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 865, CPyStatic_globals, "int or None", cpy_r_r24);
     goto CPyL50;
 __LL61: ;
     cpy_r_r26 = CPyStatics[48]; /* 'block' */
     cpy_r_r27 = CPyObject_GetAttr(cpy_r_other, cpy_r_r26);
     if (unlikely(cpy_r_r27 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 865, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 865, CPyStatic_globals);
         goto CPyL53;
     }
     if (PyLong_Check(cpy_r_r27))
@@ -12526,14 +12526,14 @@ __LL61: ;
         cpy_r_r28 = NULL;
     }
     if (cpy_r_r28 != NULL) goto __LL62;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 865, CPyStatic_globals, "int or None", cpy_r_r27);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 865, CPyStatic_globals, "int or None", cpy_r_r27);
     goto CPyL53;
 __LL62: ;
     cpy_r_r29 = PyObject_RichCompare(cpy_r_r25, cpy_r_r28, 3);
     CPy_DECREF(cpy_r_r25);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 865, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 865, CPyStatic_globals);
         goto CPyL50;
     }
     if (unlikely(!PyBool_Check(cpy_r_r29))) {
@@ -12542,7 +12542,7 @@ __LL62: ;
         cpy_r_r30 = cpy_r_r29 == Py_True;
     CPy_DECREF(cpy_r_r29);
     if (unlikely(cpy_r_r30 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 865, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 865, CPyStatic_globals);
         goto CPyL50;
     }
     if (!cpy_r_r30) goto CPyL26;
@@ -12551,7 +12551,7 @@ __LL62: ;
     cpy_r_r32 = CPyStatics[48]; /* 'block' */
     cpy_r_r33 = CPyObject_GetAttr(cpy_r_self, cpy_r_r32);
     if (unlikely(cpy_r_r33 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 867, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 867, CPyStatic_globals);
         goto CPyL50;
     }
     if (PyLong_Check(cpy_r_r33))
@@ -12566,20 +12566,20 @@ __LL62: ;
         cpy_r_r34 = NULL;
     }
     if (cpy_r_r34 != NULL) goto __LL63;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 867, CPyStatic_globals, "int or None", cpy_r_r33);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 867, CPyStatic_globals, "int or None", cpy_r_r33);
     goto CPyL50;
 __LL63: ;
     cpy_r_r35 = PyObject_Str(cpy_r_r34);
     CPy_DECREF(cpy_r_r34);
     if (unlikely(cpy_r_r35 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 867, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 867, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r36 = CPyStatics[9]; /* ' and ' */
     cpy_r_r37 = CPyStatics[48]; /* 'block' */
     cpy_r_r38 = CPyObject_GetAttr(cpy_r_other, cpy_r_r37);
     if (unlikely(cpy_r_r38 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 867, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 867, CPyStatic_globals);
         goto CPyL54;
     }
     if (PyLong_Check(cpy_r_r38))
@@ -12594,13 +12594,13 @@ __LL63: ;
         cpy_r_r39 = NULL;
     }
     if (cpy_r_r39 != NULL) goto __LL64;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 867, CPyStatic_globals, "int or None", cpy_r_r38);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 867, CPyStatic_globals, "int or None", cpy_r_r38);
     goto CPyL54;
 __LL64: ;
     cpy_r_r40 = PyObject_Str(cpy_r_r39);
     CPy_DECREF(cpy_r_r39);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 867, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 867, CPyStatic_globals);
         goto CPyL54;
     }
     cpy_r_r41 = CPyStatics[10]; /* ')' */
@@ -12608,14 +12608,14 @@ __LL64: ;
     CPy_DECREF(cpy_r_r35);
     CPy_DECREF(cpy_r_r40);
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 867, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 867, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r43 = CPyModule_builtins;
     cpy_r_r44 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r45 = CPyObject_GetAttr(cpy_r_r43, cpy_r_r44);
     if (unlikely(cpy_r_r45 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 866, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 866, CPyStatic_globals);
         goto CPyL55;
     }
     PyObject *cpy_r_r46[1] = {cpy_r_r42};
@@ -12623,14 +12623,14 @@ __LL64: ;
     cpy_r_r48 = _PyObject_Vectorcall(cpy_r_r45, cpy_r_r47, 1, 0);
     CPy_DECREF(cpy_r_r45);
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 866, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 866, CPyStatic_globals);
         goto CPyL55;
     }
     CPy_DECREF(cpy_r_r42);
     CPy_Raise(cpy_r_r48);
     CPy_DECREF(cpy_r_r48);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 866, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 866, CPyStatic_globals);
         goto CPyL50;
     }
     CPy_Unreachable();
@@ -12638,7 +12638,7 @@ CPyL26: ;
     cpy_r_r49 = CPyStatics[48]; /* 'block' */
     cpy_r_r50 = CPyObject_GetAttr(cpy_r_self, cpy_r_r49);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 870, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 870, CPyStatic_globals);
         goto CPyL50;
     }
     if (PyLong_Check(cpy_r_r50))
@@ -12653,7 +12653,7 @@ CPyL26: ;
         cpy_r_r51 = NULL;
     }
     if (cpy_r_r51 != NULL) goto __LL65;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 870, CPyStatic_globals, "int or None", cpy_r_r50);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 870, CPyStatic_globals, "int or None", cpy_r_r50);
     goto CPyL50;
 __LL65: ;
     cpy_r_r52 = (PyObject *)CPyType_WalletBalances;
@@ -12662,14 +12662,14 @@ __LL65: ;
     cpy_r_r55 = CPyStatics[144]; /* ('block',) */
     cpy_r_r56 = _PyObject_Vectorcall(cpy_r_r52, cpy_r_r54, 1, cpy_r_r55);
     if (unlikely(cpy_r_r56 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 870, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 870, CPyStatic_globals);
         goto CPyL56;
     }
     CPy_DECREF(cpy_r_r51);
     if (likely(PyDict_Check(cpy_r_r56)))
         cpy_r_r57 = cpy_r_r56;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 870, CPyStatic_globals, "dict", cpy_r_r56);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 870, CPyStatic_globals, "dict", cpy_r_r56);
         goto CPyL50;
     }
     cpy_r_r58 = 0;
@@ -12677,7 +12677,7 @@ __LL65: ;
     cpy_r_r60 = cpy_r_r59 << 1;
     cpy_r_r61 = CPyDict_GetItemsIter(cpy_r_other);
     if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 871, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 871, CPyStatic_globals);
         goto CPyL57;
     }
 CPyL31: ;
@@ -12695,7 +12695,7 @@ CPyL31: ;
     if (likely(PyUnicode_Check(cpy_r_r65)))
         cpy_r_r67 = cpy_r_r65;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 871, CPyStatic_globals, "str", cpy_r_r65);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 871, CPyStatic_globals, "str", cpy_r_r65);
         goto CPyL59;
     }
     if (Py_TYPE(cpy_r_r66) == CPyType_TokenBalances)
@@ -12710,21 +12710,21 @@ CPyL31: ;
         cpy_r_r68 = NULL;
     }
     if (cpy_r_r68 != NULL) goto __LL66;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 871, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r66);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 871, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r66);
     goto CPyL60;
 __LL66: ;
     cpy_r_category = cpy_r_r67;
     cpy_r_balances = cpy_r_r68;
     cpy_r_r69 = CPyDict_GetItem(cpy_r_r57, cpy_r_category);
     if (unlikely(cpy_r_r69 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 872, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 872, CPyStatic_globals);
         goto CPyL61;
     }
     cpy_r_r70 = PyNumber_InPlaceSubtract(cpy_r_r69, cpy_r_balances);
     CPy_DECREF(cpy_r_r69);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r70 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 872, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 872, CPyStatic_globals);
         goto CPyL62;
     }
     cpy_r_r71 = CPyDict_SetItem(cpy_r_r57, cpy_r_category, cpy_r_r70);
@@ -12732,24 +12732,24 @@ __LL66: ;
     CPy_DECREF(cpy_r_r70);
     cpy_r_r72 = cpy_r_r71 >= 0;
     if (unlikely(!cpy_r_r72)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 872, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 872, CPyStatic_globals);
         goto CPyL63;
     }
     cpy_r_r73 = CPyDict_CheckSize(cpy_r_other, cpy_r_r60);
     if (unlikely(!cpy_r_r73)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 871, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 871, CPyStatic_globals);
         goto CPyL63;
     } else
         goto CPyL31;
 CPyL38: ;
     cpy_r_r74 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r74)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 871, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 871, CPyStatic_globals);
         goto CPyL57;
     }
     cpy_r_r75 = PyDict_Copy(cpy_r_r57);
     if (unlikely(cpy_r_r75 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 873, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 873, CPyStatic_globals);
         goto CPyL57;
     }
     cpy_r_r76 = 0;
@@ -12757,7 +12757,7 @@ CPyL38: ;
     cpy_r_r78 = cpy_r_r77 << 1;
     cpy_r_r79 = CPyDict_GetItemsIter(cpy_r_r75);
     if (unlikely(cpy_r_r79 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 873, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 873, CPyStatic_globals);
         goto CPyL64;
     }
 CPyL41: ;
@@ -12775,7 +12775,7 @@ CPyL41: ;
     if (likely(PyUnicode_Check(cpy_r_r83)))
         cpy_r_r85 = cpy_r_r83;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 873, CPyStatic_globals, "str", cpy_r_r83);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 873, CPyStatic_globals, "str", cpy_r_r83);
         goto CPyL66;
     }
     if (Py_TYPE(cpy_r_r84) == CPyType_TokenBalances)
@@ -12790,7 +12790,7 @@ CPyL41: ;
         cpy_r_r86 = NULL;
     }
     if (cpy_r_r86 != NULL) goto __LL67;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 873, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r84);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 873, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r84);
     goto CPyL67;
 __LL67: ;
     cpy_r_category = cpy_r_r85;
@@ -12799,7 +12799,7 @@ __LL67: ;
     CPy_DECREF(cpy_r_balances);
     cpy_r_r88 = cpy_r_r87 >= 0;
     if (unlikely(!cpy_r_r88)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 871, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 871, CPyStatic_globals);
         goto CPyL68;
     }
     cpy_r_r89 = cpy_r_r87;
@@ -12808,20 +12808,20 @@ __LL67: ;
     CPy_DECREF(cpy_r_category);
     cpy_r_r91 = cpy_r_r90 >= 0;
     if (unlikely(!cpy_r_r91)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 875, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 875, CPyStatic_globals);
         goto CPyL70;
     }
 CPyL47: ;
     cpy_r_r92 = CPyDict_CheckSize(cpy_r_r75, cpy_r_r78);
     if (unlikely(!cpy_r_r92)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 873, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 873, CPyStatic_globals);
         goto CPyL70;
     } else
         goto CPyL41;
 CPyL48: ;
     cpy_r_r93 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r93)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 873, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 873, CPyStatic_globals);
         goto CPyL57;
     }
     return cpy_r_r57;
@@ -12942,7 +12942,7 @@ PyObject *CPyPy_WalletBalances_____sub__(PyObject *self, PyObject *const *args, 
     PyObject *retval = CPyDef_WalletBalances_____sub__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 843, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 843, CPyStatic_globals);
     return NULL;
 }
 
@@ -12967,7 +12967,7 @@ PyObject *CPyDef_WalletBalances_____getitem__(PyObject *cpy_r_self, PyObject *cp
     cpy_r_r2 = (PyObject **)&cpy_r_r1;
     cpy_r_r3 = PyObject_VectorcallMethod(cpy_r_r0, cpy_r_r2, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__getitem__", 897, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__getitem__", 897, CPyStatic_globals);
         goto CPyL7;
     } else
         goto CPyL8;
@@ -12976,7 +12976,7 @@ CPyL1: ;
     cpy_r_r5 = CPyStatics[22]; /* 'super' */
     cpy_r_r6 = CPyObject_GetAttr(cpy_r_r4, cpy_r_r5);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__getitem__", 898, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__getitem__", 898, CPyStatic_globals);
         goto CPyL7;
     }
     cpy_r_r7 = (PyObject *)CPyType_WalletBalances;
@@ -12985,14 +12985,14 @@ CPyL1: ;
     cpy_r_r10 = _PyObject_Vectorcall(cpy_r_r6, cpy_r_r9, 2, 0);
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__getitem__", 898, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__getitem__", 898, CPyStatic_globals);
         goto CPyL7;
     }
     cpy_r_r11 = CPyStatics[26]; /* '__getitem__' */
     cpy_r_r12 = CPyObject_GetAttr(cpy_r_r10, cpy_r_r11);
     CPy_DECREF(cpy_r_r10);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__getitem__", 898, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__getitem__", 898, CPyStatic_globals);
         goto CPyL7;
     }
     PyObject *cpy_r_r13[1] = {cpy_r_key};
@@ -13000,7 +13000,7 @@ CPyL1: ;
     cpy_r_r15 = _PyObject_Vectorcall(cpy_r_r12, cpy_r_r14, 1, 0);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r15 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__getitem__", 898, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__getitem__", 898, CPyStatic_globals);
         goto CPyL7;
     }
     if (Py_TYPE(cpy_r_r15) == CPyType_TokenBalances)
@@ -13015,7 +13015,7 @@ CPyL1: ;
         cpy_r_r16 = NULL;
     }
     if (cpy_r_r16 != NULL) goto __LL68;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__getitem__", 898, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r15);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__getitem__", 898, CPyStatic_globals, "union[eth_portfolio.typing.TokenBalances, dict]", cpy_r_r15);
     goto CPyL7;
 __LL68: ;
     return cpy_r_r16;
@@ -13052,7 +13052,7 @@ PyObject *CPyPy_WalletBalances_____getitem__(PyObject *self, PyObject *const *ar
     PyObject *retval = CPyDef_WalletBalances_____getitem__(arg_self, arg_key);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__getitem__", 878, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__getitem__", 878, CPyStatic_globals);
     return NULL;
 }
 
@@ -13076,7 +13076,7 @@ char CPyDef_WalletBalances_____setitem__(PyObject *cpy_r_self, PyObject *cpy_r_k
     cpy_r_r2 = (PyObject **)&cpy_r_r1;
     cpy_r_r3 = PyObject_VectorcallMethod(cpy_r_r0, cpy_r_r2, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 920, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 920, CPyStatic_globals);
         goto CPyL6;
     } else
         goto CPyL7;
@@ -13085,7 +13085,7 @@ CPyL1: ;
     cpy_r_r5 = CPyStatics[22]; /* 'super' */
     cpy_r_r6 = CPyObject_GetAttr(cpy_r_r4, cpy_r_r5);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 921, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 921, CPyStatic_globals);
         goto CPyL6;
     }
     cpy_r_r7 = (PyObject *)CPyType_WalletBalances;
@@ -13094,14 +13094,14 @@ CPyL1: ;
     cpy_r_r10 = _PyObject_Vectorcall(cpy_r_r6, cpy_r_r9, 2, 0);
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 921, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 921, CPyStatic_globals);
         goto CPyL6;
     }
     cpy_r_r11 = CPyStatics[28]; /* '__setitem__' */
     cpy_r_r12 = CPyObject_GetAttr(cpy_r_r10, cpy_r_r11);
     CPy_DECREF(cpy_r_r10);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 921, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 921, CPyStatic_globals);
         goto CPyL6;
     }
     PyObject *cpy_r_r13[2] = {cpy_r_key, cpy_r_value};
@@ -13109,7 +13109,7 @@ CPyL1: ;
     cpy_r_r15 = _PyObject_Vectorcall(cpy_r_r12, cpy_r_r14, 2, 0);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r15 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 921, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 921, CPyStatic_globals);
         goto CPyL6;
     } else
         goto CPyL8;
@@ -13173,7 +13173,7 @@ __LL69: ;
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 900, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 900, CPyStatic_globals);
     return NULL;
 }
 
@@ -13202,7 +13202,7 @@ char CPyDef_WalletBalances_____validatekey(PyObject *cpy_r_self, PyObject *cpy_r
     cpy_r_r0 = CPyStatics[60]; /* '_keys' */
     cpy_r_r1 = CPyObject_GetAttr(cpy_r_self, cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validatekey", 935, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validatekey", 935, CPyStatic_globals);
         goto CPyL13;
     }
     PyObject *__tmp70;
@@ -13266,7 +13266,7 @@ __LL71: ;
     }
     CPy_DECREF(cpy_r_r1);
     if (unlikely(cpy_r_r2.f0 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validatekey", 935, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validatekey", 935, CPyStatic_globals);
         goto CPyL13;
     }
     cpy_r_r3 = PyTuple_New(3);
@@ -13282,7 +13282,7 @@ __LL71: ;
     CPy_DECREF(cpy_r_r3);
     cpy_r_r5 = cpy_r_r4 >= 0;
     if (unlikely(!cpy_r_r5)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validatekey", 935, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validatekey", 935, CPyStatic_globals);
         goto CPyL13;
     }
     cpy_r_r6 = cpy_r_r4;
@@ -13292,7 +13292,7 @@ __LL71: ;
     cpy_r_r9 = CPyStatics[60]; /* '_keys' */
     cpy_r_r10 = CPyObject_GetAttr(cpy_r_self, cpy_r_r9);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validatekey", 937, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validatekey", 937, CPyStatic_globals);
         goto CPyL13;
     }
     PyObject *__tmp81;
@@ -13356,7 +13356,7 @@ __LL82: ;
     }
     CPy_DECREF(cpy_r_r10);
     if (unlikely(cpy_r_r11.f0 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validatekey", 937, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validatekey", 937, CPyStatic_globals);
         goto CPyL13;
     }
     cpy_r_r12 = PyTuple_New(3);
@@ -13371,20 +13371,20 @@ __LL82: ;
     cpy_r_r13 = PyObject_Str(cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r13 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validatekey", 937, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validatekey", 937, CPyStatic_globals);
         goto CPyL13;
     }
     cpy_r_r14 = CPyStr_Build(3, cpy_r_key, cpy_r_r8, cpy_r_r13);
     CPy_DECREF(cpy_r_r13);
     if (unlikely(cpy_r_r14 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validatekey", 937, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validatekey", 937, CPyStatic_globals);
         goto CPyL13;
     }
     cpy_r_r15 = CPyModule_builtins;
     cpy_r_r16 = CPyStatics[72]; /* 'KeyError' */
     cpy_r_r17 = CPyObject_GetAttr(cpy_r_r15, cpy_r_r16);
     if (unlikely(cpy_r_r17 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validatekey", 936, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validatekey", 936, CPyStatic_globals);
         goto CPyL14;
     }
     PyObject *cpy_r_r18[1] = {cpy_r_r14};
@@ -13392,14 +13392,14 @@ __LL82: ;
     cpy_r_r20 = _PyObject_Vectorcall(cpy_r_r17, cpy_r_r19, 1, 0);
     CPy_DECREF(cpy_r_r17);
     if (unlikely(cpy_r_r20 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validatekey", 936, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validatekey", 936, CPyStatic_globals);
         goto CPyL14;
     }
     CPy_DECREF(cpy_r_r14);
     CPy_Raise(cpy_r_r20);
     CPy_DECREF(cpy_r_r20);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validatekey", 936, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validatekey", 936, CPyStatic_globals);
         goto CPyL13;
     }
     CPy_Unreachable();
@@ -13443,7 +13443,7 @@ PyObject *CPyPy_WalletBalances_____validatekey(PyObject *self, PyObject *const *
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__validatekey", 923, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__validatekey", 923, CPyStatic_globals);
     return NULL;
 }
 
@@ -13512,7 +13512,7 @@ char CPyDef_WalletBalances_____validateitem(PyObject *cpy_r_self, PyObject *cpy_
     cpy_r_r2 = (PyObject **)&cpy_r_r1;
     cpy_r_r3 = PyObject_VectorcallMethod(cpy_r_r0, cpy_r_r2, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 952, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 952, CPyStatic_globals);
         goto CPyL34;
     } else
         goto CPyL35;
@@ -13526,7 +13526,7 @@ CPyL1: ;
     if (!cpy_r_r8) goto CPyL4;
     cpy_r_r9 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r9)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 953, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 953, CPyStatic_globals);
         goto CPyL34;
     }
 CPyL4: ;
@@ -13539,7 +13539,7 @@ CPyL4: ;
     if (cpy_r_r14) goto CPyL33;
     cpy_r_r15 = PyObject_Str(cpy_r_item);
     if (unlikely(cpy_r_r15 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 956, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 956, CPyStatic_globals);
         goto CPyL34;
     }
     cpy_r_r16 = CPyStatics[73]; /* ' is not a valid value for "' */
@@ -13547,14 +13547,14 @@ CPyL4: ;
     cpy_r_r18 = CPyStr_Build(4, cpy_r_r15, cpy_r_r16, cpy_r_key, cpy_r_r17);
     CPy_DECREF(cpy_r_r15);
     if (unlikely(cpy_r_r18 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 956, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 956, CPyStatic_globals);
         goto CPyL34;
     }
     cpy_r_r19 = CPyModule_builtins;
     cpy_r_r20 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r21 = CPyObject_GetAttr(cpy_r_r19, cpy_r_r20);
     if (unlikely(cpy_r_r21 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 955, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 955, CPyStatic_globals);
         goto CPyL36;
     }
     PyObject *cpy_r_r22[1] = {cpy_r_r18};
@@ -13562,14 +13562,14 @@ CPyL4: ;
     cpy_r_r24 = _PyObject_Vectorcall(cpy_r_r21, cpy_r_r23, 1, 0);
     CPy_DECREF(cpy_r_r21);
     if (unlikely(cpy_r_r24 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 955, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 955, CPyStatic_globals);
         goto CPyL36;
     }
     CPy_DECREF(cpy_r_r18);
     CPy_Raise(cpy_r_r24);
     CPy_DECREF(cpy_r_r24);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 955, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 955, CPyStatic_globals);
         goto CPyL34;
     }
     CPy_Unreachable();
@@ -13583,7 +13583,7 @@ CPyL12: ;
     if (!cpy_r_r29) goto CPyL15;
     cpy_r_r30 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r30)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", -1, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", -1, CPyStatic_globals);
         goto CPyL34;
     }
 CPyL15: ;
@@ -13603,7 +13603,7 @@ CPyL17: ;
     if (!cpy_r_r36) goto CPyL20;
     cpy_r_r37 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r37)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", -1, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", -1, CPyStatic_globals);
         goto CPyL34;
     }
 CPyL20: ;
@@ -13617,7 +13617,7 @@ CPyL21: ;
     if (cpy_r_r42) goto CPyL33;
     cpy_r_r43 = PyObject_Str(cpy_r_item);
     if (unlikely(cpy_r_r43 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 961, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 961, CPyStatic_globals);
         goto CPyL34;
     }
     cpy_r_r44 = CPyStatics[73]; /* ' is not a valid value for "' */
@@ -13625,14 +13625,14 @@ CPyL21: ;
     cpy_r_r46 = CPyStr_Build(4, cpy_r_r43, cpy_r_r44, cpy_r_key, cpy_r_r45);
     CPy_DECREF(cpy_r_r43);
     if (unlikely(cpy_r_r46 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 961, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 961, CPyStatic_globals);
         goto CPyL34;
     }
     cpy_r_r47 = CPyModule_builtins;
     cpy_r_r48 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r49 = CPyObject_GetAttr(cpy_r_r47, cpy_r_r48);
     if (unlikely(cpy_r_r49 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 960, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 960, CPyStatic_globals);
         goto CPyL37;
     }
     PyObject *cpy_r_r50[1] = {cpy_r_r46};
@@ -13640,14 +13640,14 @@ CPyL21: ;
     cpy_r_r52 = _PyObject_Vectorcall(cpy_r_r49, cpy_r_r51, 1, 0);
     CPy_DECREF(cpy_r_r49);
     if (unlikely(cpy_r_r52 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 960, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 960, CPyStatic_globals);
         goto CPyL37;
     }
     CPy_DECREF(cpy_r_r46);
     CPy_Raise(cpy_r_r52);
     CPy_DECREF(cpy_r_r52);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 960, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 960, CPyStatic_globals);
         goto CPyL34;
     }
     CPy_Unreachable();
@@ -13656,14 +13656,14 @@ CPyL28: ;
     cpy_r_r54 = CPyStatics[77]; /* ' is not yet implemented.' */
     cpy_r_r55 = CPyStr_Build(3, cpy_r_r53, cpy_r_key, cpy_r_r54);
     if (unlikely(cpy_r_r55 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 964, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 964, CPyStatic_globals);
         goto CPyL34;
     }
     cpy_r_r56 = CPyModule_builtins;
     cpy_r_r57 = CPyStatics[21]; /* 'NotImplementedError' */
     cpy_r_r58 = CPyObject_GetAttr(cpy_r_r56, cpy_r_r57);
     if (unlikely(cpy_r_r58 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 964, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 964, CPyStatic_globals);
         goto CPyL38;
     }
     PyObject *cpy_r_r59[1] = {cpy_r_r55};
@@ -13671,14 +13671,14 @@ CPyL28: ;
     cpy_r_r61 = _PyObject_Vectorcall(cpy_r_r58, cpy_r_r60, 1, 0);
     CPy_DECREF(cpy_r_r58);
     if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 964, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 964, CPyStatic_globals);
         goto CPyL38;
     }
     CPy_DECREF(cpy_r_r55);
     CPy_Raise(cpy_r_r61);
     CPy_DECREF(cpy_r_r61);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 964, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 964, CPyStatic_globals);
         goto CPyL34;
     }
     CPy_Unreachable();
@@ -13733,7 +13733,7 @@ PyObject *CPyPy_WalletBalances_____validateitem(PyObject *self, PyObject *const 
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__validateitem", 940, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__validateitem", 940, CPyStatic_globals);
     return NULL;
 }
 
@@ -13771,7 +13771,7 @@ PyObject *CPyPy___mypyc_lambda__1___3_init___3_PortfolioBalances_obj_____get__(P
     PyObject *retval = CPyDef___mypyc_lambda__1___3_init___3_PortfolioBalances_obj_____get__(arg___mypyc_self__, arg_instance, arg_owner);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__get__", -1, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__get__", -1, CPyStatic_globals);
     return NULL;
 }
 
@@ -13786,7 +13786,7 @@ PyObject *CPyDef___mypyc_lambda__1___3_init___3_PortfolioBalances_obj_____call__
     PyObject *cpy_r_r8;
     cpy_r_r0 = ((eth_portfolio___typing_____mypyc_lambda__1___3_init___3_PortfolioBalances_objObject *)cpy_r___mypyc_self__)->___mypyc_env__;
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/typing.py", "<lambda>", "__mypyc_lambda__1___init___PortfolioBalances_obj", "__mypyc_env__", 987, CPyStatic_globals);
+        CPy_AttributeError("eth_portfolio\\typing.py", "<lambda>", "__mypyc_lambda__1___init___PortfolioBalances_obj", "__mypyc_env__", 987, CPyStatic_globals);
         goto CPyL5;
     }
     CPy_INCREF(cpy_r_r0);
@@ -13799,7 +13799,7 @@ CPyL1: ;
     }
     CPy_DECREF(cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<lambda>", 987, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<lambda>", 987, CPyStatic_globals);
         goto CPyL5;
     }
 CPyL2: ;
@@ -13809,14 +13809,14 @@ CPyL2: ;
     cpy_r_r5 = CPyStatics[144]; /* ('block',) */
     cpy_r_r6 = _PyObject_Vectorcall(cpy_r_r2, cpy_r_r4, 0, cpy_r_r5);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<lambda>", 987, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<lambda>", 987, CPyStatic_globals);
         goto CPyL6;
     }
     CPy_DECREF(cpy_r_r1);
     if (likely(PyDict_Check(cpy_r_r6)))
         cpy_r_r7 = cpy_r_r6;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "<lambda>", 987, CPyStatic_globals, "dict", cpy_r_r6);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "<lambda>", 987, CPyStatic_globals, "dict", cpy_r_r6);
         goto CPyL5;
     }
     return cpy_r_r7;
@@ -13839,7 +13839,7 @@ PyObject *CPyPy___mypyc_lambda__1___3_init___3_PortfolioBalances_obj_____call__(
     PyObject *retval = CPyDef___mypyc_lambda__1___3_init___3_PortfolioBalances_obj_____call__(arg___mypyc_self__);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "<lambda>", 987, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "<lambda>", 987, CPyStatic_globals);
     return NULL;
 }
 
@@ -13982,7 +13982,7 @@ CPyL2: ;
 CPyL4: ;
     cpy_r_r2 = CPyDef___init___3_PortfolioBalances_env();
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 986, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 986, CPyStatic_globals);
         goto CPyL77;
     }
     if (((eth_portfolio___typing_____init___3_PortfolioBalances_envObject *)cpy_r_r2)->_block != NULL) {
@@ -13991,14 +13991,14 @@ CPyL4: ;
     ((eth_portfolio___typing_____init___3_PortfolioBalances_envObject *)cpy_r_r2)->_block = cpy_r_block;
     cpy_r_r3 = 1;
     if (unlikely(!cpy_r_r3)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 986, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 986, CPyStatic_globals);
         goto CPyL78;
     }
     cpy_r_r4 = CPyModule_builtins;
     cpy_r_r5 = CPyStatics[22]; /* 'super' */
     cpy_r_r6 = CPyObject_GetAttr(cpy_r_r4, cpy_r_r5);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 987, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 987, CPyStatic_globals);
         goto CPyL78;
     }
     cpy_r_r7 = (PyObject *)CPyType_PortfolioBalances;
@@ -14007,19 +14007,19 @@ CPyL4: ;
     cpy_r_r10 = _PyObject_Vectorcall(cpy_r_r6, cpy_r_r9, 2, 0);
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 987, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 987, CPyStatic_globals);
         goto CPyL78;
     }
     cpy_r_r11 = CPyStatics[23]; /* '__init__' */
     cpy_r_r12 = CPyObject_GetAttr(cpy_r_r10, cpy_r_r11);
     CPy_DECREF(cpy_r_r10);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 987, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 987, CPyStatic_globals);
         goto CPyL78;
     }
     cpy_r_r13 = CPyDef___mypyc_lambda__1___3_init___3_PortfolioBalances_obj();
     if (unlikely(cpy_r_r13 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 987, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 987, CPyStatic_globals);
         goto CPyL79;
     }
     CPy_INCREF(cpy_r_r2);
@@ -14029,7 +14029,7 @@ CPyL4: ;
     ((eth_portfolio___typing_____mypyc_lambda__1___3_init___3_PortfolioBalances_objObject *)cpy_r_r13)->___mypyc_env__ = cpy_r_r2;
     cpy_r_r14 = 1;
     if (unlikely(!cpy_r_r14)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 987, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 987, CPyStatic_globals);
         goto CPyL80;
     }
     PyObject *cpy_r_r15[1] = {cpy_r_r13};
@@ -14037,7 +14037,7 @@ CPyL4: ;
     cpy_r_r17 = _PyObject_Vectorcall(cpy_r_r12, cpy_r_r16, 1, 0);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r17 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 987, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 987, CPyStatic_globals);
         goto CPyL81;
     } else
         goto CPyL82;
@@ -14051,7 +14051,7 @@ CPyL12: ;
     }
     CPy_DECREF(cpy_r_r2);
     if (unlikely(cpy_r_r18 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 988, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 988, CPyStatic_globals);
         goto CPyL83;
     }
 CPyL13: ;
@@ -14069,7 +14069,7 @@ CPyL15: ;
     cpy_r_r22 = PyObject_IsInstance(cpy_r_seed, cpy_r_r21);
     cpy_r_r23 = cpy_r_r22 >= 0;
     if (unlikely(!cpy_r_r23)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 991, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 991, CPyStatic_globals);
         goto CPyL83;
     }
     cpy_r_r24 = cpy_r_r22;
@@ -14077,7 +14077,7 @@ CPyL15: ;
     if (likely(PyDict_Check(cpy_r_seed)))
         cpy_r_r25 = cpy_r_seed;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 992, CPyStatic_globals, "dict", cpy_r_seed);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 992, CPyStatic_globals, "dict", cpy_r_seed);
         goto CPyL74;
     }
     cpy_r_r26 = 0;
@@ -14085,7 +14085,7 @@ CPyL15: ;
     cpy_r_r28 = cpy_r_r27 << 1;
     cpy_r_r29 = CPyDict_GetItemsIter(cpy_r_r25);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 992, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 992, CPyStatic_globals);
         goto CPyL85;
     }
 CPyL19: ;
@@ -14103,7 +14103,7 @@ CPyL19: ;
     if (likely(PyDict_Check(cpy_r_r34)))
         cpy_r_r35 = cpy_r_r34;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 992, CPyStatic_globals, "dict", cpy_r_r34);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 992, CPyStatic_globals, "dict", cpy_r_r34);
         goto CPyL87;
     }
     cpy_r_wallet = cpy_r_r33;
@@ -14113,7 +14113,7 @@ CPyL19: ;
     cpy_r_r37 = CPyStatics[48]; /* 'block' */
     cpy_r_r38 = CPyObject_GetAttr(cpy_r_balances, cpy_r_r37);
     if (unlikely(cpy_r_r38 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 993, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 993, CPyStatic_globals);
         goto CPyL88;
     }
     if (PyLong_Check(cpy_r_r38))
@@ -14128,14 +14128,14 @@ CPyL19: ;
         cpy_r_r39 = NULL;
     }
     if (cpy_r_r39 != NULL) goto __LL92;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 993, CPyStatic_globals, "int or None", cpy_r_r38);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 993, CPyStatic_globals, "int or None", cpy_r_r38);
     goto CPyL88;
 __LL92: ;
     cpy_r_r40 = PyObject_RichCompare(cpy_r_r36, cpy_r_r39, 3);
     CPy_DECREF(cpy_r_r36);
     CPy_DECREF(cpy_r_r39);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 993, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 993, CPyStatic_globals);
         goto CPyL89;
     }
     if (unlikely(!PyBool_Check(cpy_r_r40))) {
@@ -14144,7 +14144,7 @@ __LL92: ;
         cpy_r_r41 = cpy_r_r40 == Py_True;
     CPy_DECREF(cpy_r_r40);
     if (unlikely(cpy_r_r41 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 993, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 993, CPyStatic_globals);
         goto CPyL89;
     }
     if (cpy_r_r41) {
@@ -14158,7 +14158,7 @@ CPyL26: ;
     cpy_r_r44 = PyObject_Str(cpy_r_r43);
     CPy_DECREF(cpy_r_r43);
     if (unlikely(cpy_r_r44 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 995, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 995, CPyStatic_globals);
         goto CPyL91;
     }
     cpy_r_r45 = CPyStatics[9]; /* ' and ' */
@@ -14166,7 +14166,7 @@ CPyL26: ;
     cpy_r_r47 = CPyObject_GetAttr(cpy_r_balances, cpy_r_r46);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r47 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 995, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 995, CPyStatic_globals);
         goto CPyL92;
     }
     if (PyLong_Check(cpy_r_r47))
@@ -14181,13 +14181,13 @@ CPyL26: ;
         cpy_r_r48 = NULL;
     }
     if (cpy_r_r48 != NULL) goto __LL93;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 995, CPyStatic_globals, "int or None", cpy_r_r47);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 995, CPyStatic_globals, "int or None", cpy_r_r47);
     goto CPyL92;
 __LL93: ;
     cpy_r_r49 = PyObject_Str(cpy_r_r48);
     CPy_DECREF(cpy_r_r48);
     if (unlikely(cpy_r_r49 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 995, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 995, CPyStatic_globals);
         goto CPyL92;
     }
     cpy_r_r50 = CPyStatics[10]; /* ')' */
@@ -14195,14 +14195,14 @@ __LL93: ;
     CPy_DECREF(cpy_r_r44);
     CPy_DECREF(cpy_r_r49);
     if (unlikely(cpy_r_r51 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 995, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 995, CPyStatic_globals);
         goto CPyL74;
     }
     cpy_r_r52 = CPyModule_builtins;
     cpy_r_r53 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r54 = CPyObject_GetAttr(cpy_r_r52, cpy_r_r53);
     if (unlikely(cpy_r_r54 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 994, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 994, CPyStatic_globals);
         goto CPyL93;
     }
     PyObject *cpy_r_r55[1] = {cpy_r_r51};
@@ -14210,53 +14210,53 @@ __LL93: ;
     cpy_r_r57 = _PyObject_Vectorcall(cpy_r_r54, cpy_r_r56, 1, 0);
     CPy_DECREF(cpy_r_r54);
     if (unlikely(cpy_r_r57 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 994, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 994, CPyStatic_globals);
         goto CPyL93;
     }
     CPy_DECREF(cpy_r_r51);
     CPy_Raise(cpy_r_r57);
     CPy_DECREF(cpy_r_r57);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 994, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 994, CPyStatic_globals);
         goto CPyL74;
     }
     CPy_Unreachable();
 CPyL35: ;
     cpy_r_r58 = PyObject_GetItem(cpy_r_self, cpy_r_wallet);
     if (unlikely(cpy_r_r58 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 997, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 997, CPyStatic_globals);
         goto CPyL89;
     }
     cpy_r_r59 = PyNumber_InPlaceAdd(cpy_r_r58, cpy_r_balances);
     CPy_DECREF(cpy_r_r58);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r59 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 997, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 997, CPyStatic_globals);
         goto CPyL94;
     }
     if (likely(PyDict_Check(cpy_r_r59)))
         cpy_r_r60 = cpy_r_r59;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 997, CPyStatic_globals, "dict", cpy_r_r59);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 997, CPyStatic_globals, "dict", cpy_r_r59);
         goto CPyL94;
     }
     cpy_r_r61 = CPyDef_PortfolioBalances_____setitem__(cpy_r_self, cpy_r_wallet, cpy_r_r60);
     CPy_DECREF(cpy_r_wallet);
     CPy_DECREF(cpy_r_r60);
     if (unlikely(cpy_r_r61 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 997, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 997, CPyStatic_globals);
         goto CPyL95;
     }
     cpy_r_r62 = CPyDict_CheckSize(cpy_r_r25, cpy_r_r28);
     if (unlikely(!cpy_r_r62)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 992, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 992, CPyStatic_globals);
         goto CPyL95;
     } else
         goto CPyL19;
 CPyL40: ;
     cpy_r_r63 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r63)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 992, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 992, CPyStatic_globals);
         goto CPyL74;
     } else
         goto CPyL73;
@@ -14265,7 +14265,7 @@ CPyL41: ;
     cpy_r_r65 = PyObject_IsInstance(cpy_r_seed, cpy_r_r64);
     cpy_r_r66 = cpy_r_r65 >= 0;
     if (unlikely(!cpy_r_r66)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 998, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 998, CPyStatic_globals);
         goto CPyL83;
     }
     cpy_r_r67 = cpy_r_r65;
@@ -14273,7 +14273,7 @@ CPyL41: ;
     if (likely(PyList_Check(cpy_r_seed)))
         cpy_r_r68 = cpy_r_seed;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 999, CPyStatic_globals, "list", cpy_r_seed);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 999, CPyStatic_globals, "list", cpy_r_seed);
         goto CPyL74;
     }
     cpy_r_r69 = 0;
@@ -14326,7 +14326,7 @@ __LL95: ;
     }
     CPy_DECREF(cpy_r_r79);
     if (unlikely(cpy_r_r80.f0 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 999, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 999, CPyStatic_globals);
         goto CPyL97;
     }
     cpy_r_r81 = cpy_r_r80.f0;
@@ -14342,7 +14342,7 @@ __LL95: ;
     cpy_r_r84 = CPyStatics[48]; /* 'block' */
     cpy_r_r85 = CPyObject_GetAttr(cpy_r_balances, cpy_r_r84);
     if (unlikely(cpy_r_r85 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1000, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1000, CPyStatic_globals);
         goto CPyL98;
     }
     if (PyLong_Check(cpy_r_r85))
@@ -14357,14 +14357,14 @@ __LL95: ;
         cpy_r_r86 = NULL;
     }
     if (cpy_r_r86 != NULL) goto __LL100;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 1000, CPyStatic_globals, "int or None", cpy_r_r85);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 1000, CPyStatic_globals, "int or None", cpy_r_r85);
     goto CPyL98;
 __LL100: ;
     cpy_r_r87 = PyObject_RichCompare(cpy_r_r83, cpy_r_r86, 3);
     CPy_DECREF(cpy_r_r83);
     CPy_DECREF(cpy_r_r86);
     if (unlikely(cpy_r_r87 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1000, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1000, CPyStatic_globals);
         goto CPyL99;
     }
     if (unlikely(!PyBool_Check(cpy_r_r87))) {
@@ -14373,7 +14373,7 @@ __LL100: ;
         cpy_r_r88 = cpy_r_r87 == Py_True;
     CPy_DECREF(cpy_r_r87);
     if (unlikely(cpy_r_r88 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1000, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1000, CPyStatic_globals);
         goto CPyL99;
     }
     if (cpy_r_r88) {
@@ -14387,7 +14387,7 @@ CPyL52: ;
     cpy_r_r91 = PyObject_Str(cpy_r_r90);
     CPy_DECREF(cpy_r_r90);
     if (unlikely(cpy_r_r91 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1002, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1002, CPyStatic_globals);
         goto CPyL91;
     }
     cpy_r_r92 = CPyStatics[9]; /* ' and ' */
@@ -14395,7 +14395,7 @@ CPyL52: ;
     cpy_r_r94 = CPyObject_GetAttr(cpy_r_balances, cpy_r_r93);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r94 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1002, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1002, CPyStatic_globals);
         goto CPyL101;
     }
     if (PyLong_Check(cpy_r_r94))
@@ -14410,13 +14410,13 @@ CPyL52: ;
         cpy_r_r95 = NULL;
     }
     if (cpy_r_r95 != NULL) goto __LL101;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 1002, CPyStatic_globals, "int or None", cpy_r_r94);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 1002, CPyStatic_globals, "int or None", cpy_r_r94);
     goto CPyL101;
 __LL101: ;
     cpy_r_r96 = PyObject_Str(cpy_r_r95);
     CPy_DECREF(cpy_r_r95);
     if (unlikely(cpy_r_r96 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1002, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1002, CPyStatic_globals);
         goto CPyL101;
     }
     cpy_r_r97 = CPyStatics[10]; /* ')' */
@@ -14424,14 +14424,14 @@ __LL101: ;
     CPy_DECREF(cpy_r_r91);
     CPy_DECREF(cpy_r_r96);
     if (unlikely(cpy_r_r98 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1002, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1002, CPyStatic_globals);
         goto CPyL74;
     }
     cpy_r_r99 = CPyModule_builtins;
     cpy_r_r100 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r101 = CPyObject_GetAttr(cpy_r_r99, cpy_r_r100);
     if (unlikely(cpy_r_r101 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1001, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1001, CPyStatic_globals);
         goto CPyL102;
     }
     PyObject *cpy_r_r102[1] = {cpy_r_r98};
@@ -14439,41 +14439,41 @@ __LL101: ;
     cpy_r_r104 = _PyObject_Vectorcall(cpy_r_r101, cpy_r_r103, 1, 0);
     CPy_DECREF(cpy_r_r101);
     if (unlikely(cpy_r_r104 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1001, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1001, CPyStatic_globals);
         goto CPyL102;
     }
     CPy_DECREF(cpy_r_r98);
     CPy_Raise(cpy_r_r104);
     CPy_DECREF(cpy_r_r104);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1001, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1001, CPyStatic_globals);
         goto CPyL74;
     }
     CPy_Unreachable();
 CPyL61: ;
     cpy_r_r105 = PyObject_GetItem(cpy_r_self, cpy_r_wallet);
     if (unlikely(cpy_r_r105 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1004, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1004, CPyStatic_globals);
         goto CPyL99;
     }
     cpy_r_r106 = PyNumber_InPlaceAdd(cpy_r_r105, cpy_r_balances);
     CPy_DECREF(cpy_r_r105);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r106 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1004, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1004, CPyStatic_globals);
         goto CPyL103;
     }
     if (likely(PyDict_Check(cpy_r_r106)))
         cpy_r_r107 = cpy_r_r106;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 1004, CPyStatic_globals, "dict", cpy_r_r106);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 1004, CPyStatic_globals, "dict", cpy_r_r106);
         goto CPyL103;
     }
     cpy_r_r108 = CPyDef_PortfolioBalances_____setitem__(cpy_r_self, cpy_r_wallet, cpy_r_r107);
     CPy_DECREF(cpy_r_wallet);
     CPy_DECREF(cpy_r_r107);
     if (unlikely(cpy_r_r108 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1004, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1004, CPyStatic_globals);
         goto CPyL97;
     }
     cpy_r_r109 = cpy_r_r69 + 2;
@@ -14488,14 +14488,14 @@ CPyL66: ;
     cpy_r_r115 = (PyObject **)&cpy_r_r114;
     cpy_r_r116 = PyObject_VectorcallMethod(cpy_r_r113, cpy_r_r115, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r116 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1006, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1006, CPyStatic_globals);
         goto CPyL83;
     }
     CPy_DECREF(cpy_r_seed);
     cpy_r_r117 = CPyStatics[78]; /* ' is not a valid input for PortfolioBalances' */
     cpy_r_r118 = PyList_New(2);
     if (unlikely(cpy_r_r118 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1006, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1006, CPyStatic_globals);
         goto CPyL104;
     }
     cpy_r_r119 = (CPyPtr)&((PyListObject *)cpy_r_r118)->ob_item;
@@ -14507,14 +14507,14 @@ CPyL66: ;
     cpy_r_r122 = PyUnicode_Join(cpy_r_r110, cpy_r_r118);
     CPy_DECREF(cpy_r_r118);
     if (unlikely(cpy_r_r122 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1006, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1006, CPyStatic_globals);
         goto CPyL74;
     }
     cpy_r_r123 = CPyModule_builtins;
     cpy_r_r124 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r125 = CPyObject_GetAttr(cpy_r_r123, cpy_r_r124);
     if (unlikely(cpy_r_r125 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1006, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1006, CPyStatic_globals);
         goto CPyL105;
     }
     PyObject *cpy_r_r126[1] = {cpy_r_r122};
@@ -14522,14 +14522,14 @@ CPyL66: ;
     cpy_r_r128 = _PyObject_Vectorcall(cpy_r_r125, cpy_r_r127, 1, 0);
     CPy_DECREF(cpy_r_r125);
     if (unlikely(cpy_r_r128 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1006, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1006, CPyStatic_globals);
         goto CPyL105;
     }
     CPy_DECREF(cpy_r_r122);
     CPy_Raise(cpy_r_r128);
     CPy_DECREF(cpy_r_r128);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1006, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1006, CPyStatic_globals);
         goto CPyL74;
     }
     CPy_Unreachable();
@@ -14735,7 +14735,7 @@ __LL103: ;
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 986, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 986, CPyStatic_globals);
     return NULL;
 }
 
@@ -14786,12 +14786,12 @@ char CPyDef_PortfolioBalances_____setitem__(PyObject *cpy_r_self, PyObject *cpy_
     cpy_r_r10 = (PyObject **)&cpy_r_r9;
     cpy_r_r11 = PyObject_VectorcallMethod(cpy_r_r8, cpy_r_r10, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r11 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 1011, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 1011, CPyStatic_globals);
         goto CPyL13;
     }
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 1011, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 1011, CPyStatic_globals);
         goto CPyL14;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -14803,14 +14803,14 @@ char CPyDef_PortfolioBalances_____setitem__(PyObject *cpy_r_self, PyObject *cpy_
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 1011, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 1011, CPyStatic_globals);
         goto CPyL13;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 1010, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 1010, CPyStatic_globals);
         goto CPyL15;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -14818,14 +14818,14 @@ char CPyDef_PortfolioBalances_____setitem__(PyObject *cpy_r_self, PyObject *cpy_
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 1010, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 1010, CPyStatic_globals);
         goto CPyL15;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 1010, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 1010, CPyStatic_globals);
         goto CPyL13;
     }
     CPy_Unreachable();
@@ -14834,7 +14834,7 @@ CPyL8: ;
     cpy_r_r24 = CPyStatics[22]; /* 'super' */
     cpy_r_r25 = CPyObject_GetAttr(cpy_r_r23, cpy_r_r24);
     if (unlikely(cpy_r_r25 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 1013, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 1013, CPyStatic_globals);
         goto CPyL13;
     }
     cpy_r_r26 = (PyObject *)CPyType_PortfolioBalances;
@@ -14843,14 +14843,14 @@ CPyL8: ;
     cpy_r_r29 = _PyObject_Vectorcall(cpy_r_r25, cpy_r_r28, 2, 0);
     CPy_DECREF(cpy_r_r25);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 1013, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 1013, CPyStatic_globals);
         goto CPyL13;
     }
     cpy_r_r30 = CPyStatics[28]; /* '__setitem__' */
     cpy_r_r31 = CPyObject_GetAttr(cpy_r_r29, cpy_r_r30);
     CPy_DECREF(cpy_r_r29);
     if (unlikely(cpy_r_r31 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 1013, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 1013, CPyStatic_globals);
         goto CPyL13;
     }
     PyObject *cpy_r_r32[2] = {cpy_r_key, cpy_r_value};
@@ -14858,7 +14858,7 @@ CPyL8: ;
     cpy_r_r34 = _PyObject_Vectorcall(cpy_r_r31, cpy_r_r33, 2, 0);
     CPy_DECREF(cpy_r_r31);
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 1013, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 1013, CPyStatic_globals);
         goto CPyL13;
     } else
         goto CPyL16;
@@ -14910,7 +14910,7 @@ PyObject *CPyPy_PortfolioBalances_____setitem__(PyObject *self, PyObject *const 
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__setitem__", 1008, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__setitem__", 1008, CPyStatic_globals);
     return NULL;
 }
 
@@ -14958,7 +14958,7 @@ PyObject *CPyDef_PortfolioBalances___dataframe(PyObject *cpy_r_self) {
     PyObject *cpy_r_r43;
     cpy_r_r0 = PyList_New(0);
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1023, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1023, CPyStatic_globals);
         goto CPyL27;
     }
     cpy_r_r1 = CPyStatics[29]; /* 'items' */
@@ -14966,13 +14966,13 @@ PyObject *CPyDef_PortfolioBalances___dataframe(PyObject *cpy_r_self) {
     cpy_r_r3 = (PyObject **)&cpy_r_r2;
     cpy_r_r4 = PyObject_VectorcallMethod(cpy_r_r1, cpy_r_r3, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1024, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1024, CPyStatic_globals);
         goto CPyL28;
     }
     cpy_r_r5 = PyObject_GetIter(cpy_r_r4);
     CPy_DECREF(cpy_r_r4);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1024, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1024, CPyStatic_globals);
         goto CPyL28;
     }
 CPyL3: ;
@@ -14981,7 +14981,7 @@ CPyL3: ;
     cpy_r_r7 = PyObject_GetIter(cpy_r_r6);
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r7 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1024, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1024, CPyStatic_globals);
         goto CPyL30;
     }
     cpy_r_r8 = PyIter_Next(cpy_r_r7);
@@ -14993,7 +14993,7 @@ CPyL6: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r9 = 0;
     if (unlikely(!cpy_r_r9)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1024, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1024, CPyStatic_globals);
         goto CPyL27;
     }
     CPy_Unreachable();
@@ -15007,7 +15007,7 @@ CPyL9: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r11 = 0;
     if (unlikely(!cpy_r_r11)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1024, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1024, CPyStatic_globals);
         goto CPyL27;
     }
     CPy_Unreachable();
@@ -15022,7 +15022,7 @@ CPyL12: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r13 = 0;
     if (unlikely(!cpy_r_r13)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1024, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1024, CPyStatic_globals);
         goto CPyL27;
     }
     CPy_Unreachable();
@@ -15031,7 +15031,7 @@ CPyL14: ;
     cpy_r_r15 = CPyObject_GetAttr(cpy_r_r10, cpy_r_r14);
     CPy_DECREF(cpy_r_r10);
     if (unlikely(cpy_r_r15 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1025, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1025, CPyStatic_globals);
         goto CPyL34;
     }
     cpy_r_r16 = CPyStatics[80]; /* 'wallet' */
@@ -15039,21 +15039,21 @@ CPyL14: ;
     CPy_DECREF(cpy_r_r8);
     cpy_r_r18 = cpy_r_r17 >= 0;
     if (unlikely(!cpy_r_r18)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1026, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1026, CPyStatic_globals);
         goto CPyL35;
     }
     cpy_r_r19 = PyList_Append(cpy_r_r0, cpy_r_r15);
     CPy_DECREF(cpy_r_r15);
     cpy_r_r20 = cpy_r_r19 >= 0;
     if (unlikely(!cpy_r_r20)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1027, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1027, CPyStatic_globals);
         goto CPyL30;
     } else
         goto CPyL3;
 CPyL17: ;
     cpy_r_r21 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r21)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1024, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1024, CPyStatic_globals);
         goto CPyL28;
     }
     cpy_r_r22 = (CPyPtr)&((PyVarObject *)cpy_r_r0)->ob_size;
@@ -15065,7 +15065,7 @@ CPyL17: ;
     cpy_r_r27 = CPyStatics[52]; /* 'concat' */
     cpy_r_r28 = CPyDict_GetItem(cpy_r_r26, cpy_r_r27);
     if (unlikely(cpy_r_r28 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1028, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1028, CPyStatic_globals);
         goto CPyL28;
     }
     PyObject *cpy_r_r29[1] = {cpy_r_r0};
@@ -15073,7 +15073,7 @@ CPyL17: ;
     cpy_r_r31 = _PyObject_Vectorcall(cpy_r_r28, cpy_r_r30, 1, 0);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r31 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1028, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1028, CPyStatic_globals);
         goto CPyL28;
     }
     CPy_DECREF(cpy_r_r0);
@@ -15084,7 +15084,7 @@ CPyL17: ;
     cpy_r_r36 = CPyStatics[143]; /* ('drop',) */
     cpy_r_r37 = PyObject_VectorcallMethod(cpy_r_r32, cpy_r_r35, 9223372036854775809ULL, cpy_r_r36);
     if (unlikely(cpy_r_r37 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1028, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1028, CPyStatic_globals);
         goto CPyL37;
     }
     CPy_DECREF(cpy_r_r31);
@@ -15095,13 +15095,13 @@ CPyL23: ;
     cpy_r_r40 = CPyStatics[32]; /* 'DataFrame' */
     cpy_r_r41 = CPyDict_GetItem(cpy_r_r39, cpy_r_r40);
     if (unlikely(cpy_r_r41 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1028, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1028, CPyStatic_globals);
         goto CPyL27;
     }
     cpy_r_r42 = _PyObject_Vectorcall(cpy_r_r41, 0, 0, 0);
     CPy_DECREF(cpy_r_r41);
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1028, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1028, CPyStatic_globals);
         goto CPyL27;
     }
     cpy_r_r38 = cpy_r_r42;
@@ -15173,7 +15173,7 @@ PyObject *CPyPy_PortfolioBalances___dataframe(PyObject *self, PyObject *const *a
     PyObject *retval = CPyDef_PortfolioBalances___dataframe(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "dataframe", 1016, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "dataframe", 1016, CPyStatic_globals);
     return NULL;
 }
 
@@ -15199,13 +15199,13 @@ PyObject *CPyDef_PortfolioBalances___sum_usd(PyObject *cpy_r_self) {
     cpy_r_r4 = (PyObject **)&cpy_r_r3;
     cpy_r_r5 = PyObject_VectorcallMethod(cpy_r_r2, cpy_r_r4, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 1043, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 1043, CPyStatic_globals);
         goto CPyL9;
     }
     cpy_r_r6 = PyObject_GetIter(cpy_r_r5);
     CPy_DECREF(cpy_r_r5);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 1043, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 1043, CPyStatic_globals);
         goto CPyL9;
     }
 CPyL2: ;
@@ -15216,7 +15216,7 @@ CPyL2: ;
     cpy_r_r10 = (PyObject **)&cpy_r_r9;
     cpy_r_r11 = PyObject_VectorcallMethod(cpy_r_r8, cpy_r_r10, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r11 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 1043, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 1043, CPyStatic_globals);
         goto CPyL11;
     }
     CPy_DECREF(cpy_r_r7);
@@ -15224,7 +15224,7 @@ CPyL2: ;
     CPy_DECREF(cpy_r_r1);
     CPy_DECREF(cpy_r_r11);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", -1, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", -1, CPyStatic_globals);
         goto CPyL12;
     }
     cpy_r_r1 = cpy_r_r12;
@@ -15232,7 +15232,7 @@ CPyL2: ;
 CPyL6: ;
     cpy_r_r13 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r13)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 1043, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 1043, CPyStatic_globals);
         goto CPyL9;
     }
     return cpy_r_r1;
@@ -15272,7 +15272,7 @@ PyObject *CPyPy_PortfolioBalances___sum_usd(PyObject *self, PyObject *const *arg
     PyObject *retval = CPyDef_PortfolioBalances___sum_usd(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "sum_usd", 1030, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "sum_usd", 1030, CPyStatic_globals);
     return NULL;
 }
 
@@ -15319,13 +15319,13 @@ PyObject *CPyDef_PortfolioBalances___inverted(PyObject *cpy_r_self) {
     cpy_r_r0 = (PyObject *)CPyType_PortfolioBalancesByCategory;
     cpy_r_r1 = _PyObject_Vectorcall(cpy_r_r0, 0, 0, 0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1059, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1059, CPyStatic_globals);
         goto CPyL38;
     }
     if (likely(PyDict_Check(cpy_r_r1)))
         cpy_r_r2 = cpy_r_r1;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "inverted", 1059, CPyStatic_globals, "dict", cpy_r_r1);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "inverted", 1059, CPyStatic_globals, "dict", cpy_r_r1);
         goto CPyL38;
     }
     cpy_r_r3 = CPyStatics[29]; /* 'items' */
@@ -15333,13 +15333,13 @@ PyObject *CPyDef_PortfolioBalances___inverted(PyObject *cpy_r_self) {
     cpy_r_r5 = (PyObject **)&cpy_r_r4;
     cpy_r_r6 = PyObject_VectorcallMethod(cpy_r_r3, cpy_r_r5, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1060, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1060, CPyStatic_globals);
         goto CPyL39;
     }
     cpy_r_r7 = PyObject_GetIter(cpy_r_r6);
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r7 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1060, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1060, CPyStatic_globals);
         goto CPyL39;
     }
 CPyL4: ;
@@ -15348,7 +15348,7 @@ CPyL4: ;
     cpy_r_r9 = PyObject_GetIter(cpy_r_r8);
     CPy_DECREF(cpy_r_r8);
     if (unlikely(cpy_r_r9 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1060, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1060, CPyStatic_globals);
         goto CPyL41;
     }
     cpy_r_r10 = PyIter_Next(cpy_r_r9);
@@ -15360,7 +15360,7 @@ CPyL7: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r11 = 0;
     if (unlikely(!cpy_r_r11)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1060, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1060, CPyStatic_globals);
         goto CPyL38;
     }
     CPy_Unreachable();
@@ -15374,7 +15374,7 @@ CPyL10: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r13 = 0;
     if (unlikely(!cpy_r_r13)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1060, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1060, CPyStatic_globals);
         goto CPyL38;
     }
     CPy_Unreachable();
@@ -15389,7 +15389,7 @@ CPyL13: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r15 = 0;
     if (unlikely(!cpy_r_r15)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1060, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1060, CPyStatic_globals);
         goto CPyL38;
     }
     CPy_Unreachable();
@@ -15399,14 +15399,14 @@ CPyL15: ;
     cpy_r_r18 = (PyObject **)&cpy_r_r17;
     cpy_r_r19 = PyObject_VectorcallMethod(cpy_r_r16, cpy_r_r18, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1061, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1061, CPyStatic_globals);
         goto CPyL45;
     }
     CPy_DECREF(cpy_r_r12);
     cpy_r_r20 = PyObject_GetIter(cpy_r_r19);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r20 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1061, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1061, CPyStatic_globals);
         goto CPyL46;
     }
 CPyL17: ;
@@ -15415,7 +15415,7 @@ CPyL17: ;
     cpy_r_r22 = PyObject_GetIter(cpy_r_r21);
     CPy_DECREF(cpy_r_r21);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1061, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1061, CPyStatic_globals);
         goto CPyL48;
     }
     cpy_r_r23 = PyIter_Next(cpy_r_r22);
@@ -15427,7 +15427,7 @@ CPyL20: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r24 = 0;
     if (unlikely(!cpy_r_r24)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1061, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1061, CPyStatic_globals);
         goto CPyL38;
     }
     CPy_Unreachable();
@@ -15441,7 +15441,7 @@ CPyL23: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r26 = 0;
     if (unlikely(!cpy_r_r26)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1061, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1061, CPyStatic_globals);
         goto CPyL38;
     }
     CPy_Unreachable();
@@ -15456,7 +15456,7 @@ CPyL26: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r28 = 0;
     if (unlikely(!cpy_r_r28)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1061, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1061, CPyStatic_globals);
         goto CPyL38;
     }
     CPy_Unreachable();
@@ -15464,7 +15464,7 @@ CPyL28: ;
     cpy_r_r29 = PyObject_IsTrue(cpy_r_r25);
     cpy_r_r30 = cpy_r_r29 >= 0;
     if (unlikely(!cpy_r_r30)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1061, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1061, CPyStatic_globals);
         goto CPyL52;
     }
     cpy_r_r31 = cpy_r_r29;
@@ -15472,25 +15472,25 @@ CPyL28: ;
     cpy_r_r32 = CPyDict_GetItem(cpy_r_r2, cpy_r_r23);
     CPy_DECREF(cpy_r_r23);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1063, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1063, CPyStatic_globals);
         goto CPyL54;
     }
     if (likely(Py_TYPE(cpy_r_r32) == CPyType_WalletBalancesRaw))
         cpy_r_r33 = cpy_r_r32;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "inverted", 1063, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r32);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "inverted", 1063, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r32);
         goto CPyL54;
     }
     cpy_r_r34 = PyObject_GetItem(cpy_r_r33, cpy_r_r10);
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1063, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1063, CPyStatic_globals);
         goto CPyL55;
     }
     cpy_r_r35 = PyNumber_InPlaceAdd(cpy_r_r34, cpy_r_r25);
     CPy_DECREF(cpy_r_r34);
     CPy_DECREF(cpy_r_r25);
     if (unlikely(cpy_r_r35 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1063, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1063, CPyStatic_globals);
         goto CPyL56;
     }
     cpy_r_r36 = PyObject_SetItem(cpy_r_r33, cpy_r_r10, cpy_r_r35);
@@ -15498,21 +15498,21 @@ CPyL28: ;
     CPy_DECREF(cpy_r_r35);
     cpy_r_r37 = cpy_r_r36 >= 0;
     if (unlikely(!cpy_r_r37)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1063, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1063, CPyStatic_globals);
         goto CPyL48;
     } else
         goto CPyL17;
 CPyL35: ;
     cpy_r_r38 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r38)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1061, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1061, CPyStatic_globals);
         goto CPyL41;
     } else
         goto CPyL4;
 CPyL36: ;
     cpy_r_r39 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r39)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1060, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1060, CPyStatic_globals);
         goto CPyL39;
     }
     return cpy_r_r2;
@@ -15645,7 +15645,7 @@ PyObject *CPyPy_PortfolioBalances___inverted(PyObject *self, PyObject *const *ar
     PyObject *retval = CPyDef_PortfolioBalances___inverted(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "inverted", 1046, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "inverted", 1046, CPyStatic_globals);
     return NULL;
 }
 
@@ -15665,14 +15665,14 @@ char CPyDef_PortfolioBalances_____bool__(PyObject *cpy_r_self) {
     cpy_r_r2 = (PyObject **)&cpy_r_r1;
     cpy_r_r3 = PyObject_VectorcallMethod(cpy_r_r0, cpy_r_r2, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 1078, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 1078, CPyStatic_globals);
         goto CPyL5;
     }
     cpy_r_r4 = CPyModule_builtins;
     cpy_r_r5 = CPyStatics[42]; /* 'any' */
     cpy_r_r6 = CPyObject_GetAttr(cpy_r_r4, cpy_r_r5);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 1078, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 1078, CPyStatic_globals);
         goto CPyL6;
     }
     PyObject *cpy_r_r7[1] = {cpy_r_r3};
@@ -15680,7 +15680,7 @@ char CPyDef_PortfolioBalances_____bool__(PyObject *cpy_r_self) {
     cpy_r_r9 = _PyObject_Vectorcall(cpy_r_r6, cpy_r_r8, 1, 0);
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r9 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 1078, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 1078, CPyStatic_globals);
         goto CPyL6;
     }
     CPy_DECREF(cpy_r_r3);
@@ -15690,7 +15690,7 @@ char CPyDef_PortfolioBalances_____bool__(PyObject *cpy_r_self) {
         cpy_r_r10 = cpy_r_r9 == Py_True;
     CPy_DECREF(cpy_r_r9);
     if (unlikely(cpy_r_r10 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 1078, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 1078, CPyStatic_globals);
         goto CPyL5;
     }
     return cpy_r_r10;
@@ -15724,7 +15724,7 @@ PyObject *CPyPy_PortfolioBalances_____bool__(PyObject *self, PyObject *const *ar
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 1066, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 1066, CPyStatic_globals);
     return NULL;
 }
 
@@ -15737,19 +15737,19 @@ PyObject *CPyDef_PortfolioBalances_____repr__(PyObject *cpy_r_self) {
     cpy_r_r0 = CPyStatics[81]; /* 'WalletBalances' */
     cpy_r_r1 = CPyDict_FromAny(cpy_r_self);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 1087, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 1087, CPyStatic_globals);
         goto CPyL4;
     }
     cpy_r_r2 = PyObject_Str(cpy_r_r1);
     CPy_DECREF(cpy_r_r1);
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 1087, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 1087, CPyStatic_globals);
         goto CPyL4;
     }
     cpy_r_r3 = CPyStr_Build(2, cpy_r_r0, cpy_r_r2);
     CPy_DECREF(cpy_r_r2);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 1087, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 1087, CPyStatic_globals);
         goto CPyL4;
     }
     return cpy_r_r3;
@@ -15775,7 +15775,7 @@ PyObject *CPyPy_PortfolioBalances_____repr__(PyObject *self, PyObject *const *ar
     PyObject *retval = CPyDef_PortfolioBalances_____repr__(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 1080, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 1080, CPyStatic_globals);
     return NULL;
 }
 
@@ -15883,13 +15883,13 @@ PyObject *CPyDef_PortfolioBalances_____add__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1110, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1110, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r11 = CPyStatics[82]; /* ' is not a PortfolioBalances object' */
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1110, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1110, CPyStatic_globals);
         goto CPyL61;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -15901,14 +15901,14 @@ PyObject *CPyDef_PortfolioBalances_____add__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1110, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1110, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1110, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1110, CPyStatic_globals);
         goto CPyL62;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -15916,14 +15916,14 @@ PyObject *CPyDef_PortfolioBalances_____add__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1110, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1110, CPyStatic_globals);
         goto CPyL62;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1110, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1110, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -15936,7 +15936,7 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r23);
     CPy_DECREF(cpy_r_r24);
     if (unlikely(cpy_r_r25 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1111, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1111, CPyStatic_globals);
         goto CPyL60;
     }
     if (unlikely(!PyBool_Check(cpy_r_r25))) {
@@ -15945,7 +15945,7 @@ CPyL8: ;
         cpy_r_r26 = cpy_r_r25 == Py_True;
     CPy_DECREF(cpy_r_r25);
     if (unlikely(cpy_r_r26 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1111, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1111, CPyStatic_globals);
         goto CPyL60;
     }
     if (!cpy_r_r26) goto CPyL18;
@@ -15956,7 +15956,7 @@ CPyL8: ;
     cpy_r_r29 = PyObject_Str(cpy_r_r28);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1113, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1113, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r30 = CPyStatics[9]; /* ' and ' */
@@ -15965,7 +15965,7 @@ CPyL8: ;
     cpy_r_r32 = PyObject_Str(cpy_r_r31);
     CPy_DECREF(cpy_r_r31);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1113, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1113, CPyStatic_globals);
         goto CPyL63;
     }
     cpy_r_r33 = CPyStatics[10]; /* ')' */
@@ -15973,14 +15973,14 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r29);
     CPy_DECREF(cpy_r_r32);
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1113, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1113, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r35 = CPyModule_builtins;
     cpy_r_r36 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r37 = CPyObject_GetAttr(cpy_r_r35, cpy_r_r36);
     if (unlikely(cpy_r_r37 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1112, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1112, CPyStatic_globals);
         goto CPyL64;
     }
     PyObject *cpy_r_r38[1] = {cpy_r_r34};
@@ -15988,14 +15988,14 @@ CPyL8: ;
     cpy_r_r40 = _PyObject_Vectorcall(cpy_r_r37, cpy_r_r39, 1, 0);
     CPy_DECREF(cpy_r_r37);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1112, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1112, CPyStatic_globals);
         goto CPyL64;
     }
     CPy_DECREF(cpy_r_r34);
     CPy_Raise(cpy_r_r40);
     CPy_DECREF(cpy_r_r40);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1112, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1112, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -16006,7 +16006,7 @@ CPyL18: ;
     cpy_r_r43 = CPyDef_PortfolioBalances(cpy_r_r42, cpy_r_r41);
     CPy_DECREF(cpy_r_r41);
     if (unlikely(cpy_r_r43 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1116, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1116, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r44 = CPyStatics[29]; /* 'items' */
@@ -16014,13 +16014,13 @@ CPyL18: ;
     cpy_r_r46 = (PyObject **)&cpy_r_r45;
     cpy_r_r47 = PyObject_VectorcallMethod(cpy_r_r44, cpy_r_r46, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r47 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1117, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1117, CPyStatic_globals);
         goto CPyL65;
     }
     cpy_r_r48 = PyObject_GetIter(cpy_r_r47);
     CPy_DECREF(cpy_r_r47);
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1117, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1117, CPyStatic_globals);
         goto CPyL65;
     }
 CPyL21: ;
@@ -16029,7 +16029,7 @@ CPyL21: ;
     cpy_r_r50 = PyObject_GetIter(cpy_r_r49);
     CPy_DECREF(cpy_r_r49);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1117, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1117, CPyStatic_globals);
         goto CPyL67;
     }
     cpy_r_r51 = PyIter_Next(cpy_r_r50);
@@ -16041,7 +16041,7 @@ CPyL24: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r52 = 0;
     if (unlikely(!cpy_r_r52)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1117, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1117, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -16056,7 +16056,7 @@ CPyL27: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r54 = 0;
     if (unlikely(!cpy_r_r54)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1117, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1117, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -16072,7 +16072,7 @@ CPyL30: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r56 = 0;
     if (unlikely(!cpy_r_r56)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1117, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1117, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -16080,7 +16080,7 @@ CPyL32: ;
     cpy_r_r57 = PyObject_IsTrue(cpy_r_balance);
     cpy_r_r58 = cpy_r_r57 >= 0;
     if (unlikely(!cpy_r_r58)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1117, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1117, CPyStatic_globals);
         goto CPyL71;
     }
     cpy_r_r59 = cpy_r_r57;
@@ -16090,14 +16090,14 @@ CPyL32: ;
     cpy_r_r62 = (PyObject **)&cpy_r_r61;
     cpy_r_r63 = PyObject_VectorcallMethod(cpy_r_r60, cpy_r_r62, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r63 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1119, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1119, CPyStatic_globals);
         goto CPyL71;
     }
     cpy_r_r64 = PyNumber_Add(cpy_r_r63, cpy_r_balance);
     CPy_DECREF(cpy_r_r63);
     CPy_DECREF(cpy_r_balance);
     if (unlikely(cpy_r_r64 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1119, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1119, CPyStatic_globals);
         goto CPyL73;
     }
     cpy_r_r65 = CPyStatics[46]; /* '_setitem_nochecksum' */
@@ -16105,7 +16105,7 @@ CPyL32: ;
     cpy_r_r67 = (PyObject **)&cpy_r_r66;
     cpy_r_r68 = PyObject_VectorcallMethod(cpy_r_r65, cpy_r_r67, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r68 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1119, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1119, CPyStatic_globals);
         goto CPyL74;
     } else
         goto CPyL75;
@@ -16116,7 +16116,7 @@ CPyL37: ;
 CPyL38: ;
     cpy_r_r69 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r69)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1117, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1117, CPyStatic_globals);
         goto CPyL65;
     }
     cpy_r_r70 = CPyStatics[29]; /* 'items' */
@@ -16124,13 +16124,13 @@ CPyL38: ;
     cpy_r_r72 = (PyObject **)&cpy_r_r71;
     cpy_r_r73 = PyObject_VectorcallMethod(cpy_r_r70, cpy_r_r72, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r73 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1120, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1120, CPyStatic_globals);
         goto CPyL65;
     }
     cpy_r_r74 = PyObject_GetIter(cpy_r_r73);
     CPy_DECREF(cpy_r_r73);
     if (unlikely(cpy_r_r74 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1120, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1120, CPyStatic_globals);
         goto CPyL65;
     }
 CPyL41: ;
@@ -16139,7 +16139,7 @@ CPyL41: ;
     cpy_r_r76 = PyObject_GetIter(cpy_r_r75);
     CPy_DECREF(cpy_r_r75);
     if (unlikely(cpy_r_r76 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1120, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1120, CPyStatic_globals);
         goto CPyL77;
     }
     cpy_r_r77 = PyIter_Next(cpy_r_r76);
@@ -16151,7 +16151,7 @@ CPyL44: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r78 = 0;
     if (unlikely(!cpy_r_r78)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1120, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1120, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -16166,7 +16166,7 @@ CPyL47: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r80 = 0;
     if (unlikely(!cpy_r_r80)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1120, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1120, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -16182,7 +16182,7 @@ CPyL50: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r82 = 0;
     if (unlikely(!cpy_r_r82)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1120, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1120, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -16190,7 +16190,7 @@ CPyL52: ;
     cpy_r_r83 = PyObject_IsTrue(cpy_r_balance);
     cpy_r_r84 = cpy_r_r83 >= 0;
     if (unlikely(!cpy_r_r84)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1117, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1117, CPyStatic_globals);
         goto CPyL81;
     }
     cpy_r_r85 = cpy_r_r83;
@@ -16200,14 +16200,14 @@ CPyL52: ;
     cpy_r_r88 = (PyObject **)&cpy_r_r87;
     cpy_r_r89 = PyObject_VectorcallMethod(cpy_r_r86, cpy_r_r88, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r89 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1122, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1122, CPyStatic_globals);
         goto CPyL81;
     }
     cpy_r_r90 = PyNumber_Add(cpy_r_r89, cpy_r_balance);
     CPy_DECREF(cpy_r_r89);
     CPy_DECREF(cpy_r_balance);
     if (unlikely(cpy_r_r90 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1122, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1122, CPyStatic_globals);
         goto CPyL83;
     }
     cpy_r_r91 = CPyStatics[46]; /* '_setitem_nochecksum' */
@@ -16215,7 +16215,7 @@ CPyL52: ;
     cpy_r_r93 = (PyObject **)&cpy_r_r92;
     cpy_r_r94 = PyObject_VectorcallMethod(cpy_r_r91, cpy_r_r93, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r94 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1122, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1122, CPyStatic_globals);
         goto CPyL84;
     } else
         goto CPyL85;
@@ -16226,7 +16226,7 @@ CPyL57: ;
 CPyL58: ;
     cpy_r_r95 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r95)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1120, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1120, CPyStatic_globals);
         goto CPyL65;
     }
     return cpy_r_r43;
@@ -16373,7 +16373,7 @@ PyObject *CPyPy_PortfolioBalances_____add__(PyObject *self, PyObject *const *arg
     PyObject *retval = CPyDef_PortfolioBalances_____add__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1089, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1089, CPyStatic_globals);
     return NULL;
 }
 
@@ -16423,7 +16423,7 @@ PyObject *CPyPy_PortfolioBalances_____add___3___SummableNonNumericMixin_glue(PyO
     PyObject *retval = CPyDef_PortfolioBalances_____add___3___SummableNonNumericMixin_glue(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__add_____SummableNonNumericMixin_glue", -1, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__add_____SummableNonNumericMixin_glue", -1, CPyStatic_globals);
     return NULL;
 }
 
@@ -16520,13 +16520,13 @@ PyObject *CPyDef_PortfolioBalances_____sub__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1146, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1146, CPyStatic_globals);
         goto CPyL56;
     }
     cpy_r_r11 = CPyStatics[82]; /* ' is not a PortfolioBalances object' */
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1146, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1146, CPyStatic_globals);
         goto CPyL57;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -16538,14 +16538,14 @@ PyObject *CPyDef_PortfolioBalances_____sub__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1146, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1146, CPyStatic_globals);
         goto CPyL56;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1146, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1146, CPyStatic_globals);
         goto CPyL58;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -16553,14 +16553,14 @@ PyObject *CPyDef_PortfolioBalances_____sub__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1146, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1146, CPyStatic_globals);
         goto CPyL58;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1146, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1146, CPyStatic_globals);
         goto CPyL56;
     }
     CPy_Unreachable();
@@ -16573,7 +16573,7 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r23);
     CPy_DECREF(cpy_r_r24);
     if (unlikely(cpy_r_r25 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1147, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1147, CPyStatic_globals);
         goto CPyL56;
     }
     if (unlikely(!PyBool_Check(cpy_r_r25))) {
@@ -16582,7 +16582,7 @@ CPyL8: ;
         cpy_r_r26 = cpy_r_r25 == Py_True;
     CPy_DECREF(cpy_r_r25);
     if (unlikely(cpy_r_r26 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1147, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1147, CPyStatic_globals);
         goto CPyL56;
     }
     if (!cpy_r_r26) goto CPyL18;
@@ -16593,7 +16593,7 @@ CPyL8: ;
     cpy_r_r29 = PyObject_Str(cpy_r_r28);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1149, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1149, CPyStatic_globals);
         goto CPyL56;
     }
     cpy_r_r30 = CPyStatics[9]; /* ' and ' */
@@ -16602,7 +16602,7 @@ CPyL8: ;
     cpy_r_r32 = PyObject_Str(cpy_r_r31);
     CPy_DECREF(cpy_r_r31);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1149, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1149, CPyStatic_globals);
         goto CPyL59;
     }
     cpy_r_r33 = CPyStatics[10]; /* ')' */
@@ -16610,14 +16610,14 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r29);
     CPy_DECREF(cpy_r_r32);
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1149, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1149, CPyStatic_globals);
         goto CPyL56;
     }
     cpy_r_r35 = CPyModule_builtins;
     cpy_r_r36 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r37 = CPyObject_GetAttr(cpy_r_r35, cpy_r_r36);
     if (unlikely(cpy_r_r37 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1148, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1148, CPyStatic_globals);
         goto CPyL60;
     }
     PyObject *cpy_r_r38[1] = {cpy_r_r34};
@@ -16625,14 +16625,14 @@ CPyL8: ;
     cpy_r_r40 = _PyObject_Vectorcall(cpy_r_r37, cpy_r_r39, 1, 0);
     CPy_DECREF(cpy_r_r37);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1148, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1148, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_DECREF(cpy_r_r34);
     CPy_Raise(cpy_r_r40);
     CPy_DECREF(cpy_r_r40);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1148, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1148, CPyStatic_globals);
         goto CPyL56;
     }
     CPy_Unreachable();
@@ -16658,14 +16658,14 @@ CPyL18: ;
         cpy_r_r42 = NULL;
     }
     if (cpy_r_r42 != NULL) goto __LL104;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 1152, CPyStatic_globals, "union[dict, list, None]", cpy_r_self);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 1152, CPyStatic_globals, "union[dict, list, None]", cpy_r_self);
     goto CPyL61;
 __LL104: ;
     cpy_r_r43 = CPyDef_PortfolioBalances(cpy_r_r42, cpy_r_r41);
     CPy_DECREF(cpy_r_r42);
     CPy_DECREF(cpy_r_r41);
     if (unlikely(cpy_r_r43 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1152, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1152, CPyStatic_globals);
         goto CPyL56;
     }
     cpy_r_r44 = CPyStatics[29]; /* 'items' */
@@ -16673,13 +16673,13 @@ __LL104: ;
     cpy_r_r46 = (PyObject **)&cpy_r_r45;
     cpy_r_r47 = PyObject_VectorcallMethod(cpy_r_r44, cpy_r_r46, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r47 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1153, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1153, CPyStatic_globals);
         goto CPyL62;
     }
     cpy_r_r48 = PyObject_GetIter(cpy_r_r47);
     CPy_DECREF(cpy_r_r47);
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1153, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1153, CPyStatic_globals);
         goto CPyL62;
     }
 CPyL22: ;
@@ -16688,7 +16688,7 @@ CPyL22: ;
     cpy_r_r50 = PyObject_GetIter(cpy_r_r49);
     CPy_DECREF(cpy_r_r49);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1153, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1153, CPyStatic_globals);
         goto CPyL64;
     }
     cpy_r_r51 = PyIter_Next(cpy_r_r50);
@@ -16700,7 +16700,7 @@ CPyL25: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r52 = 0;
     if (unlikely(!cpy_r_r52)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1153, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1153, CPyStatic_globals);
         goto CPyL56;
     }
     CPy_Unreachable();
@@ -16715,7 +16715,7 @@ CPyL28: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r54 = 0;
     if (unlikely(!cpy_r_r54)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1153, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1153, CPyStatic_globals);
         goto CPyL56;
     }
     CPy_Unreachable();
@@ -16731,41 +16731,41 @@ CPyL31: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r56 = 0;
     if (unlikely(!cpy_r_r56)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1153, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1153, CPyStatic_globals);
         goto CPyL56;
     }
     CPy_Unreachable();
 CPyL33: ;
     cpy_r_r57 = PyObject_GetItem(cpy_r_r43, cpy_r_protocol);
     if (unlikely(cpy_r_r57 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1154, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1154, CPyStatic_globals);
         goto CPyL68;
     }
     cpy_r_r58 = PyNumber_InPlaceSubtract(cpy_r_r57, cpy_r_balances);
     CPy_DECREF(cpy_r_r57);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r58 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1154, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1154, CPyStatic_globals);
         goto CPyL69;
     }
     if (likely(PyDict_Check(cpy_r_r58)))
         cpy_r_r59 = cpy_r_r58;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 1154, CPyStatic_globals, "dict", cpy_r_r58);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 1154, CPyStatic_globals, "dict", cpy_r_r58);
         goto CPyL69;
     }
     cpy_r_r60 = CPyDef_PortfolioBalances_____setitem__(cpy_r_r43, cpy_r_protocol, cpy_r_r59);
     CPy_DECREF(cpy_r_protocol);
     CPy_DECREF(cpy_r_r59);
     if (unlikely(cpy_r_r60 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1154, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1154, CPyStatic_globals);
         goto CPyL64;
     } else
         goto CPyL22;
 CPyL37: ;
     cpy_r_r61 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r61)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1153, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1153, CPyStatic_globals);
         goto CPyL62;
     }
     cpy_r_r62 = CPyStatics[29]; /* 'items' */
@@ -16773,13 +16773,13 @@ CPyL37: ;
     cpy_r_r64 = (PyObject **)&cpy_r_r63;
     cpy_r_r65 = PyObject_VectorcallMethod(cpy_r_r62, cpy_r_r64, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r65 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1155, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1155, CPyStatic_globals);
         goto CPyL62;
     }
     cpy_r_r66 = PyObject_GetIter(cpy_r_r65);
     CPy_DECREF(cpy_r_r65);
     if (unlikely(cpy_r_r66 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1155, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1155, CPyStatic_globals);
         goto CPyL62;
     }
 CPyL40: ;
@@ -16788,7 +16788,7 @@ CPyL40: ;
     cpy_r_r68 = PyObject_GetIter(cpy_r_r67);
     CPy_DECREF(cpy_r_r67);
     if (unlikely(cpy_r_r68 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1155, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1155, CPyStatic_globals);
         goto CPyL71;
     }
     cpy_r_r69 = PyIter_Next(cpy_r_r68);
@@ -16800,7 +16800,7 @@ CPyL43: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r70 = 0;
     if (unlikely(!cpy_r_r70)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1155, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1155, CPyStatic_globals);
         goto CPyL56;
     }
     CPy_Unreachable();
@@ -16815,7 +16815,7 @@ CPyL46: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r72 = 0;
     if (unlikely(!cpy_r_r72)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1155, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1155, CPyStatic_globals);
         goto CPyL56;
     }
     CPy_Unreachable();
@@ -16831,7 +16831,7 @@ CPyL49: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r74 = 0;
     if (unlikely(!cpy_r_r74)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1155, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1155, CPyStatic_globals);
         goto CPyL56;
     }
     CPy_Unreachable();
@@ -16840,7 +16840,7 @@ CPyL51: ;
     CPy_DECREF(cpy_r_balances);
     cpy_r_r76 = cpy_r_r75 >= 0;
     if (unlikely(!cpy_r_r76)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1153, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1153, CPyStatic_globals);
         goto CPyL75;
     }
     cpy_r_r77 = cpy_r_r75;
@@ -16849,14 +16849,14 @@ CPyL51: ;
     CPy_DECREF(cpy_r_protocol);
     cpy_r_r79 = cpy_r_r78 >= 0;
     if (unlikely(!cpy_r_r79)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1157, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1157, CPyStatic_globals);
         goto CPyL71;
     } else
         goto CPyL40;
 CPyL54: ;
     cpy_r_r80 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r80)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1155, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1155, CPyStatic_globals);
         goto CPyL62;
     }
     return cpy_r_r43;
@@ -16977,7 +16977,7 @@ PyObject *CPyPy_PortfolioBalances_____sub__(PyObject *self, PyObject *const *arg
     PyObject *retval = CPyDef_PortfolioBalances_____sub__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1125, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1125, CPyStatic_globals);
     return NULL;
 }
 
@@ -17015,7 +17015,7 @@ PyObject *CPyPy___mypyc_lambda__2___3_init___3_WalletBalancesRaw_obj_____get__(P
     PyObject *retval = CPyDef___mypyc_lambda__2___3_init___3_WalletBalancesRaw_obj_____get__(arg___mypyc_self__, arg_instance, arg_owner);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__get__", -1, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__get__", -1, CPyStatic_globals);
     return NULL;
 }
 
@@ -17027,7 +17027,7 @@ PyObject *CPyDef___mypyc_lambda__2___3_init___3_WalletBalancesRaw_obj_____call__
     PyObject *cpy_r_r4;
     cpy_r_r0 = ((eth_portfolio___typing_____mypyc_lambda__2___3_init___3_WalletBalancesRaw_objObject *)cpy_r___mypyc_self__)->___mypyc_env__;
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/typing.py", "<lambda>", "__mypyc_lambda__2___init___WalletBalancesRaw_obj", "__mypyc_env__", 1187, CPyStatic_globals);
+        CPy_AttributeError("eth_portfolio\\typing.py", "<lambda>", "__mypyc_lambda__2___init___WalletBalancesRaw_obj", "__mypyc_env__", 1187, CPyStatic_globals);
         goto CPyL4;
     }
     CPy_INCREF(cpy_r_r0);
@@ -17040,7 +17040,7 @@ CPyL1: ;
     }
     CPy_DECREF(cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<lambda>", 1187, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<lambda>", 1187, CPyStatic_globals);
         goto CPyL4;
     }
 CPyL2: ;
@@ -17048,7 +17048,7 @@ CPyL2: ;
     cpy_r_r3 = CPyDef_TokenBalances(cpy_r_r2, cpy_r_r1);
     CPy_DECREF(cpy_r_r1);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<lambda>", 1187, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<lambda>", 1187, CPyStatic_globals);
         goto CPyL4;
     }
     return cpy_r_r3;
@@ -17068,7 +17068,7 @@ PyObject *CPyPy___mypyc_lambda__2___3_init___3_WalletBalancesRaw_obj_____call__(
     PyObject *retval = CPyDef___mypyc_lambda__2___3_init___3_WalletBalancesRaw_obj_____call__(arg___mypyc_self__);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "<lambda>", 1187, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "<lambda>", 1187, CPyStatic_globals);
     return NULL;
 }
 
@@ -17203,7 +17203,7 @@ CPyL2: ;
 CPyL4: ;
     cpy_r_r2 = CPyDef___init___3_WalletBalancesRaw_env();
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1186, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1186, CPyStatic_globals);
         goto CPyL67;
     }
     if (((eth_portfolio___typing_____init___3_WalletBalancesRaw_envObject *)cpy_r_r2)->_block != NULL) {
@@ -17212,14 +17212,14 @@ CPyL4: ;
     ((eth_portfolio___typing_____init___3_WalletBalancesRaw_envObject *)cpy_r_r2)->_block = cpy_r_block;
     cpy_r_r3 = 1;
     if (unlikely(!cpy_r_r3)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1186, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1186, CPyStatic_globals);
         goto CPyL68;
     }
     cpy_r_r4 = CPyModule_builtins;
     cpy_r_r5 = CPyStatics[22]; /* 'super' */
     cpy_r_r6 = CPyObject_GetAttr(cpy_r_r4, cpy_r_r5);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1187, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1187, CPyStatic_globals);
         goto CPyL68;
     }
     cpy_r_r7 = (PyObject *)CPyType_WalletBalancesRaw;
@@ -17228,19 +17228,19 @@ CPyL4: ;
     cpy_r_r10 = _PyObject_Vectorcall(cpy_r_r6, cpy_r_r9, 2, 0);
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1187, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1187, CPyStatic_globals);
         goto CPyL68;
     }
     cpy_r_r11 = CPyStatics[23]; /* '__init__' */
     cpy_r_r12 = CPyObject_GetAttr(cpy_r_r10, cpy_r_r11);
     CPy_DECREF(cpy_r_r10);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1187, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1187, CPyStatic_globals);
         goto CPyL68;
     }
     cpy_r_r13 = CPyDef___mypyc_lambda__2___3_init___3_WalletBalancesRaw_obj();
     if (unlikely(cpy_r_r13 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1187, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1187, CPyStatic_globals);
         goto CPyL69;
     }
     CPy_INCREF(cpy_r_r2);
@@ -17250,7 +17250,7 @@ CPyL4: ;
     ((eth_portfolio___typing_____mypyc_lambda__2___3_init___3_WalletBalancesRaw_objObject *)cpy_r_r13)->___mypyc_env__ = cpy_r_r2;
     cpy_r_r14 = 1;
     if (unlikely(!cpy_r_r14)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1187, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1187, CPyStatic_globals);
         goto CPyL70;
     }
     PyObject *cpy_r_r15[1] = {cpy_r_r13};
@@ -17258,7 +17258,7 @@ CPyL4: ;
     cpy_r_r17 = _PyObject_Vectorcall(cpy_r_r12, cpy_r_r16, 1, 0);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r17 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1187, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1187, CPyStatic_globals);
         goto CPyL71;
     } else
         goto CPyL72;
@@ -17272,7 +17272,7 @@ CPyL12: ;
     }
     CPy_DECREF(cpy_r_r2);
     if (unlikely(cpy_r_r18 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1188, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1188, CPyStatic_globals);
         goto CPyL73;
     }
 CPyL13: ;
@@ -17290,7 +17290,7 @@ CPyL15: ;
     cpy_r_r22 = PyObject_IsInstance(cpy_r_seed, cpy_r_r21);
     cpy_r_r23 = cpy_r_r22 >= 0;
     if (unlikely(!cpy_r_r23)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1191, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1191, CPyStatic_globals);
         goto CPyL73;
     }
     cpy_r_r24 = cpy_r_r22;
@@ -17298,7 +17298,7 @@ CPyL15: ;
     if (likely(PyDict_Check(cpy_r_seed)))
         cpy_r_r25 = cpy_r_seed;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 1192, CPyStatic_globals, "dict", cpy_r_seed);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 1192, CPyStatic_globals, "dict", cpy_r_seed);
         goto CPyL64;
     }
     cpy_r_r26 = 0;
@@ -17306,7 +17306,7 @@ CPyL15: ;
     cpy_r_r28 = cpy_r_r27 << 1;
     cpy_r_r29 = CPyDict_GetItemsIter(cpy_r_r25);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1192, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1192, CPyStatic_globals);
         goto CPyL75;
     }
 CPyL19: ;
@@ -17324,7 +17324,7 @@ CPyL19: ;
     if (likely(Py_TYPE(cpy_r_r34) == CPyType_TokenBalances))
         cpy_r_r35 = cpy_r_r34;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 1192, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r34);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 1192, CPyStatic_globals, "eth_portfolio.typing.TokenBalances", cpy_r_r34);
         goto CPyL77;
     }
     cpy_r_wallet = cpy_r_r33;
@@ -17337,7 +17337,7 @@ CPyL19: ;
     CPy_DECREF(cpy_r_r36);
     CPy_DECREF(cpy_r_r37);
     if (unlikely(cpy_r_r38 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1193, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1193, CPyStatic_globals);
         goto CPyL78;
     }
     if (unlikely(!PyBool_Check(cpy_r_r38))) {
@@ -17346,7 +17346,7 @@ CPyL19: ;
         cpy_r_r39 = cpy_r_r38 == Py_True;
     CPy_DECREF(cpy_r_r38);
     if (unlikely(cpy_r_r39 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1193, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1193, CPyStatic_globals);
         goto CPyL78;
     }
     if (cpy_r_r39) {
@@ -17360,7 +17360,7 @@ CPyL24: ;
     cpy_r_r42 = PyObject_Str(cpy_r_r41);
     CPy_DECREF(cpy_r_r41);
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1195, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1195, CPyStatic_globals);
         goto CPyL80;
     }
     cpy_r_r43 = CPyStatics[9]; /* ' and ' */
@@ -17370,7 +17370,7 @@ CPyL24: ;
     cpy_r_r45 = PyObject_Str(cpy_r_r44);
     CPy_DECREF(cpy_r_r44);
     if (unlikely(cpy_r_r45 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1195, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1195, CPyStatic_globals);
         goto CPyL81;
     }
     cpy_r_r46 = CPyStatics[10]; /* ')' */
@@ -17378,14 +17378,14 @@ CPyL24: ;
     CPy_DECREF(cpy_r_r42);
     CPy_DECREF(cpy_r_r45);
     if (unlikely(cpy_r_r47 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1195, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1195, CPyStatic_globals);
         goto CPyL64;
     }
     cpy_r_r48 = CPyModule_builtins;
     cpy_r_r49 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r50 = CPyObject_GetAttr(cpy_r_r48, cpy_r_r49);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1194, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1194, CPyStatic_globals);
         goto CPyL82;
     }
     PyObject *cpy_r_r51[1] = {cpy_r_r47};
@@ -17393,28 +17393,28 @@ CPyL24: ;
     cpy_r_r53 = _PyObject_Vectorcall(cpy_r_r50, cpy_r_r52, 1, 0);
     CPy_DECREF(cpy_r_r50);
     if (unlikely(cpy_r_r53 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1194, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1194, CPyStatic_globals);
         goto CPyL82;
     }
     CPy_DECREF(cpy_r_r47);
     CPy_Raise(cpy_r_r53);
     CPy_DECREF(cpy_r_r53);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1194, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1194, CPyStatic_globals);
         goto CPyL64;
     }
     CPy_Unreachable();
 CPyL31: ;
     cpy_r_r54 = PyObject_GetItem(cpy_r_self, cpy_r_wallet);
     if (unlikely(cpy_r_r54 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1197, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1197, CPyStatic_globals);
         goto CPyL78;
     }
     cpy_r_r55 = PyNumber_InPlaceAdd(cpy_r_r54, cpy_r_balances);
     CPy_DECREF(cpy_r_r54);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r55 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1197, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1197, CPyStatic_globals);
         goto CPyL83;
     }
     cpy_r_r56 = PyObject_SetItem(cpy_r_self, cpy_r_wallet, cpy_r_r55);
@@ -17422,19 +17422,19 @@ CPyL31: ;
     CPy_DECREF(cpy_r_r55);
     cpy_r_r57 = cpy_r_r56 >= 0;
     if (unlikely(!cpy_r_r57)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1197, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1197, CPyStatic_globals);
         goto CPyL84;
     }
     cpy_r_r58 = CPyDict_CheckSize(cpy_r_r25, cpy_r_r28);
     if (unlikely(!cpy_r_r58)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1192, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1192, CPyStatic_globals);
         goto CPyL84;
     } else
         goto CPyL19;
 CPyL35: ;
     cpy_r_r59 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r59)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1192, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1192, CPyStatic_globals);
         goto CPyL64;
     } else
         goto CPyL63;
@@ -17443,7 +17443,7 @@ CPyL36: ;
     cpy_r_r61 = PyObject_IsInstance(cpy_r_seed, cpy_r_r60);
     cpy_r_r62 = cpy_r_r61 >= 0;
     if (unlikely(!cpy_r_r62)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1198, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1198, CPyStatic_globals);
         goto CPyL73;
     }
     cpy_r_r63 = cpy_r_r61;
@@ -17451,7 +17451,7 @@ CPyL36: ;
     if (likely(PyList_Check(cpy_r_seed)))
         cpy_r_r64 = cpy_r_seed;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 1199, CPyStatic_globals, "list", cpy_r_seed);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 1199, CPyStatic_globals, "list", cpy_r_seed);
         goto CPyL64;
     }
     cpy_r_r65 = 0;
@@ -17504,7 +17504,7 @@ __LL106: ;
     }
     CPy_DECREF(cpy_r_r75);
     if (unlikely(cpy_r_r76.f0 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1199, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1199, CPyStatic_globals);
         goto CPyL86;
     }
     cpy_r_r77 = cpy_r_r76.f0;
@@ -17523,7 +17523,7 @@ __LL106: ;
     CPy_DECREF(cpy_r_r79);
     CPy_DECREF(cpy_r_r80);
     if (unlikely(cpy_r_r81 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1200, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1200, CPyStatic_globals);
         goto CPyL87;
     }
     if (unlikely(!PyBool_Check(cpy_r_r81))) {
@@ -17532,7 +17532,7 @@ __LL106: ;
         cpy_r_r82 = cpy_r_r81 == Py_True;
     CPy_DECREF(cpy_r_r81);
     if (unlikely(cpy_r_r82 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1200, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1200, CPyStatic_globals);
         goto CPyL87;
     }
     if (cpy_r_r82) {
@@ -17546,7 +17546,7 @@ CPyL45: ;
     cpy_r_r85 = PyObject_Str(cpy_r_r84);
     CPy_DECREF(cpy_r_r84);
     if (unlikely(cpy_r_r85 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1202, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1202, CPyStatic_globals);
         goto CPyL80;
     }
     cpy_r_r86 = CPyStatics[9]; /* ' and ' */
@@ -17556,7 +17556,7 @@ CPyL45: ;
     cpy_r_r88 = PyObject_Str(cpy_r_r87);
     CPy_DECREF(cpy_r_r87);
     if (unlikely(cpy_r_r88 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1202, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1202, CPyStatic_globals);
         goto CPyL89;
     }
     cpy_r_r89 = CPyStatics[10]; /* ')' */
@@ -17564,14 +17564,14 @@ CPyL45: ;
     CPy_DECREF(cpy_r_r85);
     CPy_DECREF(cpy_r_r88);
     if (unlikely(cpy_r_r90 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1202, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1202, CPyStatic_globals);
         goto CPyL64;
     }
     cpy_r_r91 = CPyModule_builtins;
     cpy_r_r92 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r93 = CPyObject_GetAttr(cpy_r_r91, cpy_r_r92);
     if (unlikely(cpy_r_r93 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1201, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1201, CPyStatic_globals);
         goto CPyL90;
     }
     PyObject *cpy_r_r94[1] = {cpy_r_r90};
@@ -17579,28 +17579,28 @@ CPyL45: ;
     cpy_r_r96 = _PyObject_Vectorcall(cpy_r_r93, cpy_r_r95, 1, 0);
     CPy_DECREF(cpy_r_r93);
     if (unlikely(cpy_r_r96 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1201, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1201, CPyStatic_globals);
         goto CPyL90;
     }
     CPy_DECREF(cpy_r_r90);
     CPy_Raise(cpy_r_r96);
     CPy_DECREF(cpy_r_r96);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1201, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1201, CPyStatic_globals);
         goto CPyL64;
     }
     CPy_Unreachable();
 CPyL52: ;
     cpy_r_r97 = PyObject_GetItem(cpy_r_self, cpy_r_wallet);
     if (unlikely(cpy_r_r97 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1204, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1204, CPyStatic_globals);
         goto CPyL87;
     }
     cpy_r_r98 = PyNumber_InPlaceAdd(cpy_r_r97, cpy_r_balances);
     CPy_DECREF(cpy_r_r97);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r98 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1204, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1204, CPyStatic_globals);
         goto CPyL91;
     }
     cpy_r_r99 = PyObject_SetItem(cpy_r_self, cpy_r_wallet, cpy_r_r98);
@@ -17608,7 +17608,7 @@ CPyL52: ;
     CPy_DECREF(cpy_r_r98);
     cpy_r_r100 = cpy_r_r99 >= 0;
     if (unlikely(!cpy_r_r100)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1204, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1204, CPyStatic_globals);
         goto CPyL86;
     }
     cpy_r_r101 = cpy_r_r65 + 2;
@@ -17623,14 +17623,14 @@ CPyL56: ;
     cpy_r_r107 = (PyObject **)&cpy_r_r106;
     cpy_r_r108 = PyObject_VectorcallMethod(cpy_r_r105, cpy_r_r107, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r108 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1206, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1206, CPyStatic_globals);
         goto CPyL73;
     }
     CPy_DECREF(cpy_r_seed);
     cpy_r_r109 = CPyStatics[84]; /* ' is not a valid input for WalletBalancesRaw' */
     cpy_r_r110 = PyList_New(2);
     if (unlikely(cpy_r_r110 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1206, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1206, CPyStatic_globals);
         goto CPyL92;
     }
     cpy_r_r111 = (CPyPtr)&((PyListObject *)cpy_r_r110)->ob_item;
@@ -17642,14 +17642,14 @@ CPyL56: ;
     cpy_r_r114 = PyUnicode_Join(cpy_r_r102, cpy_r_r110);
     CPy_DECREF(cpy_r_r110);
     if (unlikely(cpy_r_r114 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1206, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1206, CPyStatic_globals);
         goto CPyL64;
     }
     cpy_r_r115 = CPyModule_builtins;
     cpy_r_r116 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r117 = CPyObject_GetAttr(cpy_r_r115, cpy_r_r116);
     if (unlikely(cpy_r_r117 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1206, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1206, CPyStatic_globals);
         goto CPyL93;
     }
     PyObject *cpy_r_r118[1] = {cpy_r_r114};
@@ -17657,14 +17657,14 @@ CPyL56: ;
     cpy_r_r120 = _PyObject_Vectorcall(cpy_r_r117, cpy_r_r119, 1, 0);
     CPy_DECREF(cpy_r_r117);
     if (unlikely(cpy_r_r120 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1206, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1206, CPyStatic_globals);
         goto CPyL93;
     }
     CPy_DECREF(cpy_r_r114);
     CPy_Raise(cpy_r_r120);
     CPy_DECREF(cpy_r_r120);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1206, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1206, CPyStatic_globals);
         goto CPyL64;
     }
     CPy_Unreachable();
@@ -17857,7 +17857,7 @@ __LL112: ;
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1186, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1186, CPyStatic_globals);
     return NULL;
 }
 
@@ -17877,14 +17877,14 @@ char CPyDef_WalletBalancesRaw_____bool__(PyObject *cpy_r_self) {
     cpy_r_r2 = (PyObject **)&cpy_r_r1;
     cpy_r_r3 = PyObject_VectorcallMethod(cpy_r_r0, cpy_r_r2, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 1220, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 1220, CPyStatic_globals);
         goto CPyL5;
     }
     cpy_r_r4 = CPyModule_builtins;
     cpy_r_r5 = CPyStatics[42]; /* 'any' */
     cpy_r_r6 = CPyObject_GetAttr(cpy_r_r4, cpy_r_r5);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 1220, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 1220, CPyStatic_globals);
         goto CPyL6;
     }
     PyObject *cpy_r_r7[1] = {cpy_r_r3};
@@ -17892,7 +17892,7 @@ char CPyDef_WalletBalancesRaw_____bool__(PyObject *cpy_r_self) {
     cpy_r_r9 = _PyObject_Vectorcall(cpy_r_r6, cpy_r_r8, 1, 0);
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r9 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 1220, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 1220, CPyStatic_globals);
         goto CPyL6;
     }
     CPy_DECREF(cpy_r_r3);
@@ -17902,7 +17902,7 @@ char CPyDef_WalletBalancesRaw_____bool__(PyObject *cpy_r_self) {
         cpy_r_r10 = cpy_r_r9 == Py_True;
     CPy_DECREF(cpy_r_r9);
     if (unlikely(cpy_r_r10 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 1220, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 1220, CPyStatic_globals);
         goto CPyL5;
     }
     return cpy_r_r10;
@@ -17936,7 +17936,7 @@ PyObject *CPyPy_WalletBalancesRaw_____bool__(PyObject *self, PyObject *const *ar
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 1208, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 1208, CPyStatic_globals);
     return NULL;
 }
 
@@ -17949,19 +17949,19 @@ PyObject *CPyDef_WalletBalancesRaw_____repr__(PyObject *cpy_r_self) {
     cpy_r_r0 = CPyStatics[81]; /* 'WalletBalances' */
     cpy_r_r1 = CPyDict_FromAny(cpy_r_self);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 1229, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 1229, CPyStatic_globals);
         goto CPyL4;
     }
     cpy_r_r2 = PyObject_Str(cpy_r_r1);
     CPy_DECREF(cpy_r_r1);
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 1229, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 1229, CPyStatic_globals);
         goto CPyL4;
     }
     cpy_r_r3 = CPyStr_Build(2, cpy_r_r0, cpy_r_r2);
     CPy_DECREF(cpy_r_r2);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 1229, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 1229, CPyStatic_globals);
         goto CPyL4;
     }
     return cpy_r_r3;
@@ -17987,7 +17987,7 @@ PyObject *CPyPy_WalletBalancesRaw_____repr__(PyObject *self, PyObject *const *ar
     PyObject *retval = CPyDef_WalletBalancesRaw_____repr__(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 1222, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 1222, CPyStatic_globals);
     return NULL;
 }
 
@@ -18095,13 +18095,13 @@ PyObject *CPyDef_WalletBalancesRaw_____add__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1252, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1252, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r11 = CPyStatics[85]; /* ' is not a WalletBalancesRaw object' */
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1252, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1252, CPyStatic_globals);
         goto CPyL61;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -18113,14 +18113,14 @@ PyObject *CPyDef_WalletBalancesRaw_____add__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1252, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1252, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1252, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1252, CPyStatic_globals);
         goto CPyL62;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -18128,14 +18128,14 @@ PyObject *CPyDef_WalletBalancesRaw_____add__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1252, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1252, CPyStatic_globals);
         goto CPyL62;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1252, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1252, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -18148,7 +18148,7 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r23);
     CPy_DECREF(cpy_r_r24);
     if (unlikely(cpy_r_r25 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1253, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1253, CPyStatic_globals);
         goto CPyL60;
     }
     if (unlikely(!PyBool_Check(cpy_r_r25))) {
@@ -18157,7 +18157,7 @@ CPyL8: ;
         cpy_r_r26 = cpy_r_r25 == Py_True;
     CPy_DECREF(cpy_r_r25);
     if (unlikely(cpy_r_r26 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1253, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1253, CPyStatic_globals);
         goto CPyL60;
     }
     if (!cpy_r_r26) goto CPyL18;
@@ -18168,7 +18168,7 @@ CPyL8: ;
     cpy_r_r29 = PyObject_Str(cpy_r_r28);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1255, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1255, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r30 = CPyStatics[9]; /* ' and ' */
@@ -18177,7 +18177,7 @@ CPyL8: ;
     cpy_r_r32 = PyObject_Str(cpy_r_r31);
     CPy_DECREF(cpy_r_r31);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1255, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1255, CPyStatic_globals);
         goto CPyL63;
     }
     cpy_r_r33 = CPyStatics[10]; /* ')' */
@@ -18185,14 +18185,14 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r29);
     CPy_DECREF(cpy_r_r32);
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1255, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1255, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r35 = CPyModule_builtins;
     cpy_r_r36 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r37 = CPyObject_GetAttr(cpy_r_r35, cpy_r_r36);
     if (unlikely(cpy_r_r37 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1254, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1254, CPyStatic_globals);
         goto CPyL64;
     }
     PyObject *cpy_r_r38[1] = {cpy_r_r34};
@@ -18200,14 +18200,14 @@ CPyL8: ;
     cpy_r_r40 = _PyObject_Vectorcall(cpy_r_r37, cpy_r_r39, 1, 0);
     CPy_DECREF(cpy_r_r37);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1254, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1254, CPyStatic_globals);
         goto CPyL64;
     }
     CPy_DECREF(cpy_r_r34);
     CPy_Raise(cpy_r_r40);
     CPy_DECREF(cpy_r_r40);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1254, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1254, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -18218,7 +18218,7 @@ CPyL18: ;
     cpy_r_r43 = CPyDef_WalletBalancesRaw(cpy_r_r42, cpy_r_r41);
     CPy_DECREF(cpy_r_r41);
     if (unlikely(cpy_r_r43 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1258, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1258, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r44 = CPyStatics[29]; /* 'items' */
@@ -18226,13 +18226,13 @@ CPyL18: ;
     cpy_r_r46 = (PyObject **)&cpy_r_r45;
     cpy_r_r47 = PyObject_VectorcallMethod(cpy_r_r44, cpy_r_r46, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r47 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1259, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1259, CPyStatic_globals);
         goto CPyL65;
     }
     cpy_r_r48 = PyObject_GetIter(cpy_r_r47);
     CPy_DECREF(cpy_r_r47);
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1259, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1259, CPyStatic_globals);
         goto CPyL65;
     }
 CPyL21: ;
@@ -18241,7 +18241,7 @@ CPyL21: ;
     cpy_r_r50 = PyObject_GetIter(cpy_r_r49);
     CPy_DECREF(cpy_r_r49);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1259, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1259, CPyStatic_globals);
         goto CPyL67;
     }
     cpy_r_r51 = PyIter_Next(cpy_r_r50);
@@ -18253,7 +18253,7 @@ CPyL24: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r52 = 0;
     if (unlikely(!cpy_r_r52)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1259, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1259, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -18268,7 +18268,7 @@ CPyL27: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r54 = 0;
     if (unlikely(!cpy_r_r54)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1259, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1259, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -18284,7 +18284,7 @@ CPyL30: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r56 = 0;
     if (unlikely(!cpy_r_r56)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1259, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1259, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -18292,7 +18292,7 @@ CPyL32: ;
     cpy_r_r57 = PyObject_IsTrue(cpy_r_balance);
     cpy_r_r58 = cpy_r_r57 >= 0;
     if (unlikely(!cpy_r_r58)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1259, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1259, CPyStatic_globals);
         goto CPyL71;
     }
     cpy_r_r59 = cpy_r_r57;
@@ -18302,14 +18302,14 @@ CPyL32: ;
     cpy_r_r62 = (PyObject **)&cpy_r_r61;
     cpy_r_r63 = PyObject_VectorcallMethod(cpy_r_r60, cpy_r_r62, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r63 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1261, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1261, CPyStatic_globals);
         goto CPyL71;
     }
     cpy_r_r64 = PyNumber_Add(cpy_r_r63, cpy_r_balance);
     CPy_DECREF(cpy_r_r63);
     CPy_DECREF(cpy_r_balance);
     if (unlikely(cpy_r_r64 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1261, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1261, CPyStatic_globals);
         goto CPyL73;
     }
     cpy_r_r65 = CPyStatics[46]; /* '_setitem_nochecksum' */
@@ -18317,7 +18317,7 @@ CPyL32: ;
     cpy_r_r67 = (PyObject **)&cpy_r_r66;
     cpy_r_r68 = PyObject_VectorcallMethod(cpy_r_r65, cpy_r_r67, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r68 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1261, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1261, CPyStatic_globals);
         goto CPyL74;
     } else
         goto CPyL75;
@@ -18328,7 +18328,7 @@ CPyL37: ;
 CPyL38: ;
     cpy_r_r69 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r69)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1259, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1259, CPyStatic_globals);
         goto CPyL65;
     }
     cpy_r_r70 = CPyStatics[29]; /* 'items' */
@@ -18336,13 +18336,13 @@ CPyL38: ;
     cpy_r_r72 = (PyObject **)&cpy_r_r71;
     cpy_r_r73 = PyObject_VectorcallMethod(cpy_r_r70, cpy_r_r72, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r73 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1262, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1262, CPyStatic_globals);
         goto CPyL65;
     }
     cpy_r_r74 = PyObject_GetIter(cpy_r_r73);
     CPy_DECREF(cpy_r_r73);
     if (unlikely(cpy_r_r74 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1262, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1262, CPyStatic_globals);
         goto CPyL65;
     }
 CPyL41: ;
@@ -18351,7 +18351,7 @@ CPyL41: ;
     cpy_r_r76 = PyObject_GetIter(cpy_r_r75);
     CPy_DECREF(cpy_r_r75);
     if (unlikely(cpy_r_r76 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1262, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1262, CPyStatic_globals);
         goto CPyL77;
     }
     cpy_r_r77 = PyIter_Next(cpy_r_r76);
@@ -18363,7 +18363,7 @@ CPyL44: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r78 = 0;
     if (unlikely(!cpy_r_r78)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1262, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1262, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -18378,7 +18378,7 @@ CPyL47: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r80 = 0;
     if (unlikely(!cpy_r_r80)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1262, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1262, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -18394,7 +18394,7 @@ CPyL50: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r82 = 0;
     if (unlikely(!cpy_r_r82)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1262, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1262, CPyStatic_globals);
         goto CPyL60;
     }
     CPy_Unreachable();
@@ -18402,7 +18402,7 @@ CPyL52: ;
     cpy_r_r83 = PyObject_IsTrue(cpy_r_balance);
     cpy_r_r84 = cpy_r_r83 >= 0;
     if (unlikely(!cpy_r_r84)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1259, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1259, CPyStatic_globals);
         goto CPyL81;
     }
     cpy_r_r85 = cpy_r_r83;
@@ -18412,14 +18412,14 @@ CPyL52: ;
     cpy_r_r88 = (PyObject **)&cpy_r_r87;
     cpy_r_r89 = PyObject_VectorcallMethod(cpy_r_r86, cpy_r_r88, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r89 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1264, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1264, CPyStatic_globals);
         goto CPyL81;
     }
     cpy_r_r90 = PyNumber_Add(cpy_r_r89, cpy_r_balance);
     CPy_DECREF(cpy_r_r89);
     CPy_DECREF(cpy_r_balance);
     if (unlikely(cpy_r_r90 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1264, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1264, CPyStatic_globals);
         goto CPyL83;
     }
     cpy_r_r91 = CPyStatics[46]; /* '_setitem_nochecksum' */
@@ -18427,7 +18427,7 @@ CPyL52: ;
     cpy_r_r93 = (PyObject **)&cpy_r_r92;
     cpy_r_r94 = PyObject_VectorcallMethod(cpy_r_r91, cpy_r_r93, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r94 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1264, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1264, CPyStatic_globals);
         goto CPyL84;
     } else
         goto CPyL85;
@@ -18438,7 +18438,7 @@ CPyL57: ;
 CPyL58: ;
     cpy_r_r95 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r95)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1262, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1262, CPyStatic_globals);
         goto CPyL65;
     }
     return cpy_r_r43;
@@ -18585,7 +18585,7 @@ PyObject *CPyPy_WalletBalancesRaw_____add__(PyObject *self, PyObject *const *arg
     PyObject *retval = CPyDef_WalletBalancesRaw_____add__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1231, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1231, CPyStatic_globals);
     return NULL;
 }
 
@@ -18635,7 +18635,7 @@ PyObject *CPyPy_WalletBalancesRaw_____add___3___SummableNonNumericMixin_glue(PyO
     PyObject *retval = CPyDef_WalletBalancesRaw_____add___3___SummableNonNumericMixin_glue(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__add_____SummableNonNumericMixin_glue", -1, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__add_____SummableNonNumericMixin_glue", -1, CPyStatic_globals);
     return NULL;
 }
 
@@ -18735,13 +18735,13 @@ PyObject *CPyDef_WalletBalancesRaw_____sub__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1288, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1288, CPyStatic_globals);
         goto CPyL57;
     }
     cpy_r_r11 = CPyStatics[85]; /* ' is not a WalletBalancesRaw object' */
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1288, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1288, CPyStatic_globals);
         goto CPyL58;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -18753,14 +18753,14 @@ PyObject *CPyDef_WalletBalancesRaw_____sub__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1288, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1288, CPyStatic_globals);
         goto CPyL57;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1288, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1288, CPyStatic_globals);
         goto CPyL59;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -18768,14 +18768,14 @@ PyObject *CPyDef_WalletBalancesRaw_____sub__(PyObject *cpy_r_self, PyObject *cpy
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1288, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1288, CPyStatic_globals);
         goto CPyL59;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1288, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1288, CPyStatic_globals);
         goto CPyL57;
     }
     CPy_Unreachable();
@@ -18788,7 +18788,7 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r23);
     CPy_DECREF(cpy_r_r24);
     if (unlikely(cpy_r_r25 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1289, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1289, CPyStatic_globals);
         goto CPyL57;
     }
     if (unlikely(!PyBool_Check(cpy_r_r25))) {
@@ -18797,7 +18797,7 @@ CPyL8: ;
         cpy_r_r26 = cpy_r_r25 == Py_True;
     CPy_DECREF(cpy_r_r25);
     if (unlikely(cpy_r_r26 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1289, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1289, CPyStatic_globals);
         goto CPyL57;
     }
     if (!cpy_r_r26) goto CPyL18;
@@ -18808,7 +18808,7 @@ CPyL8: ;
     cpy_r_r29 = PyObject_Str(cpy_r_r28);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1291, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1291, CPyStatic_globals);
         goto CPyL57;
     }
     cpy_r_r30 = CPyStatics[9]; /* ' and ' */
@@ -18817,7 +18817,7 @@ CPyL8: ;
     cpy_r_r32 = PyObject_Str(cpy_r_r31);
     CPy_DECREF(cpy_r_r31);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1291, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1291, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r33 = CPyStatics[10]; /* ')' */
@@ -18825,14 +18825,14 @@ CPyL8: ;
     CPy_DECREF(cpy_r_r29);
     CPy_DECREF(cpy_r_r32);
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1291, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1291, CPyStatic_globals);
         goto CPyL57;
     }
     cpy_r_r35 = CPyModule_builtins;
     cpy_r_r36 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r37 = CPyObject_GetAttr(cpy_r_r35, cpy_r_r36);
     if (unlikely(cpy_r_r37 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1290, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1290, CPyStatic_globals);
         goto CPyL61;
     }
     PyObject *cpy_r_r38[1] = {cpy_r_r34};
@@ -18840,14 +18840,14 @@ CPyL8: ;
     cpy_r_r40 = _PyObject_Vectorcall(cpy_r_r37, cpy_r_r39, 1, 0);
     CPy_DECREF(cpy_r_r37);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1290, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1290, CPyStatic_globals);
         goto CPyL61;
     }
     CPy_DECREF(cpy_r_r34);
     CPy_Raise(cpy_r_r40);
     CPy_DECREF(cpy_r_r40);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1290, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1290, CPyStatic_globals);
         goto CPyL57;
     }
     CPy_Unreachable();
@@ -18873,14 +18873,14 @@ CPyL18: ;
         cpy_r_r42 = NULL;
     }
     if (cpy_r_r42 != NULL) goto __LL113;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 1294, CPyStatic_globals, "union[dict, list, None]", cpy_r_self);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 1294, CPyStatic_globals, "union[dict, list, None]", cpy_r_self);
     goto CPyL62;
 __LL113: ;
     cpy_r_r43 = CPyDef_WalletBalancesRaw(cpy_r_r42, cpy_r_r41);
     CPy_DECREF(cpy_r_r42);
     CPy_DECREF(cpy_r_r41);
     if (unlikely(cpy_r_r43 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1294, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1294, CPyStatic_globals);
         goto CPyL57;
     }
     cpy_r_r44 = CPyStatics[29]; /* 'items' */
@@ -18888,13 +18888,13 @@ __LL113: ;
     cpy_r_r46 = (PyObject **)&cpy_r_r45;
     cpy_r_r47 = PyObject_VectorcallMethod(cpy_r_r44, cpy_r_r46, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r47 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1295, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1295, CPyStatic_globals);
         goto CPyL63;
     }
     cpy_r_r48 = PyObject_GetIter(cpy_r_r47);
     CPy_DECREF(cpy_r_r47);
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1295, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1295, CPyStatic_globals);
         goto CPyL63;
     }
 CPyL22: ;
@@ -18903,7 +18903,7 @@ CPyL22: ;
     cpy_r_r50 = PyObject_GetIter(cpy_r_r49);
     CPy_DECREF(cpy_r_r49);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1295, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1295, CPyStatic_globals);
         goto CPyL65;
     }
     cpy_r_r51 = PyIter_Next(cpy_r_r50);
@@ -18915,7 +18915,7 @@ CPyL25: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r52 = 0;
     if (unlikely(!cpy_r_r52)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1295, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1295, CPyStatic_globals);
         goto CPyL57;
     }
     CPy_Unreachable();
@@ -18930,7 +18930,7 @@ CPyL28: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r54 = 0;
     if (unlikely(!cpy_r_r54)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1295, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1295, CPyStatic_globals);
         goto CPyL57;
     }
     CPy_Unreachable();
@@ -18946,7 +18946,7 @@ CPyL31: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r56 = 0;
     if (unlikely(!cpy_r_r56)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1295, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1295, CPyStatic_globals);
         goto CPyL57;
     }
     CPy_Unreachable();
@@ -18954,21 +18954,21 @@ CPyL33: ;
     cpy_r_r57 = PyObject_IsTrue(cpy_r_balances);
     cpy_r_r58 = cpy_r_r57 >= 0;
     if (unlikely(!cpy_r_r58)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1295, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1295, CPyStatic_globals);
         goto CPyL69;
     }
     cpy_r_r59 = cpy_r_r57;
     if (!cpy_r_r59) goto CPyL70;
     cpy_r_r60 = PyObject_GetItem(cpy_r_r43, cpy_r_wallet);
     if (unlikely(cpy_r_r60 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1297, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1297, CPyStatic_globals);
         goto CPyL69;
     }
     cpy_r_r61 = PyNumber_InPlaceSubtract(cpy_r_r60, cpy_r_balances);
     CPy_DECREF(cpy_r_r60);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1297, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1297, CPyStatic_globals);
         goto CPyL71;
     }
     cpy_r_r62 = PyObject_SetItem(cpy_r_r43, cpy_r_wallet, cpy_r_r61);
@@ -18976,14 +18976,14 @@ CPyL33: ;
     CPy_DECREF(cpy_r_r61);
     cpy_r_r63 = cpy_r_r62 >= 0;
     if (unlikely(!cpy_r_r63)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1297, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1297, CPyStatic_globals);
         goto CPyL65;
     } else
         goto CPyL22;
 CPyL38: ;
     cpy_r_r64 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r64)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1295, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1295, CPyStatic_globals);
         goto CPyL63;
     }
     cpy_r_r65 = CPyStatics[29]; /* 'items' */
@@ -18991,13 +18991,13 @@ CPyL38: ;
     cpy_r_r67 = (PyObject **)&cpy_r_r66;
     cpy_r_r68 = PyObject_VectorcallMethod(cpy_r_r65, cpy_r_r67, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r68 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1298, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1298, CPyStatic_globals);
         goto CPyL63;
     }
     cpy_r_r69 = PyObject_GetIter(cpy_r_r68);
     CPy_DECREF(cpy_r_r68);
     if (unlikely(cpy_r_r69 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1298, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1298, CPyStatic_globals);
         goto CPyL63;
     }
 CPyL41: ;
@@ -19006,7 +19006,7 @@ CPyL41: ;
     cpy_r_r71 = PyObject_GetIter(cpy_r_r70);
     CPy_DECREF(cpy_r_r70);
     if (unlikely(cpy_r_r71 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1298, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1298, CPyStatic_globals);
         goto CPyL73;
     }
     cpy_r_r72 = PyIter_Next(cpy_r_r71);
@@ -19018,7 +19018,7 @@ CPyL44: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r73 = 0;
     if (unlikely(!cpy_r_r73)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1298, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1298, CPyStatic_globals);
         goto CPyL57;
     }
     CPy_Unreachable();
@@ -19033,7 +19033,7 @@ CPyL47: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r75 = 0;
     if (unlikely(!cpy_r_r75)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1298, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1298, CPyStatic_globals);
         goto CPyL57;
     }
     CPy_Unreachable();
@@ -19049,7 +19049,7 @@ CPyL50: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r77 = 0;
     if (unlikely(!cpy_r_r77)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1298, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1298, CPyStatic_globals);
         goto CPyL57;
     }
     CPy_Unreachable();
@@ -19058,7 +19058,7 @@ CPyL52: ;
     CPy_DECREF(cpy_r_balances);
     cpy_r_r79 = cpy_r_r78 >= 0;
     if (unlikely(!cpy_r_r79)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1295, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1295, CPyStatic_globals);
         goto CPyL77;
     }
     cpy_r_r80 = cpy_r_r78;
@@ -19067,14 +19067,14 @@ CPyL52: ;
     CPy_DECREF(cpy_r_wallet);
     cpy_r_r82 = cpy_r_r81 >= 0;
     if (unlikely(!cpy_r_r82)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1300, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1300, CPyStatic_globals);
         goto CPyL73;
     } else
         goto CPyL41;
 CPyL55: ;
     cpy_r_r83 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r83)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1298, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1298, CPyStatic_globals);
         goto CPyL63;
     }
     return cpy_r_r43;
@@ -19199,7 +19199,7 @@ PyObject *CPyPy_WalletBalancesRaw_____sub__(PyObject *self, PyObject *const *arg
     PyObject *retval = CPyDef_WalletBalancesRaw_____sub__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1267, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1267, CPyStatic_globals);
     return NULL;
 }
 
@@ -19237,7 +19237,7 @@ PyObject *CPyPy___mypyc_lambda__3___3_init___3_PortfolioBalancesByCategory_obj__
     PyObject *retval = CPyDef___mypyc_lambda__3___3_init___3_PortfolioBalancesByCategory_obj_____get__(arg___mypyc_self__, arg_instance, arg_owner);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__get__", -1, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__get__", -1, CPyStatic_globals);
     return NULL;
 }
 
@@ -19249,7 +19249,7 @@ PyObject *CPyDef___mypyc_lambda__3___3_init___3_PortfolioBalancesByCategory_obj_
     PyObject *cpy_r_r4;
     cpy_r_r0 = ((eth_portfolio___typing_____mypyc_lambda__3___3_init___3_PortfolioBalancesByCategory_objObject *)cpy_r___mypyc_self__)->___mypyc_env__;
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/typing.py", "<lambda>", "__mypyc_lambda__3___init___PortfolioBalancesByCategory_obj", "__mypyc_env__", 1331, CPyStatic_globals);
+        CPy_AttributeError("eth_portfolio\\typing.py", "<lambda>", "__mypyc_lambda__3___init___PortfolioBalancesByCategory_obj", "__mypyc_env__", 1331, CPyStatic_globals);
         goto CPyL4;
     }
     CPy_INCREF(cpy_r_r0);
@@ -19262,7 +19262,7 @@ CPyL1: ;
     }
     CPy_DECREF(cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<lambda>", 1331, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<lambda>", 1331, CPyStatic_globals);
         goto CPyL4;
     }
 CPyL2: ;
@@ -19270,7 +19270,7 @@ CPyL2: ;
     cpy_r_r3 = CPyDef_WalletBalancesRaw(cpy_r_r2, cpy_r_r1);
     CPy_DECREF(cpy_r_r1);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<lambda>", 1331, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<lambda>", 1331, CPyStatic_globals);
         goto CPyL4;
     }
     return cpy_r_r3;
@@ -19290,7 +19290,7 @@ PyObject *CPyPy___mypyc_lambda__3___3_init___3_PortfolioBalancesByCategory_obj__
     PyObject *retval = CPyDef___mypyc_lambda__3___3_init___3_PortfolioBalancesByCategory_obj_____call__(arg___mypyc_self__);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "<lambda>", 1331, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "<lambda>", 1331, CPyStatic_globals);
     return NULL;
 }
 
@@ -19415,7 +19415,7 @@ CPyL2: ;
 CPyL4: ;
     cpy_r_r2 = CPyDef___init___3_PortfolioBalancesByCategory_env();
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1330, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1330, CPyStatic_globals);
         goto CPyL76;
     }
     if (((eth_portfolio___typing_____init___3_PortfolioBalancesByCategory_envObject *)cpy_r_r2)->_block != NULL) {
@@ -19424,14 +19424,14 @@ CPyL4: ;
     ((eth_portfolio___typing_____init___3_PortfolioBalancesByCategory_envObject *)cpy_r_r2)->_block = cpy_r_block;
     cpy_r_r3 = 1;
     if (unlikely(!cpy_r_r3)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1330, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1330, CPyStatic_globals);
         goto CPyL77;
     }
     cpy_r_r4 = CPyModule_builtins;
     cpy_r_r5 = CPyStatics[22]; /* 'super' */
     cpy_r_r6 = CPyObject_GetAttr(cpy_r_r4, cpy_r_r5);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1331, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1331, CPyStatic_globals);
         goto CPyL77;
     }
     cpy_r_r7 = (PyObject *)CPyType_PortfolioBalancesByCategory;
@@ -19440,19 +19440,19 @@ CPyL4: ;
     cpy_r_r10 = _PyObject_Vectorcall(cpy_r_r6, cpy_r_r9, 2, 0);
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1331, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1331, CPyStatic_globals);
         goto CPyL77;
     }
     cpy_r_r11 = CPyStatics[23]; /* '__init__' */
     cpy_r_r12 = CPyObject_GetAttr(cpy_r_r10, cpy_r_r11);
     CPy_DECREF(cpy_r_r10);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1331, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1331, CPyStatic_globals);
         goto CPyL77;
     }
     cpy_r_r13 = CPyDef___mypyc_lambda__3___3_init___3_PortfolioBalancesByCategory_obj();
     if (unlikely(cpy_r_r13 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1331, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1331, CPyStatic_globals);
         goto CPyL78;
     }
     CPy_INCREF(cpy_r_r2);
@@ -19462,7 +19462,7 @@ CPyL4: ;
     ((eth_portfolio___typing_____mypyc_lambda__3___3_init___3_PortfolioBalancesByCategory_objObject *)cpy_r_r13)->___mypyc_env__ = cpy_r_r2;
     cpy_r_r14 = 1;
     if (unlikely(!cpy_r_r14)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1331, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1331, CPyStatic_globals);
         goto CPyL79;
     }
     PyObject *cpy_r_r15[1] = {cpy_r_r13};
@@ -19470,7 +19470,7 @@ CPyL4: ;
     cpy_r_r17 = _PyObject_Vectorcall(cpy_r_r12, cpy_r_r16, 1, 0);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r17 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1331, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1331, CPyStatic_globals);
         goto CPyL80;
     } else
         goto CPyL81;
@@ -19484,7 +19484,7 @@ CPyL12: ;
     }
     CPy_DECREF(cpy_r_r2);
     if (unlikely(cpy_r_r18 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1332, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1332, CPyStatic_globals);
         goto CPyL82;
     }
 CPyL13: ;
@@ -19493,7 +19493,7 @@ CPyL13: ;
     CPy_DECREF(cpy_r_r18);
     cpy_r_r21 = cpy_r_r20 >= 0;
     if (unlikely(!cpy_r_r21)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1332, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1332, CPyStatic_globals);
         goto CPyL82;
     }
     cpy_r_r22 = (PyObject *)&_Py_NoneStruct;
@@ -19509,7 +19509,7 @@ CPyL16: ;
     cpy_r_r25 = PyObject_IsInstance(cpy_r_seed, cpy_r_r24);
     cpy_r_r26 = cpy_r_r25 >= 0;
     if (unlikely(!cpy_r_r26)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1335, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1335, CPyStatic_globals);
         goto CPyL82;
     }
     cpy_r_r27 = cpy_r_r25;
@@ -19517,13 +19517,13 @@ CPyL16: ;
     if (likely(PyDict_Check(cpy_r_seed)))
         cpy_r_r28 = cpy_r_seed;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 1336, CPyStatic_globals, "dict", cpy_r_seed);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 1336, CPyStatic_globals, "dict", cpy_r_seed);
         goto CPyL73;
     }
     cpy_r_r29 = CPyDict_ItemsView(cpy_r_r28);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1336, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1336, CPyStatic_globals);
         goto CPyL73;
     }
     cpy_r_seed = cpy_r_r29;
@@ -19532,14 +19532,14 @@ CPyL21: ;
     cpy_r_r31 = CPyStatics[61]; /* 'Iterable' */
     cpy_r_r32 = CPyDict_GetItem(cpy_r_r30, cpy_r_r31);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1337, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1337, CPyStatic_globals);
         goto CPyL82;
     }
     cpy_r_r33 = PyObject_IsInstance(cpy_r_seed, cpy_r_r32);
     CPy_DECREF(cpy_r_r32);
     cpy_r_r34 = cpy_r_r33 >= 0;
     if (unlikely(!cpy_r_r34)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1337, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1337, CPyStatic_globals);
         goto CPyL82;
     }
     cpy_r_r35 = cpy_r_r33;
@@ -19552,14 +19552,14 @@ CPyL21: ;
     cpy_r_r41 = (PyObject **)&cpy_r_r40;
     cpy_r_r42 = PyObject_VectorcallMethod(cpy_r_r39, cpy_r_r41, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1338, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1338, CPyStatic_globals);
         goto CPyL82;
     }
     CPy_DECREF(cpy_r_seed);
     cpy_r_r43 = CPyStatics[87]; /* ' is not a valid input for PortfolioBalancesByCategory' */
     cpy_r_r44 = PyList_New(2);
     if (unlikely(cpy_r_r44 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1338, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1338, CPyStatic_globals);
         goto CPyL84;
     }
     cpy_r_r45 = (CPyPtr)&((PyListObject *)cpy_r_r44)->ob_item;
@@ -19571,14 +19571,14 @@ CPyL21: ;
     cpy_r_r48 = PyUnicode_Join(cpy_r_r36, cpy_r_r44);
     CPy_DECREF(cpy_r_r44);
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1338, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1338, CPyStatic_globals);
         goto CPyL73;
     }
     cpy_r_r49 = CPyModule_builtins;
     cpy_r_r50 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r51 = CPyObject_GetAttr(cpy_r_r49, cpy_r_r50);
     if (unlikely(cpy_r_r51 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1338, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1338, CPyStatic_globals);
         goto CPyL85;
     }
     PyObject *cpy_r_r52[1] = {cpy_r_r48};
@@ -19586,14 +19586,14 @@ CPyL21: ;
     cpy_r_r54 = _PyObject_Vectorcall(cpy_r_r51, cpy_r_r53, 1, 0);
     CPy_DECREF(cpy_r_r51);
     if (unlikely(cpy_r_r54 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1338, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1338, CPyStatic_globals);
         goto CPyL85;
     }
     CPy_DECREF(cpy_r_r48);
     CPy_Raise(cpy_r_r54);
     CPy_DECREF(cpy_r_r54);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1338, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1338, CPyStatic_globals);
         goto CPyL73;
     }
     CPy_Unreachable();
@@ -19601,7 +19601,7 @@ CPyL31: ;
     cpy_r_r55 = PyObject_GetIter(cpy_r_seed);
     CPy_DECREF(cpy_r_seed);
     if (unlikely(cpy_r_r55 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1339, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1339, CPyStatic_globals);
         goto CPyL73;
     }
 CPyL32: ;
@@ -19632,13 +19632,13 @@ CPyL32: ;
     cpy_r_r57 = cpy_r_r56;
 __LL115: ;
     if (cpy_r_r57 != NULL) goto __LL114;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 1339, CPyStatic_globals, "union[str, tuple[str, eth_portfolio.typing.WalletBalancesRaw]]", cpy_r_r56);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 1339, CPyStatic_globals, "union[str, tuple[str, eth_portfolio.typing.WalletBalancesRaw]]", cpy_r_r56);
     goto CPyL87;
 __LL114: ;
     cpy_r_r58 = PyObject_GetIter(cpy_r_r57);
     CPy_DECREF(cpy_r_r57);
     if (unlikely(cpy_r_r58 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1339, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1339, CPyStatic_globals);
         goto CPyL87;
     }
     cpy_r_r59 = PyIter_Next(cpy_r_r58);
@@ -19650,7 +19650,7 @@ CPyL36: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r60 = 0;
     if (unlikely(!cpy_r_r60)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1339, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1339, CPyStatic_globals);
         goto CPyL73;
     }
     CPy_Unreachable();
@@ -19665,7 +19665,7 @@ CPyL39: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r62 = 0;
     if (unlikely(!cpy_r_r62)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1339, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1339, CPyStatic_globals);
         goto CPyL73;
     }
     CPy_Unreachable();
@@ -19681,7 +19681,7 @@ CPyL42: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r64 = 0;
     if (unlikely(!cpy_r_r64)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1339, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1339, CPyStatic_globals);
         goto CPyL73;
     }
     CPy_Unreachable();
@@ -19689,7 +19689,7 @@ CPyL44: ;
     cpy_r_r65 = CPyStatics[48]; /* 'block' */
     cpy_r_r66 = CPyObject_GetAttr(cpy_r_self, cpy_r_r65);
     if (unlikely(cpy_r_r66 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1340, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1340, CPyStatic_globals);
         goto CPyL91;
     }
     if (PyLong_Check(cpy_r_r66))
@@ -19704,7 +19704,7 @@ CPyL44: ;
         cpy_r_r67 = NULL;
     }
     if (cpy_r_r67 != NULL) goto __LL116;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 1340, CPyStatic_globals, "int or None", cpy_r_r66);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 1340, CPyStatic_globals, "int or None", cpy_r_r66);
     goto CPyL91;
 __LL116: ;
     cpy_r_r68 = (PyObject *)CPyType_WalletBalancesRaw;
@@ -19716,7 +19716,7 @@ __LL116: ;
     if (likely(Py_TYPE(cpy_r_balances) == CPyType_WalletBalancesRaw))
         cpy_r_r72 = cpy_r_balances;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 1340, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_balances);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 1340, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_balances);
         goto CPyL92;
     }
     cpy_r_r73 = ((eth_portfolio___typing___WalletBalancesRawObject *)cpy_r_r72)->_block;
@@ -19731,7 +19731,7 @@ CPyL49: ;
     cpy_r_r77 = CPyObject_GetAttr(cpy_r_r75, cpy_r_r76);
     CPy_DECREF(cpy_r_r75);
     if (unlikely(cpy_r_r77 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1340, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1340, CPyStatic_globals);
         goto CPyL92;
     }
     cpy_r_r74 = cpy_r_r77;
@@ -19740,7 +19740,7 @@ CPyL51: ;
     CPy_DECREF(cpy_r_r67);
     CPy_DECREF(cpy_r_r74);
     if (unlikely(cpy_r_r78 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1340, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1340, CPyStatic_globals);
         goto CPyL91;
     }
     if (unlikely(!PyBool_Check(cpy_r_r78))) {
@@ -19749,7 +19749,7 @@ CPyL51: ;
         cpy_r_r79 = cpy_r_r78 == Py_True;
     CPy_DECREF(cpy_r_r78);
     if (unlikely(cpy_r_r79 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1340, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1340, CPyStatic_globals);
         goto CPyL91;
     }
     if (cpy_r_r79) {
@@ -19761,7 +19761,7 @@ CPyL54: ;
     cpy_r_r81 = CPyStatics[48]; /* 'block' */
     cpy_r_r82 = CPyObject_GetAttr(cpy_r_self, cpy_r_r81);
     if (unlikely(cpy_r_r82 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1342, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1342, CPyStatic_globals);
         goto CPyL94;
     }
     if (PyLong_Check(cpy_r_r82))
@@ -19776,13 +19776,13 @@ CPyL54: ;
         cpy_r_r83 = NULL;
     }
     if (cpy_r_r83 != NULL) goto __LL117;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 1342, CPyStatic_globals, "int or None", cpy_r_r82);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 1342, CPyStatic_globals, "int or None", cpy_r_r82);
     goto CPyL94;
 __LL117: ;
     cpy_r_r84 = PyObject_Str(cpy_r_r83);
     CPy_DECREF(cpy_r_r83);
     if (unlikely(cpy_r_r84 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1342, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1342, CPyStatic_globals);
         goto CPyL94;
     }
     cpy_r_r85 = CPyStatics[9]; /* ' and ' */
@@ -19794,7 +19794,7 @@ __LL117: ;
     if (likely(Py_TYPE(cpy_r_balances) == CPyType_WalletBalancesRaw))
         cpy_r_r90 = cpy_r_balances;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__init__", 1342, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_balances);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__init__", 1342, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_balances);
         goto CPyL95;
     }
     cpy_r_r91 = ((eth_portfolio___typing___WalletBalancesRawObject *)cpy_r_r90)->_block;
@@ -19808,7 +19808,7 @@ CPyL60: ;
     cpy_r_r95 = CPyObject_GetAttr(cpy_r_r93, cpy_r_r94);
     CPy_DECREF(cpy_r_r93);
     if (unlikely(cpy_r_r95 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1342, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1342, CPyStatic_globals);
         goto CPyL95;
     }
     cpy_r_r92 = cpy_r_r95;
@@ -19816,7 +19816,7 @@ CPyL62: ;
     cpy_r_r96 = PyObject_Str(cpy_r_r92);
     CPy_DECREF(cpy_r_r92);
     if (unlikely(cpy_r_r96 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1342, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1342, CPyStatic_globals);
         goto CPyL95;
     }
     cpy_r_r97 = CPyStatics[10]; /* ')' */
@@ -19824,14 +19824,14 @@ CPyL62: ;
     CPy_DECREF(cpy_r_r84);
     CPy_DECREF(cpy_r_r96);
     if (unlikely(cpy_r_r98 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1342, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1342, CPyStatic_globals);
         goto CPyL73;
     }
     cpy_r_r99 = CPyModule_builtins;
     cpy_r_r100 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r101 = CPyObject_GetAttr(cpy_r_r99, cpy_r_r100);
     if (unlikely(cpy_r_r101 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1341, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1341, CPyStatic_globals);
         goto CPyL96;
     }
     PyObject *cpy_r_r102[1] = {cpy_r_r98};
@@ -19839,28 +19839,28 @@ CPyL62: ;
     cpy_r_r104 = _PyObject_Vectorcall(cpy_r_r101, cpy_r_r103, 1, 0);
     CPy_DECREF(cpy_r_r101);
     if (unlikely(cpy_r_r104 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1341, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1341, CPyStatic_globals);
         goto CPyL96;
     }
     CPy_DECREF(cpy_r_r98);
     CPy_Raise(cpy_r_r104);
     CPy_DECREF(cpy_r_r104);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1341, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1341, CPyStatic_globals);
         goto CPyL73;
     }
     CPy_Unreachable();
 CPyL68: ;
     cpy_r_r105 = CPyDict_GetItem(cpy_r_self, cpy_r_label);
     if (unlikely(cpy_r_r105 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1344, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1344, CPyStatic_globals);
         goto CPyL91;
     }
     cpy_r_r106 = PyNumber_InPlaceAdd(cpy_r_r105, cpy_r_balances);
     CPy_DECREF(cpy_r_r105);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r106 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1344, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1344, CPyStatic_globals);
         goto CPyL97;
     }
     cpy_r_r107 = CPyDict_SetItem(cpy_r_self, cpy_r_label, cpy_r_r106);
@@ -19868,14 +19868,14 @@ CPyL68: ;
     CPy_DECREF(cpy_r_r106);
     cpy_r_r108 = cpy_r_r107 >= 0;
     if (unlikely(!cpy_r_r108)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1344, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1344, CPyStatic_globals);
         goto CPyL87;
     } else
         goto CPyL32;
 CPyL71: ;
     cpy_r_r109 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r109)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1339, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1339, CPyStatic_globals);
         goto CPyL73;
     }
     return 1;
@@ -20043,7 +20043,7 @@ __LL119: ;
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__init__", 1330, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__init__", 1330, CPyStatic_globals);
     return NULL;
 }
 
@@ -20055,13 +20055,13 @@ PyObject *CPyDef_PortfolioBalancesByCategory___assets(PyObject *cpy_r_self) {
     cpy_r_r0 = CPyStatics[57]; /* 'assets' */
     cpy_r_r1 = CPyDict_GetItem(cpy_r_self, cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "assets", 1354, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "assets", 1354, CPyStatic_globals);
         goto CPyL3;
     }
     if (likely(Py_TYPE(cpy_r_r1) == CPyType_WalletBalancesRaw))
         cpy_r_r2 = cpy_r_r1;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "assets", 1354, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r1);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "assets", 1354, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r1);
         goto CPyL3;
     }
     return cpy_r_r2;
@@ -20087,7 +20087,7 @@ PyObject *CPyPy_PortfolioBalancesByCategory___assets(PyObject *self, PyObject *c
     PyObject *retval = CPyDef_PortfolioBalancesByCategory___assets(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "assets", 1347, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "assets", 1347, CPyStatic_globals);
     return NULL;
 }
 
@@ -20099,13 +20099,13 @@ PyObject *CPyDef_PortfolioBalancesByCategory___debt(PyObject *cpy_r_self) {
     cpy_r_r0 = CPyStatics[58]; /* 'debt' */
     cpy_r_r1 = CPyDict_GetItem(cpy_r_self, cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "debt", 1364, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "debt", 1364, CPyStatic_globals);
         goto CPyL3;
     }
     if (likely(Py_TYPE(cpy_r_r1) == CPyType_WalletBalancesRaw))
         cpy_r_r2 = cpy_r_r1;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "debt", 1364, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r1);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "debt", 1364, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r1);
         goto CPyL3;
     }
     return cpy_r_r2;
@@ -20131,7 +20131,7 @@ PyObject *CPyPy_PortfolioBalancesByCategory___debt(PyObject *self, PyObject *con
     PyObject *retval = CPyDef_PortfolioBalancesByCategory___debt(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "debt", 1357, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "debt", 1357, CPyStatic_globals);
     return NULL;
 }
 
@@ -20178,7 +20178,7 @@ PyObject *CPyDef_PortfolioBalancesByCategory___invert(PyObject *cpy_r_self) {
     cpy_r_r1 = NULL;
     cpy_r_r2 = CPyDef_PortfolioBalances(cpy_r_r0, cpy_r_r1);
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1379, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1379, CPyStatic_globals);
         goto CPyL28;
     }
     cpy_r_r3 = 0;
@@ -20186,7 +20186,7 @@ PyObject *CPyDef_PortfolioBalancesByCategory___invert(PyObject *cpy_r_self) {
     cpy_r_r5 = cpy_r_r4 << 1;
     cpy_r_r6 = CPyDict_GetItemsIter(cpy_r_self);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1380, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1380, CPyStatic_globals);
         goto CPyL29;
     }
 CPyL2: ;
@@ -20204,13 +20204,13 @@ CPyL2: ;
     if (likely(PyUnicode_Check(cpy_r_r10)))
         cpy_r_r12 = cpy_r_r10;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "invert", 1380, CPyStatic_globals, "str", cpy_r_r10);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "invert", 1380, CPyStatic_globals, "str", cpy_r_r10);
         goto CPyL31;
     }
     if (likely(Py_TYPE(cpy_r_r11) == CPyType_WalletBalancesRaw))
         cpy_r_r13 = cpy_r_r11;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "invert", 1380, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r11);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "invert", 1380, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r11);
         goto CPyL32;
     }
     cpy_r_r14 = CPyStatics[29]; /* 'items' */
@@ -20218,14 +20218,14 @@ CPyL2: ;
     cpy_r_r16 = (PyObject **)&cpy_r_r15;
     cpy_r_r17 = PyObject_VectorcallMethod(cpy_r_r14, cpy_r_r16, 9223372036854775809ULL, 0);
     if (unlikely(cpy_r_r17 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1381, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1381, CPyStatic_globals);
         goto CPyL33;
     }
     CPy_DECREF(cpy_r_r13);
     cpy_r_r18 = PyObject_GetIter(cpy_r_r17);
     CPy_DECREF(cpy_r_r17);
     if (unlikely(cpy_r_r18 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1381, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1381, CPyStatic_globals);
         goto CPyL34;
     }
 CPyL7: ;
@@ -20234,7 +20234,7 @@ CPyL7: ;
     cpy_r_r20 = PyObject_GetIter(cpy_r_r19);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r20 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1381, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1381, CPyStatic_globals);
         goto CPyL36;
     }
     cpy_r_r21 = PyIter_Next(cpy_r_r20);
@@ -20246,7 +20246,7 @@ CPyL10: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r22 = 0;
     if (unlikely(!cpy_r_r22)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1381, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1381, CPyStatic_globals);
         goto CPyL28;
     }
     CPy_Unreachable();
@@ -20260,7 +20260,7 @@ CPyL13: ;
     PyErr_SetString(PyExc_ValueError, "not enough values to unpack");
     cpy_r_r24 = 0;
     if (unlikely(!cpy_r_r24)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1381, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1381, CPyStatic_globals);
         goto CPyL28;
     }
     CPy_Unreachable();
@@ -20275,7 +20275,7 @@ CPyL16: ;
     PyErr_SetString(PyExc_ValueError, "too many values to unpack");
     cpy_r_r26 = 0;
     if (unlikely(!cpy_r_r26)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1381, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1381, CPyStatic_globals);
         goto CPyL28;
     }
     CPy_Unreachable();
@@ -20283,7 +20283,7 @@ CPyL18: ;
     cpy_r_r27 = PyObject_IsTrue(cpy_r_r23);
     cpy_r_r28 = cpy_r_r27 >= 0;
     if (unlikely(!cpy_r_r28)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1381, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1381, CPyStatic_globals);
         goto CPyL40;
     }
     cpy_r_r29 = cpy_r_r27;
@@ -20291,19 +20291,19 @@ CPyL18: ;
     cpy_r_r30 = PyObject_GetItem(cpy_r_r2, cpy_r_r21);
     CPy_DECREF(cpy_r_r21);
     if (unlikely(cpy_r_r30 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1383, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1383, CPyStatic_globals);
         goto CPyL42;
     }
     cpy_r_r31 = PyObject_GetItem(cpy_r_r30, cpy_r_r12);
     if (unlikely(cpy_r_r31 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1383, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1383, CPyStatic_globals);
         goto CPyL43;
     }
     cpy_r_r32 = PyNumber_InPlaceAdd(cpy_r_r31, cpy_r_r23);
     CPy_DECREF(cpy_r_r31);
     CPy_DECREF(cpy_r_r23);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1383, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1383, CPyStatic_globals);
         goto CPyL44;
     }
     cpy_r_r33 = PyObject_SetItem(cpy_r_r30, cpy_r_r12, cpy_r_r32);
@@ -20311,26 +20311,26 @@ CPyL18: ;
     CPy_DECREF(cpy_r_r32);
     cpy_r_r34 = cpy_r_r33 >= 0;
     if (unlikely(!cpy_r_r34)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1383, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1383, CPyStatic_globals);
         goto CPyL36;
     } else
         goto CPyL7;
 CPyL24: ;
     cpy_r_r35 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r35)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1381, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1381, CPyStatic_globals);
         goto CPyL45;
     }
     cpy_r_r36 = CPyDict_CheckSize(cpy_r_self, cpy_r_r5);
     if (unlikely(!cpy_r_r36)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1380, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1380, CPyStatic_globals);
         goto CPyL45;
     } else
         goto CPyL2;
 CPyL26: ;
     cpy_r_r37 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r37)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1380, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1380, CPyStatic_globals);
         goto CPyL29;
     }
     return cpy_r_r2;
@@ -20457,7 +20457,7 @@ PyObject *CPyPy_PortfolioBalancesByCategory___invert(PyObject *self, PyObject *c
     PyObject *retval = CPyDef_PortfolioBalancesByCategory___invert(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "invert", 1366, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "invert", 1366, CPyStatic_globals);
     return NULL;
 }
 
@@ -20472,14 +20472,14 @@ char CPyDef_PortfolioBalancesByCategory_____bool__(PyObject *cpy_r_self) {
     char cpy_r_r8;
     cpy_r_r0 = CPyDict_ValuesView(cpy_r_self);
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 1398, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 1398, CPyStatic_globals);
         goto CPyL5;
     }
     cpy_r_r1 = CPyModule_builtins;
     cpy_r_r2 = CPyStatics[42]; /* 'any' */
     cpy_r_r3 = CPyObject_GetAttr(cpy_r_r1, cpy_r_r2);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 1398, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 1398, CPyStatic_globals);
         goto CPyL6;
     }
     PyObject *cpy_r_r4[1] = {cpy_r_r0};
@@ -20487,7 +20487,7 @@ char CPyDef_PortfolioBalancesByCategory_____bool__(PyObject *cpy_r_self) {
     cpy_r_r6 = _PyObject_Vectorcall(cpy_r_r3, cpy_r_r5, 1, 0);
     CPy_DECREF(cpy_r_r3);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 1398, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 1398, CPyStatic_globals);
         goto CPyL6;
     }
     CPy_DECREF(cpy_r_r0);
@@ -20497,7 +20497,7 @@ char CPyDef_PortfolioBalancesByCategory_____bool__(PyObject *cpy_r_self) {
         cpy_r_r7 = cpy_r_r6 == Py_True;
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r7 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 1398, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 1398, CPyStatic_globals);
         goto CPyL5;
     }
     return cpy_r_r7;
@@ -20531,7 +20531,7 @@ PyObject *CPyPy_PortfolioBalancesByCategory_____bool__(PyObject *self, PyObject 
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__bool__", 1386, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__bool__", 1386, CPyStatic_globals);
     return NULL;
 }
 
@@ -20544,19 +20544,19 @@ PyObject *CPyDef_PortfolioBalancesByCategory_____repr__(PyObject *cpy_r_self) {
     cpy_r_r0 = CPyStatics[88]; /* 'PortfolioBalancesByCategory' */
     cpy_r_r1 = PyDict_Copy(cpy_r_self);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 1407, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 1407, CPyStatic_globals);
         goto CPyL4;
     }
     cpy_r_r2 = PyObject_Str(cpy_r_r1);
     CPy_DECREF(cpy_r_r1);
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 1407, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 1407, CPyStatic_globals);
         goto CPyL4;
     }
     cpy_r_r3 = CPyStr_Build(2, cpy_r_r0, cpy_r_r2);
     CPy_DECREF(cpy_r_r2);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 1407, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 1407, CPyStatic_globals);
         goto CPyL4;
     }
     return cpy_r_r3;
@@ -20582,7 +20582,7 @@ PyObject *CPyPy_PortfolioBalancesByCategory_____repr__(PyObject *self, PyObject 
     PyObject *retval = CPyDef_PortfolioBalancesByCategory_____repr__(arg_self);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__repr__", 1400, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__repr__", 1400, CPyStatic_globals);
     return NULL;
 }
 
@@ -20693,13 +20693,13 @@ PyObject *CPyDef_PortfolioBalancesByCategory_____add__(PyObject *cpy_r_self, PyO
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1430, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1430, CPyStatic_globals);
         goto CPyL53;
     }
     cpy_r_r11 = CPyStatics[89]; /* ' is not a PortfolioBalancesByCategory object' */
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1430, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1430, CPyStatic_globals);
         goto CPyL54;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -20711,14 +20711,14 @@ PyObject *CPyDef_PortfolioBalancesByCategory_____add__(PyObject *cpy_r_self, PyO
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1430, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1430, CPyStatic_globals);
         goto CPyL53;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1430, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1430, CPyStatic_globals);
         goto CPyL55;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -20726,14 +20726,14 @@ PyObject *CPyDef_PortfolioBalancesByCategory_____add__(PyObject *cpy_r_self, PyO
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1430, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1430, CPyStatic_globals);
         goto CPyL55;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1430, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1430, CPyStatic_globals);
         goto CPyL53;
     }
     CPy_Unreachable();
@@ -20741,7 +20741,7 @@ CPyL8: ;
     cpy_r_r23 = CPyStatics[48]; /* 'block' */
     cpy_r_r24 = CPyObject_GetAttr(cpy_r_self, cpy_r_r23);
     if (unlikely(cpy_r_r24 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1431, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1431, CPyStatic_globals);
         goto CPyL53;
     }
     if (PyLong_Check(cpy_r_r24))
@@ -20756,13 +20756,13 @@ CPyL8: ;
         cpy_r_r25 = NULL;
     }
     if (cpy_r_r25 != NULL) goto __LL120;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 1431, CPyStatic_globals, "int or None", cpy_r_r24);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 1431, CPyStatic_globals, "int or None", cpy_r_r24);
     goto CPyL53;
 __LL120: ;
     cpy_r_r26 = CPyStatics[48]; /* 'block' */
     cpy_r_r27 = CPyObject_GetAttr(cpy_r_other, cpy_r_r26);
     if (unlikely(cpy_r_r27 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1431, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1431, CPyStatic_globals);
         goto CPyL56;
     }
     if (PyLong_Check(cpy_r_r27))
@@ -20777,14 +20777,14 @@ __LL120: ;
         cpy_r_r28 = NULL;
     }
     if (cpy_r_r28 != NULL) goto __LL121;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 1431, CPyStatic_globals, "int or None", cpy_r_r27);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 1431, CPyStatic_globals, "int or None", cpy_r_r27);
     goto CPyL56;
 __LL121: ;
     cpy_r_r29 = PyObject_RichCompare(cpy_r_r25, cpy_r_r28, 3);
     CPy_DECREF(cpy_r_r25);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1431, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1431, CPyStatic_globals);
         goto CPyL53;
     }
     if (unlikely(!PyBool_Check(cpy_r_r29))) {
@@ -20793,7 +20793,7 @@ __LL121: ;
         cpy_r_r30 = cpy_r_r29 == Py_True;
     CPy_DECREF(cpy_r_r29);
     if (unlikely(cpy_r_r30 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1431, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1431, CPyStatic_globals);
         goto CPyL53;
     }
     if (!cpy_r_r30) goto CPyL26;
@@ -20802,7 +20802,7 @@ __LL121: ;
     cpy_r_r32 = CPyStatics[48]; /* 'block' */
     cpy_r_r33 = CPyObject_GetAttr(cpy_r_self, cpy_r_r32);
     if (unlikely(cpy_r_r33 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1433, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1433, CPyStatic_globals);
         goto CPyL53;
     }
     if (PyLong_Check(cpy_r_r33))
@@ -20817,20 +20817,20 @@ __LL121: ;
         cpy_r_r34 = NULL;
     }
     if (cpy_r_r34 != NULL) goto __LL122;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 1433, CPyStatic_globals, "int or None", cpy_r_r33);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 1433, CPyStatic_globals, "int or None", cpy_r_r33);
     goto CPyL53;
 __LL122: ;
     cpy_r_r35 = PyObject_Str(cpy_r_r34);
     CPy_DECREF(cpy_r_r34);
     if (unlikely(cpy_r_r35 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1433, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1433, CPyStatic_globals);
         goto CPyL53;
     }
     cpy_r_r36 = CPyStatics[9]; /* ' and ' */
     cpy_r_r37 = CPyStatics[48]; /* 'block' */
     cpy_r_r38 = CPyObject_GetAttr(cpy_r_other, cpy_r_r37);
     if (unlikely(cpy_r_r38 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1433, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1433, CPyStatic_globals);
         goto CPyL57;
     }
     if (PyLong_Check(cpy_r_r38))
@@ -20845,13 +20845,13 @@ __LL122: ;
         cpy_r_r39 = NULL;
     }
     if (cpy_r_r39 != NULL) goto __LL123;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 1433, CPyStatic_globals, "int or None", cpy_r_r38);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 1433, CPyStatic_globals, "int or None", cpy_r_r38);
     goto CPyL57;
 __LL123: ;
     cpy_r_r40 = PyObject_Str(cpy_r_r39);
     CPy_DECREF(cpy_r_r39);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1433, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1433, CPyStatic_globals);
         goto CPyL57;
     }
     cpy_r_r41 = CPyStatics[10]; /* ')' */
@@ -20859,14 +20859,14 @@ __LL123: ;
     CPy_DECREF(cpy_r_r35);
     CPy_DECREF(cpy_r_r40);
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1433, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1433, CPyStatic_globals);
         goto CPyL53;
     }
     cpy_r_r43 = CPyModule_builtins;
     cpy_r_r44 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r45 = CPyObject_GetAttr(cpy_r_r43, cpy_r_r44);
     if (unlikely(cpy_r_r45 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1432, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1432, CPyStatic_globals);
         goto CPyL58;
     }
     PyObject *cpy_r_r46[1] = {cpy_r_r42};
@@ -20874,14 +20874,14 @@ __LL123: ;
     cpy_r_r48 = _PyObject_Vectorcall(cpy_r_r45, cpy_r_r47, 1, 0);
     CPy_DECREF(cpy_r_r45);
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1432, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1432, CPyStatic_globals);
         goto CPyL58;
     }
     CPy_DECREF(cpy_r_r42);
     CPy_Raise(cpy_r_r48);
     CPy_DECREF(cpy_r_r48);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1432, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1432, CPyStatic_globals);
         goto CPyL53;
     }
     CPy_Unreachable();
@@ -20889,7 +20889,7 @@ CPyL26: ;
     cpy_r_r49 = CPyStatics[48]; /* 'block' */
     cpy_r_r50 = CPyObject_GetAttr(cpy_r_self, cpy_r_r49);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1436, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1436, CPyStatic_globals);
         goto CPyL53;
     }
     if (PyLong_Check(cpy_r_r50))
@@ -20904,7 +20904,7 @@ CPyL26: ;
         cpy_r_r51 = NULL;
     }
     if (cpy_r_r51 != NULL) goto __LL124;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 1436, CPyStatic_globals, "int or None", cpy_r_r50);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 1436, CPyStatic_globals, "int or None", cpy_r_r50);
     goto CPyL53;
 __LL124: ;
     cpy_r_r52 = (PyObject *)CPyType_PortfolioBalancesByCategory;
@@ -20913,14 +20913,14 @@ __LL124: ;
     cpy_r_r55 = CPyStatics[144]; /* ('block',) */
     cpy_r_r56 = _PyObject_Vectorcall(cpy_r_r52, cpy_r_r54, 0, cpy_r_r55);
     if (unlikely(cpy_r_r56 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1436, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1436, CPyStatic_globals);
         goto CPyL59;
     }
     CPy_DECREF(cpy_r_r51);
     if (likely(PyDict_Check(cpy_r_r56)))
         cpy_r_r57 = cpy_r_r56;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 1436, CPyStatic_globals, "dict", cpy_r_r56);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 1436, CPyStatic_globals, "dict", cpy_r_r56);
         goto CPyL53;
     }
     cpy_r_r58 = 0;
@@ -20928,7 +20928,7 @@ __LL124: ;
     cpy_r_r60 = cpy_r_r59 << 1;
     cpy_r_r61 = CPyDict_GetItemsIter(cpy_r_self);
     if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1437, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1437, CPyStatic_globals);
         goto CPyL60;
     }
 CPyL31: ;
@@ -20946,33 +20946,33 @@ CPyL31: ;
     if (likely(PyUnicode_Check(cpy_r_r65)))
         cpy_r_r67 = cpy_r_r65;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 1437, CPyStatic_globals, "str", cpy_r_r65);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 1437, CPyStatic_globals, "str", cpy_r_r65);
         goto CPyL62;
     }
     if (likely(Py_TYPE(cpy_r_r66) == CPyType_WalletBalancesRaw))
         cpy_r_r68 = cpy_r_r66;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 1437, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r66);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 1437, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r66);
         goto CPyL63;
     }
     cpy_r_protocol = cpy_r_r67;
     cpy_r_balances = cpy_r_r68;
     cpy_r_r69 = CPyDef_WalletBalancesRaw_____bool__(cpy_r_balances);
     if (unlikely(cpy_r_r69 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1437, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1437, CPyStatic_globals);
         goto CPyL64;
     }
     if (!cpy_r_r69) goto CPyL65;
     cpy_r_r70 = CPyDict_GetItem(cpy_r_r57, cpy_r_protocol);
     if (unlikely(cpy_r_r70 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1439, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1439, CPyStatic_globals);
         goto CPyL64;
     }
     cpy_r_r71 = PyNumber_InPlaceAdd(cpy_r_r70, cpy_r_balances);
     CPy_DECREF(cpy_r_r70);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r71 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1439, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1439, CPyStatic_globals);
         goto CPyL66;
     }
     cpy_r_r72 = CPyDict_SetItem(cpy_r_r57, cpy_r_protocol, cpy_r_r71);
@@ -20980,20 +20980,20 @@ CPyL31: ;
     CPy_DECREF(cpy_r_r71);
     cpy_r_r73 = cpy_r_r72 >= 0;
     if (unlikely(!cpy_r_r73)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1439, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1439, CPyStatic_globals);
         goto CPyL67;
     }
 CPyL39: ;
     cpy_r_r74 = CPyDict_CheckSize(cpy_r_self, cpy_r_r60);
     if (unlikely(!cpy_r_r74)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1437, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1437, CPyStatic_globals);
         goto CPyL67;
     } else
         goto CPyL31;
 CPyL40: ;
     cpy_r_r75 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r75)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1437, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1437, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r76 = 0;
@@ -21001,7 +21001,7 @@ CPyL40: ;
     cpy_r_r78 = cpy_r_r77 << 1;
     cpy_r_r79 = CPyDict_GetItemsIter(cpy_r_other);
     if (unlikely(cpy_r_r79 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1440, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1440, CPyStatic_globals);
         goto CPyL60;
     }
 CPyL42: ;
@@ -21019,33 +21019,33 @@ CPyL42: ;
     if (likely(PyUnicode_Check(cpy_r_r83)))
         cpy_r_r85 = cpy_r_r83;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 1440, CPyStatic_globals, "str", cpy_r_r83);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 1440, CPyStatic_globals, "str", cpy_r_r83);
         goto CPyL69;
     }
     if (likely(Py_TYPE(cpy_r_r84) == CPyType_WalletBalancesRaw))
         cpy_r_r86 = cpy_r_r84;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__add__", 1440, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r84);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__add__", 1440, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r84);
         goto CPyL70;
     }
     cpy_r_protocol = cpy_r_r85;
     cpy_r_balances = cpy_r_r86;
     cpy_r_r87 = CPyDef_WalletBalancesRaw_____bool__(cpy_r_balances);
     if (unlikely(cpy_r_r87 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1437, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1437, CPyStatic_globals);
         goto CPyL71;
     }
     if (!cpy_r_r87) goto CPyL72;
     cpy_r_r88 = CPyDict_GetItem(cpy_r_r57, cpy_r_protocol);
     if (unlikely(cpy_r_r88 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1442, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1442, CPyStatic_globals);
         goto CPyL71;
     }
     cpy_r_r89 = PyNumber_InPlaceAdd(cpy_r_r88, cpy_r_balances);
     CPy_DECREF(cpy_r_r88);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r89 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1442, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1442, CPyStatic_globals);
         goto CPyL73;
     }
     cpy_r_r90 = CPyDict_SetItem(cpy_r_r57, cpy_r_protocol, cpy_r_r89);
@@ -21053,20 +21053,20 @@ CPyL42: ;
     CPy_DECREF(cpy_r_r89);
     cpy_r_r91 = cpy_r_r90 >= 0;
     if (unlikely(!cpy_r_r91)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1442, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1442, CPyStatic_globals);
         goto CPyL74;
     }
 CPyL50: ;
     cpy_r_r92 = CPyDict_CheckSize(cpy_r_other, cpy_r_r78);
     if (unlikely(!cpy_r_r92)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1440, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1440, CPyStatic_globals);
         goto CPyL74;
     } else
         goto CPyL42;
 CPyL51: ;
     cpy_r_r93 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r93)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1440, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1440, CPyStatic_globals);
         goto CPyL60;
     }
     return cpy_r_r57;
@@ -21189,7 +21189,7 @@ PyObject *CPyPy_PortfolioBalancesByCategory_____add__(PyObject *self, PyObject *
     PyObject *retval = CPyDef_PortfolioBalancesByCategory_____add__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__add__", 1409, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__add__", 1409, CPyStatic_globals);
     return NULL;
 }
 
@@ -21260,7 +21260,7 @@ PyObject *CPyPy_PortfolioBalancesByCategory_____add___3___SummableNonNumericMixi
     PyObject *retval = CPyDef_PortfolioBalancesByCategory_____add___3___SummableNonNumericMixin_glue(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__add_____SummableNonNumericMixin_glue", -1, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__add_____SummableNonNumericMixin_glue", -1, CPyStatic_globals);
     return NULL;
 }
 
@@ -21368,13 +21368,13 @@ PyObject *CPyDef_PortfolioBalancesByCategory_____sub__(PyObject *cpy_r_self, PyO
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1466, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1466, CPyStatic_globals);
         goto CPyL49;
     }
     cpy_r_r11 = CPyStatics[89]; /* ' is not a PortfolioBalancesByCategory object' */
     cpy_r_r12 = PyList_New(2);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1466, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1466, CPyStatic_globals);
         goto CPyL50;
     }
     cpy_r_r13 = (CPyPtr)&((PyListObject *)cpy_r_r12)->ob_item;
@@ -21386,14 +21386,14 @@ PyObject *CPyDef_PortfolioBalancesByCategory_____sub__(PyObject *cpy_r_self, PyO
     cpy_r_r16 = PyUnicode_Join(cpy_r_r4, cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1466, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1466, CPyStatic_globals);
         goto CPyL49;
     }
     cpy_r_r17 = CPyModule_builtins;
     cpy_r_r18 = CPyStatics[7]; /* 'TypeError' */
     cpy_r_r19 = CPyObject_GetAttr(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1466, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1466, CPyStatic_globals);
         goto CPyL51;
     }
     PyObject *cpy_r_r20[1] = {cpy_r_r16};
@@ -21401,14 +21401,14 @@ PyObject *CPyDef_PortfolioBalancesByCategory_____sub__(PyObject *cpy_r_self, PyO
     cpy_r_r22 = _PyObject_Vectorcall(cpy_r_r19, cpy_r_r21, 1, 0);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1466, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1466, CPyStatic_globals);
         goto CPyL51;
     }
     CPy_DECREF(cpy_r_r16);
     CPy_Raise(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1466, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1466, CPyStatic_globals);
         goto CPyL49;
     }
     CPy_Unreachable();
@@ -21416,7 +21416,7 @@ CPyL8: ;
     cpy_r_r23 = CPyStatics[48]; /* 'block' */
     cpy_r_r24 = CPyObject_GetAttr(cpy_r_self, cpy_r_r23);
     if (unlikely(cpy_r_r24 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1467, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1467, CPyStatic_globals);
         goto CPyL49;
     }
     if (PyLong_Check(cpy_r_r24))
@@ -21431,13 +21431,13 @@ CPyL8: ;
         cpy_r_r25 = NULL;
     }
     if (cpy_r_r25 != NULL) goto __LL125;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 1467, CPyStatic_globals, "int or None", cpy_r_r24);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 1467, CPyStatic_globals, "int or None", cpy_r_r24);
     goto CPyL49;
 __LL125: ;
     cpy_r_r26 = CPyStatics[48]; /* 'block' */
     cpy_r_r27 = CPyObject_GetAttr(cpy_r_other, cpy_r_r26);
     if (unlikely(cpy_r_r27 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1467, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1467, CPyStatic_globals);
         goto CPyL52;
     }
     if (PyLong_Check(cpy_r_r27))
@@ -21452,14 +21452,14 @@ __LL125: ;
         cpy_r_r28 = NULL;
     }
     if (cpy_r_r28 != NULL) goto __LL126;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 1467, CPyStatic_globals, "int or None", cpy_r_r27);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 1467, CPyStatic_globals, "int or None", cpy_r_r27);
     goto CPyL52;
 __LL126: ;
     cpy_r_r29 = PyObject_RichCompare(cpy_r_r25, cpy_r_r28, 3);
     CPy_DECREF(cpy_r_r25);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1467, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1467, CPyStatic_globals);
         goto CPyL49;
     }
     if (unlikely(!PyBool_Check(cpy_r_r29))) {
@@ -21468,7 +21468,7 @@ __LL126: ;
         cpy_r_r30 = cpy_r_r29 == Py_True;
     CPy_DECREF(cpy_r_r29);
     if (unlikely(cpy_r_r30 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1467, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1467, CPyStatic_globals);
         goto CPyL49;
     }
     if (!cpy_r_r30) goto CPyL26;
@@ -21477,7 +21477,7 @@ __LL126: ;
     cpy_r_r32 = CPyStatics[48]; /* 'block' */
     cpy_r_r33 = CPyObject_GetAttr(cpy_r_self, cpy_r_r32);
     if (unlikely(cpy_r_r33 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1469, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1469, CPyStatic_globals);
         goto CPyL49;
     }
     if (PyLong_Check(cpy_r_r33))
@@ -21492,20 +21492,20 @@ __LL126: ;
         cpy_r_r34 = NULL;
     }
     if (cpy_r_r34 != NULL) goto __LL127;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 1469, CPyStatic_globals, "int or None", cpy_r_r33);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 1469, CPyStatic_globals, "int or None", cpy_r_r33);
     goto CPyL49;
 __LL127: ;
     cpy_r_r35 = PyObject_Str(cpy_r_r34);
     CPy_DECREF(cpy_r_r34);
     if (unlikely(cpy_r_r35 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1469, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1469, CPyStatic_globals);
         goto CPyL49;
     }
     cpy_r_r36 = CPyStatics[9]; /* ' and ' */
     cpy_r_r37 = CPyStatics[48]; /* 'block' */
     cpy_r_r38 = CPyObject_GetAttr(cpy_r_other, cpy_r_r37);
     if (unlikely(cpy_r_r38 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1469, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1469, CPyStatic_globals);
         goto CPyL53;
     }
     if (PyLong_Check(cpy_r_r38))
@@ -21520,13 +21520,13 @@ __LL127: ;
         cpy_r_r39 = NULL;
     }
     if (cpy_r_r39 != NULL) goto __LL128;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 1469, CPyStatic_globals, "int or None", cpy_r_r38);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 1469, CPyStatic_globals, "int or None", cpy_r_r38);
     goto CPyL53;
 __LL128: ;
     cpy_r_r40 = PyObject_Str(cpy_r_r39);
     CPy_DECREF(cpy_r_r39);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1469, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1469, CPyStatic_globals);
         goto CPyL53;
     }
     cpy_r_r41 = CPyStatics[10]; /* ')' */
@@ -21534,14 +21534,14 @@ __LL128: ;
     CPy_DECREF(cpy_r_r35);
     CPy_DECREF(cpy_r_r40);
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1469, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1469, CPyStatic_globals);
         goto CPyL49;
     }
     cpy_r_r43 = CPyModule_builtins;
     cpy_r_r44 = CPyStatics[11]; /* 'ValueError' */
     cpy_r_r45 = CPyObject_GetAttr(cpy_r_r43, cpy_r_r44);
     if (unlikely(cpy_r_r45 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1468, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1468, CPyStatic_globals);
         goto CPyL54;
     }
     PyObject *cpy_r_r46[1] = {cpy_r_r42};
@@ -21549,14 +21549,14 @@ __LL128: ;
     cpy_r_r48 = _PyObject_Vectorcall(cpy_r_r45, cpy_r_r47, 1, 0);
     CPy_DECREF(cpy_r_r45);
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1468, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1468, CPyStatic_globals);
         goto CPyL54;
     }
     CPy_DECREF(cpy_r_r42);
     CPy_Raise(cpy_r_r48);
     CPy_DECREF(cpy_r_r48);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1468, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1468, CPyStatic_globals);
         goto CPyL49;
     }
     CPy_Unreachable();
@@ -21564,7 +21564,7 @@ CPyL26: ;
     cpy_r_r49 = CPyStatics[48]; /* 'block' */
     cpy_r_r50 = CPyObject_GetAttr(cpy_r_self, cpy_r_r49);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1473, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1473, CPyStatic_globals);
         goto CPyL49;
     }
     if (PyLong_Check(cpy_r_r50))
@@ -21579,7 +21579,7 @@ CPyL26: ;
         cpy_r_r51 = NULL;
     }
     if (cpy_r_r51 != NULL) goto __LL129;
-    CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 1473, CPyStatic_globals, "int or None", cpy_r_r50);
+    CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 1473, CPyStatic_globals, "int or None", cpy_r_r50);
     goto CPyL49;
 __LL129: ;
     cpy_r_r52 = (PyObject *)CPyType_PortfolioBalancesByCategory;
@@ -21588,14 +21588,14 @@ __LL129: ;
     cpy_r_r55 = CPyStatics[144]; /* ('block',) */
     cpy_r_r56 = _PyObject_Vectorcall(cpy_r_r52, cpy_r_r54, 1, cpy_r_r55);
     if (unlikely(cpy_r_r56 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1472, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1472, CPyStatic_globals);
         goto CPyL55;
     }
     CPy_DECREF(cpy_r_r51);
     if (likely(PyDict_Check(cpy_r_r56)))
         cpy_r_r57 = cpy_r_r56;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 1472, CPyStatic_globals, "dict", cpy_r_r56);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 1472, CPyStatic_globals, "dict", cpy_r_r56);
         goto CPyL49;
     }
     cpy_r_r58 = 0;
@@ -21603,7 +21603,7 @@ __LL129: ;
     cpy_r_r60 = cpy_r_r59 << 1;
     cpy_r_r61 = CPyDict_GetItemsIter(cpy_r_other);
     if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1475, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1475, CPyStatic_globals);
         goto CPyL56;
     }
 CPyL31: ;
@@ -21621,27 +21621,27 @@ CPyL31: ;
     if (likely(PyUnicode_Check(cpy_r_r65)))
         cpy_r_r67 = cpy_r_r65;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 1475, CPyStatic_globals, "str", cpy_r_r65);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 1475, CPyStatic_globals, "str", cpy_r_r65);
         goto CPyL58;
     }
     if (likely(Py_TYPE(cpy_r_r66) == CPyType_WalletBalancesRaw))
         cpy_r_r68 = cpy_r_r66;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 1475, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r66);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 1475, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r66);
         goto CPyL59;
     }
     cpy_r_protocol = cpy_r_r67;
     cpy_r_balances = cpy_r_r68;
     cpy_r_r69 = CPyDict_GetItem(cpy_r_r57, cpy_r_protocol);
     if (unlikely(cpy_r_r69 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1476, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1476, CPyStatic_globals);
         goto CPyL60;
     }
     cpy_r_r70 = PyNumber_InPlaceSubtract(cpy_r_r69, cpy_r_balances);
     CPy_DECREF(cpy_r_r69);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r70 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1476, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1476, CPyStatic_globals);
         goto CPyL61;
     }
     cpy_r_r71 = CPyDict_SetItem(cpy_r_r57, cpy_r_protocol, cpy_r_r70);
@@ -21649,19 +21649,19 @@ CPyL31: ;
     CPy_DECREF(cpy_r_r70);
     cpy_r_r72 = cpy_r_r71 >= 0;
     if (unlikely(!cpy_r_r72)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1476, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1476, CPyStatic_globals);
         goto CPyL62;
     }
     cpy_r_r73 = CPyDict_CheckSize(cpy_r_other, cpy_r_r60);
     if (unlikely(!cpy_r_r73)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1475, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1475, CPyStatic_globals);
         goto CPyL62;
     } else
         goto CPyL31;
 CPyL38: ;
     cpy_r_r74 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r74)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1475, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1475, CPyStatic_globals);
         goto CPyL56;
     }
     cpy_r_r75 = 0;
@@ -21669,7 +21669,7 @@ CPyL38: ;
     cpy_r_r77 = cpy_r_r76 << 1;
     cpy_r_r78 = CPyDict_GetItemsIter(cpy_r_r57);
     if (unlikely(cpy_r_r78 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1477, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1477, CPyStatic_globals);
         goto CPyL56;
     }
 CPyL40: ;
@@ -21687,13 +21687,13 @@ CPyL40: ;
     if (likely(PyUnicode_Check(cpy_r_r82)))
         cpy_r_r84 = cpy_r_r82;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 1477, CPyStatic_globals, "str", cpy_r_r82);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 1477, CPyStatic_globals, "str", cpy_r_r82);
         goto CPyL64;
     }
     if (likely(Py_TYPE(cpy_r_r83) == CPyType_WalletBalancesRaw))
         cpy_r_r85 = cpy_r_r83;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/typing.py", "__sub__", 1477, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r83);
+        CPy_TypeErrorTraceback("eth_portfolio\\typing.py", "__sub__", 1477, CPyStatic_globals, "eth_portfolio.typing.WalletBalancesRaw", cpy_r_r83);
         goto CPyL65;
     }
     cpy_r_protocol = cpy_r_r84;
@@ -21701,7 +21701,7 @@ CPyL40: ;
     cpy_r_r86 = CPyDef_WalletBalancesRaw_____bool__(cpy_r_balances);
     CPy_DECREF(cpy_r_balances);
     if (unlikely(cpy_r_r86 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1475, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1475, CPyStatic_globals);
         goto CPyL66;
     }
     if (cpy_r_r86) goto CPyL67;
@@ -21709,20 +21709,20 @@ CPyL40: ;
     CPy_DECREF(cpy_r_protocol);
     cpy_r_r88 = cpy_r_r87 >= 0;
     if (unlikely(!cpy_r_r88)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1479, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1479, CPyStatic_globals);
         goto CPyL68;
     }
 CPyL46: ;
     cpy_r_r89 = CPyDict_CheckSize(cpy_r_r57, cpy_r_r77);
     if (unlikely(!cpy_r_r89)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1477, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1477, CPyStatic_globals);
         goto CPyL68;
     } else
         goto CPyL40;
 CPyL47: ;
     cpy_r_r90 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r90)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1477, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1477, CPyStatic_globals);
         goto CPyL56;
     }
     return cpy_r_r57;
@@ -21834,7 +21834,7 @@ PyObject *CPyPy_PortfolioBalancesByCategory_____sub__(PyObject *self, PyObject *
     PyObject *retval = CPyDef_PortfolioBalancesByCategory_____sub__(arg_self, arg_other);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/typing.py", "__sub__", 1445, CPyStatic_globals);
+    CPy_AddTraceback("eth_portfolio\\typing.py", "__sub__", 1445, CPyStatic_globals);
     return NULL;
 }
 
@@ -22358,7 +22358,7 @@ char CPyDef___top_level__(void) {
     cpy_r_r3 = CPyStatics[91]; /* 'builtins' */
     cpy_r_r4 = PyImport_Import(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", -1, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", -1, CPyStatic_globals);
         goto CPyL169;
     }
     CPyModule_builtins = cpy_r_r4;
@@ -22370,7 +22370,7 @@ CPyL3: ;
     cpy_r_r7 = CPyStatic_globals;
     cpy_r_r8 = CPyImport_ImportFromMany(cpy_r_r6, cpy_r_r5, cpy_r_r5, cpy_r_r7);
     if (unlikely(cpy_r_r8 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 27, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 27, CPyStatic_globals);
         goto CPyL169;
     }
     CPyModule_functools = cpy_r_r8;
@@ -22383,7 +22383,7 @@ CPyL3: ;
     cpy_r_r11 = CPyStatic_globals;
     cpy_r_r12 = CPyImport_ImportFromMany(cpy_r_r10, cpy_r_r9, cpy_r_r9, cpy_r_r11);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 28, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 28, CPyStatic_globals);
         goto CPyL169;
     }
     CPyModule_typing = cpy_r_r12;
@@ -22394,7 +22394,7 @@ CPyL3: ;
     cpy_r_r15 = CPyStatic_globals;
     cpy_r_r16 = CPyImport_ImportFromMany(cpy_r_r14, cpy_r_r13, cpy_r_r13, cpy_r_r15);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 43, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 43, CPyStatic_globals);
         goto CPyL169;
     }
     CPyModule_checksum_dict = cpy_r_r16;
@@ -22405,7 +22405,7 @@ CPyL3: ;
     cpy_r_r19 = CPyStatic_globals;
     cpy_r_r20 = CPyImport_ImportFromMany(cpy_r_r18, cpy_r_r17, cpy_r_r17, cpy_r_r19);
     if (unlikely(cpy_r_r20 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 44, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 44, CPyStatic_globals);
         goto CPyL169;
     }
     CPyModule_dictstruct = cpy_r_r20;
@@ -22416,7 +22416,7 @@ CPyL3: ;
     cpy_r_r23 = CPyStatic_globals;
     cpy_r_r24 = CPyImport_ImportFromMany(cpy_r_r22, cpy_r_r21, cpy_r_r21, cpy_r_r23);
     if (unlikely(cpy_r_r24 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 45, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 45, CPyStatic_globals);
         goto CPyL169;
     }
     CPyModule_eth_typing = cpy_r_r24;
@@ -22427,7 +22427,7 @@ CPyL3: ;
     cpy_r_r27 = CPyStatic_globals;
     cpy_r_r28 = CPyImport_ImportFromMany(cpy_r_r26, cpy_r_r25, cpy_r_r25, cpy_r_r27);
     if (unlikely(cpy_r_r28 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 46, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 46, CPyStatic_globals);
         goto CPyL169;
     }
     CPyModule_pandas = cpy_r_r28;
@@ -22438,7 +22438,7 @@ CPyL3: ;
     cpy_r_r31 = CPyStatic_globals;
     cpy_r_r32 = CPyImport_ImportFromMany(cpy_r_r30, cpy_r_r29, cpy_r_r29, cpy_r_r31);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 47, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 47, CPyStatic_globals);
         goto CPyL169;
     }
     CPyModule_typing_extensions = cpy_r_r32;
@@ -22449,7 +22449,7 @@ CPyL3: ;
     cpy_r_r35 = CPyStatic_globals;
     cpy_r_r36 = CPyImport_ImportFromMany(cpy_r_r34, cpy_r_r33, cpy_r_r33, cpy_r_r35);
     if (unlikely(cpy_r_r36 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 49, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 49, CPyStatic_globals);
         goto CPyL169;
     }
     CPyModule_eth_portfolio____decimal = cpy_r_r36;
@@ -22460,7 +22460,7 @@ CPyL3: ;
     cpy_r_r39 = CPyStatics[102]; /* 'TypeVar' */
     cpy_r_r40 = CPyDict_GetItem(cpy_r_r38, cpy_r_r39);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 52, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 52, CPyStatic_globals);
         goto CPyL169;
     }
     PyObject *cpy_r_r41[1] = {cpy_r_r37};
@@ -22468,7 +22468,7 @@ CPyL3: ;
     cpy_r_r43 = _PyObject_Vectorcall(cpy_r_r40, cpy_r_r42, 1, 0);
     CPy_DECREF(cpy_r_r40);
     if (unlikely(cpy_r_r43 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 52, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 52, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r44 = CPyStatic_globals;
@@ -22477,7 +22477,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r43);
     cpy_r_r47 = cpy_r_r46 >= 0;
     if (unlikely(!cpy_r_r47)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 52, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 52, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r48 = CPyStatics[119]; /* '_I' */
@@ -22485,7 +22485,7 @@ CPyL3: ;
     cpy_r_r50 = CPyStatics[102]; /* 'TypeVar' */
     cpy_r_r51 = CPyDict_GetItem(cpy_r_r49, cpy_r_r50);
     if (unlikely(cpy_r_r51 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 53, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 53, CPyStatic_globals);
         goto CPyL169;
     }
     PyObject *cpy_r_r52[1] = {cpy_r_r48};
@@ -22493,7 +22493,7 @@ CPyL3: ;
     cpy_r_r54 = _PyObject_Vectorcall(cpy_r_r51, cpy_r_r53, 1, 0);
     CPy_DECREF(cpy_r_r51);
     if (unlikely(cpy_r_r54 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 53, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 53, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r55 = CPyStatic_globals;
@@ -22502,7 +22502,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r54);
     cpy_r_r58 = cpy_r_r57 >= 0;
     if (unlikely(!cpy_r_r58)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 53, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 53, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r59 = CPyStatics[120]; /* '_P' */
@@ -22510,7 +22510,7 @@ CPyL3: ;
     cpy_r_r61 = CPyStatics[114]; /* 'ParamSpec' */
     cpy_r_r62 = CPyDict_GetItem(cpy_r_r60, cpy_r_r61);
     if (unlikely(cpy_r_r62 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 54, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 54, CPyStatic_globals);
         goto CPyL169;
     }
     PyObject *cpy_r_r63[1] = {cpy_r_r59};
@@ -22518,7 +22518,7 @@ CPyL3: ;
     cpy_r_r65 = _PyObject_Vectorcall(cpy_r_r62, cpy_r_r64, 1, 0);
     CPy_DECREF(cpy_r_r62);
     if (unlikely(cpy_r_r65 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 54, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 54, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r66 = CPyStatic_globals;
@@ -22527,28 +22527,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r65);
     cpy_r_r69 = cpy_r_r68 >= 0;
     if (unlikely(!cpy_r_r69)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 54, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 54, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r70 = CPyStatic_globals;
     cpy_r_r71 = CPyStatics[95]; /* 'Callable' */
     cpy_r_r72 = CPyDict_GetItem(cpy_r_r70, cpy_r_r71);
     if (unlikely(cpy_r_r72 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 56, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 56, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r73 = CPyStatic_globals;
     cpy_r_r74 = CPyStatics[120]; /* '_P' */
     cpy_r_r75 = CPyDict_GetItem(cpy_r_r73, cpy_r_r74);
     if (unlikely(cpy_r_r75 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 56, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 56, CPyStatic_globals);
         goto CPyL170;
     }
     cpy_r_r76 = CPyStatic_globals;
     cpy_r_r77 = CPyStatics[118]; /* '_T' */
     cpy_r_r78 = CPyDict_GetItem(cpy_r_r76, cpy_r_r77);
     if (unlikely(cpy_r_r78 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 56, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 56, CPyStatic_globals);
         goto CPyL171;
     }
     cpy_r_r79.f0 = cpy_r_r75;
@@ -22564,7 +22564,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r72);
     CPy_DECREF(cpy_r_r80);
     if (unlikely(cpy_r_r81 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 56, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 56, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r82 = CPyStatic_globals;
@@ -22573,20 +22573,20 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r81);
     cpy_r_r85 = cpy_r_r84 >= 0;
     if (unlikely(!cpy_r_r85)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 56, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 56, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r86 = CPyStatic_globals;
     cpy_r_r87 = CPyStatics[108]; /* 'DictStruct' */
     cpy_r_r88 = CPyDict_GetItem(cpy_r_r86, cpy_r_r87);
     if (unlikely(cpy_r_r88 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 62, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 62, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r89 = PyTuple_Pack(1, cpy_r_r88);
     CPy_DECREF(cpy_r_r88);
     if (unlikely(cpy_r_r89 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 61, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 61, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r90 = CPyStatics[122]; /* 'eth_portfolio.typing' */
@@ -22594,12 +22594,12 @@ CPyL3: ;
     cpy_r_r92 = CPyType_FromTemplate(cpy_r_r91, cpy_r_r89, cpy_r_r90);
     CPy_DECREF(cpy_r_r89);
     if (unlikely(cpy_r_r92 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 61, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 61, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r93 = CPyDef_Balance_trait_vtable_setup();
     if (unlikely(cpy_r_r93 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", -1, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", -1, CPyStatic_globals);
         goto CPyL172;
     }
     cpy_r_r94 = CPyStatics[123]; /* '__mypyc_attrs__' */
@@ -22609,14 +22609,14 @@ CPyL3: ;
     cpy_r_r98 = CPyStatics[48]; /* 'block' */
     cpy_r_r99 = PyTuple_Pack(4, cpy_r_r95, cpy_r_r96, cpy_r_r97, cpy_r_r98);
     if (unlikely(cpy_r_r99 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 61, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 61, CPyStatic_globals);
         goto CPyL172;
     }
     cpy_r_r100 = PyObject_SetAttr(cpy_r_r92, cpy_r_r94, cpy_r_r99);
     CPy_DECREF(cpy_r_r99);
     cpy_r_r101 = cpy_r_r100 >= 0;
     if (unlikely(!cpy_r_r101)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 61, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 61, CPyStatic_globals);
         goto CPyL172;
     }
     CPyType_Balance = (PyTypeObject *)cpy_r_r92;
@@ -22627,7 +22627,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r92);
     cpy_r_r105 = cpy_r_r104 >= 0;
     if (unlikely(!cpy_r_r105)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 61, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 61, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r106 = (PyObject *)&PyUnicode_Type;
@@ -22636,42 +22636,42 @@ CPyL3: ;
     cpy_r_r109 = CPyDict_SetItem(cpy_r_r107, cpy_r_r108, cpy_r_r106);
     cpy_r_r110 = cpy_r_r109 >= 0;
     if (unlikely(!cpy_r_r110)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 228, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 228, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r111 = CPyStatic_globals;
     cpy_r_r112 = CPyStatics[103]; /* 'Union' */
     cpy_r_r113 = CPyDict_GetItem(cpy_r_r111, cpy_r_r112);
     if (unlikely(cpy_r_r113 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 230, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 230, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r114 = CPyStatic_globals;
     cpy_r_r115 = CPyStatics[111]; /* 'ChecksumAddress' */
     cpy_r_r116 = CPyDict_GetItem(cpy_r_r114, cpy_r_r115);
     if (unlikely(cpy_r_r116 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 230, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 230, CPyStatic_globals);
         goto CPyL173;
     }
     cpy_r_r117 = CPyStatic_globals;
     cpy_r_r118 = CPyStatics[61]; /* 'Iterable' */
     cpy_r_r119 = CPyDict_GetItem(cpy_r_r117, cpy_r_r118);
     if (unlikely(cpy_r_r119 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 230, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 230, CPyStatic_globals);
         goto CPyL174;
     }
     cpy_r_r120 = CPyStatic_globals;
     cpy_r_r121 = CPyStatics[111]; /* 'ChecksumAddress' */
     cpy_r_r122 = CPyDict_GetItem(cpy_r_r120, cpy_r_r121);
     if (unlikely(cpy_r_r122 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 230, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 230, CPyStatic_globals);
         goto CPyL175;
     }
     cpy_r_r123 = PyObject_GetItem(cpy_r_r119, cpy_r_r122);
     CPy_DECREF(cpy_r_r119);
     CPy_DECREF(cpy_r_r122);
     if (unlikely(cpy_r_r123 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 230, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 230, CPyStatic_globals);
         goto CPyL174;
     }
     cpy_r_r124.f0 = cpy_r_r116;
@@ -22687,7 +22687,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r113);
     CPy_DECREF(cpy_r_r125);
     if (unlikely(cpy_r_r126 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 230, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 230, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r127 = CPyStatic_globals;
@@ -22696,7 +22696,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r126);
     cpy_r_r130 = cpy_r_r129 >= 0;
     if (unlikely(!cpy_r_r130)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 230, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 230, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r131 = CPyStatics[127]; /* 'TokenAddress' */
@@ -22704,14 +22704,14 @@ CPyL3: ;
     cpy_r_r133 = CPyStatics[111]; /* 'ChecksumAddress' */
     cpy_r_r134 = CPyDict_GetItem(cpy_r_r132, cpy_r_r133);
     if (unlikely(cpy_r_r134 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 231, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 231, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r135 = CPyStatic_globals;
     cpy_r_r136 = CPyStatics[102]; /* 'TypeVar' */
     cpy_r_r137 = CPyDict_GetItem(cpy_r_r135, cpy_r_r136);
     if (unlikely(cpy_r_r137 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 231, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 231, CPyStatic_globals);
         goto CPyL176;
     }
     PyObject *cpy_r_r138[2] = {cpy_r_r131, cpy_r_r134};
@@ -22720,7 +22720,7 @@ CPyL3: ;
     cpy_r_r141 = _PyObject_Vectorcall(cpy_r_r137, cpy_r_r139, 1, cpy_r_r140);
     CPy_DECREF(cpy_r_r137);
     if (unlikely(cpy_r_r141 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 231, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 231, CPyStatic_globals);
         goto CPyL176;
     }
     CPy_DECREF(cpy_r_r134);
@@ -22730,7 +22730,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r141);
     cpy_r_r145 = cpy_r_r144 >= 0;
     if (unlikely(!cpy_r_r145)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 231, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 231, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r146 = NULL;
@@ -22738,25 +22738,25 @@ CPyL3: ;
     cpy_r_r148 = (PyObject *)CPyType__SummableNonNumericMixin_template;
     cpy_r_r149 = CPyType_FromTemplate(cpy_r_r148, cpy_r_r146, cpy_r_r147);
     if (unlikely(cpy_r_r149 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 234, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 234, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r150 = CPyDef__SummableNonNumericMixin_trait_vtable_setup();
     if (unlikely(cpy_r_r150 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", -1, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", -1, CPyStatic_globals);
         goto CPyL177;
     }
     cpy_r_r151 = CPyStatics[123]; /* '__mypyc_attrs__' */
     cpy_r_r152 = PyTuple_Pack(0);
     if (unlikely(cpy_r_r152 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 234, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 234, CPyStatic_globals);
         goto CPyL177;
     }
     cpy_r_r153 = PyObject_SetAttr(cpy_r_r149, cpy_r_r151, cpy_r_r152);
     CPy_DECREF(cpy_r_r152);
     cpy_r_r154 = cpy_r_r153 >= 0;
     if (unlikely(!cpy_r_r154)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 234, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 234, CPyStatic_globals);
         goto CPyL177;
     }
     CPyType__SummableNonNumericMixin = (PyTypeObject *)cpy_r_r149;
@@ -22767,28 +22767,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r149);
     cpy_r_r158 = cpy_r_r157 >= 0;
     if (unlikely(!cpy_r_r158)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 234, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 234, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r159 = CPyStatic_globals;
     cpy_r_r160 = CPyStatics[103]; /* 'Union' */
     cpy_r_r161 = CPyDict_GetItem(cpy_r_r159, cpy_r_r160);
     if (unlikely(cpy_r_r161 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 283, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 283, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r162 = CPyStatic_globals;
     cpy_r_r163 = CPyStatics[97]; /* 'Dict' */
     cpy_r_r164 = CPyDict_GetItem(cpy_r_r162, cpy_r_r163);
     if (unlikely(cpy_r_r164 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 283, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 283, CPyStatic_globals);
         goto CPyL178;
     }
     cpy_r_r165 = CPyStatic_globals;
     cpy_r_r166 = CPyStatics[111]; /* 'ChecksumAddress' */
     cpy_r_r167 = CPyDict_GetItem(cpy_r_r165, cpy_r_r166);
     if (unlikely(cpy_r_r167 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 283, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 283, CPyStatic_globals);
         goto CPyL179;
     }
     cpy_r_r168 = (PyObject *)CPyType_Balance;
@@ -22806,28 +22806,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r164);
     CPy_DECREF(cpy_r_r170);
     if (unlikely(cpy_r_r171 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 283, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 283, CPyStatic_globals);
         goto CPyL178;
     }
     cpy_r_r172 = CPyStatic_globals;
     cpy_r_r173 = CPyStatics[61]; /* 'Iterable' */
     cpy_r_r174 = CPyDict_GetItem(cpy_r_r172, cpy_r_r173);
     if (unlikely(cpy_r_r174 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 283, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 283, CPyStatic_globals);
         goto CPyL180;
     }
     cpy_r_r175 = CPyStatic_globals;
     cpy_r_r176 = CPyStatics[101]; /* 'Tuple' */
     cpy_r_r177 = CPyDict_GetItem(cpy_r_r175, cpy_r_r176);
     if (unlikely(cpy_r_r177 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 283, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 283, CPyStatic_globals);
         goto CPyL181;
     }
     cpy_r_r178 = CPyStatic_globals;
     cpy_r_r179 = CPyStatics[111]; /* 'ChecksumAddress' */
     cpy_r_r180 = CPyDict_GetItem(cpy_r_r178, cpy_r_r179);
     if (unlikely(cpy_r_r180 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 283, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 283, CPyStatic_globals);
         goto CPyL182;
     }
     cpy_r_r181 = (PyObject *)CPyType_Balance;
@@ -22845,14 +22845,14 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r177);
     CPy_DECREF(cpy_r_r183);
     if (unlikely(cpy_r_r184 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 283, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 283, CPyStatic_globals);
         goto CPyL181;
     }
     cpy_r_r185 = PyObject_GetItem(cpy_r_r174, cpy_r_r184);
     CPy_DECREF(cpy_r_r174);
     CPy_DECREF(cpy_r_r184);
     if (unlikely(cpy_r_r185 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 283, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 283, CPyStatic_globals);
         goto CPyL180;
     }
     cpy_r_r186.f0 = cpy_r_r171;
@@ -22868,7 +22868,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r161);
     CPy_DECREF(cpy_r_r187);
     if (unlikely(cpy_r_r188 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 283, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 283, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r189 = CPyStatic_globals;
@@ -22877,28 +22877,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r188);
     cpy_r_r192 = cpy_r_r191 >= 0;
     if (unlikely(!cpy_r_r192)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 283, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 283, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r193 = CPyStatic_globals;
     cpy_r_r194 = CPyStatics[106]; /* 'DefaultChecksumDict' */
     cpy_r_r195 = CPyDict_GetItem(cpy_r_r193, cpy_r_r194);
     if (unlikely(cpy_r_r195 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 286, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 286, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r196 = (PyObject *)CPyType_Balance;
     cpy_r_r197 = PyObject_GetItem(cpy_r_r195, cpy_r_r196);
     CPy_DECREF(cpy_r_r195);
     if (unlikely(cpy_r_r197 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 286, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 286, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r198 = (PyObject *)CPyType__SummableNonNumericMixin;
     cpy_r_r199 = PyTuple_Pack(2, cpy_r_r197, cpy_r_r198);
     CPy_DECREF(cpy_r_r197);
     if (unlikely(cpy_r_r199 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 286, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 286, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r200 = CPyStatics[122]; /* 'eth_portfolio.typing' */
@@ -22906,26 +22906,26 @@ CPyL3: ;
     cpy_r_r202 = CPyType_FromTemplate(cpy_r_r201, cpy_r_r199, cpy_r_r200);
     CPy_DECREF(cpy_r_r199);
     if (unlikely(cpy_r_r202 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 286, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 286, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r203 = CPyDef_TokenBalances_trait_vtable_setup();
     if (unlikely(cpy_r_r203 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", -1, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", -1, CPyStatic_globals);
         goto CPyL183;
     }
     cpy_r_r204 = CPyStatics[123]; /* '__mypyc_attrs__' */
     cpy_r_r205 = CPyStatics[48]; /* 'block' */
     cpy_r_r206 = PyTuple_Pack(1, cpy_r_r205);
     if (unlikely(cpy_r_r206 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 286, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 286, CPyStatic_globals);
         goto CPyL183;
     }
     cpy_r_r207 = PyObject_SetAttr(cpy_r_r202, cpy_r_r204, cpy_r_r206);
     CPy_DECREF(cpy_r_r206);
     cpy_r_r208 = cpy_r_r207 >= 0;
     if (unlikely(!cpy_r_r208)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 286, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 286, CPyStatic_globals);
         goto CPyL183;
     }
     CPyType_TokenBalances = (PyTypeObject *)cpy_r_r202;
@@ -22936,28 +22936,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r202);
     cpy_r_r212 = cpy_r_r211 >= 0;
     if (unlikely(!cpy_r_r212)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 286, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 286, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r213 = CPyStatic_globals;
     cpy_r_r214 = CPyStatics[103]; /* 'Union' */
     cpy_r_r215 = CPyDict_GetItem(cpy_r_r213, cpy_r_r214);
     if (unlikely(cpy_r_r215 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 486, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 486, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r216 = CPyStatic_globals;
     cpy_r_r217 = CPyStatics[97]; /* 'Dict' */
     cpy_r_r218 = CPyDict_GetItem(cpy_r_r216, cpy_r_r217);
     if (unlikely(cpy_r_r218 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 486, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 486, CPyStatic_globals);
         goto CPyL184;
     }
     cpy_r_r219 = CPyStatic_globals;
     cpy_r_r220 = CPyStatics[125]; /* 'ProtocolLabel' */
     cpy_r_r221 = CPyDict_GetItem(cpy_r_r219, cpy_r_r220);
     if (unlikely(cpy_r_r221 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 486, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 486, CPyStatic_globals);
         goto CPyL185;
     }
     cpy_r_r222 = (PyObject *)CPyType_TokenBalances;
@@ -22975,28 +22975,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r218);
     CPy_DECREF(cpy_r_r224);
     if (unlikely(cpy_r_r225 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 486, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 486, CPyStatic_globals);
         goto CPyL184;
     }
     cpy_r_r226 = CPyStatic_globals;
     cpy_r_r227 = CPyStatics[98]; /* 'List' */
     cpy_r_r228 = CPyDict_GetItem(cpy_r_r226, cpy_r_r227);
     if (unlikely(cpy_r_r228 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 486, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 486, CPyStatic_globals);
         goto CPyL186;
     }
     cpy_r_r229 = CPyStatic_globals;
     cpy_r_r230 = CPyStatics[101]; /* 'Tuple' */
     cpy_r_r231 = CPyDict_GetItem(cpy_r_r229, cpy_r_r230);
     if (unlikely(cpy_r_r231 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 486, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 486, CPyStatic_globals);
         goto CPyL187;
     }
     cpy_r_r232 = CPyStatic_globals;
     cpy_r_r233 = CPyStatics[125]; /* 'ProtocolLabel' */
     cpy_r_r234 = CPyDict_GetItem(cpy_r_r232, cpy_r_r233);
     if (unlikely(cpy_r_r234 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 486, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 486, CPyStatic_globals);
         goto CPyL188;
     }
     cpy_r_r235 = (PyObject *)CPyType_TokenBalances;
@@ -23014,14 +23014,14 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r231);
     CPy_DECREF(cpy_r_r237);
     if (unlikely(cpy_r_r238 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 486, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 486, CPyStatic_globals);
         goto CPyL187;
     }
     cpy_r_r239 = PyObject_GetItem(cpy_r_r228, cpy_r_r238);
     CPy_DECREF(cpy_r_r228);
     CPy_DECREF(cpy_r_r238);
     if (unlikely(cpy_r_r239 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 486, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 486, CPyStatic_globals);
         goto CPyL186;
     }
     cpy_r_r240.f0 = cpy_r_r225;
@@ -23037,7 +23037,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r215);
     CPy_DECREF(cpy_r_r241);
     if (unlikely(cpy_r_r242 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 486, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 486, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r243 = CPyStatic_globals;
@@ -23046,21 +23046,21 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r242);
     cpy_r_r246 = cpy_r_r245 >= 0;
     if (unlikely(!cpy_r_r246)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 486, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 486, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r247 = CPyStatic_globals;
     cpy_r_r248 = CPyStatics[96]; /* 'DefaultDict' */
     cpy_r_r249 = CPyDict_GetItem(cpy_r_r247, cpy_r_r248);
     if (unlikely(cpy_r_r249 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 489, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 489, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r250 = CPyStatic_globals;
     cpy_r_r251 = CPyStatics[125]; /* 'ProtocolLabel' */
     cpy_r_r252 = CPyDict_GetItem(cpy_r_r250, cpy_r_r251);
     if (unlikely(cpy_r_r252 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 489, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 489, CPyStatic_globals);
         goto CPyL189;
     }
     cpy_r_r253 = (PyObject *)CPyType_TokenBalances;
@@ -23078,14 +23078,14 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r249);
     CPy_DECREF(cpy_r_r255);
     if (unlikely(cpy_r_r256 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 489, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 489, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r257 = (PyObject *)CPyType__SummableNonNumericMixin;
     cpy_r_r258 = PyTuple_Pack(2, cpy_r_r256, cpy_r_r257);
     CPy_DECREF(cpy_r_r256);
     if (unlikely(cpy_r_r258 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 489, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 489, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r259 = CPyStatics[122]; /* 'eth_portfolio.typing' */
@@ -23093,21 +23093,21 @@ CPyL3: ;
     cpy_r_r261 = CPyType_FromTemplate(cpy_r_r260, cpy_r_r258, cpy_r_r259);
     CPy_DECREF(cpy_r_r258);
     if (unlikely(cpy_r_r261 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 489, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 489, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r262 = CPyStatics[123]; /* '__mypyc_attrs__' */
     cpy_r_r263 = CPyStatics[132]; /* '__dict__' */
     cpy_r_r264 = PyTuple_Pack(1, cpy_r_r263);
     if (unlikely(cpy_r_r264 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 489, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 489, CPyStatic_globals);
         goto CPyL190;
     }
     cpy_r_r265 = PyObject_SetAttr(cpy_r_r261, cpy_r_r262, cpy_r_r264);
     CPy_DECREF(cpy_r_r264);
     cpy_r_r266 = cpy_r_r265 >= 0;
     if (unlikely(!cpy_r_r266)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 489, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 489, CPyStatic_globals);
         goto CPyL190;
     }
     CPyType_RemoteTokenBalances = (PyTypeObject *)cpy_r_r261;
@@ -23118,14 +23118,14 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r261);
     cpy_r_r270 = cpy_r_r269 >= 0;
     if (unlikely(!cpy_r_r270)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 489, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 489, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r271 = CPyStatic_globals;
     cpy_r_r272 = CPyStatics[99]; /* 'Literal' */
     cpy_r_r273 = CPyDict_GetItem(cpy_r_r271, cpy_r_r272);
     if (unlikely(cpy_r_r273 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 674, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 674, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r274 = CPyStatics[57]; /* 'assets' */
@@ -23150,7 +23150,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r273);
     CPy_DECREF(cpy_r_r278);
     if (unlikely(cpy_r_r279 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 674, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 674, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r280 = CPyStatic_globals;
@@ -23159,28 +23159,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r279);
     cpy_r_r283 = cpy_r_r282 >= 0;
     if (unlikely(!cpy_r_r283)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 674, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 674, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r284 = CPyStatic_globals;
     cpy_r_r285 = CPyStatics[103]; /* 'Union' */
     cpy_r_r286 = CPyDict_GetItem(cpy_r_r284, cpy_r_r285);
     if (unlikely(cpy_r_r286 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 676, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 676, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r287 = CPyStatic_globals;
     cpy_r_r288 = CPyStatics[97]; /* 'Dict' */
     cpy_r_r289 = CPyDict_GetItem(cpy_r_r287, cpy_r_r288);
     if (unlikely(cpy_r_r289 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 676, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 676, CPyStatic_globals);
         goto CPyL191;
     }
     cpy_r_r290 = CPyStatic_globals;
     cpy_r_r291 = CPyStatics[133]; /* 'CategoryLabel' */
     cpy_r_r292 = CPyDict_GetItem(cpy_r_r290, cpy_r_r291);
     if (unlikely(cpy_r_r292 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 676, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 676, CPyStatic_globals);
         goto CPyL192;
     }
     cpy_r_r293 = (PyObject *)CPyType_TokenBalances;
@@ -23198,28 +23198,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r289);
     CPy_DECREF(cpy_r_r295);
     if (unlikely(cpy_r_r296 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 676, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 676, CPyStatic_globals);
         goto CPyL191;
     }
     cpy_r_r297 = CPyStatic_globals;
     cpy_r_r298 = CPyStatics[61]; /* 'Iterable' */
     cpy_r_r299 = CPyDict_GetItem(cpy_r_r297, cpy_r_r298);
     if (unlikely(cpy_r_r299 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 676, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 676, CPyStatic_globals);
         goto CPyL193;
     }
     cpy_r_r300 = CPyStatic_globals;
     cpy_r_r301 = CPyStatics[101]; /* 'Tuple' */
     cpy_r_r302 = CPyDict_GetItem(cpy_r_r300, cpy_r_r301);
     if (unlikely(cpy_r_r302 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 676, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 676, CPyStatic_globals);
         goto CPyL194;
     }
     cpy_r_r303 = CPyStatic_globals;
     cpy_r_r304 = CPyStatics[133]; /* 'CategoryLabel' */
     cpy_r_r305 = CPyDict_GetItem(cpy_r_r303, cpy_r_r304);
     if (unlikely(cpy_r_r305 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 676, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 676, CPyStatic_globals);
         goto CPyL195;
     }
     cpy_r_r306 = (PyObject *)CPyType_TokenBalances;
@@ -23237,14 +23237,14 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r302);
     CPy_DECREF(cpy_r_r308);
     if (unlikely(cpy_r_r309 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 676, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 676, CPyStatic_globals);
         goto CPyL194;
     }
     cpy_r_r310 = PyObject_GetItem(cpy_r_r299, cpy_r_r309);
     CPy_DECREF(cpy_r_r299);
     CPy_DECREF(cpy_r_r309);
     if (unlikely(cpy_r_r310 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 676, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 676, CPyStatic_globals);
         goto CPyL193;
     }
     cpy_r_r311.f0 = cpy_r_r296;
@@ -23260,7 +23260,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r286);
     CPy_DECREF(cpy_r_r312);
     if (unlikely(cpy_r_r313 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 676, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 676, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r314 = CPyStatic_globals;
@@ -23269,28 +23269,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r313);
     cpy_r_r317 = cpy_r_r316 >= 0;
     if (unlikely(!cpy_r_r317)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 676, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 676, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r318 = CPyStatic_globals;
     cpy_r_r319 = CPyStatics[97]; /* 'Dict' */
     cpy_r_r320 = CPyDict_GetItem(cpy_r_r318, cpy_r_r319);
     if (unlikely(cpy_r_r320 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 680, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 680, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r321 = CPyStatic_globals;
     cpy_r_r322 = CPyStatics[133]; /* 'CategoryLabel' */
     cpy_r_r323 = CPyDict_GetItem(cpy_r_r321, cpy_r_r322);
     if (unlikely(cpy_r_r323 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 680, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 680, CPyStatic_globals);
         goto CPyL196;
     }
     cpy_r_r324 = CPyStatic_globals;
     cpy_r_r325 = CPyStatics[103]; /* 'Union' */
     cpy_r_r326 = CPyDict_GetItem(cpy_r_r324, cpy_r_r325);
     if (unlikely(cpy_r_r326 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 680, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 680, CPyStatic_globals);
         goto CPyL197;
     }
     cpy_r_r327 = (PyObject *)CPyType_TokenBalances;
@@ -23310,7 +23310,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r326);
     CPy_DECREF(cpy_r_r330);
     if (unlikely(cpy_r_r331 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 680, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 680, CPyStatic_globals);
         goto CPyL197;
     }
     cpy_r_r332.f0 = cpy_r_r323;
@@ -23326,14 +23326,14 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r320);
     CPy_DECREF(cpy_r_r333);
     if (unlikely(cpy_r_r334 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 680, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 680, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r335 = (PyObject *)CPyType__SummableNonNumericMixin;
     cpy_r_r336 = PyTuple_Pack(2, cpy_r_r334, cpy_r_r335);
     CPy_DECREF(cpy_r_r334);
     if (unlikely(cpy_r_r336 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 679, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 679, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r337 = CPyStatics[122]; /* 'eth_portfolio.typing' */
@@ -23341,21 +23341,21 @@ CPyL3: ;
     cpy_r_r339 = CPyType_FromTemplate(cpy_r_r338, cpy_r_r336, cpy_r_r337);
     CPy_DECREF(cpy_r_r336);
     if (unlikely(cpy_r_r339 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 679, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 679, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r340 = CPyStatics[123]; /* '__mypyc_attrs__' */
     cpy_r_r341 = CPyStatics[132]; /* '__dict__' */
     cpy_r_r342 = PyTuple_Pack(1, cpy_r_r341);
     if (unlikely(cpy_r_r342 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 679, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 679, CPyStatic_globals);
         goto CPyL198;
     }
     cpy_r_r343 = PyObject_SetAttr(cpy_r_r339, cpy_r_r340, cpy_r_r342);
     CPy_DECREF(cpy_r_r342);
     cpy_r_r344 = cpy_r_r343 >= 0;
     if (unlikely(!cpy_r_r344)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 679, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 679, CPyStatic_globals);
         goto CPyL198;
     }
     CPyType_WalletBalances = (PyTypeObject *)cpy_r_r339;
@@ -23366,28 +23366,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r339);
     cpy_r_r348 = cpy_r_r347 >= 0;
     if (unlikely(!cpy_r_r348)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 679, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 679, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r349 = CPyStatic_globals;
     cpy_r_r350 = CPyStatics[103]; /* 'Union' */
     cpy_r_r351 = CPyDict_GetItem(cpy_r_r349, cpy_r_r350);
     if (unlikely(cpy_r_r351 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 967, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 967, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r352 = CPyStatic_globals;
     cpy_r_r353 = CPyStatics[97]; /* 'Dict' */
     cpy_r_r354 = CPyDict_GetItem(cpy_r_r352, cpy_r_r353);
     if (unlikely(cpy_r_r354 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 967, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 967, CPyStatic_globals);
         goto CPyL199;
     }
     cpy_r_r355 = CPyStatic_globals;
     cpy_r_r356 = CPyStatics[111]; /* 'ChecksumAddress' */
     cpy_r_r357 = CPyDict_GetItem(cpy_r_r355, cpy_r_r356);
     if (unlikely(cpy_r_r357 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 967, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 967, CPyStatic_globals);
         goto CPyL200;
     }
     cpy_r_r358 = (PyObject *)CPyType_WalletBalances;
@@ -23405,28 +23405,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r354);
     CPy_DECREF(cpy_r_r360);
     if (unlikely(cpy_r_r361 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 967, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 967, CPyStatic_globals);
         goto CPyL199;
     }
     cpy_r_r362 = CPyStatic_globals;
     cpy_r_r363 = CPyStatics[98]; /* 'List' */
     cpy_r_r364 = CPyDict_GetItem(cpy_r_r362, cpy_r_r363);
     if (unlikely(cpy_r_r364 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 967, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 967, CPyStatic_globals);
         goto CPyL201;
     }
     cpy_r_r365 = CPyStatic_globals;
     cpy_r_r366 = CPyStatics[101]; /* 'Tuple' */
     cpy_r_r367 = CPyDict_GetItem(cpy_r_r365, cpy_r_r366);
     if (unlikely(cpy_r_r367 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 967, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 967, CPyStatic_globals);
         goto CPyL202;
     }
     cpy_r_r368 = CPyStatic_globals;
     cpy_r_r369 = CPyStatics[111]; /* 'ChecksumAddress' */
     cpy_r_r370 = CPyDict_GetItem(cpy_r_r368, cpy_r_r369);
     if (unlikely(cpy_r_r370 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 967, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 967, CPyStatic_globals);
         goto CPyL203;
     }
     cpy_r_r371 = (PyObject *)CPyType_WalletBalances;
@@ -23444,14 +23444,14 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r367);
     CPy_DECREF(cpy_r_r373);
     if (unlikely(cpy_r_r374 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 967, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 967, CPyStatic_globals);
         goto CPyL202;
     }
     cpy_r_r375 = PyObject_GetItem(cpy_r_r364, cpy_r_r374);
     CPy_DECREF(cpy_r_r364);
     CPy_DECREF(cpy_r_r374);
     if (unlikely(cpy_r_r375 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 967, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 967, CPyStatic_globals);
         goto CPyL201;
     }
     cpy_r_r376.f0 = cpy_r_r361;
@@ -23467,7 +23467,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r351);
     CPy_DECREF(cpy_r_r377);
     if (unlikely(cpy_r_r378 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 967, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 967, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r379 = CPyStatic_globals;
@@ -23476,28 +23476,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r378);
     cpy_r_r382 = cpy_r_r381 >= 0;
     if (unlikely(!cpy_r_r382)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 967, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 967, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r383 = CPyStatic_globals;
     cpy_r_r384 = CPyStatics[106]; /* 'DefaultChecksumDict' */
     cpy_r_r385 = CPyDict_GetItem(cpy_r_r383, cpy_r_r384);
     if (unlikely(cpy_r_r385 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 970, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 970, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r386 = (PyObject *)CPyType_WalletBalances;
     cpy_r_r387 = PyObject_GetItem(cpy_r_r385, cpy_r_r386);
     CPy_DECREF(cpy_r_r385);
     if (unlikely(cpy_r_r387 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 970, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 970, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r388 = (PyObject *)CPyType__SummableNonNumericMixin;
     cpy_r_r389 = PyTuple_Pack(2, cpy_r_r387, cpy_r_r388);
     CPy_DECREF(cpy_r_r387);
     if (unlikely(cpy_r_r389 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 970, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 970, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r390 = CPyStatics[122]; /* 'eth_portfolio.typing' */
@@ -23505,26 +23505,26 @@ CPyL3: ;
     cpy_r_r392 = CPyType_FromTemplate(cpy_r_r391, cpy_r_r389, cpy_r_r390);
     CPy_DECREF(cpy_r_r389);
     if (unlikely(cpy_r_r392 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 970, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 970, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r393 = CPyDef_PortfolioBalances_trait_vtable_setup();
     if (unlikely(cpy_r_r393 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", -1, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", -1, CPyStatic_globals);
         goto CPyL204;
     }
     cpy_r_r394 = CPyStatics[123]; /* '__mypyc_attrs__' */
     cpy_r_r395 = CPyStatics[48]; /* 'block' */
     cpy_r_r396 = PyTuple_Pack(1, cpy_r_r395);
     if (unlikely(cpy_r_r396 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 970, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 970, CPyStatic_globals);
         goto CPyL204;
     }
     cpy_r_r397 = PyObject_SetAttr(cpy_r_r392, cpy_r_r394, cpy_r_r396);
     CPy_DECREF(cpy_r_r396);
     cpy_r_r398 = cpy_r_r397 >= 0;
     if (unlikely(!cpy_r_r398)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 970, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 970, CPyStatic_globals);
         goto CPyL204;
     }
     CPyType_PortfolioBalances = (PyTypeObject *)cpy_r_r392;
@@ -23535,28 +23535,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r392);
     cpy_r_r402 = cpy_r_r401 >= 0;
     if (unlikely(!cpy_r_r402)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 970, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 970, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r403 = CPyStatic_globals;
     cpy_r_r404 = CPyStatics[103]; /* 'Union' */
     cpy_r_r405 = CPyDict_GetItem(cpy_r_r403, cpy_r_r404);
     if (unlikely(cpy_r_r405 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1163, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1163, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r406 = CPyStatic_globals;
     cpy_r_r407 = CPyStatics[97]; /* 'Dict' */
     cpy_r_r408 = CPyDict_GetItem(cpy_r_r406, cpy_r_r407);
     if (unlikely(cpy_r_r408 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1163, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1163, CPyStatic_globals);
         goto CPyL205;
     }
     cpy_r_r409 = CPyStatic_globals;
     cpy_r_r410 = CPyStatics[111]; /* 'ChecksumAddress' */
     cpy_r_r411 = CPyDict_GetItem(cpy_r_r409, cpy_r_r410);
     if (unlikely(cpy_r_r411 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1163, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1163, CPyStatic_globals);
         goto CPyL206;
     }
     cpy_r_r412 = (PyObject *)CPyType_TokenBalances;
@@ -23574,28 +23574,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r408);
     CPy_DECREF(cpy_r_r414);
     if (unlikely(cpy_r_r415 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1163, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1163, CPyStatic_globals);
         goto CPyL205;
     }
     cpy_r_r416 = CPyStatic_globals;
     cpy_r_r417 = CPyStatics[98]; /* 'List' */
     cpy_r_r418 = CPyDict_GetItem(cpy_r_r416, cpy_r_r417);
     if (unlikely(cpy_r_r418 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1163, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1163, CPyStatic_globals);
         goto CPyL207;
     }
     cpy_r_r419 = CPyStatic_globals;
     cpy_r_r420 = CPyStatics[101]; /* 'Tuple' */
     cpy_r_r421 = CPyDict_GetItem(cpy_r_r419, cpy_r_r420);
     if (unlikely(cpy_r_r421 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1163, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1163, CPyStatic_globals);
         goto CPyL208;
     }
     cpy_r_r422 = CPyStatic_globals;
     cpy_r_r423 = CPyStatics[111]; /* 'ChecksumAddress' */
     cpy_r_r424 = CPyDict_GetItem(cpy_r_r422, cpy_r_r423);
     if (unlikely(cpy_r_r424 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1163, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1163, CPyStatic_globals);
         goto CPyL209;
     }
     cpy_r_r425 = (PyObject *)CPyType_TokenBalances;
@@ -23613,14 +23613,14 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r421);
     CPy_DECREF(cpy_r_r427);
     if (unlikely(cpy_r_r428 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1163, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1163, CPyStatic_globals);
         goto CPyL208;
     }
     cpy_r_r429 = PyObject_GetItem(cpy_r_r418, cpy_r_r428);
     CPy_DECREF(cpy_r_r418);
     CPy_DECREF(cpy_r_r428);
     if (unlikely(cpy_r_r429 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1163, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1163, CPyStatic_globals);
         goto CPyL207;
     }
     cpy_r_r430.f0 = cpy_r_r415;
@@ -23636,7 +23636,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r405);
     CPy_DECREF(cpy_r_r431);
     if (unlikely(cpy_r_r432 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1163, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1163, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r433 = CPyStatic_globals;
@@ -23645,28 +23645,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r432);
     cpy_r_r436 = cpy_r_r435 >= 0;
     if (unlikely(!cpy_r_r436)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1163, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1163, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r437 = CPyStatic_globals;
     cpy_r_r438 = CPyStatics[106]; /* 'DefaultChecksumDict' */
     cpy_r_r439 = CPyDict_GetItem(cpy_r_r437, cpy_r_r438);
     if (unlikely(cpy_r_r439 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1166, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1166, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r440 = (PyObject *)CPyType_TokenBalances;
     cpy_r_r441 = PyObject_GetItem(cpy_r_r439, cpy_r_r440);
     CPy_DECREF(cpy_r_r439);
     if (unlikely(cpy_r_r441 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1166, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1166, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r442 = (PyObject *)CPyType__SummableNonNumericMixin;
     cpy_r_r443 = PyTuple_Pack(2, cpy_r_r441, cpy_r_r442);
     CPy_DECREF(cpy_r_r441);
     if (unlikely(cpy_r_r443 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1166, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1166, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r444 = CPyStatics[122]; /* 'eth_portfolio.typing' */
@@ -23674,26 +23674,26 @@ CPyL3: ;
     cpy_r_r446 = CPyType_FromTemplate(cpy_r_r445, cpy_r_r443, cpy_r_r444);
     CPy_DECREF(cpy_r_r443);
     if (unlikely(cpy_r_r446 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1166, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1166, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r447 = CPyDef_WalletBalancesRaw_trait_vtable_setup();
     if (unlikely(cpy_r_r447 == 2)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", -1, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", -1, CPyStatic_globals);
         goto CPyL210;
     }
     cpy_r_r448 = CPyStatics[123]; /* '__mypyc_attrs__' */
     cpy_r_r449 = CPyStatics[48]; /* 'block' */
     cpy_r_r450 = PyTuple_Pack(1, cpy_r_r449);
     if (unlikely(cpy_r_r450 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1166, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1166, CPyStatic_globals);
         goto CPyL210;
     }
     cpy_r_r451 = PyObject_SetAttr(cpy_r_r446, cpy_r_r448, cpy_r_r450);
     CPy_DECREF(cpy_r_r450);
     cpy_r_r452 = cpy_r_r451 >= 0;
     if (unlikely(!cpy_r_r452)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1166, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1166, CPyStatic_globals);
         goto CPyL210;
     }
     CPyType_WalletBalancesRaw = (PyTypeObject *)cpy_r_r446;
@@ -23704,28 +23704,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r446);
     cpy_r_r456 = cpy_r_r455 >= 0;
     if (unlikely(!cpy_r_r456)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1166, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1166, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r457 = CPyStatic_globals;
     cpy_r_r458 = CPyStatics[103]; /* 'Union' */
     cpy_r_r459 = CPyDict_GetItem(cpy_r_r457, cpy_r_r458);
     if (unlikely(cpy_r_r459 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1306, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1306, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r460 = CPyStatic_globals;
     cpy_r_r461 = CPyStatics[97]; /* 'Dict' */
     cpy_r_r462 = CPyDict_GetItem(cpy_r_r460, cpy_r_r461);
     if (unlikely(cpy_r_r462 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1307, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1307, CPyStatic_globals);
         goto CPyL211;
     }
     cpy_r_r463 = CPyStatic_globals;
     cpy_r_r464 = CPyStatics[133]; /* 'CategoryLabel' */
     cpy_r_r465 = CPyDict_GetItem(cpy_r_r463, cpy_r_r464);
     if (unlikely(cpy_r_r465 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1307, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1307, CPyStatic_globals);
         goto CPyL212;
     }
     cpy_r_r466 = (PyObject *)CPyType_WalletBalancesRaw;
@@ -23743,28 +23743,28 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r462);
     CPy_DECREF(cpy_r_r468);
     if (unlikely(cpy_r_r469 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1307, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1307, CPyStatic_globals);
         goto CPyL211;
     }
     cpy_r_r470 = CPyStatic_globals;
     cpy_r_r471 = CPyStatics[61]; /* 'Iterable' */
     cpy_r_r472 = CPyDict_GetItem(cpy_r_r470, cpy_r_r471);
     if (unlikely(cpy_r_r472 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1307, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1307, CPyStatic_globals);
         goto CPyL213;
     }
     cpy_r_r473 = CPyStatic_globals;
     cpy_r_r474 = CPyStatics[101]; /* 'Tuple' */
     cpy_r_r475 = CPyDict_GetItem(cpy_r_r473, cpy_r_r474);
     if (unlikely(cpy_r_r475 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1307, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1307, CPyStatic_globals);
         goto CPyL214;
     }
     cpy_r_r476 = CPyStatic_globals;
     cpy_r_r477 = CPyStatics[133]; /* 'CategoryLabel' */
     cpy_r_r478 = CPyDict_GetItem(cpy_r_r476, cpy_r_r477);
     if (unlikely(cpy_r_r478 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1307, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1307, CPyStatic_globals);
         goto CPyL215;
     }
     cpy_r_r479 = (PyObject *)CPyType_WalletBalancesRaw;
@@ -23782,14 +23782,14 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r475);
     CPy_DECREF(cpy_r_r481);
     if (unlikely(cpy_r_r482 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1307, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1307, CPyStatic_globals);
         goto CPyL214;
     }
     cpy_r_r483 = PyObject_GetItem(cpy_r_r472, cpy_r_r482);
     CPy_DECREF(cpy_r_r472);
     CPy_DECREF(cpy_r_r482);
     if (unlikely(cpy_r_r483 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1307, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1307, CPyStatic_globals);
         goto CPyL213;
     }
     cpy_r_r484.f0 = cpy_r_r469;
@@ -23805,7 +23805,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r459);
     CPy_DECREF(cpy_r_r485);
     if (unlikely(cpy_r_r486 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1306, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1306, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r487 = CPyStatic_globals;
@@ -23814,21 +23814,21 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r486);
     cpy_r_r490 = cpy_r_r489 >= 0;
     if (unlikely(!cpy_r_r490)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1306, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1306, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r491 = CPyStatic_globals;
     cpy_r_r492 = CPyStatics[96]; /* 'DefaultDict' */
     cpy_r_r493 = CPyDict_GetItem(cpy_r_r491, cpy_r_r492);
     if (unlikely(cpy_r_r493 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1312, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1312, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r494 = CPyStatic_globals;
     cpy_r_r495 = CPyStatics[133]; /* 'CategoryLabel' */
     cpy_r_r496 = CPyDict_GetItem(cpy_r_r494, cpy_r_r495);
     if (unlikely(cpy_r_r496 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1312, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1312, CPyStatic_globals);
         goto CPyL216;
     }
     cpy_r_r497 = (PyObject *)CPyType_WalletBalancesRaw;
@@ -23846,14 +23846,14 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r493);
     CPy_DECREF(cpy_r_r499);
     if (unlikely(cpy_r_r500 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1312, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1312, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r501 = (PyObject *)CPyType__SummableNonNumericMixin;
     cpy_r_r502 = PyTuple_Pack(2, cpy_r_r500, cpy_r_r501);
     CPy_DECREF(cpy_r_r500);
     if (unlikely(cpy_r_r502 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1311, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1311, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r503 = CPyStatics[122]; /* 'eth_portfolio.typing' */
@@ -23861,21 +23861,21 @@ CPyL3: ;
     cpy_r_r505 = CPyType_FromTemplate(cpy_r_r504, cpy_r_r502, cpy_r_r503);
     CPy_DECREF(cpy_r_r502);
     if (unlikely(cpy_r_r505 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1311, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1311, CPyStatic_globals);
         goto CPyL169;
     }
     cpy_r_r506 = CPyStatics[123]; /* '__mypyc_attrs__' */
     cpy_r_r507 = CPyStatics[132]; /* '__dict__' */
     cpy_r_r508 = PyTuple_Pack(1, cpy_r_r507);
     if (unlikely(cpy_r_r508 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1311, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1311, CPyStatic_globals);
         goto CPyL217;
     }
     cpy_r_r509 = PyObject_SetAttr(cpy_r_r505, cpy_r_r506, cpy_r_r508);
     CPy_DECREF(cpy_r_r508);
     cpy_r_r510 = cpy_r_r509 >= 0;
     if (unlikely(!cpy_r_r510)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1311, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1311, CPyStatic_globals);
         goto CPyL217;
     }
     CPyType_PortfolioBalancesByCategory = (PyTypeObject *)cpy_r_r505;
@@ -23886,7 +23886,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r505);
     cpy_r_r514 = cpy_r_r513 >= 0;
     if (unlikely(!cpy_r_r514)) {
-        CPy_AddTraceback("eth_portfolio/typing.py", "<module>", 1311, CPyStatic_globals);
+        CPy_AddTraceback("eth_portfolio\\typing.py", "<module>", 1311, CPyStatic_globals);
         goto CPyL169;
     }
     return 1;
