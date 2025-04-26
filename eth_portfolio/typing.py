@@ -44,6 +44,7 @@ from typing import (
 
 from checksum_dict import DefaultChecksumDict
 from dictstruct import DictStruct
+from eth_typing import BlockNumber
 from pandas import DataFrame, concat
 from typing_extensions import ParamSpec, Self
 from y.datatypes import Address, Block
