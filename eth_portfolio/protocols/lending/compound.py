@@ -5,6 +5,7 @@ import a_sync
 from a_sync import igather
 from async_lru import alru_cache
 from brownie import ZERO_ADDRESS, Contract
+from eth_typing import ChecksumAddress
 from y import ERC20, Contract, map_prices, weth
 from y._decorators import stuck_coro_debugger
 from y.datatypes import Block
@@ -13,7 +14,7 @@ from y.prices.lending.compound import CToken, compound
 
 from eth_portfolio._utils import Decimal
 from eth_portfolio.protocols.lending._base import LendingProtocol
-from eth_portfolio.typing import Address, Balance, TokenBalances
+from eth_portfolio.typing import Balance, TokenBalances
 
 
 def _get_contract(market: CToken) -> Optional[Contract]:
@@ -102,7 +103,7 @@ class Compound(LendingProtocol):
         await self.underlyings()
         return self._markets
 
-    async def _debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+    async def _debt(self, address: ChecksumAddress, block: Optional[Block] = None) -> TokenBalances:
         """
         Calculates the debt balance for a given address in the Compound protocol.
 
@@ -154,7 +155,7 @@ class Compound(LendingProtocol):
 
 @stuck_coro_debugger
 async def _borrow_balance_stored(
-    market: Contract, address: Address, block: Optional[Block] = None
+    market: Contract, address: ChecksumAddress, block: Optional[Block] = None
 ) -> Optional[int]:
     """
     Fetches the stored borrow balance for a given market and address.
