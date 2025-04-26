@@ -56,8 +56,9 @@ _P = ParamSpec("_P")
 Fn = Callable[_P, _T]
 
 
+# TODO: use dataclasses for this one so mypyc can compile it
 @final
-class Balance(  # type: ignore [call-arg]
+class Balance(  # type: ignore [call-arg, misc]
     DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=True, forbid_unknown_fields=True
 ):
     """
@@ -282,7 +283,7 @@ class _SummableNonNumericMixin:
 _TBSeed = Union[Dict[ChecksumAddress, Balance], Iterable[Tuple[ChecksumAddress, Balance]]]
 
 
-class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
+class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):  # type: ignore [misc]
     """
     A specialized defaultdict subclass made for holding a mapping of ``token -> balance``.
 
@@ -308,17 +309,19 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
         self.block = block
         if seed is None:
             return
-        if isinstance(seed, dict):
-            seed = seed.items()
-        if not isinstance(seed, Iterable):
+        elif isinstance(seed, dict):
+            for token, balance in seed.items():
+                self[token] += balance
+        elif isinstance(seed, list):
+            for token, balance in seed:
+                self[token] += balance
+        else:
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
-        for token, balance in seed:  # type: ignore [misc]
-            self[token] += balance
 
-    def __getitem__(self, key) -> Balance:
+    def __getitem__(self, key: TokenAddress) -> Balance:
         return super().__getitem__(key) if key in self else Balance(token=key, block=self.block)
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: TokenAddress, value: Balance) -> None:
         """
         Sets the balance for a given token address.
 
@@ -1160,7 +1163,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
 _WTBInput = Union[Dict[ChecksumAddress, TokenBalances], List[Tuple[ChecksumAddress, TokenBalances]]]
 
 
-class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericMixin):
+class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericMixin):  # type: ignore [misc]
     # Since PortfolioBalances key lookup is:    ``wallet   -> category -> token    -> balance``
     # We need a new structure for key pattern:  ``wallet   -> token    -> balance``
 
