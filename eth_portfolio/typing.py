@@ -30,6 +30,7 @@ from typing import (
     Callable,
     DefaultDict,
     Dict,
+    Final,
     Iterable,
     List,
     Literal,
@@ -283,7 +284,8 @@ class _SummableNonNumericMixin:
 _TBSeed = Union[Dict[Address, Balance], Iterable[Tuple[Address, Balance]]]
 
 
-class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
+@final
+class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):  # type: ignore [misc]
     """
     A specialized defaultdict subclass made for holding a mapping of ``token -> balance``.
 
@@ -304,9 +306,11 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
         Decimal('100')
     """
 
-    def __init__(self, seed: Optional[_TBSeed] = None, *, block: Optional[int] = None) -> None:
+    def __init__(
+        self, seed: Optional[_TBSeed] = None, *, block: Optional[BlockNumber] = None
+    ) -> None:
         super().__init__(Balance)
-        self.block = block
+        self.block: Final = block
         if seed is None:
             return
         if isinstance(seed, dict):
@@ -484,6 +488,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):
 _RTBSeed = Dict[ProtocolLabel, TokenBalances]
 
 
+@final
 class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNonNumericMixin):
     """
     Manages token balances across different protocols, extending the :class:`~eth_portfolio.typing.TokenBalances` functionality
@@ -501,9 +506,13 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         Decimal('100')
     """
 
-    def __init__(self, seed: Optional[_RTBSeed] = None, *, block: Optional[int] = None) -> None:
+    __slots__ = ("block",)
+
+    def __init__(
+        self, seed: Optional[_RTBSeed] = None, *, block: Optional[BlockNumber] = None
+    ) -> None:
         super().__init__(lambda: TokenBalances(block=block))
-        self.block = block
+        self.block: Final = block
         if seed is None:
             return
         if isinstance(seed, dict):
@@ -668,6 +677,7 @@ CategoryLabel = Literal["assets", "debt", "external"]
 _WBSeed = Union[Dict[CategoryLabel, TokenBalances], Iterable[Tuple[CategoryLabel, TokenBalances]]]
 
 
+@final
 class WalletBalances(
     Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalances]], _SummableNonNumericMixin
 ):
@@ -690,10 +700,9 @@ class WalletBalances(
         self,
         seed: Optional[Union["WalletBalances", _WBSeed]] = None,
         *,
-        block: Optional[int] = None,
+        block: Optional[BlockNumber] = None,
     ) -> None:
-        super().__init__()
-        self.block = block
+        self.block: Final = block
         self._keys = "assets", "debt", "external"
         self["assets"] = TokenBalances(block=block)
         self["debt"] = RemoteTokenBalances(block=block)
@@ -947,7 +956,7 @@ class WalletBalances(
                 raise TypeError(
                     f'{item} is not a valid value for "{key}". Must be a TokenBalances object.'
                 )
-        elif key in ["debt", "external"]:
+        elif key in {"debt", "external"}:
             if not isinstance(item, RemoteTokenBalances):
                 raise TypeError(
                     f'{item} is not a valid value for "{key}". Must be a RemoteTokenBalances object.'
@@ -959,7 +968,8 @@ class WalletBalances(
 _PBSeed = Union[Dict[Address, WalletBalances], Iterable[Tuple[Address, WalletBalances]]]
 
 
-class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumericMixin):
+@final
+class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumericMixin):  # type: ignore [misc]
     """
     Aggregates :class:`~eth_portfolio.typing.WalletBalances` for multiple wallets, providing operations to sum
     balances across an entire portfolio.
@@ -975,9 +985,11 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         Decimal('100')
     """
 
-    def __init__(self, seed: Optional[_PBSeed] = None, *, block: Optional[int] = None) -> None:
+    def __init__(
+        self, seed: Optional[_PBSeed] = None, *, block: Optional[BlockNumber] = None
+    ) -> None:
         super().__init__(lambda: WalletBalances(block=block))
-        self.block = block
+        self.block: Final = block
         if seed is None:
             return
         if isinstance(seed, dict):
@@ -1149,7 +1161,8 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
 _WTBInput = Union[Dict[Address, TokenBalances], Iterable[Tuple[Address, TokenBalances]]]
 
 
-class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericMixin):
+@final
+class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericMixin):  # type: ignore [misc]
     # Since PortfolioBalances key lookup is:    ``wallet   -> category -> token    -> balance``
     # We need a new structure for key pattern:  ``wallet   -> token    -> balance``
 
@@ -1169,9 +1182,11 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
         Decimal('100')
     """
 
-    def __init__(self, seed: Optional[_WTBInput] = None, *, block: Optional[int] = None) -> None:
+    def __init__(
+        self, seed: Optional[_WTBInput] = None, *, block: Optional[BlockNumber] = None
+    ) -> None:
         super().__init__(lambda: TokenBalances(block=block))
-        self.block = block
+        self.block: Final = block
         if seed is None:
             return
         if isinstance(seed, dict):
@@ -1288,6 +1303,7 @@ _CBInput = Union[
 ]
 
 
+@final
 class PortfolioBalancesByCategory(
     DefaultDict[CategoryLabel, WalletBalancesRaw], _SummableNonNumericMixin
 ):
@@ -1307,9 +1323,11 @@ class PortfolioBalancesByCategory(
         Decimal('100')
     """
 
-    def __init__(self, seed: Optional[_CBInput] = None, *, block: Optional[int] = None) -> None:
+    def __init__(
+        self, seed: Optional[_CBInput] = None, *, block: Optional[BlockNumber] = None
+    ) -> None:
         super().__init__(lambda: WalletBalancesRaw(block=block))
-        self.block = block
+        self.block: Final = block
         if seed is None:
             return
         if isinstance(seed, dict):
