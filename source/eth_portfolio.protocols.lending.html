@@ -111,7 +111,7 @@ the debt in terms of the underlying token and its USD value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>) – The Ethereum address to calculate the debt for.</p></li>
+<li><p><strong>address</strong> (<em>ChecksumAddress</em>) – The Ethereum address to calculate the debt for.</p></li>
 <li><p><strong>block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>) – The block number to query. Defaults to the latest block.</p></li>
 </ul>
 </dd>
@@ -202,7 +202,7 @@ market contract. If the call reverts, it returns None.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>market</strong> (<a class="reference external" href="https://bobthebuidler.github.io/ypricemagic/source/y.html#y.contracts.Contract" title="(in ypricemagic)"><em>Contract</em></a>) – The market contract to query.</p></li>
-<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a>) – The Ethereum address to fetch the borrow balance for.</p></li>
+<li><p><strong>address</strong> (<em>ChecksumAddress</em>) – The Ethereum address to fetch the borrow balance for.</p></li>
 <li><p><strong>block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>BlockNumber</em><em> | </em><em>None</em>) – The block number to query. Defaults to the latest block.</p></li>
 </ul>
 </dd>
@@ -232,7 +232,7 @@ market contract. If the call reverts, it returns None.</p>
 <span class="sig-prename descclassname"><span class="pre">eth_portfolio.protocols.lending.compound.</span></span><span class="sig-name descname"><span class="pre">_get_contract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">market</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/compound.html#_get_contract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.compound._get_contract" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>market</strong> (<a class="reference external" href="https://bobthebuidler.github.io/ypricemagic/source/y.prices.lending.html#y.prices.lending.compound.CToken" title="(in ypricemagic)"><em>CToken</em></a>)</p>
+<dd class="field-odd"><p><strong>market</strong> (<em>CToken</em>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://bobthebuidler.github.io/ypricemagic/source/y.html#y.contracts.Contract" title="(in ypricemagic)"><em>Contract</em></a> | None</p>
@@ -378,7 +378,7 @@ market contract. If the call reverts, it returns None.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.protocols.lending.liquity.Liquity.networks">
-<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Network.&lt;function</span> <span class="pre">Network.name</span> <span class="pre">at</span> <span class="pre">0x7fa2742517e0&gt;]</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.liquity.Liquity.networks" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Network.&lt;function</span> <span class="pre">Network.name</span> <span class="pre">at</span> <span class="pre">0x7f1900162680&gt;]</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.liquity.Liquity.networks" title="Link to this definition"></a></dt>
 <dd><p>The networks on which the protocol is available.</p>
 </dd></dl>
 
@@ -545,7 +545,7 @@ market contract. If the call reverts, it returns None.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.protocols.lending.maker.Maker.networks">
-<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Network.&lt;function</span> <span class="pre">Network.name</span> <span class="pre">at</span> <span class="pre">0x7fa2742517e0&gt;]</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.maker.Maker.networks" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Network.&lt;function</span> <span class="pre">Network.name</span> <span class="pre">at</span> <span class="pre">0x7f1900162680&gt;]</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.maker.Maker.networks" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -638,7 +638,7 @@ market contract. If the call reverts, it returns None.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.protocols.lending.unit.UnitXyz.networks">
-<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Network.&lt;function</span> <span class="pre">Network.name</span> <span class="pre">at</span> <span class="pre">0x7fa2742517e0&gt;]</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.unit.UnitXyz.networks" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Network.&lt;function</span> <span class="pre">Network.name</span> <span class="pre">at</span> <span class="pre">0x7f1900162680&gt;]</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.unit.UnitXyz.networks" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
