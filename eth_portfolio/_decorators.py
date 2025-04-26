@@ -18,13 +18,15 @@ logger = logging.getLogger(__name__)
 @overload
 def set_end_block_if_none(
     func: Callable[Concatenate[_I, Block, Block, _P], AsyncGenerator[_T]],
-) -> Callable[Concatenate[_I, Block, Optional[Block], _P], AsyncGenerator[_T]]:...
+) -> Callable[Concatenate[_I, Block, Optional[Block], _P], AsyncGenerator[_T]]: ...
 
-@overload     
+
+@overload
 def set_end_block_if_none(
     func: Callable[Concatenate[_I, Block, Block, _P], _T],
-) -> Callable[Concatenate[_I, Block, Optional[Block], _P], _T]:...
-              
+) -> Callable[Concatenate[_I, Block, Optional[Block], _P], _T]: ...
+
+
 def set_end_block_if_none(
     func: Callable[Concatenate[_I, Block, Block, _P], _T],
 ) -> Callable[Concatenate[_I, Block, Optional[Block], _P], _T]:
