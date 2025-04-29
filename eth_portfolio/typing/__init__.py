@@ -24,6 +24,7 @@ These classes are designed for efficient parsing, manipulation, and summarizatio
 without managing or altering any underlying assets.
 """
 
+from dataclasses import dataclass
 from functools import cached_property
 from typing import (
     Any,

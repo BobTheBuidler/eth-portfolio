@@ -1,15 +1,14 @@
+from dataclasses import dataclass
 from typing import Literal, Optional, Union, final
 
-from dictstruct import DictStruct
 from eth_typing import BlockNumber, ChecksumAddress
 
 from eth_portfolio._decimal import Decimal
 
 
 @final
-class Balance(
-    DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=True, forbid_unknown_fields=True
-):
+@dataclass(frozen=True)
+class Balance:
     """
     Represents the balance of a single token, including its token amount and equivalent USD value.
 
