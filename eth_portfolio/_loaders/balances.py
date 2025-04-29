@@ -44,8 +44,15 @@ async def load_token_balance(token: y.ERC20, address: Address, block: Block) -> 
     if not balance:
         return Balance(token=token.address, block=block)
     price = await _get_price(token, block)
+    try:
+        rounded = round(Decimal(balance), 18)
+    except InvalidOperation as e:
+        rounded = Decimal(round(balance, 18))
     return Balance(
-        round(Decimal(balance), 18), _calc_value(balance, price), token=token.address, block=block
+        balance=rounded, 
+        usd_value=_calc_value(balance, price), 
+        token=token.address, 
+        block=block,
     )
 
 
