@@ -1,3 +1,4 @@
+import logging
 from setuptools import find_packages, setup  # type: ignore
 
 from mypyc.build import mypycify
@@ -6,29 +7,15 @@ from mypyc.build import mypycify
 with open("requirements.txt", "r") as f:
     requirements = list(map(str.strip, f.read().split("\n")))[:-1]
 
-setup(
-    name="eth-portfolio",
-    packages=find_packages(),
-    use_scm_version={
-        "root": ".",
-        "relative_to": __file__,
-        "local_scheme": "no-local-version",
-        "version_scheme": "python-simplified-semver",
-    },
-    description="eth-portfolio makes it easy to analyze your portfolio.",
-    author="BobTheBuidler",
-    author_email="bobthebuidlerdefi@gmail.com",
-    url="https://github.com/BobTheBuidler/eth-portfolio",
-    install_requires=requirements,
-    setup_requires=["setuptools_scm"],
-    package_data={
-        "eth_portfolio": ["py.typed"],
-    },
-    include_package_data=True,
-    ext_modules=mypycify(
+try:
+    ext_modules = mypycify(
         [
             # "eth_portfolio/buckets.py",
             "eth_portfolio/constants.py",
+            #"eth_portfolio_scripts/victoria/__init__.py",  # this one built fine with other files but wont alone
+            #"eth_portfolio_scripts/_portfolio.py",
+            #"eth_portfolio_scripts/_utils.py",
+            #"eth_portfolio_scripts/balances.py",
             "--strict",
             "--pretty",
             "--install-types",
@@ -59,8 +46,38 @@ setup(
             "--disable-error-code=has-type",
             "--disable-error-code=typeddict-item",
         ],
-    ),
+    )
+except Exception as e:  # fallback in case build fails
+    logging.error("Error compiling eth-portfolio:", exc_info=True)
+    ext_modules = []
+
+
+setup(
+    name="eth-portfolio",
+    packages=find_packages(),
+    use_scm_version={
+        "root": ".",
+        "relative_to": __file__,
+        "local_scheme": "no-local-version",
+        "version_scheme": "python-simplified-semver",
+    },
+    description="eth-portfolio makes it easy to analyze your portfolio.",
+    author="BobTheBuidler",
+    author_email="bobthebuidlerdefi@gmail.com",
+    url="https://github.com/BobTheBuidler/eth-portfolio",
+    install_requires=requirements,
+    setup_requires=["setuptools_scm"],
+    package_data={
+        "eth_portfolio": ["py.typed"],
+    },
+    include_package_data=True,
+    ext_modules=ext_modules,
     zip_safe=False,
+    entry_points={
+        'console_scripts': [
+            'eth-portfolio=eth_portfolio_scripts.main:main',
+        ],
+    },
 )
 
 """
