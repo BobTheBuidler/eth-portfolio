@@ -27,7 +27,7 @@ setup(
     include_package_data=True,
     ext_modules=mypycify(
         [
-            #"eth_portfolio/buckets.py",
+            # "eth_portfolio/buckets.py",
             "eth_portfolio/constants.py",
             "--strict",
             "--pretty",
