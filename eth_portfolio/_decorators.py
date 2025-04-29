@@ -1,9 +1,10 @@
-import asyncio
-import functools
-import inspect
 import logging
+from asyncio import iscoroutinefunction
+from functools import wraps
+from inspect import isasyncgenfunction
 from typing import AsyncIterator, Callable, Optional, overload
 
+from a_sync.iter import ASyncGeneratorFunction
 from brownie import chain
 from typing_extensions import Concatenate
 from y.datatypes import Block
@@ -34,9 +35,9 @@ def set_end_block_if_none(
     Used to set `end_block` = `chain.height - _config.REORG_BUFFER` if `end_block` is None.
     Only works with a class function that takes args (self, start_block, end_block, *args, **kwargs).
     """
-    if inspect.isasyncgenfunction(func):
+    if isasyncgenfunction(func) or isinstance(func, ASyncGeneratorFunction):
 
-        @functools.wraps(func)
+        @wraps(func)  # type: ignore [arg-type]
         async def wrap(
             obj: _I,
             start_block: Block,
@@ -50,9 +51,9 @@ def set_end_block_if_none(
             async for thing in func(obj, start_block, end_block, *args, **kwargs):
                 yield thing
 
-    elif asyncio.iscoroutinefunction(func):
+    elif iscoroutinefunction(func):
 
-        @functools.wraps(func)
+        @wraps(func)
         async def wrap(
             obj: _I,
             start_block: Block,
@@ -67,7 +68,7 @@ def set_end_block_if_none(
 
     else:
 
-        @functools.wraps(func)
+        @wraps(func)
         def wrap(
             obj: _I,
             start_block: Block,

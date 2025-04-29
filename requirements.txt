@@ -3,7 +3,7 @@ dank_mids>=4.20.124
 eth-brownie>=1.19.3,<1.21
 eth_retry>=0.1.15,<1
 evmspec>=0.2.8
-ez-a-sync>=0.24.43
+ez-a-sync>=0.32.6
 numpy<2
 pandas>=1.4.3,<1.6
 ypricemagic>=4.0.57,<5

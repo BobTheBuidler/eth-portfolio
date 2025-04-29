@@ -281,8 +281,8 @@ class AddressLedgerBase(
             if obj.from_address != address:
                 yield obj
 
-    @set_end_block_if_none
     @stuck_coro_debugger
+    @set_end_block_if_none
     async def _get_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[T]:
         """
         Retrieves new ledger entries between the specified blocks.
@@ -428,8 +428,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     def __del__(self) -> None:
         self.__stop_workers()
 
-    @set_end_block_if_none
     @stuck_coro_debugger
+    @set_end_block_if_none
     async def _load_new_objects(self, _: Block, end_block: Block) -> AsyncIterator[Transaction]:  # type: ignore [override]
         """
         Loads new transaction entries between the specified blocks.
@@ -671,8 +671,8 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
 
     _list_type = InternalTransfersList
 
-    @set_end_block_if_none
     @stuck_coro_debugger
+    @set_end_block_if_none
     async def _load_new_objects(
         self, start_block: Block, end_block: Block
     ) -> AsyncIterator[InternalTransfer]:
@@ -841,8 +841,8 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
                     yielded.add(address)
                     yield ERC20(address, asynchronous=self.asynchronous)
 
-    @set_end_block_if_none
     @stuck_coro_debugger
+    @set_end_block_if_none
     async def _load_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[TokenTransfer]:  # type: ignore [override]
         """
         Loads new token transfer entries between the specified blocks.
