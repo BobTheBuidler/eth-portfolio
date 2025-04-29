@@ -423,13 +423,13 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):  # 
         """
         if not isinstance(other, TokenBalances):
             raise TypeError(f"{other} is not a TokenBalances object")
-        
+
         block = self.block
         if block != other.block:
             raise ValueError(
                 f"These TokenBalances objects are not from the same block ({block} and {other.block})"
             )
-        
+
         combined: TokenBalances = TokenBalances(block=block)
         for token, balance in self.items():
             if balance:
@@ -453,20 +453,18 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):  # 
     def __iadd__(self, other: "TokenBalances") -> "TokenBalances":
         if not isinstance(other, TokenBalances):
             raise TypeError(f"{other} is not a TokenBalances object")
-        
+
         block = self.block
         if block != other.block:
             raise ValueError(
                 f"These TokenBalances objects are not from the same block ({block} and {other.block})"
             )
-        
+
         block = self.block
         for token, balance in other.items():
             if balance:
                 if token in self:
-                    self._setitem_nochecksum(
-                        token, self._getitem_nochecksum(token) + balance
-                    )
+                    self._setitem_nochecksum(token, self._getitem_nochecksum(token) + balance)
                 else:
                     self._setitem_nochecksum(
                         token,
@@ -649,7 +647,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         """
         if not isinstance(other, RemoteTokenBalances):
             raise TypeError(f"{other} is not a RemoteTokenBalances object")
-        
+
         block = self.block
         if block != other.block:
             raise ValueError(
@@ -668,7 +666,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
     def __iadd__(self, other: "RemoteTokenBalances") -> "RemoteTokenBalances":
         if not isinstance(other, RemoteTokenBalances):
             raise TypeError(f"{other} is not a RemoteTokenBalances object")
-        
+
         if self.block != other.block:
             raise ValueError(
                 f"These RemoteTokenBalances objects are not from the same block ({self.block} and {other.block})"
@@ -870,7 +868,7 @@ class WalletBalances(
         """
         if not isinstance(other, WalletBalances):
             raise TypeError(f"{other} is not a WalletBalances object")
-        
+
         block = self.block
         if block != other.block:
             raise ValueError(
@@ -885,16 +883,16 @@ class WalletBalances(
             if balances:
                 combined[category] += balances  # type: ignore [operator]
         return combined
-    
+
     def __iadd__(self, other: "WalletBalances") -> "WalletBalances":
         if not isinstance(other, WalletBalances):
             raise TypeError(f"{other} is not a WalletBalances object")
-        
+
         if self.block != other.block:
             raise ValueError(
                 f"These WalletBalances objects are not from the same block ({self.block} and {other.block})"
             )
-        
+
         for category, balances in other.items():
             if balances:
                 self[category] += balances  # type: ignore [operator]
@@ -1165,7 +1163,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         """
         if not isinstance(other, PortfolioBalances):
             raise TypeError(f"{other} is not a PortfolioBalances object")
-        
+
         block = self.block
         if block != other.block:
             raise ValueError(
@@ -1180,16 +1178,16 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             if balance:
                 combined._setitem_nochecksum(wallet, combined._getitem_nochecksum(wallet) + balance)
         return combined
-    
+
     def __iadd__(self, other: "PortfolioBalances") -> "PortfolioBalances":
         if not isinstance(other, PortfolioBalances):
             raise TypeError(f"{other} is not a PortfolioBalances object")
-        
+
         if self.block != other.block:
             raise ValueError(
                 f"These PortfolioBalances objects are not from the same block ({self.block} and {other.block})"
             )
-        
+
         for wallet, balance in other.items():
             if balance:
                 self._setitem_nochecksum(wallet, self._getitem_nochecksum(wallet) + balance)
@@ -1320,7 +1318,7 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
         """
         if not isinstance(other, WalletBalancesRaw):
             raise TypeError(f"{other} is not a WalletBalancesRaw object")
-    
+
         block = self.block
         if block != other.block:
             raise ValueError(
@@ -1335,11 +1333,11 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
             if balance:
                 combined._setitem_nochecksum(wallet, combined._getitem_nochecksum(wallet) + balance)
         return combined
-    
+
     def __iadd__(self, other: "WalletBalancesRaw") -> "WalletBalancesRaw":
         if not isinstance(other, WalletBalancesRaw):
             raise TypeError(f"{other} is not a WalletBalancesRaw object")
-    
+
         if self.block != other.block:
             raise ValueError(
                 f"These WalletBalancesRaw objects are not from the same block ({self.block} and {other.block})"
@@ -1517,7 +1515,7 @@ class PortfolioBalancesByCategory(
         """
         if not isinstance(other, PortfolioBalancesByCategory):
             raise TypeError(f"{other} is not a PortfolioBalancesByCategory object")
-    
+
         block = self.block
         if block != other.block:
             raise ValueError(
@@ -1532,17 +1530,17 @@ class PortfolioBalancesByCategory(
             if balances:
                 combined[protocol] += balances
         return combined
-    
+
     def __iadd__(self, other: "PortfolioBalancesByCategory") -> "PortfolioBalancesByCategory":
-        
+
         if not isinstance(other, PortfolioBalancesByCategory):
             raise TypeError(f"{other} is not a PortfolioBalancesByCategory object")
-    
+
         if self.block != other.block:
             raise ValueError(
                 f"These PortfolioBalancesByCategory objects are not from the same block ({self.block} and {other.block})"
             )
-        
+
         for protocol, balances in other.items():
             if balances:
                 self[protocol] += balances
