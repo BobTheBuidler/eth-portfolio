@@ -729,7 +729,7 @@ class WalletBalances(
             raise ValueError(
                 f"These WalletBalances objects are not from the same block ({self.block} and {other.block})"
             )
-        
+
         for category, balances in dict.items(other):
             if balances:
                 self[category] += balances  # type: ignore [operator]
@@ -1024,7 +1024,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             raise ValueError(
                 f"These PortfolioBalances objects are not from the same block ({self.block} and {other.block})"
             )
-        
+
         for wallet, balance in dict.items(other):
             if balance:
                 self._setitem_nochecksum(wallet, self._getitem_nochecksum(wallet) + balance)
@@ -1377,7 +1377,7 @@ class PortfolioBalancesByCategory(
             raise ValueError(
                 f"These PortfolioBalancesByCategory objects are not from the same block ({self.block} and {other.block})"
             )
-        
+
         for protocol, balances in dict.items(other):
             if balances:
                 self[protocol] += balances

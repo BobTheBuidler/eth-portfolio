@@ -283,7 +283,9 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         Examples:
             >>> eth_balance = await address.eth_balance(12345678)
         """
-        if balance := await dank_mids.eth.get_balance(self.address, block_identifier=hex(block)):  # TODO: move hex into dank
+        if balance := await dank_mids.eth.get_balance(
+            self.address, block_identifier=hex(block)
+        ):  # TODO: move hex into dank
             price = await _get_price(y.WRAPPED_GAS_COIN, block)
             return Balance(
                 balance.scaled,
