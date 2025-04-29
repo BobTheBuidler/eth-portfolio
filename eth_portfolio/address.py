@@ -194,12 +194,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
             "debt": self.debt(block, sync=False),
             "external": self.external_balances(block, sync=False),
         }
-        data = await a_sync.gather(coros)
-        for ds in data.values():
-            assert ds.block, ds
-            for t, d in ds.items():
-                assert d.block, ds
-        return WalletBalances(data, block=block)
+        return WalletBalances(await a_sync.gather(coros), block=block)
 
     @stuck_coro_debugger
     async def assets(self, block: Optional[Block] = None) -> TokenBalances:
@@ -288,7 +283,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         Examples:
             >>> eth_balance = await address.eth_balance(12345678)
         """
-        if balance := await dank_mids.eth.get_balance(self.address, block_identifier=block):
+        if balance := await dank_mids.eth.get_balance(self.address, block_identifier=hex(block)):  # TODO: move hex into dank
             price = await _get_price(y.WRAPPED_GAS_COIN, block)
             return Balance(
                 balance.scaled,
