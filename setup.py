@@ -1,5 +1,8 @@
 from setuptools import find_packages, setup  # type: ignore
 
+from mypyc.build import mypycify
+
+
 with open("requirements.txt", "r") as f:
     requirements = list(map(str.strip, f.read().split("\n")))[:-1]
 
@@ -17,10 +20,47 @@ setup(
     author_email="bobthebuidlerdefi@gmail.com",
     url="https://github.com/BobTheBuidler/eth-portfolio",
     install_requires=requirements,
-    setup_requires=["setuptools_scm", "cython"],
+    setup_requires=["setuptools_scm"],
     package_data={
         "eth_portfolio": ["py.typed"],
     },
+    include_package_data=True,
+    ext_modules=mypycify(
+        [
+            #"eth_portfolio/buckets.py",
+            "eth_portfolio/constants.py",
+            "--strict",
+            "--pretty",
+            "--install-types",
+            "--disable-error-code=unused-ignore",
+            "--disable-error-code=import-not-found",
+            "--disable-error-code=import-untyped",
+            # temporary
+            "--disable-error-code=call-arg",
+            "--disable-error-code=misc",
+            "--disable-error-code=type-arg",
+            "--disable-error-code=attr-defined",
+            "--disable-error-code=name-defined",
+            "--disable-error-code=no-any-return",
+            "--disable-error-code=arg-type",
+            "--disable-error-code=no-untyped-call",
+            "--disable-error-code=no-untyped-def",
+            "--disable-error-code=override",
+            "--disable-error-code=var-annotated",
+            "--disable-error-code=return-value",
+            "--disable-error-code=assignment",
+            "--disable-error-code=union-attr",
+            "--disable-error-code=comparison-overlap",
+            "--disable-error-code=no-redef",
+            "--disable-error-code=valid-type",
+            "--disable-error-code=call-overload",
+            "--disable-error-code=has-type",
+            "--disable-error-code=dict-item",
+            "--disable-error-code=has-type",
+            "--disable-error-code=typeddict-item",
+        ],
+    ),
+    zip_safe=False,
 )
 
 """
