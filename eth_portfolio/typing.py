@@ -423,17 +423,19 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):  # 
         """
         if not isinstance(other, TokenBalances):
             raise TypeError(f"{other} is not a TokenBalances object")
-        if self.block != other.block:
+
+        block = self.block
+        if block != other.block:
             raise ValueError(
-                f"These TokenBalances objects are not from the same block ({self.block} and {other.block})"
+                f"These TokenBalances objects are not from the same block ({block} and {other.block})"
             )
-        # NOTE We need a new object to avoid mutating the inputs
-        combined: TokenBalances = TokenBalances(block=self.block)
+
+        combined: TokenBalances = TokenBalances(block=block)
         for token, balance in self.items():
             if balance:
                 combined._setitem_nochecksum(
                     token,
-                    Balance(balance.balance, balance.usd_value, token=token, block=self.block),
+                    Balance(balance.balance, balance.usd_value, token=token, block=block),
                 )
         for token, balance in other.items():
             if balance:
@@ -444,9 +446,31 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):  # 
                 else:
                     combined._setitem_nochecksum(
                         token,
-                        Balance(balance.balance, balance.usd_value, token=token, block=self.block),
+                        Balance(balance.balance, balance.usd_value, token=token, block=block),
                     )
         return combined
+
+    def __iadd__(self, other: "TokenBalances") -> "TokenBalances":
+        if not isinstance(other, TokenBalances):
+            raise TypeError(f"{other} is not a TokenBalances object")
+
+        block = self.block
+        if block != other.block:
+            raise ValueError(
+                f"These TokenBalances objects are not from the same block ({block} and {other.block})"
+            )
+
+        block = self.block
+        for token, balance in other.items():
+            if balance:
+                if token in self:
+                    self._setitem_nochecksum(token, self._getitem_nochecksum(token) + balance)
+                else:
+                    self._setitem_nochecksum(
+                        token,
+                        Balance(balance.balance, balance.usd_value, token=token, block=block),
+                    )
+        return self
 
     def __sub__(self, other: "TokenBalances") -> "TokenBalances":
         """
@@ -623,12 +647,14 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         """
         if not isinstance(other, RemoteTokenBalances):
             raise TypeError(f"{other} is not a RemoteTokenBalances object")
-        if self.block != other.block:
+
+        block = self.block
+        if block != other.block:
             raise ValueError(
-                f"These RemoteTokenBalances objects are not from the same block ({self.block} and {other.block})"
+                f"These RemoteTokenBalances objects are not from the same block ({block} and {other.block})"
             )
-        # NOTE We need a new object to avoid mutating the inputs
-        combined: RemoteTokenBalances = RemoteTokenBalances(block=self.block)
+
+        combined: RemoteTokenBalances = RemoteTokenBalances(block=block)
         for protocol, token_balances in self.items():
             if token_balances:
                 combined[protocol] += token_balances
@@ -636,6 +662,20 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
             if token_balances:
                 combined[protocol] += token_balances
         return combined
+
+    def __iadd__(self, other: "RemoteTokenBalances") -> "RemoteTokenBalances":
+        if not isinstance(other, RemoteTokenBalances):
+            raise TypeError(f"{other} is not a RemoteTokenBalances object")
+
+        if self.block != other.block:
+            raise ValueError(
+                f"These RemoteTokenBalances objects are not from the same block ({self.block} and {other.block})"
+            )
+
+        for protocol, token_balances in other.items():
+            if token_balances:
+                self[protocol] += token_balances
+        return self
 
     def __sub__(self, other: "RemoteTokenBalances") -> "RemoteTokenBalances":
         """
@@ -828,12 +868,14 @@ class WalletBalances(
         """
         if not isinstance(other, WalletBalances):
             raise TypeError(f"{other} is not a WalletBalances object")
-        if self.block != other.block:
+
+        block = self.block
+        if block != other.block:
             raise ValueError(
-                f"These WalletBalances objects are not from the same block ({self.block} and {other.block})"
+                f"These WalletBalances objects are not from the same block ({block} and {other.block})"
             )
-        # NOTE We need a new object to avoid mutating the inputs
-        combined: WalletBalances = WalletBalances(block=self.block)
+
+        combined: WalletBalances = WalletBalances(block=block)
         for category, balances in self.items():
             if balances:
                 combined[category] += balances  # type: ignore [operator]
@@ -841,6 +883,20 @@ class WalletBalances(
             if balances:
                 combined[category] += balances  # type: ignore [operator]
         return combined
+
+    def __iadd__(self, other: "WalletBalances") -> "WalletBalances":
+        if not isinstance(other, WalletBalances):
+            raise TypeError(f"{other} is not a WalletBalances object")
+
+        if self.block != other.block:
+            raise ValueError(
+                f"These WalletBalances objects are not from the same block ({self.block} and {other.block})"
+            )
+
+        for category, balances in other.items():
+            if balances:
+                self[category] += balances  # type: ignore [operator]
+        return self
 
     def __sub__(self, other: "WalletBalances") -> "WalletBalances":
         """
@@ -1107,12 +1163,14 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         """
         if not isinstance(other, PortfolioBalances):
             raise TypeError(f"{other} is not a PortfolioBalances object")
-        if self.block != other.block:
+
+        block = self.block
+        if block != other.block:
             raise ValueError(
-                f"These PortfolioBalances objects are not from the same block ({self.block} and {other.block})"
+                f"These PortfolioBalances objects are not from the same block ({block} and {other.block})"
             )
         # NOTE We need a new object to avoid mutating the inputs
-        combined: PortfolioBalances = PortfolioBalances(block=self.block)
+        combined: PortfolioBalances = PortfolioBalances(block=block)
         for wallet, balance in self.items():
             if balance:
                 combined._setitem_nochecksum(wallet, combined._getitem_nochecksum(wallet) + balance)
@@ -1120,6 +1178,20 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             if balance:
                 combined._setitem_nochecksum(wallet, combined._getitem_nochecksum(wallet) + balance)
         return combined
+
+    def __iadd__(self, other: "PortfolioBalances") -> "PortfolioBalances":
+        if not isinstance(other, PortfolioBalances):
+            raise TypeError(f"{other} is not a PortfolioBalances object")
+
+        if self.block != other.block:
+            raise ValueError(
+                f"These PortfolioBalances objects are not from the same block ({self.block} and {other.block})"
+            )
+
+        for wallet, balance in other.items():
+            if balance:
+                self._setitem_nochecksum(wallet, self._getitem_nochecksum(wallet) + balance)
+        return self
 
     def __sub__(self, other: "PortfolioBalances") -> "PortfolioBalances":
         """
@@ -1246,12 +1318,14 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
         """
         if not isinstance(other, WalletBalancesRaw):
             raise TypeError(f"{other} is not a WalletBalancesRaw object")
-        if self.block != other.block:
+
+        block = self.block
+        if block != other.block:
             raise ValueError(
-                f"These WalletBalancesRaw objects are not from the same block ({self.block} and {other.block})"
+                f"These WalletBalancesRaw objects are not from the same block ({block} and {other.block})"
             )
-        # NOTE We need a new object to avoid mutating the inputs
-        combined: WalletBalancesRaw = WalletBalancesRaw(block=self.block)
+
+        combined: WalletBalancesRaw = WalletBalancesRaw(block=block)
         for wallet, balance in self.items():
             if balance:
                 combined._setitem_nochecksum(wallet, combined._getitem_nochecksum(wallet) + balance)
@@ -1259,6 +1333,20 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
             if balance:
                 combined._setitem_nochecksum(wallet, combined._getitem_nochecksum(wallet) + balance)
         return combined
+
+    def __iadd__(self, other: "WalletBalancesRaw") -> "WalletBalancesRaw":
+        if not isinstance(other, WalletBalancesRaw):
+            raise TypeError(f"{other} is not a WalletBalancesRaw object")
+
+        if self.block != other.block:
+            raise ValueError(
+                f"These WalletBalancesRaw objects are not from the same block ({self.block} and {other.block})"
+            )
+
+        for wallet, balance in other.items():
+            if balance:
+                self._setitem_nochecksum(wallet, self._getitem_nochecksum(wallet) + balance)
+        return self
 
     def __sub__(self, other: "WalletBalancesRaw") -> "WalletBalancesRaw":
         """
@@ -1427,12 +1515,14 @@ class PortfolioBalancesByCategory(
         """
         if not isinstance(other, PortfolioBalancesByCategory):
             raise TypeError(f"{other} is not a PortfolioBalancesByCategory object")
-        if self.block != other.block:
+
+        block = self.block
+        if block != other.block:
             raise ValueError(
-                f"These PortfolioBalancesByCategory objects are not from the same block ({self.block} and {other.block})"
+                f"These PortfolioBalancesByCategory objects are not from the same block ({block} and {other.block})"
             )
-        # NOTE We need a new object to avoid mutating the inputs
-        combined: PortfolioBalancesByCategory = PortfolioBalancesByCategory(block=self.block)
+
+        combined: PortfolioBalancesByCategory = PortfolioBalancesByCategory(block=block)
         for protocol, balances in self.items():
             if balances:
                 combined[protocol] += balances
@@ -1440,6 +1530,21 @@ class PortfolioBalancesByCategory(
             if balances:
                 combined[protocol] += balances
         return combined
+
+    def __iadd__(self, other: "PortfolioBalancesByCategory") -> "PortfolioBalancesByCategory":
+
+        if not isinstance(other, PortfolioBalancesByCategory):
+            raise TypeError(f"{other} is not a PortfolioBalancesByCategory object")
+
+        if self.block != other.block:
+            raise ValueError(
+                f"These PortfolioBalancesByCategory objects are not from the same block ({self.block} and {other.block})"
+            )
+
+        for protocol, balances in other.items():
+            if balances:
+                self[protocol] += balances
+        return self
 
     def __sub__(self, other: "PortfolioBalancesByCategory") -> "PortfolioBalancesByCategory":
         """
