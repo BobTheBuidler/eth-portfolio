@@ -1,22 +1,22 @@
 import os
+from typing import Final
 
-from a_sync.executor import PruningThreadPoolExecutor
 from brownie import chain
 from y import Network, convert, weth
 
-ERC20_TRANSFER_EVENT_HASH = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
-ERC677_TRANSFER_EVENT_HASH = "0xe19260aff97b920c7df27010903aeb9c8d2be5d310a2c67824cf3f15396e4c16"
+ERC20_TRANSFER_EVENT_HASH: Final = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+ERC677_TRANSFER_EVENT_HASH: Final = "0xe19260aff97b920c7df27010903aeb9c8d2be5d310a2c67824cf3f15396e4c16"
 
-NUM_WALLETS = int(os.environ.get("NUM_WALLETS", "10"))
-ADDRESSES = [
+NUM_WALLETS: Final = int(os.environ.get("NUM_WALLETS", "10"))
+ADDRESSES: Final = [
     convert.to_address(address)
     for address in {os.environ.get(f"PORTFOLIO_ADDRESS_{i}", None) for i in range(NUM_WALLETS)}
     if address is not None
 ]
 
-TRANSFER_SIGS = [ERC20_TRANSFER_EVENT_HASH, ERC677_TRANSFER_EVENT_HASH]
+TRANSFER_SIGS: Final = [ERC20_TRANSFER_EVENT_HASH, ERC677_TRANSFER_EVENT_HASH]
 
-ETH_LIKE = {
+ETH_LIKE: Final = {
     Network.Mainnet: {
         "ETH",
         weth.address,
@@ -29,7 +29,7 @@ ETH_LIKE = {
     },
 }.get(chain.id, set())
 
-BTC_LIKE = {
+BTC_LIKE: Final = {
     Network.Mainnet: {
         "0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D",  # renbtc
         "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",  # wbtc
@@ -42,7 +42,7 @@ BTC_LIKE = {
     },
 }.get(chain.id, set())
 
-INTL_STABLECOINS = {
+INTL_STABLECOINS: Final = {
     Network.Mainnet: {
         "0xD71eCFF9342A5Ced620049e616c5035F1dB98620",  # sEUR
         "0xC581b735A1688071A1746c968e0798D642EDE491",  # EURT
