@@ -4,8 +4,12 @@ from typing import Final
 from brownie import chain
 from y import Network, convert, weth
 
-ERC20_TRANSFER_EVENT_HASH: Final = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
-ERC677_TRANSFER_EVENT_HASH: Final = "0xe19260aff97b920c7df27010903aeb9c8d2be5d310a2c67824cf3f15396e4c16"
+ERC20_TRANSFER_EVENT_HASH: Final = (
+    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+)
+ERC677_TRANSFER_EVENT_HASH: Final = (
+    "0xe19260aff97b920c7df27010903aeb9c8d2be5d310a2c67824cf3f15396e4c16"
+)
 
 NUM_WALLETS: Final = int(os.environ.get("NUM_WALLETS", "10"))
 ADDRESSES: Final = [
