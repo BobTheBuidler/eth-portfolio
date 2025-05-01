@@ -554,7 +554,8 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
 CategoryLabel = Literal["assets", "debt", "external"]
 
 _WalletBalancesTD = TypedDict(
-    "_WalletBalancesTD", {
+    "_WalletBalancesTD",
+    {
         "assets": TokenBalances,
         "debt": TokenBalances,
         "external": RemoteTokenBalances,
