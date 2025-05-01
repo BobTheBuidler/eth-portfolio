@@ -96,7 +96,7 @@
     <span class="n">encode_bytes</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">bytestring</span><span class="p">:</span> <span class="n">encode_single</span><span class="p">(</span><span class="s2">&quot;bytes32&quot;</span><span class="p">,</span> <span class="n">bytestring</span><span class="p">)</span>
 
 <span class="n">yfi</span> <span class="o">=</span> <span class="s2">&quot;0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e&quot;</span>
-
+<span class="n">dai</span><span class="p">:</span> <span class="n">Contract</span>
 
 <div class="viewcode-block" id="Maker">
 <a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.maker.Maker">[docs]</a>
@@ -156,7 +156,7 @@
             <span class="n">art</span> <span class="o">=</span> <span class="n">urns</span><span class="o">.</span><span class="n">dict</span><span class="p">()[</span><span class="s2">&quot;art&quot;</span><span class="p">]</span>
             <span class="n">rate</span> <span class="o">=</span> <span class="n">ilk_info</span><span class="o">.</span><span class="n">dict</span><span class="p">()[</span><span class="s2">&quot;rate&quot;</span><span class="p">]</span>
             <span class="n">debt</span> <span class="o">=</span> <span class="n">art</span> <span class="o">*</span> <span class="n">rate</span> <span class="o">/</span> <span class="n">Decimal</span><span class="p">(</span><span class="mf">1e45</span><span class="p">)</span>
-            <span class="n">balances</span><span class="p">[</span><span class="n">dai</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Balance</span><span class="p">(</span><span class="n">debt</span><span class="p">,</span> <span class="n">debt</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">dai</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
+            <span class="n">balances</span><span class="p">[</span><span class="n">dai</span><span class="o">.</span><span class="n">address</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Balance</span><span class="p">(</span><span class="n">debt</span><span class="p">,</span> <span class="n">debt</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">dai</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">balances</span></div>
 
 

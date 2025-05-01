@@ -49,6 +49,7 @@
 <li class="toctree-l3 current"><a class="reference internal" href="eth_portfolio.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="eth_portfolio.protocols.html">eth_portfolio.protocols package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="eth_portfolio.structs.html">eth_portfolio.structs package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="eth_portfolio.typing.html">eth_portfolio.typing package</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#submodules">Submodules</a></li>
@@ -56,7 +57,6 @@
 <li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio.buckets">eth_portfolio.buckets module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio.constants">eth_portfolio.constants module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio.portfolio">eth_portfolio.portfolio module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio.typing">eth_portfolio.typing module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio">Module contents</a></li>
 </ul>
 </li>
@@ -116,10 +116,10 @@ the debt in terms of the underlying token and its USD value.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A <a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a> object representing the debt balances.</p>
+<dd class="field-even"><p>A <a class="reference internal" href="eth_portfolio.typing.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a> object representing the debt balances.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="eth_portfolio.typing.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -160,7 +160,7 @@ the debt in terms of the underlying token and its USD value.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.protocols.lending.compound.Compound.markets">
-<span class="sig-name descname"><span class="pre">markets</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_ASyncFutureInstanceMethod</span> <span class="pre">for</span> <span class="pre">&lt;function</span> <span class="pre">Compound.markets&gt;</span> <span class="pre">bound</span> <span class="pre">to</span> <span class="pre">None&gt;</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.compound.Compound.markets" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">markets</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_ASyncFutureInstanceMethod</span> <span class="pre">for</span> <span class="pre">&lt;cyfunction</span> <span class="pre">Compound.markets&gt;</span> <span class="pre">bound</span> <span class="pre">to</span> <span class="pre">None&gt;</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.compound.Compound.markets" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -232,7 +232,7 @@ market contract. If the call reverts, it returns None.</p>
 <span class="sig-prename descclassname"><span class="pre">eth_portfolio.protocols.lending.compound.</span></span><span class="sig-name descname"><span class="pre">_get_contract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">market</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/protocols/lending/compound.html#_get_contract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.protocols.lending.compound._get_contract" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>market</strong> (<em>CToken</em>)</p>
+<dd class="field-odd"><p><strong>market</strong> (<a class="reference external" href="https://bobthebuidler.github.io/ypricemagic/source/y.prices.lending.html#y.prices.lending.compound.CToken" title="(in ypricemagic)"><em>CToken</em></a>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://bobthebuidler.github.io/ypricemagic/source/y.html#y.contracts.Contract" title="(in ypricemagic)"><em>Contract</em></a> | None</p>
@@ -259,7 +259,7 @@ market contract. If the call reverts, it returns None.</p>
 <p class="admonition-title">See also</p>
 <ul class="simple">
 <li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">LendingProtocolWithLockedCollateral</span></code></p></li>
-<li><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a></p></li>
+<li><p><a class="reference internal" href="eth_portfolio.typing.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a></p></li>
 </ul>
 </div>
 <dl class="py method">
@@ -284,7 +284,7 @@ market contract. If the call reverts, it returns None.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.typing.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -295,7 +295,7 @@ market contract. If the call reverts, it returns None.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a></p></li>
+<li><p><a class="reference internal" href="eth_portfolio.typing.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a></p></li>
 </ul>
 </div>
 </dd></dl>
@@ -312,7 +312,7 @@ market contract. If the call reverts, it returns None.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.typing.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -323,7 +323,7 @@ market contract. If the call reverts, it returns None.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a></p></li>
+<li><p><a class="reference internal" href="eth_portfolio.typing.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a></p></li>
 </ul>
 </div>
 </dd></dl>
@@ -378,7 +378,7 @@ market contract. If the call reverts, it returns None.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.protocols.lending.liquity.Liquity.networks">
-<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Network.&lt;function</span> <span class="pre">Network.name</span> <span class="pre">at</span> <span class="pre">0x7fcfa826a680&gt;]</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.liquity.Liquity.networks" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Network.&lt;function</span> <span class="pre">Network.name</span> <span class="pre">at</span> <span class="pre">0x7fad7b3c2f80&gt;]</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.liquity.Liquity.networks" title="Link to this definition"></a></dt>
 <dd><p>The networks on which the protocol is available.</p>
 </dd></dl>
 
@@ -424,7 +424,7 @@ market contract. If the call reverts, it returns None.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.typing.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -440,7 +440,7 @@ market contract. If the call reverts, it returns None.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.typing.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -545,7 +545,7 @@ market contract. If the call reverts, it returns None.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.protocols.lending.maker.Maker.networks">
-<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Network.&lt;function</span> <span class="pre">Network.name</span> <span class="pre">at</span> <span class="pre">0x7fcfa826a680&gt;]</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.maker.Maker.networks" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Network.&lt;function</span> <span class="pre">Network.name</span> <span class="pre">at</span> <span class="pre">0x7fad7b3c2f80&gt;]</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.maker.Maker.networks" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -583,7 +583,7 @@ market contract. If the call reverts, it returns None.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.typing.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -599,7 +599,7 @@ market contract. If the call reverts, it returns None.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
+<dd class="field-even"><p><a class="reference internal" href="eth_portfolio.typing.html#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -638,7 +638,7 @@ market contract. If the call reverts, it returns None.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="eth_portfolio.protocols.lending.unit.UnitXyz.networks">
-<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Network.&lt;function</span> <span class="pre">Network.name</span> <span class="pre">at</span> <span class="pre">0x7fcfa826a680&gt;]</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.unit.UnitXyz.networks" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Network.&lt;function</span> <span class="pre">Network.name</span> <span class="pre">at</span> <span class="pre">0x7fad7b3c2f80&gt;]</span></em><a class="headerlink" href="#eth_portfolio.protocols.lending.unit.UnitXyz.networks" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
