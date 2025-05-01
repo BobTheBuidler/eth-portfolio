@@ -1,3 +1,5 @@
+from typing import Final
+
 import dank_mids
 import eth_retry
 import msgspec
@@ -5,6 +7,10 @@ from a_sync import SmartProcessingQueue
 from async_lru import alru_cache
 from eth_typing import HexStr
 from y._decorators import stuck_coro_debugger
+
+
+Raw: Final = msgspec.Raw
+TxReceiptQueue = SmartProcessingQueue[HexStr, [], msgspec.Raw]
 
 
 @eth_retry.auto_retry
@@ -36,12 +42,12 @@ async def _get_transaction_receipt(txhash: HexStr) -> msgspec.Raw:
         - :func:`async_lru.alru_cache`: For caching the results.
         - :func:`y._decorators.stuck_coro_debugger`: For debugging stuck coroutines.
     """
-    return await dank_mids.eth.get_transaction_receipt(
-        txhash, decode_to=msgspec.Raw, decode_hook=None
-    )
+    return await __get_transaction_receipt(txhash, decode_to=Raw, decode_hook=None)
 
 
-get_transaction_receipt = SmartProcessingQueue(_get_transaction_receipt, 5000)
+get_transaction_receipt: Final[TxReceiptQueue] = SmartProcessingQueue(
+    _get_transaction_receipt, 5000
+)
 """
 A queue for processing transaction receipt requests.
 
@@ -57,3 +63,6 @@ Examples:
 See Also:
     - :class:`a_sync.SmartProcessingQueue`: For managing asynchronous processing queues.
 """
+
+
+__get_transaction_receipt: Final = dank_mids.eth.get_transaction_receipt
