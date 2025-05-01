@@ -1,10 +1,10 @@
 from collections import defaultdict
-from typing import DefaultDict, Set
+from typing import DefaultDict, Final, Set
 
-from brownie.convert import EthAddress
+from eth_typing import ChecksumAddress
 from y import Network, convert
 
-shitcoins = {
+shitcoins: Final = {
     Network.Mainnet: [
         # Tagged as fake on Etherscan
         "0xb8ac53AFCCEBc44AaC33D0C30E2Ae0783E7fde5f",
@@ -237,7 +237,8 @@ shitcoins = {
     ],
 }
 
-SHITCOINS: DefaultDict[Network, Set[EthAddress]] = defaultdict(set)
+SHITCOINS: DefaultDict[Network, Set[ChecksumAddress]] = defaultdict(set)
 """A dictionary that contains, for each chain, a set of shitcoins that will be fully ignored by eth_portfolio. Add your own shitcoins to this object to boost eth_portfolio's performance."""
+
 for chain, tokens in shitcoins.items():
     SHITCOINS[chain].update(convert.to_address(token) for token in tokens)

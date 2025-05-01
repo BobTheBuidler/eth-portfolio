@@ -27,7 +27,9 @@ setup(
     include_package_data=True,
     ext_modules=mypycify(
         [
-            # "eth_portfolio/buckets.py",
+            "eth_portfolio/_argspec.py",
+            "eth_portfolio/_config.py",
+            "eth_portfolio/_shitcoins.py",
             "eth_portfolio/constants.py",
             "--strict",
             "--pretty",
@@ -58,6 +60,8 @@ setup(
             "--disable-error-code=dict-item",
             "--disable-error-code=has-type",
             "--disable-error-code=typeddict-item",
+            "--disable-error-code=str-bytes-safe",
+            "--disable-error-code=index",
         ],
     ),
     zip_safe=False,

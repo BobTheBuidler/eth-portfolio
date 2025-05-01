@@ -25,7 +25,7 @@ except ImportError:
     encode_bytes = lambda bytestring: encode_single("bytes32", bytestring)
 
 yfi = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
-
+dai: Contract
 
 class Maker(LendingProtocolWithLockedCollateral):
     networks = [Network.Mainnet]
@@ -75,7 +75,7 @@ class Maker(LendingProtocolWithLockedCollateral):
             art = urns.dict()["art"]
             rate = ilk_info.dict()["rate"]
             debt = art * rate / Decimal(1e45)
-            balances[dai] += Balance(debt, debt, token=dai, block=block)
+            balances[dai.address] += Balance(debt, debt, token=dai, block=block)
         return balances
 
     async def get_ilks(self, block: Optional[int]) -> List[HexStr]:
