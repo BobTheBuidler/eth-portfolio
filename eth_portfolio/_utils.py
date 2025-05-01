@@ -266,19 +266,19 @@ class _LedgeredBase(ASyncGenericBase, _AiterMixin["LedgerEntry"], Generic[_LT]):
     internal_transfers: _LT
     token_transfers: _LT
 
-    def __init__(self, start_block: int) -> None:
+    def __init__(self, start_block: Block) -> None:
         self.start_block = start_block
         super().__init__()
 
     @property
-    def _start_block(self) -> int:
+    def _start_block(self) -> Block:
         # in the middle of refactoring this
         return self.start_block
 
-    @property
-    def _ledgers(self) -> Iterator[_LT]:
+    @cached_property
+    def _ledgers(self) -> Tuple[_LT, _LT, _LT]:
         """An iterator with the 3 ledgers (transactions, internal transfers, token transfers)"""
-        yield from (self.transactions, self.internal_transfers, self.token_transfers)
+        return self.transactions, self.internal_transfers, self.token_transfers
 
     def _get_and_yield(
         self, start_block: Block, end_block: Block

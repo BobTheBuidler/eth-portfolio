@@ -36,6 +36,7 @@ from typing import (
     Literal,
     Optional,
     Tuple,
+    TypedDict,
     TypeVar,
     Union,
     final,
@@ -552,7 +553,15 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
 
 CategoryLabel = Literal["assets", "debt", "external"]
 
-_WBSeed = Union[Dict[CategoryLabel, TokenBalances], Iterable[Tuple[CategoryLabel, TokenBalances]]]
+_WalletBalancesTD = TypedDict(
+    "_WalletBalancesTD", {
+        "assets": TokenBalances,
+        "debt": TokenBalances,
+        "external": RemoteTokenBalances,
+    },
+)
+
+_WBSeed = Union[_WalletBalancesTD, Iterable[Tuple[CategoryLabel, TokenBalances]]]
 
 
 @final
