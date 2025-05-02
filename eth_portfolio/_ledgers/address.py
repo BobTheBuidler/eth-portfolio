@@ -542,8 +542,8 @@ class InternalTransfersList(PandableList[InternalTransfer]):
 @stuck_coro_debugger
 @eth_retry.auto_retry
 async def trace_filter(
-    from_block: BlockNumber, 
-    to_block: BlockNumber, 
+    from_block: BlockNumber,
+    to_block: BlockNumber,
     **kwargs: Unpack[TraceFilterParams],
 ) -> List[FilterTrace]:
     return await __trace_filter(from_block, to_block, **kwargs)
@@ -619,7 +619,7 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
         )
         return []
     semaphore_key = (
-        tuple(filter_params.get("toAddress", ("",))), 
+        tuple(filter_params.get("toAddress", ("",))),
         tuple(filter_params.get("fromAddress", ("",))),
     )
     async with _trace_semaphores[semaphore_key]:
