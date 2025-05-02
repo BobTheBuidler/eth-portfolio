@@ -4,11 +4,12 @@ This module orchestrates the process of loading and processing token transfers w
 
 import decimal
 from logging import getLogger
-from typing import Optional
+from typing import Final, Optional, Set
 
 from a_sync import create_task, gather
 from async_lru import alru_cache
 from dank_mids import BlockSemaphore
+from eth_typing import ChecksumAddress
 from evmspec.data import TransactionIndex
 from msgspec import Struct, ValidationError
 from msgspec.json import decode
@@ -28,7 +29,7 @@ from eth_portfolio.structs import TokenTransfer
 
 logger = getLogger(__name__)
 
-token_transfer_semaphore = BlockSemaphore(
+token_transfer_semaphore: Final = BlockSemaphore(
     20_000,  # Some arbitrary number
     name="eth_portfolio.token_transfers",
 )
@@ -71,7 +72,7 @@ async def load_token_transfer(
             return transfer
         await db.delete_token_transfer(transfer)
 
-    token_address = transfer_log.address
+    token_address: ChecksumAddress = transfer_log.address
     if token_address in _non_standard_erc20:
         logger.debug("%s is not a standard ERC20 token, skipping.", token_address)
         return None
@@ -150,7 +151,7 @@ async def _insert_to_db(transfer: TokenTransfer, load_prices: bool) -> None:
             pass
 
 
-_non_standard_erc20 = set()
+_non_standard_erc20: Final[Set[ChecksumAddress]] = set()
 
 
 @stuck_coro_debugger
