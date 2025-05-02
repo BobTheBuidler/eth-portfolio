@@ -52,11 +52,11 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#eth-portfolio-address-module">eth_portfolio.address module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#eth-portfolio-buckets-module">eth_portfolio.buckets module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#eth-portfolio-constants-module">eth_portfolio.constants module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#eth-portfolio-portfolio-module">eth_portfolio.portfolio module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio.address">eth_portfolio.address module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio.buckets">eth_portfolio.buckets module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio.constants">eth_portfolio.constants module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio.portfolio">eth_portfolio.portfolio module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eth_portfolio.html#module-eth_portfolio">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -91,8 +91,907 @@
              
   <section id="eth-portfolio-typing-package">
 <h1>eth_portfolio.typing package<a class="headerlink" href="#eth-portfolio-typing-package" title="Link to this heading"></a></h1>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="module-eth_portfolio.typing">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-eth_portfolio.typing" title="Link to this heading"></a></h2>
+<p>This module defines a set of classes to represent and manipulate various levels of balance structures
+within an Ethereum portfolio. The focus of these classes is on reading, aggregating, and summarizing
+balances, including the value in both tokens and their equivalent in USD.</p>
+<p>The main classes and their purposes are as follows:</p>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Balance</span></code>: Represents the balance of a single token, including its token amount and equivalent USD value.</p></li>
+<li><p><a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a>: Manages a collection of <code class="xref py py-class docutils literal notranslate"><span class="pre">Balance</span></code> objects for multiple tokens, providing operations
+such as summing balances across tokens.</p></li>
+<li><p><a class="reference internal" href="#eth_portfolio.typing.RemoteTokenBalances" title="eth_portfolio.typing.RemoteTokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteTokenBalances</span></code></a>: Extends <a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a> to manage balances across different protocols, enabling
+aggregation and analysis of balances by protocol.</p></li>
+<li><p><a class="reference internal" href="#eth_portfolio.typing.WalletBalances" title="eth_portfolio.typing.WalletBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalances</span></code></a>: Organizes token balances into categories such as assets, debts, and external balances
+for a single wallet. It combines <a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a> and <a class="reference internal" href="#eth_portfolio.typing.RemoteTokenBalances" title="eth_portfolio.typing.RemoteTokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteTokenBalances</span></code></a> to provide a complete view
+of a wallet’s balances.</p></li>
+<li><p><a class="reference internal" href="#eth_portfolio.typing.PortfolioBalances" title="eth_portfolio.typing.PortfolioBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioBalances</span></code></a>: Aggregates <a class="reference internal" href="#eth_portfolio.typing.WalletBalances" title="eth_portfolio.typing.WalletBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalances</span></code></a> for multiple wallets, providing operations to sum
+balances across an entire portfolio.</p></li>
+<li><p><a class="reference internal" href="#eth_portfolio.typing.WalletBalancesRaw" title="eth_portfolio.typing.WalletBalancesRaw"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalancesRaw</span></code></a>: Similar to <a class="reference internal" href="#eth_portfolio.typing.WalletBalances" title="eth_portfolio.typing.WalletBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalances</span></code></a>, but with a key structure optimized for accessing
+balances directly by wallet and token.</p></li>
+<li><p><a class="reference internal" href="#eth_portfolio.typing.PortfolioBalancesByCategory" title="eth_portfolio.typing.PortfolioBalancesByCategory"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioBalancesByCategory</span></code></a>: Provides an inverted view of <a class="reference internal" href="#eth_portfolio.typing.PortfolioBalances" title="eth_portfolio.typing.PortfolioBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioBalances</span></code></a>, allowing access
+by category first, then by wallet and token.</p></li>
+</ul>
+<p>These classes are designed for efficient parsing, manipulation, and summarization of portfolio data,
+without managing or altering any underlying assets.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalances">
+<em class="property"><span class="pre">final</span><span class="w"> </span><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.typing.</span></span><span class="sig-name descname"><span class="pre">PortfolioBalances</span></span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#PortfolioBalances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalances" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultChecksumDict</span></code>[<a class="reference internal" href="#eth_portfolio.typing.WalletBalances" title="eth_portfolio.typing.WalletBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalances</span></code></a>], <a class="reference internal" href="#eth_portfolio.typing._SummableNonNumericMixin" title="eth_portfolio.typing._SummableNonNumericMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">_SummableNonNumericMixin</span></code></a></p>
+<p>Aggregates <a class="reference internal" href="#eth_portfolio.typing.WalletBalances" title="eth_portfolio.typing.WalletBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalances</span></code></a> for multiple wallets, providing operations to sum
+balances across an entire portfolio.</p>
+<p>The class uses wallet addresses as keys and <a class="reference internal" href="#eth_portfolio.typing.WalletBalances" title="eth_portfolio.typing.WalletBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalances</span></code></a> objects as values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> – An initial seed of portfolio balances, either as a dictionary or an iterable of tuples.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">portfolio_balances</span> <span class="o">=</span> <span class="n">PortfolioBalances</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">WalletBalances</span><span class="p">({</span><span class="s1">&#39;assets&#39;</span><span class="p">:</span> <span class="n">TokenBalances</span><span class="p">({</span><span class="s1">&#39;0x456&#39;</span><span class="p">:</span> <span class="n">Balance</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">),</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;2000&#39;</span><span class="p">))})})})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">portfolio_balances</span><span class="p">[</span><span class="s1">&#39;0x123&#39;</span><span class="p">][</span><span class="s1">&#39;assets&#39;</span><span class="p">][</span><span class="s1">&#39;0x456&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">balance</span>
+<span class="go">Decimal(&#39;100&#39;)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalances.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalances.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>Return self[key].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalances.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#PortfolioBalances.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalances.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a><em>, </em><a class="reference internal" href="#eth_portfolio.typing.WalletBalances" title="eth_portfolio.typing.WalletBalances"><em>WalletBalances</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.13)"><em>Iterable</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><em>Tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a><em>, </em><a class="reference internal" href="#eth_portfolio.typing.WalletBalances" title="eth_portfolio.typing.WalletBalances"><em>WalletBalances</em></a><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>block</strong> (<em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalances.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalances.__iter__" title="Link to this definition"></a></dt>
+<dd><p>Implement iter(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalances.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalances.get" title="Link to this definition"></a></dt>
+<dd><p>Return the value for key if key is in the dictionary, else default.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalances.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">items</span></span></span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalances.items" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalances.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">keys</span></span></span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalances.keys" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalances.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">v,</span> <span class="pre">remove</span> <span class="pre">specified</span> <span class="pre">key</span> <span class="pre">and</span> <span class="pre">return</span> <span class="pre">the</span> <span class="pre">corresponding</span> <span class="pre">value.</span></span></span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalances.pop" title="Link to this definition"></a></dt>
+<dd><p>If the key is not found, return the default if given; otherwise,
+raise a KeyError.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalances.popitem">
+<span class="sig-name descname"><span class="pre">popitem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalances.popitem" title="Link to this definition"></a></dt>
+<dd><p>Remove and return a (key, value) pair as a 2-tuple.</p>
+<p>Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalances.sum_usd">
+<span class="sig-name descname"><span class="pre">sum_usd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#PortfolioBalances.sum_usd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalances.sum_usd" title="Link to this definition"></a></dt>
+<dd><p>Sums the USD values of all wallet balances in the portfolio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total USD value of all wallet balances in the portfolio.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Decimal</em></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">portfolio_balances</span> <span class="o">=</span> <span class="n">PortfolioBalances</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">WalletBalances</span><span class="p">({</span><span class="s1">&#39;assets&#39;</span><span class="p">:</span> <span class="n">TokenBalances</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">Balance</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">),</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;2000&#39;</span><span class="p">))})})})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">total_usd</span> <span class="o">=</span> <span class="n">portfolio_balances</span><span class="o">.</span><span class="n">sum_usd</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">total_usd</span>
+<span class="go">Decimal(&#39;2000&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalances.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">an</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">values</span></span></span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalances.values" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalances.block">
+<span class="sig-name descname"><span class="pre">block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Final" title="(in Python v3.13)"><span class="pre">Final</span></a></em><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalances.block" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalances.dataframe">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dataframe</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><span class="pre">DataFrame</span></a></em><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalances.dataframe" title="Link to this definition"></a></dt>
+<dd><p>Converts the portfolio balances into a pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A DataFrame representation of the portfolio balances.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalances.inverted">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inverted</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#eth_portfolio.typing.PortfolioBalancesByCategory" title="eth_portfolio.typing.PortfolioBalancesByCategory"><span class="pre">PortfolioBalancesByCategory</span></a></em><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalances.inverted" title="Link to this definition"></a></dt>
+<dd><p>Returns an inverted view of the portfolio balances, grouped by category first.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The inverted portfolio balances, grouped by category.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#eth_portfolio.typing.PortfolioBalancesByCategory" title="eth_portfolio.typing.PortfolioBalancesByCategory"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioBalancesByCategory</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">portfolio_balances</span> <span class="o">=</span> <span class="n">PortfolioBalances</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">WalletBalances</span><span class="p">({</span><span class="s1">&#39;assets&#39;</span><span class="p">:</span> <span class="n">TokenBalances</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">Balance</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">),</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;2000&#39;</span><span class="p">))})})})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">inverted_pb</span> <span class="o">=</span> <span class="n">portfolio_balances</span><span class="o">.</span><span class="n">inverted</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">inverted_pb</span><span class="p">[</span><span class="s1">&#39;assets&#39;</span><span class="p">][</span><span class="s1">&#39;0x123&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">balance</span>
+<span class="go">Decimal(&#39;100&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalancesByCategory">
+<em class="property"><span class="pre">final</span><span class="w"> </span><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.typing.</span></span><span class="sig-name descname"><span class="pre">PortfolioBalancesByCategory</span></span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#PortfolioBalancesByCategory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalancesByCategory" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.DefaultDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultDict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Literal</span></code></a>[‘assets’, ‘debt’, ‘external’], <a class="reference internal" href="#eth_portfolio.typing.WalletBalancesRaw" title="eth_portfolio.typing.WalletBalancesRaw"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalancesRaw</span></code></a>], <a class="reference internal" href="#eth_portfolio.typing._SummableNonNumericMixin" title="eth_portfolio.typing._SummableNonNumericMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">_SummableNonNumericMixin</span></code></a></p>
+<p>Provides an inverted view of <a class="reference internal" href="#eth_portfolio.typing.PortfolioBalances" title="eth_portfolio.typing.PortfolioBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioBalances</span></code></a>, allowing access by category first,
+then by wallet and token.</p>
+<p>The class uses category labels as keys (<cite>assets</cite>, <cite>debt</cite>, <cite>external</cite>) and <a class="reference internal" href="#eth_portfolio.typing.WalletBalancesRaw" title="eth_portfolio.typing.WalletBalancesRaw"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalancesRaw</span></code></a>
+objects as values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> – An initial seed of portfolio balances by category, either as a dictionary or an iterable of tuples.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pb_by_category</span> <span class="o">=</span> <span class="n">PortfolioBalancesByCategory</span><span class="p">({</span><span class="s1">&#39;assets&#39;</span><span class="p">:</span> <span class="n">WalletBalancesRaw</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">TokenBalances</span><span class="p">({</span><span class="s1">&#39;0x456&#39;</span><span class="p">:</span> <span class="n">Balance</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">),</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;2000&#39;</span><span class="p">))})})})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pb_by_category</span><span class="p">[</span><span class="s1">&#39;assets&#39;</span><span class="p">][</span><span class="s1">&#39;0x123&#39;</span><span class="p">][</span><span class="s1">&#39;0x456&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">balance</span>
+<span class="go">Decimal(&#39;100&#39;)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalancesByCategory.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalancesByCategory.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>x.__getitem__(y) &lt;==&gt; x[y]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalancesByCategory.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#PortfolioBalancesByCategory.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalancesByCategory.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'assets'</em><em>, </em><em>'debt'</em><em>, </em><em>'external'</em><em>]</em><em>, </em><em>~eth_portfolio.typing.WalletBalancesRaw</em><em>] </em><em>| </em><em>~typing.Iterable</em><em>[</em><em>~typing.Tuple</em><em>[</em><em>~typing.Literal</em><em>[</em><em>'assets'</em><em>, </em><em>'debt'</em><em>, </em><em>'external'</em><em>]</em><em>, </em><em>~eth_portfolio.typing.WalletBalancesRaw</em><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>block</strong> (<em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalancesByCategory.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalancesByCategory.__iter__" title="Link to this definition"></a></dt>
+<dd><p>Implement iter(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalancesByCategory.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalancesByCategory.get" title="Link to this definition"></a></dt>
+<dd><p>Return the value for key if key is in the dictionary, else default.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalancesByCategory.invert">
+<span class="sig-name descname"><span class="pre">invert</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#PortfolioBalancesByCategory.invert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalancesByCategory.invert" title="Link to this definition"></a></dt>
+<dd><p>Inverts the portfolio balances by category to group by wallet first.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The inverted portfolio balances, grouped by wallet first.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#eth_portfolio.typing.PortfolioBalances" title="eth_portfolio.typing.PortfolioBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortfolioBalances</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pb_by_category</span> <span class="o">=</span> <span class="n">PortfolioBalancesByCategory</span><span class="p">({</span><span class="s1">&#39;assets&#39;</span><span class="p">:</span> <span class="n">WalletBalancesRaw</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">TokenBalances</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">Balance</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">),</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;2000&#39;</span><span class="p">))})})})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">inverted_pb</span> <span class="o">=</span> <span class="n">pb_by_category</span><span class="o">.</span><span class="n">invert</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">inverted_pb</span><span class="p">[</span><span class="s1">&#39;0x123&#39;</span><span class="p">][</span><span class="s1">&#39;assets&#39;</span><span class="p">][</span><span class="s1">&#39;0x123&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">balance</span>
+<span class="go">Decimal(&#39;100&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalancesByCategory.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">items</span></span></span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalancesByCategory.items" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalancesByCategory.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">keys</span></span></span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalancesByCategory.keys" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalancesByCategory.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">v,</span> <span class="pre">remove</span> <span class="pre">specified</span> <span class="pre">key</span> <span class="pre">and</span> <span class="pre">return</span> <span class="pre">the</span> <span class="pre">corresponding</span> <span class="pre">value.</span></span></span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalancesByCategory.pop" title="Link to this definition"></a></dt>
+<dd><p>If the key is not found, return the default if given; otherwise,
+raise a KeyError.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalancesByCategory.popitem">
+<span class="sig-name descname"><span class="pre">popitem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalancesByCategory.popitem" title="Link to this definition"></a></dt>
+<dd><p>Remove and return a (key, value) pair as a 2-tuple.</p>
+<p>Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalancesByCategory.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">an</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">values</span></span></span><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalancesByCategory.values" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalancesByCategory.assets">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#eth_portfolio.typing.WalletBalancesRaw" title="eth_portfolio.typing.WalletBalancesRaw"><span class="pre">WalletBalancesRaw</span></a></em><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalancesByCategory.assets" title="Link to this definition"></a></dt>
+<dd><p>Returns the asset balances across all wallets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The <a class="reference internal" href="#eth_portfolio.typing.WalletBalancesRaw" title="eth_portfolio.typing.WalletBalancesRaw"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalancesRaw</span></code></a> object representing the asset balances.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#eth_portfolio.typing.WalletBalancesRaw" title="eth_portfolio.typing.WalletBalancesRaw"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalancesRaw</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="eth_portfolio.typing.PortfolioBalancesByCategory.debt">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">debt</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#eth_portfolio.typing.WalletBalancesRaw" title="eth_portfolio.typing.WalletBalancesRaw"><span class="pre">WalletBalancesRaw</span></a></em><a class="headerlink" href="#eth_portfolio.typing.PortfolioBalancesByCategory.debt" title="Link to this definition"></a></dt>
+<dd><p>Returns the debt balances across all wallets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The <a class="reference internal" href="#eth_portfolio.typing.WalletBalancesRaw" title="eth_portfolio.typing.WalletBalancesRaw"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalancesRaw</span></code></a> object representing the debt balances.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#eth_portfolio.typing.WalletBalancesRaw" title="eth_portfolio.typing.WalletBalancesRaw"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalancesRaw</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="eth_portfolio.typing.RemoteTokenBalances">
+<em class="property"><span class="pre">final</span><span class="w"> </span><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.typing.</span></span><span class="sig-name descname"><span class="pre">RemoteTokenBalances</span></span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#RemoteTokenBalances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.RemoteTokenBalances" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.DefaultDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultDict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a>], <a class="reference internal" href="#eth_portfolio.typing._SummableNonNumericMixin" title="eth_portfolio.typing._SummableNonNumericMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">_SummableNonNumericMixin</span></code></a></p>
+<p>Manages token balances across different protocols, extending the <a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a> functionality
+to multiple protocols.</p>
+<p>The class uses protocol labels as keys and <a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a> objects as values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> – An initial seed of remote token balances, either as a dictionary
+or an iterable of tuples.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">remote_balances</span> <span class="o">=</span> <span class="n">RemoteTokenBalances</span><span class="p">({</span><span class="s1">&#39;protocol1&#39;</span><span class="p">:</span> <span class="n">TokenBalances</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">Balance</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">),</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;2000&#39;</span><span class="p">))})})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">remote_balances</span><span class="p">[</span><span class="s1">&#39;protocol1&#39;</span><span class="p">][</span><span class="s1">&#39;0x123&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">balance</span>
+<span class="go">Decimal(&#39;100&#39;)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.RemoteTokenBalances.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.RemoteTokenBalances.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>x.__getitem__(y) &lt;==&gt; x[y]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.RemoteTokenBalances.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#RemoteTokenBalances.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.RemoteTokenBalances.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>block</strong> (<em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.RemoteTokenBalances.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.RemoteTokenBalances.__iter__" title="Link to this definition"></a></dt>
+<dd><p>Implement iter(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.RemoteTokenBalances.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.RemoteTokenBalances.get" title="Link to this definition"></a></dt>
+<dd><p>Return the value for key if key is in the dictionary, else default.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.RemoteTokenBalances.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">items</span></span></span><a class="headerlink" href="#eth_portfolio.typing.RemoteTokenBalances.items" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.RemoteTokenBalances.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">keys</span></span></span><a class="headerlink" href="#eth_portfolio.typing.RemoteTokenBalances.keys" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.RemoteTokenBalances.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">v,</span> <span class="pre">remove</span> <span class="pre">specified</span> <span class="pre">key</span> <span class="pre">and</span> <span class="pre">return</span> <span class="pre">the</span> <span class="pre">corresponding</span> <span class="pre">value.</span></span></span><a class="headerlink" href="#eth_portfolio.typing.RemoteTokenBalances.pop" title="Link to this definition"></a></dt>
+<dd><p>If the key is not found, return the default if given; otherwise,
+raise a KeyError.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.RemoteTokenBalances.popitem">
+<span class="sig-name descname"><span class="pre">popitem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.RemoteTokenBalances.popitem" title="Link to this definition"></a></dt>
+<dd><p>Remove and return a (key, value) pair as a 2-tuple.</p>
+<p>Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.RemoteTokenBalances.sum_usd">
+<span class="sig-name descname"><span class="pre">sum_usd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#RemoteTokenBalances.sum_usd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.RemoteTokenBalances.sum_usd" title="Link to this definition"></a></dt>
+<dd><p>Sums the USD values of all token balances across all protocols.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total USD value of all remote token balances.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Decimal</em></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">remote_balances</span> <span class="o">=</span> <span class="n">RemoteTokenBalances</span><span class="p">({</span><span class="s1">&#39;protocol1&#39;</span><span class="p">:</span> <span class="n">TokenBalances</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">Balance</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">),</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;2000&#39;</span><span class="p">))})})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">total_usd</span> <span class="o">=</span> <span class="n">remote_balances</span><span class="o">.</span><span class="n">sum_usd</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">total_usd</span>
+<span class="go">Decimal(&#39;2000&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.RemoteTokenBalances.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">an</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">values</span></span></span><a class="headerlink" href="#eth_portfolio.typing.RemoteTokenBalances.values" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.typing.RemoteTokenBalances.block">
+<span class="sig-name descname"><span class="pre">block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Final" title="(in Python v3.13)"><span class="pre">Final</span></a></em><a class="headerlink" href="#eth_portfolio.typing.RemoteTokenBalances.block" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="eth_portfolio.typing.RemoteTokenBalances.dataframe">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dataframe</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><span class="pre">DataFrame</span></a></em><a class="headerlink" href="#eth_portfolio.typing.RemoteTokenBalances.dataframe" title="Link to this definition"></a></dt>
+<dd><p>Converts the remote token balances into a pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A DataFrame representation of the remote token balances.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="eth_portfolio.typing.TokenBalances">
+<em class="property"><span class="pre">final</span><span class="w"> </span><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.typing.</span></span><span class="sig-name descname"><span class="pre">TokenBalances</span></span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#TokenBalances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.TokenBalances" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultChecksumDict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Balance</span></code>], <a class="reference internal" href="#eth_portfolio.typing._SummableNonNumericMixin" title="eth_portfolio.typing._SummableNonNumericMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">_SummableNonNumericMixin</span></code></a></p>
+<p>A specialized defaultdict subclass made for holding a mapping of <code class="docutils literal notranslate"><span class="pre">token</span> <span class="pre">-&gt;</span> <span class="pre">balance</span></code>.</p>
+<p>Manages a collection of <code class="xref py py-class docutils literal notranslate"><span class="pre">Balance</span></code> objects for multiple tokens, allowing for operations
+such as summing balances across tokens.</p>
+<p>The class uses token addresses as keys and <code class="xref py py-class docutils literal notranslate"><span class="pre">Balance</span></code> objects as values. It supports
+arithmetic operations like addition and subtraction of token balances.</p>
+<p>Token addresses are checksummed automatically when adding items to the dict, and the default value for a token not present is an empty <code class="xref py py-class docutils literal notranslate"><span class="pre">Balance</span></code> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> – An initial seed of token balances, either as a dictionary or an iterable of tuples.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">token_balances</span> <span class="o">=</span> <span class="n">TokenBalances</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">Balance</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">),</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;2000&#39;</span><span class="p">))})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">token_balances</span><span class="p">[</span><span class="s1">&#39;0x123&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">balance</span>
+<span class="go">Decimal(&#39;100&#39;)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.TokenBalances.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#TokenBalances.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.TokenBalances.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>Return self[key].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Balance</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.TokenBalances.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#TokenBalances.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.TokenBalances.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a><em>, </em><em>Balance</em><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.13)"><em>Iterable</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><em>Tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a><em>, </em><em>Balance</em><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>block</strong> (<em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.TokenBalances.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.TokenBalances.__iter__" title="Link to this definition"></a></dt>
+<dd><p>Implement iter(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.TokenBalances.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.TokenBalances.get" title="Link to this definition"></a></dt>
+<dd><p>Return the value for key if key is in the dictionary, else default.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.TokenBalances.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">items</span></span></span><a class="headerlink" href="#eth_portfolio.typing.TokenBalances.items" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.TokenBalances.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">keys</span></span></span><a class="headerlink" href="#eth_portfolio.typing.TokenBalances.keys" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.TokenBalances.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">v,</span> <span class="pre">remove</span> <span class="pre">specified</span> <span class="pre">key</span> <span class="pre">and</span> <span class="pre">return</span> <span class="pre">the</span> <span class="pre">corresponding</span> <span class="pre">value.</span></span></span><a class="headerlink" href="#eth_portfolio.typing.TokenBalances.pop" title="Link to this definition"></a></dt>
+<dd><p>If the key is not found, return the default if given; otherwise,
+raise a KeyError.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.TokenBalances.popitem">
+<span class="sig-name descname"><span class="pre">popitem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.TokenBalances.popitem" title="Link to this definition"></a></dt>
+<dd><p>Remove and return a (key, value) pair as a 2-tuple.</p>
+<p>Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.TokenBalances.sum_usd">
+<span class="sig-name descname"><span class="pre">sum_usd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#TokenBalances.sum_usd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.TokenBalances.sum_usd" title="Link to this definition"></a></dt>
+<dd><p>Sums the USD values of all token balances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total USD value of all token balances.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Decimal</em></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">token_balances</span> <span class="o">=</span> <span class="n">TokenBalances</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">Balance</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">),</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;2000&#39;</span><span class="p">))})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">total_usd</span> <span class="o">=</span> <span class="n">token_balances</span><span class="o">.</span><span class="n">sum_usd</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">total_usd</span>
+<span class="go">Decimal(&#39;2000&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.TokenBalances.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">an</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">values</span></span></span><a class="headerlink" href="#eth_portfolio.typing.TokenBalances.values" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.typing.TokenBalances.block">
+<span class="sig-name descname"><span class="pre">block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Final" title="(in Python v3.13)"><span class="pre">Final</span></a></em><a class="headerlink" href="#eth_portfolio.typing.TokenBalances.block" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="eth_portfolio.typing.TokenBalances.dataframe">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dataframe</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><span class="pre">DataFrame</span></a></em><a class="headerlink" href="#eth_portfolio.typing.TokenBalances.dataframe" title="Link to this definition"></a></dt>
+<dd><p>Converts the token balances into a pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A DataFrame representation of the token balances.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalances">
+<em class="property"><span class="pre">final</span><span class="w"> </span><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.typing.</span></span><span class="sig-name descname"><span class="pre">WalletBalances</span></span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#WalletBalances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.WalletBalances" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Literal</span></code></a>[‘assets’, ‘debt’, ‘external’], <a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a> | <a class="reference internal" href="#eth_portfolio.typing.RemoteTokenBalances" title="eth_portfolio.typing.RemoteTokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteTokenBalances</span></code></a>], <a class="reference internal" href="#eth_portfolio.typing._SummableNonNumericMixin" title="eth_portfolio.typing._SummableNonNumericMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">_SummableNonNumericMixin</span></code></a></p>
+<p>Organizes token balances into categories such as assets, debts, and external balances for a single wallet.</p>
+<p>The class uses categories as keys (<cite>assets</cite>, <cite>debt</cite>, <cite>external</cite>) and <a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a> or <a class="reference internal" href="#eth_portfolio.typing.RemoteTokenBalances" title="eth_portfolio.typing.RemoteTokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteTokenBalances</span></code></a>
+objects as values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> – An initial seed of wallet balances, either as a dictionary or an iterable of tuples.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">wallet_balances</span> <span class="o">=</span> <span class="n">WalletBalances</span><span class="p">({</span><span class="s1">&#39;assets&#39;</span><span class="p">:</span> <span class="n">TokenBalances</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">Balance</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">),</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;2000&#39;</span><span class="p">))})})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wallet_balances</span><span class="p">[</span><span class="s1">&#39;assets&#39;</span><span class="p">][</span><span class="s1">&#39;0x123&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">balance</span>
+<span class="go">Decimal(&#39;100&#39;)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalances.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#WalletBalances.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.WalletBalances.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the balance associated with the given category key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'assets'</em><em>, </em><em>'debt'</em><em>, </em><em>'external'</em><em>]</em>) – The category label (<cite>assets</cite>, <cite>debt</cite>, or <cite>external</cite>).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The balances associated with the category.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#KeyError" title="(in Python v3.13)"><strong>KeyError</strong></a> – If the key is not a valid category.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a> | <a class="reference internal" href="#eth_portfolio.typing.RemoteTokenBalances" title="eth_portfolio.typing.RemoteTokenBalances"><em>RemoteTokenBalances</em></a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">wallet_balances</span> <span class="o">=</span> <span class="n">WalletBalances</span><span class="p">({</span><span class="s1">&#39;assets&#39;</span><span class="p">:</span> <span class="n">TokenBalances</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">Balance</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">),</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;2000&#39;</span><span class="p">))})})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">assets_balances</span> <span class="o">=</span> <span class="n">wallet_balances</span><span class="p">[</span><span class="s1">&#39;assets&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">assets_balances</span><span class="p">[</span><span class="s1">&#39;0x123&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">balance</span>
+<span class="go">Decimal(&#39;100&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalances.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#WalletBalances.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.WalletBalances.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<a class="reference internal" href="#eth_portfolio.typing.WalletBalances" title="eth_portfolio.typing.WalletBalances"><em>WalletBalances</em></a><em> | </em><a class="reference internal" href="#eth_portfolio.typing._WalletBalancesTD" title="eth_portfolio.typing._WalletBalancesTD"><em>_WalletBalancesTD</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.13)"><em>Iterable</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><em>Tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'assets'</em><em>, </em><em>'debt'</em><em>, </em><em>'external'</em><em>]</em><em>, </em><em>~eth_portfolio.typing.TokenBalances</em><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>block</strong> (<em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalances.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.WalletBalances.__iter__" title="Link to this definition"></a></dt>
+<dd><p>Implement iter(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalances.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.WalletBalances.get" title="Link to this definition"></a></dt>
+<dd><p>Return the value for key if key is in the dictionary, else default.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalances.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">items</span></span></span><a class="headerlink" href="#eth_portfolio.typing.WalletBalances.items" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalances.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">keys</span></span></span><a class="headerlink" href="#eth_portfolio.typing.WalletBalances.keys" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalances.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">v,</span> <span class="pre">remove</span> <span class="pre">specified</span> <span class="pre">key</span> <span class="pre">and</span> <span class="pre">return</span> <span class="pre">the</span> <span class="pre">corresponding</span> <span class="pre">value.</span></span></span><a class="headerlink" href="#eth_portfolio.typing.WalletBalances.pop" title="Link to this definition"></a></dt>
+<dd><p>If the key is not found, return the default if given; otherwise,
+raise a KeyError.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalances.popitem">
+<span class="sig-name descname"><span class="pre">popitem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.WalletBalances.popitem" title="Link to this definition"></a></dt>
+<dd><p>Remove and return a (key, value) pair as a 2-tuple.</p>
+<p>Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalances.sum_usd">
+<span class="sig-name descname"><span class="pre">sum_usd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#WalletBalances.sum_usd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.WalletBalances.sum_usd" title="Link to this definition"></a></dt>
+<dd><p>Sums the USD values of the wallet’s assets, debts, and external balances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total USD value of the wallet’s net assets (assets - debt + external).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Decimal</em></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">wallet_balances</span> <span class="o">=</span> <span class="n">WalletBalances</span><span class="p">({</span><span class="s1">&#39;assets&#39;</span><span class="p">:</span> <span class="n">TokenBalances</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">Balance</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">),</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;2000&#39;</span><span class="p">))})})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">total_usd</span> <span class="o">=</span> <span class="n">wallet_balances</span><span class="o">.</span><span class="n">sum_usd</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">total_usd</span>
+<span class="go">Decimal(&#39;2000&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalances.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">an</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">values</span></span></span><a class="headerlink" href="#eth_portfolio.typing.WalletBalances.values" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalances.assets">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><span class="pre">TokenBalances</span></a></em><a class="headerlink" href="#eth_portfolio.typing.WalletBalances.assets" title="Link to this definition"></a></dt>
+<dd><p>Returns the assets held by the wallet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The <a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a> object representing the wallet’s assets.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalances.dataframe">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dataframe</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><span class="pre">DataFrame</span></a></em><a class="headerlink" href="#eth_portfolio.typing.WalletBalances.dataframe" title="Link to this definition"></a></dt>
+<dd><p>Converts the wallet balances into a pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A DataFrame representation of the wallet balances.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalances.debt">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">debt</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#eth_portfolio.typing.RemoteTokenBalances" title="eth_portfolio.typing.RemoteTokenBalances"><span class="pre">RemoteTokenBalances</span></a></em><a class="headerlink" href="#eth_portfolio.typing.WalletBalances.debt" title="Link to this definition"></a></dt>
+<dd><p>Returns the debts associated with the wallet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The <a class="reference internal" href="#eth_portfolio.typing.RemoteTokenBalances" title="eth_portfolio.typing.RemoteTokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteTokenBalances</span></code></a> object representing the wallet’s debts.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#eth_portfolio.typing.RemoteTokenBalances" title="eth_portfolio.typing.RemoteTokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteTokenBalances</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalances.external">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">external</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#eth_portfolio.typing.RemoteTokenBalances" title="eth_portfolio.typing.RemoteTokenBalances"><span class="pre">RemoteTokenBalances</span></a></em><a class="headerlink" href="#eth_portfolio.typing.WalletBalances.external" title="Link to this definition"></a></dt>
+<dd><p>Returns the external balances associated with the wallet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The <a class="reference internal" href="#eth_portfolio.typing.RemoteTokenBalances" title="eth_portfolio.typing.RemoteTokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteTokenBalances</span></code></a> object representing the wallet’s external balances.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#eth_portfolio.typing.RemoteTokenBalances" title="eth_portfolio.typing.RemoteTokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteTokenBalances</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalancesRaw">
+<em class="property"><span class="pre">final</span><span class="w"> </span><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.typing.</span></span><span class="sig-name descname"><span class="pre">WalletBalancesRaw</span></span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#WalletBalancesRaw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.WalletBalancesRaw" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultChecksumDict</span></code>[<a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a>], <a class="reference internal" href="#eth_portfolio.typing._SummableNonNumericMixin" title="eth_portfolio.typing._SummableNonNumericMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">_SummableNonNumericMixin</span></code></a></p>
+<p>A structure for key pattern <cite>wallet -&gt; token -&gt; balance</cite>.</p>
+<p>This class is similar to <a class="reference internal" href="#eth_portfolio.typing.WalletBalances" title="eth_portfolio.typing.WalletBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">WalletBalances</span></code></a> but optimized for key lookups by wallet and token directly.
+It manages <a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenBalances</span></code></a> objects for multiple wallets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> – An initial seed of wallet balances, either as a dictionary or an iterable of tuples.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">raw_balances</span> <span class="o">=</span> <span class="n">WalletBalancesRaw</span><span class="p">({</span><span class="s1">&#39;0x123&#39;</span><span class="p">:</span> <span class="n">TokenBalances</span><span class="p">({</span><span class="s1">&#39;0x456&#39;</span><span class="p">:</span> <span class="n">Balance</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">),</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;2000&#39;</span><span class="p">))})})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">raw_balances</span><span class="p">[</span><span class="s1">&#39;0x123&#39;</span><span class="p">][</span><span class="s1">&#39;0x456&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">balance</span>
+<span class="go">Decimal(&#39;100&#39;)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalancesRaw.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.WalletBalancesRaw.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>Return self[key].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalancesRaw.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#WalletBalancesRaw.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing.WalletBalancesRaw.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a><em>, </em><a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.13)"><em>Iterable</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><em>Tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>HexBytes</em><em> | </em><em>AnyAddress</em><em> | </em><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/api-convert.html#brownie.convert.datatypes.EthAddress" title="(in Brownie v1.20.3)"><em>EthAddress</em></a><em>, </em><a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><em>TokenBalances</em></a><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>block</strong> (<em>BlockNumber</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalancesRaw.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.WalletBalancesRaw.__iter__" title="Link to this definition"></a></dt>
+<dd><p>Implement iter(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalancesRaw.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.WalletBalancesRaw.get" title="Link to this definition"></a></dt>
+<dd><p>Return the value for key if key is in the dictionary, else default.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalancesRaw.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">items</span></span></span><a class="headerlink" href="#eth_portfolio.typing.WalletBalancesRaw.items" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalancesRaw.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">keys</span></span></span><a class="headerlink" href="#eth_portfolio.typing.WalletBalancesRaw.keys" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalancesRaw.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">v,</span> <span class="pre">remove</span> <span class="pre">specified</span> <span class="pre">key</span> <span class="pre">and</span> <span class="pre">return</span> <span class="pre">the</span> <span class="pre">corresponding</span> <span class="pre">value.</span></span></span><a class="headerlink" href="#eth_portfolio.typing.WalletBalancesRaw.pop" title="Link to this definition"></a></dt>
+<dd><p>If the key is not found, return the default if given; otherwise,
+raise a KeyError.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalancesRaw.popitem">
+<span class="sig-name descname"><span class="pre">popitem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing.WalletBalancesRaw.popitem" title="Link to this definition"></a></dt>
+<dd><p>Remove and return a (key, value) pair as a 2-tuple.</p>
+<p>Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalancesRaw.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">an</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">values</span></span></span><a class="headerlink" href="#eth_portfolio.typing.WalletBalancesRaw.values" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.typing.WalletBalancesRaw.block">
+<span class="sig-name descname"><span class="pre">block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Final" title="(in Python v3.13)"><span class="pre">Final</span></a></em><a class="headerlink" href="#eth_portfolio.typing.WalletBalancesRaw.block" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="eth_portfolio.typing._SummableNonNumericMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.typing.</span></span><span class="sig-name descname"><span class="pre">_SummableNonNumericMixin</span></span><a class="reference internal" href="../_modules/eth_portfolio/typing.html#_SummableNonNumericMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eth_portfolio.typing._SummableNonNumericMixin" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Mixin class for non-numeric summable objects.</p>
+<p>This class provides an interface for objects that can be used with <cite>sum</cite> but are not necessarily numeric.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="eth_portfolio.typing._WalletBalancesTD">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eth_portfolio.typing.</span></span><span class="sig-name descname"><span class="pre">_WalletBalancesTD</span></span><a class="headerlink" href="#eth_portfolio.typing._WalletBalancesTD" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing._WalletBalancesTD.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing._WalletBalancesTD.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>x.__getitem__(y) &lt;==&gt; x[y]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing._WalletBalancesTD.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing._WalletBalancesTD.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing._WalletBalancesTD.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing._WalletBalancesTD.__iter__" title="Link to this definition"></a></dt>
+<dd><p>Implement iter(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing._WalletBalancesTD.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing._WalletBalancesTD.get" title="Link to this definition"></a></dt>
+<dd><p>Return the value for key if key is in the dictionary, else default.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing._WalletBalancesTD.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">items</span></span></span><a class="headerlink" href="#eth_portfolio.typing._WalletBalancesTD.items" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing._WalletBalancesTD.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">keys</span></span></span><a class="headerlink" href="#eth_portfolio.typing._WalletBalancesTD.keys" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing._WalletBalancesTD.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">v,</span> <span class="pre">remove</span> <span class="pre">specified</span> <span class="pre">key</span> <span class="pre">and</span> <span class="pre">return</span> <span class="pre">the</span> <span class="pre">corresponding</span> <span class="pre">value.</span></span></span><a class="headerlink" href="#eth_portfolio.typing._WalletBalancesTD.pop" title="Link to this definition"></a></dt>
+<dd><p>If the key is not found, return the default if given; otherwise,
+raise a KeyError.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing._WalletBalancesTD.popitem">
+<span class="sig-name descname"><span class="pre">popitem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.typing._WalletBalancesTD.popitem" title="Link to this definition"></a></dt>
+<dd><p>Remove and return a (key, value) pair as a 2-tuple.</p>
+<p>Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eth_portfolio.typing._WalletBalancesTD.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">an</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">values</span></span></span><a class="headerlink" href="#eth_portfolio.typing._WalletBalancesTD.values" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.typing._WalletBalancesTD.assets">
+<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><span class="pre">TokenBalances</span></a></em><a class="headerlink" href="#eth_portfolio.typing._WalletBalancesTD.assets" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.typing._WalletBalancesTD.debt">
+<span class="sig-name descname"><span class="pre">debt</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#eth_portfolio.typing.TokenBalances" title="eth_portfolio.typing.TokenBalances"><span class="pre">TokenBalances</span></a></em><a class="headerlink" href="#eth_portfolio.typing._WalletBalancesTD.debt" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="eth_portfolio.typing._WalletBalancesTD.external">
+<span class="sig-name descname"><span class="pre">external</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#eth_portfolio.typing.RemoteTokenBalances" title="eth_portfolio.typing.RemoteTokenBalances"><span class="pre">RemoteTokenBalances</span></a></em><a class="headerlink" href="#eth_portfolio.typing._WalletBalancesTD.external" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
