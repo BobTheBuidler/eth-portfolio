@@ -1,9 +1,9 @@
-checksum_dict>=1.1.2
-dank_mids>=4.20.124
+checksum_dict>=2.1.7
+dank_mids>=4.20.136
 eth-brownie>=1.19.3,<1.21
 eth_retry>=0.1.15,<1
 evmspec>=0.2.8
-ez-a-sync>=0.32.6
+ez-a-sync>=0.32.7
 numpy<2
 pandas>=1.4.3,<1.6
 typed-envs>=0.0.9

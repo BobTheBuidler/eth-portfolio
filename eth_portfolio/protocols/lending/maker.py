@@ -27,6 +27,7 @@ except ImportError:
 yfi = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
 dai: Contract
 
+
 class Maker(LendingProtocolWithLockedCollateral):
     networks = [Network.Mainnet]
 

@@ -38,10 +38,11 @@ from aiohttp import ClientResponseError
 from async_lru import alru_cache
 from brownie import chain
 from dank_mids.eth import TraceFilterParams
-from eth_typing import ChecksumAddress, HexStr
+from eth_typing import BlockNumber, ChecksumAddress
 from evmspec import FilterTrace
 from evmspec.structs.receipt import Status
 from evmspec.structs.trace import call, reward
+from typing_extensions import Unpack
 from pandas import DataFrame  # type: ignore
 from tqdm import tqdm
 from y import ERC20, Network
@@ -540,17 +541,25 @@ class InternalTransfersList(PandableList[InternalTransfer]):
 @a_sync.Semaphore(128, __name__ + ".trace_filter")
 @stuck_coro_debugger
 @eth_retry.auto_retry
-async def trace_filter(fromBlock: HexStr, toBlock: HexStr, **kwargs) -> List[FilterTrace]:
-    return await __trace_filter(fromBlock, toBlock, **kwargs)
+async def trace_filter(
+    from_block: BlockNumber,
+    to_block: BlockNumber,
+    **kwargs: Unpack[TraceFilterParams],
+) -> List[FilterTrace]:
+    return await __trace_filter(from_block, to_block, **kwargs)
 
 
-async def __trace_filter(fromBlock: HexStr, toBlock: HexStr, **kwargs) -> List[FilterTrace]:
+async def __trace_filter(
+    from_block: BlockNumber,
+    to_block: BlockNumber,
+    **kwargs: Unpack[TraceFilterParams],
+) -> List[FilterTrace]:
     try:
         return await dank_mids.eth.trace_filter(
-            {"fromBlock": fromBlock, "toBlock": toBlock, **kwargs}
+            {"fromBlock": from_block, "toBlock": to_block, **kwargs}
         )
     except ClientResponseError as e:
-        if e.status != HTTPStatus.SERVICE_UNAVAILABLE or toBlock == fromBlock:
+        if e.status != HTTPStatus.SERVICE_UNAVAILABLE or to_block == from_block:
             raise
     except TypeError as e:
         # This is some intermittent error I need to debug in dank_mids, I think it occurs when we get rate limited
@@ -560,14 +569,13 @@ async def __trace_filter(fromBlock: HexStr, toBlock: HexStr, **kwargs) -> List[F
         # remove this logger when I know there are no looping issues
         logger.info("call failed, trying again")
 
-    from_block = int(fromBlock, 16)
-    range_size = int(toBlock, 16) - from_block + 1
+    range_size = to_block - from_block + 1
     chunk_size = range_size // 2
     halfway = from_block + chunk_size
 
     results = await gather(
-        __trace_filter(fromBlock=fromBlock, toBlock=HexStr(hex(halfway)), **kwargs),
-        __trace_filter(fromBlock=HexStr(hex(halfway + 1)), toBlock=toBlock, **kwargs),
+        __trace_filter(from_block=from_block, to_block=BlockNumber(halfway), **kwargs),
+        __trace_filter(from_block=BlockNumber(halfway + 1), to_block=to_block, **kwargs),
     )
     return results[0] + results[1]
 
@@ -610,8 +618,9 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
             "polygon doesnt support trace_filter method, must develop alternate solution"
         )
         return []
-    semaphore_key = tuple(
-        sorted(tuple(filter_params.get(x, ("",))) for x in ("toAddress", "fromAddress"))
+    semaphore_key = (
+        tuple(filter_params.get("toAddress", ("",))),
+        tuple(filter_params.get("fromAddress", ("",))),
     )
     async with _trace_semaphores[semaphore_key]:
         traces = await trace_filter(**filter_params)
@@ -706,8 +715,8 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
         block_ranges = _get_block_ranges(start_block, end_block)
 
         trace_filter_coros = [
-            get_traces({direction: [self.address], "fromBlock": hex(start), "toBlock": hex(end)})
-            for direction, (start, end) in product(["toAddress", "fromAddress"], block_ranges)
+            get_traces({direction: [self.address], "fromBlock": start, "toBlock": end})  # type: ignore [misc]
+            for direction, (start, end) in product(("toAddress", "fromAddress"), block_ranges)
         ]
 
         # NOTE: We only want tqdm progress bar when there is work to do
