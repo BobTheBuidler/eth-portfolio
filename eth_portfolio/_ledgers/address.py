@@ -574,8 +574,8 @@ async def __trace_filter(
     halfway = from_block + chunk_size
 
     results = await gather(
-        __trace_filter(from_block=from_block, to_block=BlockNumber(halfway), params),
-        __trace_filter(from_block=BlockNumber(halfway + 1), to_block=to_block, params),
+        __trace_filter(from_block, BlockNumber(halfway), params),
+        __trace_filter(BlockNumber(halfway + 1), to_block, params),
     )
     return results[0] + results[1]
 
