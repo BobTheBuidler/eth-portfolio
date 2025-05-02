@@ -4,7 +4,7 @@ from functools import wraps
 from logging import DEBUG, getLogger
 from random import random
 from time import sleep as time_sleep
-from typing import Callable, TypeVar
+from typing import Callable, Final, TypeVar
 
 from a_sync._typing import AnyFn
 from pony.orm import OperationalError, TransactionError
@@ -15,10 +15,10 @@ P = ParamSpec("P")
 T = TypeVar("T")
 
 
-logger = getLogger(__name__)
-__logger_is_enabled_for = logger.isEnabledFor
-__logger_warning = logger.warning
-__logger_log = logger._log
+logger: Final = getLogger(__name__)
+__logger_is_enabled_for: Final = logger.isEnabledFor
+__logger_warning: Final = logger.warning
+__logger_log: Final = logger._log
 
 
 def break_locks(fn: AnyFn[P, T]) -> AnyFn[P, T]:
