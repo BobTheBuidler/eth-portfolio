@@ -1,10 +1,15 @@
+import logging
+from pathlib import Path
 from setuptools import find_packages, setup  # type: ignore
 
-from mypyc.build import mypycify
+try:
+    from mypyc.build import mypycify
+except ModuleNotFoundError:
+    logging.warning("Cannot find mypyc, installing in iterpreted python mode (without compiling)")
+    mypycify = lambda *a, **k: []
 
 
-with open("requirements.txt", "r") as f:
-    requirements = list(map(str.strip, f.read().split("\n")))[:-1]
+requirements = list(map(str.strip, Path("requirements.txt").read_text().split("\n")))[:-1]
 
 setup(
     name="eth-portfolio",
