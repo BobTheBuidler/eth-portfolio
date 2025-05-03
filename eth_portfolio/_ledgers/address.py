@@ -544,19 +544,19 @@ class InternalTransfersList(PandableList[InternalTransfer]):
 async def trace_filter(
     from_block: BlockNumber,
     to_block: BlockNumber,
-    **kwargs: Unpack[TraceFilterParams],
+    params: TraceFilterParams,
 ) -> List[FilterTrace]:
-    return await __trace_filter(from_block, to_block, **kwargs)
+    return await __trace_filter(from_block, to_block, params)
 
 
 async def __trace_filter(
     from_block: BlockNumber,
     to_block: BlockNumber,
-    **kwargs: Unpack[TraceFilterParams],
+    params: TraceFilterParams,
 ) -> List[FilterTrace]:
     try:
         return await dank_mids.eth.trace_filter(
-            {"fromBlock": from_block, "toBlock": to_block, **kwargs}
+            {"fromBlock": from_block, "toBlock": to_block, **params}
         )
     except ClientResponseError as e:
         if e.status != HTTPStatus.SERVICE_UNAVAILABLE or to_block == from_block:
@@ -574,8 +574,8 @@ async def __trace_filter(
     halfway = from_block + chunk_size
 
     results = await gather(
-        __trace_filter(from_block=from_block, to_block=BlockNumber(halfway), **kwargs),
-        __trace_filter(from_block=BlockNumber(halfway + 1), to_block=to_block, **kwargs),
+        __trace_filter(from_block, BlockNumber(halfway), params),
+        __trace_filter(BlockNumber(halfway + 1), to_block, params),
     )
     return results[0] + results[1]
 
@@ -601,7 +601,11 @@ _trace_semaphores = defaultdict(lambda: a_sync.Semaphore(16, __name__ + ".trace_
 
 @cache_to_disk
 @eth_retry.auto_retry
-async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
+async def get_traces(
+    from_block: BlockNumber,
+    to_block: BlockNumber,
+    filter_params: TraceFilterParams,
+) -> List[FilterTrace]:
     """
     Retrieves traces from the web3 provider using the given parameters.
 
@@ -623,7 +627,7 @@ async def get_traces(filter_params: TraceFilterParams) -> List[FilterTrace]:
         tuple(filter_params.get("fromAddress", ("",))),
     )
     async with _trace_semaphores[semaphore_key]:
-        traces = await trace_filter(**filter_params)
+        traces = await trace_filter(from_block, to_block, filter_params)
     return await _check_traces(traces) if traces else []
 
 
@@ -715,14 +719,16 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
         block_ranges = _get_block_ranges(start_block, end_block)
 
         trace_filter_coros = [
-            get_traces({direction: [self.address], "fromBlock": start, "toBlock": end})  # type: ignore [misc]
+            get_traces(start, end, {direction: [self.address]})  # type: ignore [misc]
             for direction, (start, end) in product(("toAddress", "fromAddress"), block_ranges)
         ]
 
         # NOTE: We only want tqdm progress bar when there is work to do
         block_range_len = len(block_ranges)
         if block_range_len == 0:
-            raise ValueError(f"There must be at least one block in the range. start: {start_block} end: {end_block}")
+            raise ValueError(
+              f"There must be at least one block in the range. start: {start_block} end: {end_block}"
+            )
         elif block_range_len == 1:
             generator_function = a_sync.as_completed
         else:
