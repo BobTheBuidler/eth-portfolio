@@ -21,6 +21,7 @@ from typing import (
     AsyncGenerator,
     AsyncIterator,
     Callable,
+    Final,
     Generic,
     List,
     NoReturn,
@@ -108,22 +109,22 @@ class AddressLedgerBase(
         The portfolio address this ledger belongs to.
         """
 
-        self.address = self.portfolio_address.address
+        self.address: Final = self.portfolio_address.address
         """
         The Ethereum address being managed.
         """
 
-        self.asynchronous = self.portfolio_address.asynchronous
+        self.asynchronous: Final = self.portfolio_address.asynchronous
         """
         Flag indicating if the operations are asynchronous.
         """
 
-        self.load_prices = self.portfolio_address.load_prices
+        self.load_prices: Final = self.portfolio_address.load_prices
         """
         Indicates if price loading is enabled.
         """
 
-        self.objects: _LedgerEntryList = self._list_type()
+        self.objects: Final[_LedgerEntryList] = self._list_type()
         """
         _LedgerEntryList: List of ledger entries.
         """
@@ -139,7 +140,7 @@ class AddressLedgerBase(
         The block through which all entries for this ledger have been loaded into memory.
         """
 
-        self._lock = Lock()
+        self._lock: Final = Lock()
         """
         Lock: Lock for synchronizing access to ledger entries.
         """
@@ -444,7 +445,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         """
         if self.cached_thru and end_block < self.cached_thru:
             return
-        end_block_nonce: int = await get_nonce_at_block(self.address, end_block)
+        address = self.address
+        end_block_nonce: int = await get_nonce_at_block(address, end_block)
         if nonces := tuple(range(self.cached_thru_nonce + 1, end_block_nonce + 1)):
             for i, nonce in enumerate(nonces):
                 self._queue.put_nowait(nonce)
@@ -461,7 +463,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
 
             transactions = []
             transaction: Optional[Transaction]
-            for _ in tqdm(range(len_nonces), desc=f"Transactions        {self.address}"):
+            for _ in tqdm(range(len_nonces), desc=f"Transactions        {address}"):
                 nonce, transaction = await self._ready.get()
                 if transaction:
                     if isinstance(transaction, Exception):
@@ -473,7 +475,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
                     self.cached_thru_nonce = 0
                 else:
                     # NOTE Are we sure this is the correct way to handle this scenario? Are we sure it will ever even occur with the new gnosis handling?
-                    logger.warning("No transaction with nonce %s for %s", nonce, self.address)
+                    logger.warning("No transaction with nonce %s for %s", nonce, address)
 
             self.__stop_workers()
 
@@ -716,24 +718,26 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
         if isinstance(end_block, float) and int(end_block) == end_block:
             end_block = int(end_block)
 
-        block_ranges = _get_block_ranges(start_block, end_block)
-
-        trace_filter_coros = [
-            get_traces(start, end, {direction: [self.address]})  # type: ignore [misc]
-            for direction, (start, end) in product(("toAddress", "fromAddress"), block_ranges)
-        ]
+        address = self.address
+        if start_block == end_block:
+            trace_filter_coros = [
+                get_traces(start_block, end_block, {"toAddress": [address]}),
+                get_traces(start_block, end_block, {"fromAddress": [address]}),
+            ]
+        else:
+            block_ranges = _get_block_ranges(start_block, end_block)
+            addr_filters = {"toAddress": [address]}, {"fromAddress": [address]}
+            trace_filter_coros = [
+                get_traces(start, end, addr_filter)
+                for (start, end), addr_filter in product(block_ranges, addr_filters)
+            ]
 
         # NOTE: We only want tqdm progress bar when there is work to do
-        block_range_len = len(block_ranges)
-        if block_range_len == 0:
-            raise ValueError(
-              f"There must be at least one block in the range. start: {start_block} end: {end_block}"
-            )
-        elif block_range_len == 1:
+        if len(trace_filter_coros) < 10:
             generator_function = a_sync.as_completed
         else:
             generator_function = partial(  # type: ignore [assignment]
-                a_sync.as_completed, tqdm=True, desc=f"Trace Filters       {self.address}"
+                a_sync.as_completed, tqdm=True, desc=f"Trace Filters       {address}"
             )
 
         traces = []
@@ -744,7 +748,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             internal_transfers = []
             append_transfer = internal_transfers.append
             load = InternalTransfer.from_trace
-            tqdm_desc = f"Internal Transfers  {self.address}"
+            tqdm_desc = f"Internal Transfers  {address}"
 
             if self.load_prices:
                 tasks = []
