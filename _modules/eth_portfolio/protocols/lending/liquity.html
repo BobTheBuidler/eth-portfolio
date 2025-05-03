@@ -1,0 +1,226 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eth_portfolio.protocols.lending.liquity &mdash; eth-portfolio  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            eth-portfolio
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../source/modules.html">eth_portfolio</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">eth-portfolio</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">eth_portfolio.protocols.lending.liquity</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for eth_portfolio.protocols.lending.liquity</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">async_lru</span> <span class="kn">import</span> <span class="n">alru_cache</span>
+<span class="kn">from</span> <span class="nn">y</span> <span class="kn">import</span> <span class="n">Contract</span><span class="p">,</span> <span class="n">Network</span><span class="p">,</span> <span class="n">get_price</span>
+<span class="kn">from</span> <span class="nn">y._decorators</span> <span class="kn">import</span> <span class="n">stuck_coro_debugger</span>
+<span class="kn">from</span> <span class="nn">y.constants</span> <span class="kn">import</span> <span class="n">EEE_ADDRESS</span>
+<span class="kn">from</span> <span class="nn">y.datatypes</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">Block</span>
+
+<span class="kn">from</span> <span class="nn">eth_portfolio.protocols.lending._base</span> <span class="kn">import</span> <span class="n">LendingProtocolWithLockedCollateral</span>
+<span class="kn">from</span> <span class="nn">eth_portfolio.typing</span> <span class="kn">import</span> <span class="n">Balance</span><span class="p">,</span> <span class="n">TokenBalances</span>
+
+<span class="n">lusd</span> <span class="o">=</span> <span class="s2">&quot;0x5f98805A4E8be255a32880FDeC7F6728C6568bA0&quot;</span>
+
+
+<div class="viewcode-block" id="Liquity">
+<a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.liquity.Liquity">[docs]</a>
+<span class="k">class</span> <span class="nc">Liquity</span><span class="p">(</span><span class="n">LendingProtocolWithLockedCollateral</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents the Liquity protocol, a decentralized borrowing protocol that allows users to draw loans against Ether collateral.</span>
+
+<span class="sd">    This class is a subclass of :class:`~eth_portfolio.protocols.lending._base.LendingProtocolWithLockedCollateral`, which means it maintains a debt balance for a user and holds collateral internally.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; liquity = Liquity()</span>
+<span class="sd">        &gt;&gt;&gt; balances = await liquity.balances(&quot;0xYourAddress&quot;, 12345678)</span>
+<span class="sd">        &gt;&gt;&gt; print(balances)</span>
+
+<span class="sd">    See Also:</span>
+<span class="sd">        - :class:`~eth_portfolio.protocols.lending._base.LendingProtocolWithLockedCollateral`</span>
+<span class="sd">        - :class:`~eth_portfolio.typing.TokenBalances`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">networks</span> <span class="o">=</span> <span class="p">[</span><span class="n">Network</span><span class="o">.</span><span class="n">Mainnet</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The networks on which the protocol is available.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Liquity.__init__">
+<a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.liquity.Liquity.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">troveManager</span> <span class="o">=</span> <span class="n">Contract</span><span class="p">(</span><span class="s2">&quot;0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The contract instance for the Trove Manager.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_block</span> <span class="o">=</span> <span class="mi">12178557</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The block number from which the protocol starts.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="Liquity.get_trove">
+<a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.liquity.Liquity.get_trove">[docs]</a>
+    <span class="nd">@alru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+    <span class="nd">@stuck_coro_debugger</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_trove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Block</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the trove data for a given address at a specific block.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            address: The Ethereum address of the user.</span>
+<span class="sd">            block: The block number to query.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; trove_data = await liquity.get_trove(&quot;0xYourAddress&quot;, 12345678)</span>
+<span class="sd">            &gt;&gt;&gt; print(trove_data)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">troveManager</span><span class="o">.</span><span class="n">Troves</span><span class="o">.</span><span class="n">coroutine</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">block_identifier</span><span class="o">=</span><span class="n">block</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Liquity._balances">
+<a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.liquity.Liquity._balances">[docs]</a>
+    <span class="nd">@stuck_coro_debugger</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_balances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenBalances</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the collateral balances for a given address at a specific block.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            address: The Ethereum address of the user.</span>
+<span class="sd">            block: The block number to query.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; balances = await liquity._balances(&quot;0xYourAddress&quot;, 12345678)</span>
+<span class="sd">            &gt;&gt;&gt; print(balances)</span>
+
+<span class="sd">        See Also:</span>
+<span class="sd">            - :class:`~eth_portfolio.typing.TokenBalances`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">balances</span><span class="p">:</span> <span class="n">TokenBalances</span> <span class="o">=</span> <span class="n">TokenBalances</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">block</span> <span class="ow">and</span> <span class="n">block</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_block</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">balances</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_trove</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span>
+        <span class="n">eth_collateral_balance</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">eth_collateral_balance</span><span class="p">:</span>
+            <span class="n">eth_collateral_balance</span> <span class="o">/=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">18</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">eth_collateral_balance</span> <span class="o">*</span> <span class="k">await</span> <span class="n">get_price</span><span class="p">(</span><span class="n">EEE_ADDRESS</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">balances</span><span class="p">[</span><span class="n">EEE_ADDRESS</span><span class="p">]</span> <span class="o">=</span> <span class="n">Balance</span><span class="p">(</span>
+                <span class="n">eth_collateral_balance</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">EEE_ADDRESS</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">balances</span></div>
+
+
+<div class="viewcode-block" id="Liquity._debt">
+<a class="viewcode-back" href="../../../../source/eth_portfolio.protocols.lending.html#eth_portfolio.protocols.lending.liquity.Liquity._debt">[docs]</a>
+    <span class="nd">@stuck_coro_debugger</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_debt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenBalances</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the debt balances for a given address at a specific block.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            address: The Ethereum address of the user.</span>
+<span class="sd">            block: The block number to query.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; debt_balances = await liquity._debt(&quot;0xYourAddress&quot;, 12345678)</span>
+<span class="sd">            &gt;&gt;&gt; print(debt_balances)</span>
+
+<span class="sd">        See Also:</span>
+<span class="sd">            - :class:`~eth_portfolio.typing.TokenBalances`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">balances</span><span class="p">:</span> <span class="n">TokenBalances</span> <span class="o">=</span> <span class="n">TokenBalances</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">block</span> <span class="ow">and</span> <span class="n">block</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_block</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">balances</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_trove</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span>
+        <span class="n">lusd_debt</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">lusd_debt</span><span class="p">:</span>
+            <span class="n">lusd_debt</span> <span class="o">/=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">18</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">lusd_debt</span> <span class="o">*</span> <span class="k">await</span> <span class="n">get_price</span><span class="p">(</span><span class="n">lusd</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">balances</span><span class="p">[</span><span class="n">lusd</span><span class="p">]</span> <span class="o">=</span> <span class="n">Balance</span><span class="p">(</span><span class="n">lusd_debt</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">lusd</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">balances</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, BobTheBuidler.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
