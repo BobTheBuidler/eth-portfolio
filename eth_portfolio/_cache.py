@@ -1,6 +1,6 @@
 import functools
 import inspect
-from asyncio import PriorityQueue, Task, current_task, get_event_loop
+from asyncio import AbstractEventLoop, PriorityQueue, Task, current_task, get_event_loop
 from concurrent.futures import Executor
 from hashlib import md5
 from logging import getLogger
@@ -8,7 +8,7 @@ from os import makedirs
 from os.path import exists, join
 from pickle import dumps, load, loads
 from random import random
-from typing import Any, Callable, List, NoReturn
+from typing import Any, Callable, List, NoReturn, Optional
 
 from a_sync import PruningThreadPoolExecutor
 from a_sync._typing import P, T
@@ -58,13 +58,17 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
                 logger.exception(e)
                 raise
 
+        loop: Optional[AbstractEventLoop] = None
         workers: List[Task[NoReturn]] = []
 
         @functools.wraps(fn)
         async def disk_cache_wrap(*args: P.args, **kwargs: P.kwargs) -> T:
             cache_path = get_cache_file_path(args, kwargs)
             if await _EXISTS_EXECUTOR.run(exists, cache_path):
-                fut = get_event_loop().create_future()
+                nonlocal loop
+                if loop is None:
+                    loop = get_event_loop()
+                fut = loop.create_future()
                 # we intentionally mix up the order to break up heavy load block ranges
                 queue.put_nowait((random(), fut, cache_path, args, kwargs))
                 if not workers:
