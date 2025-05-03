@@ -727,7 +727,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
         block_range_len = len(block_ranges)
         if block_range_len == 0:
             raise ValueError(
-                "There must be at least one block in the range. start: {start} end: {end}"
+              f"There must be at least one block in the range. start: {start_block} end: {end_block}"
             )
         elif block_range_len == 1:
             generator_function = a_sync.as_completed
