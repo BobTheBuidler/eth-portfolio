@@ -196,7 +196,7 @@ async def get_nonce_at_block(address: ChecksumAddress, block: Block) -> int:
         >>> print(f"The nonce at block {block} is {nonce}.")
 
     """
-    return await get_nonce_at_block(address, block)
+    return await _get_nonce_at_block(address, block)
 
 
 @alru_cache(ttl=60 * 60)
