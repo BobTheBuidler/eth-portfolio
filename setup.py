@@ -32,6 +32,7 @@ setup(
     include_package_data=True,
     ext_modules=mypycify(
         [
+            "eth_portfolio/_loaders/_nonce.py",
             "eth_portfolio/_loaders/balances.py",
             "eth_portfolio/_loaders/utils.py",
             "eth_portfolio/_argspec.py",

@@ -6,11 +6,8 @@ The functions defined here use various async operations to retrieve transaction 
 The primary focus of this module is to support eth-portfolio's internal operations such as loading transactions by address and nonce, retrieving transaction details from specific blocks, and managing transaction-related data.
 """
 
-import asyncio
-import itertools
-from collections import defaultdict
-from logging import DEBUG, getLogger
-from typing import DefaultDict, Dict, List, Optional, Tuple
+from logging import getLogger
+from typing import Final, List, Optional, Tuple
 
 import a_sync
 import dank_mids
@@ -18,12 +15,13 @@ import eth_retry
 import evmspec
 import msgspec
 from async_lru import alru_cache
+from eth_typing import ChecksumAddress
 from evmspec import data
 from pony.orm import TransactionIntegrityError
 from y import get_price
 from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
-from y.datatypes import Address, Block
+from y.datatypes import Block
 from y.exceptions import reraise_excs_with_extra_context
 from y.utils.events import decode_logs
 
@@ -31,20 +29,17 @@ from eth_portfolio.structs import structs
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._db import utils as db
 from eth_portfolio._decimal import Decimal
+from eth_portfolio._loaders._nonce import Nonce, get_block_for_nonce, get_nonce_at_block
 from eth_portfolio._loaders.utils import get_transaction_receipt
 
-logger = getLogger(__name__)
 
-Nonce = int
-Nonces = DefaultDict[Nonce, Block]
-
-nonces: DefaultDict[Address, Nonces] = defaultdict(lambda: defaultdict(int))
+logger: Final = getLogger(__name__)
 
 
 @eth_retry.auto_retry
 @stuck_coro_debugger
 async def load_transaction(
-    address: Address, nonce: Nonce, load_prices: bool
+    address: ChecksumAddress, nonce: Nonce, load_prices: bool
 ) -> Tuple[Nonce, Optional[structs.Transaction]]:
     """
     Loads a transaction by address and nonce.
@@ -94,105 +89,6 @@ async def load_transaction(
     return nonce, transaction
 
 
-@alru_cache(maxsize=None, ttl=5)
-async def _get_block_number():
-    return await dank_mids.eth.block_number
-
-
-_nonce_cache_locks: DefaultDict[Address, asyncio.Lock] = defaultdict(asyncio.Lock)
-
-
-async def get_block_for_nonce(address: Address, nonce: Nonce) -> int:
-    async with _nonce_cache_locks[address]:
-        highest_known_nonce_lower_than_query = None
-        lowest_known_nonce_greater_than_query = None
-
-        # it is impossible for n to == nonce
-        filtered = filter(lambda n: n != nonce, nonces[address])
-        for less_than, ns in itertools.groupby(filtered, lambda n: n < nonce):
-            if less_than:
-                max_value = max(ns)
-                if (
-                    highest_known_nonce_lower_than_query is None
-                    or max_value > highest_known_nonce_lower_than_query
-                ):
-                    highest_known_nonce_lower_than_query = max_value
-
-            else:
-                min_value = min(ns)
-                if (
-                    lowest_known_nonce_greater_than_query is None
-                    or min_value < lowest_known_nonce_greater_than_query
-                ):
-                    lowest_known_nonce_greater_than_query = min_value
-
-        if highest_known_nonce_lower_than_query is not None:
-            lo = nonces[address][highest_known_nonce_lower_than_query]
-        else:
-            lo = 0
-
-        if lowest_known_nonce_greater_than_query is not None:
-            hi = nonces[address][lowest_known_nonce_greater_than_query]
-        else:
-            hi = await _get_block_number()
-
-        del highest_known_nonce_lower_than_query, lowest_known_nonce_greater_than_query
-
-        # lets find the general area first before we proceed with our binary search
-        range_size = hi - lo + 1
-        if range_size > 4:
-            num_chunks = _get_num_chunks(range_size)
-            chunk_size = range_size // num_chunks
-            points: Dict[int, Nonce] = await a_sync.gather(
-                {
-                    point: get_nonce_at_block(address, point)
-                    for point in (lo + i * chunk_size for i in range(num_chunks))
-                }
-            )
-
-            for block, _nonce in points.items():
-                if _nonce >= nonce:
-                    hi = block
-                    break
-                lo = block
-
-            del num_chunks, chunk_size, points, block
-
-        del range_size
-
-    debug_logs_enabled = logger.isEnabledFor(DEBUG)
-    while True:
-        _nonce = await get_nonce_at_block(address, lo)
-
-        if _nonce < nonce:
-            old_lo = lo
-            lo += int((hi - lo) / 2) or 1
-            if debug_logs_enabled:
-                logger._log(
-                    DEBUG,
-                    "Nonce for %s at %s is %s, checking higher block %s",
-                    (address, old_lo, _nonce, lo),
-                )
-            continue
-
-        prev_block_nonce: int = await get_nonce_at_block(address, lo - 1)
-        if prev_block_nonce >= nonce:
-            hi = lo
-            lo = int(lo / 2)
-            if debug_logs_enabled:
-                logger._log(
-                    DEBUG,
-                    "Nonce for %s at %s is %s, checking lower block %s",
-                    (address, hi, _nonce, lo),
-                )
-            continue
-
-        if debug_logs_enabled:
-            logger._log(DEBUG, "Found nonce %s for %s at block %s", (nonce, address, lo))
-
-        return lo
-
-
 async def _insert_to_db(transaction: structs.Transaction, load_prices: bool) -> None:
     with reraise_excs_with_extra_context(transaction):
         try:
@@ -207,7 +103,7 @@ async def _insert_to_db(transaction: structs.Transaction, load_prices: bool) -> 
 @stuck_coro_debugger
 @cache_to_disk
 async def get_transaction_by_nonce_and_block(
-    address: Address, nonce: int, block: Block
+    address: ChecksumAddress, nonce: int, block: Block
 ) -> Optional[evmspec.Transaction]:
     """
     This function retrieves a transaction for a specifified address by its nonce and block, if any match.
@@ -277,7 +173,7 @@ class ReceiptLogs(msgspec.Struct):
 @eth_retry.auto_retry
 @stuck_coro_debugger
 @cache_to_disk
-async def get_nonce_at_block(address: Address, block: Block) -> int:
+async def get_nonce_at_block(address: ChecksumAddress, block: Block) -> int:
     """
     Retrieves the nonce of an address at a specific block.
 
@@ -296,21 +192,7 @@ async def get_nonce_at_block(address: Address, block: Block) -> int:
         >>> print(f"The nonce at block {block} is {nonce}.")
 
     """
-    try:
-        nonce = await dank_mids.eth.get_transaction_count(address, block_identifier=block) - 1
-        _update_nonces(address, nonce, block)
-        return nonce
-    except ValueError as e:
-        # NOTE this is known to occur on Arbitrum
-        if "error creating execution cursor" in str(e) and block == 0:
-            return -1
-        raise ValueError(f"For {address} at {block}: {e}") from e
-
-
-def _update_nonces(address: Address, nonce: Nonce, block: Block):
-    # if you are searching for `nonce` and you verified it occurs AT or ABOVE `block` call this fn.
-    if block > nonces[address][nonce]:
-        nonces[address][nonce] = block
+    return await get_nonce_at_block(address, block)
 
 
 @alru_cache(ttl=60 * 60)
@@ -348,28 +230,3 @@ Example:
     >>> transactions = await get_block_transactions.process(block=12345678)
     >>> [print(tx['hash']) for tx in transactions]
 """
-
-
-def _get_num_chunks(range_size: int) -> int:
-    if range_size >= 4096:
-        return 100
-    elif range_size >= 2048:
-        return 80
-    elif range_size >= 1024:
-        return 40
-    elif range_size >= 512:
-        return 20
-    elif range_size >= 256:
-        return 10
-    elif range_size >= 128:
-        return 8
-    elif range_size >= 64:
-        return 6
-    elif range_size >= 32:
-        return 5
-    elif range_size >= 16:
-        return 4
-    elif range_size >= 8:
-        return 3
-    else:
-        return 2

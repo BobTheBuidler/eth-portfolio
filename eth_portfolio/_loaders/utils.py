@@ -66,3 +66,8 @@ See Also:
 
 
 __get_transaction_receipt: Final = dank_mids.eth.get_transaction_receipt
+
+
+@alru_cache(maxsize=None, ttl=5)
+async def get_block_number():
+    return await dank_mids.eth.block_number
