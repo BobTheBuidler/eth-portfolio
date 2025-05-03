@@ -3,7 +3,7 @@ import logging
 from collections import defaultdict
 from itertools import groupby
 from time import time
-from typing import ClassVar, DefaultDict, Dict, Final, final
+from typing import ClassVar, DefaultDict, Dict, Final, Tuple, final
 
 import a_sync
 import dank_mids
@@ -27,7 +27,7 @@ locks: Final[DefaultDict[ChecksumAddress, asyncio.Lock]] = defaultdict(asyncio.L
 
 get_transaction_count: Final = dank_mids.eth.get_transaction_count
 
-gather: Final = a_sync.gather
+igather: Final = a_sync.igather
 
 now: Final = time
 
@@ -64,54 +64,38 @@ async def get_nonce_at_block(address: ChecksumAddress, block: BlockNumber) -> in
 
 async def get_block_for_nonce(address: ChecksumAddress, nonce: Nonce) -> int:
     async with locks[address]:
-        highest_known_nonce_lower_than_query = None
-        lowest_known_nonce_greater_than_query = None
+        highest_known_nonce_lt_query = None
+        lowest_known_nonce_gt_query = None
+
+        def lt_nonce(n: Nonce) -> bool:
+            return n < nonce
 
         # it is impossible for n to == nonce
-        for less_than, ns in groupby([n for n in nonces[address] if n != nonce], lambda n: n < nonce):
+        for less_than, ns in groupby([n for n in nonces[address] if n != nonce], lt_nonce):
             if less_than:
                 max_value = max(ns)
-                if (
-                    highest_known_nonce_lower_than_query is None
-                    or max_value > highest_known_nonce_lower_than_query
-                ):
-                    highest_known_nonce_lower_than_query = max_value
+                if highest_known_nonce_lt_query is None or max_value > highest_known_nonce_lt_query:
+                    highest_known_nonce_lt_query = max_value
 
             else:
                 min_value = min(ns)
-                if (
-                    lowest_known_nonce_greater_than_query is None
-                    or min_value < lowest_known_nonce_greater_than_query
-                ):
-                    lowest_known_nonce_greater_than_query = min_value
+                if lowest_known_nonce_gt_query is None or min_value < lowest_known_nonce_gt_query:
+                    lowest_known_nonce_gt_query = min_value
 
-        if highest_known_nonce_lower_than_query is not None:
-            lo = nonces[address][highest_known_nonce_lower_than_query]
+        if highest_known_nonce_lt_query is not None:
+            lo = nonces[address][highest_known_nonce_lt_query]
         else:
             lo = BlockNumber(0)
 
-        if lowest_known_nonce_greater_than_query is not None:
-            hi = nonces[address][lowest_known_nonce_greater_than_query]
+        if lowest_known_nonce_gt_query is not None:
+            hi = nonces[address][lowest_known_nonce_gt_query]
         else:
             hi = await get_block_number()
 
         # lets find the general area first before we proceed with our binary search
         range_size = hi - lo + 1
         if range_size > 4:
-            num_chunks = _get_num_chunks(range_size)
-            chunk_size = range_size // num_chunks
-            points: Dict[int, Nonce] = await gather(
-                {
-                    point: get_nonce_at_block(address, point)
-                    for point in (BlockNumber(lo + i * chunk_size) for i in range(num_chunks))
-                }
-            )
-
-            for block, _nonce in points.items():
-                if _nonce >= nonce:
-                    hi = block  # type: ignore [assignment]
-                    break
-                lo = block  # type: ignore [assignment]
+            lo, hi = await _get_area(address, nonce, lo, hi, range_size)
 
     debug_logs_enabled = logger_is_enabled(DEBUG)
     while True:
@@ -144,6 +128,24 @@ async def get_block_for_nonce(address: ChecksumAddress, nonce: Nonce) -> int:
             __log(DEBUG, "Found nonce %s for %s at block %s", (nonce, address, lo))
 
         return lo
+
+
+async def _get_area(
+    address: ChecksumAddress,
+    nonce: Nonce,
+    lo: BlockNumber,
+    hi: BlockNumber,
+    range_size: int,
+) -> Tuple[BlockNumber, BlockNumber]:
+    num_chunks = _get_num_chunks(range_size)
+    chunk_size = range_size // num_chunks
+    points = [BlockNumber(lo + i * chunk_size) for i in range(num_chunks)]
+    nonces = await igather(get_nonce_at_block(address, point) for point in points)
+    for block, n in zip(points, nonces):
+        if n >= nonce:
+            return lo, block
+        lo = block
+    return lo, hi
 
 
 def _update_nonces(address: ChecksumAddress, nonce: Nonce, block: BlockNumber):
@@ -195,4 +197,3 @@ async def get_block_number():
         block = BlockCache.block = await dank_mids.eth.block_number
         BlockCache.updated_at = ts
         return block
-        
