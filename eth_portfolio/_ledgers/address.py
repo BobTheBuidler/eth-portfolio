@@ -723,7 +723,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             ]
         else:
             block_ranges = _get_block_ranges(start_block, end_block)
-    
+
             trace_filter_coros = [
                 get_traces(start, end, {direction: [self.address]})  # type: ignore [misc]
                 for direction, (start, end) in product(("toAddress", "fromAddress"), block_ranges)
