@@ -104,7 +104,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         """
         if not isinstance(asynchronous, bool):
             raise TypeError(f"`asynchronous` must be a boolean, you passed {type(asynchronous)}")
-        
+
         self.asynchronous: Final = asynchronous
         """
         Flag indicating if the operations are asynchronous.
@@ -251,7 +251,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         """
         staking: "Task[RemoteTokenBalances]"
         collateral: RemoteTokenBalances
-        
+
         staking = create_task(self.staking(block, sync=False))  # type: ignore [arg-type]
         try:
             collateral = await self.collateral(block, sync=False)  # type: ignore [assignment]
@@ -385,10 +385,12 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         Examples:
             >>> all_entries = await address.all(12000000, 12345678)
         """
-        return await a_sync.gather({
-            "transactions": self.transactions.get(start_block, end_block, sync=False),
-            "internal_transactions": self.internal_transfers.get(
-                start_block, end_block, sync=False
-            ),
-            "token_transfers": self.token_transfers.get(start_block, end_block, sync=False),
-        })
+        return await a_sync.gather(
+            {
+                "transactions": self.transactions.get(start_block, end_block, sync=False),
+                "internal_transactions": self.internal_transfers.get(
+                    start_block, end_block, sync=False
+                ),
+                "token_transfers": self.token_transfers.get(start_block, end_block, sync=False),
+            }
+        )
