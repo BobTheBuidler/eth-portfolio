@@ -729,8 +729,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             addr_filters = {"toAddress": [address]}, {"fromAddress": [address]}
             trace_filter_coros = [
                 get_traces(start, end, addr_filter)
-                for (start, end), addr_filter
-                in product(block_ranges, addr_filters)
+                for (start, end), addr_filter in product(block_ranges, addr_filters)
             ]
 
         # NOTE: We only want tqdm progress bar when there is work to do
