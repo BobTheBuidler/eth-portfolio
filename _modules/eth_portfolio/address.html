@@ -179,7 +179,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">asynchronous</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`asynchronous` must be a boolean, you passed </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">asynchronous</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">asynchronous</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="n">asynchronous</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Flag indicating if the operations are asynchronous.</span>
@@ -338,7 +338,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">staking</span><span class="p">:</span> <span class="s2">&quot;Task[RemoteTokenBalances]&quot;</span>
         <span class="n">collateral</span><span class="p">:</span> <span class="n">RemoteTokenBalances</span>
-        
+
         <span class="n">staking</span> <span class="o">=</span> <span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">staking</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>  <span class="c1"># type: ignore [arg-type]</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">collateral</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">collateral</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># type: ignore [assignment]</span>
@@ -490,13 +490,15 @@
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; all_entries = await address.all(12000000, 12345678)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="n">a_sync</span><span class="o">.</span><span class="n">gather</span><span class="p">({</span>
-            <span class="s2">&quot;transactions&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-            <span class="s2">&quot;internal_transactions&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal_transfers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-                <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;token_transfers&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_transfers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-        <span class="p">})</span></div>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">a_sync</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;transactions&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                <span class="s2">&quot;internal_transactions&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal_transfers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span>
+                <span class="p">),</span>
+                <span class="s2">&quot;token_transfers&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_transfers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="p">}</span>
+        <span class="p">)</span></div>
 </div>
 
 </pre></div>
