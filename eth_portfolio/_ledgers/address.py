@@ -718,8 +718,8 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
 
         if start_block == end_block:
             trace_filter_coros = [
-                get_traces(start, end, {"toAddress"}: [self.address]}),
-                get_traces(start, end, {"fromAddress"}: [self.address]}),
+                get_traces(start, end, {"toAddress": [self.address]}),
+                get_traces(start, end, {"fromAddress": [self.address]}),
             ]
         else:
             block_ranges = _get_block_ranges(start_block, end_block)
