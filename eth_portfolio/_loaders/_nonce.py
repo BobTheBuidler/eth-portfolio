@@ -69,23 +69,17 @@ async def get_block_for_nonce(address: ChecksumAddress, nonce: Nonce) -> int:
 
         def lt_nonce(n: Nonce) -> bool:
             return n < nonce
-        
+
         # it is impossible for n to == nonce
         for less_than, ns in groupby([n for n in nonces[address] if n != nonce], lt_nonce):
             if less_than:
                 max_value = max(ns)
-                if (
-                    highest_known_nonce_lt_query is None
-                    or max_value > highest_known_nonce_lt_query
-                ):
+                if highest_known_nonce_lt_query is None or max_value > highest_known_nonce_lt_query:
                     highest_known_nonce_lt_query = max_value
 
             else:
                 min_value = min(ns)
-                if (
-                    lowest_known_nonce_gt_query is None
-                    or min_value < lowest_known_nonce_gt_query
-                ):
+                if lowest_known_nonce_gt_query is None or min_value < lowest_known_nonce_gt_query:
                     lowest_known_nonce_gt_query = min_value
 
         if highest_known_nonce_lt_query is not None:
@@ -137,11 +131,11 @@ async def get_block_for_nonce(address: ChecksumAddress, nonce: Nonce) -> int:
 
 
 async def _get_area(
-    address: ChecksumAddress, 
+    address: ChecksumAddress,
     nonce: Nonce,
-    lo: BlockNumber, 
-    hi: BlockNumber, 
-    range_size: int, 
+    lo: BlockNumber,
+    hi: BlockNumber,
+    range_size: int,
 ) -> Tuple[BlockNumber, BlockNumber]:
     num_chunks = _get_num_chunks(range_size)
     chunk_size = range_size // num_chunks
@@ -203,4 +197,3 @@ async def get_block_number():
         block = BlockCache.block = await dank_mids.eth.block_number
         BlockCache.updated_at = ts
         return block
-        
