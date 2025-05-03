@@ -733,7 +733,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             ]
 
         # NOTE: We only want tqdm progress bar when there is work to do
-        if start_block == end_block:
+        if len(trace_filter_coros) < 10:
             generator_function = a_sync.as_completed
         else:
             generator_function = partial(  # type: ignore [assignment]
