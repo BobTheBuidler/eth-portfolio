@@ -13,6 +13,7 @@ from typing import Any, Callable, Final, List, NoReturn, Optional
 from a_sync import PruningThreadPoolExecutor
 from a_sync._typing import P, T
 from a_sync.asyncio import create_task
+
 # TODO: rip out this deprecated func
 from a_sync.primitives.queue import log_broken
 from aiofiles import open as _aio_open
