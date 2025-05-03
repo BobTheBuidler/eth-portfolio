@@ -29,7 +29,8 @@ from eth_portfolio.structs import structs
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._db import utils as db
 from eth_portfolio._decimal import Decimal
-from eth_portfolio._loaders._nonce import Nonce, get_block_for_nonce, get_nonce_at_block
+from eth_portfolio._loaders._nonce import Nonce, get_block_for_nonce
+from eth_portfolio._loaders._nonce import get_nonce_at_block as _get_nonce_at_block
 from eth_portfolio._loaders.utils import get_transaction_receipt
 
 
@@ -167,6 +168,9 @@ class ReceiptContractAddress(msgspec.Struct):
 
 class ReceiptLogs(msgspec.Struct):
     logs: List[evmspec.Log]
+
+
+get_transaction_count: Final = dank_mids.eth.get_transaction_count
 
 
 @alru_cache(maxsize=None)

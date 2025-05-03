@@ -8,18 +8,19 @@ from os import makedirs
 from os.path import exists, join
 from pickle import dumps, load, loads
 from random import random
-from typing import Any, Callable, List, NoReturn, Optional
+from typing import Any, Callable, Final, List, NoReturn, Optional
 
 from a_sync import PruningThreadPoolExecutor
 from a_sync._typing import P, T
 from a_sync.asyncio import create_task
+# TODO: rip out this deprecated func
 from a_sync.primitives.queue import log_broken
 from aiofiles import open as _aio_open
 from brownie import chain
 
-BASE_PATH = f"./cache/{chain.id}/"
-_THREAD_NAME_PREFIX = "eth-portfolio-cache-decorator"
-_EXISTS_EXECUTOR = PruningThreadPoolExecutor(8, f"{_THREAD_NAME_PREFIX}-exists")
+BASE_PATH: Final = f"./cache/{chain.id}/"
+_THREAD_NAME_PREFIX: Final = "eth-portfolio-cache-decorator"
+_EXISTS_EXECUTOR: Final = PruningThreadPoolExecutor(8, f"{_THREAD_NAME_PREFIX}-exists")
 
 
 def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
@@ -42,7 +43,7 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
             8, f"{_THREAD_NAME_PREFIX}-{fn.__qualname__}-read"
         )
 
-        queue = PriorityQueue()
+        queue: PriorityQueue = PriorityQueue()
 
         async def cache_deco_worker_coro(func) -> NoReturn:
             try:
@@ -115,6 +116,5 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
 
 
 async def __cache_write(cache_path: str, result: Any, executor: Executor) -> None:
-    result = dumps(result)
     async with _aio_open(cache_path, "wb", executor=executor) as f:
-        await f.write(result)
+        await f.write(dumps(result))
