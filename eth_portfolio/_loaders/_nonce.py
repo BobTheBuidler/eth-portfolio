@@ -2,7 +2,8 @@ import asyncio
 import logging
 from collections import defaultdict
 from itertools import groupby
-from typing import DefaultDict, Dict, Final
+from time import time
+from typing import ClassVar, DefaultDict, Dict, Final, final
 
 import a_sync
 import dank_mids
@@ -24,10 +25,11 @@ GlobalNonces = DefaultDict[ChecksumAddress, AccountNonces]
 nonces: Final[GlobalNonces] = defaultdict(lambda: defaultdict(int))  # type: ignore [arg-type]
 locks: Final[DefaultDict[ChecksumAddress, asyncio.Lock]] = defaultdict(asyncio.Lock)
 
-get_block_number: Final = utils.get_block_number
 get_transaction_count: Final = dank_mids.eth.get_transaction_count
 
 gather: Final = a_sync.gather
+
+now: Final = time
 
 
 async def get_nonce_at_block(address: ChecksumAddress, block: BlockNumber) -> int:
@@ -173,3 +175,24 @@ def _get_num_chunks(range_size: int) -> int:
         return 3
     else:
         return 2
+
+
+@final
+class BlockCache:
+    block: ClassVar = 0
+    updated_at: ClassVar = 0.0
+    lock: Final = asyncio.Lock()
+    ttl: Final = 5.0
+
+
+async def get_block_number():
+    if now() - BlockCache.updated_at < BlockCache.ttl:
+        return BlockCache.block
+    async with BlockCache.lock:
+        if now() - BlockCache.updated_at < BlockCache.ttl:
+            return BlockCache.block
+        ts = now()
+        block = BlockCache.block = await dank_mids.eth.block_number
+        BlockCache.updated_at = ts
+        return block
+        
