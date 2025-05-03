@@ -722,7 +722,9 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
         # NOTE: We only want tqdm progress bar when there is work to do
         block_range_len = len(block_ranges)
         if block_range_len == 0:
-            raise ValueError("There must be at least one block in the range. start: {start} end: {end}")
+            raise ValueError(
+                "There must be at least one block in the range. start: {start} end: {end}"
+            )
         elif block_range_len == 1:
             generator_function = a_sync.as_completed
         else:
