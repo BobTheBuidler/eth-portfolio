@@ -86,8 +86,8 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">asyncio</span> <span class="kn">import</span> <span class="n">gather</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">asyncio</span> <span class="kn">import</span> <span class="n">Task</span><span class="p">,</span> <span class="n">create_task</span><span class="p">,</span> <span class="n">gather</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Final</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">final</span>
 
 <span class="kn">import</span> <span class="nn">a_sync</span>
 <span class="kn">import</span> <span class="nn">dank_mids</span>
@@ -111,11 +111,14 @@
 <span class="kn">from</span> <span class="nn">eth_portfolio.typing</span> <span class="kn">import</span> <span class="n">Balance</span><span class="p">,</span> <span class="n">RemoteTokenBalances</span><span class="p">,</span> <span class="n">TokenBalances</span><span class="p">,</span> <span class="n">WalletBalances</span>
 
 
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">checksum</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="n">convert</span><span class="o">.</span><span class="n">to_address</span>
 
 
 <div class="viewcode-block" id="PortfolioAddress">
 <a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.address.PortfolioAddress">[docs]</a>
+<span class="nd">@final</span>
 <span class="k">class</span> <span class="nc">PortfolioAddress</span><span class="p">(</span><span class="n">_LedgeredBase</span><span class="p">[</span><span class="n">AddressLedgerBase</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a portfolio address within the eth-portfolio system.</span>
@@ -170,32 +173,36 @@
 <span class="sd">            - :class:`~eth_portfolio._ledgers.address.AddressInternalTransfersLedger`</span>
 <span class="sd">            - :class:`~eth_portfolio._ledgers.address.AddressTokenTransfersLedger`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">convert</span><span class="o">.</span><span class="n">to_address</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="n">convert</span><span class="o">.</span><span class="n">to_address</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The address being managed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">asynchronous</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`asynchronous` must be a boolean, you passed </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">asynchronous</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">asynchronous</span> <span class="o">=</span> <span class="n">asynchronous</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">asynchronous</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="n">asynchronous</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Flag indicating if the operations are asynchronous.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">load_prices</span> <span class="o">=</span> <span class="n">load_prices</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_prices</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="n">load_prices</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Indicates if price loading is enabled.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">start_block</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span> <span class="o">=</span> <span class="n">AddressTransactionsLedger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_workers_transactions</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="n">AddressTransactionsLedger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_workers_transactions</span><span class="p">)</span>  <span class="c1"># type: ignore [misc]</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Ledger for tracking transactions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">internal_transfers</span> <span class="o">=</span> <span class="n">AddressInternalTransfersLedger</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">internal_transfers</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="n">AddressInternalTransfersLedger</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c1"># type: ignore [misc]</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Ledger for tracking internal transfers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">token_transfers</span> <span class="o">=</span> <span class="n">AddressTokenTransfersLedger</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">token_transfers</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="n">AddressTokenTransfersLedger</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c1"># type: ignore [misc]</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Ledger for tracking token transfers.</span>
 <span class="sd">        &quot;&quot;&quot;</span></div>
@@ -232,7 +239,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">PortfolioAddress</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">address</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">==</span> <span class="n">convert</span><span class="o">.</span><span class="n">to_address</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">==</span> <span class="n">checksum</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -272,7 +279,7 @@
             <span class="s2">&quot;debt&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">debt</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
             <span class="s2">&quot;external&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">external_balances</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
         <span class="p">}</span>
-        <span class="k">return</span> <span class="n">WalletBalances</span><span class="p">(</span><span class="k">await</span> <span class="n">a_sync</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">coros</span><span class="p">),</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">WalletBalances</span><span class="p">(</span><span class="k">await</span> <span class="n">a_sync</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">coros</span><span class="p">),</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>  <span class="c1"># type: ignore [arg-type]</span></div>
 
 
 <div class="viewcode-block" id="PortfolioAddress.assets">
@@ -291,7 +298,7 @@
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; assets = await address.assets(12345678)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">balances</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">balances</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># type: ignore [return-value]</span></div>
 
 
 <div class="viewcode-block" id="PortfolioAddress.debt">
@@ -329,8 +336,17 @@
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; external_balances = await address.external_balances(12345678)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">balances</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gather</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">staking</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">collateral</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">balances</span><span class="p">)</span>  <span class="c1"># type: ignore [arg-type, return-value]</span></div>
+        <span class="n">staking</span><span class="p">:</span> <span class="s2">&quot;Task[RemoteTokenBalances]&quot;</span>
+        <span class="n">collateral</span><span class="p">:</span> <span class="n">RemoteTokenBalances</span>
+        
+        <span class="n">staking</span> <span class="o">=</span> <span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">staking</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>  <span class="c1"># type: ignore [arg-type]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">collateral</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">collateral</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># type: ignore [assignment]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">staking</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+            <span class="k">raise</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">collateral</span> <span class="o">+</span> <span class="k">await</span> <span class="n">staking</span></div>
 
 
     <span class="c1"># Assets</span>
@@ -355,8 +371,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">eth_balance</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">token_balances</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
         <span class="p">)</span>
-        <span class="n">token_balances</span><span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">EEE_ADDRESS</span><span class="p">]</span> <span class="o">=</span> <span class="n">eth_balance</span>
-        <span class="k">return</span> <span class="n">token_balances</span></div>
+        <span class="n">token_balances</span><span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">EEE_ADDRESS</span><span class="p">]</span> <span class="o">=</span> <span class="n">eth_balance</span>  <span class="c1"># type: ignore [call-overload]</span>
+        <span class="k">return</span> <span class="n">token_balances</span>  <span class="c1"># type: ignore [return-value]</span></div>
 
 
 <div class="viewcode-block" id="PortfolioAddress.eth_balance">
@@ -377,7 +393,7 @@
 <span class="sd">            &gt;&gt;&gt; eth_balance = await address.eth_balance(12345678)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">balance</span> <span class="o">:=</span> <span class="k">await</span> <span class="n">dank_mids</span><span class="o">.</span><span class="n">eth</span><span class="o">.</span><span class="n">get_balance</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">block_identifier</span><span class="o">=</span><span class="nb">hex</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">block_identifier</span><span class="o">=</span><span class="n">block</span>  <span class="c1"># type: ignore [arg-type]</span>
         <span class="p">):</span>  <span class="c1"># TODO: move hex into dank</span>
             <span class="n">price</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_get_price</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">WRAPPED_GAS_COIN</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">Balance</span><span class="p">(</span>
@@ -474,14 +490,13 @@
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; all_entries = await address.all(12000000, 12345678)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">coros</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">a_sync</span><span class="o">.</span><span class="n">gather</span><span class="p">({</span>
             <span class="s2">&quot;transactions&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
             <span class="s2">&quot;internal_transactions&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal_transfers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
                 <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span>
             <span class="p">),</span>
             <span class="s2">&quot;token_transfers&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_transfers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="n">a_sync</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">coros</span><span class="p">)</span></div>
+        <span class="p">})</span></div>
 </div>
 
 </pre></div>
