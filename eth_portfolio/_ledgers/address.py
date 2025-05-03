@@ -716,20 +716,21 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
         if isinstance(end_block, float) and int(end_block) == end_block:
             end_block = int(end_block)
 
-        block_ranges = _get_block_ranges(start_block, end_block)
-
-        trace_filter_coros = [
-            get_traces(start, end, {direction: [self.address]})  # type: ignore [misc]
-            for direction, (start, end) in product(("toAddress", "fromAddress"), block_ranges)
-        ]
+        if start_block == end_block:
+            trace_filter_coros = [
+                get_traces(start, end, {"toAddress"}: [self.address]}),
+                get_traces(start, end, {"fromAddress"}: [self.address]}),
+            ]
+        else:
+            block_ranges = _get_block_ranges(start_block, end_block)
+    
+            trace_filter_coros = [
+                get_traces(start, end, {direction: [self.address]})  # type: ignore [misc]
+                for direction, (start, end) in product(("toAddress", "fromAddress"), block_ranges)
+            ]
 
         # NOTE: We only want tqdm progress bar when there is work to do
-        block_range_len = len(block_ranges)
-        if block_range_len == 0:
-            raise ValueError(
-              f"There must be at least one block in the range. start: {start_block} end: {end_block}"
-            )
-        elif block_range_len == 1:
+        if start_block == end_block:
             generator_function = a_sync.as_completed
         else:
             generator_function = partial(  # type: ignore [assignment]
