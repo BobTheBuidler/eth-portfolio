@@ -737,7 +737,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             generator_function = a_sync.as_completed
         else:
             generator_function = partial(  # type: ignore [assignment]
-                a_sync.as_completed, tqdm=True, desc=f"Trace Filters       {self.address}"
+                a_sync.as_completed, tqdm=True, desc=f"Trace Filters       {address}"
             )
 
         traces = []
@@ -748,7 +748,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             internal_transfers = []
             append_transfer = internal_transfers.append
             load = InternalTransfer.from_trace
-            tqdm_desc = f"Internal Transfers  {self.address}"
+            tqdm_desc = f"Internal Transfers  {address}"
 
             if self.load_prices:
                 tasks = []
