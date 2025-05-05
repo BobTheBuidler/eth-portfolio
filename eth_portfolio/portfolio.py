@@ -273,10 +273,10 @@ class Portfolio(a_sync.ASyncGenericBase):
         Type: 
             :class:`~web3.Web3`
         """
-    
+
     def __repr__(self) -> str:
         # NOTE: should we show addresses? for now we won't
-        #string = f"{type(self).__name__}(addresses={list(map(str, self.addresses))}"
+        # string = f"{type(self).__name__}(addresses={list(map(str, self.addresses))}"
         string = f"{type(self).__name__}(label={self.label}"
         if self._start_block:
             string += f", start_block={self._start_block}"
@@ -375,7 +375,9 @@ class Portfolio(a_sync.ASyncGenericBase):
         """
         assert block
         return PortfolioBalances(
-            await a_sync.gather({address.address: address.describe(block, sync=False) for address in self}),
+            await a_sync.gather(
+                {address.address: address.describe(block, sync=False) for address in self}
+            ),
             block=block,
         )
 
