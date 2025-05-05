@@ -203,9 +203,9 @@ async def get_nonce_at_block(address: ChecksumAddress, block: Block) -> int:
     return await _get_nonce_at_block(address, block)
 
 
-_get_block_transactions: Final[Callable[[Block], Awaitable[Transactions]]] = alru_cache(ttl=60*60)(
-    eth_retry.auto_retry(stuck_coro_debugger(dank_mids.eth.get_transactions))
-)
+_get_block_transactions: Final[Callable[[Block], Awaitable[Transactions]]] = alru_cache(
+    ttl=60 * 60
+)(eth_retry.auto_retry(stuck_coro_debugger(dank_mids.eth.get_transactions)))
 """
 Retrieves all transactions from a specific block.
 
