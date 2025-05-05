@@ -306,7 +306,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):  # 
             if token in self:
                 DefaultChecksumDict._setitem_nochecksum(
                     self,
-                    token, 
+                    token,
                     self._getitem_nochecksum(token) + balance,
                 )
             else:
@@ -1024,10 +1024,14 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         combined: PortfolioBalances = PortfolioBalances(block=block)
         for wallet, balance in dict.items(self):
             if balance:
-                DefaultChecksumDict._setitem_nochecksum(combined, wallet, combined._getitem_nochecksum(wallet) + balance)
+                DefaultChecksumDict._setitem_nochecksum(
+                    combined, wallet, combined._getitem_nochecksum(wallet) + balance
+                )
         for wallet, balance in dict.items(other):
             if balance:
-                DefaultChecksumDict._setitem_nochecksum(combined, wallet, combined._getitem_nochecksum(wallet) + balance)
+                DefaultChecksumDict._setitem_nochecksum(
+                    combined, wallet, combined._getitem_nochecksum(wallet) + balance
+                )
         return combined
 
     def __iadd__(self, other: "PortfolioBalances") -> "PortfolioBalances":
@@ -1041,7 +1045,9 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
 
         for wallet, balance in dict.items(other):
             if balance:
-                DefaultChecksumDict._setitem_nochecksum(self, wallet, self._getitem_nochecksum(wallet) + balance)
+                DefaultChecksumDict._setitem_nochecksum(
+                    self, wallet, self._getitem_nochecksum(wallet) + balance
+                )
         return self
 
     def __sub__(self, other: "PortfolioBalances") -> "PortfolioBalances":
@@ -1179,10 +1185,14 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
         combined: WalletBalancesRaw = WalletBalancesRaw(block=block)
         for wallet, balance in dict.items(self):
             if balance:
-                DefaultChecksumDict._setitem_nochecksum(combined, wallet, combined._getitem_nochecksum(wallet) + balance)
+                DefaultChecksumDict._setitem_nochecksum(
+                    combined, wallet, combined._getitem_nochecksum(wallet) + balance
+                )
         for wallet, balance in dict.items(other):
             if balance:
-                DefaultChecksumDict._setitem_nochecksum(combined, wallet, combined._getitem_nochecksum(wallet) + balance)
+                DefaultChecksumDict._setitem_nochecksum(
+                    combined, wallet, combined._getitem_nochecksum(wallet) + balance
+                )
         return combined
 
     def __iadd__(self, other: "WalletBalancesRaw") -> "WalletBalancesRaw":
@@ -1196,7 +1206,9 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
 
         for wallet, balance in dict.items(other):
             if balance:
-                DefaultChecksumDict._setitem_nochecksum(self, wallet, self._getitem_nochecksum(wallet) + balance)
+                DefaultChecksumDict._setitem_nochecksum(
+                    self, wallet, self._getitem_nochecksum(wallet) + balance
+                )
         return self
 
     def __sub__(self, other: "WalletBalancesRaw") -> "WalletBalancesRaw":
