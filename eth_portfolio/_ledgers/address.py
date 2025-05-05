@@ -507,8 +507,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
                 for i in range(num_workers - len_workers)
             )
 
-    @staticmethod
     async def __worker_fn(
+        self,
         address: ChecksumAddress,
         load_prices: bool,
         queue_get: Callable[[], Nonce],
@@ -522,7 +522,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
                 except Exception as e:
                     put_ready((nonce, e))
         except Exception as e:
-            logger.error(f"%s in %s __worker_coro", type(e), self)
+            logger.error("%s in %s __worker_coro", type(e), self)
             logger.exception(e)
             raise
 
