@@ -45,13 +45,14 @@ async def load_token_balance(token: y.ERC20, address: Address, block: Block) -> 
     except y.NonStandardERC20:
         logger.warning("NonStandardERC20 exc for %s", token)
         balance = _ZERO
+    token_address = token.address
     if not balance:
-        return Balance(token=token.address, block=block)
-    price = await _get_price(token, block)
+        return Balance(token=token_address, block=block)
+    price = await _get_price(token_address, block)
     return Balance(
         balance=round(balance, 18),
         usd_value=_calc_value(balance, price),
-        token=token.address,
+        token=token_address,
         block=block,
     )
 
