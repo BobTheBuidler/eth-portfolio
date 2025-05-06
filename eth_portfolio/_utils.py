@@ -7,6 +7,7 @@ from typing import (
     TYPE_CHECKING,
     AsyncGenerator,
     AsyncIterator,
+    Final,
     Generic,
     List,
     Optional,
@@ -21,9 +22,11 @@ from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
 from eth_abi.exceptions import InsufficientDataBytes
+from eth_typing import ChecksumAddress
 from pandas import DataFrame  # type: ignore
 from y import ERC20, Contract, Network
-from y.datatypes import Address, Block
+from y.constants import CHAINID, NETWORK_NAME
+from y.datatypes import AddressOrContract, Block
 from y.exceptions import (
     CantFetchParam,
     ContractNotVerified,
@@ -41,11 +44,12 @@ from eth_portfolio.typing import _T
 if TYPE_CHECKING:
     from eth_portfolio.structs import LedgerEntry
 
-logger = logging.getLogger(__name__)
 
-NON_STANDARD_ERC721 = {
+logger: Final = logging.getLogger(__name__)
+
+NON_STANDARD_ERC721: Final = {
     Network.Mainnet: ["0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB"],  # CryptoPunks
-}.get(chain.id, [])
+}.get(CHAINID, [])
 
 
 async def get_buffered_chain_height() -> int:
@@ -75,7 +79,7 @@ class Decimal(_decimal.Decimal):
         super().__init__()
 
 
-async def _describe_err(token: Address, block: Optional[Block]) -> str:
+async def _describe_err(token: AddressOrContract, block: Optional[Block]) -> str:
     """
     Assembles a string used to provide as much useful information as possible in PriceError messages
     """
@@ -86,17 +90,17 @@ async def _describe_err(token: Address, block: Optional[Block]) -> str:
 
     if block is None:
         if symbol:
-            return f"{symbol} {token} on {Network.name()}"
+            return f"{symbol} {token} on {NETWORK_NAME}"
 
-        return f"malformed token {token} on {Network.name()}"
+        return f"malformed token {token} on {NETWORK_NAME}"
 
     if symbol:
-        return f"{symbol} {token} on {Network.name()} at {block}"
+        return f"{symbol} {token} on {NETWORK_NAME} at {block}"
 
-    return f"malformed token {token} on {Network.name()} at {block}"
+    return f"malformed token {token} on {NETWORK_NAME} at {block}"
 
 
-_to_raise = (
+_to_raise: Final = (
     OSError,
     FileNotFoundError,
     NodeNotSynced,
@@ -108,7 +112,8 @@ _to_raise = (
 )
 
 
-async def _get_price(token: Address, block: Optional[int] = None) -> _decimal.Decimal:
+async def _get_price(token: AddressOrContract, block: Optional[int] = None) -> _decimal.Decimal:
+    token = str(token)
     with reraise_excs_with_extra_context(token, block):
         try:
             if await is_erc721(token):
@@ -137,7 +142,7 @@ async def _get_price(token: Address, block: Optional[int] = None) -> _decimal.De
 
 
 @alru_cache(maxsize=None)
-async def is_erc721(token: Address) -> bool:
+async def is_erc721(token: ChecksumAddress) -> bool:
     # This can probably be improved
     try:
         contract = await Contract.coroutine(token)
