@@ -1,13 +1,8 @@
-from typing import TYPE_CHECKING
-
 from a_sync import create_task
 from a_sync.asyncio import sleep0 as yield_to_loop
 
 from eth_portfolio_scripts import docker
 from eth_portfolio_scripts._utils import aiter_timestamps, parse_timedelta
-
-if TYPE_CHECKING:
-    from eth_portfolio_scripts._portfolio import ExportablePortfolio
 
 
 @docker.ensure_containers
