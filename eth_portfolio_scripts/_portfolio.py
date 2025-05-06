@@ -121,32 +121,33 @@ class ExportablePortfolio(Portfolio):
         bucket = await self.get_bucket(token)
         ts_millis = floor(ts.timestamp()) * 1000
         
-        yield victoria.types.PrometheusItem(
-            metric=victoria.Metric(
-                param="balance",
-                wallet=wallet,
-                token_address=token,
-                token=symbol,
-                bucket=bucket,
-                network=NETWORK_LABEL,
-                __name__=label_and_section,
+        return (
+            victoria.types.PrometheusItem(
+                metric=victoria.Metric(
+                    param="balance",
+                    wallet=wallet,
+                    token_address=token,
+                    token=symbol,
+                    bucket=bucket,
+                    network=NETWORK_LABEL,
+                    __name__=label_and_section,
+                ),
+                values=[float(bal.balance)], 
+                timestamps=[ts_millis],
+            ), 
+            victoria.types.PrometheusItem(
+                metric=victoria.Metric(
+                    param="usd value",
+                    wallet=wallet,
+                    token_address=token,
+                    token=symbol,
+                    bucket=bucket,
+                    network=NETWORK_LABEL,
+                    __name__=label_and_section,
+                ),
+                values=[float(bal.usd)], 
+                timestamps=[ts_millis],
             ),
-            values=[float(bal.balance)], 
-            timestamps=[ts_millis],
-        )
-        
-        yield victoria.types.PrometheusItem(
-            metric=victoria.Metric(
-                param="usd value",
-                wallet=wallet,
-                token_address=token,
-                token=symbol,
-                bucket=bucket,
-                network=NETWORK_LABEL,
-                __name__=label_and_section,
-            ),
-            values=[float(bal.usd)], 
-            timestamps=[ts_millis],
         )
 
 
