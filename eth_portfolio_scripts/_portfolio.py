@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from math import floor
 from typing import Awaitable, Callable, Final, Iterator, List, Optional, Tuple
 
@@ -60,6 +60,7 @@ class ExportablePortfolio(Portfolio):
         print(f'checking data at {dt} for {self}')
         if not await self.data_exists(dt, sync=False):
             print(f'exporting {dt} for {self}')
+            start = datetime.now(tz=timezone.utc)
             while True:
                 try:
                     block = await get_block_at_timestamp(dt, sync=False)
@@ -69,7 +70,7 @@ class ExportablePortfolio(Portfolio):
                     break
             print(f"block at {dt}: {block}")
             data = await self.get_data_for_export(block, dt, sync=False)
-            print(f"got data for block {block} for {self}")
+            print(f"got data for block {block} for {self} in {datetime.now(tz=timezone.utc) - start}")
             await victoria.post_data(data)
 
     @a_sync.Semaphore(10_000)
@@ -77,10 +78,10 @@ class ExportablePortfolio(Portfolio):
         metrics_to_export = []
         data: PortfolioBalances = await self.describe(block, sync=False)
 
-        for wallet, wallet_data in data.items():
+        for wallet, wallet_data in dict.items(data):
             for section, section_data in wallet_data.items():
                 if isinstance(section_data, TokenBalances):
-                    for token, bals in section_data.items():
+                    for token, bals in dict.items(section_data):
                         metrics_to_export.extend(
                             await self.__process_token(ts, section, wallet, token, bals)
                         )
@@ -88,7 +89,7 @@ class ExportablePortfolio(Portfolio):
                     if section == 'external':
                         section = 'assets'
                     for protocol, token_bals in section_data.items():
-                        for token, bals in token_bals.items():
+                        for token, bals in dict.items(token_bals):
                             metrics_to_export.extend(
                                 await self.__process_token(ts, section, wallet, token, bals, protocol=protocol)
                             )

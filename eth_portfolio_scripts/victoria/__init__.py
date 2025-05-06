@@ -52,18 +52,18 @@ async def post_data(metrics_to_export: List["Metric"]) -> None:
     session = get_session()
     while True:
         try:
-            await session.post(
-                "api/v1/import",
+            async with session.post(
+                "/api/v1/import",
                 headers =  {'Connection': 'close', 'Content-Encoding': 'gzip'},
                 data = data,
-            )
+            ):
+                logger.debug(f"posted {len(data)} datas")
+                return
         except ClientError as e:
             attempts += 1
             logger.debug('You had a ClientError: %s', e)
             if attempts >= 10:
                 raise e
-        else:
-            return
 
 
 def __set_session(sesh: ClientSession) -> None:
