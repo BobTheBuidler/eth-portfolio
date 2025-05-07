@@ -13,7 +13,7 @@ Raw: Final = msgspec.Raw
 TxReceiptQueue = SmartProcessingQueue[HexStr, [], msgspec.Raw]
 
 
-@eth_retry.auto_retry
+@eth_retry.auto_retry(min_sleep_time=1, max_sleep_time=3, max_retries=20)
 @alru_cache(maxsize=None, ttl=60 * 60)
 @stuck_coro_debugger
 async def _get_transaction_receipt(txhash: HexStr) -> msgspec.Raw:
