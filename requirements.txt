@@ -7,4 +7,4 @@ ez-a-sync>=0.32.7
 numpy<2
 pandas>=1.4.3,<1.6
 typed-envs>=0.0.9
-ypricemagic>=4.4.15,<5
+ypricemagic>=4.5.4,<5
