@@ -7,13 +7,14 @@ The primary focus of this module is to support eth-portfolio's internal operatio
 """
 
 from logging import getLogger
-from typing import Final, List, Optional, Tuple
+from typing import Awaitable, Callable, Final, List, Optional, Tuple
 
 import a_sync
 import dank_mids
 import eth_retry
 import evmspec
 import msgspec
+from a_sync import SmartProcessingQueue
 from async_lru import alru_cache
 from eth_typing import ChecksumAddress
 from evmspec import data
@@ -32,6 +33,9 @@ from eth_portfolio._decimal import Decimal
 from eth_portfolio._loaders._nonce import Nonce, get_block_for_nonce
 from eth_portfolio._loaders._nonce import get_nonce_at_block as _get_nonce_at_block
 from eth_portfolio._loaders.utils import get_transaction_receipt
+
+
+Transactions = List[evmspec.Transaction]
 
 
 logger: Final = getLogger(__name__)
@@ -199,31 +203,31 @@ async def get_nonce_at_block(address: ChecksumAddress, block: Block) -> int:
     return await _get_nonce_at_block(address, block)
 
 
-@alru_cache(ttl=60 * 60)
-@eth_retry.auto_retry
-@stuck_coro_debugger
-async def _get_block_transactions(block: Block) -> List[evmspec.Transaction]:
-    """
-    Retrieves all transactions from a specific block.
+_get_block_transactions: Final[Callable[[Block], Awaitable[Transactions]]] = alru_cache(
+    ttl=60 * 60
+)(eth_retry.auto_retry(stuck_coro_debugger(dank_mids.eth.get_transactions)))
+"""
+Retrieves all transactions from a specific block.
 
-    This function fetches the full transaction data for a block using async caching to optimize repeated requests.
+This function fetches the full transaction data for a block using async caching to optimize repeated requests.
 
-    The cache has a time-to-live (TTL) of 1 hour to avoid memory leaks for services or long-running scripts.
+The cache has a time-to-live (TTL) of 1 hour to avoid memory leaks for services or long-running scripts.
 
-    Args:
-        block: The block number from which to retrieve the transactions.
+Args:
+    block: The block number from which to retrieve the transactions.
 
-    Returns:
-        A list of transaction data objects from the block.
+Returns:
+    A list of transaction data objects from the block.
 
-    Example:
-        >>> transactions = await _get_block_transactions(block=12345678)
-        >>> [print(tx.hash) for tx in transactions]
-    """
-    return await dank_mids.eth.get_transactions(block)
+Example:
+    >>> transactions = await _get_block_transactions(block=12345678)
+    >>> [print(tx.hash) for tx in transactions]
+"""
 
 
-get_block_transactions = a_sync.SmartProcessingQueue(_get_block_transactions, 1_000)
+get_block_transactions: Final[SmartProcessingQueue[Block, [], Transactions]] = SmartProcessingQueue(
+    _get_block_transactions, 1_000
+)
 """
 A smart processing queue that retrieves transactions from blocks with managable concurrency.
 
