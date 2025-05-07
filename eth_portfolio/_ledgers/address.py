@@ -583,6 +583,7 @@ async def __trace_filter(
 
 
 @alru_cache(maxsize=None)
+@eth_retry.auto_retry(min_sleep_time=1, max_sleep_time=3, max_retries=20, suppress_logs=1)
 async def get_transaction_status(txhash: str) -> Status:
     """
     Retrieves the status for a transaction.
