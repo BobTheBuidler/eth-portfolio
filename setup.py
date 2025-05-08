@@ -20,7 +20,7 @@ try:
             "eth_portfolio/_argspec.py",
             "eth_portfolio/_config.py",
             "eth_portfolio/_shitcoins.py",
-            "eth_portfolio/_submodules.py",
+            #"eth_portfolio/_submodules.py",
             "eth_portfolio/constants.py",
             #"eth_portfolio_scripts/victoria/__init__.py",  # this one built fine with other files but wont alone
             #"eth_portfolio_scripts/_portfolio.py",
