@@ -38,6 +38,7 @@ setup(
             "eth_portfolio/_argspec.py",
             "eth_portfolio/_config.py",
             "eth_portfolio/_shitcoins.py",
+            "eth_portfolio/_submodules.py",
             "eth_portfolio/constants.py",
             "--strict",
             "--pretty",
