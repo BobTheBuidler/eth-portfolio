@@ -59,8 +59,9 @@ args = parser.parse_args()
 if hasattr(args, "network"):
     environ['BROWNIE_NETWORK_ID'] = args.network
 
-environ['GF_PORT'] = str(args.grafana_port)
+environ['GRAFANA_PORT'] = str(args.grafana_port)
 environ['RENDERER_PORT'] = str(args.renderer_port)
+environ['VICTORIA_PORT'] = str(args.victoria_port)
 
 # TODO: run forever arg
 def main():

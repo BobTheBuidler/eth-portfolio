@@ -5,7 +5,7 @@ services:
   grafana:
     image: grafana/grafana:10.2.0
     ports:
-      - ${GF_PORT:-3000}:3000
+      - 127.0.0.1:${GRAFANA_PORT:-3000}:3000
     environment:
       #- GF_PORT
       - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER:-admin}
@@ -62,9 +62,7 @@ services:
       - "-retentionPeriod=10y"
       - "-search.disableAutoCacheReset=true"
     ports:
-      # NOTE: change the port to default 8428 for prod
-      #- 127.0.0.1:${VICTORIA_PORT:-8430}:8430
-      - ${VICTORIA_PORT:-8430}:8428
+      - 127.0.0.1:${VICTORIA_PORT:-8428}:8428
     networks:
       - eth_portfolio
     restart: always

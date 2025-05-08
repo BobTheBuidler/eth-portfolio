@@ -17,3 +17,9 @@ def add_infra_port_args(parser: ArgumentParser) -> None:
         help='The port that will be used by grafana',
         default=8091,
     )
+    parser.add_argument(
+        "--victoria-port",
+        type=int,
+        help="The port that will be used by victoria metrics",
+        default=8428,
+    )
