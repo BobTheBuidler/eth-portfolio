@@ -1,37 +1,26 @@
 import asyncio
+from argparse import ArgumentParser
 from os import environ
 
 import brownie
 
-from eth_portfolio_scripts._args import get_arg_parser
 from eth_portfolio_scripts import docker, logger
+from eth_portfolio_scripts._args import add_infra_port_args
 from eth_portfolio_scripts.balances import export_balances
 
 
-
-parser = get_arg_parser(description="eth-portfolio")
-
-parser.add_argument(
-    '--grafana-port',
-    type=int,
-    help='The port that will be used by grafana',
-    default=3000,
-)
-parser.add_argument(
-    '--renderer-port',
-    type=int,
-    help='The port that will be used by grafana',
-    default=8091,
-)
+parser = ArgumentParser(description="eth-portfolio")
 
 subparsers = parser.add_subparsers(title="Commands", dest="command", required=True)
 
 export_parser = subparsers.add_parser("export", help="Export a specific dataset for your portfolio")
 export_parser.add_argument("target", help="Choose an exporter to run")
+add_infra_port_args(export_parser)
 export_parser.set_defaults(func=export_balances)
 
 infra_parser = subparsers.add_parser("infra", help="Start the docker containers required to run any eth-portfolio service")
 infra_parser.add_argument("cmd", help="What do you want to do?")
+add_infra_port_args(infra_parser)
 
 export_parser.add_argument(
     '--wallet',
