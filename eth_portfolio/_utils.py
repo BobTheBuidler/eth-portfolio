@@ -184,7 +184,7 @@ class _AiterMixin(ASyncIterable[_T]):
 
     @abstractmethod
     async def _get_and_yield(
-        self, start_block: Block, end_block: Block
+        self, start_block: Block, end_block: Block, mem_cache: bool
     ) -> AsyncGenerator[_T, None]:
         yield
 
@@ -214,10 +214,10 @@ class _LedgeredBase(ASyncGenericBase, _AiterMixin["LedgerEntry"], Generic[_LT]):
 
     @cached_property
     def _ledgers(self) -> Tuple[_LT, _LT, _LT]:
-        """An iterator with the 3 ledgers (transactions, internal transfers, token transfers)"""
+        """A tuple with the 3 ledgers (transactions, internal transfers, token transfers)"""
         return self.transactions, self.internal_transfers, self.token_transfers
 
     def _get_and_yield(
-        self, start_block: Block, end_block: Block
+        self, start_block: Block, end_block: Block, mem_cache: bool
     ) -> AsyncGenerator["LedgerEntry", None]:
-        return as_yielded(*(ledger[start_block:end_block] for ledger in self._ledgers))  # type: ignore [return-value,index]
+        return as_yielded(*(ledger._get_and_yield(start_block, end_block, mem_cache) for ledger in self._ledgers))  # type: ignore [return-value,index]
