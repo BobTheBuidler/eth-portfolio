@@ -746,7 +746,8 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
         internal_transfers = []
         append_transfer = internal_transfers.append
         tqdm_desc = f"Internal Transfers  {address}"
-        
+
+        done = 0
         if self.load_prices:
             traces = []
             async for chunk in generator_function(trace_filter_coros, aiter=True):
@@ -763,7 +764,6 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
                     # without waiting for all tasks to be created
                     await yield_to_loop()
 
-                done = 0
                 async for internal_transfer in a_sync.as_completed(
                     tasks, aiter=True, tqdm=True, desc=tqdm_desc
                 ):
@@ -782,12 +782,13 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
                     if internal_transfer is not None:
                         append_transfer(internal_transfer)
                         yield internal_transfer
-                    if i % 1000 == 0:
+
+                    done += 1
+                    if done % 1000 == 0:
                         await yield_to_loop()
 
-            if internal_transfers:
-                self.objects.extend(internal_transfers)
-
+        if internal_transfers:
+            self.objects.extend(internal_transfers)
             self.objects.sort(key=lambda t: (t.block_number, t.transaction_index))
 
         if self.cached_from is None or start_block < self.cached_from:
