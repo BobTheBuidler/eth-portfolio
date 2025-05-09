@@ -35,6 +35,7 @@ from typing import (
 import a_sync
 import dank_mids
 import eth_retry
+from a_sync.asyncio import sleep0 as yield_to_loop
 from aiohttp import ClientResponseError
 from async_lru import alru_cache
 from brownie import chain
@@ -196,7 +197,7 @@ class AddressLedgerBase(
             nonlocal num_yielded
             num_yielded += 1
             if num_yielded % 100 == 0:
-                await sleep(0)
+                await yield_to_loop()
 
         if self.objects and end_block and self.objects[-1].block_number > end_block:
             for ledger_entry in self.objects:
@@ -454,7 +455,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
                 # Keep the event loop relatively unblocked
                 # and let the rpc start doing work asap
                 if i % 1000:
-                    await sleep(0)
+                    await yield_to_loop()
 
             len_nonces = len(nonces)
             del nonces
@@ -645,7 +646,7 @@ async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
     for i, trace in enumerate(traces):
         # Make sure we don't block up the event loop
         if i % 500:
-            await sleep(0)
+            await yield_to_loop()
 
         if "error" in trace:
             continue
@@ -741,26 +742,26 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
                 a_sync.as_completed, tqdm=True, desc=f"Trace Filters       {address}"
             )
 
-        traces = []
-        async for chunk in generator_function(trace_filter_coros, aiter=True):
-            traces.extend(chunk)
-
-        if traces:
-            internal_transfers = []
-            append_transfer = internal_transfers.append
-            load = InternalTransfer.from_trace
-            tqdm_desc = f"Internal Transfers  {address}"
-
-            if self.load_prices:
+        load = InternalTransfer.from_trace
+        internal_transfers = []
+        append_transfer = internal_transfers.append
+        tqdm_desc = f"Internal Transfers  {address}"
+        
+        if self.load_prices:
+            traces = []
+            async for chunk in generator_function(trace_filter_coros, aiter=True):
+                traces.extend(chunk)
+    
+            if traces:
                 tasks = []
                 while traces:
                     tasks.extend(
-                        create_task(load(trace, load_prices=True)) for trace in traces[:1000]
+                        create_task(load(trace, load_prices=True)) for trace in traces[:5000]
                     )
-                    traces = traces[1000:]
+                    traces = traces[5000:]
                     # let the tasks start sending calls to your node now
                     # without waiting for all tasks to be created
-                    await sleep(0)
+                    await yield_to_loop()
 
                 done = 0
                 async for internal_transfer in a_sync.as_completed(
@@ -771,19 +772,18 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
                         yield internal_transfer
 
                     done += 1
-                    if done % 100 == 0:
-                        await sleep(0)
+                    if done % 1000 == 0:
+                        await yield_to_loop()
 
-            else:
-                pop_next_trace = traces.pop
-                for i in tqdm(tuple(range(len(traces))), desc=tqdm_desc):
-                    internal_transfer = await load(pop_next_trace(), load_prices=False)
+        else:
+            async for chunk in generator_function(trace_filter_coros, aiter=True):
+                for trace in chunk:
+                    internal_transfer = await load(trace, load_prices=False)
                     if internal_transfer is not None:
                         append_transfer(internal_transfer)
                         yield internal_transfer
-
-                    if i % 100 == 0:
-                        await sleep(0)
+                    if i % 1000 == 0:
+                        await yield_to_loop()
 
             if internal_transfers:
                 self.objects.extend(internal_transfers)
@@ -903,7 +903,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
                 # Don't let the event loop get congested
                 done += 1
                 if done % 100 == 0:
-                    await sleep(0)
+                    await yield_to_loop()
 
             if token_transfers:
                 self.objects.extend(token_transfers)
