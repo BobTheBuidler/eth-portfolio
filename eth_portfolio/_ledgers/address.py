@@ -286,7 +286,7 @@ class AddressLedgerBase(
 
     @stuck_coro_debugger
     @set_end_block_if_none
-    async def _get_new_objects(self, start_block: Block, end_block: Block, mem_cache: bool = True) -> AsyncIterator[T]:
+    async def _get_new_objects(self, start_block: Block, end_block: Block, mem_cache: bool) -> AsyncIterator[T]:
         """
         Retrieves new ledger entries between the specified blocks.
 
