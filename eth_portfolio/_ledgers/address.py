@@ -176,7 +176,7 @@ class AddressLedgerBase(
         """
         return self.portfolio_address._start_block
 
-    async def _get_and_yield(self, start_block: Block, end_block: Block) -> AsyncGenerator[T, None]:
+    async def _get_and_yield(self, start_block: Block, end_block: Block, mem_cache: bool) -> AsyncGenerator[T, None]:
         """
         Yields ledger entries between the specified blocks.
 
@@ -196,8 +196,14 @@ class AddressLedgerBase(
             """
             nonlocal num_yielded
             num_yielded += 1
-            if num_yielded % 100 == 0:
+            if num_yielded % 500 == 0:
                 await yield_to_loop()
+
+        if not mem_cache:
+            for ledger_entry in self._get_new_objects(start_block, end_block, False):
+                yield ledger_entry
+                await unblock_loop()
+            return
 
         if self.objects and end_block and self.objects[-1].block_number > end_block:
             for ledger_entry in self.objects:
@@ -219,7 +225,7 @@ class AddressLedgerBase(
             yield ledger_entry
             yielded.add(ledger_entry)
             await unblock_loop()
-        async for ledger_entry in self._get_new_objects(start_block, end_block):  # type: ignore [assignment, misc]
+        async for ledger_entry in self._get_new_objects(start_block, end_block, True):  # type: ignore [assignment, misc]
             if ledger_entry not in yielded:
                 yield ledger_entry
                 yielded.add(ledger_entry)
