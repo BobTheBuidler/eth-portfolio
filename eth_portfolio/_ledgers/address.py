@@ -200,7 +200,7 @@ class AddressLedgerBase(
                 await yield_to_loop()
 
         if not mem_cache:
-            for ledger_entry in self._get_new_objects(start_block, end_block, False):
+            async for ledger_entry in self._get_new_objects(start_block, end_block, False):
                 yield ledger_entry
                 await unblock_loop()
             return
