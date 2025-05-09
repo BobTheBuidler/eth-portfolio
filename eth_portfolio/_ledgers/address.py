@@ -286,7 +286,7 @@ class AddressLedgerBase(
 
     @stuck_coro_debugger
     @set_end_block_if_none
-    async def _get_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[T]:
+    async def _get_new_objects(self, start_block: Block, end_block: Block, mem_cache: bool = True) -> AsyncIterator[T]:
         """
         Retrieves new ledger entries between the specified blocks.
 
@@ -298,11 +298,11 @@ class AddressLedgerBase(
             AsyncIterator[T]: An async iterator of new ledger entries.
         """
         async with self._lock:
-            async for ledger_entry in self._load_new_objects(start_block, end_block):
+            async for ledger_entry in self._load_new_objects(start_block, end_block, mem_cache):
                 yield ledger_entry
 
     @abstractmethod
-    async def _load_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[T]:
+    async def _load_new_objects(self, start_block: Block, end_block: Block, mem_cache: bool) -> AsyncIterator[T]:
         """
         Abstract method to load new ledger entries between the specified blocks.
 
@@ -433,7 +433,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
 
     @stuck_coro_debugger
     @set_end_block_if_none
-    async def _load_new_objects(self, _: Block, end_block: Block) -> AsyncIterator[Transaction]:  # type: ignore [override]
+    async def _load_new_objects(self, _: Block, end_block: Block, mem_cache: bool) -> AsyncIterator[Transaction]:  # type: ignore [override]
         """
         Loads new transaction entries between the specified blocks.
 
@@ -446,6 +446,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         """
         if self.cached_thru and end_block < self.cached_thru:
             return
+        if not mem_cache:
+            logger.warning(f"{type(self).__name__}._load_new_objects mem_cache arg is not yet implemented
         address = self.address
         end_block_nonce: int = await get_nonce_at_block(address, end_block)
         if nonces := tuple(range(self.cached_thru_nonce + 1, end_block_nonce + 1)):
@@ -691,7 +693,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
     @stuck_coro_debugger
     @set_end_block_if_none
     async def _load_new_objects(
-        self, start_block: Block, end_block: Block, mem_cache: bool = True
+        self, start_block: Block, end_block: Block, mem_cache: bool
     ) -> AsyncIterator[InternalTransfer]:
         """
         Loads new internal transfer entries between the specified blocks.
@@ -871,7 +873,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
 
     @stuck_coro_debugger
     @set_end_block_if_none
-    async def _load_new_objects(self, start_block: Block, end_block: Block) -> AsyncIterator[TokenTransfer]:  # type: ignore [override]
+    async def _load_new_objects(self, start_block: Block, end_block: Block, mem_cache: bool) -> AsyncIterator[TokenTransfer]:  # type: ignore [override]
         """
         Loads new token transfer entries between the specified blocks.
 
@@ -882,6 +884,9 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         Yields:
             AsyncIterator[TokenTransfer]: An async iterator of token transfer entries.
         """
+        if not mem_cache:
+            logger.warning(f"{type(self).__name__}._load_new_objects mem_cache arg is not yet implemented
+        
         try:
             start_block, end_block = self._check_blocks_against_cache(start_block, end_block)
         except _exceptions.BlockRangeIsCached:
