@@ -447,7 +447,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         if self.cached_thru and end_block < self.cached_thru:
             return
         if not mem_cache:
-            logger.warning(f"{type(self).__name__}._load_new_objects mem_cache arg is not yet implemented
+            logger.warning(f"{type(self).__name__}._load_new_objects mem_cache arg is not yet implemented")
         address = self.address
         end_block_nonce: int = await get_nonce_at_block(address, end_block)
         if nonces := tuple(range(self.cached_thru_nonce + 1, end_block_nonce + 1)):
@@ -885,7 +885,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
             AsyncIterator[TokenTransfer]: An async iterator of token transfer entries.
         """
         if not mem_cache:
-            logger.warning(f"{type(self).__name__}._load_new_objects mem_cache arg is not yet implemented
+            logger.warning(f"{type(self).__name__}._load_new_objects mem_cache arg is not yet implemented")
         
         try:
             start_block, end_block = self._check_blocks_against_cache(start_block, end_block)
