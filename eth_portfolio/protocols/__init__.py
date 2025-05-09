@@ -3,14 +3,15 @@ from typing import List, Optional
 import a_sync
 from y.datatypes import Address, Block
 
-from eth_portfolio._utils import _get_protocols_for_submodule, _import_submodules
+from eth_portfolio._submodules import import_submodules, get_protocols
 from eth_portfolio.protocols import lending
 from eth_portfolio.protocols._base import StakingPoolABC
 from eth_portfolio.typing import RemoteTokenBalances
 
-_import_submodules()
 
-protocols: List[StakingPoolABC] = _get_protocols_for_submodule()  # type: ignore [assignment]
+import_submodules()
+
+protocols: List[StakingPoolABC] = get_protocols()  # type: ignore [assignment]
 
 
 @a_sync.future

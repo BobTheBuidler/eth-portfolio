@@ -1,19 +1,14 @@
-import importlib
-import inspect
 import logging
-import pkgutil
 import sqlite3
 from abc import abstractmethod
 from datetime import datetime
 from functools import cached_property
-from types import ModuleType
 from typing import (
     TYPE_CHECKING,
     AsyncGenerator,
     AsyncIterator,
-    Dict,
+    Final,
     Generic,
-    Iterator,
     List,
     Optional,
     Tuple,
@@ -27,9 +22,11 @@ from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
 from eth_abi.exceptions import InsufficientDataBytes
+from eth_typing import ChecksumAddress
 from pandas import DataFrame  # type: ignore
 from y import ERC20, Contract, Network
-from y.datatypes import Address, Block
+from y.constants import CHAINID, NETWORK_NAME
+from y.datatypes import AddressOrContract, Block
 from y.exceptions import (
     CantFetchParam,
     ContractNotVerified,
@@ -47,11 +44,12 @@ from eth_portfolio.typing import _T
 if TYPE_CHECKING:
     from eth_portfolio.structs import LedgerEntry
 
-logger = logging.getLogger(__name__)
 
-NON_STANDARD_ERC721 = {
+logger: Final = logging.getLogger(__name__)
+
+NON_STANDARD_ERC721: Final = {
     Network.Mainnet: ["0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB"],  # CryptoPunks
-}.get(chain.id, [])
+}.get(CHAINID, [])
 
 
 async def get_buffered_chain_height() -> int:
@@ -81,7 +79,7 @@ class Decimal(_decimal.Decimal):
         super().__init__()
 
 
-async def _describe_err(token: Address, block: Optional[Block]) -> str:
+async def _describe_err(token: AddressOrContract, block: Optional[Block]) -> str:
     """
     Assembles a string used to provide as much useful information as possible in PriceError messages
     """
@@ -92,17 +90,17 @@ async def _describe_err(token: Address, block: Optional[Block]) -> str:
 
     if block is None:
         if symbol:
-            return f"{symbol} {token} on {Network.name()}"
+            return f"{symbol} {token} on {NETWORK_NAME}"
 
-        return f"malformed token {token} on {Network.name()}"
+        return f"malformed token {token} on {NETWORK_NAME}"
 
     if symbol:
-        return f"{symbol} {token} on {Network.name()} at {block}"
+        return f"{symbol} {token} on {NETWORK_NAME} at {block}"
 
-    return f"malformed token {token} on {Network.name()} at {block}"
+    return f"malformed token {token} on {NETWORK_NAME} at {block}"
 
 
-_to_raise = (
+_to_raise: Final = (
     OSError,
     FileNotFoundError,
     NodeNotSynced,
@@ -114,7 +112,8 @@ _to_raise = (
 )
 
 
-async def _get_price(token: Address, block: Optional[int] = None) -> _decimal.Decimal:
+async def _get_price(token: AddressOrContract, block: Optional[int] = None) -> _decimal.Decimal:
+    token = str(token)
     with reraise_excs_with_extra_context(token, block):
         try:
             if await is_erc721(token):
@@ -143,7 +142,7 @@ async def _get_price(token: Address, block: Optional[int] = None) -> _decimal.De
 
 
 @alru_cache(maxsize=None)
-async def is_erc721(token: Address) -> bool:
+async def is_erc721(token: ChecksumAddress) -> bool:
     # This can probably be improved
     try:
         contract = await Contract.coroutine(token)
@@ -155,68 +154,6 @@ async def is_erc721(token: Address) -> bool:
     elif contract.address in NON_STANDARD_ERC721:
         return True
     return False
-
-
-def get_submodules_for_module(module: ModuleType) -> List[ModuleType]:
-    """
-    Returns a list of submodules of `module`.
-    """
-    assert isinstance(module, ModuleType), "`module` must be a module"
-    return [
-        obj
-        for obj in module.__dict__.values()
-        if isinstance(obj, ModuleType) and obj.__name__.startswith(module.__name__)
-    ]
-
-
-def get_class_defs_from_module(module: ModuleType) -> List[type]:
-    """
-    Returns a list of class definitions from a module.
-    """
-    return [
-        obj
-        for obj in module.__dict__.values()
-        if isinstance(obj, type) and obj.__module__ == module.__name__
-    ]
-
-
-def _get_protocols_for_submodule() -> List[type]:
-    """
-    Used to initialize a submodule's class object.
-    Returns a list of initialized protocol objects.
-    """
-    called_from_module = inspect.getmodule(inspect.stack()[1][0])
-    assert called_from_module, "You can only call this function from a module"
-    components = [
-        module
-        for module in get_submodules_for_module(called_from_module)
-        if not module.__name__.endswith("._base")
-    ]
-    return [
-        cls()
-        for component in components
-        for cls in get_class_defs_from_module(component)
-        if cls
-        and not cls.__name__.startswith("_")
-        and cls.__name__ != "Lending"
-        and (not hasattr(cls, "networks") or chain.id in cls.networks)
-    ]
-
-
-def _import_submodules() -> Dict[str, ModuleType]:
-    """
-    Import all submodules of the module from which this was called, recursively.
-    Ignores submodules named `"base"`.
-    Returns a dict of `{module.__name__: module}`
-    """
-    called_from_module = inspect.getmodule(inspect.stack()[1][0])
-    if called_from_module is None:
-        return {}
-    return {
-        name: importlib.import_module(called_from_module.__name__ + "." + name)
-        for loader, name, is_pkg in pkgutil.walk_packages(called_from_module.__path__)  # type: ignore
-        if name != "base"
-    }
 
 
 def _unpack_indicies(indicies: Union[Block, Tuple[Block, Block]]) -> Tuple[Block, Block]:
