@@ -13,7 +13,7 @@ async def export_balances(args):
         raise NotImplementedError("This feature must be implemented")
     
     interval = parse_timedelta(args.interval)
-    portfolio = ExportablePortfolio(args.wallet, label=args.label, load_prices=False)
+    portfolio = ExportablePortfolio(args.wallet, label=args.label, start_block=args.first_tx_block, load_prices=False)
 
     print(f"Exporting {portfolio}")
     async for ts in aiter_timestamps(interval=interval, run_forever=True):
