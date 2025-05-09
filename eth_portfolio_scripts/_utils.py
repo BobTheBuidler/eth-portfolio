@@ -7,42 +7,54 @@ from brownie import chain
 
 
 def parse_timedelta(value: str) -> timedelta:
-    regex = re.compile(r'(\d+)([dhms]?)')
+    regex = re.compile(r"(\d+)([dhms]?)")
     result = regex.findall(value)
 
     days, hours, minutes, seconds = 0, 0, 0, 0
 
     for val, unit in result:
         val = int(val)
-        if unit == 'd':
+        if unit == "d":
             days = val
-        elif unit == 'h':
+        elif unit == "h":
             hours = val
-        elif unit == 'm':
+        elif unit == "m":
             minutes = val
-        elif unit == 's':
+        elif unit == "s":
             seconds = val
 
     return timedelta(days=days, hours=hours, minutes=minutes, seconds=seconds)
 
 
-async def aiter_timestamps(*, start: Optional[datetime] = None, interval: timedelta = timedelta(days=1), run_forever: bool = False) -> AsyncGenerator[datetime, None]:
+async def aiter_timestamps(
+    *,
+    start: Optional[datetime] = None,
+    interval: timedelta = timedelta(days=1),
+    run_forever: bool = False,
+) -> AsyncGenerator[datetime, None]:
     """
     Generates the timestamps to be queried based on the specified range and interval.
     """
     if not isinstance(run_forever, bool):
-        raise TypeError(f'`run_forever` must be boolean. You passed {run_forever}')
+        raise TypeError(f"`run_forever` must be boolean. You passed {run_forever}")
 
     if start is None:
         start = datetime.now(tz=timezone.utc)
         block0_ts = datetime.fromtimestamp(chain[0].timestamp, tz=timezone.utc)
-        helper = datetime(year=block0_ts.year, month=block0_ts.month, day=block0_ts.day, hour=block0_ts.hour, minute=block0_ts.minute, tzinfo=timezone.utc)
+        helper = datetime(
+            year=block0_ts.year,
+            month=block0_ts.month,
+            day=block0_ts.day,
+            hour=block0_ts.hour,
+            minute=block0_ts.minute,
+            tzinfo=timezone.utc,
+        )
         while helper + interval < start:
             helper += interval
         start = helper
         if start < block0_ts:
             start += interval
-    
+
     timestamp = start
 
     while timestamp <= datetime.now(tz=timezone.utc):

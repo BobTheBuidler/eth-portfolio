@@ -3,15 +3,13 @@ from eth_portfolio_scripts.docker.docker_compose import build, down, ensure_cont
 
 __all__ = [
     # commands
-    "build", 
-    "up", 
+    "build",
+    "up",
     "down",
-    
-    #decorators
+    # decorators
     "ensure_containers",
-
     # checks
-    "check_docker", 
-    "check_docker_compose", 
+    "check_docker",
+    "check_docker_compose",
     "check_system",
 ]
