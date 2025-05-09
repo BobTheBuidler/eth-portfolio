@@ -632,7 +632,7 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
         self, start_block: Optional[Block] = None, end_block: Optional[Block] = None, *, mem_cache: bool = True
     ) -> AsyncIterator[LedgerEntry]:
         portfolio_addresses = set(self.portfolio.addresses.keys())
-        async for obj in self._get_and_yield(start_block or 0, end_block, mem_cache)
+        async for obj in self._get_and_yield(start_block or 0, end_block, mem_cache):
             if (
                 obj.value
                 and obj.to_address in portfolio_addresses
