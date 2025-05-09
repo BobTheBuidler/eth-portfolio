@@ -48,6 +48,16 @@ export_parser.add_argument(
     default='6h',
 )
 export_parser.add_argument(
+    '--first-tx-block',
+    type=int,
+    help=(
+        'The block of your portfolio's first transaction, if known. '
+        'This value, if provided, allows us to speed up processing of your data by limiting the block range we need to query. '
+        'If not provided, the whole blockchain will be scanned.'
+    ),
+    default=0,
+)
+export_parser.add_argument(
     '--daemon', 
     type=bool,
     help='TODO: If True, starts a daemon process instead of running in your terminal. Not currently supported.',
