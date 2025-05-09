@@ -11,15 +11,15 @@ async def export_balances(args):
 
     if args.daemon is True:
         raise NotImplementedError("This feature must be implemented")
-    
+
     interval = parse_timedelta(args.interval)
     portfolio = ExportablePortfolio(args.wallet, label=args.label, load_prices=False)
 
     print(f"Exporting {portfolio}")
     async for ts in aiter_timestamps(interval=interval, run_forever=True):
-        print(f'found ts {ts}')
+        print(f"found ts {ts}")
         create_task(
-            coro=portfolio.export_snapshot(ts, sync=False), 
+            coro=portfolio.export_snapshot(ts, sync=False),
             name=f"eth-portfolio export snapsshot {ts}",
             skip_gc_until_done=True,
         )
