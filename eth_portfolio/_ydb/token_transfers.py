@@ -44,7 +44,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
         super().__init__(topics=self._topics, from_block=from_block)
 
     def __repr__(self) -> str:
-        return f"<{self.__class__.__module__}.{self.__class__.__name__} address={self.address}>"
+        return f"<{self.__class__.__name__}(address={self.address})"
 
     @property
     @abstractmethod
