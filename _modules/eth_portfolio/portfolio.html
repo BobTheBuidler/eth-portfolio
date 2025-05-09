@@ -370,6 +370,14 @@
 <span class="sd">            :class:`~web3.Web3`</span>
 <span class="sd">        &quot;&quot;&quot;</span></div>
 
+    
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="c1"># NOTE: should we show addresses? for now we won&#39;t</span>
+        <span class="c1">#string = f&quot;{type(self).__name__}(addresses={list(map(str, self.addresses))}&quot;</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(label=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_block</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;, start_block=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_start_block</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">string</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;, load_prices=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">load_prices</span><span class="si">}</span><span class="s2">, asynchronous=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">asynchronous</span><span class="si">}</span><span class="s2">)&quot;</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="c1"># NOTE: should we show addresses? for now we won&#39;t</span>
