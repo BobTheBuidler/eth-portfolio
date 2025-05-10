@@ -892,14 +892,15 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         """
         if not mem_cache:
             logger.warning(f"{type(self).__name__}._load_new_objects mem_cache arg is not yet implemented")
-        
-        try:
-            start_block, end_block = self._check_blocks_against_cache(start_block, end_block)
-        except _exceptions.BlockRangeIsCached:
-            return
-        except _exceptions.BlockRangeOutOfBounds as e:
-            await e.load_remaining()
-            return
+
+        if mem_cache:
+            try:
+                start_block, end_block = self._check_blocks_against_cache(start_block, end_block)
+            except _exceptions.BlockRangeIsCached:
+                return
+            except _exceptions.BlockRangeOutOfBounds as e:
+                await e.load_remaining()
+                return
 
         if tasks := [
             task
@@ -913,7 +914,8 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
                 tasks, aiter=True, tqdm=True, desc=f"Token Transfers     {self.address}"
             ):
                 if token_transfer:
-                    append_token_transfer(token_transfer)
+                    if mem_cache:
+                        append_token_transfer(token_transfer)
                     yield token_transfer
 
                 # Don't let the event loop get congested
@@ -921,10 +923,9 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
                 if done % 100 == 0:
                     await yield_to_loop()
 
-            if token_transfers:
+            if mem_cache and token_transfers:
                 self.objects.extend(token_transfers)
-
-            self.objects.sort(key=lambda t: (t.block_number, t.transaction_index, t.log_index))
+                self.objects.sort(key=lambda t: (t.block_number, t.transaction_index, t.log_index))
 
         if self.cached_from is None or start_block < self.cached_from:
             self.cached_from = start_block
