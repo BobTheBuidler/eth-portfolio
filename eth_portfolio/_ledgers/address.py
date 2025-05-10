@@ -890,9 +890,6 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         Yields:
             AsyncIterator[TokenTransfer]: An async iterator of token transfer entries.
         """
-        if not mem_cache:
-            logger.warning(f"{type(self).__name__}._load_new_objects mem_cache arg is not yet implemented")
-
         if mem_cache:
             try:
                 start_block, end_block = self._check_blocks_against_cache(start_block, end_block)
