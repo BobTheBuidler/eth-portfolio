@@ -62,6 +62,6 @@ class BlockRangeOutOfBounds(Exception):
             - :meth:`~eth_portfolio._ledgers.address.AddressLedgerBase._load_new_objects`: Method to load new ledger entries.
         """
         return await gather(
-            self.ledger._load_new_objects(self.start_block, self.ledger.cached_thru - 1),
-            self.ledger._load_new_objects(self.ledger.cached_from + 1, self.end_block),
+            self.ledger._load_new_objects(self.start_block, self.ledger.cached_thru - 1, True),
+            self.ledger._load_new_objects(self.ledger.cached_from + 1, self.end_block, True),
         )
