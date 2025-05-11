@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 
-import dank_mids
 from a_sync import create_task
 from a_sync.asyncio import sleep0 as yield_to_loop
 
@@ -10,6 +9,8 @@ from eth_portfolio_scripts._utils import aiter_timestamps, parse_timedelta
 
 @docker.ensure_containers
 async def export_balances(args):
+    import dank_mids
+    
     from eth_portfolio_scripts._portfolio import ExportablePortfolio
 
     if args.daemon is True:
