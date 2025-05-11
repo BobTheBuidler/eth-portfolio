@@ -2,7 +2,7 @@ from asyncio import gather
 from typing import Optional
 
 from eth_typing import BlockNumber
-from y import Contract, Network, dai
+from y import Contract, Network, contract_creation_block, dai
 from y.datatypes import Address, Block
 
 from eth_portfolio._decimal import Decimal
