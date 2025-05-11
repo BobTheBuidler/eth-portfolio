@@ -1,6 +1,8 @@
 from asyncio import gather
 from typing import Optional
 
+from a_sync.async_property import async_cached_property
+from eth_typing import BlockNumber
 from y import Contract, Network, dai
 from y.datatypes import Address, Block
 
@@ -16,8 +18,19 @@ class MakerDSR(ProtocolABC):
         self.dsr_manager = Contract("0x373238337Bfe1146fb49989fc222523f83081dDb")
         self.pot = Contract("0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7")
 
+    @async_cached_property
+    async def _start_block(self) -> BlockNumber:
+        return max(
+            await gather(
+                contract_creation_block_async(self.dsr_manager),
+                contract_creation_block_async(self.pot),
+            )
+        )
+
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         balances = TokenBalances(block=block)
+        if block and block < await self._start_block:
+            return balances
         pie, exchange_rate = await gather(
             self.dsr_manager.pieOf.coroutine(address, block_identifier=block),
             self._exchange_rate(block),
