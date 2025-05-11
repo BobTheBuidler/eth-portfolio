@@ -22,11 +22,11 @@ class MakerDSR(ProtocolABC):
     async def _start_block(self) -> BlockNumber:
         return min(
             await gather(
-                contract_creation_block_async(self.dsr_manager), 
+                contract_creation_block_async(self.dsr_manager),
                 contract_creation_block_async(self.pot),
             )
         )
-        
+
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         balances = TokenBalances(block=block)
         if block and block < await self._start_block:
