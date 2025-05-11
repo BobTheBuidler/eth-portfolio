@@ -18,60 +18,69 @@ export_parser.add_argument("target", help="Choose an exporter to run")
 add_infra_port_args(export_parser)
 export_parser.set_defaults(func=export_balances)
 
-infra_parser = subparsers.add_parser("infra", help="Start the docker containers required to run any eth-portfolio service")
+infra_parser = subparsers.add_parser(
+    "infra", help="Start the docker containers required to run any eth-portfolio service"
+)
 infra_parser.add_argument("cmd", help="What do you want to do?")
 add_infra_port_args(infra_parser)
 
 export_parser.add_argument(
-    '--wallet',
+    "--wallet",
     type=str,
-    help='The address of a wallet to export. You can pass multiple, ie. `--wallet 0x123 0x234 0x345`',
+    help="The address of a wallet to export. You can pass multiple, ie. `--wallet 0x123 0x234 0x345`",
     required=True,
-    nargs='+',
+    nargs="+",
 )
 export_parser.add_argument(
-    '--network', 
+    "--network",
     type=str,
-    help='The brownie network identifier for the rpc you wish to use. default: mainnet',
-    default='mainnet', 
+    help="The brownie network identifier for the rpc you wish to use. default: mainnet",
+    default="mainnet",
 )
 export_parser.add_argument(
-    '--label',
+    "--label",
     type=str,
     help='The label for this portfolio, if you want one. Defaults to "MyPortfolio".',
     default="My Portfolio",
 )
 export_parser.add_argument(
-    '--interval', 
+    "--interval",
     type=str,
-    help='The time interval between datapoints. default: 6h',
-    default='6h',
+    help="The time interval between datapoints. default: 6h",
+    default="6h",
 )
 export_parser.add_argument(
-    '--first-tx-block',
+    "--first-tx-block",
     type=int,
     help=(
-        'The block of your portfolio's first transaction, if known. '
-        'This value, if provided, allows us to speed up processing of your data by limiting the block range we need to query. '
-        'If not provided, the whole blockchain will be scanned.'
+        "The block of your portfolio's first transaction, if known. "
+        "This value, if provided, allows us to speed up processing of your data by limiting the block range we need to query. "
+        "If not provided, the whole blockchain will be scanned."
     ),
     default=0,
 )
 export_parser.add_argument(
-    '--daemon', 
+    "--export-start-block",
+    type=int,
+    help="The first block in the range you wish to export.",
+    default=0,
+)
+export_parser.add_argument(
+    "--daemon",
     type=bool,
-    help='TODO: If True, starts a daemon process instead of running in your terminal. Not currently supported.',
-    default=False, 
+    help="TODO: If True, starts a daemon process instead of running in your terminal. Not currently supported.",
+    default=False,
 )
 
 args = parser.parse_args()
 
 if hasattr(args, "network"):
-    environ['BROWNIE_NETWORK_ID'] = args.network
+    environ["BROWNIE_NETWORK_ID"] = args.network
 
-environ['GRAFANA_PORT'] = str(args.grafana_port)
-environ['RENDERER_PORT'] = str(args.renderer_port)
-environ['VICTORIA_PORT'] = str(args.victoria_port)
+environ["GRAFANA_PORT"] = str(args.grafana_port)
+environ["RENDERER_PORT"] = str(args.renderer_port)
+environ["VICTORIA_PORT"] = str(args.victoria_port)
+
 
 # TODO: run forever arg
 def main():
@@ -84,7 +93,7 @@ def main():
             docker.down()
         else:
             raise ValueError(f"{args.target} is not a valid command")
-    
+
     else:
         # The user's command is `export`
         if args.target == "balances":
