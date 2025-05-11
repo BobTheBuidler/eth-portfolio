@@ -180,7 +180,7 @@ class _AiterMixin(ASyncIterable[_T]):
         return ASyncIterator(self._get_and_yield(slice.start or 0, slice.stop, True))  # type: ignore [truthy-function]
 
     def yield_forever(self, mem_cache: bool = True) -> ASyncIterator[_T]:
-        return ASyncIterator(self._get_and_yield(slice.start or 0, slice.stop, mem_cache))  # type: ignore [truthy-function]
+        return ASyncIterator(self._get_and_yield(self._start_block or 0, None, mem_cache))
 
     @abstractmethod
     async def _get_and_yield(
