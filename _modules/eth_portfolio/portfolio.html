@@ -498,18 +498,26 @@
 <div class="viewcode-block" id="Portfolio.sent">
 <a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.portfolio.Portfolio.sent">[docs]</a>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">sent</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">start_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">start_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">end_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">mem_cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">LedgerEntry</span><span class="p">]:</span>
-        <span class="k">async</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ledger</span><span class="o">.</span><span class="n">sent</span><span class="p">(</span><span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ledger</span><span class="o">.</span><span class="n">sent</span><span class="p">(</span><span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">mem_cache</span><span class="o">=</span><span class="n">mem_cache</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">obj</span></div>
 
 
 <div class="viewcode-block" id="Portfolio.received">
 <a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.portfolio.Portfolio.received">[docs]</a>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">received</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">start_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">start_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">end_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">mem_cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">LedgerEntry</span><span class="p">]:</span>
-        <span class="k">async</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ledger</span><span class="o">.</span><span class="n">received</span><span class="p">(</span><span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ledger</span><span class="o">.</span><span class="n">received</span><span class="p">(</span><span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">mem_cache</span><span class="o">=</span><span class="n">mem_cache</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">obj</span></div>
 </div>
 
@@ -743,10 +751,14 @@
 <div class="viewcode-block" id="PortfolioLedger.sent">
 <a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.portfolio.PortfolioLedger.sent">[docs]</a>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">sent</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">start_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">start_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">end_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">mem_cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">LedgerEntry</span><span class="p">]:</span>
         <span class="n">portfolio_addresses</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">portfolio</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-        <span class="k">async</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">[</span><span class="n">start_block</span><span class="p">:</span><span class="n">end_block</span><span class="p">]:</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_and_yield</span><span class="p">(</span><span class="n">start_block</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">mem_cache</span><span class="p">):</span>
             <span class="k">if</span> <span class="p">(</span>
                 <span class="n">obj</span><span class="o">.</span><span class="n">value</span>
                 <span class="ow">and</span> <span class="n">obj</span><span class="o">.</span><span class="n">from_address</span> <span class="ow">in</span> <span class="n">portfolio_addresses</span>
@@ -758,10 +770,14 @@
 <div class="viewcode-block" id="PortfolioLedger.received">
 <a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.portfolio.PortfolioLedger.received">[docs]</a>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">received</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">start_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">start_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">end_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">mem_cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">LedgerEntry</span><span class="p">]:</span>
         <span class="n">portfolio_addresses</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">portfolio</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-        <span class="k">async</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">[</span><span class="n">start_block</span><span class="p">:</span><span class="n">end_block</span><span class="p">]:</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_and_yield</span><span class="p">(</span><span class="n">start_block</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">mem_cache</span><span class="p">):</span>
             <span class="k">if</span> <span class="p">(</span>
                 <span class="n">obj</span><span class="o">.</span><span class="n">value</span>
                 <span class="ow">and</span> <span class="n">obj</span><span class="o">.</span><span class="n">to_address</span> <span class="ow">in</span> <span class="n">portfolio_addresses</span>
