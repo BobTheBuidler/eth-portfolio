@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from logging import getLogger
 from math import floor
 from typing import Awaitable, Callable, Final, Iterator, List, Optional, Tuple
 
@@ -21,6 +22,9 @@ from eth_portfolio_scripts import victoria
 NETWORK_LABEL: Final = Network.label(CHAINID)
 
 decode: Final = json.decode
+
+logger: Final = getLogger("eth_portfolio")
+log_error: Final = logger.error
 
 
 class ExportablePortfolio(Portfolio):
@@ -58,20 +62,23 @@ class ExportablePortfolio(Portfolio):
 
     async def export_snapshot(self, dt: datetime):
         print(f'checking data at {dt} for {self}')
-        if not await self.data_exists(dt, sync=False):
-            print(f'exporting {dt} for {self}')
-            start = datetime.now(tz=timezone.utc)
-            while True:
-                try:
-                    block = await get_block_at_timestamp(dt, sync=False)
-                except NoBlockFound:
-                    pass
-                else:
-                    break
-            print(f"block at {dt}: {block}")
-            data = await self.get_data_for_export(block, dt, sync=False)
-            print(f"got data for block {block} for {self} in {datetime.now(tz=timezone.utc) - start}")
-            await victoria.post_data(data)
+        try:
+            if not await self.data_exists(dt, sync=False):
+                print(f'exporting {dt} for {self}')
+                start = datetime.now(tz=timezone.utc)
+                while True:
+                    try:
+                        block = await get_block_at_timestamp(dt, sync=False)
+                    except NoBlockFound:
+                        pass
+                    else:
+                        break
+                print(f"block at {dt}: {block}")
+                data = await self.get_data_for_export(block, dt, sync=False)
+                print(f"got data for block {block} for {self} in {datetime.now(tz=timezone.utc) - start}")
+                await victoria.post_data(data)
+        except Exception as e:
+            log_error("Error processing %s:", dt, exc_info=True)
 
     @a_sync.Semaphore(10_000)
     async def get_data_for_export(self, block: BlockNumber, ts: datetime) -> List[victoria.Metric]:
