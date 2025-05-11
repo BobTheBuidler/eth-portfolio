@@ -73,8 +73,6 @@ class ExportablePortfolio(Portfolio):
         print(f"checking data at {dt} for {self}")
         try:
             if not await self.data_exists(dt, sync=False):
-                print(f"exporting {dt} for {self}")
-                start = datetime.now(tz=timezone.utc)
                 while True:
                     try:
                         block = await get_block_at_timestamp(dt, sync=False)
@@ -84,16 +82,16 @@ class ExportablePortfolio(Portfolio):
                         break
                 print(f"block at {dt}: {block}")
                 data = await self.get_data_for_export(block, dt, sync=False)
-                print(
-                    f"got data for block {block} for {self} in {datetime.now(tz=timezone.utc) - start}"
-                )
                 await victoria.post_data(data)
         except Exception as e:
             log_error("Error processing %s:", dt, exc_info=True)
 
     @a_sync.Semaphore(500)
     async def get_data_for_export(self, block: BlockNumber, ts: datetime) -> List[victoria.Metric]:
-        metrics_to_export = []
+        print(f"exporting {ts} for {self}")
+        start = datetime.now(tz=timezone.utc)
+        
+        metrics_to_export = []        
         data: PortfolioBalances = await self.describe(block, sync=False)
 
         for wallet, wallet_data in dict.items(data):
@@ -116,6 +114,7 @@ class ExportablePortfolio(Portfolio):
                 else:
                     raise NotImplementedError()
 
+        print(f"got data for {ts} for {self} in {datetime.now(tz=timezone.utc) - start}")
         return metrics_to_export
 
     def __get_data_exists_coros(self, dt: datetime) -> Iterator[str]:
