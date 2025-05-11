@@ -90,8 +90,8 @@ class ExportablePortfolio(Portfolio):
     async def get_data_for_export(self, block: BlockNumber, ts: datetime) -> List[victoria.Metric]:
         print(f"exporting {ts} for {self}")
         start = datetime.now(tz=timezone.utc)
-        
-        metrics_to_export = []        
+
+        metrics_to_export = []
         data: PortfolioBalances = await self.describe(block, sync=False)
 
         for wallet, wallet_data in dict.items(data):
