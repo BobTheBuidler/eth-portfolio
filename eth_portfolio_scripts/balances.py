@@ -20,7 +20,7 @@ async def export_balances(args):
         print(f'found ts {ts}')
         create_task(
             coro=portfolio.export_snapshot(ts, sync=False), 
-            name=f"eth-portfolio export snapsshot {ts}",
+            name=f"eth-portfolio export snapshot {ts}",
             skip_gc_until_done=True,
         )
         # get some work in before yielding the next task
