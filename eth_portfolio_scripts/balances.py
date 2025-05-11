@@ -26,7 +26,6 @@ async def export_balances(args):
         
     print(f"Exporting {portfolio}")
     async for ts in aiter_timestamps(start=start, interval=interval, run_forever=True):
-        print(f'found ts {ts}')
         create_task(
             coro=portfolio.export_snapshot(ts, sync=False), 
             name=f"eth-portfolio export snapshot {ts}",
