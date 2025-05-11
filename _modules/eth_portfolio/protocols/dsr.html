@@ -72,7 +72,6 @@
 <span></span><span class="kn">from</span> <span class="nn">asyncio</span> <span class="kn">import</span> <span class="n">gather</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">a_sync.async_property</span> <span class="kn">import</span> <span class="n">async_cached_property</span>
 <span class="kn">from</span> <span class="nn">eth_typing</span> <span class="kn">import</span> <span class="n">BlockNumber</span>
 <span class="kn">from</span> <span class="nn">y</span> <span class="kn">import</span> <span class="n">Contract</span><span class="p">,</span> <span class="n">Network</span><span class="p">,</span> <span class="n">dai</span>
 <span class="kn">from</span> <span class="nn">y.datatypes</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">Block</span>
@@ -91,26 +90,15 @@
 <a class="viewcode-back" href="../../../source/eth_portfolio.protocols.html#eth_portfolio.protocols.dsr.MakerDSR.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dsr_manager</span> <span class="o">=</span> <span class="n">Contract</span><span class="p">(</span><span class="s2">&quot;0x373238337Bfe1146fb49989fc222523f83081dDb&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pot</span> <span class="o">=</span> <span class="n">Contract</span><span class="p">(</span><span class="s2">&quot;0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7&quot;</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="MakerDSR._start_block">
-<a class="viewcode-back" href="../../../source/eth_portfolio.protocols.html#eth_portfolio.protocols.dsr.MakerDSR._start_block">[docs]</a>
-    <span class="nd">@async_cached_property</span>
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">_start_block</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BlockNumber</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span>
-            <span class="k">await</span> <span class="n">gather</span><span class="p">(</span>
-                <span class="n">contract_creation_block_async</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsr_manager</span><span class="p">),</span>
-                <span class="n">contract_creation_block_async</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="p">),</span>
-            <span class="p">)</span>
-        <span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pot</span> <span class="o">=</span> <span class="n">Contract</span><span class="p">(</span><span class="s2">&quot;0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_block</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">contract_creation_block</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsr_manager</span><span class="p">),</span> <span class="n">contract_creation_block</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="MakerDSR._balances">
 <a class="viewcode-back" href="../../../source/eth_portfolio.protocols.html#eth_portfolio.protocols.dsr.MakerDSR._balances">[docs]</a>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_balances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenBalances</span><span class="p">:</span>
         <span class="n">balances</span> <span class="o">=</span> <span class="n">TokenBalances</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">block</span> <span class="ow">and</span> <span class="n">block</span> <span class="o">&lt;</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_block</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">block</span> <span class="ow">and</span> <span class="n">block</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_block</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">balances</span>
         <span class="n">pie</span><span class="p">,</span> <span class="n">exchange_rate</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gather</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dsr_manager</span><span class="o">.</span><span class="n">pieOf</span><span class="o">.</span><span class="n">coroutine</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">block_identifier</span><span class="o">=</span><span class="n">block</span><span class="p">),</span>
