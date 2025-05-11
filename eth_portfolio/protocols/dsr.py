@@ -20,7 +20,7 @@ class MakerDSR(ProtocolABC):
 
     @async_cached_property
     async def _start_block(self) -> BlockNumber:
-        return min(
+        return max(
             await gather(
                 contract_creation_block_async(self.dsr_manager),
                 contract_creation_block_async(self.pot),
