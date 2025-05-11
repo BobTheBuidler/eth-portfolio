@@ -16,9 +16,15 @@ from eth_portfolio_scripts._utils import aiter_timestamps, parse_timedelta
         ("1d2h30m15s", timedelta(days=1, hours=2, minutes=30, seconds=15)),  # combined
         ("1d30m", timedelta(days=1, minutes=30)),  # days and minutes
         ("2h15s", timedelta(hours=2, seconds=15)),  # hours and seconds
-        ("100d200h300m6000s", timedelta(days=100, hours=200, minutes=300, seconds=6000)), # large values
-        ("1d2h30m15s45z", timedelta(days=1, hours=2, minutes=30, seconds=15)), # ignore invalid unit
-        ("42", timedelta()), # no unit
+        (
+            "100d200h300m6000s",
+            timedelta(days=100, hours=200, minutes=300, seconds=6000),
+        ),  # large values
+        (
+            "1d2h30m15s45z",
+            timedelta(days=1, hours=2, minutes=30, seconds=15),
+        ),  # ignore invalid unit
+        ("42", timedelta()),  # no unit
     ],
     ids=[
         "days",
@@ -31,7 +37,7 @@ from eth_portfolio_scripts._utils import aiter_timestamps, parse_timedelta
         "large_values",
         "invalid_unit",
         "no_unit",
-    ]
+    ],
 )
 def test_parse_timedelta_happy_path(test_input, expected):
     actual = parse_timedelta(test_input)
@@ -44,7 +50,7 @@ def test_parse_timedelta_happy_path(test_input, expected):
         ("", timedelta()),  # empty string
         ("   ", timedelta()),  # whitespace only
     ],
-    ids=["empty_string", "whitespace_only"]
+    ids=["empty_string", "whitespace_only"],
 )
 def test_parse_timedelta_edge_cases(test_input, expected):
     actual = parse_timedelta(test_input)
@@ -56,21 +62,22 @@ def test_parse_timedelta_edge_cases(test_input, expected):
     [
         "1x",  # invalid unit
         "abc",  # non-numeric value
-        "1d2x3m", # invalid unit in combined input
+        "1d2x3m",  # invalid unit in combined input
     ],
     ids=[
         "invalid_unit",
         "non_numeric",
         "invalid_unit_combined",
-    ]
+    ],
 )
 def test_parse_timedelta_error_cases(test_input):
     with pytest.raises(ValueError):
         parse_timedelta(test_input)
 
 
-_ts_is_ready = AsyncMock() # type: ignore
-_get_waiter = AsyncMock() # type: ignore
+_ts_is_ready = AsyncMock()  # type: ignore
+_get_waiter = AsyncMock()  # type: ignore
+
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
@@ -97,13 +104,17 @@ _get_waiter = AsyncMock() # type: ignore
     ],
     ids=["single_timestamp", "different_interval", "run_forever"],
 )
-async def test_aiter_timestamps_happy_path(start, interval, run_forever, expected_timestamps, mocker):
+async def test_aiter_timestamps_happy_path(
+    start, interval, run_forever, expected_timestamps, mocker
+):
     # Arrange
-    _ts_is_ready.return_value = True # for initial timestamp
-    _ts_is_ready.side_effect = [True] + [False] * 100 # for subsequent timestamps if run_forever
+    _ts_is_ready.return_value = True  # for initial timestamp
+    _ts_is_ready.side_effect = [True] + [False] * 100  # for subsequent timestamps if run_forever
 
     # Act
-    actual_timestamps = [ts async for ts in aiter_timestamps(start=start, interval=interval, run_forever=run_forever)]
+    actual_timestamps = [
+        ts async for ts in aiter_timestamps(start=start, interval=interval, run_forever=run_forever)
+    ]
 
     # Assert
     assert actual_timestamps == expected_timestamps
@@ -117,7 +128,9 @@ async def test_aiter_timestamps_happy_path(start, interval, run_forever, expecte
     ],
     ids=["start_none"],
 )
-async def test_aiter_timestamps_edge_cases(start, interval, run_forever, expected_timestamps, mocker):
+async def test_aiter_timestamps_edge_cases(
+    start, interval, run_forever, expected_timestamps, mocker
+):
     # Arrange
     _ts_is_ready.return_value = False
 
@@ -125,7 +138,9 @@ async def test_aiter_timestamps_edge_cases(start, interval, run_forever, expecte
     chain_mock[0].timestamp = 0
 
     # Act
-    actual_timestamps = [ts async for ts in aiter_timestamps(start=start, interval=interval, run_forever=run_forever)]
+    actual_timestamps = [
+        ts async for ts in aiter_timestamps(start=start, interval=interval, run_forever=run_forever)
+    ]
 
     # Assert
     assert actual_timestamps == expected_timestamps

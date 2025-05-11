@@ -15,7 +15,13 @@ from y.time import NoBlockFound
 from eth_portfolio import Portfolio
 from eth_portfolio.buckets import get_token_bucket
 from eth_portfolio.portfolio import _DEFAULT_LABEL
-from eth_portfolio.typing import Addresses, Balance, RemoteTokenBalances, PortfolioBalances, TokenBalances
+from eth_portfolio.typing import (
+    Addresses,
+    Balance,
+    RemoteTokenBalances,
+    PortfolioBalances,
+    TokenBalances,
+)
 from eth_portfolio_scripts import victoria
 
 
@@ -28,25 +34,28 @@ log_error: Final = logger.error
 
 
 class ExportablePortfolio(Portfolio):
-    """ Adds methods to export full portoflio data. """
+    """Adds methods to export full portoflio data."""
+
     def __init__(
-        self, 
+        self,
         addresses: Addresses,
         start_block: int = 0,
         label: str = _DEFAULT_LABEL,
         load_prices: bool = True,
-        get_bucket: Callable[[ChecksumAddress], Awaitable[str]] = get_token_bucket, 
+        get_bucket: Callable[[ChecksumAddress], Awaitable[str]] = get_token_bucket,
         num_workers_transactions: int = 1000,
         asynchronous: bool = False,
     ):
-        super().__init__(addresses, start_block, label, load_prices, num_workers_transactions, asynchronous)
+        super().__init__(
+            addresses, start_block, label, load_prices, num_workers_transactions, asynchronous
+        )
         self.get_bucket = get_bucket
 
     @cached_property
     def _data_queries(self) -> Tuple[str, str, str]:
         label = self.label.lower().replace(" ", "-")
         return (f"{label}-assets", f"{label}-debts", f"{label}-external")
-    
+
     @eth_retry.auto_retry
     @a_sync.Semaphore(16)
     async def data_exists(self, dt: datetime) -> bool:
@@ -56,15 +65,15 @@ class ExportablePortfolio(Portfolio):
                 result = decode(data, type=victoria.types.Response)
             except ValidationError:
                 raise victoria.VictoriaMetricsError(data.decode()) from None
-            if result.status == 'success' and len(result.data.result) > 0:
-                return True   
+            if result.status == "success" and len(result.data.result) > 0:
+                return True
         return False
 
     async def export_snapshot(self, dt: datetime):
-        print(f'checking data at {dt} for {self}')
+        print(f"checking data at {dt} for {self}")
         try:
             if not await self.data_exists(dt, sync=False):
-                print(f'exporting {dt} for {self}')
+                print(f"exporting {dt} for {self}")
                 start = datetime.now(tz=timezone.utc)
                 while True:
                     try:
@@ -75,7 +84,9 @@ class ExportablePortfolio(Portfolio):
                         break
                 print(f"block at {dt}: {block}")
                 data = await self.get_data_for_export(block, dt, sync=False)
-                print(f"got data for block {block} for {self} in {datetime.now(tz=timezone.utc) - start}")
+                print(
+                    f"got data for block {block} for {self} in {datetime.now(tz=timezone.utc) - start}"
+                )
                 await victoria.post_data(data)
         except Exception as e:
             log_error("Error processing %s:", dt, exc_info=True)
@@ -93,12 +104,14 @@ class ExportablePortfolio(Portfolio):
                             await self.__process_token(ts, section, wallet, token, bals)
                         )
                 elif isinstance(section_data, RemoteTokenBalances):
-                    if section == 'external':
-                        section = 'assets'
+                    if section == "external":
+                        section = "assets"
                     for protocol, token_bals in section_data.items():
                         for token, bals in dict.items(token_bals):
                             metrics_to_export.extend(
-                                await self.__process_token(ts, section, wallet, token, bals, protocol=protocol)
+                                await self.__process_token(
+                                    ts, section, wallet, token, bals, protocol=protocol
+                                )
                             )
                 else:
                     raise NotImplementedError()
@@ -107,27 +120,27 @@ class ExportablePortfolio(Portfolio):
 
     def __get_data_exists_coros(self, dt: datetime) -> Iterator[str]:
         for query in self._data_queries:
-            yield victoria.get(f'/api/v1/query?query={query}&time={int(dt.timestamp())}')
-    
+            yield victoria.get(f"/api/v1/query?query={query}&time={int(dt.timestamp())}")
+
     async def __process_token(
-        self, 
-        ts: datetime, 
-        section: str, 
-        wallet: ChecksumAddress, 
-        token: ChecksumAddress, 
-        bal: Balance, 
+        self,
+        ts: datetime,
+        section: str,
+        wallet: ChecksumAddress,
+        token: ChecksumAddress,
+        bal: Balance,
         protocol: Optional[str] = None,
     ):
         # TODO wallet nicknames in grafana
-        #wallet = KNOWN_ADDRESSES[wallet] if wallet in KNOWN_ADDRESSES else wallet
+        # wallet = KNOWN_ADDRESSES[wallet] if wallet in KNOWN_ADDRESSES else wallet
         if protocol is not None:
-            wallet = f'{protocol} | {wallet}'
+            wallet = f"{protocol} | {wallet}"
 
         label_and_section = f"{self.label}_{section}"
         symbol = await _get_symbol(token)
         bucket = await self.get_bucket(token)
         ts_millis = floor(ts.timestamp()) * 1000
-        
+
         return (
             victoria.types.PrometheusItem(
                 metric=victoria.Metric(
@@ -139,9 +152,9 @@ class ExportablePortfolio(Portfolio):
                     network=NETWORK_LABEL,
                     __name__=label_and_section,
                 ),
-                values=[float(bal.balance)], 
+                values=[float(bal.balance)],
                 timestamps=[ts_millis],
-            ), 
+            ),
             victoria.types.PrometheusItem(
                 metric=victoria.Metric(
                     param="usd value",
@@ -152,15 +165,15 @@ class ExportablePortfolio(Portfolio):
                     network=NETWORK_LABEL,
                     __name__=label_and_section,
                 ),
-                values=[float(bal.usd)], 
+                values=[float(bal.usd)],
                 timestamps=[ts_millis],
             ),
         )
 
 
 async def _get_symbol(token) -> str:
-    if token == 'ETH':
-        return 'ETH'
+    if token == "ETH":
+        return "ETH"
     try:
         return await ERC20(token, asynchronous=True).symbol
     except NonStandardERC20:
