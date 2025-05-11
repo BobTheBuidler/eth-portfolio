@@ -14,9 +14,11 @@ class MakerDSR(ProtocolABC):
     networks = [Network.Mainnet]
 
     def __init__(self) -> None:
-        self.dsr_manager = Contract("0x373238337Bfe1146fb49989fc222523f83081dDb")
-        self.pot = Contract("0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7")
-        self._start_block = max(contract_creation_block(self.dsr_manager), contract_creation_block(self.pot))
+        dsr_manager = "0x373238337Bfe1146fb49989fc222523f83081dDb"
+        pot = "0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7"
+        self.dsr_manager = Contract(dsr_manager)
+        self.pot = Contract(pot)
+        self._start_block = max(contract_creation_block(dsr_manager), contract_creation_block(pot))
 
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         balances = TokenBalances(block=block)
