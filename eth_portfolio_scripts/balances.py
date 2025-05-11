@@ -18,7 +18,7 @@ async def export_balances(args):
     interval = parse_timedelta(args.interval)
     portfolio = ExportablePortfolio(args.wallet, label=args.label, start_block=args.first_tx_block, load_prices=False)
 
-    if args.export_start_block:
+    if export_start_block := args.export_start_block or args.first_tx_block:
         start = datetime.fromtimestamp(await dank_mids.eth.get_block_timestamp(args.export_start_block), tz=timezone.utc)
     else:
         start = None
