@@ -89,9 +89,11 @@
 <div class="viewcode-block" id="MakerDSR.__init__">
 <a class="viewcode-back" href="../../../source/eth_portfolio.protocols.html#eth_portfolio.protocols.dsr.MakerDSR.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dsr_manager</span> <span class="o">=</span> <span class="n">Contract</span><span class="p">(</span><span class="s2">&quot;0x373238337Bfe1146fb49989fc222523f83081dDb&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pot</span> <span class="o">=</span> <span class="n">Contract</span><span class="p">(</span><span class="s2">&quot;0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_start_block</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">contract_creation_block</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsr_manager</span><span class="p">),</span> <span class="n">contract_creation_block</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="p">))</span></div>
+        <span class="n">dsr_manager</span> <span class="o">=</span> <span class="s2">&quot;0x373238337Bfe1146fb49989fc222523f83081dDb&quot;</span>
+        <span class="n">pot</span> <span class="o">=</span> <span class="s2">&quot;0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dsr_manager</span> <span class="o">=</span> <span class="n">Contract</span><span class="p">(</span><span class="n">dsr_manager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pot</span> <span class="o">=</span> <span class="n">Contract</span><span class="p">(</span><span class="n">pot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_block</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">contract_creation_block</span><span class="p">(</span><span class="n">dsr_manager</span><span class="p">),</span> <span class="n">contract_creation_block</span><span class="p">(</span><span class="n">pot</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="MakerDSR._balances">
