@@ -58,6 +58,12 @@ export_parser.add_argument(
     default=0,
 )
 export_parser.add_argument(
+    '--export-start-block',
+    type=int,
+    help='The first block in the range you wish to export.',
+    default=0,
+)
+export_parser.add_argument(
     '--daemon', 
     type=bool,
     help='TODO: If True, starts a daemon process instead of running in your terminal. Not currently supported.',
