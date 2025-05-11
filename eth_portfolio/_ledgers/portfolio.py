@@ -41,7 +41,7 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
         """Returns the start block for analysis of this portfolio."""
         return self.portfolio._start_block
 
-    def _get_and_yield(self, start_block: int, end_block: int) -> AsyncIterator[T]:
+    def _get_and_yield(self, start_block: int, end_block: int, mem_cache: bool) -> AsyncIterator[T]:
         """
         Asynchronously yields ledger entries for each address in the portfolio for the specified block range.
 
@@ -61,7 +61,7 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
             ...     print(entry)
         """
         aiterators = [
-            getattr(address, self.property_name)[start_block:end_block]
+            getattr(address, self.property_name)._get_and_yield(start_block, end_block, mem_cache)
             for address in self.portfolio
         ]
         return a_sync.as_yielded(*aiterators)
