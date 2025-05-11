@@ -35,13 +35,14 @@ async def aiter_timestamps(*, start: Optional[datetime] = None, interval: timede
 
     if start is None:
         start = datetime.now(tz=timezone.utc)
-        block0_ts = datetime.fromtimestamp(chain[0].timestamp, tz=timezone.utc)
-        helper = datetime(year=block0_ts.year, month=block0_ts.month, day=block0_ts.day, hour=block0_ts.hour, minute=block0_ts.minute, tzinfo=timezone.utc)
-        while helper + interval < start:
-            helper += interval
-        start = helper
-        if start < block0_ts:
-            start += interval
+        
+    block0_ts = datetime.fromtimestamp(chain[0].timestamp, tz=timezone.utc)
+    helper = datetime(year=block0_ts.year, month=block0_ts.month, day=block0_ts.day, hour=block0_ts.hour, minute=block0_ts.minute, tzinfo=timezone.utc)
+    while helper + interval < start:
+        helper += interval
+    start = helper
+    if start < block0_ts:
+        start += interval
     
     timestamp = start
 
