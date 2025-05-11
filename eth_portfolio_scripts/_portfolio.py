@@ -114,7 +114,7 @@ class ExportablePortfolio(Portfolio):
                 else:
                     raise NotImplementedError()
 
-        print(f"got data for {ts} for {self} in {datetime.now(tz=timezone.utc) - start}")
+        print(f"got data for {ts} in {datetime.now(tz=timezone.utc) - start}")
         return metrics_to_export
 
     def __get_data_exists_coros(self, dt: datetime) -> Iterator[str]:
