@@ -1,7 +1,7 @@
 from asyncio import gather
 from typing import Optional
 
-from eth_typing import BlockNumber
+from dank_mids.exceptions import Revert
 from y import Contract, Network, contract_creation_block, dai
 from y.datatypes import Address, Block
 
@@ -24,13 +24,17 @@ class MakerDSR(ProtocolABC):
         balances = TokenBalances(block=block)
         if block and block < self._start_block:
             return balances
-        pie, exchange_rate = await gather(
-            self.dsr_manager.pieOf.coroutine(address, block_identifier=block),
-            self._exchange_rate(block),
-        )
-        if pie:
-            dai_in_dsr = pie * exchange_rate / 10**18
-            balances[dai] = Balance(dai_in_dsr, dai_in_dsr, token=dai, block=block)
+        try:
+            pie, exchange_rate = await gather(
+                self.dsr_manager.pieOf.coroutine(address, block_identifier=block),
+                self._exchange_rate(block),
+            )
+        except Revert:
+            pass
+        else:
+            if pie:
+                dai_in_dsr = pie * exchange_rate / 10**18
+                balances[dai] = Balance(dai_in_dsr, dai_in_dsr, token=dai, block=block)
         return balances
 
     async def _exchange_rate(self, block: Optional[Block] = None) -> Decimal:
