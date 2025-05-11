@@ -1,3 +1,6 @@
+from datetime import datetime, timezone
+
+import dank_mids
 from a_sync import create_task
 from a_sync.asyncio import sleep0 as yield_to_loop
 
@@ -15,8 +18,13 @@ async def export_balances(args):
     interval = parse_timedelta(args.interval)
     portfolio = ExportablePortfolio(args.wallet, label=args.label, start_block=args.first_tx_block, load_prices=False)
 
+    if args.export_start_block:
+        start = datetime.fromtimestamp(await dank_mids.eth.get_block_timestamp(args.export_start_block), tz=timezone.utc)
+    else:
+        start = None
+        
     print(f"Exporting {portfolio}")
-    async for ts in aiter_timestamps(interval=interval, run_forever=True):
+    async for ts in aiter_timestamps(start=start, interval=interval, run_forever=True):
         print(f'found ts {ts}')
         create_task(
             coro=portfolio.export_snapshot(ts, sync=False), 
