@@ -176,7 +176,9 @@ class AddressLedgerBase(
         """
         return self.portfolio_address._start_block
 
-    async def _get_and_yield(self, start_block: Block, end_block: Block, mem_cache: bool) -> AsyncGenerator[T, None]:
+    async def _get_and_yield(
+        self, start_block: Block, end_block: Block, mem_cache: bool
+    ) -> AsyncGenerator[T, None]:
         """
         Yields ledger entries between the specified blocks.
 
@@ -292,7 +294,9 @@ class AddressLedgerBase(
 
     @stuck_coro_debugger
     @set_end_block_if_none
-    async def _get_new_objects(self, start_block: Block, end_block: Block, mem_cache: bool) -> AsyncIterator[T]:
+    async def _get_new_objects(
+        self, start_block: Block, end_block: Block, mem_cache: bool
+    ) -> AsyncIterator[T]:
         """
         Retrieves new ledger entries between the specified blocks.
 
@@ -308,7 +312,9 @@ class AddressLedgerBase(
                 yield ledger_entry
 
     @abstractmethod
-    async def _load_new_objects(self, start_block: Block, end_block: Block, mem_cache: bool) -> AsyncIterator[T]:
+    async def _load_new_objects(
+        self, start_block: Block, end_block: Block, mem_cache: bool
+    ) -> AsyncIterator[T]:
         """
         Abstract method to load new ledger entries between the specified blocks.
 
@@ -453,7 +459,9 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         if self.cached_thru and end_block < self.cached_thru:
             return
         if not mem_cache:
-            logger.warning(f"{type(self).__name__}._load_new_objects mem_cache arg is not yet implemented")
+            logger.warning(
+                f"{type(self).__name__}._load_new_objects mem_cache arg is not yet implemented"
+            )
         address = self.address
         end_block_nonce: int = await get_nonce_at_block(address, end_block)
         if nonces := tuple(range(self.cached_thru_nonce + 1, end_block_nonce + 1)):
@@ -752,7 +760,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             )
 
         load = InternalTransfer.from_trace
-        
+
         if mem_cache:
             internal_transfers = []
             append_transfer = internal_transfers.append
@@ -762,7 +770,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             traces = []
             async for chunk in generator_function(trace_filter_coros, aiter=True):
                 traces.extend(chunk)
-    
+
             if traces:
                 tasks = []
                 while traces:

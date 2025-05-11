@@ -390,13 +390,21 @@ class Portfolio(a_sync.ASyncGenericBase):
         )
 
     async def sent(
-        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None, *, mem_cache: bool = True
+        self,
+        start_block: Optional[Block] = None,
+        end_block: Optional[Block] = None,
+        *,
+        mem_cache: bool = True,
     ) -> AsyncIterator[LedgerEntry]:
         async for obj in self.ledger.sent(start_block, end_block, mem_cache=mem_cache):
             yield obj
 
     async def received(
-        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None, *, mem_cache: bool = True
+        self,
+        start_block: Optional[Block] = None,
+        end_block: Optional[Block] = None,
+        *,
+        mem_cache: bool = True,
     ) -> AsyncIterator[LedgerEntry]:
         async for obj in self.ledger.received(start_block, end_block, mem_cache=mem_cache):
             yield obj
@@ -617,7 +625,11 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
             raise
 
     async def sent(
-        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None, *, mem_cache: bool = True
+        self,
+        start_block: Optional[Block] = None,
+        end_block: Optional[Block] = None,
+        *,
+        mem_cache: bool = True,
     ) -> AsyncIterator[LedgerEntry]:
         portfolio_addresses = set(self.portfolio.addresses.keys())
         async for obj in self._get_and_yield(start_block or 0, end_block, mem_cache):
@@ -629,7 +641,11 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
                 yield obj
 
     async def received(
-        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None, *, mem_cache: bool = True
+        self,
+        start_block: Optional[Block] = None,
+        end_block: Optional[Block] = None,
+        *,
+        mem_cache: bool = True,
     ) -> AsyncIterator[LedgerEntry]:
         portfolio_addresses = set(self.portfolio.addresses.keys())
         async for obj in self._get_and_yield(start_block or 0, end_block, mem_cache):
