@@ -67,34 +67,64 @@ class Decimal(decimal.Decimal):
         return string
 
     def __add__(self, other):
-        return type(self)(super().__add__(other))
+        try:
+            return type(self)(super().__add__(other))
+        except TypeError as e:
+            raise TypeError(str(e), other) from e.__cause__
 
     def __radd__(self, other):
-        return type(self)(super().__radd__(other))
+        try:
+            return type(self)(super().__radd__(other))
+        except TypeError as e:
+            raise TypeError(str(e), other) from e.__cause__
 
     def __sub__(self, other):
-        return type(self)(super().__sub__(other))
+        try:
+            return type(self)(super().__sub__(other))
+        except TypeError as e:
+            raise TypeError(str(e), other) from e.__cause__
 
     def __rsub__(self, other):
-        return type(self)(super().__rsub__(other))
+        try:
+            return type(self)(super().__rsub__(other))
+        except TypeError as e:
+            raise TypeError(str(e), other) from e.__cause__
 
     def __mul__(self, other):
-        return type(self)(super().__mul__(other))
+        try:
+            return type(self)(super().__mul__(other))
+        except TypeError as e:
+            raise TypeError(str(e), other) from e.__cause__
 
     def __rmul__(self, other):
-        return type(self)(super().__rmul__(other))
+        try:
+            return type(self)(super().__rmul__(other))
+        except TypeError as e:
+            raise TypeError(str(e), other) from e.__cause__
 
     def __truediv__(self, other):
-        return type(self)(super().__truediv__(other))
+        try:
+            return type(self)(super().__truediv__(other))
+        except TypeError as e:
+            raise TypeError(str(e), other) from e.__cause__
 
     def __rtruediv__(self, other):
-        return type(self)(super().__rtruediv__(other))
+        try:
+            return type(self)(super().__rtruediv__(other))
+        except TypeError as e:
+            raise TypeError(str(e), other) from e.__cause__
 
     def __floordiv__(self, other):
-        return type(self)(super().__floordiv__(other))
+        try:
+            return type(self)(super().__floordiv__(other))
+        except TypeError as e:
+            raise TypeError(str(e), other) from e.__cause__
 
     def __rfloordiv__(self, other):
-        return type(self)(super().__rfloordiv__(other))
+        try:
+            return type(self)(super().__rfloordiv__(other))
+        except TypeError as e:
+            raise TypeError(str(e), other) from e.__cause__
 
 
 class Gwei(Decimal):
