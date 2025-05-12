@@ -30,7 +30,7 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
         if bal:
             bal = Decimal(bal) / 10**18
             balances[yfi] = Balance(
-                bal, bal * await _get_price(yfi, block, sync=False), token=yfi, block=block
+                bal, bal * await _get_price(yfi, block), token=yfi, block=block
             )
         return balances
 
