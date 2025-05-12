@@ -1,10 +1,11 @@
 from typing import Optional
 
-from y import Contract, Network, get_price
+from y import Contract, Network
 from y._decorators import stuck_coro_debugger
 from y.datatypes import Address, Block
 
 from eth_portfolio._decimal import Decimal
+from eth_portfolio._utils import _get_price
 from eth_portfolio.protocols.lending._base import LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import Balance, TokenBalances
 
@@ -29,7 +30,7 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
         if bal:
             bal = Decimal(bal) / 10**18
             balances[yfi] = Balance(
-                bal, bal * await get_price(yfi, block, sync=False), token=yfi, block=block
+                bal, bal * await _get_price(yfi, block, sync=False), token=yfi, block=block
             )
         return balances
 
