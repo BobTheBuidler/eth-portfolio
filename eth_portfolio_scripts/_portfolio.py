@@ -136,7 +136,7 @@ class ExportablePortfolio(Portfolio):
         if protocol is not None:
             wallet = f"{protocol} | {wallet}"
 
-        label_and_section = f"{self.label.lower().replace(" ", "-")}-{section}"
+        label_and_section = f"{self.label}-{section}".lower().replace(" ", "-")
         symbol = await _get_symbol(token)
         bucket = await self.get_bucket(token)
         ts_millis = floor(ts.timestamp()) * 1000
