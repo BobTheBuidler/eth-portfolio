@@ -29,9 +29,7 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
         bal: int = await self.unitVault.collaterals.coroutine(yfi, address, block_identifier=block)
         if bal:
             bal = Decimal(bal) / 10**18
-            balances[yfi] = Balance(
-                bal, bal * await _get_price(yfi, block), token=yfi, block=block
-            )
+            balances[yfi] = Balance(bal, bal * await _get_price(yfi, block), token=yfi, block=block)
         return balances
 
     @stuck_coro_debugger
