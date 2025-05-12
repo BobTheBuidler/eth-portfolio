@@ -21,9 +21,9 @@ services:
     #  sh -c "grafana-cli plugins install frser-sqlite-datasource && /run.sh"
     volumes:
       #- ./.grafana/plugins/:/var/lib/grafana/plugins
-      - ~/.eth_portfolio/:/var/lib/eth_portfolio
-      - ~/.eth_portfolio/data/grafana/:/var/lib/grafana
-      - ~/.eth_portfolio/grafana/provisioning/:/etc/grafana/provisioning/
+      - ~/.eth-portfolio/:/var/lib/eth_portfolio
+      - ~/.eth-portfolio/data/grafana/:/var/lib/grafana
+      - ~/.eth-portfolio/grafana/provisioning/:/etc/grafana/provisioning/
     networks:
       - eth_portfolio
     restart: always
@@ -57,7 +57,7 @@ services:
   victoria-metrics:
     image: victoriametrics/victoria-metrics:v1.81.1
     volumes:
-      - ~/.eth_portfolio/data/victoria/:/victoria-metrics-data
+      - ~/.eth-portfolio/data/victoria/:/victoria-metrics-data
     command:
       - "-retentionPeriod=10y"
       - "-search.disableAutoCacheReset=true"
