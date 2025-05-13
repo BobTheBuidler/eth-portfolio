@@ -77,7 +77,7 @@ def _calc_value(balance, price) -> Decimal:
         >>> print(f"USD Value: {value}")
     """
     if price is None:
-        return Decimal(0)
+        return _ZERO
     # NOTE If balance * price returns a Decimal with precision < 18, rounding is both impossible and unnecessary.
     value = Decimal(balance) * Decimal(price)
     return round(value, 18)
