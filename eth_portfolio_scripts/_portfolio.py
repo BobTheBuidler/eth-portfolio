@@ -66,7 +66,7 @@ class ExportablePortfolio(Portfolio):
             except ValidationError:
                 raise victoria.VictoriaMetricsError(data.decode()) from None
             if result.status == "success" and len(result.data.result) > 0:
-                print("{dt} already loaded")
+                print(f"{dt} already loaded")
                 return True
         return False
 
