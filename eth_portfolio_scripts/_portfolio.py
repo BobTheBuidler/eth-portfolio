@@ -52,9 +52,9 @@ class ExportablePortfolio(Portfolio):
         self.get_bucket = get_bucket
 
     @cached_property
-    def _data_queries(self) -> Tuple[str, str, str]:
-        label = self.label.lower().replace(" ", "-")
-        return (f"{label}-assets", f"{label}-debts", f"{label}-external")
+    def _data_queries(self) -> Tuple[str, str]:
+        label = self.label.lower().replace(" ", "_")
+        return f"{label}_assets", f"{label}_debts"
 
     @eth_retry.auto_retry
     @a_sync.Semaphore(16)
@@ -136,7 +136,7 @@ class ExportablePortfolio(Portfolio):
         if protocol is not None:
             wallet = f"{protocol} | {wallet}"
 
-        label_and_section = f"{self.label}-{section}".lower().replace(" ", "-")
+        label_and_section = f"{self.label}_{section}".lower().replace(" ", "_")
         symbol = await _get_symbol(token)
         bucket = await self.get_bucket(token)
         ts_millis = floor(ts.timestamp()) * 1000

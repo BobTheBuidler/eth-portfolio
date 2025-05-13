@@ -1,13 +1,15 @@
 networks:
   eth_portfolio:
 
+volumes:
+  grafana_data: {}
+
 services:
   grafana:
     image: grafana/grafana:10.2.0
     ports:
       - 127.0.0.1:${GRAFANA_PORT:-3000}:3000
     environment:
-      #- GF_PORT
       - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER:-admin}
       - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD:-admin}
       - GF_AUTH_ANONYMOUS_ENABLED=true
@@ -20,10 +22,8 @@ services:
     #command: >
     #  sh -c "grafana-cli plugins install frser-sqlite-datasource && /run.sh"
     volumes:
-      #- ./.grafana/plugins/:/var/lib/grafana/plugins
-      - ~/.eth-portfolio/:/var/lib/eth_portfolio
-      - ~/.eth-portfolio/data/grafana/:/var/lib/grafana
-      - ~/.eth-portfolio/grafana/provisioning/:/etc/grafana/provisioning/
+      - grafana_data:/var/lib/grafana
+      - ./.grafana/:/etc/grafana/provisioning/
     networks:
       - eth_portfolio
     restart: always
@@ -45,9 +45,7 @@ services:
       - ../victoria/:/etc/prometheus/
     command:
       - "-promscrape.config=/etc/prometheus/prometheus.yml"
-      - "-remoteWrite.url=http://victoria-metrics:8430/api/v1/write"
-    #links:
-    #  - victoria-metrics:victoria-metrics
+      - "-remoteWrite.url=http://victoria-metrics:8428/api/v1/write"
     depends_on:
       - victoria-metrics
     networks:
@@ -65,4 +63,14 @@ services:
       - 127.0.0.1:${VICTORIA_PORT:-8428}:8428
     networks:
       - eth_portfolio
+    restart: always
+
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    command:
+      - "--path.rootfs=/host"
+    networks:
+      - eth_portfolio
+    volumes:
+      - "/:/host:ro,rslave"
     restart: always
