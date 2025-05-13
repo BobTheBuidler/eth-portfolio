@@ -23,7 +23,7 @@ services:
       #- ./.grafana/plugins/:/var/lib/grafana/plugins
       - ~/.eth-portfolio/:/var/lib/eth_portfolio
       - ~/.eth-portfolio/data/grafana/:/var/lib/grafana
-      - ~/.eth-portfolio/grafana/provisioning/:/etc/grafana/provisioning/
+      - ./.grafana/:/etc/grafana/provisioning/
     networks:
       - eth_portfolio
     restart: always
