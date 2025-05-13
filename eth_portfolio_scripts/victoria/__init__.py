@@ -28,7 +28,7 @@ class VictoriaMetricsError(ValueError): ...
 def get_session() -> ClientSession:
     sesh = session
     if sesh is None:
-        sesh = ClientSession(BASE_URL)
+        sesh = ClientSession(BASE_URL, raise_for_status=True)
         __set_session(sesh)
     return sesh
 
