@@ -67,8 +67,6 @@ services:
 
   node-exporter:
     image: quay.io/prometheus/node-exporter:latest
-    ports:
-      - 127.0.0.1:9100:9100
     command:
       - "--path.rootfs=/host"
     networks:
