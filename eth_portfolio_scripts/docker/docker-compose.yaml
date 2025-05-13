@@ -10,7 +10,6 @@ services:
     ports:
       - 127.0.0.1:${GRAFANA_PORT:-3000}:3000
     environment:
-      #- GF_PORT
       - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER:-admin}
       - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD:-admin}
       - GF_AUTH_ANONYMOUS_ENABLED=true
@@ -23,8 +22,6 @@ services:
     #command: >
     #  sh -c "grafana-cli plugins install frser-sqlite-datasource && /run.sh"
     volumes:
-      #- ./.grafana/plugins/:/var/lib/grafana/plugins
-      #- ~/.eth-portfolio/:/var/lib/eth_portfolio
       - grafana_data:/var/lib/grafana
       - ./.grafana/:/etc/grafana/provisioning/
     networks:
@@ -48,9 +45,7 @@ services:
       - ../victoria/:/etc/prometheus/
     command:
       - "-promscrape.config=/etc/prometheus/prometheus.yml"
-      - "-remoteWrite.url=http://victoria-metrics:8430/api/v1/write"
-    #links:
-    #  - victoria-metrics:victoria-metrics
+      - "-remoteWrite.url=http://victoria-metrics:8428/api/v1/write"
     depends_on:
       - victoria-metrics
     networks:
