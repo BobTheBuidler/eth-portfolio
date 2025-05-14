@@ -71,7 +71,7 @@ class ExportablePortfolio(Portfolio):
         return False
 
     async def export_snapshot(self, dt: datetime):
-        print(f"checking data at {dt} for {self}")
+        print(f"checking data at {dt} for {self.label}")
         try:
             if not await self.data_exists(dt, sync=False):
                 while True:
@@ -89,7 +89,7 @@ class ExportablePortfolio(Portfolio):
 
     @a_sync.Semaphore(250)
     async def get_data_for_export(self, block: BlockNumber, ts: datetime) -> List[victoria.Metric]:
-        print(f"exporting {ts} for {self}")
+        print(f"exporting {ts} for {self.label}")
         start = datetime.now(tz=timezone.utc)
 
         metrics_to_export = []
