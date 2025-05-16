@@ -66,7 +66,7 @@ except Exception as e:  # fallback in case build fails
 setup(
     # NOTE: somebody stole our name on pypi, we have this placeholder until we steal it back
     name="eth-portfolio-temp",
-    #name="eth-portfolio",
+    # name="eth-portfolio",
     packages=find_packages(),
     use_scm_version={
         "root": ".",
