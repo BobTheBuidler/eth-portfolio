@@ -22,7 +22,7 @@
     "liveNow": false,
     "panels": [
         {
-            "datasource": "DS_PROMETHEUS",
+            "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
                     "color": {"mode": "thresholds"},
@@ -122,7 +122,7 @@
             "type": "stat",
         },
         {
-            "datasource": "DS_PROMETHEUS",
+            "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
                     "color": {"mode": "thresholds"},
@@ -162,7 +162,7 @@
             "type": "stat",
         },
         {
-            "datasource": "DS_PROMETHEUS",
+            "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
                     "color": {"mode": "thresholds"},
@@ -202,7 +202,7 @@
             "type": "stat",
         },
         {
-            "datasource": "DS_PROMETHEUS",
+            "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
                     "color": {"mode": "thresholds"},
@@ -240,7 +240,7 @@
             "type": "stat",
         },
         {
-            "datasource": "DS_PROMETHEUS",
+            "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
                     "color": {"mode": "thresholds"},
@@ -278,7 +278,7 @@
             "type": "stat",
         },
         {
-            "datasource": "DS_PROMETHEUS",
+            "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
                     "color": {"mode": "thresholds"},
@@ -318,7 +318,7 @@
             "type": "stat",
         },
         {
-            "datasource": "DS_PROMETHEUS",
+            "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
                     "color": {"mode": "thresholds"},
@@ -358,7 +358,7 @@
             "type": "stat",
         },
         {
-            "datasource": "DS_PROMETHEUS",
+            "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
                     "color": {"mode": "thresholds"},
@@ -396,7 +396,7 @@
             "type": "stat",
         },
         {
-            "datasource": "DS_PROMETHEUS",
+            "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
                     "color": {"mode": "palette-classic"},
@@ -454,7 +454,7 @@
             "type": "timeseries",
         },
         {
-            "datasource": "DS_PROMETHEUS",
+            "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
                     "color": {"mode": "palette-classic"},
@@ -503,7 +503,7 @@
             "type": "timeseries",
         },
         {
-            "datasource": "DS_PROMETHEUS",
+            "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
                     "color": {"mode": "palette-classic"},
@@ -585,7 +585,7 @@
             "type": "timeseries",
         },
         {
-            "datasource": "DS_PROMETHEUS",
+            "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
                     "color": {"mode": "palette-classic"},
@@ -670,7 +670,7 @@
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
-                    "datasource": "DS_PROMETHEUS",
+                    "datasource": "PROMETHEUS",
                     "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
                     "fill": 0,
                     "fillGradient": 0,
@@ -766,7 +766,7 @@
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
-                    "datasource": "DS_PROMETHEUS",
+                    "datasource": "PROMETHEUS",
                     "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
                     "fill": 0,
                     "fillGradient": 0,
@@ -862,7 +862,7 @@
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
-                    "datasource": "DS_PROMETHEUS",
+                    "datasource": "PROMETHEUS",
                     "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
                     "fill": 0,
                     "fillGradient": 0,
@@ -958,7 +958,7 @@
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
-                    "datasource": "DS_PROMETHEUS",
+                    "datasource": "PROMETHEUS",
                     "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
                     "fill": 0,
                     "fillGradient": 0,
@@ -1054,7 +1054,7 @@
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
-                    "datasource": "DS_PROMETHEUS",
+                    "datasource": "PROMETHEUS",
                     "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
                     "fill": 0,
                     "fillGradient": 0,
@@ -1150,7 +1150,7 @@
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
-                    "datasource": "DS_PROMETHEUS",
+                    "datasource": "PROMETHEUS",
                     "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
                     "fill": 0,
                     "fillGradient": 0,
@@ -1246,7 +1246,7 @@
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
-                    "datasource": "DS_PROMETHEUS",
+                    "datasource": "PROMETHEUS",
                     "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
                     "fill": 0,
                     "fillGradient": 0,
@@ -1342,7 +1342,7 @@
                     "bars": false,
                     "dashLength": 10,
                     "dashes": false,
-                    "datasource": "DS_PROMETHEUS",
+                    "datasource": "PROMETHEUS",
                     "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
                     "fill": 0,
                     "fillGradient": 0,
