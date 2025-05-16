@@ -8,8 +8,13 @@
                 "hide": true,
                 "iconColor": "rgba(0, 211, 255, 1)",
                 "name": "Annotations & Alerts",
-                "target": {"limit": 100, "matchAny": false, "tags": [], "type": "dashboard"},
-                "type": "dashboard",
+                "target": {
+                    "limit": 100,
+                    "matchAny": false,
+                    "tags": [],
+                    "type": "dashboard"
+                },
+                "type": "dashboard"
             }
         ]
     },
@@ -25,51 +30,73 @@
             "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
-                    "color": {"mode": "thresholds"},
+                    "color": {
+                        "mode": "thresholds"
+                    },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{"color": "green", "value": null}, {"color": "red", "value": 80}],
-                    },
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
                 },
-                "overrides": [],
+                "overrides": []
             },
-            "gridPos": {"h": 4, "w": 3, "x": 0, "y": 0},
+            "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 0,
+                "y": 0
+            },
             "id": 12,
             "options": {
                 "colorMode": "value",
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
-                "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
                 "text": {},
-                "textMode": "auto",
+                "textMode": "auto"
             },
             "pluginVersion": "8.2.1",
             "targets": [
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="balance",token="YFI"})',
+                    "expr": "sum(my_portfolio_assets{param=\"balance\",token=\"YFI\"})",
                     "interval": "",
                     "legendFormat": "YFI Balance",
-                    "refId": "A",
+                    "refId": "A"
                 },
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="usd value",token="YFI"})',
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",token=\"YFI\"})",
                     "hide": false,
                     "interval": "",
                     "legendFormat": "YFI Value",
-                    "refId": "B",
+                    "refId": "B"
                 },
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="usd value",token="yvYFI"})',
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",token=\"yvYFI\"})",
                     "hide": false,
                     "interval": "",
                     "legendFormat": "yvYFI Value",
-                    "refId": "C",
-                },
+                    "refId": "C"
+                }
             ],
             "title": "YFI in Treasury",
             "transformations": [
@@ -81,12 +108,14 @@
                             "left": "YFI Value",
                             "operator": "/",
                             "reducer": "sum",
-                            "right": "YFI Balance",
+                            "right": "YFI Balance"
                         },
                         "mode": "binary",
-                        "reduce": {"reducer": "sum"},
-                        "replaceFields": false,
-                    },
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": false
+                    }
                 },
                 {
                     "id": "calculateField",
@@ -96,12 +125,14 @@
                             "left": "yvYFI Value",
                             "operator": "/",
                             "reducer": "sum",
-                            "right": "yfi price",
+                            "right": "yfi price"
                         },
                         "mode": "binary",
-                        "reduce": {"reducer": "sum"},
-                        "replaceFields": false,
-                    },
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": false
+                    }
                 },
                 {
                     "id": "calculateField",
@@ -111,295 +142,453 @@
                             "left": "yvYFI Balance in YFI",
                             "operator": "+",
                             "reducer": "sum",
-                            "right": "YFI Balance",
+                            "right": "YFI Balance"
                         },
                         "mode": "binary",
-                        "reduce": {"reducer": "sum"},
-                        "replaceFields": true,
-                    },
-                },
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": true
+                    }
+                }
             ],
-            "type": "stat",
+            "type": "stat"
         },
         {
             "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
-                    "color": {"mode": "thresholds"},
+                    "color": {
+                        "mode": "thresholds"
+                    },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{"color": "green", "value": null}, {"color": "red", "value": 80}],
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
                     },
-                    "unit": "currencyUSD",
+                    "unit": "currencyUSD"
                 },
-                "overrides": [],
+                "overrides": []
             },
-            "gridPos": {"h": 4, "w": 3, "x": 3, "y": 0},
+            "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 3,
+                "y": 0
+            },
             "id": 7,
             "options": {
                 "colorMode": "value",
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
-                "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
                 "text": {},
-                "textMode": "auto",
+                "textMode": "auto"
             },
             "pluginVersion": "8.2.1",
             "targets": [
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="usd value",token="YFI"}) + sum(my_portfolio_assets{param="usd value",token="yvYFI"})',
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",token=\"YFI\"}) + sum(my_portfolio_assets{param=\"usd value\",token=\"yvYFI\"})",
                     "format": "time_series",
                     "instant": false,
                     "interval": "",
                     "legendFormat": "",
-                    "refId": "A",
+                    "refId": "A"
                 }
             ],
             "title": "YFI in Treasury ($)",
-            "type": "stat",
+            "type": "stat"
         },
         {
             "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
-                    "color": {"mode": "thresholds"},
+                    "color": {
+                        "mode": "thresholds"
+                    },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{"color": "green", "value": null}, {"color": "red", "value": 80}],
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
                     },
-                    "unit": "currencyUSD",
+                    "unit": "currencyUSD"
                 },
-                "overrides": [],
+                "overrides": []
             },
-            "gridPos": {"h": 4, "w": 3, "x": 6, "y": 0},
+            "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 6,
+                "y": 0
+            },
             "id": 9,
             "options": {
                 "colorMode": "value",
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
-                "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
                 "text": {},
-                "textMode": "auto",
+                "textMode": "auto"
             },
             "pluginVersion": "8.2.1",
             "targets": [
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="usd value",bucket!="YFI", bucket!="Other long term assets"})',
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket!=\"YFI\", bucket!=\"Other long term assets\"})",
                     "format": "time_series",
                     "instant": false,
                     "interval": "",
                     "legendFormat": "",
-                    "refId": "A",
+                    "refId": "A"
                 }
             ],
             "title": "Liquid Assets",
-            "type": "stat",
+            "type": "stat"
         },
         {
             "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
-                    "color": {"mode": "thresholds"},
+                    "color": {
+                        "mode": "thresholds"
+                    },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{"color": "green", "value": null}, {"color": "red", "value": 80}],
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
                     },
-                    "unit": "currencyUSD",
+                    "unit": "currencyUSD"
                 },
-                "overrides": [],
+                "overrides": []
             },
-            "gridPos": {"h": 4, "w": 3, "x": 9, "y": 0},
+            "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 9,
+                "y": 0
+            },
             "id": 20,
             "options": {
                 "colorMode": "value",
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
-                "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
                 "text": {},
-                "textMode": "auto",
+                "textMode": "auto"
             },
             "pluginVersion": "8.2.1",
             "targets": [
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="usd value",bucket="ETH"})',
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"ETH\"})",
                     "interval": "",
                     "legendFormat": "",
-                    "refId": "A",
+                    "refId": "A"
                 }
             ],
             "title": "ETH",
-            "type": "stat",
+            "type": "stat"
         },
         {
             "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
-                    "color": {"mode": "thresholds"},
+                    "color": {
+                        "mode": "thresholds"
+                    },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{"color": "green", "value": null}, {"color": "red", "value": 80}],
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
                     },
-                    "unit": "currencyUSD",
+                    "unit": "currencyUSD"
                 },
-                "overrides": [],
+                "overrides": []
             },
-            "gridPos": {"h": 4, "w": 3, "x": 12, "y": 0},
+            "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 12,
+                "y": 0
+            },
             "id": 19,
             "options": {
                 "colorMode": "value",
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
-                "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
                 "text": {},
-                "textMode": "auto",
+                "textMode": "auto"
             },
             "pluginVersion": "8.2.1",
             "targets": [
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="usd value",bucket="BTC"})',
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"BTC\"})",
                     "interval": "",
                     "legendFormat": "",
-                    "refId": "A",
+                    "refId": "A"
                 }
             ],
             "title": "BTC",
-            "type": "stat",
+            "type": "stat"
         },
         {
             "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
-                    "color": {"mode": "thresholds"},
+                    "color": {
+                        "mode": "thresholds"
+                    },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{"color": "green", "value": null}, {"color": "red", "value": 80}],
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
                     },
-                    "unit": "currencyUSD",
+                    "unit": "currencyUSD"
                 },
-                "overrides": [],
+                "overrides": []
             },
-            "gridPos": {"h": 4, "w": 3, "x": 15, "y": 0},
+            "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 15,
+                "y": 0
+            },
             "id": 10,
             "options": {
                 "colorMode": "value",
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
-                "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
                 "text": {},
-                "textMode": "auto",
+                "textMode": "auto"
             },
             "pluginVersion": "8.2.1",
             "targets": [
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="usd value", bucket="Cash & cash equivalents"}) ',
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\", bucket=\"Cash & cash equivalents\"})",
                     "format": "time_series",
                     "instant": false,
                     "interval": "",
                     "legendFormat": "",
-                    "refId": "A",
+                    "refId": "A"
                 }
             ],
             "title": "Cash",
-            "type": "stat",
+            "type": "stat"
         },
         {
             "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
-                    "color": {"mode": "thresholds"},
+                    "color": {
+                        "mode": "thresholds"
+                    },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{"color": "green", "value": null}, {"color": "red", "value": 80}],
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
                     },
-                    "unit": "currencyUSD",
+                    "unit": "currencyUSD"
                 },
-                "overrides": [],
+                "overrides": []
             },
-            "gridPos": {"h": 4, "w": 3, "x": 18, "y": 0},
+            "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 18,
+                "y": 0
+            },
             "id": 8,
             "options": {
                 "colorMode": "value",
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
-                "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
                 "text": {},
-                "textMode": "auto",
+                "textMode": "auto"
             },
             "pluginVersion": "8.2.1",
             "targets": [
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_debt{param="usd value"})',
+                    "expr": "sum(my_portfolio_debt{param=\"usd value\"})",
                     "format": "time_series",
                     "instant": false,
                     "interval": "",
                     "legendFormat": "",
-                    "refId": "A",
+                    "refId": "A"
                 }
             ],
             "title": "Treasury Debt",
-            "type": "stat",
+            "type": "stat"
         },
         {
             "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
-                    "color": {"mode": "thresholds"},
+                    "color": {
+                        "mode": "thresholds"
+                    },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{"color": "green", "value": null}, {"color": "red", "value": 80}],
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
                     },
-                    "unit": "currencyUSD",
+                    "unit": "currencyUSD"
                 },
-                "overrides": [],
+                "overrides": []
             },
-            "gridPos": {"h": 4, "w": 3, "x": 21, "y": 0},
+            "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 21,
+                "y": 0
+            },
             "id": 18,
             "options": {
                 "colorMode": "value",
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
-                "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
                 "text": {},
-                "textMode": "auto",
+                "textMode": "auto"
             },
             "pluginVersion": "8.2.1",
             "targets": [
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="usd value",bucket="Cash & cash equivalents"}) - sum(my_portfolio_debt{param="usd value"})',
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Cash & cash equivalents\"}) - sum(my_portfolio_debt{param=\"usd value\"})",
                     "interval": "",
                     "legendFormat": "",
-                    "refId": "A",
+                    "refId": "A"
                 }
             ],
             "title": "Cash - Debt",
-            "type": "stat",
+            "type": "stat"
         },
         {
             "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
-                    "color": {"mode": "palette-classic"},
+                    "color": {
+                        "mode": "palette-classic"
+                    },
                     "custom": {
                         "axisLabel": "",
                         "axisPlacement": "auto",
@@ -407,57 +596,88 @@
                         "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
-                        "hideFrom": {"legend": false, "tooltip": false, "viz": false},
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
                         "lineInterpolation": "linear",
                         "lineWidth": 1,
                         "pointSize": 5,
-                        "scaleDistribution": {"type": "linear"},
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
                         "showPoints": "auto",
                         "spanNulls": 3600000,
-                        "stacking": {"group": "A", "mode": "none"},
-                        "thresholdsStyle": {"mode": "off"},
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{"color": "green", "value": null}],
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            }
+                        ]
                     },
-                    "unit": "currencyUSD",
+                    "unit": "currencyUSD"
                 },
-                "overrides": [],
+                "overrides": []
             },
-            "gridPos": {"h": 10, "w": 12, "x": 0, "y": 4},
+            "gridPos": {
+                "h": 10,
+                "w": 12,
+                "x": 0,
+                "y": 4
+            },
             "id": 2,
             "options": {
-                "legend": {"calcs": ["lastNotNull"], "displayMode": "list", "placement": "bottom"},
-                "tooltip": {"mode": "single"},
+                "legend": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single"
+                }
             },
             "targets": [
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="usd value",bucket!="YFI", bucket!="Other long term assets"}) by (bucket)',
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket!=\"YFI\", bucket!=\"Other long term assets\"}) by (bucket)",
                     "hide": false,
                     "interval": "",
                     "legendFormat": "{{bucket}}",
-                    "refId": "A",
+                    "refId": "A"
                 },
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="usd value",token="YFI"}) by (bucket)',
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",token=\"YFI\"}) by (bucket)",
                     "hide": true,
                     "interval": "",
                     "legendFormat": "",
-                    "refId": "B",
-                },
+                    "refId": "B"
+                }
             ],
             "title": "Liquid Assets",
-            "type": "timeseries",
+            "type": "timeseries"
         },
         {
             "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
-                    "color": {"mode": "palette-classic"},
+                    "color": {
+                        "mode": "palette-classic"
+                    },
                     "custom": {
                         "axisLabel": "",
                         "axisPlacement": "auto",
@@ -465,48 +685,83 @@
                         "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
-                        "hideFrom": {"legend": false, "tooltip": false, "viz": false},
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
                         "lineInterpolation": "linear",
                         "lineWidth": 1,
                         "pointSize": 5,
-                        "scaleDistribution": {"type": "linear"},
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
                         "showPoints": "auto",
                         "spanNulls": 3600000,
-                        "stacking": {"group": "A", "mode": "none"},
-                        "thresholdsStyle": {"mode": "off"},
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{"color": "green", "value": null}, {"color": "red", "value": 80}],
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
                     },
-                    "unit": "currencyUSD",
+                    "unit": "currencyUSD"
                 },
-                "overrides": [],
+                "overrides": []
             },
-            "gridPos": {"h": 10, "w": 12, "x": 12, "y": 4},
+            "gridPos": {
+                "h": 10,
+                "w": 12,
+                "x": 12,
+                "y": 4
+            },
             "id": 3,
             "options": {
-                "legend": {"calcs": ["lastNotNull"], "displayMode": "list", "placement": "bottom"},
-                "tooltip": {"mode": "single"},
+                "legend": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single"
+                }
             },
             "targets": [
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_debt{param="usd value"}) by (token)',
+                    "expr": "sum(my_portfolio_debt{param=\"usd value\"}) by (token)",
                     "interval": "",
                     "legendFormat": "{{token}}",
-                    "refId": "A",
+                    "refId": "A"
                 }
             ],
             "title": "Protocol Debt",
-            "type": "timeseries",
+            "type": "timeseries"
         },
         {
             "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
-                    "color": {"mode": "palette-classic"},
+                    "color": {
+                        "mode": "palette-classic"
+                    },
                     "custom": {
                         "axisLabel": "",
                         "axisPlacement": "auto",
@@ -514,81 +769,116 @@
                         "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
-                        "hideFrom": {"legend": false, "tooltip": false, "viz": false},
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
                         "lineInterpolation": "linear",
                         "lineWidth": 1,
                         "pointSize": 5,
-                        "scaleDistribution": {"type": "linear"},
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
                         "showPoints": "auto",
                         "spanNulls": 3600000,
-                        "stacking": {"group": "A", "mode": "none"},
-                        "thresholdsStyle": {"mode": "off"},
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{"color": "green", "value": null}, {"color": "red", "value": 80}],
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
                     },
-                    "unit": "currencyUSD",
+                    "unit": "currencyUSD"
                 },
-                "overrides": [],
+                "overrides": []
             },
-            "gridPos": {"h": 10, "w": 12, "x": 0, "y": 14},
+            "gridPos": {
+                "h": 10,
+                "w": 12,
+                "x": 0,
+                "y": 14
+            },
             "id": 5,
             "options": {
-                "legend": {"calcs": ["lastNotNull"], "displayMode": "list", "placement": "bottom"},
-                "tooltip": {"mode": "single"},
+                "legend": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single"
+                }
             },
             "targets": [
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="usd value",bucket!="YFI",bucket!="Other long term assets"})',
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket!=\"YFI\",bucket!=\"Other long term assets\"})",
                     "hide": false,
                     "interval": "",
                     "legendFormat": "Liquid Assets",
-                    "refId": "C",
+                    "refId": "C"
                 },
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="usd value",bucket="Cash & cash equivalents"})',
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Cash & cash equivalents\"})",
                     "hide": false,
                     "interval": "",
                     "legendFormat": "Cash",
-                    "refId": "E",
+                    "refId": "E"
                 },
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_debt{param="usd value"})',
+                    "expr": "sum(my_portfolio_debt{param=\"usd value\"})",
                     "hide": false,
                     "interval": "",
                     "legendFormat": "Debt",
-                    "refId": "B",
+                    "refId": "B"
                 },
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="usd value",bucket="Cash & cash equivalents"}) - sum(my_portfolio_debt{param="usd value"})',
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Cash & cash equivalents\"}) - sum(my_portfolio_debt{param=\"usd value\"})",
                     "hide": false,
                     "interval": "",
                     "legendFormat": "Cash - Debt",
-                    "refId": "D",
+                    "refId": "D"
                 },
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="usd value",bucket!="YFI"}) - sum(my_portfolio_debt{param="usd value"})',
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket!=\"YFI\"}) - sum(my_portfolio_debt{param=\"usd value\"})",
                     "hide": false,
                     "interval": "",
                     "legendFormat": "Liquid Assets - Debt",
-                    "refId": "A",
-                },
+                    "refId": "A"
+                }
             ],
             "title": "Assets - Debt",
-            "type": "timeseries",
+            "type": "timeseries"
         },
         {
             "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
-                    "color": {"mode": "palette-classic"},
+                    "color": {
+                        "mode": "palette-classic"
+                    },
                     "custom": {
                         "axisLabel": "",
                         "axisPlacement": "auto",
@@ -596,48 +886,79 @@
                         "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
-                        "hideFrom": {"legend": false, "tooltip": false, "viz": false},
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
                         "lineInterpolation": "linear",
                         "lineWidth": 1,
                         "pointSize": 5,
-                        "scaleDistribution": {"type": "linear"},
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
                         "showPoints": "auto",
                         "spanNulls": 3600000,
-                        "stacking": {"group": "A", "mode": "none"},
-                        "thresholdsStyle": {"mode": "off"},
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{"color": "green", "value": null}, {"color": "red", "value": 80}],
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
                     },
-                    "unit": "percentunit",
+                    "unit": "percentunit"
                 },
-                "overrides": [],
+                "overrides": []
             },
-            "gridPos": {"h": 10, "w": 12, "x": 12, "y": 14},
+            "gridPos": {
+                "h": 10,
+                "w": 12,
+                "x": 12,
+                "y": 14
+            },
             "id": 35,
             "options": {
-                "legend": {"calcs": [], "displayMode": "list", "placement": "bottom"},
-                "tooltip": {"mode": "single"},
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single"
+                }
             },
             "pluginVersion": "8.2.1",
             "targets": [
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_debt{param="usd value"})',
+                    "expr": "sum(my_portfolio_debt{param=\"usd value\"})",
                     "interval": "",
                     "legendFormat": "",
-                    "refId": "A",
+                    "refId": "A"
                 },
                 {
                     "exemplar": true,
-                    "expr": 'sum(my_portfolio_assets{param="usd value",bucket!="Other long term assets"})',
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket!=\"Other long term assets\"})",
                     "hide": false,
                     "interval": "",
                     "legendFormat": "",
-                    "refId": "B",
-                },
+                    "refId": "B"
+                }
             ],
             "title": "Debt to Asset Ratio",
             "transformations": [
@@ -646,23 +967,30 @@
                     "options": {
                         "alias": "Debt to Asset Ratio",
                         "binary": {
-                            "left": 'sum(my_portfolio_debt{param="usd value"})',
+                            "left": "sum(my_portfolio_debt{param=\"usd value\"})",
                             "operator": "/",
                             "reducer": "sum",
-                            "right": 'sum(my_portfolio_assets{param="usd value",bucket!="Other long term assets"})',
+                            "right": "sum(my_portfolio_assets{param=\"usd value\",bucket!=\"Other long term assets\"})"
                         },
                         "mode": "binary",
-                        "reduce": {"reducer": "sum"},
-                        "replaceFields": true,
-                    },
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": true
+                    }
                 }
             ],
-            "type": "timeseries",
+            "type": "timeseries"
         },
         {
             "collapsed": true,
             "datasource": null,
-            "gridPos": {"h": 1, "w": 24, "x": 0, "y": 24},
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 24
+            },
             "id": 33,
             "panels": [
                 {
@@ -671,10 +999,20 @@
                     "dashLength": 10,
                     "dashes": false,
                     "datasource": "PROMETHEUS",
-                    "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
+                    "fieldConfig": {
+                        "defaults": {
+                            "unit": "currencyUSD"
+                        },
+                        "overrides": []
+                    },
                     "fill": 0,
                     "fillGradient": 0,
-                    "gridPos": {"h": 16, "w": 24, "x": 0, "y": 26},
+                    "gridPos": {
+                        "h": 16,
+                        "w": 24,
+                        "x": 0,
+                        "y": 26
+                    },
                     "hiddenSeries": false,
                     "id": 15,
                     "legend": {
@@ -690,12 +1028,14 @@
                         "sort": "current",
                         "sortDesc": true,
                         "total": false,
-                        "values": true,
+                        "values": true
                     },
                     "lines": true,
                     "linewidth": 1,
                     "nullPointMode": "null as zero",
-                    "options": {"alertThreshold": true},
+                    "options": {
+                        "alertThreshold": true
+                    },
                     "percentage": false,
                     "pluginVersion": "8.2.1",
                     "pointradius": 2,
@@ -708,11 +1048,11 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": 'sum(my_portfolio_assets{param="usd value",bucket="Cash & cash equivalents"}) by (token)',
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Cash & cash equivalents\"}) by (token)",
                             "hide": false,
                             "interval": "",
                             "legendFormat": "{{token}}",
-                            "refId": "A",
+                            "refId": "A"
                         }
                     ],
                     "thresholds": [],
@@ -720,14 +1060,18 @@
                     "timeRegions": [],
                     "timeShift": null,
                     "title": "Liquid Cash",
-                    "tooltip": {"shared": true, "sort": 2, "value_type": "individual"},
+                    "tooltip": {
+                        "shared": true,
+                        "sort": 2,
+                        "value_type": "individual"
+                    },
                     "type": "graph",
                     "xaxis": {
                         "buckets": null,
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [],
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -737,7 +1081,7 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": true,
+                            "show": true
                         },
                         {
                             "$$hashKey": "object:73",
@@ -746,19 +1090,27 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": false,
-                        },
+                            "show": false
+                        }
                     ],
-                    "yaxis": {"align": false, "alignLevel": null},
+                    "yaxis": {
+                        "align": false,
+                        "alignLevel": null
+                    }
                 }
             ],
             "title": "Liquid Cash",
-            "type": "row",
+            "type": "row"
         },
         {
             "collapsed": true,
             "datasource": null,
-            "gridPos": {"h": 1, "w": 24, "x": 0, "y": 25},
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 25
+            },
             "id": 31,
             "panels": [
                 {
@@ -767,10 +1119,20 @@
                     "dashLength": 10,
                     "dashes": false,
                     "datasource": "PROMETHEUS",
-                    "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
+                    "fieldConfig": {
+                        "defaults": {
+                            "unit": "currencyUSD"
+                        },
+                        "overrides": []
+                    },
                     "fill": 0,
                     "fillGradient": 0,
-                    "gridPos": {"h": 16, "w": 24, "x": 0, "y": 28},
+                    "gridPos": {
+                        "h": 16,
+                        "w": 24,
+                        "x": 0,
+                        "y": 28
+                    },
                     "hiddenSeries": false,
                     "id": 21,
                     "legend": {
@@ -786,12 +1148,14 @@
                         "sort": "current",
                         "sortDesc": true,
                         "total": false,
-                        "values": true,
+                        "values": true
                     },
                     "lines": true,
                     "linewidth": 1,
                     "nullPointMode": "null as zero",
-                    "options": {"alertThreshold": true},
+                    "options": {
+                        "alertThreshold": true
+                    },
                     "percentage": false,
                     "pluginVersion": "8.2.1",
                     "pointradius": 2,
@@ -804,11 +1168,11 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": 'sum(my_portfolio_assets{param="usd value",bucket="ETH"}) by (token)',
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"ETH\"}) by (token)",
                             "hide": false,
                             "interval": "",
                             "legendFormat": "{{token}}",
-                            "refId": "A",
+                            "refId": "A"
                         }
                     ],
                     "thresholds": [],
@@ -816,14 +1180,18 @@
                     "timeRegions": [],
                     "timeShift": null,
                     "title": "Liquid ETH",
-                    "tooltip": {"shared": true, "sort": 2, "value_type": "individual"},
+                    "tooltip": {
+                        "shared": true,
+                        "sort": 2,
+                        "value_type": "individual"
+                    },
                     "type": "graph",
                     "xaxis": {
                         "buckets": null,
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [],
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -833,7 +1201,7 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": true,
+                            "show": true
                         },
                         {
                             "$$hashKey": "object:73",
@@ -842,19 +1210,27 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": false,
-                        },
+                            "show": false
+                        }
                     ],
-                    "yaxis": {"align": false, "alignLevel": null},
+                    "yaxis": {
+                        "align": false,
+                        "alignLevel": null
+                    }
                 }
             ],
             "title": "Liquid ETH",
-            "type": "row",
+            "type": "row"
         },
         {
             "collapsed": true,
             "datasource": null,
-            "gridPos": {"h": 1, "w": 24, "x": 0, "y": 26},
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 26
+            },
             "id": 29,
             "panels": [
                 {
@@ -863,10 +1239,20 @@
                     "dashLength": 10,
                     "dashes": false,
                     "datasource": "PROMETHEUS",
-                    "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
+                    "fieldConfig": {
+                        "defaults": {
+                            "unit": "currencyUSD"
+                        },
+                        "overrides": []
+                    },
                     "fill": 0,
                     "fillGradient": 0,
-                    "gridPos": {"h": 16, "w": 24, "x": 0, "y": 28},
+                    "gridPos": {
+                        "h": 16,
+                        "w": 24,
+                        "x": 0,
+                        "y": 28
+                    },
                     "hiddenSeries": false,
                     "id": 22,
                     "legend": {
@@ -882,12 +1268,14 @@
                         "sort": "current",
                         "sortDesc": true,
                         "total": false,
-                        "values": true,
+                        "values": true
                     },
                     "lines": true,
                     "linewidth": 1,
                     "nullPointMode": "null as zero",
-                    "options": {"alertThreshold": true},
+                    "options": {
+                        "alertThreshold": true
+                    },
                     "percentage": false,
                     "pluginVersion": "8.2.1",
                     "pointradius": 2,
@@ -900,11 +1288,11 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": 'sum(my_portfolio_assets{param="usd value",bucket="BTC"}) by (token)',
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"BTC\"}) by (token)",
                             "hide": false,
                             "interval": "",
                             "legendFormat": "{{token}}",
-                            "refId": "A",
+                            "refId": "A"
                         }
                     ],
                     "thresholds": [],
@@ -912,14 +1300,18 @@
                     "timeRegions": [],
                     "timeShift": null,
                     "title": "Liquid BTC",
-                    "tooltip": {"shared": true, "sort": 2, "value_type": "individual"},
+                    "tooltip": {
+                        "shared": true,
+                        "sort": 2,
+                        "value_type": "individual"
+                    },
                     "type": "graph",
                     "xaxis": {
                         "buckets": null,
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [],
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -929,7 +1321,7 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": true,
+                            "show": true
                         },
                         {
                             "$$hashKey": "object:73",
@@ -938,19 +1330,27 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": false,
-                        },
+                            "show": false
+                        }
                     ],
-                    "yaxis": {"align": false, "alignLevel": null},
+                    "yaxis": {
+                        "align": false,
+                        "alignLevel": null
+                    }
                 }
             ],
             "title": "Liquid BTC",
-            "type": "row",
+            "type": "row"
         },
         {
             "collapsed": true,
             "datasource": null,
-            "gridPos": {"h": 1, "w": 24, "x": 0, "y": 27},
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 27
+            },
             "id": 27,
             "panels": [
                 {
@@ -959,10 +1359,20 @@
                     "dashLength": 10,
                     "dashes": false,
                     "datasource": "PROMETHEUS",
-                    "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
+                    "fieldConfig": {
+                        "defaults": {
+                            "unit": "currencyUSD"
+                        },
+                        "overrides": []
+                    },
                     "fill": 0,
                     "fillGradient": 0,
-                    "gridPos": {"h": 16, "w": 24, "x": 0, "y": 28},
+                    "gridPos": {
+                        "h": 16,
+                        "w": 24,
+                        "x": 0,
+                        "y": 28
+                    },
                     "hiddenSeries": false,
                     "id": 23,
                     "legend": {
@@ -978,12 +1388,14 @@
                         "sort": "current",
                         "sortDesc": true,
                         "total": false,
-                        "values": true,
+                        "values": true
                     },
                     "lines": true,
                     "linewidth": 1,
                     "nullPointMode": "null as zero",
-                    "options": {"alertThreshold": true},
+                    "options": {
+                        "alertThreshold": true
+                    },
                     "percentage": false,
                     "pluginVersion": "8.2.1",
                     "pointradius": 2,
@@ -996,11 +1408,11 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": 'sum(my_portfolio_assets{param="usd value",bucket="Other short term assets"}) by (token)',
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Other short term assets\"}) by (token)",
                             "hide": false,
                             "interval": "",
                             "legendFormat": "{{token}}",
-                            "refId": "A",
+                            "refId": "A"
                         }
                     ],
                     "thresholds": [],
@@ -1008,14 +1420,18 @@
                     "timeRegions": [],
                     "timeShift": null,
                     "title": "Liquid Everything Else",
-                    "tooltip": {"shared": true, "sort": 2, "value_type": "individual"},
+                    "tooltip": {
+                        "shared": true,
+                        "sort": 2,
+                        "value_type": "individual"
+                    },
                     "type": "graph",
                     "xaxis": {
                         "buckets": null,
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [],
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -1025,7 +1441,7 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": true,
+                            "show": true
                         },
                         {
                             "$$hashKey": "object:73",
@@ -1034,19 +1450,27 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": false,
-                        },
+                            "show": false
+                        }
                     ],
-                    "yaxis": {"align": false, "alignLevel": null},
+                    "yaxis": {
+                        "align": false,
+                        "alignLevel": null
+                    }
                 }
             ],
             "title": "Liquid Everything Else",
-            "type": "row",
+            "type": "row"
         },
         {
             "collapsed": true,
             "datasource": null,
-            "gridPos": {"h": 1, "w": 24, "x": 0, "y": 28},
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 28
+            },
             "id": 40,
             "panels": [
                 {
@@ -1055,10 +1479,20 @@
                     "dashLength": 10,
                     "dashes": false,
                     "datasource": "PROMETHEUS",
-                    "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
+                    "fieldConfig": {
+                        "defaults": {
+                            "unit": "currencyUSD"
+                        },
+                        "overrides": []
+                    },
                     "fill": 0,
                     "fillGradient": 0,
-                    "gridPos": {"h": 16, "w": 24, "x": 0, "y": 29},
+                    "gridPos": {
+                        "h": 16,
+                        "w": 24,
+                        "x": 0,
+                        "y": 29
+                    },
                     "hiddenSeries": false,
                     "id": 45,
                     "legend": {
@@ -1074,12 +1508,14 @@
                         "sort": "current",
                         "sortDesc": true,
                         "total": false,
-                        "values": true,
+                        "values": true
                     },
                     "lines": true,
                     "linewidth": 1,
                     "nullPointMode": "null as zero",
-                    "options": {"alertThreshold": true},
+                    "options": {
+                        "alertThreshold": true
+                    },
                     "percentage": false,
                     "pluginVersion": "8.2.1",
                     "pointradius": 2,
@@ -1092,11 +1528,11 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": 'sum(my_portfolio_assets{param="usd value",bucket="Cash & cash equivalents"}) by (token,wallet)',
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Cash & cash equivalents\"}) by (token,wallet)",
                             "hide": false,
                             "interval": "",
                             "legendFormat": "{{token}} | {{wallet}}",
-                            "refId": "A",
+                            "refId": "A"
                         }
                     ],
                     "thresholds": [],
@@ -1104,14 +1540,18 @@
                     "timeRegions": [],
                     "timeShift": null,
                     "title": "Liquid Cash by Wallet",
-                    "tooltip": {"shared": true, "sort": 2, "value_type": "individual"},
+                    "tooltip": {
+                        "shared": true,
+                        "sort": 2,
+                        "value_type": "individual"
+                    },
                     "type": "graph",
                     "xaxis": {
                         "buckets": null,
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [],
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -1121,7 +1561,7 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": true,
+                            "show": true
                         },
                         {
                             "$$hashKey": "object:73",
@@ -1130,19 +1570,27 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": false,
-                        },
+                            "show": false
+                        }
                     ],
-                    "yaxis": {"align": false, "alignLevel": null},
+                    "yaxis": {
+                        "align": false,
+                        "alignLevel": null
+                    }
                 }
             ],
             "title": "Liquid Cash by Wallet",
-            "type": "row",
+            "type": "row"
         },
         {
             "collapsed": true,
             "datasource": null,
-            "gridPos": {"h": 1, "w": 24, "x": 0, "y": 29},
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 29
+            },
             "id": 42,
             "panels": [
                 {
@@ -1151,10 +1599,20 @@
                     "dashLength": 10,
                     "dashes": false,
                     "datasource": "PROMETHEUS",
-                    "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
+                    "fieldConfig": {
+                        "defaults": {
+                            "unit": "currencyUSD"
+                        },
+                        "overrides": []
+                    },
                     "fill": 0,
                     "fillGradient": 0,
-                    "gridPos": {"h": 16, "w": 24, "x": 0, "y": 30},
+                    "gridPos": {
+                        "h": 16,
+                        "w": 24,
+                        "x": 0,
+                        "y": 30
+                    },
                     "hiddenSeries": false,
                     "id": 36,
                     "legend": {
@@ -1170,12 +1628,14 @@
                         "sort": "current",
                         "sortDesc": true,
                         "total": false,
-                        "values": true,
+                        "values": true
                     },
                     "lines": true,
                     "linewidth": 1,
                     "nullPointMode": "null as zero",
-                    "options": {"alertThreshold": true},
+                    "options": {
+                        "alertThreshold": true
+                    },
                     "percentage": false,
                     "pluginVersion": "8.2.1",
                     "pointradius": 2,
@@ -1188,11 +1648,11 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": 'sum(my_portfolio_assets{param="usd value",bucket="ETH"}) by (token,wallet)',
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"ETH\"}) by (token,wallet)",
                             "hide": false,
                             "interval": "",
                             "legendFormat": "{{token}} | {{wallet}}",
-                            "refId": "A",
+                            "refId": "A"
                         }
                     ],
                     "thresholds": [],
@@ -1200,14 +1660,18 @@
                     "timeRegions": [],
                     "timeShift": null,
                     "title": "Liquid ETH by Wallet",
-                    "tooltip": {"shared": true, "sort": 2, "value_type": "individual"},
+                    "tooltip": {
+                        "shared": true,
+                        "sort": 2,
+                        "value_type": "individual"
+                    },
                     "type": "graph",
                     "xaxis": {
                         "buckets": null,
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [],
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -1217,7 +1681,7 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": true,
+                            "show": true
                         },
                         {
                             "$$hashKey": "object:73",
@@ -1226,19 +1690,27 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": false,
-                        },
+                            "show": false
+                        }
                     ],
-                    "yaxis": {"align": false, "alignLevel": null},
+                    "yaxis": {
+                        "align": false,
+                        "alignLevel": null
+                    }
                 }
             ],
             "title": "Liquid ETH by Wallet",
-            "type": "row",
+            "type": "row"
         },
         {
             "collapsed": true,
             "datasource": null,
-            "gridPos": {"h": 1, "w": 24, "x": 0, "y": 30},
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 30
+            },
             "id": 44,
             "panels": [
                 {
@@ -1247,10 +1719,20 @@
                     "dashLength": 10,
                     "dashes": false,
                     "datasource": "PROMETHEUS",
-                    "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
+                    "fieldConfig": {
+                        "defaults": {
+                            "unit": "currencyUSD"
+                        },
+                        "overrides": []
+                    },
                     "fill": 0,
                     "fillGradient": 0,
-                    "gridPos": {"h": 16, "w": 24, "x": 0, "y": 31},
+                    "gridPos": {
+                        "h": 16,
+                        "w": 24,
+                        "x": 0,
+                        "y": 31
+                    },
                     "hiddenSeries": false,
                     "id": 48,
                     "legend": {
@@ -1266,12 +1748,14 @@
                         "sort": "current",
                         "sortDesc": true,
                         "total": false,
-                        "values": true,
+                        "values": true
                     },
                     "lines": true,
                     "linewidth": 1,
                     "nullPointMode": "null as zero",
-                    "options": {"alertThreshold": true},
+                    "options": {
+                        "alertThreshold": true
+                    },
                     "percentage": false,
                     "pluginVersion": "8.2.1",
                     "pointradius": 2,
@@ -1284,11 +1768,11 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": 'sum(my_portfolio_assets{param="usd value",bucket="BTC"}) by (token, wallet)',
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"BTC\"}) by (token, wallet)",
                             "hide": false,
                             "interval": "",
                             "legendFormat": "{{token}} | {{wallet}}",
-                            "refId": "A",
+                            "refId": "A"
                         }
                     ],
                     "thresholds": [],
@@ -1296,14 +1780,18 @@
                     "timeRegions": [],
                     "timeShift": null,
                     "title": "Liquid BTC by Wallet",
-                    "tooltip": {"shared": true, "sort": 2, "value_type": "individual"},
+                    "tooltip": {
+                        "shared": true,
+                        "sort": 2,
+                        "value_type": "individual"
+                    },
                     "type": "graph",
                     "xaxis": {
                         "buckets": null,
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [],
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -1313,7 +1801,7 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": true,
+                            "show": true
                         },
                         {
                             "$$hashKey": "object:73",
@@ -1322,19 +1810,27 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": false,
-                        },
+                            "show": false
+                        }
                     ],
-                    "yaxis": {"align": false, "alignLevel": null},
+                    "yaxis": {
+                        "align": false,
+                        "alignLevel": null
+                    }
                 }
             ],
             "title": "Liquid BTC by Wallet",
-            "type": "row",
+            "type": "row"
         },
         {
             "collapsed": true,
             "datasource": null,
-            "gridPos": {"h": 1, "w": 24, "x": 0, "y": 31},
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 31
+            },
             "id": 47,
             "panels": [
                 {
@@ -1343,10 +1839,20 @@
                     "dashLength": 10,
                     "dashes": false,
                     "datasource": "PROMETHEUS",
-                    "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []},
+                    "fieldConfig": {
+                        "defaults": {
+                            "unit": "currencyUSD"
+                        },
+                        "overrides": []
+                    },
                     "fill": 0,
                     "fillGradient": 0,
-                    "gridPos": {"h": 16, "w": 24, "x": 0, "y": 32},
+                    "gridPos": {
+                        "h": 16,
+                        "w": 24,
+                        "x": 0,
+                        "y": 32
+                    },
                     "hiddenSeries": false,
                     "id": 49,
                     "legend": {
@@ -1362,12 +1868,14 @@
                         "sort": "current",
                         "sortDesc": true,
                         "total": false,
-                        "values": true,
+                        "values": true
                     },
                     "lines": true,
                     "linewidth": 1,
                     "nullPointMode": "null as zero",
-                    "options": {"alertThreshold": true},
+                    "options": {
+                        "alertThreshold": true
+                    },
                     "percentage": false,
                     "pluginVersion": "8.2.1",
                     "pointradius": 2,
@@ -1380,11 +1888,11 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": 'sum(my_portfolio_assets{param="usd value",bucket="Other short term assets"}) by (token, wallet)',
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Other short term assets\"}) by (token, wallet)",
                             "hide": false,
                             "interval": "",
                             "legendFormat": "{{token}} | {{wallet}}",
-                            "refId": "A",
+                            "refId": "A"
                         }
                     ],
                     "thresholds": [],
@@ -1392,14 +1900,18 @@
                     "timeRegions": [],
                     "timeShift": null,
                     "title": "Liquid Everything Else by Wallet",
-                    "tooltip": {"shared": true, "sort": 2, "value_type": "individual"},
+                    "tooltip": {
+                        "shared": true,
+                        "sort": 2,
+                        "value_type": "individual"
+                    },
                     "type": "graph",
                     "xaxis": {
                         "buckets": null,
                         "mode": "time",
                         "name": null,
                         "show": true,
-                        "values": [],
+                        "values": []
                     },
                     "yaxes": [
                         {
@@ -1409,7 +1921,7 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": true,
+                            "show": true
                         },
                         {
                             "$$hashKey": "object:73",
@@ -1418,48 +1930,87 @@
                             "logBase": 1,
                             "max": null,
                             "min": null,
-                            "show": false,
-                        },
+                            "show": false
+                        }
                     ],
-                    "yaxis": {"align": false, "alignLevel": null},
+                    "yaxis": {
+                        "align": false,
+                        "alignLevel": null
+                    }
                 }
             ],
             "title": "Liquid Everything Else by Wallet",
-            "type": "row",
+            "type": "row"
         },
         {
-            "datasource": {"type": "prometheus", "uid": "PBFE396EC0B189D67"},
+            "datasource": {
+                "type": "prometheus",
+                "uid": "PBFE396EC0B189D67"
+            },
             "fieldConfig": {
                 "defaults": {
-                    "color": {"mode": "thresholds"},
-                    "custom": {"align": "auto", "displayMode": "auto"},
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "custom": {
+                        "align": "auto",
+                        "displayMode": "auto"
+                    },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{"color": "green", "value": null}, {"color": "red", "value": 80}],
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
                     },
-                    "unit": "currencyUSD",
+                    "unit": "currencyUSD"
                 },
-                "overrides": [],
+                "overrides": []
             },
-            "gridPos": {"h": 13, "w": 24, "x": 0, "y": 24},
+            "gridPos": {
+                "h": 13,
+                "w": 24,
+                "x": 0,
+                "y": 24
+            },
             "id": 51,
             "options": {
-                "footer": {"fields": "", "reducer": ["sum"], "show": false},
+                "footer": {
+                    "fields": "",
+                    "reducer": [
+                        "sum"
+                    ],
+                    "show": false
+                },
                 "frameIndex": 0,
                 "showHeader": true,
-                "sortBy": [{"desc": true, "displayName": "Period End Value ($)"}],
+                "sortBy": [
+                    {
+                        "desc": true,
+                        "displayName": "Period End Value ($)"
+                    }
+                ]
             },
             "pluginVersion": "8.3.1",
             "targets": [
                 {
-                    "datasource": {"type": "prometheus", "uid": "PBFE396EC0B189D67"},
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "PBFE396EC0B189D67"
+                    },
                     "exemplar": true,
                     "expr": "my_portfolio_assets{}",
                     "format": "table",
                     "interval": "",
                     "legendFormat": "",
-                    "refId": "A",
+                    "refId": "A"
                 }
             ],
             "title": "Panel Title",
@@ -1469,34 +2020,60 @@
                     "options": {
                         "filters": [
                             {
-                                "config": {"id": "equal", "options": {"value": "usd value"}},
-                                "fieldName": "param",
+                                "config": {
+                                    "id": "equal",
+                                    "options": {
+                                        "value": "usd value"
+                                    }
+                                },
+                                "fieldName": "param"
                             }
                         ],
                         "match": "any",
-                        "type": "include",
-                    },
+                        "type": "include"
+                    }
                 },
                 {
                     "id": "groupBy",
                     "options": {
                         "fields": {
                             "Value #A": {
-                                "aggregations": ["first", "last"],
-                                "operation": "aggregate",
+                                "aggregations": [
+                                    "first",
+                                    "last"
+                                ],
+                                "operation": "aggregate"
                             },
-                            "__name__": {"aggregations": [], "operation": "groupby"},
-                            "balance": {"aggregations": []},
-                            "bucket": {"aggregations": [], "operation": "groupby"},
-                            "network": {"aggregations": []},
-                            "param": {"aggregations": []},
-                            "token": {"aggregations": [], "operation": "groupby"},
+                            "__name__": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "balance": {
+                                "aggregations": []
+                            },
+                            "bucket": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "network": {
+                                "aggregations": []
+                            },
+                            "param": {
+                                "aggregations": []
+                            },
+                            "token": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
                             "usd value": {
-                                "aggregations": ["lastNotNull", "firstNotNull"],
-                                "operation": "aggregate",
-                            },
+                                "aggregations": [
+                                    "lastNotNull",
+                                    "firstNotNull"
+                                ],
+                                "operation": "aggregate"
+                            }
                         }
-                    },
+                    }
                 },
                 {
                     "id": "organize",
@@ -1509,9 +2086,9 @@
                             "__name__": "Label",
                             "bucket": "Bucket",
                             "param": "",
-                            "token": "Token",
-                        },
-                    },
+                            "token": "Token"
+                        }
+                    }
                 },
                 {
                     "id": "calculateField",
@@ -1521,25 +2098,32 @@
                             "left": "Period End Value ($)",
                             "operator": "-",
                             "reducer": "sum",
-                            "right": "Period Start Value ($)",
+                            "right": "Period Start Value ($)"
                         },
                         "mode": "binary",
-                        "reduce": {"reducer": "sum"},
-                    },
-                },
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                }
             ],
-            "type": "table",
-        },
+            "type": "table"
+        }
     ],
     "refresh": "30s",
     "schemaVersion": 31,
     "style": "dark",
     "tags": [],
-    "templating": {"list": []},
-    "time": {"from": "now-30d", "to": "now"},
+    "templating": {
+        "list": []
+    },
+    "time": {
+        "from": "now-30d",
+        "to": "now"
+    },
     "timepicker": {},
     "timezone": "",
     "title": "Treasury Balances",
     "uid": "9_ppKhd7z",
-    "version": 45,
+    "version": 45
 }
