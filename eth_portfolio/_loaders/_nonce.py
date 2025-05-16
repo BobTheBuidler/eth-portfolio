@@ -1,7 +1,6 @@
 import asyncio
 import logging
 from collections import defaultdict
-from itertools import groupby
 from time import time
 from typing import ClassVar, DefaultDict, Dict, Final, Tuple, final
 
@@ -63,24 +62,22 @@ async def get_nonce_at_block(address: ChecksumAddress, block: BlockNumber) -> in
 
 
 async def get_block_for_nonce(address: ChecksumAddress, nonce: Nonce) -> int:
+    highest_known_nonce_lt_query: Optional[int]
+    lowest_known_nonce_gt_query: Optional[int]
+    
     async with locks[address]:
         highest_known_nonce_lt_query = None
         lowest_known_nonce_gt_query = None
 
-        def lt_nonce(n: Nonce) -> bool:
-            return n < nonce
-
         # it is impossible for n to == nonce
-        for less_than, ns in groupby([n for n in nonces[address] if n != nonce], lt_nonce):
-            if less_than:
-                max_value = max(ns)
-                if highest_known_nonce_lt_query is None or max_value > highest_known_nonce_lt_query:
-                    highest_known_nonce_lt_query = max_value
-
-            else:
-                min_value = min(ns)
-                if lowest_known_nonce_gt_query is None or min_value < lowest_known_nonce_gt_query:
-                    lowest_known_nonce_gt_query = min_value
+        for n in nonces[address]:
+            if n < nonce:
+                if highest_known_nonce_lt_query is None or n > highest_known_nonce_lt_query:
+                    highest_known_nonce_lt_query = n
+            elif n == nonce:
+                continue
+            elif lowest_known_nonce_gt_query is None or n < lowest_known_nonce_gt_query:
+                lowest_known_nonce_gt_query = n
 
         if highest_known_nonce_lt_query is not None:
             lo = nonces[address][highest_known_nonce_lt_query]
