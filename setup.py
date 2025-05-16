@@ -51,7 +51,6 @@ try:
             "--disable-error-code=no-redef",
             "--disable-error-code=valid-type",
             "--disable-error-code=call-overload",
-            "--disable-error-code=has-type",
             "--disable-error-code=dict-item",
             "--disable-error-code=has-type",
             "--disable-error-code=typeddict-item",
