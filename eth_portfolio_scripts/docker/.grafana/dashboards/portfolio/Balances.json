@@ -1943,10 +1943,7 @@
             "type": "row"
         },
         {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "PBFE396EC0B189D67"
-            },
+            "datasource": "PROMETHEUS",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -2001,10 +1998,7 @@
             "pluginVersion": "8.3.1",
             "targets": [
                 {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "PBFE396EC0B189D67"
-                    },
+                    "datasource": "PROMETHEUS",
                     "exemplar": true,
                     "expr": "my_portfolio_assets{}",
                     "format": "table",
