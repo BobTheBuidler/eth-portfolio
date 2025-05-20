@@ -64,7 +64,7 @@ except Exception as e:  # fallback in case build fails
 
 
 setup(
-    name="eth-portfolio",
+    name="eth-portfolio-temp",
     packages=find_packages(),
     use_scm_version={
         "root": ".",
