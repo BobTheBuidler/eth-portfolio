@@ -67,9 +67,8 @@ export_parser.add_argument(
 )
 export_parser.add_argument(
     "--daemon",
-    type=bool,
+    action="store_true",
     help="TODO: If True, starts a daemon process instead of running in your terminal. Not currently supported.",
-    default=False,
 )
 
 args = parser.parse_args()
