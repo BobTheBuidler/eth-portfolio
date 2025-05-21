@@ -267,7 +267,7 @@
             "targets": [
                 {
                     "exemplar": true,
-                    "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket!=\"YFI\", bucket!=\"Other long term assets\"})",
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket!=\"YFI\", bucket!=\"Other long term assets\", token=\"yvCurve-sdCRVv2-f\", token=\"OGV\", token=\"NEWO\", token=\"yvCurve-pUSD-FRAXBP-f\", token=\"yvCurve-yETH-f\", token=\"GUSD\"})",
                     "format": "time_series",
                     "instant": false,
                     "interval": "",
@@ -1408,7 +1408,7 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Other short term assets\"}) by (token)",
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Other short term assets\", token=\"yvCurve-sdCRVv2-f\", token=\"OGV\", token=\"NEWO\", token=\"yvCurve-pUSD-FRAXBP-f\", token=\"yvCurve-yETH-f\", token=\"GUSD\"}) by (token)",
                             "hide": false,
                             "interval": "",
                             "legendFormat": "{{token}}",
@@ -1888,7 +1888,7 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Other short term assets\"}) by (token, wallet)",
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Other short term assets\", token=\"yvCurve-sdCRVv2-f\", token=\"OGV\", token=\"NEWO\", token=\"yvCurve-pUSD-FRAXBP-f\", token=\"yvCurve-yETH-f\", token=\"GUSD\"}) by (token, wallet)",
                             "hide": false,
                             "interval": "",
                             "legendFormat": "{{token}} | {{wallet}}",
