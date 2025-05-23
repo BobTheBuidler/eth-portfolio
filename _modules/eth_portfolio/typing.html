@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>eth_portfolio.typing &mdash; eth-portfolio  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -95,8 +95,8 @@
 <span class="sd">without managing or altering any underlying assets.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">Any</span><span class="p">,</span>
     <span class="n">Callable</span><span class="p">,</span>
     <span class="n">DefaultDict</span><span class="p">,</span>
@@ -113,15 +113,15 @@
     <span class="n">final</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">checksum_dict</span> <span class="kn">import</span> <span class="n">DefaultChecksumDict</span>
-<span class="kn">from</span> <span class="nn">eth_typing</span> <span class="kn">import</span> <span class="n">BlockNumber</span>
-<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">concat</span>
-<span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">ParamSpec</span><span class="p">,</span> <span class="n">Self</span>
-<span class="kn">from</span> <span class="nn">y</span> <span class="kn">import</span> <span class="n">ERC20</span>
-<span class="kn">from</span> <span class="nn">y.datatypes</span> <span class="kn">import</span> <span class="n">Address</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">checksum_dict</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultChecksumDict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">eth_typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">BlockNumber</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">concat</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing_extensions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParamSpec</span><span class="p">,</span> <span class="n">Self</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">y</span><span class="w"> </span><span class="kn">import</span> <span class="n">ERC20</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">y.datatypes</span><span class="w"> </span><span class="kn">import</span> <span class="n">Address</span>
 
-<span class="kn">from</span> <span class="nn">eth_portfolio._decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
-<span class="kn">from</span> <span class="nn">eth_portfolio.typing.balance.single</span> <span class="kn">import</span> <span class="n">Balance</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">eth_portfolio._decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">eth_portfolio.typing.balance.single</span><span class="w"> </span><span class="kn">import</span> <span class="n">Balance</span>
 
 
 <span class="n">_T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;_T&quot;</span><span class="p">)</span>
@@ -139,14 +139,14 @@
 
 <div class="viewcode-block" id="_SummableNonNumericMixin">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing._SummableNonNumericMixin">[docs]</a>
-<span class="k">class</span> <span class="nc">_SummableNonNumericMixin</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">_SummableNonNumericMixin</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Mixin class for non-numeric summable objects.</span>
 
 <span class="sd">    This class provides an interface for objects that can be used with `sum` but are not necessarily numeric.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Abstract method for adding two objects of the same type.</span>
 
@@ -161,7 +161,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
-    <span class="k">def</span> <span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Self</span><span class="p">,</span> <span class="n">Literal</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Self</span><span class="p">,</span> <span class="n">Literal</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Supports the addition operation from the right side to enable use of `sum`.</span>
 
@@ -195,7 +195,7 @@
 <div class="viewcode-block" id="TokenBalances">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.TokenBalances">[docs]</a>
 <span class="nd">@final</span>
-<span class="k">class</span> <span class="nc">TokenBalances</span><span class="p">(</span><span class="n">DefaultChecksumDict</span><span class="p">[</span><span class="n">Balance</span><span class="p">],</span> <span class="n">_SummableNonNumericMixin</span><span class="p">):</span>  <span class="c1"># type: ignore [misc]</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TokenBalances</span><span class="p">(</span><span class="n">DefaultChecksumDict</span><span class="p">[</span><span class="n">Balance</span><span class="p">],</span> <span class="n">_SummableNonNumericMixin</span><span class="p">):</span>  <span class="c1"># type: ignore [misc]</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A specialized defaultdict subclass made for holding a mapping of ``token -&gt; balance``.</span>
 
@@ -218,7 +218,7 @@
 
 <div class="viewcode-block" id="TokenBalances.__init__">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.TokenBalances.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">_TBSeed</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">BlockNumber</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">Balance</span><span class="p">)</span>
@@ -240,11 +240,11 @@
 
 <div class="viewcode-block" id="TokenBalances.__getitem__">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.TokenBalances.__getitem__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Balance</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Balance</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span> <span class="k">else</span> <span class="n">Balance</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">block</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the balance for a given token address.</span>
 
@@ -262,11 +262,11 @@
 <span class="sd">            Decimal(&#39;100&#39;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Balance</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;value must be a `Balance` object. You passed </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;value must be a `Balance` object. You passed </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the token balances into a pandas DataFrame.</span>
 
@@ -285,7 +285,7 @@
 
 <div class="viewcode-block" id="TokenBalances.sum_usd">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.TokenBalances.sum_usd">[docs]</a>
-    <span class="k">def</span> <span class="nf">sum_usd</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sum_usd</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sums the USD values of all token balances.</span>
 
@@ -301,7 +301,7 @@
         <span class="k">return</span> <span class="n">Decimal</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">balance</span><span class="o">.</span><span class="n">usd</span> <span class="k">for</span> <span class="n">balance</span> <span class="ow">in</span> <span class="nb">dict</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Evaluates the truth value of the :class:`~eth_portfolio.typing.TokenBalances` object.</span>
 
@@ -315,7 +315,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a string representation of the :class:`~eth_portfolio.typing.TokenBalances` object.</span>
 
@@ -324,7 +324,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;TokenBalances</span><span class="si">{</span><span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;TokenBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TokenBalances&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;TokenBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TokenBalances&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds another :class:`~eth_portfolio.typing.TokenBalances` object to this one.</span>
 
@@ -375,7 +375,7 @@
                     <span class="p">)</span>
         <span class="k">return</span> <span class="n">combined</span>
 
-    <span class="k">def</span> <span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;TokenBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TokenBalances&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;TokenBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TokenBalances&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">TokenBalances</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">other</span><span class="si">}</span><span class="s2"> is not a TokenBalances object&quot;</span><span class="p">)</span>
 
@@ -399,7 +399,7 @@
                 <span class="n">DefaultChecksumDict</span><span class="o">.</span><span class="n">_setitem_nochecksum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">balance</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;TokenBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TokenBalances&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;TokenBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TokenBalances&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtracts another :class:`~eth_portfolio.typing.TokenBalances` object from this one.</span>
 
@@ -444,7 +444,7 @@
 <div class="viewcode-block" id="RemoteTokenBalances">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.RemoteTokenBalances">[docs]</a>
 <span class="nd">@final</span>
-<span class="k">class</span> <span class="nc">RemoteTokenBalances</span><span class="p">(</span><span class="n">DefaultDict</span><span class="p">[</span><span class="n">ProtocolLabel</span><span class="p">,</span> <span class="n">TokenBalances</span><span class="p">],</span> <span class="n">_SummableNonNumericMixin</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RemoteTokenBalances</span><span class="p">(</span><span class="n">DefaultDict</span><span class="p">[</span><span class="n">ProtocolLabel</span><span class="p">,</span> <span class="n">TokenBalances</span><span class="p">],</span> <span class="n">_SummableNonNumericMixin</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Manages token balances across different protocols, extending the :class:`~eth_portfolio.typing.TokenBalances` functionality</span>
 <span class="sd">    to multiple protocols.</span>
@@ -465,7 +465,7 @@
 
 <div class="viewcode-block" id="RemoteTokenBalances.__init__">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.RemoteTokenBalances.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">_RTBSeed</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">BlockNumber</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">TokenBalances</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">))</span>
@@ -484,7 +484,7 @@
             <span class="bp">self</span><span class="p">[</span><span class="n">remote</span><span class="p">]</span> <span class="o">+=</span> <span class="n">token_balances</span>  <span class="c1"># type: ignore [has-type]</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">protocol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">TokenBalances</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">protocol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">TokenBalances</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the token balances for a given protocol.</span>
 
@@ -502,11 +502,11 @@
 <span class="sd">            Decimal(&#39;100&#39;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">TokenBalances</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;value must be a `TokenBalances` object. You passed </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;value must be a `TokenBalances` object. You passed </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the remote token balances into a pandas DataFrame.</span>
 
@@ -522,7 +522,7 @@
 
 <div class="viewcode-block" id="RemoteTokenBalances.sum_usd">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.RemoteTokenBalances.sum_usd">[docs]</a>
-    <span class="k">def</span> <span class="nf">sum_usd</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sum_usd</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sums the USD values of all token balances across all protocols.</span>
 
@@ -538,7 +538,7 @@
         <span class="k">return</span> <span class="n">Decimal</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">balance</span><span class="o">.</span><span class="n">sum_usd</span><span class="p">()</span> <span class="k">for</span> <span class="n">balance</span> <span class="ow">in</span> <span class="nb">dict</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Evaluates the truth value of the :class:`~eth_portfolio.typing.RemoteTokenBalances` object.</span>
 
@@ -552,7 +552,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a string representation of the :class:`~eth_portfolio.typing.RemoteTokenBalances` object.</span>
 
@@ -561,7 +561,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;RemoteTokenBalances</span><span class="si">{</span><span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;RemoteTokenBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RemoteTokenBalances&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;RemoteTokenBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RemoteTokenBalances&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds another :class:`~eth_portfolio.typing.RemoteTokenBalances` object to this one.</span>
 
@@ -599,7 +599,7 @@
                 <span class="n">combined</span><span class="p">[</span><span class="n">protocol</span><span class="p">]</span> <span class="o">+=</span> <span class="n">token_balances</span>
         <span class="k">return</span> <span class="n">combined</span>
 
-    <span class="k">def</span> <span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;RemoteTokenBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RemoteTokenBalances&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;RemoteTokenBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RemoteTokenBalances&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">RemoteTokenBalances</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">other</span><span class="si">}</span><span class="s2"> is not a RemoteTokenBalances object&quot;</span><span class="p">)</span>
 
@@ -613,7 +613,7 @@
                 <span class="bp">self</span><span class="p">[</span><span class="n">protocol</span><span class="p">]</span> <span class="o">+=</span> <span class="n">token_balances</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;RemoteTokenBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RemoteTokenBalances&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;RemoteTokenBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RemoteTokenBalances&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtracts another :class:`~eth_portfolio.typing.RemoteTokenBalances` object from this one.</span>
 
@@ -667,7 +667,7 @@
 <div class="viewcode-block" id="WalletBalances">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.WalletBalances">[docs]</a>
 <span class="nd">@final</span>
-<span class="k">class</span> <span class="nc">WalletBalances</span><span class="p">(</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">WalletBalances</span><span class="p">(</span>
     <span class="n">Dict</span><span class="p">[</span><span class="n">CategoryLabel</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">TokenBalances</span><span class="p">,</span> <span class="n">RemoteTokenBalances</span><span class="p">]],</span> <span class="n">_SummableNonNumericMixin</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -687,7 +687,7 @@
 
 <div class="viewcode-block" id="WalletBalances.__init__">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.WalletBalances.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="s2">&quot;WalletBalances&quot;</span><span class="p">,</span> <span class="n">_WBSeed</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
@@ -715,7 +715,7 @@
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">assets</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenBalances</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">assets</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenBalances</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the assets held by the wallet.</span>
 
@@ -725,7 +725,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;assets&quot;</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">debt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RemoteTokenBalances</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">debt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RemoteTokenBalances</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the debts associated with the wallet.</span>
 
@@ -735,7 +735,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;debt&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">external</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RemoteTokenBalances</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">external</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RemoteTokenBalances</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the external balances associated with the wallet.</span>
 
@@ -745,7 +745,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;external&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the wallet balances into a pandas DataFrame.</span>
 
@@ -761,7 +761,7 @@
 
 <div class="viewcode-block" id="WalletBalances.sum_usd">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.WalletBalances.sum_usd">[docs]</a>
-    <span class="k">def</span> <span class="nf">sum_usd</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sum_usd</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sums the USD values of the wallet&#39;s assets, debts, and external balances.</span>
 
@@ -777,7 +777,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">sum_usd</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">debt</span><span class="o">.</span><span class="n">sum_usd</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">external</span><span class="o">.</span><span class="n">sum_usd</span><span class="p">()</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Evaluates the truth value of the :class:`~eth_portfolio.typing.WalletBalances` object.</span>
 
@@ -791,7 +791,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a string representation of the :class:`~eth_portfolio.typing.WalletBalances` object.</span>
 
@@ -800,7 +800,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;WalletBalances </span><span class="si">{</span><span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WalletBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WalletBalances&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WalletBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WalletBalances&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds another :class:`~eth_portfolio.typing.WalletBalances` object to this one.</span>
 
@@ -838,7 +838,7 @@
                 <span class="n">combined</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">+=</span> <span class="n">balances</span>  <span class="c1"># type: ignore [operator]</span>
         <span class="k">return</span> <span class="n">combined</span>
 
-    <span class="k">def</span> <span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WalletBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WalletBalances&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WalletBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WalletBalances&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">WalletBalances</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">other</span><span class="si">}</span><span class="s2"> is not a WalletBalances object&quot;</span><span class="p">)</span>
 
@@ -852,7 +852,7 @@
                 <span class="bp">self</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">+=</span> <span class="n">balances</span>  <span class="c1"># type: ignore [operator]</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WalletBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WalletBalances&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WalletBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WalletBalances&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtracts another :class:`~eth_portfolio.typing.WalletBalances` object from this one.</span>
 
@@ -889,7 +889,7 @@
 
 <div class="viewcode-block" id="WalletBalances.__getitem__">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.WalletBalances.__getitem__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">CategoryLabel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">TokenBalances</span><span class="p">,</span> <span class="n">RemoteTokenBalances</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">CategoryLabel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">TokenBalances</span><span class="p">,</span> <span class="n">RemoteTokenBalances</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieves the balance associated with the given category key.</span>
 
@@ -912,7 +912,7 @@
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">CategoryLabel</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">TokenBalances</span><span class="p">,</span> <span class="n">RemoteTokenBalances</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -935,7 +935,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__validateitem</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__validatekey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">CategoryLabel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__validatekey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">CategoryLabel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Validates that the given key is a valid category.</span>
 
@@ -952,7 +952,7 @@
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> is not a valid key for WalletBalances. Valid keys are: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_keys</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__validateitem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">CategoryLabel</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__validateitem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">CategoryLabel</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Validates that the given item is a valid balance type for the category.</span>
 
@@ -986,7 +986,7 @@
 <div class="viewcode-block" id="PortfolioBalances">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.PortfolioBalances">[docs]</a>
 <span class="nd">@final</span>
-<span class="k">class</span> <span class="nc">PortfolioBalances</span><span class="p">(</span><span class="n">DefaultChecksumDict</span><span class="p">[</span><span class="n">WalletBalances</span><span class="p">],</span> <span class="n">_SummableNonNumericMixin</span><span class="p">):</span>  <span class="c1"># type: ignore [misc]</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PortfolioBalances</span><span class="p">(</span><span class="n">DefaultChecksumDict</span><span class="p">[</span><span class="n">WalletBalances</span><span class="p">],</span> <span class="n">_SummableNonNumericMixin</span><span class="p">):</span>  <span class="c1"># type: ignore [misc]</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Aggregates :class:`~eth_portfolio.typing.WalletBalances` for multiple wallets, providing operations to sum</span>
 <span class="sd">    balances across an entire portfolio.</span>
@@ -1004,7 +1004,7 @@
 
 <div class="viewcode-block" id="PortfolioBalances.__init__">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.PortfolioBalances.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">_PBSeed</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">BlockNumber</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">WalletBalances</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">))</span>
@@ -1023,15 +1023,15 @@
             <span class="bp">self</span><span class="p">[</span><span class="n">wallet</span><span class="p">]</span> <span class="o">+=</span> <span class="n">balances</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">WalletBalances</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;value must be a `WalletBalances` object. You passed </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the portfolio balances into a pandas DataFrame.</span>
 
@@ -1047,7 +1047,7 @@
 
 <div class="viewcode-block" id="PortfolioBalances.sum_usd">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.PortfolioBalances.sum_usd">[docs]</a>
-    <span class="k">def</span> <span class="nf">sum_usd</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sum_usd</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sums the USD values of all wallet balances in the portfolio.</span>
 
@@ -1064,7 +1064,7 @@
 
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">inverted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalancesByCategory&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inverted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalancesByCategory&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns an inverted view of the portfolio balances, grouped by category first.</span>
 
@@ -1084,7 +1084,7 @@
                     <span class="n">inverted</span><span class="p">[</span><span class="n">label</span><span class="p">][</span><span class="n">wallet</span><span class="p">]</span> <span class="o">+=</span> <span class="n">tbalances</span>  <span class="c1"># type: ignore [operator]</span>
         <span class="k">return</span> <span class="n">inverted</span>
 
-    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Evaluates the truth value of the :class:`~eth_portfolio.typing.PortfolioBalances` object.</span>
 
@@ -1098,7 +1098,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a string representation of the :class:`~eth_portfolio.typing.PortfolioBalances` object.</span>
 
@@ -1107,7 +1107,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;WalletBalances</span><span class="si">{</span><span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;PortfolioBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalances&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;PortfolioBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalances&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds another :class:`~eth_portfolio.typing.PortfolioBalances` object to this one.</span>
 
@@ -1149,7 +1149,7 @@
                 <span class="p">)</span>
         <span class="k">return</span> <span class="n">combined</span>
 
-    <span class="k">def</span> <span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;PortfolioBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalances&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;PortfolioBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalances&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">PortfolioBalances</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">other</span><span class="si">}</span><span class="s2"> is not a PortfolioBalances object&quot;</span><span class="p">)</span>
 
@@ -1165,7 +1165,7 @@
                 <span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;PortfolioBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalances&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;PortfolioBalances&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalances&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtracts another :class:`~eth_portfolio.typing.PortfolioBalances` object from this one.</span>
 
@@ -1210,7 +1210,7 @@
 <div class="viewcode-block" id="WalletBalancesRaw">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.WalletBalancesRaw">[docs]</a>
 <span class="nd">@final</span>
-<span class="k">class</span> <span class="nc">WalletBalancesRaw</span><span class="p">(</span><span class="n">DefaultChecksumDict</span><span class="p">[</span><span class="n">TokenBalances</span><span class="p">],</span> <span class="n">_SummableNonNumericMixin</span><span class="p">):</span>  <span class="c1"># type: ignore [misc]</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">WalletBalancesRaw</span><span class="p">(</span><span class="n">DefaultChecksumDict</span><span class="p">[</span><span class="n">TokenBalances</span><span class="p">],</span> <span class="n">_SummableNonNumericMixin</span><span class="p">):</span>  <span class="c1"># type: ignore [misc]</span>
     <span class="c1"># Since PortfolioBalances key lookup is:    ``wallet   -&gt; category -&gt; token    -&gt; balance``</span>
     <span class="c1"># We need a new structure for key pattern:  ``wallet   -&gt; token    -&gt; balance``</span>
 
@@ -1232,7 +1232,7 @@
 
 <div class="viewcode-block" id="WalletBalancesRaw.__init__">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.WalletBalancesRaw.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">_WTBInput</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">BlockNumber</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">TokenBalances</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">))</span>
@@ -1251,7 +1251,7 @@
             <span class="bp">self</span><span class="p">[</span><span class="n">wallet</span><span class="p">]</span> <span class="o">+=</span> <span class="n">balances</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Evaluates the truth value of the :class:`~eth_portfolio.typing.WalletBalancesRaw` object.</span>
 
@@ -1265,7 +1265,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a string representation of the :class:`~eth_portfolio.typing.WalletBalancesRaw` object.</span>
 
@@ -1274,7 +1274,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;WalletBalances</span><span class="si">{</span><span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WalletBalancesRaw&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WalletBalancesRaw&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WalletBalancesRaw&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WalletBalancesRaw&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds another :class:`~eth_portfolio.typing.WalletBalancesRaw` object to this one.</span>
 
@@ -1316,7 +1316,7 @@
                 <span class="p">)</span>
         <span class="k">return</span> <span class="n">combined</span>
 
-    <span class="k">def</span> <span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WalletBalancesRaw&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WalletBalancesRaw&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WalletBalancesRaw&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WalletBalancesRaw&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">WalletBalancesRaw</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">other</span><span class="si">}</span><span class="s2"> is not a WalletBalancesRaw object&quot;</span><span class="p">)</span>
 
@@ -1332,7 +1332,7 @@
                 <span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WalletBalancesRaw&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WalletBalancesRaw&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WalletBalancesRaw&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WalletBalancesRaw&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtracts another :class:`~eth_portfolio.typing.WalletBalancesRaw` object from this one.</span>
 
@@ -1380,7 +1380,7 @@
 <div class="viewcode-block" id="PortfolioBalancesByCategory">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.PortfolioBalancesByCategory">[docs]</a>
 <span class="nd">@final</span>
-<span class="k">class</span> <span class="nc">PortfolioBalancesByCategory</span><span class="p">(</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PortfolioBalancesByCategory</span><span class="p">(</span>
     <span class="n">DefaultDict</span><span class="p">[</span><span class="n">CategoryLabel</span><span class="p">,</span> <span class="n">WalletBalancesRaw</span><span class="p">],</span> <span class="n">_SummableNonNumericMixin</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1401,7 +1401,7 @@
 
 <div class="viewcode-block" id="PortfolioBalancesByCategory.__init__">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.PortfolioBalancesByCategory.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">_CBInput</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">BlockNumber</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">WalletBalancesRaw</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">))</span>
@@ -1421,7 +1421,7 @@
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">assets</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WalletBalancesRaw</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">assets</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WalletBalancesRaw</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the asset balances across all wallets.</span>
 
@@ -1431,7 +1431,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;assets&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">debt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WalletBalancesRaw</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">debt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WalletBalancesRaw</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the debt balances across all wallets.</span>
 
@@ -1442,7 +1442,7 @@
 
 <div class="viewcode-block" id="PortfolioBalancesByCategory.invert">
 <a class="viewcode-back" href="../../source/eth_portfolio.typing.html#eth_portfolio.typing.PortfolioBalancesByCategory.invert">[docs]</a>
-    <span class="k">def</span> <span class="nf">invert</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalances&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">invert</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalances&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Inverts the portfolio balances by category to group by wallet first.</span>
 
@@ -1463,7 +1463,7 @@
         <span class="k">return</span> <span class="n">inverted</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Evaluates the truth value of the :class:`~eth_portfolio.typing.PortfolioBalancesByCategory` object.</span>
 
@@ -1477,7 +1477,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a string representation of the :class:`~eth_portfolio.typing.PortfolioBalancesByCategory` object.</span>
 
@@ -1486,7 +1486,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;PortfolioBalancesByCategory</span><span class="si">{</span><span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;PortfolioBalancesByCategory&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalancesByCategory&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;PortfolioBalancesByCategory&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalancesByCategory&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds another :class:`~eth_portfolio.typing.PortfolioBalancesByCategory` object to this one.</span>
 
@@ -1524,7 +1524,7 @@
                 <span class="n">combined</span><span class="p">[</span><span class="n">protocol</span><span class="p">]</span> <span class="o">+=</span> <span class="n">balances</span>
         <span class="k">return</span> <span class="n">combined</span>
 
-    <span class="k">def</span> <span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;PortfolioBalancesByCategory&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalancesByCategory&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;PortfolioBalancesByCategory&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalancesByCategory&quot;</span><span class="p">:</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">PortfolioBalancesByCategory</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">other</span><span class="si">}</span><span class="s2"> is not a PortfolioBalancesByCategory object&quot;</span><span class="p">)</span>
@@ -1539,7 +1539,7 @@
                 <span class="bp">self</span><span class="p">[</span><span class="n">protocol</span><span class="p">]</span> <span class="o">+=</span> <span class="n">balances</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;PortfolioBalancesByCategory&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalancesByCategory&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;PortfolioBalancesByCategory&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PortfolioBalancesByCategory&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtracts another :class:`~eth_portfolio.typing.PortfolioBalancesByCategory` object from this one.</span>
 

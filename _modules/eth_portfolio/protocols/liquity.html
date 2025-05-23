@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>eth_portfolio.protocols.liquity &mdash; eth-portfolio  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -69,13 +69,13 @@
            <div itemprop="articleBody">
              
   <h1>Source code for eth_portfolio.protocols.liquity</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">eth_portfolio.protocols._base</span> <span class="kn">import</span> <span class="n">SingleTokenStakingPoolABC</span>
-<span class="kn">from</span> <span class="nn">y</span> <span class="kn">import</span> <span class="n">ERC20</span><span class="p">,</span> <span class="n">Network</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">eth_portfolio.protocols._base</span><span class="w"> </span><span class="kn">import</span> <span class="n">SingleTokenStakingPoolABC</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">y</span><span class="w"> </span><span class="kn">import</span> <span class="n">ERC20</span><span class="p">,</span> <span class="n">Network</span>
 
 
 <div class="viewcode-block" id="LqtyStakingPool">
 <a class="viewcode-back" href="../../../source/eth_portfolio.protocols.html#eth_portfolio.protocols.liquity.LqtyStakingPool">[docs]</a>
-<span class="k">class</span> <span class="nc">LqtyStakingPool</span><span class="p">(</span><span class="n">SingleTokenStakingPoolABC</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LqtyStakingPool</span><span class="p">(</span><span class="n">SingleTokenStakingPoolABC</span><span class="p">):</span>
     <span class="n">networks</span> <span class="o">=</span> <span class="p">[</span><span class="n">Network</span><span class="o">.</span><span class="n">Mainnet</span><span class="p">]</span>
     <span class="n">contract_address</span> <span class="o">=</span> <span class="s2">&quot;0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d&quot;</span>
     <span class="n">balance_method_name</span> <span class="o">=</span> <span class="s2">&quot;stakes&quot;</span>
@@ -85,7 +85,7 @@
 
 <div class="viewcode-block" id="LiquityStabilityPool">
 <a class="viewcode-back" href="../../../source/eth_portfolio.protocols.html#eth_portfolio.protocols.liquity.LiquityStabilityPool">[docs]</a>
-<span class="k">class</span> <span class="nc">LiquityStabilityPool</span><span class="p">(</span><span class="n">SingleTokenStakingPoolABC</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LiquityStabilityPool</span><span class="p">(</span><span class="n">SingleTokenStakingPoolABC</span><span class="p">):</span>
     <span class="n">networks</span> <span class="o">=</span> <span class="p">[</span><span class="n">Network</span><span class="o">.</span><span class="n">Mainnet</span><span class="p">]</span>
     <span class="n">contract_address</span> <span class="o">=</span> <span class="s2">&quot;0x66017D22b0f8556afDd19FC67041899Eb65a21bb&quot;</span>
     <span class="n">balance_method_name</span> <span class="o">=</span> <span class="s2">&quot;getCompoundedLUSDDeposit&quot;</span>

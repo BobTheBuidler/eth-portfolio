@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>eth_portfolio.structs package &mdash; eth-portfolio  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
@@ -118,7 +118,7 @@
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;field1&#39;</span><span class="p">]</span>
@@ -144,7 +144,7 @@
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">LazyDictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">LazyDictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -170,7 +170,7 @@
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">)</span>
@@ -186,7 +186,7 @@
 <span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.items" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field name and value pairs.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -206,7 +206,7 @@
 <span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.keys" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the field names of the struct.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -226,7 +226,7 @@
 <span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.values" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field values.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -258,7 +258,7 @@
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.block" title="Link to this definition"></a></dt>
 <dd><p>A shorthand getter for ‘blockNumber’.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">block</span>
@@ -272,7 +272,7 @@
 <span class="sig-name descname"><span class="pre">blockHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.blockHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockHash</span>
@@ -286,7 +286,7 @@
 <span class="sig-name descname"><span class="pre">blockNumber</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.blockNumber" title="Link to this definition"></a></dt>
 <dd><p>The number of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockNumber</span>
@@ -313,7 +313,7 @@
 <span class="sig-name descname"><span class="pre">subtraces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">uint</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.subtraces" title="Link to this definition"></a></dt>
 <dd><p>The number of traces of internal transactions that occurred during this transaction.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">subtraces</span>
@@ -327,7 +327,7 @@
 <span class="sig-name descname"><span class="pre">traceAddress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">uint</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.traceAddress" title="Link to this definition"></a></dt>
 <dd><p>The trace addresses (array) representing the path of the call within the trace tree.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">traceAddress</span>
@@ -341,7 +341,7 @@
 <span class="sig-name descname"><span class="pre">transactionHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.transactionHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the transaction being traced.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionHash</span>
@@ -355,7 +355,7 @@
 <span class="sig-name descname"><span class="pre">transactionPosition</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#eth_portfolio.structs.modified.CallTrace.transactionPosition" title="Link to this definition"></a></dt>
 <dd><p>The position of the transaction in the block.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionPosition</span>
@@ -400,7 +400,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;field1&#39;</span><span class="p">]</span>
@@ -426,7 +426,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">LazyDictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">LazyDictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -452,7 +452,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">)</span>
@@ -468,7 +468,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.items" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field name and value pairs.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -488,7 +488,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.keys" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the field names of the struct.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -508,7 +508,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.values" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field values.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -557,7 +557,7 @@ of the contract creation process.</p>
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.block" title="Link to this definition"></a></dt>
 <dd><p>A shorthand getter for ‘blockNumber’.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">block</span>
@@ -571,7 +571,7 @@ of the contract creation process.</p>
 <span class="sig-name descname"><span class="pre">blockHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.blockHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockHash</span>
@@ -585,7 +585,7 @@ of the contract creation process.</p>
 <span class="sig-name descname"><span class="pre">blockNumber</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.blockNumber" title="Link to this definition"></a></dt>
 <dd><p>The number of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockNumber</span>
@@ -599,7 +599,7 @@ of the contract creation process.</p>
 <span class="sig-name descname"><span class="pre">error</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.error" title="Link to this definition"></a></dt>
 <dd><p>An error message if an error occurred during the execution of the transaction. Defaults to UNSET.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">UNSET</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">error</span>
@@ -628,7 +628,7 @@ contract’s code.</p>
 <span class="sig-name descname"><span class="pre">subtraces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">uint</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.subtraces" title="Link to this definition"></a></dt>
 <dd><p>The number of traces of internal transactions that occurred during this transaction.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">subtraces</span>
@@ -642,7 +642,7 @@ contract’s code.</p>
 <span class="sig-name descname"><span class="pre">traceAddress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">uint</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.traceAddress" title="Link to this definition"></a></dt>
 <dd><p>The trace addresses (array) representing the path of the call within the trace tree.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">traceAddress</span>
@@ -656,7 +656,7 @@ contract’s code.</p>
 <span class="sig-name descname"><span class="pre">transactionHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.transactionHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the transaction being traced.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionHash</span>
@@ -670,7 +670,7 @@ contract’s code.</p>
 <span class="sig-name descname"><span class="pre">transactionPosition</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#eth_portfolio.structs.modified.CreateTrace.transactionPosition" title="Link to this definition"></a></dt>
 <dd><p>The position of the transaction in the block.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionPosition</span>
@@ -715,7 +715,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;field1&#39;</span><span class="p">]</span>
@@ -741,7 +741,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">LazyDictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">LazyDictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -767,7 +767,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">)</span>
@@ -783,7 +783,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.items" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field name and value pairs.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -803,7 +803,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.keys" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the field names of the struct.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -823,7 +823,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.values" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field values.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -870,7 +870,7 @@ decoding hook to convert the raw action data into a structured
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.block" title="Link to this definition"></a></dt>
 <dd><p>A shorthand getter for ‘blockNumber’.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">block</span>
@@ -884,7 +884,7 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">blockHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.blockHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockHash</span>
@@ -898,7 +898,7 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">blockNumber</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.blockNumber" title="Link to this definition"></a></dt>
 <dd><p>The number of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockNumber</span>
@@ -912,7 +912,7 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">error</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.error" title="Link to this definition"></a></dt>
 <dd><p>An error message if an error occurred during the execution of the transaction. Defaults to UNSET.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">UNSET</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">error</span>
@@ -926,7 +926,7 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">subtraces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">uint</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.subtraces" title="Link to this definition"></a></dt>
 <dd><p>The number of traces of internal transactions that occurred during this transaction.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">subtraces</span>
@@ -940,7 +940,7 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">traceAddress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">uint</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.traceAddress" title="Link to this definition"></a></dt>
 <dd><p>The trace addresses (array) representing the path of the call within the trace tree.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">traceAddress</span>
@@ -954,7 +954,7 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">transactionHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.transactionHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the transaction being traced.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionHash</span>
@@ -968,7 +968,7 @@ decoding hook to convert the raw action data into a structured
 <span class="sig-name descname"><span class="pre">transactionPosition</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#eth_portfolio.structs.modified.RewardTrace.transactionPosition" title="Link to this definition"></a></dt>
 <dd><p>The position of the transaction in the block.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionPosition</span>
@@ -1013,7 +1013,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;field1&#39;</span><span class="p">]</span>
@@ -1039,7 +1039,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">LazyDictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">LazyDictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1065,7 +1065,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">)</span>
@@ -1081,7 +1081,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.items" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field name and value pairs.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1101,7 +1101,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.keys" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the field names of the struct.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1121,7 +1121,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.values" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field values.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1147,7 +1147,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.block" title="Link to this definition"></a></dt>
 <dd><p>A shorthand getter for ‘blockNumber’.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">block</span>
@@ -1161,7 +1161,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">blockHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.blockHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockHash</span>
@@ -1175,7 +1175,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">blockNumber</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BlockNumber</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.blockNumber" title="Link to this definition"></a></dt>
 <dd><p>The number of the block where this action happened.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">blockNumber</span>
@@ -1189,7 +1189,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">error</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.error" title="Link to this definition"></a></dt>
 <dd><p>An error message if an error occurred during the execution of the transaction. Defaults to UNSET.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">UNSET</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">error</span>
@@ -1209,7 +1209,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">subtraces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">uint</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.subtraces" title="Link to this definition"></a></dt>
 <dd><p>The number of traces of internal transactions that occurred during this transaction.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">subtraces</span>
@@ -1223,7 +1223,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">traceAddress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">uint</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.traceAddress" title="Link to this definition"></a></dt>
 <dd><p>The trace addresses (array) representing the path of the call within the trace tree.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">traceAddress</span>
@@ -1237,7 +1237,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">transactionHash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TransactionHash</span></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.transactionHash" title="Link to this definition"></a></dt>
 <dd><p>The hash of the transaction being traced.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionHash</span>
@@ -1251,7 +1251,7 @@ within the Ethereum Virtual Machine (EVM).</p>
 <span class="sig-name descname"><span class="pre">transactionPosition</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#eth_portfolio.structs.modified.SuicideTrace.transactionPosition" title="Link to this definition"></a></dt>
 <dd><p>The position of the transaction in the block.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTrace</span><span class="p">(</span><span class="n">_FilterTraceBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">MyTrace</span><span class="p">(</span><span class="n">blockNumber</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">blockHash</span><span class="o">=</span><span class="s2">&quot;0xabc...&quot;</span><span class="p">,</span> <span class="n">transactionHash</span><span class="o">=</span><span class="s2">&quot;0xdef...&quot;</span><span class="p">,</span> <span class="n">transactionPosition</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traceAddress</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">subtraces</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">transactionPosition</span>
@@ -1314,7 +1314,7 @@ the execution of a single transaction.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;field1&#39;</span><span class="p">]</span>
@@ -1340,7 +1340,7 @@ the execution of a single transaction.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1419,7 +1419,7 @@ transaction success for non-reward transfers.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">)</span>
@@ -1435,7 +1435,7 @@ transaction success for non-reward transfers.</p>
 <span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs.InternalTransfer.items" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field name and value pairs.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1455,7 +1455,7 @@ transaction success for non-reward transfers.</p>
 <span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs.InternalTransfer.keys" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the field names of the struct.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1475,7 +1475,7 @@ transaction success for non-reward transfers.</p>
 <span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs.InternalTransfer.values" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field values.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1667,7 +1667,7 @@ the execution of a transaction interacting with the token contract.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;field1&#39;</span><span class="p">]</span>
@@ -1693,7 +1693,7 @@ the execution of a transaction interacting with the token contract.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1719,7 +1719,7 @@ the execution of a transaction interacting with the token contract.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">)</span>
@@ -1735,7 +1735,7 @@ the execution of a transaction interacting with the token contract.</p>
 <span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs.TokenTransfer.items" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field name and value pairs.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1755,7 +1755,7 @@ the execution of a transaction interacting with the token contract.</p>
 <span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs.TokenTransfer.keys" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the field names of the struct.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1775,7 +1775,7 @@ the execution of a transaction interacting with the token contract.</p>
 <span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs.TokenTransfer.values" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field values.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1900,7 +1900,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;field1&#39;</span><span class="p">]</span>
@@ -1926,7 +1926,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1969,7 +1969,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">)</span>
@@ -1985,7 +1985,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 <span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs.Transaction.items" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field name and value pairs.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -2005,7 +2005,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 <span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs.Transaction.keys" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the field names of the struct.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -2025,7 +2025,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 <span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs.Transaction.values" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field values.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -2213,7 +2213,7 @@ None for chains that don’t specify transaction types.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;field1&#39;</span><span class="p">]</span>
@@ -2239,7 +2239,7 @@ None for chains that don’t specify transaction types.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -2282,7 +2282,7 @@ None for chains that don’t specify transaction types.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">)</span>
@@ -2298,7 +2298,7 @@ None for chains that don’t specify transaction types.</p>
 <span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs.TransactionRLP.items" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field name and value pairs.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -2318,7 +2318,7 @@ None for chains that don’t specify transaction types.</p>
 <span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs.TransactionRLP.keys" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the field names of the struct.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -2338,7 +2338,7 @@ None for chains that don’t specify transaction types.</p>
 <span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs.TransactionRLP.values" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field values.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -2541,7 +2541,7 @@ None for chains that don’t specify transaction types.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;field1&#39;</span><span class="p">]</span>
@@ -2567,7 +2567,7 @@ None for chains that don’t specify transaction types.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -2593,7 +2593,7 @@ None for chains that don’t specify transaction types.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">)</span>
@@ -2609,7 +2609,7 @@ None for chains that don’t specify transaction types.</p>
 <span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs._LedgerEntryBase.items" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field name and value pairs.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -2629,7 +2629,7 @@ None for chains that don’t specify transaction types.</p>
 <span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs._LedgerEntryBase.keys" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the field names of the struct.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -2649,7 +2649,7 @@ None for chains that don’t specify transaction types.</p>
 <span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs._LedgerEntryBase.values" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field values.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -2729,7 +2729,7 @@ including gas parameters, signature components, and transaction-specific data.</
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;field1&#39;</span><span class="p">]</span>
@@ -2755,7 +2755,7 @@ including gas parameters, signature components, and transaction-specific data.</
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -2798,7 +2798,7 @@ including gas parameters, signature components, and transaction-specific data.</
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">)</span>
@@ -2814,7 +2814,7 @@ including gas parameters, signature components, and transaction-specific data.</
 <span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs._TransactionBase.items" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field name and value pairs.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -2834,7 +2834,7 @@ including gas parameters, signature components, and transaction-specific data.</
 <span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs._TransactionBase.keys" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the field names of the struct.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -2854,7 +2854,7 @@ including gas parameters, signature components, and transaction-specific data.</
 <span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.structs._TransactionBase.values" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field values.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -3043,7 +3043,7 @@ None for chains that don’t specify transaction types.</p>
 <p>The <cite>__all__</cite> list defines the public API for this module, which includes the main union type <cite>LedgerEntry</cite> and its specific types: <cite>Transaction</cite>, <cite>InternalTransfer</cite>, <cite>TokenTransfer</cite>, and <cite>TransactionRLP</cite>.</p>
 <p class="rubric">Examples</p>
 <p>Importing the main union type and specific ledger entry types:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">eth_portfolio.structs</span> <span class="kn">import</span> <span class="n">LedgerEntry</span><span class="p">,</span> <span class="n">Transaction</span><span class="p">,</span> <span class="n">InternalTransfer</span><span class="p">,</span> <span class="n">TokenTransfer</span><span class="p">,</span> <span class="n">TransactionRLP</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">eth_portfolio.structs</span><span class="w"> </span><span class="kn">import</span> <span class="n">LedgerEntry</span><span class="p">,</span> <span class="n">Transaction</span><span class="p">,</span> <span class="n">InternalTransfer</span><span class="p">,</span> <span class="n">TokenTransfer</span><span class="p">,</span> <span class="n">TransactionRLP</span>
 </pre></div>
 </div>
 <p>Using the <cite>LedgerEntry</cite> union type to annotate a variable that can hold any ledger entry type:</p>
@@ -3097,7 +3097,7 @@ the execution of a single transaction.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;field1&#39;</span><span class="p">]</span>
@@ -3123,7 +3123,7 @@ the execution of a single transaction.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -3202,7 +3202,7 @@ transaction success for non-reward transfers.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">)</span>
@@ -3218,7 +3218,7 @@ transaction success for non-reward transfers.</p>
 <span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.InternalTransfer.items" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field name and value pairs.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -3238,7 +3238,7 @@ transaction success for non-reward transfers.</p>
 <span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.InternalTransfer.keys" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the field names of the struct.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -3258,7 +3258,7 @@ transaction success for non-reward transfers.</p>
 <span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.InternalTransfer.values" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field values.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -3450,7 +3450,7 @@ the execution of a transaction interacting with the token contract.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;field1&#39;</span><span class="p">]</span>
@@ -3476,7 +3476,7 @@ the execution of a transaction interacting with the token contract.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -3502,7 +3502,7 @@ the execution of a transaction interacting with the token contract.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">)</span>
@@ -3518,7 +3518,7 @@ the execution of a transaction interacting with the token contract.</p>
 <span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.TokenTransfer.items" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field name and value pairs.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -3538,7 +3538,7 @@ the execution of a transaction interacting with the token contract.</p>
 <span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.TokenTransfer.keys" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the field names of the struct.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -3558,7 +3558,7 @@ the execution of a transaction interacting with the token contract.</p>
 <span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.TokenTransfer.values" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field values.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -3683,7 +3683,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;field1&#39;</span><span class="p">]</span>
@@ -3709,7 +3709,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -3752,7 +3752,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">)</span>
@@ -3768,7 +3768,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 <span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.Transaction.items" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field name and value pairs.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -3788,7 +3788,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 <span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.Transaction.keys" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the field names of the struct.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -3808,7 +3808,7 @@ Used to uniquely identify the Transfer event associated with this TokenTransfer 
 <span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.Transaction.values" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field values.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -3996,7 +3996,7 @@ None for chains that don’t specify transaction types.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;field1&#39;</span><span class="p">]</span>
@@ -4022,7 +4022,7 @@ None for chains that don’t specify transaction types.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -4065,7 +4065,7 @@ None for chains that don’t specify transaction types.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">)</span>
@@ -4081,7 +4081,7 @@ None for chains that don’t specify transaction types.</p>
 <span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.TransactionRLP.items" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field name and value pairs.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -4101,7 +4101,7 @@ None for chains that don’t specify transaction types.</p>
 <span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.TransactionRLP.keys" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the field names of the struct.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -4121,7 +4121,7 @@ None for chains that don’t specify transaction types.</p>
 <span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#eth_portfolio.structs.TransactionRLP.values" title="Link to this definition"></a></dt>
 <dd><p>Returns an iterator over the struct’s field values.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyStruct</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">field1</span><span class="p">:</span> <span class="nb">str</span>
 <span class="gp">... </span>    <span class="n">field2</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">MyStruct</span><span class="p">(</span><span class="n">field1</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">field2</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>

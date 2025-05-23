@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>eth_portfolio.structs.structs &mdash; eth-portfolio  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -75,8 +75,8 @@
 <span class="sd">The classes are designed to provide a consistent and flexible interface for working with blockchain data. Instance attributes can be fetched with either dot notation or key lookup. Classes are compatible with the standard dictionary interface.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">Any</span><span class="p">,</span>
     <span class="n">ClassVar</span><span class="p">,</span>
     <span class="n">Dict</span><span class="p">,</span>
@@ -89,28 +89,28 @@
     <span class="n">final</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="kn">import</span> <span class="nn">evmspec</span>
-<span class="kn">from</span> <span class="nn">brownie</span> <span class="kn">import</span> <span class="n">chain</span>
-<span class="kn">from</span> <span class="nn">dictstruct</span> <span class="kn">import</span> <span class="n">DictStruct</span>
-<span class="kn">from</span> <span class="nn">evmspec.data</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">BlockHash</span><span class="p">,</span> <span class="n">TransactionHash</span><span class="p">,</span> <span class="n">Wei</span>
-<span class="kn">from</span> <span class="nn">evmspec.structs.trace</span> <span class="kn">import</span> <span class="n">reward</span>
-<span class="kn">from</span> <span class="nn">evmspec.structs.transaction</span> <span class="kn">import</span> <span class="n">AccessListEntry</span>
-<span class="kn">from</span> <span class="nn">hexbytes</span> <span class="kn">import</span> <span class="n">HexBytes</span>
-<span class="kn">from</span> <span class="nn">msgspec</span> <span class="kn">import</span> <span class="n">Struct</span>
-<span class="kn">from</span> <span class="nn">y</span> <span class="kn">import</span> <span class="n">Network</span>
-<span class="kn">from</span> <span class="nn">y._db.log</span> <span class="kn">import</span> <span class="n">Log</span>
-<span class="kn">from</span> <span class="nn">y._decorators</span> <span class="kn">import</span> <span class="n">stuck_coro_debugger</span>
-<span class="kn">from</span> <span class="nn">y.constants</span> <span class="kn">import</span> <span class="n">EEE_ADDRESS</span>
-<span class="kn">from</span> <span class="nn">y.datatypes</span> <span class="kn">import</span> <span class="n">Block</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">evmspec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">brownie</span><span class="w"> </span><span class="kn">import</span> <span class="n">chain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dictstruct</span><span class="w"> </span><span class="kn">import</span> <span class="n">DictStruct</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">evmspec.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">BlockHash</span><span class="p">,</span> <span class="n">TransactionHash</span><span class="p">,</span> <span class="n">Wei</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">evmspec.structs.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">reward</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">evmspec.structs.transaction</span><span class="w"> </span><span class="kn">import</span> <span class="n">AccessListEntry</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hexbytes</span><span class="w"> </span><span class="kn">import</span> <span class="n">HexBytes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">msgspec</span><span class="w"> </span><span class="kn">import</span> <span class="n">Struct</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">y</span><span class="w"> </span><span class="kn">import</span> <span class="n">Network</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">y._db.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">Log</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">y._decorators</span><span class="w"> </span><span class="kn">import</span> <span class="n">stuck_coro_debugger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">y.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">EEE_ADDRESS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">y.datatypes</span><span class="w"> </span><span class="kn">import</span> <span class="n">Block</span>
 
-<span class="kn">from</span> <span class="nn">eth_portfolio._decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
-<span class="kn">from</span> <span class="nn">eth_portfolio._utils</span> <span class="kn">import</span> <span class="n">_get_price</span>
-<span class="kn">from</span> <span class="nn">eth_portfolio.structs.modified</span> <span class="kn">import</span> <span class="n">ModifiedTrace</span><span class="p">,</span> <span class="n">_modified_trace_type_map</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">eth_portfolio._decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">eth_portfolio._utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_get_price</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">eth_portfolio.structs.modified</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModifiedTrace</span><span class="p">,</span> <span class="n">_modified_trace_type_map</span>
 
 
 <div class="viewcode-block" id="_LedgerEntryBase">
 <a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs._LedgerEntryBase">[docs]</a>
-<span class="k">class</span> <span class="nc">_LedgerEntryBase</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">omit_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">repr_omit_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>  <span class="c1"># type: ignore [call-arg]</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">_LedgerEntryBase</span><span class="p">(</span><span class="n">DictStruct</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">omit_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">repr_omit_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>  <span class="c1"># type: ignore [call-arg]</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The :class:`~structs._LedgerEntryBase` class is a base class for ledger entries representing on-chain actions in a blockchain.</span>
 
@@ -120,14 +120,14 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">_evm_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">evmspec</span><span class="o">.</span><span class="n">Transaction</span><span class="p">,</span> <span class="n">evmspec</span><span class="o">.</span><span class="n">FilterTrace</span><span class="p">,</span> <span class="n">Log</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evm_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">evmspec</span><span class="o">.</span><span class="n">Transaction</span><span class="p">,</span> <span class="n">evmspec</span><span class="o">.</span><span class="n">FilterTrace</span><span class="p">,</span> <span class="n">Log</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The EVM object associated with {cls_name}, exactly as it was received from the RPC.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">entry_type</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">chainid</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Network</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">chainid</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Network</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The network ID where the {cls_name} occurred.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -137,7 +137,7 @@
             <span class="k">return</span> <span class="n">Network</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">block_number</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Block</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">block_number</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Block</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The block number where the {cls_name} was included.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -153,7 +153,7 @@
 <span class="sd">    The USD value of the cryptocurrency transferred in the {cls_name}, if price is known.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init_subclass__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__init_subclass__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init_subclass__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="c1"># Replace {cls_name} in attribute-level docstrings</span>
@@ -165,7 +165,7 @@
 
 <div class="viewcode-block" id="_get_init_kwargs">
 <a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs._get_init_kwargs">[docs]</a>
-<span class="k">def</span> <span class="nf">_get_init_kwargs</span><span class="p">(</span><span class="n">original_struct</span><span class="p">:</span> <span class="n">Struct</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_init_kwargs</span><span class="p">(</span><span class="n">original_struct</span><span class="p">:</span> <span class="n">Struct</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">original_struct</span><span class="o">.</span><span class="n">__struct_fields__</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -178,7 +178,7 @@
 
 <div class="viewcode-block" id="_TransactionBase">
 <a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs._TransactionBase">[docs]</a>
-<span class="k">class</span> <span class="nc">_TransactionBase</span><span class="p">(</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">_TransactionBase</span><span class="p">(</span>
     <span class="n">_LedgerEntryBase</span><span class="p">,</span>
     <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -212,7 +212,7 @@
 <div class="viewcode-block" id="_TransactionBase.from_rpc_response">
 <a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs._TransactionBase.from_rpc_response">[docs]</a>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_rpc_response</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_rpc_response</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span>
         <span class="n">transaction</span><span class="p">:</span> <span class="n">evmspec</span><span class="o">.</span><span class="n">Transaction</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
@@ -227,35 +227,35 @@
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TransactionHash</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TransactionHash</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The unique transaction hash.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">hash</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">block_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BlockHash</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">block_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BlockHash</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The hash of the block that includes this Transaction.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">blockHash</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">transaction_index</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">transaction_index</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The index of the transaction within its block, if applicable.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">transactionIndex</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">nonce</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nonce</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The sender&#39;s transaction count at the time of this Transaction.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">nonce</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The transaction type (e.g., 0 for legacy, 1 for EIP-2930, 2 for EIP-1559).</span>
 <span class="sd">        None for chains that don&#39;t specify transaction types.</span>
@@ -264,98 +264,98 @@
             <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">typ</span><span class="o">.</span><span class="n">hex</span><span class="p">(),</span> <span class="mi">16</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">from_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Address</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Address</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The address from which the transaction was sent, if applicable.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">sender</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">to_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Address</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Address</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The address to which the transaction was sent, if applicable.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">to</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The value/amount of cryptocurrency transferred in the transaction, scaled to a human-readable decimal value.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Wei</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">scaled</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">gas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The maximum amount of gas the sender is willing to use for the Transaction.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">gas</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">gas_price</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gas_price</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The price per unit of gas the sender is willing to pay (for legacy and EIP-2930 transactions).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">gasPrice</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">max_fee_per_gas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">max_fee_per_gas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The maximum total fee per gas the sender is willing to pay (for EIP-1559 transactions only).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">maxFeePerGas</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">max_priority_fee_per_gas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">max_priority_fee_per_gas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The maximum priority fee per gas the sender is willing to pay (for EIP-1559 transactions only).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">maxPriorityFeePerGas</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HexBytes</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HexBytes</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The data payload sent with the Transaction, often used for contract interactions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">input</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">r</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HexBytes</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">r</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HexBytes</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The R component of the Transaction&#39;s ECDSA signature.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">r</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">s</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HexBytes</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">s</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HexBytes</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The S component of the Transaction&#39;s ECDSA signature.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">s</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The V component of the Transaction&#39;s ECDSA signature, used for replay protection.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">v</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">access_list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">AccessListEntry</span><span class="p">,</span> <span class="o">...</span><span class="p">]]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">access_list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">AccessListEntry</span><span class="p">,</span> <span class="o">...</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        List of addresses and storage keys the transaction plans to access (for EIP-2930 and EIP-1559 transactions).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">accessList</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">y_parity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">y_parity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The Y parity of the transaction signature, used in EIP-2718 typed transactions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">yParity</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">__db_primary_key__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__db_primary_key__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;from_address&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_address</span><span class="p">),</span> <span class="s2">&quot;nonce&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonce</span><span class="p">}</span></div>
 
 
@@ -363,7 +363,7 @@
 <div class="viewcode-block" id="Transaction">
 <a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs.Transaction">[docs]</a>
 <span class="nd">@final</span>
-<span class="k">class</span> <span class="nc">Transaction</span><span class="p">(</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Transaction</span><span class="p">(</span>
     <span class="n">_TransactionBase</span><span class="p">,</span>
     <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -384,7 +384,7 @@
 <div class="viewcode-block" id="TransactionRLP">
 <a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs.TransactionRLP">[docs]</a>
 <span class="nd">@final</span>
-<span class="k">class</span> <span class="nc">TransactionRLP</span><span class="p">(</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TransactionRLP</span><span class="p">(</span>
     <span class="n">_TransactionBase</span><span class="p">,</span>
     <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -405,7 +405,7 @@
 <div class="viewcode-block" id="InternalTransfer">
 <a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs.InternalTransfer">[docs]</a>
 <span class="nd">@final</span>
-<span class="k">class</span> <span class="nc">InternalTransfer</span><span class="p">(</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">InternalTransfer</span><span class="p">(</span>
     <span class="n">_LedgerEntryBase</span><span class="p">,</span>
     <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -435,7 +435,7 @@
 <a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs.InternalTransfer.from_trace">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="nd">@stuck_coro_debugger</span>
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">from_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">:</span> <span class="n">evmspec</span><span class="o">.</span><span class="n">FilterTrace</span><span class="p">,</span> <span class="n">load_prices</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;InternalTransfer&quot;</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">from_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">:</span> <span class="n">evmspec</span><span class="o">.</span><span class="n">FilterTrace</span><span class="p">,</span> <span class="n">load_prices</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;InternalTransfer&quot;</span><span class="p">:</span>
         <span class="c1"># sourcery skip: simplify-boolean-comparison</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Asynchronously processes a raw internal transfer dictionary into an InternalTransfer object.</span>
@@ -492,7 +492,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">_evm_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModifiedTrace</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evm_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModifiedTrace</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span>
 
     <span class="n">trace</span><span class="p">:</span> <span class="n">ModifiedTrace</span>
@@ -501,21 +501,21 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">block_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HexBytes</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">block_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HexBytes</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The hash of the block containing the transaction that includes this InternalTransfer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="o">.</span><span class="n">blockHash</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">transaction_index</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">transaction_index</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The index of the transaction within its block, if applicable.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="o">.</span><span class="n">transactionPosition</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">HexBytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">HexBytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The unique hash of the transaction containing this internal transfer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -526,14 +526,14 @@
         <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">from_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Address</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Address</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The address from which the internal transfer was sent, if applicable.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">sender</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">to_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Address</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Address</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The address to which the internal transfer was sent, if applicable.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -542,18 +542,18 @@
         <span class="k">return</span> <span class="n">action</span><span class="o">.</span><span class="n">author</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="o">.</span><span class="n">Action</span><span class="p">)</span> <span class="k">else</span> <span class="n">action</span><span class="o">.</span><span class="n">to</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The value/amount of cryptocurrency transferred in the internal transfer, scaled to a human-readable decimal value.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">scaled</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;call&quot;</span><span class="p">,</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="s2">&quot;reward&quot;</span><span class="p">,</span> <span class="s2">&quot;suicide&quot;</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;call&quot;</span><span class="p">,</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="s2">&quot;reward&quot;</span><span class="p">,</span> <span class="s2">&quot;suicide&quot;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="o">.</span><span class="n">type</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">trace_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">trace_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The path of sub-calls to reach this InternalTransfer within the transaction,</span>
 
@@ -567,49 +567,49 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="o">.</span><span class="n">traceAddress</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">gas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The amount of gas allocated for this internal operation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">,</span> <span class="n">reward</span><span class="o">.</span><span class="n">Trace</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">gas</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">gas_used</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gas_used</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The amount of gas actually consumed by this internal operation, if known.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">gasUsed</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">subtraces</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">subtraces</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The number of sub-operations spawned by this InternalTransfer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="o">.</span><span class="n">subtraces</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">call_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">call_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The type of call made in this InternalTransfer (e.g., &quot;call&quot;, &quot;delegatecall&quot;, &quot;staticcall&quot;).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">callType</span><span class="o">.</span><span class="n">name</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">reward_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reward_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The type of the reward, for reward transactions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">rewardType</span><span class="o">.</span><span class="n">name</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HexBytes</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HexBytes</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The input data for this internal operation, if any.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">input</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HexBytes</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HexBytes</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The output data from this internal operation, if any.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -637,7 +637,7 @@
 <div class="viewcode-block" id="TokenTransfer">
 <a class="viewcode-back" href="../../../source/eth_portfolio.structs.html#eth_portfolio.structs.structs.TokenTransfer">[docs]</a>
 <span class="nd">@final</span>
-<span class="k">class</span> <span class="nc">TokenTransfer</span><span class="p">(</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TokenTransfer</span><span class="p">(</span>
     <span class="n">_LedgerEntryBase</span><span class="p">,</span>
     <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -677,21 +677,21 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">from_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Address</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Address</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">topic1</span><span class="o">.</span><span class="n">as_address</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">to_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Address</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Address</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">topic2</span><span class="o">.</span><span class="n">as_address</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">_evm_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Log</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evm_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Log</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log</span>
 
     <span class="n">transaction_index</span><span class="p">:</span> <span class="nb">int</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">log_index</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">log_index</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The index of this transfer event within the transaction logs.</span>
 <span class="sd">        Used to uniquely identify the Transfer event associated with this TokenTransfer within the transaction.</span>
@@ -704,14 +704,14 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HexBytes</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HexBytes</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The unique hash of the transaction containing this token transfer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">transactionHash</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">token_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Address</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">token_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Address</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The contract address of the token being transferred.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

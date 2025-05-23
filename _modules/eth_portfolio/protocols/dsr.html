@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>eth_portfolio.protocols.dsr &mdash; eth-portfolio  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -69,26 +69,26 @@
            <div itemprop="articleBody">
              
   <h1>Source code for eth_portfolio.protocols.dsr</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">asyncio</span> <span class="kn">import</span> <span class="n">gather</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">asyncio</span><span class="w"> </span><span class="kn">import</span> <span class="n">gather</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">eth_typing</span> <span class="kn">import</span> <span class="n">BlockNumber</span>
-<span class="kn">from</span> <span class="nn">y</span> <span class="kn">import</span> <span class="n">Contract</span><span class="p">,</span> <span class="n">Network</span><span class="p">,</span> <span class="n">contract_creation_block</span><span class="p">,</span> <span class="n">dai</span>
-<span class="kn">from</span> <span class="nn">y.datatypes</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">Block</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">eth_typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">BlockNumber</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">y</span><span class="w"> </span><span class="kn">import</span> <span class="n">Contract</span><span class="p">,</span> <span class="n">Network</span><span class="p">,</span> <span class="n">contract_creation_block</span><span class="p">,</span> <span class="n">dai</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">y.datatypes</span><span class="w"> </span><span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">Block</span>
 
-<span class="kn">from</span> <span class="nn">eth_portfolio._decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
-<span class="kn">from</span> <span class="nn">eth_portfolio.protocols._base</span> <span class="kn">import</span> <span class="n">ProtocolABC</span>
-<span class="kn">from</span> <span class="nn">eth_portfolio.typing</span> <span class="kn">import</span> <span class="n">Balance</span><span class="p">,</span> <span class="n">TokenBalances</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">eth_portfolio._decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">eth_portfolio.protocols._base</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProtocolABC</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">eth_portfolio.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Balance</span><span class="p">,</span> <span class="n">TokenBalances</span>
 
 
 <div class="viewcode-block" id="MakerDSR">
 <a class="viewcode-back" href="../../../source/eth_portfolio.protocols.html#eth_portfolio.protocols.dsr.MakerDSR">[docs]</a>
-<span class="k">class</span> <span class="nc">MakerDSR</span><span class="p">(</span><span class="n">ProtocolABC</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MakerDSR</span><span class="p">(</span><span class="n">ProtocolABC</span><span class="p">):</span>
     <span class="n">networks</span> <span class="o">=</span> <span class="p">[</span><span class="n">Network</span><span class="o">.</span><span class="n">Mainnet</span><span class="p">]</span>
 
 <div class="viewcode-block" id="MakerDSR.__init__">
 <a class="viewcode-back" href="../../../source/eth_portfolio.protocols.html#eth_portfolio.protocols.dsr.MakerDSR.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">dsr_manager</span> <span class="o">=</span> <span class="s2">&quot;0x373238337Bfe1146fb49989fc222523f83081dDb&quot;</span>
         <span class="n">pot</span> <span class="o">=</span> <span class="s2">&quot;0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dsr_manager</span> <span class="o">=</span> <span class="n">Contract</span><span class="p">(</span><span class="n">dsr_manager</span><span class="p">)</span>
@@ -98,7 +98,7 @@
 
 <div class="viewcode-block" id="MakerDSR._balances">
 <a class="viewcode-back" href="../../../source/eth_portfolio.protocols.html#eth_portfolio.protocols.dsr.MakerDSR._balances">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">_balances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenBalances</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_balances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenBalances</span><span class="p">:</span>
         <span class="n">balances</span> <span class="o">=</span> <span class="n">TokenBalances</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">block</span> <span class="ow">and</span> <span class="n">block</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_block</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">balances</span>
@@ -114,7 +114,7 @@
 
 <div class="viewcode-block" id="MakerDSR._exchange_rate">
 <a class="viewcode-back" href="../../../source/eth_portfolio.protocols.html#eth_portfolio.protocols.dsr.MakerDSR._exchange_rate">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">_exchange_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_exchange_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">Decimal</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">chi</span><span class="o">.</span><span class="n">coroutine</span><span class="p">(</span><span class="n">block_identifier</span><span class="o">=</span><span class="n">block</span><span class="p">))</span> <span class="o">/</span> <span class="mi">10</span><span class="o">**</span><span class="mi">27</span></div>
 </div>
 
