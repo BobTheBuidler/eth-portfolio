@@ -83,6 +83,7 @@ setup(
     setup_requires=["setuptools_scm"],
     package_data={
         "eth_portfolio": ["py.typed"],
+        "eth_portfolio_scripts": ["py.typed"],
     },
     include_package_data=True,
     ext_modules=ext_modules,
