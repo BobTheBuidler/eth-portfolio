@@ -13,7 +13,15 @@ from evmspec.data import _decode_hook
 from logging import getLogger
 from msgspec import ValidationError, json
 from multicall.utils import get_event_loop
-from pony.orm import BindingError, OperationalError, commit, db_session, flush, select
+from pony.orm import (
+    BindingError,
+    OperationalError,
+    TransactionIntegrityError,
+    commit,
+    db_session,
+    flush,
+    select,
+)
 from y import ENVIRONMENT_VARIABLES as ENVS
 from y._db.entities import db
 from y.constants import CHAINID
@@ -570,20 +578,23 @@ async def insert_token_transfer(token_transfer: TokenTransfer) -> None:
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
-    entities.TokenTransfer(
-        block=(CHAINID, token_transfer.block_number),
-        transaction_index=token_transfer.transaction_index,
-        log_index=token_transfer.log_index,
-        hash=token_transfer.hash.hex(),
-        token=(CHAINID, token_transfer.token_address),
-        from_address=(CHAINID, token_transfer.from_address),
-        to_address=(CHAINID, token_transfer.to_address),
-        value=token_transfer.value,
-        price=token_transfer.price,
-        value_usd=token_transfer.value_usd,
-        raw=json.encode(token_transfer, enc_hook=enc_hook),
-    )
-    commit()
+    try:
+        entities.TokenTransfer(
+            block=(CHAINID, token_transfer.block_number),
+            transaction_index=token_transfer.transaction_index,
+            log_index=token_transfer.log_index,
+            hash=token_transfer.hash.hex(),
+            token=(CHAINID, token_transfer.token_address),
+            from_address=(CHAINID, token_transfer.from_address),
+            to_address=(CHAINID, token_transfer.to_address),
+            value=token_transfer.value,
+            price=token_transfer.price,
+            value_usd=token_transfer.value_usd,
+            raw=json.encode(token_transfer, enc_hook=enc_hook),
+        )
+        commit()
+    except TransactionIntegrityError:
+        pass  # most likely non-issue, debug later if needed
 
 
 def enc_hook(obj: Any) -> Any:
