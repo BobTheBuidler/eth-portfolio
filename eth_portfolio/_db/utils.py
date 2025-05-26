@@ -13,7 +13,15 @@ from evmspec.data import _decode_hook
 from logging import getLogger
 from msgspec import ValidationError, json
 from multicall.utils import get_event_loop
-from pony.orm import BindingError, OperationalError, TransactionIntegrityError, commit, db_session, flush, select
+from pony.orm import (
+    BindingError,
+    OperationalError,
+    TransactionIntegrityError,
+    commit,
+    db_session,
+    flush,
+    select,
+)
 from y import ENVIRONMENT_VARIABLES as ENVS
 from y._db.entities import db
 from y.constants import CHAINID
