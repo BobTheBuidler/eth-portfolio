@@ -29,6 +29,7 @@ services:
     restart: always
 
   renderer:
+    platform: linux/amd64
     image: grafana/grafana-image-renderer:latest
     ports:
       - 127.0.0.1:${RENDERER_PORT:-8091}:8091
