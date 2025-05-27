@@ -1,7 +1,7 @@
 # eth-portfolio
 Use `eth-portfolio` to output information about your portfolio in a streamlined, speed-optimized way.
 
-### INSTALLATION:
+### Installation:
 - You should start with a fresh virtual environment, and then just...
 ```
 pip install git+https://github.com/BobTheBuidler/eth-portfolio
@@ -19,8 +19,12 @@ then try again
 pip install git+https://github.com/BobTheBuidler/eth-portfolio
 `
 
+### Prerequisites
 
-### USE:
+You must have a [brownie network](https://eth-brownie.readthedocs.io/en/stable/network-management.html) configured to use your RPC.
+You will also need [Docker](https://www.docker.com/get-started/) installed on your system.
+
+### Usage:
 For basic use, input each of your addresses as environment variables using the following pattern:
 ```
 PORTFOLIO_ADDRESS_0=0x123...
@@ -129,7 +133,7 @@ net.sum_usd()
 >>> Decimal("123456.78900")
 ```
 
-### ADVANCED:
+### Advanced:
 You also have more granular control available using the Portfolio object:
 ```
 from eth_portfolio import Portfolio
