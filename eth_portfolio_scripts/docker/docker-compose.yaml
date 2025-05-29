@@ -42,10 +42,7 @@ services:
   
   vmagent:
     image: victoriametrics/vmagent:heads-public-single-node-0-g52eb9c99e
-    volumes:
-      - ../victoria/:/etc/prometheus/
     command:
-      - "-promscrape.config=/etc/prometheus/prometheus.yml"
       - "-remoteWrite.url=http://victoria-metrics:8428/api/v1/write"
     depends_on:
       - victoria-metrics
