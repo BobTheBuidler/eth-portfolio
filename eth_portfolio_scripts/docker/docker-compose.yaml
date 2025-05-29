@@ -65,13 +65,3 @@ services:
     networks:
       - eth_portfolio
     restart: always
-
-  node-exporter:
-    image: quay.io/prometheus/node-exporter:latest
-    command:
-      - "--path.rootfs=/host"
-    networks:
-      - eth_portfolio
-    volumes:
-      - "/:/host:ro,rslave"
-    restart: always
