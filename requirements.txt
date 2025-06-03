@@ -4,6 +4,7 @@ eth-brownie>=1.21.0,<1.22
 eth_retry>=0.3.4,<1
 evmspec>=0.4.1
 ez-a-sync>=0.32.7
+faster-eth-utils
 numpy<2
 pandas>=1.4.3,<1.6
 typed-envs>=0.0.9

@@ -8,7 +8,7 @@ import evmspec
 import y._db.log
 from a_sync import ASyncIterable, ASyncIterator, as_yielded
 from brownie import chain
-from eth_utils import encode_hex
+from faster_eth_utils import encode_hex
 from y.datatypes import Address
 from y.utils.events import ProcessedEvents
 
