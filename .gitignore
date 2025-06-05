@@ -6,6 +6,9 @@ env/
 .pytest_cache
 __pycache__/
 eth_portfolio.egg-info/
-build/
+build/**/*.py
+build/**/*.json
+build/**/*.yaml
+build/ops.txt
 **/.o
 **.so
