@@ -98,7 +98,7 @@
                     "refId": "C"
                 }
             ],
-            "title": "YFI in Treasury",
+            "title": "YFI in Portfolio",
             "transformations": [
                 {
                     "id": "calculateField",
@@ -213,7 +213,7 @@
                     "refId": "A"
                 }
             ],
-            "title": "YFI in Treasury ($)",
+            "title": "YFI in Portfolio ($)",
             "type": "stat"
         },
         {
@@ -519,7 +519,7 @@
                     "refId": "A"
                 }
             ],
-            "title": "Treasury Debt",
+            "title": "Portfolio Debt",
             "type": "stat"
         },
         {
@@ -1956,7 +1956,7 @@
     },
     "timepicker": {},
     "timezone": "",
-    "title": "Treasury Balances",
+    "title": "Portfolio Balances",
     "uid": "9_ppKhd7z",
     "version": 45
 }
