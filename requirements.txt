@@ -8,4 +8,4 @@ faster-eth-utils
 numpy<2
 pandas>=1.4.3,<1.6
 typed-envs>=0.0.9
-ypricemagic>=4.6.2,<5
+ypricemagic>=4.6.6,<5
