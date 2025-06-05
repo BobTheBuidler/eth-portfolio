@@ -8,7 +8,8 @@ __pycache__/
 eth_portfolio.egg-info/
 build/**/*.py
 build/**/*.json
+build/**/*.typed
 build/**/*.yaml
 build/ops.txt
-**/.o
+**.o
 **.so
