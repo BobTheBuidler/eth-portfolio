@@ -2,7 +2,6 @@ apiVersion: 1
 
 providers:
 - name: 'Portfolio dashboards'
-  orgId: 1
   folder: 'portfolio'
   type: file
   disableDeletion: true
