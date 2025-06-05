@@ -14,3 +14,4 @@ build/**/*.yaml
 build/ops.txt
 **.o
 **.so
+eth_portfolio_temp.egg-info/
