@@ -87,7 +87,7 @@ class ExportablePortfolio(Portfolio):
         except Exception as e:
             log_error("Error processing %s:", dt, exc_info=True)
 
-    @a_sync.Semaphore(100)
+    @a_sync.Semaphore(80)
     async def get_data_for_export(self, block: BlockNumber, ts: datetime) -> List[victoria.Metric]:
         print(f"exporting {ts} for {self.label}")
         start = datetime.now(tz=timezone.utc)
