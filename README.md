@@ -11,7 +11,6 @@ pip install git+https://github.com/BobTheBuidler/eth-portfolio
 
 - First, you will need to bring your own archive node. This can be one you run yourself, or one from one of the common providers (Tenderly, Alchemy, QuickNode, etc.)
 - You must configure a [brownie network](https://eth-brownie.readthedocs.io/en/stable/network-management.html) to use your RPC.
-- You'll also need [Docker](https://www.docker.com/get-started/) installed on your system. If on MacOS, you will need to leave Docker Desktop open while Yearn Treasury is running.
 
 ### Usage:
 For basic use, input each of your addresses as environment variables using the following pattern:
