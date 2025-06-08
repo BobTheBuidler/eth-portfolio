@@ -2,27 +2,16 @@
 Use `eth-portfolio` to output information about your portfolio in a streamlined, speed-optimized way.
 
 ### Installation:
-- You should start with a fresh virtual environment, and then just...
+- Make sure you are using Python >= 3.9 and < 3.13. You should start with a fresh virtual environment, and then just...
 ```
 pip install git+https://github.com/BobTheBuidler/eth-portfolio
 ```
-
-**Known Issues**  
-Make sure you are using Python >= 3.8 and < 3.13
-If you have a PyYaml Issue with 3.4.1 not installing due to an issue with cython, try the following:  
-```
-pip install wheel
-pip install --no-build-isolation "Cython<3" "pyyaml==5.4.1"
-```
-then try again
-`
-pip install git+https://github.com/BobTheBuidler/eth-portfolio
-`
 
 ### Prerequisites
 
-You must have a [brownie network](https://eth-brownie.readthedocs.io/en/stable/network-management.html) configured to use your RPC.
-You will also need [Docker](https://www.docker.com/get-started/) installed on your system.
+- First, you will need to bring your own archive node. This can be one you run yourself, or one from one of the common providers (Tenderly, Alchemy, QuickNode, etc.)
+- You must configure a [brownie network](https://eth-brownie.readthedocs.io/en/stable/network-management.html) to use your RPC.
+- You'll also need [Docker](https://www.docker.com/get-started/) installed on your system. If on MacOS, you will need to leave Docker Desktop open while Yearn Treasury is running.
 
 ### Usage:
 For basic use, input each of your addresses as environment variables using the following pattern:
