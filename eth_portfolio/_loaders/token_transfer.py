@@ -146,8 +146,9 @@ async def _insert_to_db(transfer: TokenTransfer, load_prices: bool) -> None:
             digits_before_decimal = str(transfer.value).split(".")[0]
             if len(digits_before_decimal) <= 20:
                 raise
-        except decimal.InvalidOperation:
+        except decimal.InvalidOperation as e:
             # TODO: debug why this happens sometimes
+            logger.exception(e, transfer)
             pass
 
 
