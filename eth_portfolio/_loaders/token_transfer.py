@@ -148,7 +148,7 @@ async def _insert_to_db(transfer: TokenTransfer, load_prices: bool) -> None:
                 raise
         except decimal.InvalidOperation as e:
             # TODO: debug why this happens sometimes
-            logger.exception(e, transfer)
+            logger.exception("%s %s", e, transfer)
             pass
 
 
