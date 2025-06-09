@@ -14,6 +14,7 @@ from eth_portfolio.typing import Balance
 _ZERO: Final = Decimal(0)
 
 logger: Final = logging.getLogger(__name__)
+log_warning: Final = logger.warning
 
 
 @stuck_coro_debugger
@@ -43,7 +44,7 @@ async def load_token_balance(token: y.ERC20, address: Address, block: Block) -> 
     try:
         balance = await token.balance_of_readable(address, block, sync=False)
     except y.NonStandardERC20:
-        logger.warning("NonStandardERC20 exc for %s", token)
+        log_warning("NonStandardERC20 exc for %s", token)
         balance = _ZERO
     token_address = token.address
     if not balance:
@@ -51,44 +52,7 @@ async def load_token_balance(token: y.ERC20, address: Address, block: Block) -> 
     price = await _get_price(token_address, block)
     return Balance(
         balance=round(balance, 18),
-        usd_value=_calc_value(balance, price),
+        usd_value=(_ZERO if price is None else round(Decimal(balance) * Decimal(price), 18)),
         token=token_address,
         block=block,
     )
-
-
-def _calc_value(balance, price) -> Decimal:
-    """
-    Calculate the USD value of a token balance based on its price.
-
-    Args:
-        balance: The token balance.
-        price: The token price in USD.
-
-    Returns:
-        The total USD value, rounded to 18 decimal places if possible.
-        If rounding is not possible due to high precision, returns the unrounded value.
-
-    Note:
-        Returns :class:`~decimal.Decimal(0)` if the price is None, handling cases where price data is unavailable.
-
-    Example:
-        >>> value = _calc_value(balance=1000, price=0.50)
-        >>> print(f"USD Value: {value}")
-    """
-    if price is None:
-        return _ZERO
-    # NOTE If balance * price returns a Decimal with precision < 18, rounding is both impossible and unnecessary.
-    value = Decimal(balance) * Decimal(price)
-    return round(value, 18)
-
-
-_builtin_round: Final = round
-
-
-def round(value: Decimal, digits: int) -> Decimal:
-    # For a Decimal with precision < 18, rounding is both impossible and unnecessary.
-    try:
-        return _builtin_round(value, digits)  # type: ignore [return-value]
-    except InvalidOperation:
-        return value
