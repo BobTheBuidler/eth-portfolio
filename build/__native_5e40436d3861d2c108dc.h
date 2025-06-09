@@ -339,7 +339,7 @@ struct export_table_5e40436d3861d2c108dc {
     char (*CPyDef__nonce_____top_level__)(void);
     PyObject **CPyStatic_balances____ZERO;
     PyObject **CPyStatic_balances___logger;
-    PyObject **CPyStatic_balances____builtin_round;
+    PyObject **CPyStatic_balances___log_warning;
     PyTypeObject **CPyType_balances___load_token_balance_env;
     PyObject *(*CPyDef_balances___load_token_balance_env)(void);
     PyTypeObject **CPyType_balances___load_token_balance_gen;
@@ -352,8 +352,6 @@ struct export_table_5e40436d3861d2c108dc {
     PyObject *(*CPyDef_balances___load_token_balance_gen___close)(PyObject *cpy_r___mypyc_self__);
     PyObject *(*CPyDef_balances___load_token_balance_gen_____await__)(PyObject *cpy_r___mypyc_self__);
     PyObject *(*CPyDef_balances___load_token_balance)(PyObject *cpy_r_token, PyObject *cpy_r_address, PyObject *cpy_r_block);
-    PyObject *(*CPyDef_balances____calc_value)(PyObject *cpy_r_balance, PyObject *cpy_r_price);
-    PyObject *(*CPyDef_balances___round)(PyObject *cpy_r_value, CPyTagged cpy_r_digits);
     char (*CPyDef_balances_____top_level__)(void);
     PyObject **CPyStatic_utils___Raw;
     PyObject **CPyStatic_utils___get_transaction_receipt;

@@ -6,7 +6,7 @@
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[461];
+extern PyObject *CPyStatics[462];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -165,7 +165,7 @@ extern PyObject *CPyPy__nonce___get_block_number(PyObject *self, PyObject *const
 extern char CPyDef__nonce_____top_level__(void);
 extern PyObject *CPyStatic_balances____ZERO;
 extern PyObject *CPyStatic_balances___logger;
-extern PyObject *CPyStatic_balances____builtin_round;
+extern PyObject *CPyStatic_balances___log_warning;
 extern PyTypeObject *CPyType_balances___load_token_balance_env;
 extern PyObject *CPyDef_balances___load_token_balance_env(void);
 extern PyTypeObject *CPyType_balances___load_token_balance_gen;
@@ -186,10 +186,6 @@ extern PyObject *CPyDef_balances___load_token_balance_gen_____await__(PyObject *
 extern PyObject *CPyPy_balances___load_token_balance_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_balances___load_token_balance(PyObject *cpy_r_token, PyObject *cpy_r_address, PyObject *cpy_r_block);
 extern PyObject *CPyPy_balances___load_token_balance(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef_balances____calc_value(PyObject *cpy_r_balance, PyObject *cpy_r_price);
-extern PyObject *CPyPy_balances____calc_value(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef_balances___round(PyObject *cpy_r_value, CPyTagged cpy_r_digits);
-extern PyObject *CPyPy_balances___round(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_balances_____top_level__(void);
 extern PyObject *CPyStatic_utils___Raw;
 extern PyObject *CPyStatic_utils___get_transaction_receipt;
