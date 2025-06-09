@@ -1,3 +1,4 @@
+import decimal
 import threading
 from asyncio import create_task, gather, get_event_loop, sleep
 from contextlib import suppress
@@ -597,7 +598,7 @@ def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
             raw=json.encode(token_transfer, enc_hook=enc_hook),
         )
         commit()
-    except InvalidOperation:
+    except decimal.InvalidOperation:
         with _trap_lock:
             decimal_context = decimal.getcontext()
             # lets remove the trap just for this one insert and see if it works
