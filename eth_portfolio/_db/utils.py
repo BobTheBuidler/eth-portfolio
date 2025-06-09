@@ -602,11 +602,11 @@ def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
         with _trap_lock:
             traps = decimal.getcontext().traps
             # lets remove the trap just for this one insert and see if it works
-            traps.remove(decimal.InvalidOperation)
+            traps[decimal.InvalidOperation] = False
             try:
                 return db.insert_token_transfer(transfer, sync=True)
             finally:
-                traps.append(decimal.InvalidOperation)
+                traps[decimal.InvalidOperation] = True
     except TransactionIntegrityError:
         pass  # most likely non-issue, debug later if needed
 
