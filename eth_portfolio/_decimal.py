@@ -7,6 +7,9 @@ from evmspec.data import Wei
 
 logger = logging.getLogger(__name__)
 
+# we need to enlarge the precision for Decimal objects to match the largest accepted size in the db
+decimal.getcontext().prec = 38
+
 
 class Decimal(decimal.Decimal):
     """
