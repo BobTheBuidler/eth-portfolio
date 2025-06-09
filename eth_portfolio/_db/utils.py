@@ -577,6 +577,7 @@ async def insert_token_transfer(token_transfer: TokenTransfer) -> None:
 
 _trap_lock = threading.Lock()
 
+
 @a_sync(default="async", executor=_token_transfer_write_executor)
 @requery_objs_on_diff_tx_err
 @robust_db_session
