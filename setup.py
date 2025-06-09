@@ -1,14 +1,14 @@
 """
 Installation
 ------------
-To install the `eth-portfolio` package, you should start with a fresh virtual environment. 
-Due to the use of :mod:`setuptools_scm` for versioning, it is recommended to clone the repository first 
-to ensure the version can be determined correctly. 
+To install the `eth-portfolio` package, you should start with a fresh virtual environment.
+Due to the use of :mod:`setuptools_scm` for versioning, it is recommended to clone the repository first
+to ensure the version can be determined correctly.
 
-The `setup.py` file automatically handles the installation of :mod:`setuptools_scm` and :mod:`cython`, 
-so you do not need to install them manually before running the setup process. Additionally, 
-the `requirements.txt` file is used to specify additional dependencies that are installed via 
-the `install_requires` parameter. Note that the last line of `requirements.txt` is intentionally excluded 
+The `setup.py` file automatically handles the installation of :mod:`setuptools_scm` and :mod:`cython`,
+so you do not need to install them manually before running the setup process. Additionally,
+the `requirements.txt` file is used to specify additional dependencies that are installed via
+the `install_requires` parameter. Note that the last line of `requirements.txt` is intentionally excluded
 from installation, so ensure that any necessary dependency is not placed on the last line.
 
 Example:
@@ -32,6 +32,7 @@ See Also:
     - :mod:`cython`: For more information on Cython.
     - :mod:`requirements.txt`: For more information on managing dependencies.
 """
+
 import logging
 from pathlib import Path
 from setuptools import find_packages, setup  # type: ignore
