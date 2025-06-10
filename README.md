@@ -1,13 +1,12 @@
 # eth-portfolio
 Use `eth-portfolio` to output information about your portfolio in a streamlined, speed-optimized way.
 
-## Requirements
+### Requirements
 - Python 3.9 or higher.
 - At least 16GB of RAM.
 - All dependencies installed as specified in the project’s requirements.txt file.
 
 ### Prerequisites
-
 - First, you will need to bring your own archive node. This can be one you run yourself, or one from one of the common providers (Tenderly, Alchemy, QuickNode, etc.)
 - You must configure a [brownie network](https://eth-brownie.readthedocs.io/en/stable/network-management.html) to use your RPC.
 - You will also need an auth token for [Etherscan](https://etherscan.io/)'s API. Follow their [guide](https://docs.etherscan.io/etherscan-v2/getting-an-api-key) to get your key, and set env var `ETHERSCAN_TOKEN` with its value.
