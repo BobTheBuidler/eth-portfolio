@@ -1,3 +1,12 @@
+import warnings
+
+warnings.filterwarnings(
+    "ignore",
+    message="Changing decimals precision could have unintended side effects!",
+    category=UserWarning,
+)
+
+
 import a_sync._smart
 
 a_sync._smart.set_smart_task_factory()
