@@ -50,6 +50,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#command-line-options">Command-Line Options</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#docker-containers">Docker Containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-flow-summary">Data Flow Summary</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#additional-information">Additional Information</a></li>
 </ul>
 </li>
@@ -121,20 +122,37 @@ The first block in the range you wish to export. default: 0</p></li>
 </section>
 <section id="docker-containers">
 <h2>Docker Containers<a class="headerlink" href="#docker-containers" title="Link to this heading"></a></h2>
-<p>When you run the Portfolio Exporter, ETH Portfolio will build and start 4 required Docker containers on your system:</p>
+<p>When you run the Portfolio Exporter, ETH Portfolio will build and start 4 required Docker containers on your system. These containers work together to collect, store, and visualize your portfolio data:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">grafana</span></code>
-This container […]</p></li>
+The Grafana container provides a web-based dashboard for visualizing your portfolio metrics and balances. It is pre-configured with a “Balances” dashboard and uses victoria-metrics as its Prometheus-compatible data source. Grafana is accessible locally (default port 3000) and supports dashboard image rendering via the renderer container. Anonymous access is enabled for convenience.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">renderer</span></code>
-This container […]</p></li>
+The renderer container runs the official grafana-image-renderer service, enabling Grafana to export dashboards as images. This is useful for generating reports or sharing visualizations. It is tightly integrated with the Grafana container and operates on port 8091 by default.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">victoria-metrics</span></code>
-This container […]</p></li>
+victoria-metrics is a high-performance, long-retention time-series database that stores all portfolio and balance metrics. Data is persisted to a local volume for durability, with a default retention period of 10 years. It receives metrics from vmagent and serves as the main data source for Grafana (default port 8428).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">vmagent</span></code>
-This container […]</p></li>
+vmagent is responsible for collecting and forwarding metrics to victoria-metrics. It is configured to remote write all scraped metrics to the victoria-metrics container. vmagent ensures that all relevant portfolio data is reliably collected and stored for visualization and analysis.</p></li>
 </ul>
+</section>
+<section id="data-flow-summary">
+<h2>Data Flow Summary<a class="headerlink" href="#data-flow-summary" title="Link to this heading"></a></h2>
+<p>The containers interact as follows:</p>
+<ol class="arabic simple">
+<li><p><strong>eth-portfolio</strong> and/or related exporters expose metrics endpoints.</p></li>
+<li><p><strong>vmagent</strong> scrapes these endpoints and forwards the data to <strong>victoria-metrics</strong>.</p></li>
+<li><p><strong>victoria-metrics</strong> stores the time-series data for long-term analysis.</p></li>
+<li><p><strong>Grafana</strong> is pre-configured to use victoria-metrics as its data source and provides dashboards (such as “Balances”) for visualization.</p></li>
+<li><p>The <strong>renderer</strong> container enables Grafana to export dashboards as images for reporting or sharing.</p></li>
+</ol>
 </section>
 <section id="additional-information">
 <h2>Additional Information<a class="headerlink" href="#additional-information" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>All containers are orchestrated via Docker Compose and are automatically started as needed.</p></li>
+<li><p>Grafana provisioning files ensure dashboards and data sources are set up out-of-the-box.</p></li>
+<li><p>Metrics are stored with a long retention period, enabling historical analysis.</p></li>
+<li><p>Dashboard images can be generated for reporting via the renderer.</p></li>
+</ul>
 <p>TODO: add more details on the underlying data extraction process and portfolio calculations</p>
 </section>
 </section>
