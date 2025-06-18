@@ -39,6 +39,23 @@ The Portfolio Exporter supports several command-line options to customize its be
 - ``--export-start-block <block>``
   The first block in the range you wish to export. default: 0
 
+Docker Containers
+-----------------
+When you run the Portfolio Exporter, ETH Portfolio will build and start 4 required Docker containers on your system:
+
+- ``grafana``
+  This container [...]
+
+- ``renderer``
+  This container [...]
+
+- ``victoria-metrics``
+  This container [...]
+
+- ``vmagent``
+  This container [...]
+
 Additional Information
 ----------------------
+
 TODO: add more details on the underlying data extraction process and portfolio calculations

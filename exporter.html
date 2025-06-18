@@ -49,6 +49,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#command-line-options">Command-Line Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#docker-containers">Docker Containers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#additional-information">Additional Information</a></li>
 </ul>
 </li>
@@ -116,6 +117,20 @@ The time interval between datapoints. default: 6h</p></li>
 The block of your portfolio’s first transaction, if known. This value, if provided, allows us to speed up processing of your data by limiting the block range we need to query. If not provided, the whole blockchain will be scanned. default: 0</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--export-start-block</span> <span class="pre">&lt;block&gt;</span></code>
 The first block in the range you wish to export. default: 0</p></li>
+</ul>
+</section>
+<section id="docker-containers">
+<h2>Docker Containers<a class="headerlink" href="#docker-containers" title="Link to this heading"></a></h2>
+<p>When you run the Portfolio Exporter, ETH Portfolio will build and start 4 required Docker containers on your system:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">grafana</span></code>
+This container […]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renderer</span></code>
+This container […]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">victoria-metrics</span></code>
+This container […]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vmagent</span></code>
+This container […]</p></li>
 </ul>
 </section>
 <section id="additional-information">
