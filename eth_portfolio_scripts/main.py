@@ -23,6 +23,11 @@ infra_parser = subparsers.add_parser(
 )
 infra_parser.add_argument("cmd", help="What do you want to do?")
 add_infra_port_args(infra_parser)
+infra_parser.add_argument(
+    "--start-renderer",
+    action="store_true",
+    help="If set, starts the renderer container in addition to the default containers. By default, only grafana, victoria-metrics, and vmagent are started.",
+)
 
 export_parser.add_argument(
     "--wallet",
@@ -87,7 +92,10 @@ def main():
     if command == "infra":
         if args.cmd == "start":
             # Start the backend containers
-            docker.up()
+            if getattr(args, "start_renderer", False):
+                docker.up()
+            else:
+                docker.up("grafana", "victoria-metrics", "vmagent")
         elif args.cmd == "stop":
             docker.down()
         else:
