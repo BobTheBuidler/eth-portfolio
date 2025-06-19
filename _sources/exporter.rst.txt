@@ -81,4 +81,51 @@ Additional Information
 - Metrics are stored with a long retention period, enabling historical analysis.
 - Dashboard images can be generated for reporting via the renderer.
 
-TODO: add more details on the underlying data extraction process and portfolio calculations
+Data Extraction and Portfolio Calculations
+------------------------------------------
+
+The Portfolio Exporter performs a comprehensive extraction and calculation process to ensure accurate and detailed portfolio data. The workflow is as follows:
+
+**1. Data Extraction Process**
+
+- **Per-Wallet, Per-Timestamp:**  
+  For each wallet specified via the CLI, the exporter iterates over a series of timestamps (based on the `--interval` argument). At each timestamp, it determines the corresponding Ethereum block and extracts a snapshot of the portfolio at that point in time.
+
+- **Asynchronous Data Loading:**  
+  The exporter leverages highly concurrent, asynchronous routines to efficiently load data for all wallets and tokens. It uses specialized loader functions to fetch:
+  - Token balances (including ERC-20 and protocol-specific tokens)
+  - Transaction history
+  - Token transfers
+  - Protocol positions (e.g., lending, borrowing, staking)
+
+- **Block and Transaction Resolution:**  
+  For each timestamp, the exporter resolves the closest block and loads all relevant on-chain data for the specified wallets. This includes querying balances, fetching transaction receipts, and aggregating protocol positions.
+
+**2. Portfolio Calculations**
+
+- **Balance and Value Computation:**  
+  For each token held by a wallet, the exporter calculates:
+  - The raw token balance
+  - The USD value of the balance (using price oracles or on-chain data)
+  - Protocol-specific metrics (e.g., supplied/borrowed amounts, rewards)
+
+- **Aggregation and Structuring:**  
+  The exporter organizes data into logical sections, such as "assets", "debts", and "external" protocol positions. It aggregates balances across all wallets and protocols, ensuring a unified view of the portfolio.
+
+- **Metric Formatting:**  
+  Each data point is formatted as a Prometheus metric, including metadata such as wallet address, token address, token symbol, protocol name, and a logical "bucket" for grouping. Both the raw balance and USD value are exported for each token.
+
+**3. Export and Storage**
+
+- **Deduplication:**  
+  Before exporting, the system checks if data for a given timestamp already exists in the time-series database to avoid redundant processing.
+
+- **Export to VictoriaMetrics:**  
+  The processed metrics are sent to the VictoriaMetrics time-series database, where they are stored for long-term analysis and visualization in Grafana.
+
+- **Error Handling and Robustness:**  
+  The exporter is designed to handle network errors, missing data, and protocol-specific quirks gracefully, ensuring reliable and repeatable exports.
+
+**Summary**
+
+This architecture allows the Portfolio Exporter to provide a high-fidelity, time-resolved view of all wallet balances, protocol positions, and historical portfolio values. The modular, asynchronous design ensures scalability and performance, even for large portfolios or long time ranges.
