@@ -14,19 +14,19 @@ logger = logging.getLogger(__name__)
 compose_file = path.join(path.dirname(path.abspath(__file__)), "docker-compose.yaml")
 
 
-def up() -> None:
-    build()
+def up(*services: str) -> None:
+    build(*services)
     print("starting the infra containers...")
-    _exec_command(["up", "-d"])
+    _exec_command(["up", "-d", *services])
 
 
-def down(*_) -> None:
+def down() -> None:
     _exec_command(["down"])
 
 
-def build() -> None:
+def build(*services: str) -> None:
     print("building the grafana containers")
-    _exec_command(["build"])
+    _exec_command(["build", *services])
 
 
 _P = ParamSpec("_P")
