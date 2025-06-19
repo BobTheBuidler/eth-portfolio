@@ -1,11 +1,12 @@
 from eth_portfolio_scripts.docker.check import *
-from eth_portfolio_scripts.docker.docker_compose import build, down, ensure_containers, up
+from eth_portfolio_scripts.docker.docker_compose import build, down, ensure_containers, up, stop
 
 __all__ = [
     # commands
     "build",
     "up",
     "down",
+    "stop",
     # decorators
     "ensure_containers",
     # checks

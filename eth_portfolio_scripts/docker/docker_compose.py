@@ -29,6 +29,15 @@ def build(*services: str) -> None:
     _exec_command(["build", *services])
 
 
+def stop(container_name: str) -> None:
+    """
+    Stop the specified container if it is running.
+    Defaults to stopping the 'renderer' container.
+    """
+    print(f"stopping the {container_name} container...")
+    _exec_command(["stop", container_name])
+
+
 _P = ParamSpec("_P")
 _T = TypeVar("_T")
 
