@@ -125,12 +125,12 @@ The first block in the range you wish to export. default: 0</p></li>
 </section>
 <section id="docker-containers">
 <h2>Docker Containers<a class="headerlink" href="#docker-containers" title="Link to this heading"></a></h2>
-<p>When you run the Portfolio Exporter, ETH Portfolio will build and start 4 required Docker containers on your system. These containers work together to collect, store, and visualize your portfolio data:</p>
+<p>When you run the Portfolio Exporter, ETH Portfolio will build and start 3 required Docker containers on your system, as well as up to 1 optional container depending on your configuration. These containers work together to collect, store, and visualize your portfolio data:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">grafana</span></code>
 The Grafana container provides a web-based dashboard for visualizing your portfolio metrics and balances. It is pre-configured with a “Balances” dashboard and uses victoria-metrics as its Prometheus-compatible data source. Grafana is accessible locally (default port 3000) and supports dashboard image rendering via the renderer container. Anonymous access is enabled for convenience.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">renderer</span></code>
-The renderer container runs the official grafana-image-renderer service, enabling Grafana to export dashboards as images. This is useful for generating reports or sharing visualizations. It is tightly integrated with the Grafana container and operates on port 8091 by default.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renderer</span></code> (optional)
+The renderer container runs the official grafana-image-renderer service, enabling Grafana to export dashboards as images. This is useful for generating reports or sharing visualizations. It is tightly integrated with the Grafana container and operates on port 8091 by default. <strong>This container is only started if you pass the ``–start-renderer`` flag to the infra command.</strong></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">victoria-metrics</span></code>
 victoria-metrics is a high-performance, long-retention time-series database that stores all portfolio and balance metrics. Data is persisted to a local volume for durability, with a default retention period of 10 years. It receives metrics from vmagent and serves as the main data source for Grafana (default port 8428).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">vmagent</span></code>
@@ -145,7 +145,7 @@ vmagent is responsible for collecting and forwarding metrics to victoria-metrics
 <li><p><strong>vmagent</strong> scrapes these endpoints and forwards the data to <strong>victoria-metrics</strong>.</p></li>
 <li><p><strong>victoria-metrics</strong> stores the time-series data for long-term analysis.</p></li>
 <li><p><strong>Grafana</strong> is pre-configured to use victoria-metrics as its data source and provides dashboards (such as “Balances”) for visualization.</p></li>
-<li><p>The <strong>renderer</strong> container enables Grafana to export dashboards as images for reporting or sharing.</p></li>
+<li><p>The <strong>renderer</strong> container enables Grafana to export dashboards as images for reporting or sharing (if started with <code class="docutils literal notranslate"><span class="pre">--start-renderer</span></code>).</p></li>
 </ol>
 </section>
 <section id="additional-information">
@@ -154,7 +154,7 @@ vmagent is responsible for collecting and forwarding metrics to victoria-metrics
 <li><p>All containers are orchestrated via Docker Compose and are automatically started as needed.</p></li>
 <li><p>Grafana provisioning files ensure dashboards and data sources are set up out-of-the-box.</p></li>
 <li><p>Metrics are stored with a long retention period, enabling historical analysis.</p></li>
-<li><p>Dashboard images can be generated for reporting via the renderer.</p></li>
+<li><p>Dashboard images can be generated for reporting via the renderer (if started).</p></li>
 </ul>
 </section>
 <section id="data-extraction-and-portfolio-calculations">
