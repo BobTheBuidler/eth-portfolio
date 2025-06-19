@@ -12,6 +12,7 @@ Welcome to eth-portfolio's documentation!
 
    source/modules.rst
    exporter
+   new-protocols
 
 Indices and tables
 ==================
