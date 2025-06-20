@@ -18,6 +18,7 @@ dai: Final = y.dai
 
 Decimal: Final = _decimal.Decimal
 
+
 class MakerDSR(ProtocolABC):
     networks = [Network.Mainnet]
 
