@@ -11,6 +11,7 @@ Welcome to eth-portfolio's documentation!
    :caption: Contents:
 
    source/modules.rst
+   caching
    exporter
    new-protocols
 
