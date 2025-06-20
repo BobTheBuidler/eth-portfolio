@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caching in eth-portfolio &mdash; eth-portfolio  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Portfolio Exporter" href="exporter.html" />
+    <link rel="prev" title="eth_portfolio.typing package" href="source/eth_portfolio.typing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            eth-portfolio
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="source/modules.html">eth_portfolio</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Caching in eth-portfolio</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#disk-caches">Disk Caches</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#local-sql-cache">Local SQL Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disk-function-result-cache">Disk Function Result Cache</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#in-memory-lru-caches">In-Memory LRU Caches</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#synchronous-lru-caches">Synchronous LRU Caches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#asynchronous-lru-caches">Asynchronous LRU Caches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#what-is-lru-cached">What is LRU-cached</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cache-control">Cache Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#summary-table">Summary Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exporter.html">Portfolio Exporter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="new-protocols.html">Contributing: Adding New Protocols</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">eth-portfolio</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Caching in eth-portfolio</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/caching.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="caching-in-eth-portfolio">
+<h1>Caching in eth-portfolio<a class="headerlink" href="#caching-in-eth-portfolio" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>eth-portfolio uses multiple caching strategies to maximize performance, minimize redundant RPC/database calls, and provide fast access to frequently used data. These strategies closely mirror those in ypricemagic, with some eth_portfolio-specific extensions and customizations. For a detailed overview of the canonical caching system, see ypricemagic’s [caching documentation](<a class="reference external" href="https://bobthebuidler.github.io/ypricemagic/caching.html">https://bobthebuidler.github.io/ypricemagic/caching.html</a>).</p>
+</section>
+<section id="disk-caches">
+<h2>Disk Caches<a class="headerlink" href="#disk-caches" title="Link to this heading"></a></h2>
+<section id="local-sql-cache">
+<h3>Local SQL Cache<a class="headerlink" href="#local-sql-cache" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Backend:</strong> Pony ORM with SQLite (default, configurable via environment variables)</p></li>
+<li><p><strong>Location:</strong> <code class="docutils literal notranslate"><span class="pre">~/.ypricemagic/ypricemagic.sqlite</span></code></p></li>
+<li><p><strong>Purpose:</strong> Persistent storage for blockchain data, portfolio data, and cache metadata.</p></li>
+<li><p><strong>What is cached:</strong>
+- Blockchain data: chains, blocks, addresses, contracts, tokens, prices
+- Portfolio data: transactions, internal transfers, token transfers, etc.
+- Cache metadata</p></li>
+<li><p><strong>Implementation:</strong> Entities defined in <code class="docutils literal notranslate"><span class="pre">eth_portfolio/_db/entities.py</span></code></p></li>
+<li><p><strong>Integration:</strong> If ypricemagic is installed, eth_portfolio will automatically extend and share the same persistent SQL database, unifying cached data and utility functions.</p></li>
+</ul>
+</section>
+<section id="disk-function-result-cache">
+<h3>Disk Function Result Cache<a class="headerlink" href="#disk-function-result-cache" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Backend:</strong> Custom <code class="docutils literal notranslate"><span class="pre">cache_to_disk</span></code> decorator (see <code class="docutils literal notranslate"><span class="pre">eth_portfolio/_cache.py</span></code>)</p></li>
+<li><p><strong>Location:</strong> <code class="docutils literal notranslate"><span class="pre">./cache/{chain.id}/...</span></code> (per-chain)</p></li>
+<li><p><strong>Purpose:</strong> Disk-based function result caching for expensive or slow-to-compute results.</p></li>
+<li><p><strong>Usage:</strong> Decorate functions with <code class="docutils literal notranslate"><span class="pre">&#64;cache_to_disk</span></code> to persist results to disk.</p></li>
+<li><p><strong>Note:</strong> While ypricemagic uses <code class="docutils literal notranslate"><span class="pre">joblib.Memory</span></code> for this purpose, eth_portfolio implements a functionally similar in-house solution.</p></li>
+</ul>
+</section>
+</section>
+<section id="in-memory-lru-caches">
+<h2>In-Memory LRU Caches<a class="headerlink" href="#in-memory-lru-caches" title="Link to this heading"></a></h2>
+<section id="synchronous-lru-caches">
+<h3>Synchronous LRU Caches<a class="headerlink" href="#synchronous-lru-caches" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>functools.lru_cache:</strong> Used for pure in-memory caching of function results, especially for database reads (see <code class="docutils literal notranslate"><span class="pre">db_session_cached</span></code> in <code class="docutils literal notranslate"><span class="pre">eth_portfolio/_db/utils.py</span></code>).</p></li>
+<li><p><strong>functools.cached_property:</strong> Used for property-level in-memory caching throughout the codebase.</p></li>
+</ul>
+</section>
+<section id="asynchronous-lru-caches">
+<h3>Asynchronous LRU Caches<a class="headerlink" href="#asynchronous-lru-caches" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>async_lru.alru_cache:</strong> Used extensively for async LRU caching of coroutine results (e.g., token metadata, block lookups, protocol-specific data). Some usages include TTLs (e.g., 1 hour, 5 minutes) for time-limited caching.</p></li>
+</ul>
+</section>
+<section id="what-is-lru-cached">
+<h3>What is LRU-cached<a class="headerlink" href="#what-is-lru-cached" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Token metadata (symbols, decimals, names, buckets)</p></li>
+<li><p>Contract ABIs and deploy blocks</p></li>
+<li><p>Block/timestamp lookups</p></li>
+<li><p>Price data</p></li>
+<li><p>Protocol-specific data</p></li>
+<li><p>Results of expensive on-chain or DB queries</p></li>
+</ul>
+</section>
+<section id="cache-control">
+<h3>Cache Control<a class="headerlink" href="#cache-control" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Some caches have TTLs (time-limited)</p></li>
+<li><p>Some caches are per-chain (partitioned by chain ID)</p></li>
+<li><p>Some caches are unlimited size</p></li>
+<li><p>Caches are generally transparent to the user; cache control parameters (e.g., skip_cache) may exist at the function level</p></li>
+</ul>
+</section>
+</section>
+<section id="summary-table">
+<h2>Summary Table<a class="headerlink" href="#summary-table" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Cache Type</p></th>
+<th class="head"><p>Library/Decorator</p></th>
+<th class="head"><p>Example Usage</p></th>
+<th class="head"><p>What is Cached</p></th>
+<th class="head"><p>Sync/Async</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Local SQL</p></td>
+<td><p>Pony ORM (SQLite)</p></td>
+<td><p>_db/entities.py</p></td>
+<td><p>Blockchain, portfolio data</p></td>
+<td><p>Sync</p></td>
+</tr>
+<tr class="row-odd"><td><p>Disk Function</p></td>
+<td><p>cache_to_disk (custom)</p></td>
+<td><p>_cache.py</p></td>
+<td><p>Function results</p></td>
+<td><p>Sync/Async</p></td>
+</tr>
+<tr class="row-even"><td><p>LRU (in-memory)</p></td>
+<td><p>functools.lru_cache</p></td>
+<td><p>_db/utils.py</p></td>
+<td><p>DB reads</p></td>
+<td><p>Sync</p></td>
+</tr>
+<tr class="row-odd"><td><p>LRU (in-memory)</p></td>
+<td><p>functools.cached_property</p></td>
+<td><p>_utils.py, etc.</p></td>
+<td><p>Property values</p></td>
+<td><p>Sync</p></td>
+</tr>
+<tr class="row-even"><td><p>LRU (in-memory)</p></td>
+<td><p>async_lru.alru_cache</p></td>
+<td><p>_utils.py, _ledgers/, etc.</p></td>
+<td><p>Async function results</p></td>
+<td><p>Async</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Canonical ypricemagic caching docs: <a class="reference external" href="https://bobthebuidler.github.io/ypricemagic/caching.html">https://bobthebuidler.github.io/ypricemagic/caching.html</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eth_portfolio/_cache.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eth_portfolio/_db/entities.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eth_portfolio/_db/utils.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eth_portfolio/_utils.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eth_portfolio/_ledgers/</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eth_portfolio/_loaders/</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eth_portfolio/protocols/</span></code></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="source/eth_portfolio.typing.html" class="btn btn-neutral float-left" title="eth_portfolio.typing package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="exporter.html" class="btn btn-neutral float-right" title="Portfolio Exporter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, BobTheBuidler.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
