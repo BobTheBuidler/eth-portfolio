@@ -24,8 +24,8 @@ class MakerDSR(ProtocolABC):
     networks: Final = [Network.Mainnet]
 
     def __init__(self) -> None:
-        dsr_manager: Final = "0x373238337Bfe1146fb49989fc222523f83081dDb"
-        pot: Final = "0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7"
+        dsr_manager = "0x373238337Bfe1146fb49989fc222523f83081dDb"
+        pot = "0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7"
         self.dsr_manager: Final = Contract(dsr_manager)
         self.pot: Final = Contract(pot)
         self._start_block: Final = max(
