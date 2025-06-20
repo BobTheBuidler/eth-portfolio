@@ -1,5 +1,5 @@
-#ifndef MYPYC_NATIVE_90f9a08527ecc91adc70_H
-#define MYPYC_NATIVE_90f9a08527ecc91adc70_H
+#ifndef MYPYC_NATIVE_2960ac10e1a504a73b93_H
+#define MYPYC_NATIVE_2960ac10e1a504a73b93_H
 #include <Python.h>
 #include <CPy.h>
 #ifndef MYPYC_DECLARED_tuple_T3OOO
@@ -270,6 +270,63 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
+    PyObject *_networks;
+    PyObject *_dsr_manager;
+    PyObject *_pot;
+    PyObject *__start_block;
+    PyObject *__get_chi;
+} eth_portfolio___protocols___dsr___MakerDSRObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_self__;
+    PyObject *_self;
+    PyObject *_address;
+    PyObject *_block;
+    PyObject *_type;
+    PyObject *_value;
+    PyObject *_traceback;
+    PyObject *_arg;
+    CPyTagged ___mypyc_next_label__;
+    PyObject *_balances;
+    PyObject *___mypyc_temp__0;
+    tuple_T3OOO ___mypyc_temp__1;
+    PyObject *_pie;
+    PyObject *_exchange_rate;
+    PyObject *_dai_in_dsr;
+} eth_portfolio___protocols___dsr____balances_MakerDSR_envObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_env__;
+} eth_portfolio___protocols___dsr____balances_MakerDSR_genObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_self__;
+    PyObject *_self;
+    PyObject *_block;
+    PyObject *_type;
+    PyObject *_value;
+    PyObject *_traceback;
+    PyObject *_arg;
+    CPyTagged ___mypyc_next_label__;
+    PyObject *___mypyc_temp__2;
+    tuple_T3OOO ___mypyc_temp__3;
+} eth_portfolio___protocols___dsr____exchange_rate_MakerDSR_envObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_env__;
+} eth_portfolio___protocols___dsr____exchange_rate_MakerDSR_genObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
     vectorcallfunc vectorcall;
 } eth_portfolio___typing___balance___single___usd_Balance_objObject;
 
@@ -298,7 +355,7 @@ typedef struct {
 } eth_portfolio___typing___balance___single_____bool___3_Balance_objObject;
 
 
-struct export_table_90f9a08527ecc91adc70 {
+struct export_table_2960ac10e1a504a73b93 {
     PyObject **CPyStatic__nonce___logger;
     PyObject **CPyStatic__nonce___logger_is_enabled;
     PyObject **CPyStatic__nonce_____log;
@@ -401,6 +458,41 @@ struct export_table_90f9a08527ecc91adc70 {
     PyObject *(*CPyDef_utils____get_transaction_receipt_gen_____await__)(PyObject *cpy_r___mypyc_self__);
     PyObject *(*CPyDef_utils____get_transaction_receipt)(PyObject *cpy_r_txhash);
     char (*CPyDef_utils_____top_level__)(void);
+    PyObject **CPyStatic_dsr___gather;
+    PyObject **CPyStatic_dsr___Contract;
+    PyObject **CPyStatic_dsr___Network;
+    PyObject **CPyStatic_dsr___contract_creation_block;
+    PyObject **CPyStatic_dsr___dai;
+    PyObject **CPyStatic_dsr___Decimal;
+    PyTypeObject **CPyType_dsr___MakerDSR;
+    PyObject *(*CPyDef_dsr___MakerDSR)(void);
+    PyTypeObject **CPyType_dsr____balances_MakerDSR_env;
+    PyObject *(*CPyDef_dsr____balances_MakerDSR_env)(void);
+    PyTypeObject **CPyType_dsr____balances_MakerDSR_gen;
+    PyObject *(*CPyDef_dsr____balances_MakerDSR_gen)(void);
+    PyTypeObject **CPyType_dsr____exchange_rate_MakerDSR_env;
+    PyObject *(*CPyDef_dsr____exchange_rate_MakerDSR_env)(void);
+    PyTypeObject **CPyType_dsr____exchange_rate_MakerDSR_gen;
+    PyObject *(*CPyDef_dsr____exchange_rate_MakerDSR_gen)(void);
+    char (*CPyDef_dsr___MakerDSR_____init__)(PyObject *cpy_r_self);
+    PyObject *(*CPyDef_dsr____balances_MakerDSR_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_dsr____balances_MakerDSR_gen_____next__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_dsr____balances_MakerDSR_gen___send)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_dsr____balances_MakerDSR_gen_____iter__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_dsr____balances_MakerDSR_gen___throw)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+    PyObject *(*CPyDef_dsr____balances_MakerDSR_gen___close)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_dsr____balances_MakerDSR_gen_____await__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_dsr___MakerDSR____balances)(PyObject *cpy_r_self, PyObject *cpy_r_address, PyObject *cpy_r_block);
+    PyObject *(*CPyDef_dsr____exchange_rate_MakerDSR_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_dsr____exchange_rate_MakerDSR_gen_____next__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_dsr____exchange_rate_MakerDSR_gen___send)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_dsr____exchange_rate_MakerDSR_gen_____iter__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_dsr____exchange_rate_MakerDSR_gen___throw)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+    PyObject *(*CPyDef_dsr____exchange_rate_MakerDSR_gen___close)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_dsr____exchange_rate_MakerDSR_gen_____await__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_dsr___MakerDSR____exchange_rate)(PyObject *cpy_r_self, PyObject *cpy_r_block);
+    char (*CPyDef_dsr___MakerDSR_____mypyc_defaults_setup)(PyObject *cpy_r___mypyc_self__);
+    char (*CPyDef_dsr_____top_level__)(void);
     PyTypeObject **CPyType_single___Balance;
     PyTypeObject **CPyType_single___usd_Balance_obj;
     PyObject *(*CPyDef_single___usd_Balance_obj)(void);

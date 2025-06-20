@@ -1,12 +1,12 @@
-#ifndef MYPYC_NATIVE_INTERNAL_90f9a08527ecc91adc70_H
-#define MYPYC_NATIVE_INTERNAL_90f9a08527ecc91adc70_H
+#ifndef MYPYC_NATIVE_INTERNAL_2960ac10e1a504a73b93_H
+#define MYPYC_NATIVE_INTERNAL_2960ac10e1a504a73b93_H
 #include <Python.h>
 #include <CPy.h>
-#include "__native_90f9a08527ecc91adc70.h"
+#include "__native_2960ac10e1a504a73b93.h"
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[502];
+extern PyObject *CPyStatics[533];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -43,6 +43,11 @@ extern PyObject *CPyStatic_utils___globals;
 extern CPyModule *CPyModule_eth_retry;
 extern CPyModule *CPyModule_msgspec;
 extern CPyModule *CPyModule_async_lru;
+extern CPyModule *CPyModule_eth_portfolio___protocols___dsr_internal;
+extern CPyModule *CPyModule_eth_portfolio___protocols___dsr;
+extern PyObject *CPyStatic_dsr___globals;
+extern CPyModule *CPyModule_eth_portfolio;
+extern CPyModule *CPyModule_eth_portfolio___protocols____base;
 extern CPyModule *CPyModule_eth_portfolio___typing___balance___single_internal;
 extern CPyModule *CPyModule_eth_portfolio___typing___balance___single;
 extern PyObject *CPyStatic_single___globals;
@@ -220,6 +225,59 @@ extern PyObject *CPyPy_utils____get_transaction_receipt_gen_____await__(PyObject
 extern PyObject *CPyDef_utils____get_transaction_receipt(PyObject *cpy_r_txhash);
 extern PyObject *CPyPy_utils____get_transaction_receipt(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_utils_____top_level__(void);
+extern PyObject *CPyStatic_dsr___gather;
+extern PyObject *CPyStatic_dsr___Contract;
+extern PyObject *CPyStatic_dsr___Network;
+extern PyObject *CPyStatic_dsr___contract_creation_block;
+extern PyObject *CPyStatic_dsr___dai;
+extern PyObject *CPyStatic_dsr___Decimal;
+extern PyTypeObject *CPyType_dsr___MakerDSR;
+extern PyObject *CPyDef_dsr___MakerDSR(void);
+extern PyTypeObject *CPyType_dsr____balances_MakerDSR_env;
+extern PyObject *CPyDef_dsr____balances_MakerDSR_env(void);
+extern PyTypeObject *CPyType_dsr____balances_MakerDSR_gen;
+extern PyObject *CPyDef_dsr____balances_MakerDSR_gen(void);
+extern PyTypeObject *CPyType_dsr____exchange_rate_MakerDSR_env;
+extern PyObject *CPyDef_dsr____exchange_rate_MakerDSR_env(void);
+extern PyTypeObject *CPyType_dsr____exchange_rate_MakerDSR_gen;
+extern PyObject *CPyDef_dsr____exchange_rate_MakerDSR_gen(void);
+extern char CPyDef_dsr___MakerDSR_____init__(PyObject *cpy_r_self);
+extern PyObject *CPyPy_dsr___MakerDSR_____init__(PyObject *self, PyObject *args, PyObject *kw);
+extern PyObject *CPyDef_dsr____balances_MakerDSR_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+extern PyObject *CPyPy_dsr____balances_MakerDSR_gen_____mypyc_generator_helper__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_dsr____balances_MakerDSR_gen_____next__(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_dsr____balances_MakerDSR_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_dsr____balances_MakerDSR_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+extern PyObject *CPyPy_dsr____balances_MakerDSR_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_dsr____balances_MakerDSR_gen_____iter__(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_dsr____balances_MakerDSR_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_dsr____balances_MakerDSR_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+extern PyObject *CPyPy_dsr____balances_MakerDSR_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_dsr____balances_MakerDSR_gen___close(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_dsr____balances_MakerDSR_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_dsr____balances_MakerDSR_gen_____await__(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_dsr____balances_MakerDSR_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_dsr___MakerDSR____balances(PyObject *cpy_r_self, PyObject *cpy_r_address, PyObject *cpy_r_block);
+extern PyObject *CPyPy_dsr___MakerDSR____balances(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_dsr____exchange_rate_MakerDSR_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+extern PyObject *CPyPy_dsr____exchange_rate_MakerDSR_gen_____mypyc_generator_helper__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_dsr____exchange_rate_MakerDSR_gen_____next__(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_dsr____exchange_rate_MakerDSR_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_dsr____exchange_rate_MakerDSR_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+extern PyObject *CPyPy_dsr____exchange_rate_MakerDSR_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_dsr____exchange_rate_MakerDSR_gen_____iter__(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_dsr____exchange_rate_MakerDSR_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_dsr____exchange_rate_MakerDSR_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+extern PyObject *CPyPy_dsr____exchange_rate_MakerDSR_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_dsr____exchange_rate_MakerDSR_gen___close(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_dsr____exchange_rate_MakerDSR_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_dsr____exchange_rate_MakerDSR_gen_____await__(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_dsr____exchange_rate_MakerDSR_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_dsr___MakerDSR____exchange_rate(PyObject *cpy_r_self, PyObject *cpy_r_block);
+extern PyObject *CPyPy_dsr___MakerDSR____exchange_rate(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern char CPyDef_dsr___MakerDSR_____mypyc_defaults_setup(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_dsr___MakerDSR_____mypyc_defaults_setup(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern char CPyDef_dsr_____top_level__(void);
 extern PyTypeObject *CPyType_single___Balance;
 extern PyTypeObject *CPyType_single___usd_Balance_obj;
 extern PyObject *CPyDef_single___usd_Balance_obj(void);

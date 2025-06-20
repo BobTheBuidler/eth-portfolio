@@ -4,11 +4,11 @@ PyMODINIT_FUNC
 PyInit_constants(void)
 {
     PyObject *tmp;
-    if (!(tmp = PyImport_ImportModule("90f9a08527ecc91adc70__mypyc"))) return NULL;
+    if (!(tmp = PyImport_ImportModule("2960ac10e1a504a73b93__mypyc"))) return NULL;
     PyObject *capsule = PyObject_GetAttrString(tmp, "init_eth_portfolio___constants");
     Py_DECREF(tmp);
     if (capsule == NULL) return NULL;
-    void *init_func = PyCapsule_GetPointer(capsule, "90f9a08527ecc91adc70__mypyc.init_eth_portfolio___constants");
+    void *init_func = PyCapsule_GetPointer(capsule, "2960ac10e1a504a73b93__mypyc.init_eth_portfolio___constants");
     Py_DECREF(capsule);
     if (!init_func) {
         return NULL;
