@@ -1,14 +1,14 @@
 #include <Python.h>
 
 PyMODINIT_FUNC
-PyInit_utils(void)
+PyInit_single(void)
 {
     PyObject *tmp;
     if (!(tmp = PyImport_ImportModule("90f9a08527ecc91adc70__mypyc"))) return NULL;
-    PyObject *capsule = PyObject_GetAttrString(tmp, "init_eth_portfolio____loaders___utils");
+    PyObject *capsule = PyObject_GetAttrString(tmp, "init_eth_portfolio___typing___balance___single");
     Py_DECREF(tmp);
     if (capsule == NULL) return NULL;
-    void *init_func = PyCapsule_GetPointer(capsule, "90f9a08527ecc91adc70__mypyc.init_eth_portfolio____loaders___utils");
+    void *init_func = PyCapsule_GetPointer(capsule, "90f9a08527ecc91adc70__mypyc.init_eth_portfolio___typing___balance___single");
     Py_DECREF(capsule);
     if (!init_func) {
         return NULL;
@@ -18,4 +18,4 @@ PyInit_utils(void)
 
 // distutils sometimes spuriously tells cl to export CPyInit___init__,
 // so provide that so it chills out
-PyMODINIT_FUNC PyInit___init__(void) { return PyInit_utils(); }
+PyMODINIT_FUNC PyInit___init__(void) { return PyInit_single(); }
