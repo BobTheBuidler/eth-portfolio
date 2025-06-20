@@ -1,14 +1,22 @@
+from argparse import Namespace
 from datetime import datetime, timezone
+from typing import Final
 
-from a_sync import create_task
-from a_sync.asyncio import sleep0 as yield_to_loop
+import a_sync
+import a_sync.asyncio
 
 from eth_portfolio_scripts import docker
 from eth_portfolio_scripts._utils import aiter_timestamps, parse_timedelta
 
 
+_UTC: Final = timezone.utc
+
+create_task: Final = a_sync.create_task
+yield_to_loop: Final = a_sync.asyncio.sleep0
+
+
 @docker.ensure_containers
-async def export_balances(args):
+async def export_balances(args: Namespace) -> None:
     import dank_mids
 
     from eth_portfolio_scripts._portfolio import ExportablePortfolio

@@ -4,11 +4,11 @@ PyMODINIT_FUNC
 PyInit_dsr(void)
 {
     PyObject *tmp;
-    if (!(tmp = PyImport_ImportModule("8ed3bf658d7a9c9778fd__mypyc"))) return NULL;
+    if (!(tmp = PyImport_ImportModule("a84bea286168f88be129__mypyc"))) return NULL;
     PyObject *capsule = PyObject_GetAttrString(tmp, "init_eth_portfolio___protocols___dsr");
     Py_DECREF(tmp);
     if (capsule == NULL) return NULL;
-    void *init_func = PyCapsule_GetPointer(capsule, "8ed3bf658d7a9c9778fd__mypyc.init_eth_portfolio___protocols___dsr");
+    void *init_func = PyCapsule_GetPointer(capsule, "a84bea286168f88be129__mypyc.init_eth_portfolio___protocols___dsr");
     Py_DECREF(capsule);
     if (!init_func) {
         return NULL;

@@ -1,5 +1,5 @@
-#ifndef MYPYC_NATIVE_8ed3bf658d7a9c9778fd_H
-#define MYPYC_NATIVE_8ed3bf658d7a9c9778fd_H
+#ifndef MYPYC_NATIVE_a84bea286168f88be129_H
+#define MYPYC_NATIVE_a84bea286168f88be129_H
 #include <Python.h>
 #include <CPy.h>
 #ifndef MYPYC_DECLARED_tuple_T3OOO
@@ -399,8 +399,45 @@ typedef struct {
     PyObject *___mypyc_env__;
 } eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_genObject;
 
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_self__;
+    PyObject *_args;
+    PyObject *_type;
+    PyObject *_value;
+    PyObject *_traceback;
+    PyObject *_arg;
+    CPyTagged ___mypyc_next_label__;
+    PyObject *_interval;
+    PyObject *_portfolio;
+    PyObject *_export_start_block;
+    PyObject *___mypyc_temp__0;
+    tuple_T3OOO ___mypyc_temp__1;
+    PyObject *_start;
+    PyObject *___mypyc_temp__2;
+    PyObject *___mypyc_temp__3;
+    PyObject *___mypyc_temp__4;
+    tuple_T3OOO ___mypyc_temp__5;
+    tuple_T3OOO ___mypyc_temp__6;
+    PyObject *_ts;
+    PyObject *___mypyc_temp__7;
+    tuple_T3OOO ___mypyc_temp__8;
+    PyObject *___mypyc_temp__9;
+    tuple_T3OOO ___mypyc_temp__10;
+    PyObject *___mypyc_temp__11;
+    tuple_T3OOO ___mypyc_temp__12;
+    PyObject *___mypyc_temp__2_0;
+} eth_portfolio_scripts___balances___export_balances_envObject;
 
-struct export_table_8ed3bf658d7a9c9778fd {
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_env__;
+} eth_portfolio_scripts___balances___export_balances_genObject;
+
+
+struct export_table_a84bea286168f88be129 {
     PyObject **CPyStatic__nonce___logger;
     PyObject **CPyStatic__nonce___logger_is_enabled;
     PyObject **CPyStatic__nonce_____log;
@@ -469,24 +506,24 @@ struct export_table_8ed3bf658d7a9c9778fd {
     PyObject *(*CPyDef__nonce___get_block_number_gen_____await__)(PyObject *cpy_r___mypyc_self__);
     PyObject *(*CPyDef__nonce___get_block_number)(void);
     char (*CPyDef__nonce_____top_level__)(void);
-    PyObject **CPyStatic_balances____ZERO;
-    PyObject **CPyStatic_balances___logger;
-    PyObject **CPyStatic_balances____builtin_round;
-    PyTypeObject **CPyType_balances___load_token_balance_env;
-    PyObject *(*CPyDef_balances___load_token_balance_env)(void);
-    PyTypeObject **CPyType_balances___load_token_balance_gen;
-    PyObject *(*CPyDef_balances___load_token_balance_gen)(void);
-    PyObject *(*CPyDef_balances___load_token_balance_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
-    PyObject *(*CPyDef_balances___load_token_balance_gen_____next__)(PyObject *cpy_r___mypyc_self__);
-    PyObject *(*CPyDef_balances___load_token_balance_gen___send)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
-    PyObject *(*CPyDef_balances___load_token_balance_gen_____iter__)(PyObject *cpy_r___mypyc_self__);
-    PyObject *(*CPyDef_balances___load_token_balance_gen___throw)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
-    PyObject *(*CPyDef_balances___load_token_balance_gen___close)(PyObject *cpy_r___mypyc_self__);
-    PyObject *(*CPyDef_balances___load_token_balance_gen_____await__)(PyObject *cpy_r___mypyc_self__);
-    PyObject *(*CPyDef_balances___load_token_balance)(PyObject *cpy_r_token, PyObject *cpy_r_address, PyObject *cpy_r_block);
-    PyObject *(*CPyDef_balances____calc_value)(PyObject *cpy_r_balance, PyObject *cpy_r_price);
-    PyObject *(*CPyDef_balances___round)(PyObject *cpy_r_value, CPyTagged cpy_r_digits);
-    char (*CPyDef_balances_____top_level__)(void);
+    PyObject **CPyStatic__loaders___balances____ZERO;
+    PyObject **CPyStatic__loaders___balances___logger;
+    PyObject **CPyStatic__loaders___balances____builtin_round;
+    PyTypeObject **CPyType__loaders___balances___load_token_balance_env;
+    PyObject *(*CPyDef__loaders___balances___load_token_balance_env)(void);
+    PyTypeObject **CPyType__loaders___balances___load_token_balance_gen;
+    PyObject *(*CPyDef__loaders___balances___load_token_balance_gen)(void);
+    PyObject *(*CPyDef__loaders___balances___load_token_balance_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef__loaders___balances___load_token_balance_gen_____next__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef__loaders___balances___load_token_balance_gen___send)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef__loaders___balances___load_token_balance_gen_____iter__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef__loaders___balances___load_token_balance_gen___throw)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+    PyObject *(*CPyDef__loaders___balances___load_token_balance_gen___close)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef__loaders___balances___load_token_balance_gen_____await__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef__loaders___balances___load_token_balance)(PyObject *cpy_r_token, PyObject *cpy_r_address, PyObject *cpy_r_block);
+    PyObject *(*CPyDef__loaders___balances____calc_value)(PyObject *cpy_r_balance, PyObject *cpy_r_price);
+    PyObject *(*CPyDef__loaders___balances___round)(PyObject *cpy_r_value, CPyTagged cpy_r_digits);
+    char (*CPyDef__loaders___balances_____top_level__)(void);
     PyObject **CPyStatic_utils___Raw;
     PyObject **CPyStatic_utils___get_transaction_receipt;
     PyObject **CPyStatic_utils_____get_transaction_receipt;
@@ -606,5 +643,21 @@ struct export_table_8ed3bf658d7a9c9778fd {
     PyObject *(*CPyDef_docker_compose___ensure_containers)(PyObject *cpy_r_fn);
     char (*CPyDef_docker_compose____exec_command)(PyObject *cpy_r_command, PyObject *cpy_r_compose_options);
     char (*CPyDef_docker_compose_____top_level__)(void);
+    PyObject **CPyStatic_eth_portfolio_scripts___balances____UTC;
+    PyObject **CPyStatic_eth_portfolio_scripts___balances___create_task;
+    PyObject **CPyStatic_eth_portfolio_scripts___balances___yield_to_loop;
+    PyTypeObject **CPyType_eth_portfolio_scripts___balances___export_balances_env;
+    PyObject *(*CPyDef_eth_portfolio_scripts___balances___export_balances_env)(void);
+    PyTypeObject **CPyType_eth_portfolio_scripts___balances___export_balances_gen;
+    PyObject *(*CPyDef_eth_portfolio_scripts___balances___export_balances_gen)(void);
+    PyObject *(*CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____next__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_eth_portfolio_scripts___balances___export_balances_gen___send)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____iter__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_eth_portfolio_scripts___balances___export_balances_gen___throw)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+    PyObject *(*CPyDef_eth_portfolio_scripts___balances___export_balances_gen___close)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____await__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_eth_portfolio_scripts___balances___export_balances)(PyObject *cpy_r_args);
+    char (*CPyDef_eth_portfolio_scripts___balances_____top_level__)(void);
 };
 #endif

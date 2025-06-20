@@ -63,7 +63,7 @@ try:
             # "eth_portfolio_scripts/victoria/__init__.py",  # this one built fine with other files but wont alone
             # "eth_portfolio_scripts/_portfolio.py",
             # "eth_portfolio_scripts/_utils.py",
-            # "eth_portfolio_scripts/balances.py",
+            "eth_portfolio_scripts/balances.py",
             "--strict",
             "--pretty",
             "--install-types",
