@@ -55,6 +55,7 @@ services:
     volumes:
       - ~/.eth-portfolio/data/victoria/:/victoria-metrics-data
     command:
+      - '-memory.allowedBytes=3GB'
       - "-retentionPeriod=10y"
       - "-search.disableAutoCacheReset=true"
     ports:
