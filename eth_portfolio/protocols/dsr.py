@@ -28,7 +28,9 @@ class MakerDSR(ProtocolABC):
         pot: Final = "0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7"
         self.dsr_manager: Final = Contract(dsr_manager)
         self.pot: Final = Contract(pot)
-        self._start_block: Final = max(contract_creation_block(dsr_manager), contract_creation_block(pot))
+        self._start_block: Final = max(
+            contract_creation_block(dsr_manager), contract_creation_block(pot)
+        )
         self._get_chi: Final = self.pot.chi.coroutine
 
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
