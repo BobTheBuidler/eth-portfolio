@@ -52,6 +52,7 @@ try:
             "eth_portfolio/_loaders/_nonce.py",
             "eth_portfolio/_loaders/balances.py",
             "eth_portfolio/_loaders/utils.py",
+            "eth_portfolio/_ydb",
             "eth_portfolio/protocols/dsr.py",
             "eth_portfolio/typing/balance/single.py",
             "eth_portfolio/_argspec.py",
@@ -62,7 +63,7 @@ try:
             "eth_portfolio_scripts/docker",
             # "eth_portfolio_scripts/victoria/__init__.py",  # this one built fine with other files but wont alone
             # "eth_portfolio_scripts/_portfolio.py",
-            # "eth_portfolio_scripts/_utils.py",
+            "eth_portfolio_scripts/_utils.py",
             "eth_portfolio_scripts/balances.py",
             "--strict",
             "--pretty",

@@ -1,14 +1,14 @@
 from abc import abstractmethod
 from asyncio import Task, create_task, sleep
 from logging import DEBUG, getLogger
-from typing import AsyncIterator, List
+from typing import AsyncIterator, Final, List, final
 
 import dank_mids
 import evmspec
+import faster_eth_utils
 import y._db.log
 from a_sync import ASyncIterable, ASyncIterator, as_yielded
 from brownie import chain
-from faster_eth_utils import encode_hex
 from y.datatypes import Address
 from y.utils.events import ProcessedEvents
 
@@ -16,6 +16,9 @@ from eth_portfolio._loaders import load_token_transfer
 from eth_portfolio._shitcoins import SHITCOINS
 from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.structs import TokenTransfer
+
+
+encode_hex: Final = faster_eth_utils.encode_hex
 
 
 try:
@@ -28,9 +31,10 @@ except ImportError:
 
     encode_address = lambda address: encode_hex(encode_single("address", str(address)))
 
-logger = getLogger(__name__)
-_logger_is_enabled_for = logger.isEnabledFor
-_logger_log = logger._log
+
+logger: Final = getLogger(__name__)
+_logger_is_enabled_for: Final = logger.isEnabledFor
+_logger_log: Final = logger._log
 
 
 class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
@@ -39,8 +43,8 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
     __slots__ = "address", "_load_prices"
 
     def __init__(self, address: Address, from_block: int, load_prices: bool = False):
-        self.address = address
-        self._load_prices = load_prices
+        self.address: Final = address
+        self._load_prices: Final = load_prices
         super().__init__(topics=self._topics, from_block=from_block)
 
     def __repr__(self) -> str:
@@ -97,6 +101,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
             raise e
 
 
+@final
 class InboundTokenTransfers(_TokenTransfers):
     """A container that fetches and iterates over all inbound token transfers for a particular wallet address"""
 
@@ -105,6 +110,7 @@ class InboundTokenTransfers(_TokenTransfers):
         return [TRANSFER_SIGS, None, encode_address(self.address)]
 
 
+@final
 class OutboundTokenTransfers(_TokenTransfers):
     """A container that fetches and iterates over all outbound token transfers for a particular wallet address"""
 
@@ -113,6 +119,7 @@ class OutboundTokenTransfers(_TokenTransfers):
         return [TRANSFER_SIGS, encode_address(self.address)]
 
 
+@final
 class TokenTransfers(ASyncIterable[TokenTransfer]):
     """
     A container that fetches and iterates over all token transfers for a particular wallet address.
@@ -120,8 +127,12 @@ class TokenTransfers(ASyncIterable[TokenTransfer]):
     """
 
     def __init__(self, address: Address, from_block: int, load_prices: bool = False):
-        self.transfers_in = InboundTokenTransfers(address, from_block, load_prices=load_prices)
-        self.transfers_out = OutboundTokenTransfers(address, from_block, load_prices=load_prices)
+        self.transfers_in: Final = InboundTokenTransfers(
+            address, from_block, load_prices=load_prices
+        )
+        self.transfers_out: Final = OutboundTokenTransfers(
+            address, from_block, load_prices=load_prices
+        )
 
     async def __aiter__(self):
         async for transfer in self.__yield_thru_block(await dank_mids.eth.block_number):
