@@ -243,6 +243,7 @@ extern PyObject *CPyStatic_dsr___Network;
 extern PyObject *CPyStatic_dsr___contract_creation_block;
 extern PyObject *CPyStatic_dsr___dai;
 extern PyObject *CPyStatic_dsr___Decimal;
+extern PyObject *CPyStatic_dsr___MakerDSR___networks;
 extern PyTypeObject *CPyType_dsr___MakerDSR;
 extern PyObject *CPyDef_dsr___MakerDSR(void);
 extern PyTypeObject *CPyType_dsr____balances_MakerDSR_env;

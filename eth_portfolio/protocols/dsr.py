@@ -1,5 +1,5 @@
 import asyncio
-from typing import Final, Optional
+from typing import Final, Optional, final
 
 import y
 from y.datatypes import Address, Block
@@ -19,16 +19,19 @@ dai: Final = y.dai
 Decimal: Final = _decimal.Decimal
 
 
+@final
 class MakerDSR(ProtocolABC):
-    networks = [Network.Mainnet]
+    networks: Final = [Network.Mainnet]
 
     def __init__(self) -> None:
         dsr_manager = "0x373238337Bfe1146fb49989fc222523f83081dDb"
         pot = "0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7"
-        self.dsr_manager = Contract(dsr_manager)
-        self.pot = Contract(pot)
-        self._start_block = max(contract_creation_block(dsr_manager), contract_creation_block(pot))
-        self._get_chi = self.pot.chi.coroutine
+        self.dsr_manager: Final = Contract(dsr_manager)
+        self.pot: Final = Contract(pot)
+        self._start_block: Final = max(
+            contract_creation_block(dsr_manager), contract_creation_block(pot)
+        )
+        self._get_chi: Final = self.pot.chi.coroutine
 
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         balances = TokenBalances(block=block)

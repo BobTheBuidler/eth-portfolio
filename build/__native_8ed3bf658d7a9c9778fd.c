@@ -17611,6 +17611,8 @@ PyObject *CPyInit_eth_portfolio___protocols___dsr(void)
     CPyStatic_dsr___dai = NULL;
     CPy_XDECREF(CPyStatic_dsr___Decimal);
     CPyStatic_dsr___Decimal = NULL;
+    CPy_XDECREF_NO_IMM(CPyStatic_dsr___MakerDSR___networks);
+    CPyStatic_dsr___MakerDSR___networks = NULL;
     Py_CLEAR(CPyType_dsr___MakerDSR);
     Py_CLEAR(CPyType_dsr____balances_MakerDSR_env);
     Py_CLEAR(CPyType_dsr____balances_MakerDSR_gen);
@@ -17666,7 +17668,7 @@ CPyL1: ;
     PyErr_SetString(PyExc_NameError, "value for final name \"Contract\" was not set");
     cpy_r_r3 = 0;
     if (unlikely(!cpy_r_r3)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 28, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 29, CPyStatic_dsr___globals);
         goto CPyL29;
     }
     CPy_Unreachable();
@@ -17675,7 +17677,7 @@ CPyL3: ;
     cpy_r_r5 = (PyObject **)&cpy_r_r4;
     cpy_r_r6 = PyObject_Vectorcall(cpy_r_r2, cpy_r_r5, 1, 0);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 28, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 29, CPyStatic_dsr___globals);
         goto CPyL31;
     }
     if (((eth_portfolio___protocols___dsr___MakerDSRObject *)cpy_r_self)->_dsr_manager != NULL) {
@@ -17684,7 +17686,7 @@ CPyL3: ;
     ((eth_portfolio___protocols___dsr___MakerDSRObject *)cpy_r_self)->_dsr_manager = cpy_r_r6;
     cpy_r_r7 = 1;
     if (unlikely(!cpy_r_r7)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 28, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 29, CPyStatic_dsr___globals);
         goto CPyL31;
     }
     cpy_r_r8 = CPyStatic_dsr___Contract;
@@ -17696,7 +17698,7 @@ CPyL6: ;
     PyErr_SetString(PyExc_NameError, "value for final name \"Contract\" was not set");
     cpy_r_r9 = 0;
     if (unlikely(!cpy_r_r9)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 29, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 30, CPyStatic_dsr___globals);
         goto CPyL29;
     }
     CPy_Unreachable();
@@ -17705,7 +17707,7 @@ CPyL8: ;
     cpy_r_r11 = (PyObject **)&cpy_r_r10;
     cpy_r_r12 = PyObject_Vectorcall(cpy_r_r8, cpy_r_r11, 1, 0);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 29, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 30, CPyStatic_dsr___globals);
         goto CPyL31;
     }
     if (((eth_portfolio___protocols___dsr___MakerDSRObject *)cpy_r_self)->_pot != NULL) {
@@ -17714,7 +17716,7 @@ CPyL8: ;
     ((eth_portfolio___protocols___dsr___MakerDSRObject *)cpy_r_self)->_pot = cpy_r_r12;
     cpy_r_r13 = 1;
     if (unlikely(!cpy_r_r13)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 29, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 30, CPyStatic_dsr___globals);
         goto CPyL31;
     }
     cpy_r_r14 = CPyStatic_dsr___contract_creation_block;
@@ -17726,7 +17728,7 @@ CPyL11: ;
     PyErr_SetString(PyExc_NameError, "value for final name \"contract_creation_block\" was not set");
     cpy_r_r15 = 0;
     if (unlikely(!cpy_r_r15)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 30, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 32, CPyStatic_dsr___globals);
         goto CPyL29;
     }
     CPy_Unreachable();
@@ -17735,7 +17737,7 @@ CPyL13: ;
     cpy_r_r17 = (PyObject **)&cpy_r_r16;
     cpy_r_r18 = PyObject_Vectorcall(cpy_r_r14, cpy_r_r17, 1, 0);
     if (unlikely(cpy_r_r18 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 30, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 32, CPyStatic_dsr___globals);
         goto CPyL31;
     }
     CPy_DECREF(cpy_r_r0);
@@ -17748,7 +17750,7 @@ CPyL15: ;
     PyErr_SetString(PyExc_NameError, "value for final name \"contract_creation_block\" was not set");
     cpy_r_r20 = 0;
     if (unlikely(!cpy_r_r20)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 30, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 32, CPyStatic_dsr___globals);
         goto CPyL29;
     }
     CPy_Unreachable();
@@ -17757,20 +17759,20 @@ CPyL17: ;
     cpy_r_r22 = (PyObject **)&cpy_r_r21;
     cpy_r_r23 = PyObject_Vectorcall(cpy_r_r19, cpy_r_r22, 1, 0);
     if (unlikely(cpy_r_r23 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 30, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 32, CPyStatic_dsr___globals);
         goto CPyL35;
     }
     CPy_DECREF(cpy_r_r1);
     cpy_r_r24 = PyObject_RichCompare(cpy_r_r23, cpy_r_r18, 4);
     if (unlikely(cpy_r_r24 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 30, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 31, CPyStatic_dsr___globals);
         goto CPyL36;
     }
     cpy_r_r25 = PyObject_IsTrue(cpy_r_r24);
     CPy_DECREF(cpy_r_r24);
     cpy_r_r26 = cpy_r_r25 >= 0;
     if (unlikely(!cpy_r_r26)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 30, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 31, CPyStatic_dsr___globals);
         goto CPyL36;
     }
     cpy_r_r27 = cpy_r_r25;
@@ -17790,12 +17792,12 @@ CPyL23: ;
     ((eth_portfolio___protocols___dsr___MakerDSRObject *)cpy_r_self)->__start_block = cpy_r_r28;
     cpy_r_r29 = 1;
     if (unlikely(!cpy_r_r29)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 30, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 31, CPyStatic_dsr___globals);
         goto CPyL29;
     }
     cpy_r_r30 = ((eth_portfolio___protocols___dsr___MakerDSRObject *)cpy_r_self)->_pot;
     if (unlikely(cpy_r_r30 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "__init__", "MakerDSR", "pot", 31, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "__init__", "MakerDSR", "pot", 34, CPyStatic_dsr___globals);
         goto CPyL29;
     }
     CPy_INCREF(cpy_r_r30);
@@ -17804,14 +17806,14 @@ CPyL25: ;
     cpy_r_r32 = CPyObject_GetAttr(cpy_r_r30, cpy_r_r31);
     CPy_DECREF(cpy_r_r30);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 31, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 34, CPyStatic_dsr___globals);
         goto CPyL29;
     }
     cpy_r_r33 = CPyStatics[116]; /* 'coroutine' */
     cpy_r_r34 = CPyObject_GetAttr(cpy_r_r32, cpy_r_r33);
     CPy_DECREF(cpy_r_r32);
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 31, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 34, CPyStatic_dsr___globals);
         goto CPyL29;
     }
     if (((eth_portfolio___protocols___dsr___MakerDSRObject *)cpy_r_self)->__get_chi != NULL) {
@@ -17820,7 +17822,7 @@ CPyL25: ;
     ((eth_portfolio___protocols___dsr___MakerDSRObject *)cpy_r_self)->__get_chi = cpy_r_r34;
     cpy_r_r35 = 1;
     if (unlikely(!cpy_r_r35)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 31, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 34, CPyStatic_dsr___globals);
         goto CPyL29;
     }
     return 1;
@@ -17884,7 +17886,7 @@ PyObject *CPyPy_dsr___MakerDSR_____init__(PyObject *self, PyObject *args, PyObje
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 25, CPyStatic_dsr___globals);
+    CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__init__", 26, CPyStatic_dsr___globals);
     return NULL;
 }
 
@@ -18000,14 +18002,14 @@ PyObject *CPyDef_dsr____balances_MakerDSR_gen_____mypyc_generator_helper__(PyObj
     cpy_r_r1 = cpy_r_r0;
     cpy_r_r2 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_genObject *)cpy_r___mypyc_self__)->___mypyc_env__;
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_gen", "__mypyc_env__", 33, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_gen", "__mypyc_env__", 36, CPyStatic_dsr___globals);
         goto CPyL99;
     }
     CPy_INCREF_NO_IMM(cpy_r_r2);
 CPyL1: ;
     cpy_r_r3 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->___mypyc_next_label__;
     if (unlikely(cpy_r_r3 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "__mypyc_next_label__", 33, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "__mypyc_next_label__", 36, CPyStatic_dsr___globals);
         goto CPyL100;
     }
     CPyTagged_INCREF(cpy_r_r3);
@@ -18022,14 +18024,14 @@ CPyL2: ;
 CPyL3: ;
     CPyErr_SetObjectAndTraceback(cpy_r_type, cpy_r_value, cpy_r_traceback);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 33, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 36, CPyStatic_dsr___globals);
         goto CPyL98;
     }
     CPy_Unreachable();
 CPyL5: ;
     cpy_r_r6 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_block;
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "block", 34, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "block", 37, CPyStatic_dsr___globals);
         goto CPyL100;
     }
     CPy_INCREF(cpy_r_r6);
@@ -18038,7 +18040,7 @@ CPyL6: ;
     cpy_r_r8 = CPyStatics[117]; /* 'TokenBalances' */
     cpy_r_r9 = CPyDict_GetItem(cpy_r_r7, cpy_r_r8);
     if (unlikely(cpy_r_r9 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 34, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 37, CPyStatic_dsr___globals);
         goto CPyL102;
     }
     PyObject *cpy_r_r10[1] = {cpy_r_r6};
@@ -18047,14 +18049,14 @@ CPyL6: ;
     cpy_r_r13 = PyObject_Vectorcall(cpy_r_r9, cpy_r_r11, 0, cpy_r_r12);
     CPy_DECREF(cpy_r_r9);
     if (unlikely(cpy_r_r13 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 34, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 37, CPyStatic_dsr___globals);
         goto CPyL102;
     }
     CPy_DECREF(cpy_r_r6);
     if (likely(PyDict_Check(cpy_r_r13)))
         cpy_r_r14 = cpy_r_r13;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/protocols/dsr.py", "_balances", 34, CPyStatic_dsr___globals, "dict", cpy_r_r13);
+        CPy_TypeErrorTraceback("eth_portfolio/protocols/dsr.py", "_balances", 37, CPyStatic_dsr___globals, "dict", cpy_r_r13);
         goto CPyL100;
     }
     if (((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_balances != NULL) {
@@ -18063,12 +18065,12 @@ CPyL6: ;
     ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_balances = cpy_r_r14;
     cpy_r_r15 = 1;
     if (unlikely(!cpy_r_r15)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 34, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 37, CPyStatic_dsr___globals);
         goto CPyL100;
     }
     cpy_r_r16 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_block;
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "block", 35, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "block", 38, CPyStatic_dsr___globals);
         goto CPyL100;
     }
     CPy_INCREF(cpy_r_r16);
@@ -18077,14 +18079,14 @@ CPyL11: ;
     CPy_DECREF(cpy_r_r16);
     cpy_r_r18 = cpy_r_r17 >= 0;
     if (unlikely(!cpy_r_r18)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 35, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 38, CPyStatic_dsr___globals);
         goto CPyL100;
     }
     cpy_r_r19 = cpy_r_r17;
     if (!cpy_r_r19) goto CPyL24;
     cpy_r_r20 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_block;
     if (unlikely(cpy_r_r20 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "block", 35, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "block", 38, CPyStatic_dsr___globals);
         goto CPyL100;
     }
     CPy_INCREF(cpy_r_r20);
@@ -18096,12 +18098,12 @@ CPyL14: ;
     }
     CPy_DECREF(cpy_r_r20);
     if (unlikely(cpy_r_r21 == CPY_INT_TAG)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 35, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 38, CPyStatic_dsr___globals);
         goto CPyL100;
     }
     cpy_r_r22 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_self;
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "self", 35, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "self", 38, CPyStatic_dsr___globals);
         goto CPyL103;
     }
     CPy_INCREF_NO_IMM(cpy_r_r22);
@@ -18114,7 +18116,7 @@ CPyL16: ;
     }
     CPy_DECREF_NO_IMM(cpy_r_r22);
     if (unlikely(cpy_r_r23 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 35, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 38, CPyStatic_dsr___globals);
         goto CPyL103;
     }
 CPyL17: ;
@@ -18123,14 +18125,14 @@ CPyL17: ;
     CPy_DECREF(cpy_r_r24);
     CPy_DECREF(cpy_r_r23);
     if (unlikely(cpy_r_r25 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 35, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 38, CPyStatic_dsr___globals);
         goto CPyL100;
     }
     cpy_r_r26 = PyObject_IsTrue(cpy_r_r25);
     CPy_DECREF(cpy_r_r25);
     cpy_r_r27 = cpy_r_r26 >= 0;
     if (unlikely(!cpy_r_r27)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 35, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 38, CPyStatic_dsr___globals);
         goto CPyL100;
     }
     cpy_r_r28 = cpy_r_r26;
@@ -18141,7 +18143,7 @@ CPyL17: ;
 CPyL20: ;
     cpy_r_r29 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_balances;
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "balances", 36, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "balances", 39, CPyStatic_dsr___globals);
         goto CPyL105;
     }
     CPy_INCREF(cpy_r_r29);
@@ -18153,7 +18155,7 @@ CPyL21: ;
     cpy_r_r30 = 1;
     CPy_DECREF_NO_IMM(cpy_r_r2);
     if (unlikely(!cpy_r_r30)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 36, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 39, CPyStatic_dsr___globals);
         goto CPyL106;
     }
     CPyGen_SetStopIterationValue(cpy_r_r29);
@@ -18163,7 +18165,7 @@ CPyL21: ;
 CPyL24: ;
     cpy_r_r31 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_self;
     if (unlikely(cpy_r_r31 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "self", 38, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "self", 41, CPyStatic_dsr___globals);
         goto CPyL100;
     }
     CPy_INCREF_NO_IMM(cpy_r_r31);
@@ -18176,7 +18178,7 @@ CPyL25: ;
     }
     CPy_DECREF_NO_IMM(cpy_r_r31);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 38, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 41, CPyStatic_dsr___globals);
         goto CPyL100;
     }
 CPyL26: ;
@@ -18184,19 +18186,19 @@ CPyL26: ;
     cpy_r_r34 = CPyObject_GetAttr(cpy_r_r32, cpy_r_r33);
     CPy_DECREF(cpy_r_r32);
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 38, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 41, CPyStatic_dsr___globals);
         goto CPyL100;
     }
     cpy_r_r35 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_address;
     if (unlikely(cpy_r_r35 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "address", 38, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "address", 41, CPyStatic_dsr___globals);
         goto CPyL107;
     }
     CPy_INCREF(cpy_r_r35);
 CPyL28: ;
     cpy_r_r36 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_block;
     if (unlikely(cpy_r_r36 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "block", 38, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "block", 41, CPyStatic_dsr___globals);
         goto CPyL108;
     }
     CPy_INCREF(cpy_r_r36);
@@ -18207,7 +18209,7 @@ CPyL29: ;
     cpy_r_r40 = CPyStatics[535]; /* ('block_identifier',) */
     cpy_r_r41 = PyObject_VectorcallMethod(cpy_r_r37, cpy_r_r39, 9223372036854775810ULL, cpy_r_r40);
     if (unlikely(cpy_r_r41 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 38, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 41, CPyStatic_dsr___globals);
         goto CPyL109;
     }
     CPy_DECREF(cpy_r_r34);
@@ -18215,14 +18217,14 @@ CPyL29: ;
     CPy_DECREF(cpy_r_r36);
     cpy_r_r42 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_self;
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "self", 39, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "self", 42, CPyStatic_dsr___globals);
         goto CPyL110;
     }
     CPy_INCREF_NO_IMM(cpy_r_r42);
 CPyL31: ;
     cpy_r_r43 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_block;
     if (unlikely(cpy_r_r43 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "block", 39, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "block", 42, CPyStatic_dsr___globals);
         goto CPyL111;
     }
     CPy_INCREF(cpy_r_r43);
@@ -18231,7 +18233,7 @@ CPyL32: ;
     CPy_DECREF(cpy_r_r43);
     CPy_DECREF_NO_IMM(cpy_r_r42);
     if (unlikely(cpy_r_r44 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 39, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 42, CPyStatic_dsr___globals);
         goto CPyL110;
     }
     cpy_r_r45 = CPyStatic_dsr___gather;
@@ -18243,7 +18245,7 @@ CPyL34: ;
     PyErr_SetString(PyExc_NameError, "value for final name \"gather\" was not set");
     cpy_r_r46 = 0;
     if (unlikely(!cpy_r_r46)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 37, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 40, CPyStatic_dsr___globals);
         goto CPyL98;
     }
     CPy_Unreachable();
@@ -18252,7 +18254,7 @@ CPyL36: ;
     cpy_r_r48 = (PyObject **)&cpy_r_r47;
     cpy_r_r49 = PyObject_Vectorcall(cpy_r_r45, cpy_r_r48, 2, 0);
     if (unlikely(cpy_r_r49 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 37, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 40, CPyStatic_dsr___globals);
         goto CPyL113;
     }
     CPy_DECREF(cpy_r_r41);
@@ -18260,7 +18262,7 @@ CPyL36: ;
     cpy_r_r50 = CPy_GetCoro(cpy_r_r49);
     CPy_DECREF(cpy_r_r49);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 37, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 40, CPyStatic_dsr___globals);
         goto CPyL100;
     }
     if (((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->___mypyc_temp__0 != NULL) {
@@ -18288,7 +18290,7 @@ CPyL40: ;
 CPyL41: ;
     cpy_r_r54 = CPy_FetchStopIterationValue();
     if (unlikely(cpy_r_r54 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 37, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 40, CPyStatic_dsr___globals);
         goto CPyL105;
     }
     cpy_r_r55 = cpy_r_r54;
@@ -18302,7 +18304,7 @@ CPyL44: ;
     ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->___mypyc_next_label__ = 2;
     cpy_r_r57 = 1;
     if (unlikely(!cpy_r_r57)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 37, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 40, CPyStatic_dsr___globals);
         goto CPyL115;
     } else
         goto CPyL116;
@@ -18314,7 +18316,7 @@ CPyL46: ;
     if (!cpy_r_r59) goto CPyL49;
     CPyErr_SetObjectAndTraceback(cpy_r_type, cpy_r_value, cpy_r_traceback);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 37, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 40, CPyStatic_dsr___globals);
         goto CPyL50;
     } else
         goto CPyL117;
@@ -18347,7 +18349,7 @@ CPyL52: ;
     cpy_r_r64 = CPy_YieldFromErrorHandle(cpy_r_r63, cpy_r_r62);
     CPy_DecRef(cpy_r_r63);
     if (unlikely(cpy_r_r64 == 2)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 37, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 40, CPyStatic_dsr___globals);
         goto CPyL118;
     }
     if (cpy_r_r64) goto CPyL56;
@@ -18422,7 +18424,7 @@ CPyL62: ;
 CPyL64: ;
     cpy_r_r71 = CPy_FetchStopIterationValue();
     if (unlikely(cpy_r_r71 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 37, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 40, CPyStatic_dsr___globals);
         goto CPyL105;
     }
     cpy_r_r55 = cpy_r_r71;
@@ -18454,7 +18456,7 @@ __LL48: ;
     }
     CPy_DECREF(cpy_r_r55);
     if (unlikely(cpy_r_r72.f0 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 37, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 40, CPyStatic_dsr___globals);
         goto CPyL105;
     }
     cpy_r_r73 = cpy_r_r72.f0;
@@ -18466,7 +18468,7 @@ __LL48: ;
     ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_pie = cpy_r_r75;
     cpy_r_r76 = 1;
     if (unlikely(!cpy_r_r76)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 37, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 40, CPyStatic_dsr___globals);
         goto CPyL105;
     }
     cpy_r_r77 = cpy_r_r74;
@@ -18476,12 +18478,12 @@ __LL48: ;
     ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_exchange_rate = cpy_r_r77;
     cpy_r_r78 = 1;
     if (unlikely(!cpy_r_r78)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 37, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 40, CPyStatic_dsr___globals);
         goto CPyL105;
     }
     cpy_r_r79 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_pie;
     if (unlikely(cpy_r_r79 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "pie", 41, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "pie", 44, CPyStatic_dsr___globals);
         goto CPyL105;
     }
     CPy_INCREF(cpy_r_r79);
@@ -18490,21 +18492,21 @@ CPyL70: ;
     CPy_DECREF(cpy_r_r79);
     cpy_r_r81 = cpy_r_r80 >= 0;
     if (unlikely(!cpy_r_r81)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 41, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 44, CPyStatic_dsr___globals);
         goto CPyL105;
     }
     cpy_r_r82 = cpy_r_r80;
     if (!cpy_r_r82) goto CPyL90;
     cpy_r_r83 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_pie;
     if (unlikely(cpy_r_r83 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "pie", 42, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "pie", 45, CPyStatic_dsr___globals);
         goto CPyL105;
     }
     CPy_INCREF(cpy_r_r83);
 CPyL73: ;
     cpy_r_r84 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_exchange_rate;
     if (unlikely(cpy_r_r84 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "exchange_rate", 42, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "exchange_rate", 45, CPyStatic_dsr___globals);
         goto CPyL123;
     }
     CPy_INCREF(cpy_r_r84);
@@ -18513,14 +18515,14 @@ CPyL74: ;
     CPy_DECREF(cpy_r_r83);
     CPy_DECREF(cpy_r_r84);
     if (unlikely(cpy_r_r85 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 42, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 45, CPyStatic_dsr___globals);
         goto CPyL105;
     }
     cpy_r_r86 = CPyStatics[532]; /* 1000000000000000000 */
     cpy_r_r87 = PyNumber_TrueDivide(cpy_r_r85, cpy_r_r86);
     CPy_DECREF(cpy_r_r85);
     if (unlikely(cpy_r_r87 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 42, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 45, CPyStatic_dsr___globals);
         goto CPyL105;
     }
     if (((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_dai_in_dsr != NULL) {
@@ -18529,19 +18531,19 @@ CPyL74: ;
     ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_dai_in_dsr = cpy_r_r87;
     cpy_r_r88 = 1;
     if (unlikely(!cpy_r_r88)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 42, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 45, CPyStatic_dsr___globals);
         goto CPyL105;
     }
     cpy_r_r89 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_dai_in_dsr;
     if (unlikely(cpy_r_r89 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "dai_in_dsr", 43, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "dai_in_dsr", 46, CPyStatic_dsr___globals);
         goto CPyL105;
     }
     CPy_INCREF(cpy_r_r89);
 CPyL78: ;
     cpy_r_r90 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_dai_in_dsr;
     if (unlikely(cpy_r_r90 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "dai_in_dsr", 43, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "dai_in_dsr", 46, CPyStatic_dsr___globals);
         goto CPyL124;
     }
     CPy_INCREF(cpy_r_r90);
@@ -18555,14 +18557,14 @@ CPyL80: ;
     PyErr_SetString(PyExc_NameError, "value for final name \"dai\" was not set");
     cpy_r_r92 = 0;
     if (unlikely(!cpy_r_r92)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 43, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 46, CPyStatic_dsr___globals);
         goto CPyL98;
     }
     CPy_Unreachable();
 CPyL82: ;
     cpy_r_r93 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_block;
     if (unlikely(cpy_r_r93 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "block", 43, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "block", 46, CPyStatic_dsr___globals);
         goto CPyL126;
     }
     CPy_INCREF(cpy_r_r93);
@@ -18573,7 +18575,7 @@ CPyL83: ;
     cpy_r_r97 = CPyStatics[548]; /* ('token', 'block') */
     cpy_r_r98 = PyObject_Vectorcall(cpy_r_r94, cpy_r_r96, 2, cpy_r_r97);
     if (unlikely(cpy_r_r98 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 43, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 46, CPyStatic_dsr___globals);
         goto CPyL127;
     }
     CPy_DECREF(cpy_r_r89);
@@ -18582,12 +18584,12 @@ CPyL83: ;
     if (likely(Py_TYPE(cpy_r_r98) == CPyType_single___Balance))
         cpy_r_r99 = cpy_r_r98;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/protocols/dsr.py", "_balances", 43, CPyStatic_dsr___globals, "eth_portfolio.typing.balance.single.Balance", cpy_r_r98);
+        CPy_TypeErrorTraceback("eth_portfolio/protocols/dsr.py", "_balances", 46, CPyStatic_dsr___globals, "eth_portfolio.typing.balance.single.Balance", cpy_r_r98);
         goto CPyL105;
     }
     cpy_r_r100 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_balances;
     if (unlikely(cpy_r_r100 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "balances", 43, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "balances", 46, CPyStatic_dsr___globals);
         goto CPyL128;
     }
     CPy_INCREF(cpy_r_r100);
@@ -18601,7 +18603,7 @@ CPyL87: ;
     PyErr_SetString(PyExc_NameError, "value for final name \"dai\" was not set");
     cpy_r_r102 = 0;
     if (unlikely(!cpy_r_r102)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 43, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 46, CPyStatic_dsr___globals);
         goto CPyL98;
     }
     CPy_Unreachable();
@@ -18611,13 +18613,13 @@ CPyL89: ;
     CPy_DECREF_NO_IMM(cpy_r_r99);
     cpy_r_r104 = cpy_r_r103 >= 0;
     if (unlikely(!cpy_r_r104)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 43, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 46, CPyStatic_dsr___globals);
         goto CPyL105;
     }
 CPyL90: ;
     cpy_r_r105 = ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r2)->_balances;
     if (unlikely(cpy_r_r105 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "balances", 44, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_balances", "_balances_MakerDSR_env", "balances", 47, CPyStatic_dsr___globals);
         goto CPyL105;
     }
     CPy_INCREF(cpy_r_r105);
@@ -18629,7 +18631,7 @@ CPyL91: ;
     cpy_r_r106 = 1;
     CPy_DECREF_NO_IMM(cpy_r_r2);
     if (unlikely(!cpy_r_r106)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 44, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 47, CPyStatic_dsr___globals);
         goto CPyL130;
     }
     CPyGen_SetStopIterationValue(cpy_r_r105);
@@ -18649,7 +18651,7 @@ CPyL96: ;
     PyErr_SetNone(PyExc_StopIteration);
     cpy_r_r109 = 0;
     if (unlikely(!cpy_r_r109)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 33, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 36, CPyStatic_dsr___globals);
         goto CPyL98;
     }
     CPy_Unreachable();
@@ -18823,7 +18825,7 @@ PyObject *CPyPy_dsr____balances_MakerDSR_gen_____mypyc_generator_helper__(PyObje
     PyObject *retval = CPyDef_dsr____balances_MakerDSR_gen_____mypyc_generator_helper__(arg___mypyc_self__, arg_type, arg_value, arg_traceback, arg_arg);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 33, CPyStatic_dsr___globals);
+    CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 36, CPyStatic_dsr___globals);
     return NULL;
 }
 
@@ -19131,7 +19133,7 @@ PyObject *CPyDef_dsr___MakerDSR____balances(PyObject *cpy_r_self, PyObject *cpy_
 CPyL2: ;
     cpy_r_r1 = CPyDef_dsr____balances_MakerDSR_env();
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 33, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 36, CPyStatic_dsr___globals);
         goto CPyL12;
     }
     CPy_INCREF_NO_IMM(cpy_r_self);
@@ -19141,7 +19143,7 @@ CPyL2: ;
     ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r1)->_self = cpy_r_self;
     cpy_r_r2 = 1;
     if (unlikely(!cpy_r_r2)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 33, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 36, CPyStatic_dsr___globals);
         goto CPyL13;
     }
     CPy_INCREF(cpy_r_address);
@@ -19151,7 +19153,7 @@ CPyL2: ;
     ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r1)->_address = cpy_r_address;
     cpy_r_r3 = 1;
     if (unlikely(!cpy_r_r3)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 33, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 36, CPyStatic_dsr___globals);
         goto CPyL13;
     }
     if (((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r1)->_block != NULL) {
@@ -19160,12 +19162,12 @@ CPyL2: ;
     ((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r1)->_block = cpy_r_block;
     cpy_r_r4 = 1;
     if (unlikely(!cpy_r_r4)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 33, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 36, CPyStatic_dsr___globals);
         goto CPyL14;
     }
     cpy_r_r5 = CPyDef_dsr____balances_MakerDSR_gen();
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 33, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 36, CPyStatic_dsr___globals);
         goto CPyL14;
     }
     CPy_INCREF_NO_IMM(cpy_r_r1);
@@ -19175,7 +19177,7 @@ CPyL2: ;
     ((eth_portfolio___protocols___dsr____balances_MakerDSR_genObject *)cpy_r_r5)->___mypyc_env__ = cpy_r_r1;
     cpy_r_r6 = 1;
     if (unlikely(!cpy_r_r6)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 33, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 36, CPyStatic_dsr___globals);
         goto CPyL15;
     }
     if (((eth_portfolio___protocols___dsr____balances_MakerDSR_envObject *)cpy_r_r1)->___mypyc_next_label__ != CPY_INT_TAG) {
@@ -19185,7 +19187,7 @@ CPyL2: ;
     cpy_r_r7 = 1;
     CPy_DECREF_NO_IMM(cpy_r_r1);
     if (unlikely(!cpy_r_r7)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 33, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 36, CPyStatic_dsr___globals);
         goto CPyL16;
     }
     return cpy_r_r5;
@@ -19267,7 +19269,7 @@ __LL56: ;
     PyObject *retval = CPyDef_dsr___MakerDSR____balances(arg_self, arg_address, arg_block);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 33, CPyStatic_dsr___globals);
+    CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_balances", 36, CPyStatic_dsr___globals);
     return NULL;
 }
 
@@ -19322,14 +19324,14 @@ PyObject *CPyDef_dsr____exchange_rate_MakerDSR_gen_____mypyc_generator_helper__(
     cpy_r_r1 = cpy_r_r0;
     cpy_r_r2 = ((eth_portfolio___protocols___dsr____exchange_rate_MakerDSR_genObject *)cpy_r___mypyc_self__)->___mypyc_env__;
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_exchange_rate", "_exchange_rate_MakerDSR_gen", "__mypyc_env__", 46, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_exchange_rate", "_exchange_rate_MakerDSR_gen", "__mypyc_env__", 49, CPyStatic_dsr___globals);
         goto CPyL51;
     }
     CPy_INCREF_NO_IMM(cpy_r_r2);
 CPyL1: ;
     cpy_r_r3 = ((eth_portfolio___protocols___dsr____exchange_rate_MakerDSR_envObject *)cpy_r_r2)->___mypyc_next_label__;
     if (unlikely(cpy_r_r3 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_exchange_rate", "_exchange_rate_MakerDSR_env", "__mypyc_next_label__", 46, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_exchange_rate", "_exchange_rate_MakerDSR_env", "__mypyc_next_label__", 49, CPyStatic_dsr___globals);
         goto CPyL52;
     }
     CPyTagged_INCREF(cpy_r_r3);
@@ -19344,21 +19346,21 @@ CPyL2: ;
 CPyL3: ;
     CPyErr_SetObjectAndTraceback(cpy_r_type, cpy_r_value, cpy_r_traceback);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 46, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 49, CPyStatic_dsr___globals);
         goto CPyL50;
     }
     CPy_Unreachable();
 CPyL5: ;
     cpy_r_r6 = ((eth_portfolio___protocols___dsr____exchange_rate_MakerDSR_envObject *)cpy_r_r2)->_self;
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_exchange_rate", "_exchange_rate_MakerDSR_env", "self", 47, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_exchange_rate", "_exchange_rate_MakerDSR_env", "self", 50, CPyStatic_dsr___globals);
         goto CPyL52;
     }
     CPy_INCREF_NO_IMM(cpy_r_r6);
 CPyL6: ;
     cpy_r_r7 = ((eth_portfolio___protocols___dsr____exchange_rate_MakerDSR_envObject *)cpy_r_r2)->_block;
     if (unlikely(cpy_r_r7 == NULL)) {
-        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_exchange_rate", "_exchange_rate_MakerDSR_env", "block", 47, CPyStatic_dsr___globals);
+        CPy_AttributeError("eth_portfolio/protocols/dsr.py", "_exchange_rate", "_exchange_rate_MakerDSR_env", "block", 50, CPyStatic_dsr___globals);
         goto CPyL54;
     }
     CPy_INCREF(cpy_r_r7);
@@ -19371,7 +19373,7 @@ CPyL7: ;
     }
     CPy_DECREF_NO_IMM(cpy_r_r6);
     if (unlikely(cpy_r_r8 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 47, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 50, CPyStatic_dsr___globals);
         goto CPyL55;
     }
 CPyL8: ;
@@ -19381,14 +19383,14 @@ CPyL8: ;
     cpy_r_r12 = PyObject_Vectorcall(cpy_r_r8, cpy_r_r10, 0, cpy_r_r11);
     CPy_DECREF(cpy_r_r8);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 47, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 50, CPyStatic_dsr___globals);
         goto CPyL55;
     }
     CPy_DECREF(cpy_r_r7);
     cpy_r_r13 = CPy_GetCoro(cpy_r_r12);
     CPy_DECREF(cpy_r_r12);
     if (unlikely(cpy_r_r13 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 47, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 50, CPyStatic_dsr___globals);
         goto CPyL52;
     }
     if (((eth_portfolio___protocols___dsr____exchange_rate_MakerDSR_envObject *)cpy_r_r2)->___mypyc_temp__2 != NULL) {
@@ -19416,7 +19418,7 @@ CPyL12: ;
 CPyL13: ;
     cpy_r_r17 = CPy_FetchStopIterationValue();
     if (unlikely(cpy_r_r17 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 47, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 50, CPyStatic_dsr___globals);
         goto CPyL57;
     }
     cpy_r_r18 = cpy_r_r17;
@@ -19430,7 +19432,7 @@ CPyL16: ;
     ((eth_portfolio___protocols___dsr____exchange_rate_MakerDSR_envObject *)cpy_r_r2)->___mypyc_next_label__ = 2;
     cpy_r_r20 = 1;
     if (unlikely(!cpy_r_r20)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 47, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 50, CPyStatic_dsr___globals);
         goto CPyL58;
     } else
         goto CPyL59;
@@ -19442,7 +19444,7 @@ CPyL18: ;
     if (!cpy_r_r22) goto CPyL21;
     CPyErr_SetObjectAndTraceback(cpy_r_type, cpy_r_value, cpy_r_traceback);
     if (unlikely(!0)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 47, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 50, CPyStatic_dsr___globals);
         goto CPyL22;
     } else
         goto CPyL60;
@@ -19475,7 +19477,7 @@ CPyL24: ;
     cpy_r_r27 = CPy_YieldFromErrorHandle(cpy_r_r26, cpy_r_r25);
     CPy_DecRef(cpy_r_r26);
     if (unlikely(cpy_r_r27 == 2)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 47, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 50, CPyStatic_dsr___globals);
         goto CPyL61;
     }
     if (cpy_r_r27) goto CPyL28;
@@ -19550,7 +19552,7 @@ CPyL34: ;
 CPyL36: ;
     cpy_r_r34 = CPy_FetchStopIterationValue();
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 47, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 50, CPyStatic_dsr___globals);
         goto CPyL57;
     }
     cpy_r_r18 = cpy_r_r34;
@@ -19564,7 +19566,7 @@ CPyL39: ;
     PyErr_SetString(PyExc_NameError, "value for final name \"Decimal\" was not set");
     cpy_r_r36 = 0;
     if (unlikely(!cpy_r_r36)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 47, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 50, CPyStatic_dsr___globals);
         goto CPyL50;
     }
     CPy_Unreachable();
@@ -19573,7 +19575,7 @@ CPyL41: ;
     cpy_r_r38 = (PyObject **)&cpy_r_r37;
     cpy_r_r39 = PyObject_Vectorcall(cpy_r_r35, cpy_r_r38, 1, 0);
     if (unlikely(cpy_r_r39 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 47, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 50, CPyStatic_dsr___globals);
         goto CPyL67;
     }
     CPy_DECREF(cpy_r_r18);
@@ -19584,7 +19586,7 @@ CPyL41: ;
     CPy_DECREF(cpy_r_r39);
     CPy_DECREF(cpy_r_r41);
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 47, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 50, CPyStatic_dsr___globals);
         goto CPyL57;
     }
     if (((eth_portfolio___protocols___dsr____exchange_rate_MakerDSR_envObject *)cpy_r_r2)->___mypyc_next_label__ != CPY_INT_TAG) {
@@ -19594,7 +19596,7 @@ CPyL41: ;
     cpy_r_r43 = 1;
     CPy_DECREF_NO_IMM(cpy_r_r2);
     if (unlikely(!cpy_r_r43)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 47, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 50, CPyStatic_dsr___globals);
         goto CPyL68;
     }
     CPyGen_SetStopIterationValue(cpy_r_r42);
@@ -19614,7 +19616,7 @@ CPyL48: ;
     PyErr_SetNone(PyExc_StopIteration);
     cpy_r_r46 = 0;
     if (unlikely(!cpy_r_r46)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 46, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 49, CPyStatic_dsr___globals);
         goto CPyL50;
     }
     CPy_Unreachable();
@@ -19716,7 +19718,7 @@ PyObject *CPyPy_dsr____exchange_rate_MakerDSR_gen_____mypyc_generator_helper__(P
     PyObject *retval = CPyDef_dsr____exchange_rate_MakerDSR_gen_____mypyc_generator_helper__(arg___mypyc_self__, arg_type, arg_value, arg_traceback, arg_arg);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 46, CPyStatic_dsr___globals);
+    CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 49, CPyStatic_dsr___globals);
     return NULL;
 }
 
@@ -20023,7 +20025,7 @@ PyObject *CPyDef_dsr___MakerDSR____exchange_rate(PyObject *cpy_r_self, PyObject 
 CPyL2: ;
     cpy_r_r1 = CPyDef_dsr____exchange_rate_MakerDSR_env();
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 46, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 49, CPyStatic_dsr___globals);
         goto CPyL11;
     }
     CPy_INCREF_NO_IMM(cpy_r_self);
@@ -20033,7 +20035,7 @@ CPyL2: ;
     ((eth_portfolio___protocols___dsr____exchange_rate_MakerDSR_envObject *)cpy_r_r1)->_self = cpy_r_self;
     cpy_r_r2 = 1;
     if (unlikely(!cpy_r_r2)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 46, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 49, CPyStatic_dsr___globals);
         goto CPyL12;
     }
     if (((eth_portfolio___protocols___dsr____exchange_rate_MakerDSR_envObject *)cpy_r_r1)->_block != NULL) {
@@ -20042,12 +20044,12 @@ CPyL2: ;
     ((eth_portfolio___protocols___dsr____exchange_rate_MakerDSR_envObject *)cpy_r_r1)->_block = cpy_r_block;
     cpy_r_r3 = 1;
     if (unlikely(!cpy_r_r3)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 46, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 49, CPyStatic_dsr___globals);
         goto CPyL13;
     }
     cpy_r_r4 = CPyDef_dsr____exchange_rate_MakerDSR_gen();
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 46, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 49, CPyStatic_dsr___globals);
         goto CPyL13;
     }
     CPy_INCREF_NO_IMM(cpy_r_r1);
@@ -20057,7 +20059,7 @@ CPyL2: ;
     ((eth_portfolio___protocols___dsr____exchange_rate_MakerDSR_genObject *)cpy_r_r4)->___mypyc_env__ = cpy_r_r1;
     cpy_r_r5 = 1;
     if (unlikely(!cpy_r_r5)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 46, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 49, CPyStatic_dsr___globals);
         goto CPyL14;
     }
     if (((eth_portfolio___protocols___dsr____exchange_rate_MakerDSR_envObject *)cpy_r_r1)->___mypyc_next_label__ != CPY_INT_TAG) {
@@ -20067,7 +20069,7 @@ CPyL2: ;
     cpy_r_r6 = 1;
     CPy_DECREF_NO_IMM(cpy_r_r1);
     if (unlikely(!cpy_r_r6)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 46, CPyStatic_dsr___globals);
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 49, CPyStatic_dsr___globals);
         goto CPyL15;
     }
     return cpy_r_r4;
@@ -20136,7 +20138,7 @@ __LL59: ;
     PyObject *retval = CPyDef_dsr___MakerDSR____exchange_rate(arg_self, arg_block);
     return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 46, CPyStatic_dsr___globals);
+    CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "_exchange_rate", 49, CPyStatic_dsr___globals);
     return NULL;
 }
 
@@ -20308,7 +20310,18 @@ char CPyDef_dsr_____top_level__(void) {
     PyObject *cpy_r_r108;
     int32_t cpy_r_r109;
     char cpy_r_r110;
-    char cpy_r_r111;
+    PyObject *cpy_r_r111;
+    PyObject *cpy_r_r112;
+    char cpy_r_r113;
+    PyObject *cpy_r_r114;
+    PyObject *cpy_r_r115;
+    PyObject *cpy_r_r116;
+    CPyPtr cpy_r_r117;
+    CPyPtr cpy_r_r118;
+    PyObject *cpy_r_r119;
+    int32_t cpy_r_r120;
+    char cpy_r_r121;
+    char cpy_r_r122;
     cpy_r_r0 = CPyModule_builtins;
     cpy_r_r1 = (PyObject *)&_Py_NoneStruct;
     cpy_r_r2 = cpy_r_r0 != cpy_r_r1;
@@ -20317,7 +20330,7 @@ char CPyDef_dsr_____top_level__(void) {
     cpy_r_r4 = PyImport_Import(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", -1, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     CPyModule_builtins = cpy_r_r4;
     CPy_INCREF(CPyModule_builtins);
@@ -20333,14 +20346,14 @@ CPyL3: ;
     cpy_r_r12 = CPyStatics[120]; /* 'eth_portfolio/protocols/dsr.py' */
     cpy_r_r13 = CPyStatics[26]; /* '<module>' */
     cpy_r_r14 = CPyImport_ImportMany(cpy_r_r10, cpy_r_r7, cpy_r_r11, cpy_r_r12, cpy_r_r13, cpy_r_r9);
-    if (!cpy_r_r14) goto CPyL31;
-    cpy_r_r15 = CPyStatics[571]; /* ('Final', 'Optional') */
+    if (!cpy_r_r14) goto CPyL37;
+    cpy_r_r15 = CPyStatics[571]; /* ('Final', 'Optional', 'final') */
     cpy_r_r16 = CPyStatics[35]; /* 'typing' */
     cpy_r_r17 = CPyStatic_dsr___globals;
     cpy_r_r18 = CPyImport_ImportFromMany(cpy_r_r16, cpy_r_r15, cpy_r_r15, cpy_r_r17);
     if (unlikely(cpy_r_r18 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 2, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     CPyModule_typing = cpy_r_r18;
     CPy_INCREF(CPyModule_typing);
@@ -20355,14 +20368,14 @@ CPyL3: ;
     cpy_r_r26 = CPyStatics[120]; /* 'eth_portfolio/protocols/dsr.py' */
     cpy_r_r27 = CPyStatics[26]; /* '<module>' */
     cpy_r_r28 = CPyImport_ImportMany(cpy_r_r24, cpy_r_r21, cpy_r_r25, cpy_r_r26, cpy_r_r27, cpy_r_r23);
-    if (!cpy_r_r28) goto CPyL31;
+    if (!cpy_r_r28) goto CPyL37;
     cpy_r_r29 = CPyStatics[556]; /* ('Address', 'Block') */
     cpy_r_r30 = CPyStatics[83]; /* 'y.datatypes' */
     cpy_r_r31 = CPyStatic_dsr___globals;
     cpy_r_r32 = CPyImport_ImportFromMany(cpy_r_r30, cpy_r_r29, cpy_r_r29, cpy_r_r31);
     if (unlikely(cpy_r_r32 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 5, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     CPyModule_y___datatypes = cpy_r_r32;
     CPy_INCREF(CPyModule_y___datatypes);
@@ -20373,7 +20386,7 @@ CPyL3: ;
     cpy_r_r36 = CPyImport_ImportFromMany(cpy_r_r34, cpy_r_r33, cpy_r_r33, cpy_r_r35);
     if (unlikely(cpy_r_r36 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 7, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     CPyModule_eth_portfolio = cpy_r_r36;
     CPy_INCREF(CPyModule_eth_portfolio);
@@ -20384,7 +20397,7 @@ CPyL3: ;
     cpy_r_r40 = CPyImport_ImportFromMany(cpy_r_r38, cpy_r_r37, cpy_r_r37, cpy_r_r39);
     if (unlikely(cpy_r_r40 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 8, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     CPyModule_eth_portfolio___protocols____base = cpy_r_r40;
     CPy_INCREF(CPyModule_eth_portfolio___protocols____base);
@@ -20395,7 +20408,7 @@ CPyL3: ;
     cpy_r_r44 = CPyImport_ImportFromMany(cpy_r_r42, cpy_r_r41, cpy_r_r41, cpy_r_r43);
     if (unlikely(cpy_r_r44 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 9, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     CPyModule_eth_portfolio___typing = cpy_r_r44;
     CPy_INCREF(CPyModule_eth_portfolio___typing);
@@ -20405,7 +20418,7 @@ CPyL3: ;
     cpy_r_r47 = CPyObject_GetAttr(cpy_r_r45, cpy_r_r46);
     if (unlikely(cpy_r_r47 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 12, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     CPyStatic_dsr___gather = cpy_r_r47;
     CPy_INCREF(CPyStatic_dsr___gather);
@@ -20416,14 +20429,14 @@ CPyL3: ;
     cpy_r_r51 = cpy_r_r50 >= 0;
     if (unlikely(!cpy_r_r51)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 12, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     cpy_r_r52 = CPyModule_y;
     cpy_r_r53 = CPyStatics[127]; /* 'Contract' */
     cpy_r_r54 = CPyObject_GetAttr(cpy_r_r52, cpy_r_r53);
     if (unlikely(cpy_r_r54 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 14, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     CPyStatic_dsr___Contract = cpy_r_r54;
     CPy_INCREF(CPyStatic_dsr___Contract);
@@ -20434,14 +20447,14 @@ CPyL3: ;
     cpy_r_r58 = cpy_r_r57 >= 0;
     if (unlikely(!cpy_r_r58)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 14, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     cpy_r_r59 = CPyModule_y;
     cpy_r_r60 = CPyStatics[128]; /* 'Network' */
     cpy_r_r61 = CPyObject_GetAttr(cpy_r_r59, cpy_r_r60);
     if (unlikely(cpy_r_r61 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 15, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     CPyStatic_dsr___Network = cpy_r_r61;
     CPy_INCREF(CPyStatic_dsr___Network);
@@ -20452,14 +20465,14 @@ CPyL3: ;
     cpy_r_r65 = cpy_r_r64 >= 0;
     if (unlikely(!cpy_r_r65)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 15, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     cpy_r_r66 = CPyModule_y;
     cpy_r_r67 = CPyStatics[129]; /* 'contract_creation_block' */
     cpy_r_r68 = CPyObject_GetAttr(cpy_r_r66, cpy_r_r67);
     if (unlikely(cpy_r_r68 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 16, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     CPyStatic_dsr___contract_creation_block = cpy_r_r68;
     CPy_INCREF(CPyStatic_dsr___contract_creation_block);
@@ -20470,14 +20483,14 @@ CPyL3: ;
     cpy_r_r72 = cpy_r_r71 >= 0;
     if (unlikely(!cpy_r_r72)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 16, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     cpy_r_r73 = CPyModule_y;
     cpy_r_r74 = CPyStatics[130]; /* 'dai' */
     cpy_r_r75 = CPyObject_GetAttr(cpy_r_r73, cpy_r_r74);
     if (unlikely(cpy_r_r75 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 17, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     CPyStatic_dsr___dai = cpy_r_r75;
     CPy_INCREF(CPyStatic_dsr___dai);
@@ -20488,21 +20501,21 @@ CPyL3: ;
     cpy_r_r79 = cpy_r_r78 >= 0;
     if (unlikely(!cpy_r_r79)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 17, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     cpy_r_r80 = CPyStatic_dsr___globals;
     cpy_r_r81 = CPyStatics[122]; /* '_decimal' */
     cpy_r_r82 = CPyDict_GetItem(cpy_r_r80, cpy_r_r81);
     if (unlikely(cpy_r_r82 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 19, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     cpy_r_r83 = CPyStatics[74]; /* 'Decimal' */
     cpy_r_r84 = CPyObject_GetAttr(cpy_r_r82, cpy_r_r83);
     CPy_DECREF(cpy_r_r82);
     if (unlikely(cpy_r_r84 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 19, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     CPyStatic_dsr___Decimal = cpy_r_r84;
     CPy_INCREF(CPyStatic_dsr___Decimal);
@@ -20513,33 +20526,33 @@ CPyL3: ;
     cpy_r_r88 = cpy_r_r87 >= 0;
     if (unlikely(!cpy_r_r88)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 19, CPyStatic_dsr___globals);
-        goto CPyL31;
+        goto CPyL37;
     }
     cpy_r_r89 = CPyStatic_dsr___globals;
     cpy_r_r90 = CPyStatics[124]; /* 'ProtocolABC' */
     cpy_r_r91 = CPyDict_GetItem(cpy_r_r89, cpy_r_r90);
     if (unlikely(cpy_r_r91 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 22, CPyStatic_dsr___globals);
-        goto CPyL31;
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 23, CPyStatic_dsr___globals);
+        goto CPyL37;
     }
     cpy_r_r92 = PyTuple_Pack(1, cpy_r_r91);
     CPy_DECREF(cpy_r_r91);
     if (unlikely(cpy_r_r92 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 22, CPyStatic_dsr___globals);
-        goto CPyL31;
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 23, CPyStatic_dsr___globals);
+        goto CPyL37;
     }
     cpy_r_r93 = CPyStatics[131]; /* 'eth_portfolio.protocols.dsr' */
     cpy_r_r94 = (PyObject *)CPyType_dsr___MakerDSR_template;
     cpy_r_r95 = CPyType_FromTemplate(cpy_r_r94, cpy_r_r92, cpy_r_r93);
     CPy_DECREF(cpy_r_r92);
     if (unlikely(cpy_r_r95 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 22, CPyStatic_dsr___globals);
-        goto CPyL31;
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 23, CPyStatic_dsr___globals);
+        goto CPyL37;
     }
     cpy_r_r96 = CPyDef_dsr___MakerDSR_trait_vtable_setup();
     if (unlikely(cpy_r_r96 == 2)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", -1, CPyStatic_dsr___globals);
-        goto CPyL32;
+        goto CPyL38;
     }
     cpy_r_r97 = CPyStatics[60]; /* '__mypyc_attrs__' */
     cpy_r_r98 = CPyStatics[132]; /* 'networks' */
@@ -20550,15 +20563,15 @@ CPyL3: ;
     cpy_r_r103 = CPyStatics[137]; /* '__dict__' */
     cpy_r_r104 = PyTuple_Pack(6, cpy_r_r98, cpy_r_r99, cpy_r_r100, cpy_r_r101, cpy_r_r102, cpy_r_r103);
     if (unlikely(cpy_r_r104 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 22, CPyStatic_dsr___globals);
-        goto CPyL32;
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 23, CPyStatic_dsr___globals);
+        goto CPyL38;
     }
     cpy_r_r105 = PyObject_SetAttr(cpy_r_r95, cpy_r_r97, cpy_r_r104);
     CPy_DECREF(cpy_r_r104);
     cpy_r_r106 = cpy_r_r105 >= 0;
     if (unlikely(!cpy_r_r106)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 22, CPyStatic_dsr___globals);
-        goto CPyL32;
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 23, CPyStatic_dsr___globals);
+        goto CPyL38;
     }
     CPyType_dsr___MakerDSR = (PyTypeObject *)cpy_r_r95;
     CPy_INCREF(CPyType_dsr___MakerDSR);
@@ -20568,16 +20581,57 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r95);
     cpy_r_r110 = cpy_r_r109 >= 0;
     if (unlikely(!cpy_r_r110)) {
-        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 22, CPyStatic_dsr___globals);
-        goto CPyL31;
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 23, CPyStatic_dsr___globals);
+        goto CPyL37;
     }
+    cpy_r_r111 = (PyObject *)CPyType_dsr___MakerDSR;
+    cpy_r_r112 = CPyStatic_dsr___Network;
+    if (likely(cpy_r_r112 != NULL)) goto CPyL33;
+    PyErr_SetString(PyExc_NameError, "value for final name \"Network\" was not set");
+    cpy_r_r113 = 0;
+    if (unlikely(!cpy_r_r113)) {
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 24, CPyStatic_dsr___globals);
+        goto CPyL37;
+    }
+    CPy_Unreachable();
+CPyL33: ;
+    cpy_r_r114 = CPyStatics[119]; /* 'Mainnet' */
+    cpy_r_r115 = CPyObject_GetAttr(cpy_r_r112, cpy_r_r114);
+    if (unlikely(cpy_r_r115 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 24, CPyStatic_dsr___globals);
+        goto CPyL37;
+    }
+    cpy_r_r116 = PyList_New(1);
+    if (unlikely(cpy_r_r116 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 24, CPyStatic_dsr___globals);
+        goto CPyL39;
+    }
+    cpy_r_r117 = (CPyPtr)&((PyListObject *)cpy_r_r116)->ob_item;
+    cpy_r_r118 = *(CPyPtr *)cpy_r_r117;
+    *(PyObject * *)cpy_r_r118 = cpy_r_r115;
+    cpy_r_r119 = CPyStatics[132]; /* 'networks' */
+    cpy_r_r120 = PyObject_SetAttr(cpy_r_r111, cpy_r_r119, cpy_r_r116);
+    cpy_r_r121 = cpy_r_r120 >= 0;
+    if (unlikely(!cpy_r_r121)) {
+        CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 24, CPyStatic_dsr___globals);
+        goto CPyL40;
+    }
+    CPyStatic_dsr___MakerDSR___networks = cpy_r_r116;
+    CPy_INCREF_NO_IMM(CPyStatic_dsr___MakerDSR___networks);
+    CPy_DECREF_NO_IMM(cpy_r_r116);
     return 1;
-CPyL31: ;
-    cpy_r_r111 = 2;
-    return cpy_r_r111;
-CPyL32: ;
+CPyL37: ;
+    cpy_r_r122 = 2;
+    return cpy_r_r122;
+CPyL38: ;
     CPy_DecRef(cpy_r_r95);
-    goto CPyL31;
+    goto CPyL37;
+CPyL39: ;
+    CPy_DecRef(cpy_r_r115);
+    goto CPyL37;
+CPyL40: ;
+    CPy_DecRef(cpy_r_r116);
+    goto CPyL37;
 }
 
 static PyObject *CPyDunder___get__single___usd_Balance_obj(PyObject *self, PyObject *instance, PyObject *owner) {
@@ -31878,10 +31932,10 @@ const int CPyLit_Tuple[] = {
     38, 39, 1, 41, 1, 65, 2, 70, 19, 4, 72, 73, 70, 19, 1, 537, 1, 75, 1,
     32, 3, 78, 78, 78, 1, 553, 1, 79, 2, 81, 82, 1, 74, 1, 71, 1, 86, 2,
     93, 94, 3, 95, 95, 95, 3, 96, 96, 96, 3, 543, 561, 562, 1, 98, 1, 99,
-    1, 101, 2, 105, 62, 4, 107, 108, 109, 110, 1, 19, 1, 536, 2, 32, 121,
-    1, 122, 1, 124, 2, 86, 117, 4, 155, 121, 156, 34, 1, 157, 1, 159, 1,
-    172, 1, 173, 5, 175, 178, 179, 33, 180, 3, 181, 181, 181, 1, 581, 3,
-    30, 32, 186, 1, 39, 2, 128, 187, 1, 426, 3, 128, 187, 431, 5, 469,
+    1, 101, 2, 105, 62, 4, 107, 108, 109, 110, 1, 19, 1, 536, 3, 32, 121,
+    34, 1, 122, 1, 124, 2, 86, 117, 4, 155, 121, 156, 34, 1, 157, 1, 159,
+    1, 172, 1, 173, 5, 175, 178, 179, 33, 180, 3, 181, 181, 181, 1, 581,
+    3, 30, 32, 186, 1, 39, 2, 128, 187, 1, 426, 3, 128, 187, 431, 5, 469,
     470, 471, 472, 473, 1, 496, 2, 484, 481, 1, 105, 1, 504, 1, 511, 5,
     178, 512, 179, 33, 513, 1, 514, 1, 477
 };
@@ -32115,6 +32169,7 @@ PyObject *CPyStatic_dsr___Network = NULL;
 PyObject *CPyStatic_dsr___contract_creation_block = NULL;
 PyObject *CPyStatic_dsr___dai = NULL;
 PyObject *CPyStatic_dsr___Decimal = NULL;
+PyObject *CPyStatic_dsr___MakerDSR___networks = NULL;
 PyTypeObject *CPyType_dsr___MakerDSR;
 PyObject *CPyDef_dsr___MakerDSR(void);
 PyTypeObject *CPyType_dsr____balances_MakerDSR_env;
@@ -32371,6 +32426,7 @@ static struct export_table_8ed3bf658d7a9c9778fd exports = {
     &CPyStatic_dsr___contract_creation_block,
     &CPyStatic_dsr___dai,
     &CPyStatic_dsr___Decimal,
+    &CPyStatic_dsr___MakerDSR___networks,
     &CPyType_dsr___MakerDSR,
     &CPyDef_dsr___MakerDSR,
     &CPyType_dsr____balances_MakerDSR_env,
