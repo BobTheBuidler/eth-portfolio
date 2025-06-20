@@ -1,14 +1,22 @@
-from asyncio import gather
-from typing import Optional
+import asyncio
+from typing import Final, Optional
 
-from eth_typing import BlockNumber
-from y import Contract, Network, contract_creation_block, dai
+import y
 from y.datatypes import Address, Block
 
-from eth_portfolio._decimal import Decimal
+from eth_portfolio import _decimal
 from eth_portfolio.protocols._base import ProtocolABC
 from eth_portfolio.typing import Balance, TokenBalances
 
+
+gather: Final = asyncio.gather
+
+Contract: Final = y.Contract
+Network: Final = y.Network
+contract_creation_block: Final = y.contract_creation_block
+dai: Final = y.dai
+
+Decimal: Final = _decimal.Decimal
 
 class MakerDSR(ProtocolABC):
     networks = [Network.Mainnet]
@@ -19,6 +27,7 @@ class MakerDSR(ProtocolABC):
         self.dsr_manager = Contract(dsr_manager)
         self.pot = Contract(pot)
         self._start_block = max(contract_creation_block(dsr_manager), contract_creation_block(pot))
+        self._get_chi = self.pot.chi.coroutine
 
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         balances = TokenBalances(block=block)
@@ -34,4 +43,4 @@ class MakerDSR(ProtocolABC):
         return balances
 
     async def _exchange_rate(self, block: Optional[Block] = None) -> Decimal:
-        return Decimal(await self.pot.chi.coroutine(block_identifier=block)) / 10**27
+        return Decimal(await self._get_chi(block_identifier=block)) / 10**27
