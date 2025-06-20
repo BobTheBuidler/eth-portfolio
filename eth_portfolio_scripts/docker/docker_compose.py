@@ -2,7 +2,7 @@ import logging
 from functools import wraps
 from os import path
 from subprocess import CalledProcessError, check_output
-from typing import Callable, Iterable, Tuple, TypeVar
+from typing import Callable, Iterable, List, Tuple, TypeVar
 
 from typing_extensions import ParamSpec
 
@@ -64,7 +64,7 @@ def ensure_containers(fn: Callable[_P, _T]) -> Callable[_P, _T]:
     return compose_wrap
 
 
-def _exec_command(command: Iterable[str], *, compose_options: Tuple[str] = ()) -> None:
+def _exec_command(command: List[str], *, compose_options: Tuple[str, ...] = ()) -> None:
     check_system()
     try:
         check_output(["docker", "compose", *compose_options, "-f", compose_file, *command])
