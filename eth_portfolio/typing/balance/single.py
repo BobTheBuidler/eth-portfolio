@@ -2,11 +2,13 @@ from typing import Literal, Optional, Union, final
 
 from dictstruct import DictStruct
 from eth_typing import BlockNumber, ChecksumAddress
+from mypy_extensions import mypyc_attr
 
 from eth_portfolio._decimal import Decimal
 
 
 @final
+@mypyc_attr(native_class=False)
 class Balance(
     DictStruct, frozen=True, omit_defaults=True, repr_omit_defaults=True, forbid_unknown_fields=True
 ):
