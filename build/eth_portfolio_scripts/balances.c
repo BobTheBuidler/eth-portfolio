@@ -1,14 +1,14 @@
 #include <Python.h>
 
 PyMODINIT_FUNC
-PyInit_docker(void)
+PyInit_balances(void)
 {
     PyObject *tmp;
     if (!(tmp = PyImport_ImportModule("a84bea286168f88be129__mypyc"))) return NULL;
-    PyObject *capsule = PyObject_GetAttrString(tmp, "init_eth_portfolio_scripts___docker");
+    PyObject *capsule = PyObject_GetAttrString(tmp, "init_eth_portfolio_scripts___balances");
     Py_DECREF(tmp);
     if (capsule == NULL) return NULL;
-    void *init_func = PyCapsule_GetPointer(capsule, "a84bea286168f88be129__mypyc.init_eth_portfolio_scripts___docker");
+    void *init_func = PyCapsule_GetPointer(capsule, "a84bea286168f88be129__mypyc.init_eth_portfolio_scripts___balances");
     Py_DECREF(capsule);
     if (!init_func) {
         return NULL;
@@ -18,4 +18,4 @@ PyInit_docker(void)
 
 // distutils sometimes spuriously tells cl to export CPyInit___init__,
 // so provide that so it chills out
-PyMODINIT_FUNC PyInit___init__(void) { return PyInit_docker(); }
+PyMODINIT_FUNC PyInit___init__(void) { return PyInit_balances(); }
