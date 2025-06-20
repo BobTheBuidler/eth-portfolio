@@ -127,8 +127,12 @@ class TokenTransfers(ASyncIterable[TokenTransfer]):
     """
 
     def __init__(self, address: Address, from_block: int, load_prices: bool = False):
-        self.transfers_in: Final = InboundTokenTransfers(address, from_block, load_prices=load_prices)
-        self.transfers_out: Final = OutboundTokenTransfers(address, from_block, load_prices=load_prices)
+        self.transfers_in: Final = InboundTokenTransfers(
+            address, from_block, load_prices=load_prices
+        )
+        self.transfers_out: Final = OutboundTokenTransfers(
+            address, from_block, load_prices=load_prices
+        )
 
     async def __aiter__(self):
         async for transfer in self.__yield_thru_block(await dank_mids.eth.block_number):
