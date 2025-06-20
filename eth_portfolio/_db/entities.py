@@ -36,7 +36,7 @@ class AddressExtended(Address):
     """
     Extends the base Address entity to add relationships for sent/received transactions, internal transfers, and token transfers.
     """
-    
+
     if typing.TYPE_CHECKING:
         # if we execute this code we get `TypeError: 'type' object is not subscriptable`
         transactions_sent: Set["Transaction"]
@@ -75,7 +75,7 @@ class TokenExtended(Token, AddressExtended):
     """
     Extends both Token and AddressExtended to represent a token contract with address relationships.
     """
-    
+
     if typing.TYPE_CHECKING:
         # if we execute this code we get `TypeError: 'type' object is not subscriptable`
         transfers: Set["TokenTransfer"]
