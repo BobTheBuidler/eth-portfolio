@@ -509,6 +509,7 @@ struct export_table_8ed3bf658d7a9c9778fd {
     PyObject **CPyStatic_dsr___contract_creation_block;
     PyObject **CPyStatic_dsr___dai;
     PyObject **CPyStatic_dsr___Decimal;
+    PyObject **CPyStatic_dsr___MakerDSR___networks;
     PyTypeObject **CPyType_dsr___MakerDSR;
     PyObject *(*CPyDef_dsr___MakerDSR)(void);
     PyTypeObject **CPyType_dsr____balances_MakerDSR_env;
