@@ -44,7 +44,7 @@ _T = TypeVar("_T")
 
 def ensure_containers(fn: Callable[_P, _T]) -> Callable[_P, _T]:
     @wraps(fn)
-    async def compose_wrap(*args: _P.args, **kwargs: _P.kwargs):
+    async def compose_wrap(*args: _P.args, **kwargs: _P.kwargs) -> _T:
         # register shutdown sequence
         # TODO: argument to leave them up
         # NOTE: do we need both this and the finally?
@@ -55,11 +55,11 @@ def ensure_containers(fn: Callable[_P, _T]) -> Callable[_P, _T]:
 
         try:
             # attempt to run `fn`
-            await fn(*args, **kwargs)
+            return await fn(*args, **kwargs)
         finally:
             # stop and remove containers
             # down()
-            ...
+            pass
 
     return compose_wrap
 
