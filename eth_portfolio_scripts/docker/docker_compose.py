@@ -2,7 +2,7 @@ import logging
 from functools import wraps
 from os import path
 from subprocess import CalledProcessError, check_output
-from typing import Callable, Iterable, Tuple, TypeVar
+from typing import Callable, Iterable, List, Tuple, TypeVar
 
 from typing_extensions import ParamSpec
 
@@ -44,7 +44,7 @@ _T = TypeVar("_T")
 
 def ensure_containers(fn: Callable[_P, _T]) -> Callable[_P, _T]:
     @wraps(fn)
-    async def compose_wrap(*args: _P.args, **kwargs: _P.kwargs):
+    async def compose_wrap(*args: _P.args, **kwargs: _P.kwargs) -> _T:
         # register shutdown sequence
         # TODO: argument to leave them up
         # NOTE: do we need both this and the finally?
@@ -55,16 +55,16 @@ def ensure_containers(fn: Callable[_P, _T]) -> Callable[_P, _T]:
 
         try:
             # attempt to run `fn`
-            await fn(*args, **kwargs)
+            return await fn(*args, **kwargs)
         finally:
             # stop and remove containers
             # down()
-            ...
+            pass
 
     return compose_wrap
 
 
-def _exec_command(command: Iterable[str], *, compose_options: Tuple[str] = ()) -> None:
+def _exec_command(command: List[str], *, compose_options: Tuple[str, ...] = ()) -> None:
     check_system()
     try:
         check_output(["docker", "compose", *compose_options, "-f", compose_file, *command])

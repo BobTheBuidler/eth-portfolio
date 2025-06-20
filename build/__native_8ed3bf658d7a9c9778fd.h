@@ -1,5 +1,5 @@
-#ifndef MYPYC_NATIVE_2960ac10e1a504a73b93_H
-#define MYPYC_NATIVE_2960ac10e1a504a73b93_H
+#ifndef MYPYC_NATIVE_8ed3bf658d7a9c9778fd_H
+#define MYPYC_NATIVE_8ed3bf658d7a9c9778fd_H
 #include <Python.h>
 #include <CPy.h>
 #ifndef MYPYC_DECLARED_tuple_T3OOO
@@ -55,6 +55,13 @@ typedef struct tuple_T4CIOO {
     PyObject *f2;
     PyObject *f3;
 } tuple_T4CIOO;
+#endif
+
+#ifndef MYPYC_DECLARED_tuple_T0
+#define MYPYC_DECLARED_tuple_T0
+typedef struct tuple_T0 {
+    int empty_struct_error_flag;
+} tuple_T0;
 #endif
 
 typedef struct {
@@ -354,8 +361,46 @@ typedef struct {
     vectorcallfunc vectorcall;
 } eth_portfolio___typing___balance___single_____bool___3_Balance_objObject;
 
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_self__;
+    PyObject *_fn;
+    PyObject *_compose_wrap;
+} eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject;
 
-struct export_table_2960ac10e1a504a73b93 {
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_self__;
+    PyObject *___mypyc_env__;
+    PyObject *_args;
+    PyObject *_kwargs;
+    PyObject *_type;
+    PyObject *_value;
+    PyObject *_traceback;
+    PyObject *_arg;
+    CPyTagged ___mypyc_next_label__;
+    PyObject *___mypyc_temp__0;
+    tuple_T3OOO ___mypyc_temp__1;
+    PyObject *___mypyc_temp__2;
+} eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    vectorcallfunc vectorcall;
+    PyObject *___mypyc_env__;
+} eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_env__;
+} eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_genObject;
+
+
+struct export_table_8ed3bf658d7a9c9778fd {
     PyObject **CPyStatic__nonce___logger;
     PyObject **CPyStatic__nonce___logger_is_enabled;
     PyObject **CPyStatic__nonce_____log;
@@ -531,5 +576,34 @@ struct export_table_2960ac10e1a504a73b93 {
     PyObject **CPyStatic_constants___BTC_LIKE;
     PyObject **CPyStatic_constants___INTL_STABLECOINS;
     char (*CPyDef_constants_____top_level__)(void);
+    char (*CPyDef_docker_____top_level__)(void);
+    char (*CPyDef_check___check_docker)(void);
+    char (*CPyDef_check___check_docker_compose)(void);
+    char (*CPyDef_check___check_system)(void);
+    char (*CPyDef_check_____top_level__)(void);
+    PyTypeObject **CPyType_docker_compose___ensure_containers_env;
+    PyObject *(*CPyDef_docker_compose___ensure_containers_env)(void);
+    PyTypeObject **CPyType_docker_compose___compose_wrap_ensure_containers_env;
+    PyObject *(*CPyDef_docker_compose___compose_wrap_ensure_containers_env)(void);
+    PyTypeObject **CPyType_docker_compose___compose_wrap_ensure_containers_obj;
+    PyObject *(*CPyDef_docker_compose___compose_wrap_ensure_containers_obj)(void);
+    PyTypeObject **CPyType_docker_compose___compose_wrap_ensure_containers_gen;
+    PyObject *(*CPyDef_docker_compose___compose_wrap_ensure_containers_gen)(void);
+    char (*CPyDef_docker_compose___up)(PyObject *cpy_r_services);
+    char (*CPyDef_docker_compose___down)(void);
+    char (*CPyDef_docker_compose___build)(PyObject *cpy_r_services);
+    char (*CPyDef_docker_compose___stop)(PyObject *cpy_r_container_name);
+    PyObject *(*CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
+    PyObject *(*CPyDef_docker_compose___compose_wrap_ensure_containers_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_docker_compose___compose_wrap_ensure_containers_gen_____next__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_docker_compose___compose_wrap_ensure_containers_gen___send)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_docker_compose___compose_wrap_ensure_containers_gen_____iter__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_docker_compose___compose_wrap_ensure_containers_gen___throw)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+    PyObject *(*CPyDef_docker_compose___compose_wrap_ensure_containers_gen___close)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_docker_compose___compose_wrap_ensure_containers_gen_____await__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____call__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_args, PyObject *cpy_r_kwargs);
+    PyObject *(*CPyDef_docker_compose___ensure_containers)(PyObject *cpy_r_fn);
+    char (*CPyDef_docker_compose____exec_command)(PyObject *cpy_r_command, PyObject *cpy_r_compose_options);
+    char (*CPyDef_docker_compose_____top_level__)(void);
 };
 #endif
