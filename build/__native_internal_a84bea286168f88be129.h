@@ -6,7 +6,7 @@
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[648];
+extern PyObject *CPyStatics[649];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -79,6 +79,7 @@ extern PyObject *CPyStatic_check___globals;
 extern CPyModule *CPyModule_functools;
 extern CPyModule *CPyModule_subprocess;
 extern PyObject *CPyStatic_docker_compose___globals;
+extern CPyModule *CPyModule_importlib;
 extern CPyModule *CPyModule_typing_extensions;
 extern CPyModule *CPyModule_eth_portfolio_scripts___balances_internal;
 extern CPyModule *CPyModule_eth_portfolio_scripts___balances;
@@ -357,6 +358,8 @@ extern PyObject *CPyPy_check___check_docker_compose(PyObject *self, PyObject *co
 extern char CPyDef_check___check_system(void);
 extern PyObject *CPyPy_check___check_system(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_check_____top_level__(void);
+extern PyObject *CPyStatic_docker_compose___logger;
+extern PyObject *CPyStatic_docker_compose___compose_file;
 extern PyTypeObject *CPyType_docker_compose___ensure_containers_env;
 extern PyObject *CPyDef_docker_compose___ensure_containers_env(void);
 extern PyTypeObject *CPyType_docker_compose___compose_wrap_ensure_containers_env;
