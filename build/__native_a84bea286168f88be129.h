@@ -299,6 +299,7 @@ typedef struct {
     PyObject *_balances;
     PyObject *___mypyc_temp__0;
     tuple_T3OOO ___mypyc_temp__1;
+    tuple_T2OO _results;
     PyObject *_pie;
     PyObject *_exchange_rate;
     PyObject *_dai_in_dsr;
