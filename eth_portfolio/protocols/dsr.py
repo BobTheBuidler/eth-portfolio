@@ -32,13 +32,14 @@ class MakerDSR(ProtocolABC):
             contract_creation_block(dsr_manager), contract_creation_block(pot)
         )
         self._get_chi: Final = self.pot.chi.coroutine
+        self._get_pie: Final = self.dsr_manager.pieOf.coroutine
 
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         balances = TokenBalances(block=block)
         if block and block < self._start_block:
             return balances
         pie, exchange_rate = await gather(
-            self.dsr_manager.pieOf.coroutine(address, block_identifier=block),
+            self._get_pie(address, block_identifier=block),
             self._exchange_rate(block),
         )
         if pie:
