@@ -1,5 +1,6 @@
 import logging
 from functools import wraps
+from importlib import resources
 from os import path
 from subprocess import CalledProcessError, check_output
 from typing import Callable, Final, Iterable, List, Tuple, TypeVar
