@@ -617,6 +617,8 @@ struct export_table_a84bea286168f88be129 {
     char (*CPyDef_check___check_docker_compose)(void);
     char (*CPyDef_check___check_system)(void);
     char (*CPyDef_check_____top_level__)(void);
+    PyObject **CPyStatic_docker_compose___logger;
+    PyObject **CPyStatic_docker_compose___compose_file;
     PyTypeObject **CPyType_docker_compose___ensure_containers_env;
     PyObject *(*CPyDef_docker_compose___ensure_containers_env)(void);
     PyTypeObject **CPyType_docker_compose___compose_wrap_ensure_containers_env;

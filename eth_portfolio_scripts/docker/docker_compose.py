@@ -1,17 +1,20 @@
 import logging
 from functools import wraps
+from importlib import resources
 from os import path
 from subprocess import CalledProcessError, check_output
-from typing import Callable, Iterable, List, Tuple, TypeVar
+from typing import Callable, Final, Iterable, List, Tuple, TypeVar
 
 from typing_extensions import ParamSpec
 
 from eth_portfolio_scripts.docker.check import check_system
 
 
-logger = logging.getLogger(__name__)
+logger: Final = logging.getLogger(__name__)
 
-compose_file = path.join(path.dirname(path.abspath(__file__)), "docker-compose.yaml")
+compose_file: Final = str(
+    resources.files("eth_portfolio_scripts").joinpath("docker/docker-compose.yaml")
+)
 
 
 def up(*services: str) -> None:
