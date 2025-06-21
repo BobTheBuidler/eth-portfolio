@@ -71,7 +71,7 @@ class ExportablePortfolio(Portfolio):
         return False
 
     async def export_snapshot(self, dt: datetime):
-        print(f"checking data at {dt} for {self.label}")
+        logger.debug("checking data at %s for %s", dt, self.label)
         try:
             if not await self.data_exists(dt, sync=False):
                 while True:
@@ -81,7 +81,7 @@ class ExportablePortfolio(Portfolio):
                         pass
                     else:
                         break
-                print(f"block at {dt}: {block}")
+                logger.debug("block at %s: %s", dt, block)
                 data = await self.get_data_for_export(block, dt, sync=False)
                 await victoria.post_data(data)
         except Exception as e:
