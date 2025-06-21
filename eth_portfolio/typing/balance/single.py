@@ -24,6 +24,7 @@ class Balance(
         >>> combined_balance.usd_value
         Decimal('3000')
     """
+
     def __init__(self, *args, **kwargs):
         # this is a hacky workaround since compilation breaks __init__
         super().__init__(*args, **kwargs)
