@@ -30,6 +30,7 @@ NETWORK_LABEL: Final = Network.label(CHAINID)
 decode: Final = json.decode
 
 logger: Final = getLogger("eth_portfolio")
+log_debug: Final = logger.debug
 log_error: Final = logger.error
 
 
@@ -71,7 +72,7 @@ class ExportablePortfolio(Portfolio):
         return False
 
     async def export_snapshot(self, dt: datetime):
-        logger.debug("checking data at %s for %s", dt, self.label)
+        log_debug("checking data at %s for %s", dt, self.label)
         try:
             if not await self.data_exists(dt, sync=False):
                 while True:
@@ -81,7 +82,7 @@ class ExportablePortfolio(Portfolio):
                         pass
                     else:
                         break
-                logger.debug("block at %s: %s", dt, block)
+                log_debug("block at %s: %s", dt, block)
                 data = await self.get_data_for_export(block, dt, sync=False)
                 await victoria.post_data(data)
         except Exception as e:
