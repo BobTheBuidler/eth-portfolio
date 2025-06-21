@@ -52,7 +52,8 @@ try:
             "eth_portfolio/_loaders/_nonce.py",
             "eth_portfolio/_loaders/balances.py",
             "eth_portfolio/_loaders/utils.py",
-            "eth_portfolio/protocols/dsr.py",
+            # NOTE: disabled until https://github.com/mypyc/mypyc/issues/1112 is fixed
+            # "eth_portfolio/protocols/dsr.py",
             "eth_portfolio/typing/balance/single.py",
             "eth_portfolio/_argspec.py",
             "eth_portfolio/_config.py",
