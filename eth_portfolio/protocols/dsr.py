@@ -1,5 +1,5 @@
 import asyncio
-from typing import Final, Optional, final
+from typing import ClassVar, Final, Optional, final
 
 import y
 from y.datatypes import Address, Block
@@ -21,7 +21,7 @@ Decimal: Final = _decimal.Decimal
 
 @final
 class MakerDSR(ProtocolABC):
-    networks: Final = [Network.Mainnet]
+    networks: ClassVar = [Network.Mainnet]
 
     def __init__(self) -> None:
         dsr_manager = "0x373238337Bfe1146fb49989fc222523f83081dDb"
