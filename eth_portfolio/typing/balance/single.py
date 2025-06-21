@@ -25,6 +25,10 @@ class Balance(
         Decimal('3000')
     """
 
+    def __init__(self, *args, **kwargs):
+        # this is a hacky workaround since compilation breaks __init__
+        super().__init__(*args, **kwargs)
+
     balance: Decimal = Decimal(0)
     """
     The amount of the token.
