@@ -25,6 +25,8 @@ class Balance(
         Decimal('3000')
     """
 
+    __init__ = DictStruct.__init__
+
     balance: Decimal = Decimal(0)
     """
     The amount of the token.
