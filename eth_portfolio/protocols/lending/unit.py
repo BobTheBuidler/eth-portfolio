@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import ClassVar, Final, Optional, final
 
 from y import Contract, Network
 from y._decorators import stuck_coro_debugger
@@ -10,23 +10,25 @@ from eth_portfolio.protocols.lending._base import LendingProtocolWithLockedColla
 from eth_portfolio.typing import Balance, TokenBalances
 
 # NOTE: This only works for YFI collateral, must extend before using for other collaterals
-yfi = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
-usdp = "0x1456688345527bE1f37E9e627DA0837D6f08C925"
+yfi: Final = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
+usdp: Final = "0x1456688345527bE1f37E9e627DA0837D6f08C925"
 
 
+@final
 class UnitXyz(LendingProtocolWithLockedCollateral):
-    networks = [Network.Mainnet]
+    networks: ClassVar = [Network.Mainnet]
 
     def __init__(self) -> None:
-        self.unitVault = Contract("0xb1cff81b9305166ff1efc49a129ad2afcd7bcf19")
-        self.start_block = 11315910
+        self.unitVault: Final = Contract("0xb1cff81b9305166ff1efc49a129ad2afcd7bcf19")
+        self.start_block: Final = 11315910
+        self._collaterals: Final = self.unitVault.collaterals.coroutine
 
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         balances: TokenBalances = TokenBalances(block=block)
         if block and block < self.start_block:
             return balances
-        bal: int = await self.unitVault.collaterals.coroutine(yfi, address, block_identifier=block)
+        bal: int = await self._collaterals(yfi, address, block_identifier=block)
         if bal:
             bal = Decimal(bal) / 10**18
             balances[yfi] = Balance(bal, bal * await _get_price(yfi, block), token=yfi, block=block)
