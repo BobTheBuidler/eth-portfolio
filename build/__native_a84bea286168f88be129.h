@@ -335,6 +335,12 @@ typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
     vectorcallfunc vectorcall;
+} eth_portfolio___typing___balance___single_____init___3_Balance_objObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    vectorcallfunc vectorcall;
 } eth_portfolio___typing___balance___single___usd_Balance_objObject;
 
 typedef struct {
@@ -575,6 +581,8 @@ struct export_table_a84bea286168f88be129 {
     PyObject *(*CPyDef_dsr___MakerDSR____exchange_rate)(PyObject *cpy_r_self, PyObject *cpy_r_block);
     char (*CPyDef_dsr_____top_level__)(void);
     PyTypeObject **CPyType_single___Balance;
+    PyTypeObject **CPyType_single_____init___3_Balance_obj;
+    PyObject *(*CPyDef_single_____init___3_Balance_obj)(void);
     PyTypeObject **CPyType_single___usd_Balance_obj;
     PyObject *(*CPyDef_single___usd_Balance_obj)(void);
     PyTypeObject **CPyType_single_____add___3_Balance_obj;
@@ -585,6 +593,8 @@ struct export_table_a84bea286168f88be129 {
     PyObject *(*CPyDef_single_____sub___3_Balance_obj)(void);
     PyTypeObject **CPyType_single_____bool___3_Balance_obj;
     PyObject *(*CPyDef_single_____bool___3_Balance_obj)(void);
+    PyObject *(*CPyDef_single_____init___3_Balance_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
+    char (*CPyDef_single_____init___3_Balance_obj_____call__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_self, PyObject *cpy_r_args, PyObject *cpy_r_kwargs);
     PyObject *(*CPyDef_single___usd_Balance_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
     PyObject *(*CPyDef_single___usd_Balance_obj_____call__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_self);
     PyObject *(*CPyDef_single_____add___3_Balance_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);

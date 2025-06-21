@@ -6,7 +6,7 @@
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[650];
+extern PyObject *CPyStatics[652];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -299,6 +299,8 @@ extern PyObject *CPyDef_dsr___MakerDSR____exchange_rate(PyObject *cpy_r_self, Py
 extern PyObject *CPyPy_dsr___MakerDSR____exchange_rate(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_dsr_____top_level__(void);
 extern PyTypeObject *CPyType_single___Balance;
+extern PyTypeObject *CPyType_single_____init___3_Balance_obj;
+extern PyObject *CPyDef_single_____init___3_Balance_obj(void);
 extern PyTypeObject *CPyType_single___usd_Balance_obj;
 extern PyObject *CPyDef_single___usd_Balance_obj(void);
 extern PyTypeObject *CPyType_single_____add___3_Balance_obj;
@@ -309,6 +311,10 @@ extern PyTypeObject *CPyType_single_____sub___3_Balance_obj;
 extern PyObject *CPyDef_single_____sub___3_Balance_obj(void);
 extern PyTypeObject *CPyType_single_____bool___3_Balance_obj;
 extern PyObject *CPyDef_single_____bool___3_Balance_obj(void);
+extern PyObject *CPyDef_single_____init___3_Balance_obj_____get__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
+extern PyObject *CPyPy_single_____init___3_Balance_obj_____get__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern char CPyDef_single_____init___3_Balance_obj_____call__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_self, PyObject *cpy_r_args, PyObject *cpy_r_kwargs);
+extern PyObject *CPyPy_single_____init___3_Balance_obj_____call__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_single___usd_Balance_obj_____get__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
 extern PyObject *CPyPy_single___usd_Balance_obj_____get__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_single___usd_Balance_obj_____call__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_self);
