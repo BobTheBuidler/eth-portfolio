@@ -4,11 +4,11 @@ PyMODINIT_FUNC
 PyInit_docker_compose(void)
 {
     PyObject *tmp;
-    if (!(tmp = PyImport_ImportModule("a84bea286168f88be129__mypyc"))) return NULL;
+    if (!(tmp = PyImport_ImportModule("f1e218790a463ec43ce1__mypyc"))) return NULL;
     PyObject *capsule = PyObject_GetAttrString(tmp, "init_eth_portfolio_scripts___docker___docker_compose");
     Py_DECREF(tmp);
     if (capsule == NULL) return NULL;
-    void *init_func = PyCapsule_GetPointer(capsule, "a84bea286168f88be129__mypyc.init_eth_portfolio_scripts___docker___docker_compose");
+    void *init_func = PyCapsule_GetPointer(capsule, "f1e218790a463ec43ce1__mypyc.init_eth_portfolio_scripts___docker___docker_compose");
     Py_DECREF(capsule);
     if (!init_func) {
         return NULL;

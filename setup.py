@@ -53,6 +53,7 @@ try:
             "eth_portfolio/_loaders/balances.py",
             "eth_portfolio/_loaders/utils.py",
             "eth_portfolio/protocols/dsr.py",
+            "eth_portfolio/protocols/lending/unit.py",
             "eth_portfolio/typing/balance/single.py",
             "eth_portfolio/_argspec.py",
             "eth_portfolio/_config.py",

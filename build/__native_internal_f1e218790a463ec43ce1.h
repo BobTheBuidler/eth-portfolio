@@ -1,12 +1,12 @@
-#ifndef MYPYC_NATIVE_INTERNAL_a84bea286168f88be129_H
-#define MYPYC_NATIVE_INTERNAL_a84bea286168f88be129_H
+#ifndef MYPYC_NATIVE_INTERNAL_f1e218790a463ec43ce1_H
+#define MYPYC_NATIVE_INTERNAL_f1e218790a463ec43ce1_H
 #include <Python.h>
 #include <CPy.h>
-#include "__native_a84bea286168f88be129.h"
+#include "__native_f1e218790a463ec43ce1.h"
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[647];
+extern PyObject *CPyStatics[664];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -48,6 +48,10 @@ extern CPyModule *CPyModule_eth_portfolio___protocols___dsr;
 extern PyObject *CPyStatic_dsr___globals;
 extern CPyModule *CPyModule_eth_portfolio;
 extern CPyModule *CPyModule_eth_portfolio___protocols____base;
+extern CPyModule *CPyModule_eth_portfolio___protocols___lending___unit_internal;
+extern CPyModule *CPyModule_eth_portfolio___protocols___lending___unit;
+extern PyObject *CPyStatic_unit___globals;
+extern CPyModule *CPyModule_eth_portfolio___protocols___lending____base;
 extern CPyModule *CPyModule_eth_portfolio___typing___balance___single_internal;
 extern CPyModule *CPyModule_eth_portfolio___typing___balance___single;
 extern PyObject *CPyStatic_single___globals;
@@ -297,6 +301,51 @@ extern PyObject *CPyPy_dsr____exchange_rate_MakerDSR_gen_____await__(PyObject *s
 extern PyObject *CPyDef_dsr___MakerDSR____exchange_rate(PyObject *cpy_r_self, PyObject *cpy_r_block);
 extern PyObject *CPyPy_dsr___MakerDSR____exchange_rate(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_dsr_____top_level__(void);
+extern PyTypeObject *CPyType_unit___UnitXyz;
+extern PyObject *CPyDef_unit___UnitXyz(void);
+extern PyTypeObject *CPyType_unit____balances_UnitXyz_env;
+extern PyObject *CPyDef_unit____balances_UnitXyz_env(void);
+extern PyTypeObject *CPyType_unit____balances_UnitXyz_gen;
+extern PyObject *CPyDef_unit____balances_UnitXyz_gen(void);
+extern PyTypeObject *CPyType_unit____debt_UnitXyz_env;
+extern PyObject *CPyDef_unit____debt_UnitXyz_env(void);
+extern PyTypeObject *CPyType_unit____debt_UnitXyz_gen;
+extern PyObject *CPyDef_unit____debt_UnitXyz_gen(void);
+extern char CPyDef_unit___UnitXyz_____init__(PyObject *cpy_r_self);
+extern PyObject *CPyPy_unit___UnitXyz_____init__(PyObject *self, PyObject *args, PyObject *kw);
+extern PyObject *CPyDef_unit____balances_UnitXyz_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+extern PyObject *CPyPy_unit____balances_UnitXyz_gen_____mypyc_generator_helper__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_unit____balances_UnitXyz_gen_____next__(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_unit____balances_UnitXyz_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_unit____balances_UnitXyz_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+extern PyObject *CPyPy_unit____balances_UnitXyz_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_unit____balances_UnitXyz_gen_____iter__(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_unit____balances_UnitXyz_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_unit____balances_UnitXyz_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+extern PyObject *CPyPy_unit____balances_UnitXyz_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_unit____balances_UnitXyz_gen___close(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_unit____balances_UnitXyz_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_unit____balances_UnitXyz_gen_____await__(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_unit____balances_UnitXyz_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_unit___UnitXyz____balances(PyObject *cpy_r_self, PyObject *cpy_r_address, PyObject *cpy_r_block);
+extern PyObject *CPyPy_unit___UnitXyz____balances(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_unit____debt_UnitXyz_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+extern PyObject *CPyPy_unit____debt_UnitXyz_gen_____mypyc_generator_helper__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_unit____debt_UnitXyz_gen_____next__(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_unit____debt_UnitXyz_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_unit____debt_UnitXyz_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+extern PyObject *CPyPy_unit____debt_UnitXyz_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_unit____debt_UnitXyz_gen_____iter__(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_unit____debt_UnitXyz_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_unit____debt_UnitXyz_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+extern PyObject *CPyPy_unit____debt_UnitXyz_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_unit____debt_UnitXyz_gen___close(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_unit____debt_UnitXyz_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_unit____debt_UnitXyz_gen_____await__(PyObject *cpy_r___mypyc_self__);
+extern PyObject *CPyPy_unit____debt_UnitXyz_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_unit___UnitXyz____debt(PyObject *cpy_r_self, PyObject *cpy_r_address, PyObject *cpy_r_block);
+extern PyObject *CPyPy_unit___UnitXyz____debt(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern char CPyDef_unit_____top_level__(void);
 extern PyTypeObject *CPyType_single___Balance;
 extern PyTypeObject *CPyType_single___usd_Balance_obj;
 extern PyObject *CPyDef_single___usd_Balance_obj(void);

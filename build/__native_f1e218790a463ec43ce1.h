@@ -1,5 +1,5 @@
-#ifndef MYPYC_NATIVE_a84bea286168f88be129_H
-#define MYPYC_NATIVE_a84bea286168f88be129_H
+#ifndef MYPYC_NATIVE_f1e218790a463ec43ce1_H
+#define MYPYC_NATIVE_f1e218790a463ec43ce1_H
 #include <Python.h>
 #include <CPy.h>
 #ifndef MYPYC_DECLARED_tuple_T3OOO
@@ -333,6 +333,66 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
+    PyObject *_unitVault;
+    CPyTagged _start_block;
+    PyObject *__collaterals;
+} eth_portfolio___protocols___lending___unit___UnitXyzObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_self__;
+    PyObject *_self;
+    PyObject *_address;
+    PyObject *_block;
+    PyObject *_type;
+    PyObject *_value;
+    PyObject *_traceback;
+    PyObject *_arg;
+    CPyTagged ___mypyc_next_label__;
+    PyObject *_balances;
+    PyObject *___mypyc_temp__0;
+    tuple_T3OOO ___mypyc_temp__1;
+    CPyTagged _bal;
+    PyObject *___mypyc_temp__2;
+    tuple_T3OOO ___mypyc_temp__3;
+    CPyTagged ___mypyc_temp__2_0;
+    CPyTagged ___mypyc_temp__2_1;
+} eth_portfolio___protocols___lending___unit____balances_UnitXyz_envObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_env__;
+} eth_portfolio___protocols___lending___unit____balances_UnitXyz_genObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_self__;
+    PyObject *_self;
+    PyObject *_address;
+    PyObject *_block;
+    PyObject *_type;
+    PyObject *_value;
+    PyObject *_traceback;
+    PyObject *_arg;
+    CPyTagged ___mypyc_next_label__;
+    PyObject *_balances;
+    PyObject *___mypyc_temp__4;
+    tuple_T3OOO ___mypyc_temp__5;
+    PyObject *_debt;
+} eth_portfolio___protocols___lending___unit____debt_UnitXyz_envObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_env__;
+} eth_portfolio___protocols___lending___unit____debt_UnitXyz_genObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
     vectorcallfunc vectorcall;
 } eth_portfolio___typing___balance___single___usd_Balance_objObject;
 
@@ -436,7 +496,7 @@ typedef struct {
 } eth_portfolio_scripts___balances___export_balances_genObject;
 
 
-struct export_table_a84bea286168f88be129 {
+struct export_table_f1e218790a463ec43ce1 {
     PyObject **CPyStatic__nonce___logger;
     PyObject **CPyStatic__nonce___logger_is_enabled;
     PyObject **CPyStatic__nonce_____log;
@@ -573,6 +633,34 @@ struct export_table_a84bea286168f88be129 {
     PyObject *(*CPyDef_dsr____exchange_rate_MakerDSR_gen_____await__)(PyObject *cpy_r___mypyc_self__);
     PyObject *(*CPyDef_dsr___MakerDSR____exchange_rate)(PyObject *cpy_r_self, PyObject *cpy_r_block);
     char (*CPyDef_dsr_____top_level__)(void);
+    PyTypeObject **CPyType_unit___UnitXyz;
+    PyObject *(*CPyDef_unit___UnitXyz)(void);
+    PyTypeObject **CPyType_unit____balances_UnitXyz_env;
+    PyObject *(*CPyDef_unit____balances_UnitXyz_env)(void);
+    PyTypeObject **CPyType_unit____balances_UnitXyz_gen;
+    PyObject *(*CPyDef_unit____balances_UnitXyz_gen)(void);
+    PyTypeObject **CPyType_unit____debt_UnitXyz_env;
+    PyObject *(*CPyDef_unit____debt_UnitXyz_env)(void);
+    PyTypeObject **CPyType_unit____debt_UnitXyz_gen;
+    PyObject *(*CPyDef_unit____debt_UnitXyz_gen)(void);
+    char (*CPyDef_unit___UnitXyz_____init__)(PyObject *cpy_r_self);
+    PyObject *(*CPyDef_unit____balances_UnitXyz_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_unit____balances_UnitXyz_gen_____next__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_unit____balances_UnitXyz_gen___send)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_unit____balances_UnitXyz_gen_____iter__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_unit____balances_UnitXyz_gen___throw)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+    PyObject *(*CPyDef_unit____balances_UnitXyz_gen___close)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_unit____balances_UnitXyz_gen_____await__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_unit___UnitXyz____balances)(PyObject *cpy_r_self, PyObject *cpy_r_address, PyObject *cpy_r_block);
+    PyObject *(*CPyDef_unit____debt_UnitXyz_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_unit____debt_UnitXyz_gen_____next__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_unit____debt_UnitXyz_gen___send)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_unit____debt_UnitXyz_gen_____iter__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_unit____debt_UnitXyz_gen___throw)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+    PyObject *(*CPyDef_unit____debt_UnitXyz_gen___close)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_unit____debt_UnitXyz_gen_____await__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_unit___UnitXyz____debt)(PyObject *cpy_r_self, PyObject *cpy_r_address, PyObject *cpy_r_block);
+    char (*CPyDef_unit_____top_level__)(void);
     PyTypeObject **CPyType_single___Balance;
     PyTypeObject **CPyType_single___usd_Balance_obj;
     PyObject *(*CPyDef_single___usd_Balance_obj)(void);
