@@ -16762,7 +16762,6 @@ dsr___MakerDSR_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 static int
 dsr___MakerDSR_traverse(eth_portfolio___protocols___dsr___MakerDSRObject *self, visitproc visit, void *arg)
 {
-    Py_VISIT(self->_networks);
     Py_VISIT(self->_dsr_manager);
     Py_VISIT(self->_pot);
     Py_VISIT(self->__start_block);
@@ -16774,7 +16773,6 @@ dsr___MakerDSR_traverse(eth_portfolio___protocols___dsr___MakerDSRObject *self, 
 static int
 dsr___MakerDSR_clear(eth_portfolio___protocols___dsr___MakerDSRObject *self)
 {
-    Py_CLEAR(self->_networks);
     Py_CLEAR(self->_dsr_manager);
     Py_CLEAR(self->_pot);
     Py_CLEAR(self->__start_block);
@@ -16793,7 +16791,7 @@ dsr___MakerDSR_dealloc(eth_portfolio___protocols___dsr___MakerDSRObject *self)
     CPy_TRASHCAN_END(self)
 }
 
-static CPyVTableItem dsr___MakerDSR_vtable[4];
+static CPyVTableItem dsr___MakerDSR_vtable[3];
 static bool
 CPyDef_dsr___MakerDSR_trait_vtable_setup(void)
 {
@@ -16801,16 +16799,11 @@ CPyDef_dsr___MakerDSR_trait_vtable_setup(void)
         (CPyVTableItem)CPyDef_dsr___MakerDSR_____init__,
         (CPyVTableItem)CPyDef_dsr___MakerDSR____balances,
         (CPyVTableItem)CPyDef_dsr___MakerDSR____exchange_rate,
-        (CPyVTableItem)CPyDef_dsr___MakerDSR_____mypyc_defaults_setup,
     };
     memcpy(dsr___MakerDSR_vtable, dsr___MakerDSR_vtable_scratch, sizeof(dsr___MakerDSR_vtable));
     return 1;
 }
 
-static PyObject *
-dsr___MakerDSR_get_networks(eth_portfolio___protocols___dsr___MakerDSRObject *self, void *closure);
-static int
-dsr___MakerDSR_set_networks(eth_portfolio___protocols___dsr___MakerDSRObject *self, PyObject *value, void *closure);
 static PyObject *
 dsr___MakerDSR_get_dsr_manager(eth_portfolio___protocols___dsr___MakerDSRObject *self, void *closure);
 static int
@@ -16829,9 +16822,6 @@ static int
 dsr___MakerDSR_set__get_chi(eth_portfolio___protocols___dsr___MakerDSRObject *self, PyObject *value, void *closure);
 
 static PyGetSetDef dsr___MakerDSR_getseters[] = {
-    {"networks",
-     (getter)dsr___MakerDSR_get_networks, (setter)dsr___MakerDSR_set_networks,
-     NULL, NULL},
     {"dsr_manager",
      (getter)dsr___MakerDSR_get_dsr_manager, (setter)dsr___MakerDSR_set_dsr_manager,
      NULL, NULL},
@@ -16857,9 +16847,6 @@ static PyMethodDef dsr___MakerDSR_methods[] = {
      METH_FASTCALL | METH_KEYWORDS, NULL},
     {"_exchange_rate",
      (PyCFunction)CPyPy_dsr___MakerDSR____exchange_rate,
-     METH_FASTCALL | METH_KEYWORDS, NULL},
-    {"__mypyc_defaults_setup",
-     (PyCFunction)CPyPy_dsr___MakerDSR_____mypyc_defaults_setup,
      METH_FASTCALL | METH_KEYWORDS, NULL},
     {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
     {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
@@ -16889,10 +16876,6 @@ dsr___MakerDSR_setup(PyTypeObject *type)
     if (self == NULL)
         return NULL;
     self->vtable = dsr___MakerDSR_vtable;
-    if (CPyDef_dsr___MakerDSR_____mypyc_defaults_setup((PyObject *)self) == 0) {
-        Py_DECREF(self);
-        return NULL;
-    }
     return (PyObject *)self;
 }
 
@@ -16907,44 +16890,6 @@ PyObject *CPyDef_dsr___MakerDSR(void)
         return NULL;
     }
     return self;
-}
-
-static PyObject *
-dsr___MakerDSR_get_networks(eth_portfolio___protocols___dsr___MakerDSRObject *self, void *closure)
-{
-    if (unlikely(self->_networks == NULL)) {
-        PyErr_SetString(PyExc_AttributeError,
-            "attribute 'networks' of 'MakerDSR' undefined");
-        return NULL;
-    }
-    CPy_INCREF_NO_IMM(self->_networks);
-    PyObject *retval = self->_networks;
-    return retval;
-}
-
-static int
-dsr___MakerDSR_set_networks(eth_portfolio___protocols___dsr___MakerDSRObject *self, PyObject *value, void *closure)
-{
-    if (value == NULL) {
-        PyErr_SetString(PyExc_AttributeError,
-            "'MakerDSR' object attribute 'networks' cannot be deleted");
-        return -1;
-    }
-    if (self->_networks != NULL) {
-        CPy_DECREF_NO_IMM(self->_networks);
-    }
-    PyObject *tmp;
-    if (likely(PyList_Check(value)))
-        tmp = value;
-    else {
-        CPy_TypeError("list", value); 
-        tmp = NULL;
-    }
-    if (!tmp)
-        return -1;
-    CPy_INCREF_NO_IMM(tmp);
-    self->_networks = tmp;
-    return 0;
 }
 
 static PyObject *
@@ -17611,8 +17556,6 @@ PyObject *CPyInit_eth_portfolio___protocols___dsr(void)
     CPyStatic_dsr___dai = NULL;
     CPy_XDECREF(CPyStatic_dsr___Decimal);
     CPyStatic_dsr___Decimal = NULL;
-    CPy_XDECREF_NO_IMM(CPyStatic_dsr___MakerDSR___networks);
-    CPyStatic_dsr___MakerDSR___networks = NULL;
     Py_CLEAR(CPyType_dsr___MakerDSR);
     Py_CLEAR(CPyType_dsr____balances_MakerDSR_env);
     Py_CLEAR(CPyType_dsr____balances_MakerDSR_gen);
@@ -20142,66 +20085,6 @@ fail: ;
     return NULL;
 }
 
-char CPyDef_dsr___MakerDSR_____mypyc_defaults_setup(PyObject *cpy_r___mypyc_self__) {
-    PyObject *cpy_r_r0;
-    char cpy_r_r1;
-    PyObject *cpy_r_r2;
-    PyObject *cpy_r_r3;
-    PyObject *cpy_r_r4;
-    CPyPtr cpy_r_r5;
-    CPyPtr cpy_r_r6;
-    char cpy_r_r7;
-    cpy_r_r0 = CPyStatic_dsr___Network;
-    if (likely(cpy_r_r0 != NULL)) goto CPyL3;
-    PyErr_SetString(PyExc_NameError, "value for final name \"Network\" was not set");
-    cpy_r_r1 = 0;
-    if (!cpy_r_r1) goto CPyL6;
-    CPy_Unreachable();
-CPyL3: ;
-    cpy_r_r2 = CPyStatics[119]; /* 'Mainnet' */
-    cpy_r_r3 = CPyObject_GetAttr(cpy_r_r0, cpy_r_r2);
-    if (cpy_r_r3 == NULL) goto CPyL6;
-    cpy_r_r4 = PyList_New(1);
-    if (cpy_r_r4 == NULL) goto CPyL7;
-    cpy_r_r5 = (CPyPtr)&((PyListObject *)cpy_r_r4)->ob_item;
-    cpy_r_r6 = *(CPyPtr *)cpy_r_r5;
-    *(PyObject * *)cpy_r_r6 = cpy_r_r3;
-    ((eth_portfolio___protocols___dsr___MakerDSRObject *)cpy_r___mypyc_self__)->_networks = cpy_r_r4;
-    return 1;
-CPyL6: ;
-    cpy_r_r7 = 2;
-    return cpy_r_r7;
-CPyL7: ;
-    CPy_DECREF(cpy_r_r3);
-    goto CPyL6;
-}
-
-PyObject *CPyPy_dsr___MakerDSR_____mypyc_defaults_setup(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__mypyc_defaults_setup", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_dsr___MakerDSR))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio.protocols.dsr.MakerDSR", obj___mypyc_self__); 
-        goto fail;
-    }
-    char retval = CPyDef_dsr___MakerDSR_____mypyc_defaults_setup(arg___mypyc_self__);
-    if (retval == 2) {
-        return NULL;
-    }
-    PyObject *retbox = retval ? Py_True : Py_False;
-    CPy_INCREF(retbox);
-    return retbox;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "__mypyc_defaults_setup", -1, CPyStatic_dsr___globals);
-    return NULL;
-}
-
 char CPyDef_dsr_____top_level__(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -20303,25 +20186,24 @@ char CPyDef_dsr_____top_level__(void) {
     PyObject *cpy_r_r101;
     PyObject *cpy_r_r102;
     PyObject *cpy_r_r103;
-    PyObject *cpy_r_r104;
-    int32_t cpy_r_r105;
-    char cpy_r_r106;
+    int32_t cpy_r_r104;
+    char cpy_r_r105;
+    PyObject *cpy_r_r106;
     PyObject *cpy_r_r107;
-    PyObject *cpy_r_r108;
-    int32_t cpy_r_r109;
-    char cpy_r_r110;
+    int32_t cpy_r_r108;
+    char cpy_r_r109;
+    PyObject *cpy_r_r110;
     PyObject *cpy_r_r111;
-    PyObject *cpy_r_r112;
-    char cpy_r_r113;
+    char cpy_r_r112;
+    PyObject *cpy_r_r113;
     PyObject *cpy_r_r114;
     PyObject *cpy_r_r115;
-    PyObject *cpy_r_r116;
+    CPyPtr cpy_r_r116;
     CPyPtr cpy_r_r117;
-    CPyPtr cpy_r_r118;
-    PyObject *cpy_r_r119;
-    int32_t cpy_r_r120;
+    PyObject *cpy_r_r118;
+    int32_t cpy_r_r119;
+    char cpy_r_r120;
     char cpy_r_r121;
-    char cpy_r_r122;
     cpy_r_r0 = CPyModule_builtins;
     cpy_r_r1 = (PyObject *)&_Py_NoneStruct;
     cpy_r_r2 = cpy_r_r0 != cpy_r_r1;
@@ -20343,11 +20225,11 @@ CPyL3: ;
     cpy_r_r9 = (void *)&cpy_r_r8;
     cpy_r_r10 = CPyStatics[609]; /* (('asyncio', 'asyncio', 'asyncio'),) */
     cpy_r_r11 = CPyStatic_dsr___globals;
-    cpy_r_r12 = CPyStatics[120]; /* 'eth_portfolio/protocols/dsr.py' */
+    cpy_r_r12 = CPyStatics[119]; /* 'eth_portfolio/protocols/dsr.py' */
     cpy_r_r13 = CPyStatics[26]; /* '<module>' */
     cpy_r_r14 = CPyImport_ImportMany(cpy_r_r10, cpy_r_r7, cpy_r_r11, cpy_r_r12, cpy_r_r13, cpy_r_r9);
     if (!cpy_r_r14) goto CPyL37;
-    cpy_r_r15 = CPyStatics[610]; /* ('Final', 'Optional', 'final') */
+    cpy_r_r15 = CPyStatics[610]; /* ('ClassVar', 'Final', 'Optional', 'final') */
     cpy_r_r16 = CPyStatics[35]; /* 'typing' */
     cpy_r_r17 = CPyStatic_dsr___globals;
     cpy_r_r18 = CPyImport_ImportFromMany(cpy_r_r16, cpy_r_r15, cpy_r_r15, cpy_r_r17);
@@ -20365,7 +20247,7 @@ CPyL3: ;
     cpy_r_r23 = (void *)&cpy_r_r22;
     cpy_r_r24 = CPyStatics[593]; /* (('y', 'y', 'y'),) */
     cpy_r_r25 = CPyStatic_dsr___globals;
-    cpy_r_r26 = CPyStatics[120]; /* 'eth_portfolio/protocols/dsr.py' */
+    cpy_r_r26 = CPyStatics[119]; /* 'eth_portfolio/protocols/dsr.py' */
     cpy_r_r27 = CPyStatics[26]; /* '<module>' */
     cpy_r_r28 = CPyImport_ImportMany(cpy_r_r24, cpy_r_r21, cpy_r_r25, cpy_r_r26, cpy_r_r27, cpy_r_r23);
     if (!cpy_r_r28) goto CPyL37;
@@ -20381,7 +20263,7 @@ CPyL3: ;
     CPy_INCREF(CPyModule_y___datatypes);
     CPy_DECREF(cpy_r_r32);
     cpy_r_r33 = CPyStatics[611]; /* ('_decimal',) */
-    cpy_r_r34 = CPyStatics[123]; /* 'eth_portfolio' */
+    cpy_r_r34 = CPyStatics[122]; /* 'eth_portfolio' */
     cpy_r_r35 = CPyStatic_dsr___globals;
     cpy_r_r36 = CPyImport_ImportFromMany(cpy_r_r34, cpy_r_r33, cpy_r_r33, cpy_r_r35);
     if (unlikely(cpy_r_r36 == NULL)) {
@@ -20392,7 +20274,7 @@ CPyL3: ;
     CPy_INCREF(CPyModule_eth_portfolio);
     CPy_DECREF(cpy_r_r36);
     cpy_r_r37 = CPyStatics[612]; /* ('ProtocolABC',) */
-    cpy_r_r38 = CPyStatics[125]; /* 'eth_portfolio.protocols._base' */
+    cpy_r_r38 = CPyStatics[124]; /* 'eth_portfolio.protocols._base' */
     cpy_r_r39 = CPyStatic_dsr___globals;
     cpy_r_r40 = CPyImport_ImportFromMany(cpy_r_r38, cpy_r_r37, cpy_r_r37, cpy_r_r39);
     if (unlikely(cpy_r_r40 == NULL)) {
@@ -20414,7 +20296,7 @@ CPyL3: ;
     CPy_INCREF(CPyModule_eth_portfolio___typing);
     CPy_DECREF(cpy_r_r44);
     cpy_r_r45 = CPyModule_asyncio;
-    cpy_r_r46 = CPyStatics[126]; /* 'gather' */
+    cpy_r_r46 = CPyStatics[125]; /* 'gather' */
     cpy_r_r47 = CPyObject_GetAttr(cpy_r_r45, cpy_r_r46);
     if (unlikely(cpy_r_r47 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 12, CPyStatic_dsr___globals);
@@ -20423,7 +20305,7 @@ CPyL3: ;
     CPyStatic_dsr___gather = cpy_r_r47;
     CPy_INCREF(CPyStatic_dsr___gather);
     cpy_r_r48 = CPyStatic_dsr___globals;
-    cpy_r_r49 = CPyStatics[126]; /* 'gather' */
+    cpy_r_r49 = CPyStatics[125]; /* 'gather' */
     cpy_r_r50 = CPyDict_SetItem(cpy_r_r48, cpy_r_r49, cpy_r_r47);
     CPy_DECREF(cpy_r_r47);
     cpy_r_r51 = cpy_r_r50 >= 0;
@@ -20432,7 +20314,7 @@ CPyL3: ;
         goto CPyL37;
     }
     cpy_r_r52 = CPyModule_y;
-    cpy_r_r53 = CPyStatics[127]; /* 'Contract' */
+    cpy_r_r53 = CPyStatics[126]; /* 'Contract' */
     cpy_r_r54 = CPyObject_GetAttr(cpy_r_r52, cpy_r_r53);
     if (unlikely(cpy_r_r54 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 14, CPyStatic_dsr___globals);
@@ -20441,7 +20323,7 @@ CPyL3: ;
     CPyStatic_dsr___Contract = cpy_r_r54;
     CPy_INCREF(CPyStatic_dsr___Contract);
     cpy_r_r55 = CPyStatic_dsr___globals;
-    cpy_r_r56 = CPyStatics[127]; /* 'Contract' */
+    cpy_r_r56 = CPyStatics[126]; /* 'Contract' */
     cpy_r_r57 = CPyDict_SetItem(cpy_r_r55, cpy_r_r56, cpy_r_r54);
     CPy_DECREF(cpy_r_r54);
     cpy_r_r58 = cpy_r_r57 >= 0;
@@ -20450,7 +20332,7 @@ CPyL3: ;
         goto CPyL37;
     }
     cpy_r_r59 = CPyModule_y;
-    cpy_r_r60 = CPyStatics[128]; /* 'Network' */
+    cpy_r_r60 = CPyStatics[127]; /* 'Network' */
     cpy_r_r61 = CPyObject_GetAttr(cpy_r_r59, cpy_r_r60);
     if (unlikely(cpy_r_r61 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 15, CPyStatic_dsr___globals);
@@ -20459,7 +20341,7 @@ CPyL3: ;
     CPyStatic_dsr___Network = cpy_r_r61;
     CPy_INCREF(CPyStatic_dsr___Network);
     cpy_r_r62 = CPyStatic_dsr___globals;
-    cpy_r_r63 = CPyStatics[128]; /* 'Network' */
+    cpy_r_r63 = CPyStatics[127]; /* 'Network' */
     cpy_r_r64 = CPyDict_SetItem(cpy_r_r62, cpy_r_r63, cpy_r_r61);
     CPy_DECREF(cpy_r_r61);
     cpy_r_r65 = cpy_r_r64 >= 0;
@@ -20468,7 +20350,7 @@ CPyL3: ;
         goto CPyL37;
     }
     cpy_r_r66 = CPyModule_y;
-    cpy_r_r67 = CPyStatics[129]; /* 'contract_creation_block' */
+    cpy_r_r67 = CPyStatics[128]; /* 'contract_creation_block' */
     cpy_r_r68 = CPyObject_GetAttr(cpy_r_r66, cpy_r_r67);
     if (unlikely(cpy_r_r68 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 16, CPyStatic_dsr___globals);
@@ -20477,7 +20359,7 @@ CPyL3: ;
     CPyStatic_dsr___contract_creation_block = cpy_r_r68;
     CPy_INCREF(CPyStatic_dsr___contract_creation_block);
     cpy_r_r69 = CPyStatic_dsr___globals;
-    cpy_r_r70 = CPyStatics[129]; /* 'contract_creation_block' */
+    cpy_r_r70 = CPyStatics[128]; /* 'contract_creation_block' */
     cpy_r_r71 = CPyDict_SetItem(cpy_r_r69, cpy_r_r70, cpy_r_r68);
     CPy_DECREF(cpy_r_r68);
     cpy_r_r72 = cpy_r_r71 >= 0;
@@ -20486,7 +20368,7 @@ CPyL3: ;
         goto CPyL37;
     }
     cpy_r_r73 = CPyModule_y;
-    cpy_r_r74 = CPyStatics[130]; /* 'dai' */
+    cpy_r_r74 = CPyStatics[129]; /* 'dai' */
     cpy_r_r75 = CPyObject_GetAttr(cpy_r_r73, cpy_r_r74);
     if (unlikely(cpy_r_r75 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 17, CPyStatic_dsr___globals);
@@ -20495,7 +20377,7 @@ CPyL3: ;
     CPyStatic_dsr___dai = cpy_r_r75;
     CPy_INCREF(CPyStatic_dsr___dai);
     cpy_r_r76 = CPyStatic_dsr___globals;
-    cpy_r_r77 = CPyStatics[130]; /* 'dai' */
+    cpy_r_r77 = CPyStatics[129]; /* 'dai' */
     cpy_r_r78 = CPyDict_SetItem(cpy_r_r76, cpy_r_r77, cpy_r_r75);
     CPy_DECREF(cpy_r_r75);
     cpy_r_r79 = cpy_r_r78 >= 0;
@@ -20504,7 +20386,7 @@ CPyL3: ;
         goto CPyL37;
     }
     cpy_r_r80 = CPyStatic_dsr___globals;
-    cpy_r_r81 = CPyStatics[122]; /* '_decimal' */
+    cpy_r_r81 = CPyStatics[121]; /* '_decimal' */
     cpy_r_r82 = CPyDict_GetItem(cpy_r_r80, cpy_r_r81);
     if (unlikely(cpy_r_r82 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 19, CPyStatic_dsr___globals);
@@ -20529,7 +20411,7 @@ CPyL3: ;
         goto CPyL37;
     }
     cpy_r_r89 = CPyStatic_dsr___globals;
-    cpy_r_r90 = CPyStatics[124]; /* 'ProtocolABC' */
+    cpy_r_r90 = CPyStatics[123]; /* 'ProtocolABC' */
     cpy_r_r91 = CPyDict_GetItem(cpy_r_r89, cpy_r_r90);
     if (unlikely(cpy_r_r91 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 23, CPyStatic_dsr___globals);
@@ -20541,7 +20423,7 @@ CPyL3: ;
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 23, CPyStatic_dsr___globals);
         goto CPyL37;
     }
-    cpy_r_r93 = CPyStatics[131]; /* 'eth_portfolio.protocols.dsr' */
+    cpy_r_r93 = CPyStatics[130]; /* 'eth_portfolio.protocols.dsr' */
     cpy_r_r94 = (PyObject *)CPyType_dsr___MakerDSR_template;
     cpy_r_r95 = CPyType_FromTemplate(cpy_r_r94, cpy_r_r92, cpy_r_r93);
     CPy_DECREF(cpy_r_r92);
@@ -20555,82 +20437,76 @@ CPyL3: ;
         goto CPyL38;
     }
     cpy_r_r97 = CPyStatics[60]; /* '__mypyc_attrs__' */
-    cpy_r_r98 = CPyStatics[132]; /* 'networks' */
-    cpy_r_r99 = CPyStatics[133]; /* 'dsr_manager' */
-    cpy_r_r100 = CPyStatics[134]; /* 'pot' */
-    cpy_r_r101 = CPyStatics[135]; /* '_start_block' */
-    cpy_r_r102 = CPyStatics[136]; /* '_get_chi' */
-    cpy_r_r103 = CPyStatics[137]; /* '__dict__' */
-    cpy_r_r104 = PyTuple_Pack(6, cpy_r_r98, cpy_r_r99, cpy_r_r100, cpy_r_r101, cpy_r_r102, cpy_r_r103);
-    if (unlikely(cpy_r_r104 == NULL)) {
+    cpy_r_r98 = CPyStatics[131]; /* 'dsr_manager' */
+    cpy_r_r99 = CPyStatics[132]; /* 'pot' */
+    cpy_r_r100 = CPyStatics[133]; /* '_start_block' */
+    cpy_r_r101 = CPyStatics[134]; /* '_get_chi' */
+    cpy_r_r102 = CPyStatics[135]; /* '__dict__' */
+    cpy_r_r103 = PyTuple_Pack(5, cpy_r_r98, cpy_r_r99, cpy_r_r100, cpy_r_r101, cpy_r_r102);
+    if (unlikely(cpy_r_r103 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 23, CPyStatic_dsr___globals);
         goto CPyL38;
     }
-    cpy_r_r105 = PyObject_SetAttr(cpy_r_r95, cpy_r_r97, cpy_r_r104);
-    CPy_DECREF(cpy_r_r104);
-    cpy_r_r106 = cpy_r_r105 >= 0;
-    if (unlikely(!cpy_r_r106)) {
+    cpy_r_r104 = PyObject_SetAttr(cpy_r_r95, cpy_r_r97, cpy_r_r103);
+    CPy_DECREF(cpy_r_r103);
+    cpy_r_r105 = cpy_r_r104 >= 0;
+    if (unlikely(!cpy_r_r105)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 23, CPyStatic_dsr___globals);
         goto CPyL38;
     }
     CPyType_dsr___MakerDSR = (PyTypeObject *)cpy_r_r95;
     CPy_INCREF(CPyType_dsr___MakerDSR);
-    cpy_r_r107 = CPyStatic_dsr___globals;
-    cpy_r_r108 = CPyStatics[138]; /* 'MakerDSR' */
-    cpy_r_r109 = CPyDict_SetItem(cpy_r_r107, cpy_r_r108, cpy_r_r95);
+    cpy_r_r106 = CPyStatic_dsr___globals;
+    cpy_r_r107 = CPyStatics[136]; /* 'MakerDSR' */
+    cpy_r_r108 = CPyDict_SetItem(cpy_r_r106, cpy_r_r107, cpy_r_r95);
     CPy_DECREF(cpy_r_r95);
-    cpy_r_r110 = cpy_r_r109 >= 0;
-    if (unlikely(!cpy_r_r110)) {
+    cpy_r_r109 = cpy_r_r108 >= 0;
+    if (unlikely(!cpy_r_r109)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 23, CPyStatic_dsr___globals);
         goto CPyL37;
     }
-    cpy_r_r111 = (PyObject *)CPyType_dsr___MakerDSR;
-    cpy_r_r112 = CPyStatic_dsr___Network;
-    if (likely(cpy_r_r112 != NULL)) goto CPyL33;
+    cpy_r_r110 = (PyObject *)CPyType_dsr___MakerDSR;
+    cpy_r_r111 = CPyStatic_dsr___Network;
+    if (likely(cpy_r_r111 != NULL)) goto CPyL33;
     PyErr_SetString(PyExc_NameError, "value for final name \"Network\" was not set");
-    cpy_r_r113 = 0;
-    if (unlikely(!cpy_r_r113)) {
+    cpy_r_r112 = 0;
+    if (unlikely(!cpy_r_r112)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 24, CPyStatic_dsr___globals);
         goto CPyL37;
     }
     CPy_Unreachable();
 CPyL33: ;
-    cpy_r_r114 = CPyStatics[119]; /* 'Mainnet' */
-    cpy_r_r115 = CPyObject_GetAttr(cpy_r_r112, cpy_r_r114);
-    if (unlikely(cpy_r_r115 == NULL)) {
+    cpy_r_r113 = CPyStatics[137]; /* 'Mainnet' */
+    cpy_r_r114 = CPyObject_GetAttr(cpy_r_r111, cpy_r_r113);
+    if (unlikely(cpy_r_r114 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 24, CPyStatic_dsr___globals);
         goto CPyL37;
     }
-    cpy_r_r116 = PyList_New(1);
-    if (unlikely(cpy_r_r116 == NULL)) {
+    cpy_r_r115 = PyList_New(1);
+    if (unlikely(cpy_r_r115 == NULL)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 24, CPyStatic_dsr___globals);
         goto CPyL39;
     }
-    cpy_r_r117 = (CPyPtr)&((PyListObject *)cpy_r_r116)->ob_item;
-    cpy_r_r118 = *(CPyPtr *)cpy_r_r117;
-    *(PyObject * *)cpy_r_r118 = cpy_r_r115;
-    cpy_r_r119 = CPyStatics[132]; /* 'networks' */
-    cpy_r_r120 = PyObject_SetAttr(cpy_r_r111, cpy_r_r119, cpy_r_r116);
-    cpy_r_r121 = cpy_r_r120 >= 0;
-    if (unlikely(!cpy_r_r121)) {
+    cpy_r_r116 = (CPyPtr)&((PyListObject *)cpy_r_r115)->ob_item;
+    cpy_r_r117 = *(CPyPtr *)cpy_r_r116;
+    *(PyObject * *)cpy_r_r117 = cpy_r_r114;
+    cpy_r_r118 = CPyStatics[138]; /* 'networks' */
+    cpy_r_r119 = PyObject_SetAttr(cpy_r_r110, cpy_r_r118, cpy_r_r115);
+    CPy_DECREF_NO_IMM(cpy_r_r115);
+    cpy_r_r120 = cpy_r_r119 >= 0;
+    if (unlikely(!cpy_r_r120)) {
         CPy_AddTraceback("eth_portfolio/protocols/dsr.py", "<module>", 24, CPyStatic_dsr___globals);
-        goto CPyL40;
+        goto CPyL37;
     }
-    CPyStatic_dsr___MakerDSR___networks = cpy_r_r116;
-    CPy_INCREF_NO_IMM(CPyStatic_dsr___MakerDSR___networks);
-    CPy_DECREF_NO_IMM(cpy_r_r116);
     return 1;
 CPyL37: ;
-    cpy_r_r122 = 2;
-    return cpy_r_r122;
+    cpy_r_r121 = 2;
+    return cpy_r_r121;
 CPyL38: ;
     CPy_DecRef(cpy_r_r95);
     goto CPyL37;
 CPyL39: ;
-    CPy_DecRef(cpy_r_r115);
-    goto CPyL37;
-CPyL40: ;
-    CPy_DecRef(cpy_r_r116);
+    CPy_DecRef(cpy_r_r114);
     goto CPyL37;
 }
 
@@ -25277,13 +25153,13 @@ CPyL3: ;
     CPy_INCREF(CPyModule_y);
     CPy_DECREF(cpy_r_r20);
     cpy_r_r21 = CPyStatic__shitcoins___globals;
-    cpy_r_r22 = CPyStatics[128]; /* 'Network' */
+    cpy_r_r22 = CPyStatics[127]; /* 'Network' */
     cpy_r_r23 = CPyDict_GetItem(cpy_r_r21, cpy_r_r22);
     if (unlikely(cpy_r_r23 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_shitcoins.py", "<module>", 8, CPyStatic__shitcoins___globals);
         goto CPyL53;
     }
-    cpy_r_r24 = CPyStatics[119]; /* 'Mainnet' */
+    cpy_r_r24 = CPyStatics[137]; /* 'Mainnet' */
     cpy_r_r25 = CPyObject_GetAttr(cpy_r_r23, cpy_r_r24);
     CPy_DECREF(cpy_r_r23);
     if (unlikely(cpy_r_r25 == NULL)) {
@@ -25718,7 +25594,7 @@ CPyL3: ;
         goto CPyL54;
     }
     cpy_r_r238 = CPyStatic__shitcoins___globals;
-    cpy_r_r239 = CPyStatics[128]; /* 'Network' */
+    cpy_r_r239 = CPyStatics[127]; /* 'Network' */
     cpy_r_r240 = CPyDict_GetItem(cpy_r_r238, cpy_r_r239);
     if (unlikely(cpy_r_r240 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_shitcoins.py", "<module>", 232, CPyStatic__shitcoins___globals);
@@ -25742,7 +25618,7 @@ CPyL3: ;
     CPy_INCREF(cpy_r_r243);
     *(PyObject * *)cpy_r_r246 = cpy_r_r243;
     cpy_r_r247 = CPyStatic__shitcoins___globals;
-    cpy_r_r248 = CPyStatics[128]; /* 'Network' */
+    cpy_r_r248 = CPyStatics[127]; /* 'Network' */
     cpy_r_r249 = CPyDict_GetItem(cpy_r_r247, cpy_r_r248);
     if (unlikely(cpy_r_r249 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_shitcoins.py", "<module>", 236, CPyStatic__shitcoins___globals);
@@ -25790,7 +25666,7 @@ CPyL3: ;
     cpy_r_r267 = cpy_r_r261 + 48;
     *(PyObject * *)cpy_r_r267 = cpy_r_r258;
     cpy_r_r268 = CPyStatic__shitcoins___globals;
-    cpy_r_r269 = CPyStatics[128]; /* 'Network' */
+    cpy_r_r269 = CPyStatics[127]; /* 'Network' */
     cpy_r_r270 = CPyDict_GetItem(cpy_r_r268, cpy_r_r269);
     if (unlikely(cpy_r_r270 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_shitcoins.py", "<module>", 245, CPyStatic__shitcoins___globals);
@@ -26808,13 +26684,13 @@ CPyL40: ;
         goto CPyL103;
     }
     cpy_r_r113 = CPyStatic_constants___globals;
-    cpy_r_r114 = CPyStatics[128]; /* 'Network' */
+    cpy_r_r114 = CPyStatics[127]; /* 'Network' */
     cpy_r_r115 = CPyDict_GetItem(cpy_r_r113, cpy_r_r114);
     if (unlikely(cpy_r_r115 == NULL)) {
         CPy_AddTraceback("eth_portfolio/constants.py", "<module>", 24, CPyStatic_constants___globals);
         goto CPyL103;
     }
-    cpy_r_r116 = CPyStatics[119]; /* 'Mainnet' */
+    cpy_r_r116 = CPyStatics[137]; /* 'Mainnet' */
     cpy_r_r117 = CPyObject_GetAttr(cpy_r_r115, cpy_r_r116);
     CPy_DECREF(cpy_r_r115);
     if (unlikely(cpy_r_r117 == NULL)) {
@@ -26953,13 +26829,13 @@ CPyL40: ;
         goto CPyL103;
     }
     cpy_r_r161 = CPyStatic_constants___globals;
-    cpy_r_r162 = CPyStatics[128]; /* 'Network' */
+    cpy_r_r162 = CPyStatics[127]; /* 'Network' */
     cpy_r_r163 = CPyDict_GetItem(cpy_r_r161, cpy_r_r162);
     if (unlikely(cpy_r_r163 == NULL)) {
         CPy_AddTraceback("eth_portfolio/constants.py", "<module>", 37, CPyStatic_constants___globals);
         goto CPyL103;
     }
-    cpy_r_r164 = CPyStatics[119]; /* 'Mainnet' */
+    cpy_r_r164 = CPyStatics[137]; /* 'Mainnet' */
     cpy_r_r165 = CPyObject_GetAttr(cpy_r_r163, cpy_r_r164);
     CPy_DECREF(cpy_r_r163);
     if (unlikely(cpy_r_r165 == NULL)) {
@@ -27084,13 +26960,13 @@ CPyL40: ;
         goto CPyL103;
     }
     cpy_r_r205 = CPyStatic_constants___globals;
-    cpy_r_r206 = CPyStatics[128]; /* 'Network' */
+    cpy_r_r206 = CPyStatics[127]; /* 'Network' */
     cpy_r_r207 = CPyDict_GetItem(cpy_r_r205, cpy_r_r206);
     if (unlikely(cpy_r_r207 == NULL)) {
         CPy_AddTraceback("eth_portfolio/constants.py", "<module>", 50, CPyStatic_constants___globals);
         goto CPyL103;
     }
-    cpy_r_r208 = CPyStatics[119]; /* 'Mainnet' */
+    cpy_r_r208 = CPyStatics[137]; /* 'Mainnet' */
     cpy_r_r209 = CPyObject_GetAttr(cpy_r_r207, cpy_r_r208);
     CPy_DECREF(cpy_r_r207);
     if (unlikely(cpy_r_r209 == NULL)) {
@@ -35156,12 +35032,12 @@ const char * const CPyLit_Str[] = {
     "\004\016max_sleep_time\vmax_retries\rsuppress_logs\027get_transaction_receipt",
     "\002\031__get_transaction_receipt*0x373238337Bfe1146fb49989fc222523f83081dDb",
     "\003*0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7\003chi\tcoroutine",
-    "\005\rTokenBalances\005pieOf\aMainnet\036eth_portfolio/protocols/dsr.py\bOptional",
-    "\004\b_decimal\reth_portfolio\vProtocolABC\035eth_portfolio.protocols._base",
-    "\005\006gather\bContract\aNetwork\027contract_creation_block\003dai",
-    "\005\033eth_portfolio.protocols.dsr\bnetworks\vdsr_manager\003pot\f_start_block",
-    "\a\b_get_chi\b__dict__\bMakerDSR\000\005{:{}}\006format\032 is not a `Balance` object",
-    "\001\tTypeError",
+    "\005\rTokenBalances\005pieOf\036eth_portfolio/protocols/dsr.py\bOptional\b_decimal",
+    "\004\reth_portfolio\vProtocolABC\035eth_portfolio.protocols._base\006gather",
+    "\004\bContract\aNetwork\027contract_creation_block\003dai",
+    "\005\033eth_portfolio.protocols.dsr\vdsr_manager\003pot\f_start_block\b_get_chi",
+    "\a\b__dict__\bMakerDSR\aMainnet\bnetworks\000\005{:{}}\006format",
+    "\002\032 is not a `Balance` object\tTypeError",
     "\002>These Balance objects represent balances of different tokens (\005 and ",
     "\002\001)@These Balance objects represent balances from different blocks (",
     "\005\tException\vCannot add \004args\a__add__\033 is not a `Balance` object.",
@@ -35476,14 +35352,14 @@ const int CPyLit_Tuple[] = {
     38, 39, 1, 41, 1, 65, 2, 70, 19, 4, 72, 73, 70, 19, 1, 576, 1, 75, 1,
     32, 3, 78, 78, 78, 1, 592, 1, 79, 2, 81, 82, 1, 74, 1, 71, 1, 86, 2,
     93, 94, 3, 95, 95, 95, 3, 96, 96, 96, 3, 582, 600, 601, 1, 98, 1, 99,
-    1, 101, 2, 105, 62, 4, 107, 108, 109, 110, 1, 19, 1, 575, 3, 32, 121,
-    34, 1, 122, 1, 124, 2, 86, 117, 4, 155, 121, 156, 34, 1, 157, 1, 159,
-    1, 172, 1, 173, 5, 175, 178, 179, 33, 180, 3, 181, 181, 181, 1, 620,
-    3, 30, 32, 186, 1, 39, 2, 128, 187, 1, 426, 3, 128, 187, 431, 5, 469,
-    470, 471, 472, 473, 1, 496, 2, 484, 481, 1, 105, 1, 504, 1, 511, 5,
-    178, 512, 179, 33, 513, 1, 514, 1, 477, 1, 523, 3, 531, 533, 534, 1,
-    541, 3, 544, 528, 545, 3, 548, 549, 550, 1, 551, 2, 536, 538, 3, 553,
-    36, 36, 2, 581, 643, 1, 479, 2, 543, 529
+    1, 101, 2, 105, 62, 4, 107, 108, 109, 110, 1, 19, 1, 575, 4, 29, 32,
+    120, 34, 1, 121, 1, 123, 2, 86, 117, 4, 155, 120, 156, 34, 1, 157, 1,
+    159, 1, 172, 1, 173, 5, 175, 178, 179, 33, 180, 3, 181, 181, 181, 1,
+    620, 3, 30, 32, 186, 1, 39, 2, 127, 187, 1, 426, 3, 127, 187, 431, 5,
+    469, 470, 471, 472, 473, 1, 496, 2, 484, 481, 1, 105, 1, 504, 1, 511,
+    5, 178, 512, 179, 33, 513, 1, 514, 1, 477, 1, 523, 3, 531, 533, 534,
+    1, 541, 3, 544, 528, 545, 3, 548, 549, 550, 1, 551, 2, 536, 538, 3,
+    553, 36, 36, 2, 581, 643, 1, 479, 2, 543, 529
 };
 const int CPyLit_FrozenSet[] = {0};
 CPyModule *CPyModule_eth_portfolio____loaders____nonce_internal = NULL;
@@ -35724,7 +35600,6 @@ PyObject *CPyStatic_dsr___Network = NULL;
 PyObject *CPyStatic_dsr___contract_creation_block = NULL;
 PyObject *CPyStatic_dsr___dai = NULL;
 PyObject *CPyStatic_dsr___Decimal = NULL;
-PyObject *CPyStatic_dsr___MakerDSR___networks = NULL;
 PyTypeObject *CPyType_dsr___MakerDSR;
 PyObject *CPyDef_dsr___MakerDSR(void);
 PyTypeObject *CPyType_dsr____balances_MakerDSR_env;
@@ -35769,8 +35644,6 @@ PyObject *CPyDef_dsr____exchange_rate_MakerDSR_gen_____await__(PyObject *cpy_r__
 PyObject *CPyPy_dsr____exchange_rate_MakerDSR_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 PyObject *CPyDef_dsr___MakerDSR____exchange_rate(PyObject *cpy_r_self, PyObject *cpy_r_block);
 PyObject *CPyPy_dsr___MakerDSR____exchange_rate(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-char CPyDef_dsr___MakerDSR_____mypyc_defaults_setup(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy_dsr___MakerDSR_____mypyc_defaults_setup(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 char CPyDef_dsr_____top_level__(void);
 PyTypeObject *CPyType_single___Balance;
 PyTypeObject *CPyType_single___usd_Balance_obj;
@@ -36005,7 +35878,6 @@ static struct export_table_a84bea286168f88be129 exports = {
     &CPyStatic_dsr___contract_creation_block,
     &CPyStatic_dsr___dai,
     &CPyStatic_dsr___Decimal,
-    &CPyStatic_dsr___MakerDSR___networks,
     &CPyType_dsr___MakerDSR,
     &CPyDef_dsr___MakerDSR,
     &CPyType_dsr____balances_MakerDSR_env,
@@ -36033,7 +35905,6 @@ static struct export_table_a84bea286168f88be129 exports = {
     &CPyDef_dsr____exchange_rate_MakerDSR_gen___close,
     &CPyDef_dsr____exchange_rate_MakerDSR_gen_____await__,
     &CPyDef_dsr___MakerDSR____exchange_rate,
-    &CPyDef_dsr___MakerDSR_____mypyc_defaults_setup,
     &CPyDef_dsr_____top_level__,
     &CPyType_single___Balance,
     &CPyType_single___usd_Balance_obj,

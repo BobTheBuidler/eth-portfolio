@@ -252,7 +252,6 @@ extern PyObject *CPyStatic_dsr___Network;
 extern PyObject *CPyStatic_dsr___contract_creation_block;
 extern PyObject *CPyStatic_dsr___dai;
 extern PyObject *CPyStatic_dsr___Decimal;
-extern PyObject *CPyStatic_dsr___MakerDSR___networks;
 extern PyTypeObject *CPyType_dsr___MakerDSR;
 extern PyObject *CPyDef_dsr___MakerDSR(void);
 extern PyTypeObject *CPyType_dsr____balances_MakerDSR_env;
@@ -297,8 +296,6 @@ extern PyObject *CPyDef_dsr____exchange_rate_MakerDSR_gen_____await__(PyObject *
 extern PyObject *CPyPy_dsr____exchange_rate_MakerDSR_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_dsr___MakerDSR____exchange_rate(PyObject *cpy_r_self, PyObject *cpy_r_block);
 extern PyObject *CPyPy_dsr___MakerDSR____exchange_rate(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern char CPyDef_dsr___MakerDSR_____mypyc_defaults_setup(PyObject *cpy_r___mypyc_self__);
-extern PyObject *CPyPy_dsr___MakerDSR_____mypyc_defaults_setup(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_dsr_____top_level__(void);
 extern PyTypeObject *CPyType_single___Balance;
 extern PyTypeObject *CPyType_single___usd_Balance_obj;
