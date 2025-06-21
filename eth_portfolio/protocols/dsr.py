@@ -38,12 +38,10 @@ class MakerDSR(ProtocolABC):
         balances = TokenBalances(block=block)
         if block and block < self._start_block:
             return balances
-        results = await gather(
+        pie, exchange_rate = await gather(
             self._get_pie(address, block_identifier=block),
             self._exchange_rate(block),
         )
-        pie = results[0]
-        exchange_rate = results[1]
         if pie:
             dai_in_dsr = pie * exchange_rate / 10**18
             balances[dai] = Balance(dai_in_dsr, dai_in_dsr, token=dai, block=block)
