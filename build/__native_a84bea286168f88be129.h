@@ -277,7 +277,6 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *_networks;
     PyObject *_dsr_manager;
     PyObject *_pot;
     PyObject *__start_block;
@@ -546,7 +545,6 @@ struct export_table_a84bea286168f88be129 {
     PyObject **CPyStatic_dsr___contract_creation_block;
     PyObject **CPyStatic_dsr___dai;
     PyObject **CPyStatic_dsr___Decimal;
-    PyObject **CPyStatic_dsr___MakerDSR___networks;
     PyTypeObject **CPyType_dsr___MakerDSR;
     PyObject *(*CPyDef_dsr___MakerDSR)(void);
     PyTypeObject **CPyType_dsr____balances_MakerDSR_env;
@@ -574,7 +572,6 @@ struct export_table_a84bea286168f88be129 {
     PyObject *(*CPyDef_dsr____exchange_rate_MakerDSR_gen___close)(PyObject *cpy_r___mypyc_self__);
     PyObject *(*CPyDef_dsr____exchange_rate_MakerDSR_gen_____await__)(PyObject *cpy_r___mypyc_self__);
     PyObject *(*CPyDef_dsr___MakerDSR____exchange_rate)(PyObject *cpy_r_self, PyObject *cpy_r_block);
-    char (*CPyDef_dsr___MakerDSR_____mypyc_defaults_setup)(PyObject *cpy_r___mypyc_self__);
     char (*CPyDef_dsr_____top_level__)(void);
     PyTypeObject **CPyType_single___Balance;
     PyTypeObject **CPyType_single___usd_Balance_obj;
