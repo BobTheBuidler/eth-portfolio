@@ -281,6 +281,7 @@ typedef struct {
     PyObject *_pot;
     PyObject *__start_block;
     PyObject *__get_chi;
+    PyObject *__get_pie;
 } eth_portfolio___protocols___dsr___MakerDSRObject;
 
 typedef struct {
