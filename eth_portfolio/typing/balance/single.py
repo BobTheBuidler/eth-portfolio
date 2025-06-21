@@ -24,6 +24,7 @@ class Balance(
         >>> combined_balance.usd_value
         Decimal('3000')
     """
+    __init__ = DictStruct.__init__
 
     balance: Decimal = Decimal(0)
     """
