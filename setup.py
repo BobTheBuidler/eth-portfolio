@@ -54,7 +54,8 @@ try:
             "eth_portfolio/_loaders/utils.py",
             # NOTE: disabled until https://github.com/mypyc/mypyc/issues/1112 is fixed
             # "eth_portfolio/protocols/dsr.py",
-            "eth_portfolio/typing/balance/single.py",
+            # NOTE: disabled until https://github.com/mypyc/mypyc/issues/1113 is fixed
+            # "eth_portfolio/typing/balance/single.py",
             "eth_portfolio/_argspec.py",
             "eth_portfolio/_config.py",
             "eth_portfolio/_shitcoins.py",
