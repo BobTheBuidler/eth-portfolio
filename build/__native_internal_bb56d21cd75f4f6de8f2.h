@@ -1,12 +1,12 @@
-#ifndef MYPYC_NATIVE_INTERNAL_93dc731d39cdfeb0971f_H
-#define MYPYC_NATIVE_INTERNAL_93dc731d39cdfeb0971f_H
+#ifndef MYPYC_NATIVE_INTERNAL_bb56d21cd75f4f6de8f2_H
+#define MYPYC_NATIVE_INTERNAL_bb56d21cd75f4f6de8f2_H
 #include <Python.h>
 #include <CPy.h>
-#include "__native_93dc731d39cdfeb0971f.h"
+#include "__native_bb56d21cd75f4f6de8f2.h"
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[618];
+extern PyObject *CPyStatics[579];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -43,11 +43,6 @@ extern PyObject *CPyStatic_utils___globals;
 extern CPyModule *CPyModule_eth_retry;
 extern CPyModule *CPyModule_msgspec;
 extern CPyModule *CPyModule_async_lru;
-extern CPyModule *CPyModule_eth_portfolio___typing___balance___single_internal;
-extern CPyModule *CPyModule_eth_portfolio___typing___balance___single;
-extern PyObject *CPyStatic_single___globals;
-extern CPyModule *CPyModule_dictstruct;
-extern CPyModule *CPyModule_mypy_extensions;
 extern CPyModule *CPyModule_eth_portfolio____argspec_internal;
 extern CPyModule *CPyModule_eth_portfolio____argspec;
 extern PyObject *CPyStatic__argspec___globals;
@@ -242,38 +237,6 @@ extern PyObject *CPyPy_utils____get_transaction_receipt_gen_____await__(PyObject
 extern PyObject *CPyDef_utils____get_transaction_receipt(PyObject *cpy_r_txhash);
 extern PyObject *CPyPy_utils____get_transaction_receipt(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_utils_____top_level__(void);
-extern PyTypeObject *CPyType_single___Balance;
-extern PyTypeObject *CPyType_single___usd_Balance_obj;
-extern PyObject *CPyDef_single___usd_Balance_obj(void);
-extern PyTypeObject *CPyType_single_____add___3_Balance_obj;
-extern PyObject *CPyDef_single_____add___3_Balance_obj(void);
-extern PyTypeObject *CPyType_single_____radd___3_Balance_obj;
-extern PyObject *CPyDef_single_____radd___3_Balance_obj(void);
-extern PyTypeObject *CPyType_single_____sub___3_Balance_obj;
-extern PyObject *CPyDef_single_____sub___3_Balance_obj(void);
-extern PyTypeObject *CPyType_single_____bool___3_Balance_obj;
-extern PyObject *CPyDef_single_____bool___3_Balance_obj(void);
-extern PyObject *CPyDef_single___usd_Balance_obj_____get__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
-extern PyObject *CPyPy_single___usd_Balance_obj_____get__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef_single___usd_Balance_obj_____call__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_self);
-extern PyObject *CPyPy_single___usd_Balance_obj_____call__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef_single_____add___3_Balance_obj_____get__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
-extern PyObject *CPyPy_single_____add___3_Balance_obj_____get__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef_single_____add___3_Balance_obj_____call__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_self, PyObject *cpy_r_other);
-extern PyObject *CPyPy_single_____add___3_Balance_obj_____call__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef_single_____radd___3_Balance_obj_____get__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
-extern PyObject *CPyPy_single_____radd___3_Balance_obj_____get__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef_single_____radd___3_Balance_obj_____call__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_self, PyObject *cpy_r_other);
-extern PyObject *CPyPy_single_____radd___3_Balance_obj_____call__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef_single_____sub___3_Balance_obj_____get__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
-extern PyObject *CPyPy_single_____sub___3_Balance_obj_____get__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef_single_____sub___3_Balance_obj_____call__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_self, PyObject *cpy_r_other);
-extern PyObject *CPyPy_single_____sub___3_Balance_obj_____call__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef_single_____bool___3_Balance_obj_____get__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
-extern PyObject *CPyPy_single_____bool___3_Balance_obj_____get__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern char CPyDef_single_____bool___3_Balance_obj_____call__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_self);
-extern PyObject *CPyPy_single_____bool___3_Balance_obj_____call__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern char CPyDef_single_____top_level__(void);
 extern PyObject *CPyDef__argspec___get_args_type(PyObject *cpy_r_sample);
 extern PyObject *CPyPy__argspec___get_args_type(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef__argspec___get_kwargs_type(PyObject *cpy_r_sample);

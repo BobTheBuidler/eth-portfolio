@@ -1,5 +1,5 @@
-#ifndef MYPYC_NATIVE_93dc731d39cdfeb0971f_H
-#define MYPYC_NATIVE_93dc731d39cdfeb0971f_H
+#ifndef MYPYC_NATIVE_bb56d21cd75f4f6de8f2_H
+#define MYPYC_NATIVE_bb56d21cd75f4f6de8f2_H
 #include <Python.h>
 #include <CPy.h>
 #ifndef MYPYC_DECLARED_tuple_T3OOO
@@ -277,36 +277,6 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    vectorcallfunc vectorcall;
-} eth_portfolio___typing___balance___single___usd_Balance_objObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    vectorcallfunc vectorcall;
-} eth_portfolio___typing___balance___single_____add___3_Balance_objObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    vectorcallfunc vectorcall;
-} eth_portfolio___typing___balance___single_____radd___3_Balance_objObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    vectorcallfunc vectorcall;
-} eth_portfolio___typing___balance___single_____sub___3_Balance_objObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    vectorcallfunc vectorcall;
-} eth_portfolio___typing___balance___single_____bool___3_Balance_objObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
     PyObject *___mypyc_self__;
     PyObject *_fn;
     PyObject *_compose_wrap;
@@ -380,7 +350,7 @@ typedef struct {
 } eth_portfolio_scripts___balances___export_balances_genObject;
 
 
-struct export_table_93dc731d39cdfeb0971f {
+struct export_table_bb56d21cd75f4f6de8f2 {
     PyObject **CPyStatic__nonce___logger;
     PyObject **CPyStatic__nonce___logger_is_enabled;
     PyObject **CPyStatic__nonce_____log;
@@ -483,28 +453,6 @@ struct export_table_93dc731d39cdfeb0971f {
     PyObject *(*CPyDef_utils____get_transaction_receipt_gen_____await__)(PyObject *cpy_r___mypyc_self__);
     PyObject *(*CPyDef_utils____get_transaction_receipt)(PyObject *cpy_r_txhash);
     char (*CPyDef_utils_____top_level__)(void);
-    PyTypeObject **CPyType_single___Balance;
-    PyTypeObject **CPyType_single___usd_Balance_obj;
-    PyObject *(*CPyDef_single___usd_Balance_obj)(void);
-    PyTypeObject **CPyType_single_____add___3_Balance_obj;
-    PyObject *(*CPyDef_single_____add___3_Balance_obj)(void);
-    PyTypeObject **CPyType_single_____radd___3_Balance_obj;
-    PyObject *(*CPyDef_single_____radd___3_Balance_obj)(void);
-    PyTypeObject **CPyType_single_____sub___3_Balance_obj;
-    PyObject *(*CPyDef_single_____sub___3_Balance_obj)(void);
-    PyTypeObject **CPyType_single_____bool___3_Balance_obj;
-    PyObject *(*CPyDef_single_____bool___3_Balance_obj)(void);
-    PyObject *(*CPyDef_single___usd_Balance_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
-    PyObject *(*CPyDef_single___usd_Balance_obj_____call__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_self);
-    PyObject *(*CPyDef_single_____add___3_Balance_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
-    PyObject *(*CPyDef_single_____add___3_Balance_obj_____call__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_self, PyObject *cpy_r_other);
-    PyObject *(*CPyDef_single_____radd___3_Balance_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
-    PyObject *(*CPyDef_single_____radd___3_Balance_obj_____call__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_self, PyObject *cpy_r_other);
-    PyObject *(*CPyDef_single_____sub___3_Balance_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
-    PyObject *(*CPyDef_single_____sub___3_Balance_obj_____call__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_self, PyObject *cpy_r_other);
-    PyObject *(*CPyDef_single_____bool___3_Balance_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
-    char (*CPyDef_single_____bool___3_Balance_obj_____call__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_self);
-    char (*CPyDef_single_____top_level__)(void);
     PyObject *(*CPyDef__argspec___get_args_type)(PyObject *cpy_r_sample);
     PyObject *(*CPyDef__argspec___get_kwargs_type)(PyObject *cpy_r_sample);
     PyObject *(*CPyDef__argspec___get_return_type)(PyObject *cpy_r_sample);
