@@ -15,7 +15,7 @@ Welcome to eth-portfolio's documentation!
    exporter
    new-protocols
 
-Indices and tables
+Indices and Tables
 ==================
 
 * :ref:`genindex`
