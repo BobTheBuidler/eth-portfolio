@@ -2,9 +2,9 @@ apiVersion: 1
 
 providers:
 - name: 'Portfolio dashboards'
-  folder: 'portfolio'
+  folder: 'Portfolio'
   type: file
   disableDeletion: true
   editable: false
   options:
-    path: /etc/grafana/provisioning/dashboards/portfolio
+    path: /etc/grafana/provisioning/dashboards/Portfolio

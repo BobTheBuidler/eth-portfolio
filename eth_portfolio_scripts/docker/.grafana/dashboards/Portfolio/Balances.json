@@ -103,7 +103,7 @@
                 {
                     "id": "calculateField",
                     "options": {
-                        "alias": "yfi price",
+                        "alias": "YFI Price",
                         "binary": {
                             "left": "YFI Value",
                             "operator": "/",
@@ -125,7 +125,7 @@
                             "left": "yvYFI Value",
                             "operator": "/",
                             "reducer": "sum",
-                            "right": "yfi price"
+                            "right": "YFI Price"
                         },
                         "mode": "binary",
                         "reduce": {
@@ -653,15 +653,15 @@
             "targets": [
                 {
                     "exemplar": true,
-                    "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket!=\"YFI\", bucket!=\"Other long term assets\"}) by (bucket)",
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket!=\"YFI\", bucket!=\"Other long term assets\"}) by (Bucket)",
                     "hide": false,
                     "interval": "",
-                    "legendFormat": "{{bucket}}",
+                    "legendFormat": "{{Bucket}}",
                     "refId": "A"
                 },
                 {
                     "exemplar": true,
-                    "expr": "sum(my_portfolio_assets{param=\"usd value\",token=\"YFI\"}) by (bucket)",
+                    "expr": "sum(my_portfolio_assets{param=\"usd value\",token=\"YFI\"}) by (Bucket)",
                     "hide": true,
                     "interval": "",
                     "legendFormat": "",
@@ -746,9 +746,9 @@
             "targets": [
                 {
                     "exemplar": true,
-                    "expr": "sum(my_portfolio_debt{param=\"usd value\"}) by (token)",
+                    "expr": "sum(my_portfolio_debt{param=\"usd value\"}) by (Token)",
                     "interval": "",
-                    "legendFormat": "{{token}}",
+                    "legendFormat": "{{Token}}",
                     "refId": "A"
                 }
             ],
@@ -1048,10 +1048,10 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Cash & cash equivalents\"}) by (token)",
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Cash & cash equivalents\"}) by (Token)",
                             "hide": false,
                             "interval": "",
-                            "legendFormat": "{{token}}",
+                            "legendFormat": "{{Token}}",
                             "refId": "A"
                         }
                     ],
@@ -1168,10 +1168,10 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"ETH\"}) by (token)",
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"ETH\"}) by (Token)",
                             "hide": false,
                             "interval": "",
-                            "legendFormat": "{{token}}",
+                            "legendFormat": "{{Token}}",
                             "refId": "A"
                         }
                     ],
@@ -1288,10 +1288,10 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"BTC\"}) by (token)",
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"BTC\"}) by (Token)",
                             "hide": false,
                             "interval": "",
-                            "legendFormat": "{{token}}",
+                            "legendFormat": "{{Token}}",
                             "refId": "A"
                         }
                     ],
@@ -1408,10 +1408,10 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Other short term assets\", token=\"yvCurve-sdCRVv2-f\", token=\"OGV\", token=\"NEWO\", token=\"yvCurve-pUSD-FRAXBP-f\", token=\"yvCurve-yETH-f\", token=\"GUSD\"}) by (token)",
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Other short term assets\", token=\"yvCurve-sdCRVv2-f\", token=\"OGV\", token=\"NEWO\", token=\"yvCurve-pUSD-FRAXBP-f\", token=\"yvCurve-yETH-f\", token=\"GUSD\"}) by (Token)",
                             "hide": false,
                             "interval": "",
-                            "legendFormat": "{{token}}",
+                            "legendFormat": "{{Token}}",
                             "refId": "A"
                         }
                     ],
@@ -1528,10 +1528,10 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Cash & cash equivalents\"}) by (token,wallet)",
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Cash & cash equivalents\"}) by (Token,Wallet)",
                             "hide": false,
                             "interval": "",
-                            "legendFormat": "{{token}} | {{wallet}}",
+                            "legendFormat": "{{Token}} | {{Wallet}}",
                             "refId": "A"
                         }
                     ],
@@ -1648,10 +1648,10 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"ETH\"}) by (token,wallet)",
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"ETH\"}) by (Token,Wallet)",
                             "hide": false,
                             "interval": "",
-                            "legendFormat": "{{token}} | {{wallet}}",
+                            "legendFormat": "{{Token}} | {{Wallet}}",
                             "refId": "A"
                         }
                     ],
@@ -1768,10 +1768,10 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"BTC\"}) by (token, wallet)",
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"BTC\"}) by (Token,Wallet)",
                             "hide": false,
                             "interval": "",
-                            "legendFormat": "{{token}} | {{wallet}}",
+                            "legendFormat": "{{Token}} | {{Wallet}}",
                             "refId": "A"
                         }
                     ],
@@ -1888,10 +1888,10 @@
                     "targets": [
                         {
                             "exemplar": true,
-                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Other short term assets\", token=\"yvCurve-sdCRVv2-f\", token=\"OGV\", token=\"NEWO\", token=\"yvCurve-pUSD-FRAXBP-f\", token=\"yvCurve-yETH-f\", token=\"GUSD\"}) by (token, wallet)",
+                            "expr": "sum(my_portfolio_assets{param=\"usd value\",bucket=\"Other short term assets\", token=\"yvCurve-sdCRVv2-f\", token=\"OGV\", token=\"NEWO\", token=\"yvCurve-pUSD-FRAXBP-f\", token=\"yvCurve-yETH-f\", token=\"GUSD\"}) by (Token,Wallet)",
                             "hide": false,
                             "interval": "",
-                            "legendFormat": "{{token}} | {{wallet}}",
+                            "legendFormat": "{{Token}} | {{Wallet}}",
                             "refId": "A"
                         }
                     ],
