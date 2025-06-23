@@ -228,6 +228,7 @@ shitcoins: Final = {
         # fake AERO
         "0x3C78E3391C47fB9310BDB9085955934E1622442f",
         "0x1f186De364a56e741Fcb188d37a393d409D08AeA",
+        "0xDd62542e9Be4390147f8c1f5b417f50ec4F834B7",
     ],
     Network.Fantom: [
         # generally looks like shit
