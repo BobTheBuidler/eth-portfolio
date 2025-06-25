@@ -182,8 +182,4 @@ def _is_stable(token: ChecksumAddress) -> bool:
         - :data:`INTL_STABLECOINS`
         - :data:`STABLEISH_COINS`
     """
-    return (
-        token in STABLECOINS
-        or token in INTL_STABLECOINS
-        or token in STABLEISH
-    )
+    return token in STABLECOINS or token in INTL_STABLECOINS or token in STABLEISH
