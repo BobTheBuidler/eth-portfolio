@@ -3,19 +3,23 @@ from typing import Optional, Set
 
 from a_sync import igather
 from async_lru import alru_cache
-from brownie import chain
-from y.constants import STABLECOINS, WRAPPED_GAS_COIN
+from eth_typing import ChecksumAddress
+from y.constants import CHAINID, STABLECOINS, WRAPPED_GAS_COIN
+from y.convert import to_address
 from y.datatypes import Address, AnyAddressType
+from y.exceptions import ContractNotVerified
 from y.prices.lending.aave import aave
 from y.prices.lending.compound import CToken, compound
 from y.prices.stable_swap.curve import curve
 from y.prices.yearn import YearnInspiredVault, is_yearn_vault
 
 from eth_portfolio.constants import BTC_LIKE, ETH_LIKE, INTL_STABLECOINS
+from eth_portfolio._stableish import STABLEISH_COINS
 
 logger = logging.getLogger(__name__)
 
-OTHER_LONG_TERM_ASSETS: Set[Address] = {}.get(chain.id, set())
+STABLEISH = STABLEISH_COINS[CHAINID]
+OTHER_LONG_TERM_ASSETS: Set[Address] = {}.get(CHAINID, set())
 
 
 async def get_token_bucket(token: AnyAddressType) -> str:
@@ -53,27 +57,25 @@ async def get_token_bucket(token: AnyAddressType) -> str:
         - :func:`_unwrap_token`
         - :func:`_is_stable`
     """
-    token = str(token)
+    token_address = to_address(token)
     try:
-        token = str(await _unwrap_token(token))
-    except ValueError as e:
-        if str(e).startswith("Source for") and str(e).endswith("has not been verified"):
-            return "Other short term assets"
-        raise
+        token_address = await _unwrap_token(token_address)
+    except ContractNotVerified as e:
+        return "Other short term assets"
 
-    if _is_stable(token):
+    if _is_stable(token_address):
         return "Cash & cash equivalents"
-    if token in ETH_LIKE:
+    if token_address in ETH_LIKE:
         return "ETH"
-    if token in BTC_LIKE:
+    if token_address in BTC_LIKE:
         return "BTC"
-    if token in OTHER_LONG_TERM_ASSETS:
+    if token_address in OTHER_LONG_TERM_ASSETS:
         return "Other long term assets"
     return "Other short term assets"
 
 
 @alru_cache(maxsize=None)
-async def _unwrap_token(token) -> str:
+async def _unwrap_token(token) -> ChecksumAddress:
     """
     Recursively unwrap a token to its underlying asset.
 
@@ -158,18 +160,19 @@ def _pool_bucket(pool_tokens: set) -> Optional[str]:
     return list(INTL_STABLECOINS)[0] if pool_tokens < INTL_STABLECOINS else None
 
 
-def _is_stable(token: Address) -> bool:
+def _is_stable(token: ChecksumAddress) -> bool:
     """
-    Check if a token is a stablecoin.
+    Check if a token is a stablecoin or stable-ish coin.
 
-    This function checks if a given token is present in the :data:`STABLECOINS` or
-    :data:`INTL_STABLECOINS` sets, indicating that it is a stablecoin.
+    This function checks if a given token is present in the :data:`STABLECOINS`,
+    :data:`INTL_STABLECOINS`, or :data:`STABLEISH_COINS` sets, indicating that it is
+    a stablecoin or considered stable by the wider market.
 
     Args:
         token: The address of the token to check.
 
     Example:
-        Check if a token is a stablecoin:
+        Check if a token is a stablecoin or stable-ish coin:
 
         >>> _is_stable("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")
         True
@@ -177,5 +180,10 @@ def _is_stable(token: Address) -> bool:
     See Also:
         - :data:`STABLECOINS`
         - :data:`INTL_STABLECOINS`
+        - :data:`STABLEISH_COINS`
     """
-    return token in STABLECOINS or token in INTL_STABLECOINS
+    return (
+        token in STABLECOINS
+        or token in INTL_STABLECOINS
+        or token in STABLEISH
+    )
