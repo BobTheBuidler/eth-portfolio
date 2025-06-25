@@ -1,9 +1,6 @@
 networks:
   eth_portfolio:
 
-volumes:
-  grafana_data: {}
-
 services:
   grafana:
     image: grafana/grafana:10.2.0
@@ -22,7 +19,6 @@ services:
     #command: >
     #  sh -c "grafana-cli plugins install frser-sqlite-datasource && /run.sh"
     volumes:
-      - grafana_data:/var/lib/grafana
       - ./.grafana/:/etc/grafana/provisioning/
     networks:
       - eth_portfolio
