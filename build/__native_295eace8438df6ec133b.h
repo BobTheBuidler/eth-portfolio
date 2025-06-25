@@ -1,5 +1,5 @@
-#ifndef MYPYC_NATIVE_bb56d21cd75f4f6de8f2_H
-#define MYPYC_NATIVE_bb56d21cd75f4f6de8f2_H
+#ifndef MYPYC_NATIVE_295eace8438df6ec133b_H
+#define MYPYC_NATIVE_295eace8438df6ec133b_H
 #include <Python.h>
 #include <CPy.h>
 #ifndef MYPYC_DECLARED_tuple_T3OOO
@@ -350,7 +350,7 @@ typedef struct {
 } eth_portfolio_scripts___balances___export_balances_genObject;
 
 
-struct export_table_bb56d21cd75f4f6de8f2 {
+struct export_table_295eace8438df6ec133b {
     PyObject **CPyStatic__nonce___logger;
     PyObject **CPyStatic__nonce___logger_is_enabled;
     PyObject **CPyStatic__nonce_____log;
@@ -462,6 +462,8 @@ struct export_table_bb56d21cd75f4f6de8f2 {
     char (*CPyDef__config_____top_level__)(void);
     PyObject **CPyStatic__shitcoins___shitcoins;
     char (*CPyDef__shitcoins_____top_level__)(void);
+    PyObject **CPyStatic__stableish___stableish;
+    char (*CPyDef__stableish_____top_level__)(void);
     CPyTagged *CPyStatic_constants___NUM_WALLETS;
     PyObject **CPyStatic_constants___ADDRESSES;
     PyObject **CPyStatic_constants___TRANSFER_SIGS;

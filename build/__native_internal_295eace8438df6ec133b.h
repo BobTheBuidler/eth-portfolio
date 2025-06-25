@@ -1,12 +1,12 @@
-#ifndef MYPYC_NATIVE_INTERNAL_bb56d21cd75f4f6de8f2_H
-#define MYPYC_NATIVE_INTERNAL_bb56d21cd75f4f6de8f2_H
+#ifndef MYPYC_NATIVE_INTERNAL_295eace8438df6ec133b_H
+#define MYPYC_NATIVE_INTERNAL_295eace8438df6ec133b_H
 #include <Python.h>
 #include <CPy.h>
-#include "__native_bb56d21cd75f4f6de8f2.h"
+#include "__native_295eace8438df6ec133b.h"
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[583];
+extern PyObject *CPyStatics[597];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -54,6 +54,9 @@ extern CPyModule *CPyModule_os;
 extern CPyModule *CPyModule_eth_portfolio____shitcoins_internal;
 extern CPyModule *CPyModule_eth_portfolio____shitcoins;
 extern PyObject *CPyStatic__shitcoins___globals;
+extern CPyModule *CPyModule_eth_portfolio____stableish_internal;
+extern CPyModule *CPyModule_eth_portfolio____stableish;
+extern PyObject *CPyStatic__stableish___globals;
 extern CPyModule *CPyModule_eth_portfolio___constants_internal;
 extern CPyModule *CPyModule_eth_portfolio___constants;
 extern PyObject *CPyStatic_constants___globals;
@@ -250,6 +253,8 @@ extern CPyTagged CPyStatic__config___REORG_BUFFER;
 extern char CPyDef__config_____top_level__(void);
 extern PyObject *CPyStatic__shitcoins___shitcoins;
 extern char CPyDef__shitcoins_____top_level__(void);
+extern PyObject *CPyStatic__stableish___stableish;
+extern char CPyDef__stableish_____top_level__(void);
 extern CPyTagged CPyStatic_constants___NUM_WALLETS;
 extern PyObject *CPyStatic_constants___ADDRESSES;
 extern PyObject *CPyStatic_constants___TRANSFER_SIGS;

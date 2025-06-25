@@ -4,11 +4,11 @@ PyMODINIT_FUNC
 PyInit__config(void)
 {
     PyObject *tmp;
-    if (!(tmp = PyImport_ImportModule("bb56d21cd75f4f6de8f2__mypyc"))) return NULL;
+    if (!(tmp = PyImport_ImportModule("295eace8438df6ec133b__mypyc"))) return NULL;
     PyObject *capsule = PyObject_GetAttrString(tmp, "init_eth_portfolio____config");
     Py_DECREF(tmp);
     if (capsule == NULL) return NULL;
-    void *init_func = PyCapsule_GetPointer(capsule, "bb56d21cd75f4f6de8f2__mypyc.init_eth_portfolio____config");
+    void *init_func = PyCapsule_GetPointer(capsule, "295eace8438df6ec133b__mypyc.init_eth_portfolio____config");
     Py_DECREF(capsule);
     if (!init_func) {
         return NULL;
