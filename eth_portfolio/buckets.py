@@ -18,7 +18,7 @@ from eth_portfolio._stableish import STABLEISH_COINS
 
 logger = logging.getLogger(__name__)
 
-STABLEISH = STABLEISH_COINS[CHAINID]
+SORT_AS_STABLES = STABLECOINS.keys() | STABLEISH_COINS[CHAINID]
 OTHER_LONG_TERM_ASSETS: Set[Address] = {}.get(CHAINID, set())
 
 
@@ -155,8 +155,8 @@ def _pool_bucket(pool_tokens: set) -> Optional[str]:
         return list(BTC_LIKE)[0]
     if pool_tokens < ETH_LIKE:
         return list(ETH_LIKE)[0]
-    if pool_tokens < STABLECOINS.keys():
-        return list(STABLECOINS.keys())[0]
+    if pool_tokens < SORT_AS_STABLES:
+        return list(SORT_AS_STABLES)[0]
     return list(INTL_STABLECOINS)[0] if pool_tokens < INTL_STABLECOINS else None
 
 
