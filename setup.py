@@ -50,7 +50,7 @@ try:
     ext_modules = mypycify(
         [
             "eth_portfolio/_loaders/_nonce.py",
-            "eth_portfolio/_loaders/balances.py",
+            #"eth_portfolio/_loaders/balances.py",  reenable after debugging
             "eth_portfolio/_loaders/utils.py",
             # NOTE: disabled until https://github.com/mypyc/mypyc/issues/1112 is fixed
             # "eth_portfolio/protocols/dsr.py",
