@@ -73,7 +73,7 @@
              
   <h1>Source code for eth_portfolio.buckets</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Final</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">a_sync</span><span class="w"> </span><span class="kn">import</span> <span class="n">igather</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">async_lru</span><span class="w"> </span><span class="kn">import</span> <span class="n">alru_cache</span>
@@ -90,10 +90,11 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">eth_portfolio.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">BTC_LIKE</span><span class="p">,</span> <span class="n">ETH_LIKE</span><span class="p">,</span> <span class="n">INTL_STABLECOINS</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">eth_portfolio._stableish</span><span class="w"> </span><span class="kn">import</span> <span class="n">STABLEISH_COINS</span>
 
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">log_debug</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">debug</span>
 
-<span class="n">SORT_AS_STABLES</span> <span class="o">=</span> <span class="n">STABLECOINS</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">|</span> <span class="n">STABLEISH_COINS</span><span class="p">[</span><span class="n">CHAINID</span><span class="p">]</span>
-<span class="n">OTHER_LONG_TERM_ASSETS</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">Address</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">CHAINID</span><span class="p">,</span> <span class="nb">set</span><span class="p">())</span>
+<span class="n">SORT_AS_STABLES</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="n">STABLECOINS</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">|</span> <span class="n">STABLEISH_COINS</span><span class="p">[</span><span class="n">CHAINID</span><span class="p">]</span>
+<span class="n">OTHER_LONG_TERM_ASSETS</span><span class="p">:</span> <span class="n">Final</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="n">ChecksumAddress</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">CHAINID</span><span class="p">,</span> <span class="nb">set</span><span class="p">())</span>  <span class="c1"># type: ignore [call-overload]</span>
 
 
 <div class="viewcode-block" id="get_token_bucket">
@@ -180,23 +181,31 @@
 <span class="sd">        - :class:`y.prices.lending.aave`</span>
 <span class="sd">        - :class:`y.prices.lending.compound.CToken`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;unwrapping </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;ETH&quot;</span><span class="p">,</span> <span class="s2">&quot;0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&quot;</span><span class="p">}:</span>
+        <span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;returning eee address&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">token</span>
 
     <span class="k">if</span> <span class="k">await</span> <span class="n">is_yearn_vault</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">underlying</span> <span class="o">=</span> <span class="k">await</span> <span class="n">YearnInspiredVault</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">asynchronous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">underlying</span>
+        <span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;underlying: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">underlying</span><span class="p">)</span>
         <span class="k">return</span> <span class="k">await</span> <span class="n">_unwrap_token</span><span class="p">(</span><span class="n">underlying</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">curve</span> <span class="ow">and</span> <span class="p">(</span><span class="n">pool</span> <span class="o">:=</span> <span class="k">await</span> <span class="n">curve</span><span class="o">.</span><span class="n">get_pool</span><span class="p">(</span><span class="n">token</span><span class="p">)):</span>
         <span class="n">pool_tokens</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="k">await</span> <span class="n">igather</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">_unwrap_token</span><span class="p">,</span> <span class="k">await</span> <span class="n">pool</span><span class="o">.</span><span class="n">coins</span><span class="p">)))</span>
+        <span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;pool_tokens: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pool_tokens</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">pool_bucket</span> <span class="o">:=</span> <span class="n">_pool_bucket</span><span class="p">(</span><span class="n">pool_tokens</span><span class="p">):</span>
+            <span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;returning pool bucket: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pool_bucket</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">pool_bucket</span>  <span class="c1"># type: ignore</span>
     <span class="k">if</span> <span class="n">aave</span> <span class="ow">and</span> <span class="k">await</span> <span class="n">aave</span><span class="o">.</span><span class="n">is_atoken</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+        <span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;atoken&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="k">await</span> <span class="n">aave</span><span class="o">.</span><span class="n">underlying</span><span class="p">(</span><span class="n">token</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">compound</span> <span class="ow">and</span> <span class="k">await</span> <span class="n">compound</span><span class="o">.</span><span class="n">is_compound_market</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+        <span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;unwrapping ctoken </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="k">await</span> <span class="n">CToken</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">asynchronous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">underlying</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">WRAPPED_GAS_COIN</span>
+    <span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;returning: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">token</span>
 
 
@@ -227,7 +236,7 @@
 <span class="sd">        - :data:`STABLECOINS`</span>
 <span class="sd">        - :data:`INTL_STABLECOINS`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Pool tokens: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pool_tokens</span><span class="p">)</span>
+    <span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Pool tokens: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pool_tokens</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">pool_tokens</span> <span class="o">&lt;</span> <span class="n">BTC_LIKE</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">BTC_LIKE</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">pool_tokens</span> <span class="o">&lt;</span> <span class="n">ETH_LIKE</span><span class="p">:</span>
