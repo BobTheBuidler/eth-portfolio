@@ -117,18 +117,18 @@ async def _unwrap_token(token) -> ChecksumAddress:
         pool_tokens = set(await igather(map(_unwrap_token, await pool.coins)))
         log_debug("pool_tokens: %s", pool_tokens)
         if pool_bucket := _pool_bucket(pool_tokens):
-            log_debug('returning pool bucket: %s', pool_bucket)
+            log_debug("returning pool bucket: %s", pool_bucket)
             return pool_bucket  # type: ignore
     if aave and await aave.is_atoken(token):
-        log_debug('atoken')
+        log_debug("atoken")
         return str(await aave.underlying(token))
     if compound and await compound.is_compound_market(token):
-        log_debug('unwrapping ctoken %s', token)
+        log_debug("unwrapping ctoken %s", token)
         try:
             return str(await CToken(token, asynchronous=True).underlying)
         except AttributeError:
             return WRAPPED_GAS_COIN
-    log_debug('returning: %s', token)
+    log_debug("returning: %s", token)
     return token
 
 
