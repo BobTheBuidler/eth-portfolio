@@ -1,5 +1,5 @@
 import logging
-from typing import Optional, Set
+from typing import Final, Optional, Set
 
 from a_sync import igather
 from async_lru import alru_cache
@@ -16,10 +16,11 @@ from y.prices.yearn import YearnInspiredVault, is_yearn_vault
 from eth_portfolio.constants import BTC_LIKE, ETH_LIKE, INTL_STABLECOINS
 from eth_portfolio._stableish import STABLEISH_COINS
 
-logger = logging.getLogger(__name__)
+logger: Final = logging.getLogger(__name__)
+log_debug: Final = logger.debug
 
-SORT_AS_STABLES = STABLECOINS.keys() | STABLEISH_COINS[CHAINID]
-OTHER_LONG_TERM_ASSETS: Set[Address] = {}.get(CHAINID, set())
+SORT_AS_STABLES: Final = STABLECOINS.keys() | STABLEISH_COINS[CHAINID]
+OTHER_LONG_TERM_ASSETS: Final[Set[ChecksumAddress]] = {}.get(CHAINID, set())  # type: ignore [call-overload]
 
 
 async def get_token_bucket(token: AnyAddressType) -> str:
@@ -103,23 +104,31 @@ async def _unwrap_token(token) -> ChecksumAddress:
         - :class:`y.prices.lending.aave`
         - :class:`y.prices.lending.compound.CToken`
     """
+    log_debug("unwrapping %s", token)
     if str(token) in {"ETH", "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"}:
+        log_debug("returning eee address")
         return token
 
     if await is_yearn_vault(token, sync=False):
         underlying = await YearnInspiredVault(token, asynchronous=True).underlying
+        log_debug("underlying: %s", underlying)
         return await _unwrap_token(underlying)
     if curve and (pool := await curve.get_pool(token)):
         pool_tokens = set(await igather(map(_unwrap_token, await pool.coins)))
+        log_debug("pool_tokens: %s", pool_tokens)
         if pool_bucket := _pool_bucket(pool_tokens):
+            log_debug('returning pool bucket: %s', pool_bucket)
             return pool_bucket  # type: ignore
     if aave and await aave.is_atoken(token):
+        log_debug('atoken')
         return str(await aave.underlying(token))
     if compound and await compound.is_compound_market(token):
+        log_debug('unwrapping ctoken %s', token)
         try:
             return str(await CToken(token, asynchronous=True).underlying)
         except AttributeError:
             return WRAPPED_GAS_COIN
+    log_debug('returning: %s', token)
     return token
 
 
@@ -150,7 +159,7 @@ def _pool_bucket(pool_tokens: set) -> Optional[str]:
         - :data:`STABLECOINS`
         - :data:`INTL_STABLECOINS`
     """
-    logger.debug("Pool tokens: %s", pool_tokens)
+    log_debug("Pool tokens: %s", pool_tokens)
     if pool_tokens < BTC_LIKE:
         return list(BTC_LIKE)[0]
     if pool_tokens < ETH_LIKE:
