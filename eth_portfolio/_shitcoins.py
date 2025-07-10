@@ -67,6 +67,7 @@ shitcoins: Final = {
         "0x635701CC5fE41FE8AbD02aa74Beb02e3540E9BB2",
         "0xF709642622729feafC8bf0934679706df49d8A30",
         # Tagged as phishing on Etherscan
+        "0x6426b6C2A9108Fa815bcccA3a3232301E1895742",
         "0x0bF377fb3b5F1dD601e693B8fAF6b0bD249f37D3",
         "0xBf5fB1563ef58ba41325454ca61Cc3D62bd40744",
         "0x54fd62228C6e1234fd5Fded28555CA963Dcf6d26",
