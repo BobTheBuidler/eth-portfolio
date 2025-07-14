@@ -80,38 +80,22 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_self__;
     PyObject *_address;
     PyObject *_block;
-    PyObject *_type;
-    PyObject *_value;
-    PyObject *_traceback;
-    PyObject *_arg;
-    CPyTagged ___mypyc_next_label__;
+    int32_t ___mypyc_next_label__;
     PyObject *___mypyc_temp__0;
     tuple_T3OOO ___mypyc_temp__1;
     PyObject *_nonce;
     tuple_T3OOO ___mypyc_temp__2;
     PyObject *_e;
-} eth_portfolio____loaders____nonce___get_nonce_at_block_envObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    PyObject *___mypyc_env__;
 } eth_portfolio____loaders____nonce___get_nonce_at_block_genObject;
 
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_self__;
     PyObject *_address;
     CPyTagged _nonce;
-    PyObject *_type;
-    PyObject *_value;
-    PyObject *_traceback;
-    PyObject *_arg;
-    CPyTagged ___mypyc_next_label__;
+    int32_t ___mypyc_next_label__;
     PyObject *_highest_known_nonce_lt_query;
     PyObject *_lowest_known_nonce_gt_query;
     PyObject *___mypyc_temp__3;
@@ -144,28 +128,17 @@ typedef struct {
     PyObject *___mypyc_temp__23;
     tuple_T3OOO ___mypyc_temp__24;
     CPyTagged _prev_block_nonce;
-} eth_portfolio____loaders____nonce___get_block_for_nonce_envObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    PyObject *___mypyc_env__;
 } eth_portfolio____loaders____nonce___get_block_for_nonce_genObject;
 
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_self__;
     PyObject *_address;
     CPyTagged _nonce;
     PyObject *_lo;
     PyObject *_hi;
     CPyTagged _range_size;
-    PyObject *_type;
-    PyObject *_value;
-    PyObject *_traceback;
-    PyObject *_arg;
-    CPyTagged ___mypyc_next_label__;
+    int32_t ___mypyc_next_label__;
     CPyTagged _num_chunks;
     CPyTagged _chunk_size;
     PyObject *___mypyc_temp__25;
@@ -185,24 +158,13 @@ typedef struct {
     CPyTagged ___mypyc_temp__35;
     PyObject *_block;
     CPyTagged _n;
-} eth_portfolio____loaders____nonce____get_area_envObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    PyObject *___mypyc_env__;
 } eth_portfolio____loaders____nonce____get_area_genObject;
 
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
     uint32_t bitmap;
-    PyObject *___mypyc_self__;
-    PyObject *_type;
-    PyObject *_value;
-    PyObject *_traceback;
-    PyObject *_arg;
-    CPyTagged ___mypyc_next_label__;
+    int32_t ___mypyc_next_label__;
     PyObject *___mypyc_temp__36;
     PyObject *___mypyc_temp__37;
     char ___mypyc_temp__38;
@@ -218,26 +180,15 @@ typedef struct {
     tuple_T3OOO ___mypyc_temp__46;
     PyObject *___mypyc_temp__47;
     tuple_T3OOO ___mypyc_temp__48;
-} eth_portfolio____loaders____nonce___get_block_number_envObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    PyObject *___mypyc_env__;
 } eth_portfolio____loaders____nonce___get_block_number_genObject;
 
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_self__;
     PyObject *_token;
     PyObject *_address;
     PyObject *_block;
-    PyObject *_type;
-    PyObject *_value;
-    PyObject *_traceback;
-    PyObject *_arg;
-    CPyTagged ___mypyc_next_label__;
+    int32_t ___mypyc_next_label__;
     PyObject *___mypyc_temp__0;
     tuple_T3OOO ___mypyc_temp__1;
     PyObject *_balance;
@@ -246,32 +197,15 @@ typedef struct {
     PyObject *___mypyc_temp__3;
     tuple_T3OOO ___mypyc_temp__4;
     PyObject *_price;
-} eth_portfolio____loaders___balances___load_token_balance_envObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    PyObject *___mypyc_env__;
 } eth_portfolio____loaders___balances___load_token_balance_genObject;
 
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_self__;
     PyObject *_txhash;
-    PyObject *_type;
-    PyObject *_value;
-    PyObject *_traceback;
-    PyObject *_arg;
-    CPyTagged ___mypyc_next_label__;
+    int32_t ___mypyc_next_label__;
     PyObject *___mypyc_temp__0;
     tuple_T3OOO ___mypyc_temp__1;
-} eth_portfolio____loaders___utils____get_transaction_receipt_envObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    PyObject *___mypyc_env__;
 } eth_portfolio____loaders___utils____get_transaction_receipt_genObject;
 
 typedef struct {
@@ -293,7 +227,7 @@ typedef struct {
     PyObject *_value;
     PyObject *_traceback;
     PyObject *_arg;
-    CPyTagged ___mypyc_next_label__;
+    int32_t ___mypyc_next_label__;
     PyObject *___mypyc_temp__0;
     tuple_T3OOO ___mypyc_temp__1;
     PyObject *___mypyc_temp__2;
@@ -315,13 +249,8 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_self__;
     PyObject *_args;
-    PyObject *_type;
-    PyObject *_value;
-    PyObject *_traceback;
-    PyObject *_arg;
-    CPyTagged ___mypyc_next_label__;
+    int32_t ___mypyc_next_label__;
     PyObject *_interval;
     PyObject *_portfolio;
     PyObject *_export_start_block;
@@ -341,12 +270,6 @@ typedef struct {
     PyObject *___mypyc_temp__11;
     tuple_T3OOO ___mypyc_temp__12;
     PyObject *___mypyc_temp__2_0;
-} eth_portfolio_scripts___balances___export_balances_envObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    PyObject *___mypyc_env__;
 } eth_portfolio_scripts___balances___export_balances_genObject;
 
 
@@ -365,20 +288,12 @@ struct export_table_295eace8438df6ec133b {
     PyObject *(*CPyDef__nonce___BlockCache)(void);
     PyTypeObject **CPyType__nonce_____mypyc_lambda__0_obj;
     PyObject *(*CPyDef__nonce_____mypyc_lambda__0_obj)(void);
-    PyTypeObject **CPyType__nonce___get_nonce_at_block_env;
-    PyObject *(*CPyDef__nonce___get_nonce_at_block_env)(void);
     PyTypeObject **CPyType__nonce___get_nonce_at_block_gen;
     PyObject *(*CPyDef__nonce___get_nonce_at_block_gen)(void);
-    PyTypeObject **CPyType__nonce___get_block_for_nonce_env;
-    PyObject *(*CPyDef__nonce___get_block_for_nonce_env)(void);
     PyTypeObject **CPyType__nonce___get_block_for_nonce_gen;
     PyObject *(*CPyDef__nonce___get_block_for_nonce_gen)(void);
-    PyTypeObject **CPyType__nonce____get_area_env;
-    PyObject *(*CPyDef__nonce____get_area_env)(void);
     PyTypeObject **CPyType__nonce____get_area_gen;
     PyObject *(*CPyDef__nonce____get_area_gen)(void);
-    PyTypeObject **CPyType__nonce___get_block_number_env;
-    PyObject *(*CPyDef__nonce___get_block_number_env)(void);
     PyTypeObject **CPyType__nonce___get_block_number_gen;
     PyObject *(*CPyDef__nonce___get_block_number_gen)(void);
     PyObject *(*CPyDef__nonce_____mypyc_lambda__0_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
@@ -422,8 +337,6 @@ struct export_table_295eace8438df6ec133b {
     PyObject **CPyStatic__loaders___balances____ZERO;
     PyObject **CPyStatic__loaders___balances___logger;
     PyObject **CPyStatic__loaders___balances____builtin_round;
-    PyTypeObject **CPyType__loaders___balances___load_token_balance_env;
-    PyObject *(*CPyDef__loaders___balances___load_token_balance_env)(void);
     PyTypeObject **CPyType__loaders___balances___load_token_balance_gen;
     PyObject *(*CPyDef__loaders___balances___load_token_balance_gen)(void);
     PyObject *(*CPyDef__loaders___balances___load_token_balance_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
@@ -440,8 +353,6 @@ struct export_table_295eace8438df6ec133b {
     PyObject **CPyStatic_utils___Raw;
     PyObject **CPyStatic_utils___get_transaction_receipt;
     PyObject **CPyStatic_utils_____get_transaction_receipt;
-    PyTypeObject **CPyType_utils____get_transaction_receipt_env;
-    PyObject *(*CPyDef_utils____get_transaction_receipt_env)(void);
     PyTypeObject **CPyType_utils____get_transaction_receipt_gen;
     PyObject *(*CPyDef_utils____get_transaction_receipt_gen)(void);
     PyObject *(*CPyDef_utils____get_transaction_receipt_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
@@ -505,8 +416,6 @@ struct export_table_295eace8438df6ec133b {
     PyObject **CPyStatic_eth_portfolio_scripts___balances____UTC;
     PyObject **CPyStatic_eth_portfolio_scripts___balances___create_task;
     PyObject **CPyStatic_eth_portfolio_scripts___balances___yield_to_loop;
-    PyTypeObject **CPyType_eth_portfolio_scripts___balances___export_balances_env;
-    PyObject *(*CPyDef_eth_portfolio_scripts___balances___export_balances_env)(void);
     PyTypeObject **CPyType_eth_portfolio_scripts___balances___export_balances_gen;
     PyObject *(*CPyDef_eth_portfolio_scripts___balances___export_balances_gen)(void);
     PyObject *(*CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
