@@ -6,6 +6,6 @@ evmspec>=0.4.1
 ez-a-sync>=0.32.7
 faster-eth-utils
 numpy<2
-pandas>=1.4.3,<1.6
+pandas>=1.4.3,<3
 typed-envs>=0.0.9
 ypricemagic>=4.6.21.dev0,<5
