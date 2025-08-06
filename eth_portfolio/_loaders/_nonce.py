@@ -145,7 +145,7 @@ async def _get_area(
     return lo, hi
 
 
-def _update_nonces(address: ChecksumAddress, nonce: Nonce, block: BlockNumber):
+def _update_nonces(address: ChecksumAddress, nonce: Nonce, block: BlockNumber) -> None:
     # if you are searching for `nonce` and you verified it occurs AT or ABOVE `block` call this fn.
     if block > nonces[address][nonce]:
         nonces[address][nonce] = block
@@ -178,13 +178,13 @@ def _get_num_chunks(range_size: int) -> int:
 
 @final
 class BlockCache:
-    block: ClassVar = 0
+    block: ClassVar[BlockNumber] = 0
     updated_at: ClassVar = 0.0
     lock: Final = asyncio.Lock()
     ttl: Final = 5.0
 
 
-async def get_block_number():
+async def get_block_number() -> BlockNumber:
     if now() - BlockCache.updated_at < BlockCache.ttl:
         return BlockCache.block
     async with BlockCache.lock:
