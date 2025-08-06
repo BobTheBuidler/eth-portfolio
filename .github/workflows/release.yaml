@@ -48,6 +48,7 @@ jobs:
             build_type: musllinux-x86
             cibw_build: "*musllinux*"
             cibw_archs_linux: i686
+            cibw_env: 'PIP_ONLY_BINARY=":pydantic-core:"'
             artifact_name: "wheels-ubuntu-latest-musllinux-x86"
 
           # ----------------------------------------------------
@@ -105,7 +106,7 @@ jobs:
           # Which wheels to build for Linux (manylinux vs. musllinux)
           CIBW_BUILD: ${{ matrix.cibw_build || '' }}
           # Download wheels for deps, don't build from source
-          CIBW_ENVIRONMENT: 'PIP_ONLY_BINARY=":all:"'
+          CIBW_ENVIRONMENT: ${{ matrix.cibw_env || '' }}
         run: |
           python -m cibuildwheel --output-dir wheelhouse
 
