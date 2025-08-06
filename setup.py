@@ -72,7 +72,6 @@ try:
             "--install-types",
             "--disable-error-code=unused-ignore",
             "--disable-error-code=import-not-found",
-            "--disable-error-code=import-untyped",
             # temporary
             "--disable-error-code=call-arg",
             "--disable-error-code=misc",
