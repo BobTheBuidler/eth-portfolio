@@ -73,7 +73,7 @@
              
   <h1>Source code for eth_portfolio.buckets</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Final</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Final</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">a_sync</span><span class="w"> </span><span class="kn">import</span> <span class="n">igather</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">async_lru</span><span class="w"> </span><span class="kn">import</span> <span class="n">alru_cache</span>
@@ -153,7 +153,7 @@
 
 
 <span class="nd">@alru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_unwrap_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ChecksumAddress</span><span class="p">:</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_unwrap_token</span><span class="p">(</span><span class="n">token</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ChecksumAddress</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Recursively unwrap a token to its underlying asset.</span>
 

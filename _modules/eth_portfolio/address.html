@@ -97,6 +97,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">eth_retry</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">y</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">a_sync.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MappingIsEmptyError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">eth_typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">BlockNumber</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">y</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">y._decorators</span><span class="w"> </span><span class="kn">import</span> <span class="n">stuck_coro_debugger</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">y.datatypes</span><span class="w"> </span><span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">Block</span>
@@ -411,7 +412,7 @@
 <div class="viewcode-block" id="PortfolioAddress.token_balances">
 <a class="viewcode-back" href="../../source/eth_portfolio.html#eth_portfolio.address.PortfolioAddress.token_balances">[docs]</a>
     <span class="nd">@stuck_coro_debugger</span>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">token_balances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenBalances</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">token_balances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="n">BlockNumber</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenBalances</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieves the balances for all tokens in the wallet at a given block.</span>
 
