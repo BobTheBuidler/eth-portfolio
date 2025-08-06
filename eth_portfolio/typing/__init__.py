@@ -46,7 +46,7 @@ from checksum_dict import DefaultChecksumDict
 from eth_typing import BlockNumber
 from pandas import DataFrame, concat
 from typing_extensions import ParamSpec, Self
-from y import ERC20
+from y import Contract, ERC20
 from y.datatypes import Address
 
 from eth_portfolio._decimal import Decimal

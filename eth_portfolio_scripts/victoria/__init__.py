@@ -68,3 +68,6 @@ async def post_data(metrics_to_export: List["Metric"]) -> None:
 def __set_session(sesh: ClientSession) -> None:
     global session
     session = sesh
+
+
+__all__ = ["Metric", "get", "post_data"]

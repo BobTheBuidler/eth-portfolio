@@ -2,7 +2,7 @@ import asyncio
 import logging
 from collections import defaultdict
 from time import time
-from typing import ClassVar, DefaultDict, Dict, Final, Tuple, final
+from typing import ClassVar, DefaultDict, Dict, Final, Optional, Tuple, final
 
 import a_sync
 import dank_mids

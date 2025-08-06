@@ -190,7 +190,7 @@ def is_token(address) -> bool:
 
 async def _is_token(address) -> bool:
     # just breaking a weird lock, dont mind me
-    if retval := await get_event_loop().run_in_executor(process, __is_token, address):
+    if retval := await get_event_loop().run_in_executor(process, __is_token, address):  # type: ignore [name-defined]
         logger.debug("%s is token")
     else:
         logger.debug("%s is not token")
