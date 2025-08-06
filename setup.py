@@ -95,7 +95,6 @@ try:
             "--disable-error-code=dict-item",
             "--disable-error-code=has-type",
             "--disable-error-code=typeddict-item",
-            "--disable-error-code=str-bytes-safe",
             "--disable-error-code=index",
         ],
     )
