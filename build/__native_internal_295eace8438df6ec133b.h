@@ -154,7 +154,7 @@ extern PyObject *CPyDef__nonce____get_area_gen_____await__(PyObject *cpy_r___myp
 extern PyObject *CPyPy__nonce____get_area_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef__nonce____get_area(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, PyObject *cpy_r_lo, PyObject *cpy_r_hi, CPyTagged cpy_r_range_size);
 extern PyObject *CPyPy__nonce____get_area(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef__nonce____update_nonces(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, PyObject *cpy_r_block);
+extern char CPyDef__nonce____update_nonces(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, PyObject *cpy_r_block);
 extern PyObject *CPyPy__nonce____update_nonces(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern CPyTagged CPyDef__nonce____get_num_chunks(CPyTagged cpy_r_range_size);
 extern PyObject *CPyPy__nonce____get_num_chunks(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);

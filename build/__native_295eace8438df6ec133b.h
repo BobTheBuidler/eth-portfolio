@@ -322,7 +322,7 @@ struct export_table_295eace8438df6ec133b {
     PyObject *(*CPyDef__nonce____get_area_gen___close)(PyObject *cpy_r___mypyc_self__);
     PyObject *(*CPyDef__nonce____get_area_gen_____await__)(PyObject *cpy_r___mypyc_self__);
     PyObject *(*CPyDef__nonce____get_area)(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, PyObject *cpy_r_lo, PyObject *cpy_r_hi, CPyTagged cpy_r_range_size);
-    PyObject *(*CPyDef__nonce____update_nonces)(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, PyObject *cpy_r_block);
+    char (*CPyDef__nonce____update_nonces)(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, PyObject *cpy_r_block);
     CPyTagged (*CPyDef__nonce____get_num_chunks)(CPyTagged cpy_r_range_size);
     char (*CPyDef__nonce___BlockCache_____mypyc_defaults_setup)(PyObject *cpy_r___mypyc_self__);
     PyObject *(*CPyDef__nonce___get_block_number_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);

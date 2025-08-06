@@ -1307,7 +1307,7 @@ PyObject *CPyDef__nonce___get_nonce_at_block_gen_____mypyc_generator_helper__(Py
     PyObject *cpy_r_r41;
     PyObject *cpy_r_r42;
     CPyTagged cpy_r_r43;
-    PyObject *cpy_r_r44;
+    char cpy_r_r44;
     PyObject *cpy_r_r45;
     char cpy_r_r46;
     tuple_T3OOO cpy_r_r47;
@@ -1616,12 +1616,10 @@ CPyL43: ;
     CPy_DECREF(cpy_r_r40);
     CPyTagged_DECREF(cpy_r_r43);
     CPy_DECREF(cpy_r_r42);
-    if (unlikely(cpy_r_r44 == NULL)) {
+    if (unlikely(cpy_r_r44 == 2)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", 55, CPyStatic__nonce___globals);
         goto CPyL49;
-    } else
-        goto CPyL99;
-CPyL45: ;
+    }
     cpy_r_r45 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->_nonce;
     if (unlikely(cpy_r_r45 == NULL)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "nonce", 56, CPyStatic__nonce___globals);
@@ -1751,7 +1749,7 @@ CPyL66: ;
     cpy_r_r72 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->_block;
     if (unlikely(cpy_r_r72 == NULL)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "block", 61, CPyStatic__nonce___globals);
-        goto CPyL100;
+        goto CPyL99;
     }
     CPy_INCREF(cpy_r_r72);
 CPyL68: ;
@@ -1759,13 +1757,13 @@ CPyL68: ;
     CPy_DecRef(cpy_r_r72);
     if (unlikely(cpy_r_r73 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", 61, CPyStatic__nonce___globals);
-        goto CPyL100;
+        goto CPyL99;
     }
     cpy_r_r74 = CPyStatics[9]; /* ': ' */
     cpy_r_r75 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->_e;
     if (unlikely(cpy_r_r75 == NULL)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "e", 61, CPyStatic__nonce___globals);
-        goto CPyL101;
+        goto CPyL100;
     }
     CPy_INCREF(cpy_r_r75);
 CPyL70: ;
@@ -1773,7 +1771,7 @@ CPyL70: ;
     CPy_DecRef(cpy_r_r75);
     if (unlikely(cpy_r_r76 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", 61, CPyStatic__nonce___globals);
-        goto CPyL101;
+        goto CPyL100;
     }
     cpy_r_r77 = CPyStr_Build(6, cpy_r_r68, cpy_r_r70, cpy_r_r71, cpy_r_r73, cpy_r_r74, cpy_r_r76);
     CPy_DecRef(cpy_r_r70);
@@ -1788,7 +1786,7 @@ CPyL70: ;
     cpy_r_r80 = CPyObject_GetAttr(cpy_r_r78, cpy_r_r79);
     if (unlikely(cpy_r_r80 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", 61, CPyStatic__nonce___globals);
-        goto CPyL102;
+        goto CPyL101;
     }
     PyObject *cpy_r_r81[1] = {cpy_r_r77};
     cpy_r_r82 = (PyObject **)&cpy_r_r81;
@@ -1796,7 +1794,7 @@ CPyL70: ;
     CPy_DecRef(cpy_r_r80);
     if (unlikely(cpy_r_r83 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", 61, CPyStatic__nonce___globals);
-        goto CPyL102;
+        goto CPyL101;
     }
     CPy_DecRef(cpy_r_r77);
     CPy_Raise(cpy_r_r83);
@@ -1829,12 +1827,12 @@ CPyL79: ;
     CPy_Unreachable();
 CPyL81: ;
     cpy_r_r86 = cpy_r_r2 == 0;
-    if (cpy_r_r86) goto CPyL103;
+    if (cpy_r_r86) goto CPyL102;
     cpy_r_r87 = cpy_r_r2 == 1;
     if (cpy_r_r87) {
         goto CPyL18;
     } else
-        goto CPyL104;
+        goto CPyL103;
 CPyL83: ;
     PyErr_SetNone(PyExc_StopIteration);
     cpy_r_r88 = 0;
@@ -1890,22 +1888,19 @@ CPyL98: ;
     CPy_DecRef(cpy_r_r42);
     goto CPyL49;
 CPyL99: ;
-    CPy_DECREF(cpy_r_r44);
-    goto CPyL45;
-CPyL100: ;
     CPy_DecRef(cpy_r_r70);
     goto CPyL78;
-CPyL101: ;
+CPyL100: ;
     CPy_DecRef(cpy_r_r70);
     CPy_DecRef(cpy_r_r73);
     goto CPyL78;
-CPyL102: ;
+CPyL101: ;
     CPy_DecRef(cpy_r_r77);
     goto CPyL78;
-CPyL103: ;
+CPyL102: ;
     CPy_XDECREF(cpy_r_r1);
     goto CPyL1;
-CPyL104: ;
+CPyL103: ;
     CPy_XDECREF(cpy_r_r1);
     goto CPyL83;
 }
@@ -7876,7 +7871,7 @@ fail: ;
     return NULL;
 }
 
-PyObject *CPyDef__nonce____update_nonces(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, PyObject *cpy_r_block) {
+char CPyDef__nonce____update_nonces(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, PyObject *cpy_r_block) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
     PyObject *cpy_r_r2;
@@ -7892,8 +7887,7 @@ PyObject *CPyDef__nonce____update_nonces(PyObject *cpy_r_address, CPyTagged cpy_
     PyObject *cpy_r_r12;
     int32_t cpy_r_r13;
     char cpy_r_r14;
-    PyObject *cpy_r_r15;
-    PyObject *cpy_r_r16;
+    char cpy_r_r15;
     cpy_r_r0 = CPyStatic__nonce___nonces;
     if (likely(cpy_r_r0 != NULL)) goto CPyL3;
     PyErr_SetString(PyExc_NameError, "value for final name \"nonces\" was not set");
@@ -7972,11 +7966,10 @@ CPyL12: ;
         goto CPyL16;
     }
 CPyL15: ;
-    cpy_r_r15 = Py_None;
-    return cpy_r_r15;
+    return 1;
 CPyL16: ;
-    cpy_r_r16 = NULL;
-    return cpy_r_r16;
+    cpy_r_r15 = 2;
+    return cpy_r_r15;
 }
 
 PyObject *CPyPy__nonce____update_nonces(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
@@ -7996,8 +7989,13 @@ PyObject *CPyPy__nonce____update_nonces(PyObject *self, PyObject *const *args, s
         CPy_TypeError("int", obj_nonce); goto fail;
     }
     PyObject *arg_block = obj_block;
-    PyObject *retval = CPyDef__nonce____update_nonces(arg_address, arg_nonce, arg_block);
-    return retval;
+    char retval = CPyDef__nonce____update_nonces(arg_address, arg_nonce, arg_block);
+    if (retval == 2) {
+        return NULL;
+    }
+    PyObject *retbox = Py_None;
+    CPy_INCREF(retbox);
+    return retbox;
 fail: ;
     CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_update_nonces", 148, CPyStatic__nonce___globals);
     return NULL;
@@ -26900,7 +26898,7 @@ PyObject *CPyDef__nonce____get_area_gen_____await__(PyObject *cpy_r___mypyc_self
 PyObject *CPyPy__nonce____get_area_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 PyObject *CPyDef__nonce____get_area(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, PyObject *cpy_r_lo, PyObject *cpy_r_hi, CPyTagged cpy_r_range_size);
 PyObject *CPyPy__nonce____get_area(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce____update_nonces(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, PyObject *cpy_r_block);
+char CPyDef__nonce____update_nonces(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, PyObject *cpy_r_block);
 PyObject *CPyPy__nonce____update_nonces(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 CPyTagged CPyDef__nonce____get_num_chunks(CPyTagged cpy_r_range_size);
 PyObject *CPyPy__nonce____get_num_chunks(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
