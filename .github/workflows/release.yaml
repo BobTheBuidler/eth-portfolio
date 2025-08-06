@@ -104,6 +104,8 @@ jobs:
           CIBW_ARCHS_WINDOWS: ${{ matrix.cibw_archs_windows || '' }}
           # Which wheels to build for Linux (manylinux vs. musllinux)
           CIBW_BUILD: ${{ matrix.cibw_build || '' }}
+          # Download wheels for deps, don't build from source
+          PIP_ONLY_BINARY: ":all:"
         run: |
           python -m cibuildwheel --output-dir wheelhouse
 
