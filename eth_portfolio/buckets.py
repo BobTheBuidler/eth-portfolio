@@ -1,5 +1,5 @@
 import logging
-from typing import Final, Optional, Set
+from typing import Any, Final, Optional, Set
 
 from a_sync import igather
 from async_lru import alru_cache
@@ -76,7 +76,7 @@ async def get_token_bucket(token: AnyAddressType) -> str:
 
 
 @alru_cache(maxsize=None)
-async def _unwrap_token(token) -> ChecksumAddress:
+async def _unwrap_token(token: Any) -> ChecksumAddress:
     """
     Recursively unwrap a token to its underlying asset.
 
