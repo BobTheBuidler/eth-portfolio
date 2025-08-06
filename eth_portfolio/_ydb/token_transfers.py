@@ -56,7 +56,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
     def _topics(self) -> List: ...
 
     @ASyncIterator.wrap  # type: ignore [call-overload]
-    async def yield_thru_block(self, block) -> AsyncIterator["Task[TokenTransfer]"]:
+    async def yield_thru_block(self, block: BlockNumber) -> AsyncIterator["Task[TokenTransfer]"]:
         if not _logger_is_enabled_for(DEBUG):
             async for task in self._objects_thru(block=block):
                 yield task
@@ -137,14 +137,14 @@ class TokenTransfers(ASyncIterable[TokenTransfer]):
             address, from_block, load_prices=load_prices
         )
 
-    async def __aiter__(self):
+    async def __aiter__(self) -> AsyncIterator["Task[TokenTransfer]"]:
         async for transfer in self.__yield_thru_block(await dank_mids.eth.block_number):
             yield transfer
 
-    def yield_thru_block(self, block: int) -> ASyncIterator["Task[TokenTransfer]"]:
+    def yield_thru_block(self, block: BlockNumber) -> ASyncIterator["Task[TokenTransfer]"]:
         return ASyncIterator(self.__yield_thru_block(block))
 
-    def __yield_thru_block(self, block: int) -> AsyncIterator["Task[TokenTransfer]"]:
+    def __yield_thru_block(self, block: BlockNumber) -> AsyncIterator["Task[TokenTransfer]"]:
         return as_yielded(
             self.transfers_in.yield_thru_block(block), self.transfers_out.yield_thru_block(block)
         )

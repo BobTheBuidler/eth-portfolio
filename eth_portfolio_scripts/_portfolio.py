@@ -71,7 +71,7 @@ class ExportablePortfolio(Portfolio):
                 return True
         return False
 
-    async def export_snapshot(self, dt: datetime):
+    async def export_snapshot(self, dt: datetime) -> None:
         log_debug("checking data at %s for %s", dt, self.label)
         try:
             if not await self.data_exists(dt, sync=False):
@@ -131,7 +131,7 @@ class ExportablePortfolio(Portfolio):
         token: ChecksumAddress,
         bal: Balance,
         protocol: Optional[str] = None,
-    ):
+    ) -> Tuple[victoria.types.PrometheusItem, victoria.types.PrometheusItem]:
         # TODO wallet nicknames in grafana
         # wallet = KNOWN_ADDRESSES[wallet] if wallet in KNOWN_ADDRESSES else wallet
         if protocol is not None:
@@ -172,7 +172,7 @@ class ExportablePortfolio(Portfolio):
         )
 
 
-async def _get_symbol(token) -> str:
+async def _get_symbol(token: str) -> str:
     if token == "ETH":
         return "ETH"
     try:

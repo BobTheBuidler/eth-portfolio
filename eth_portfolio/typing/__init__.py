@@ -393,7 +393,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
                 )
             self[remote] += token_balances  # type: ignore [has-type]
 
-    def __setitem__(self, protocol: str, value: TokenBalances):
+    def __setitem__(self, protocol: str, value: TokenBalances) -> None:
         """
         Sets the token balances for a given protocol.
 
