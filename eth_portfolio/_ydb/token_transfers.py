@@ -1,15 +1,15 @@
 from abc import abstractmethod
 from asyncio import Task, create_task, sleep
 from logging import DEBUG, getLogger
-from typing import AsyncIterator, List
+from typing import AsyncIterator, Final, List
 
 import dank_mids
 import evmspec
 import y._db.log
 from a_sync import ASyncIterable, ASyncIterator, as_yielded
 from brownie import chain
+from eth_typing import BlockNumber, ChecksumAddress
 from faster_eth_utils import encode_hex
-from y.datatypes import Address
 from y.utils.events import ProcessedEvents
 
 from eth_portfolio._loaders import load_token_transfer
@@ -28,9 +28,9 @@ except ImportError:
 
     encode_address = lambda address: encode_hex(encode_single("address", str(address)))
 
-logger = getLogger(__name__)
-_logger_is_enabled_for = logger.isEnabledFor
-_logger_log = logger._log
+logger: Final = getLogger(__name__)
+_logger_is_enabled_for: Final = logger.isEnabledFor
+_logger_log: Final = logger._log
 
 
 class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
@@ -38,9 +38,14 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
 
     __slots__ = "address", "_load_prices"
 
-    def __init__(self, address: Address, from_block: int, load_prices: bool = False):
-        self.address = address
-        self._load_prices = load_prices
+    def __init__(
+        self,
+        address: ChecksumAddress,
+        from_block: BlockNumber,
+        load_prices: bool = False,
+    ) -> None:
+        self.address: Final = address
+        self._load_prices: Final = load_prices
         super().__init__(topics=self._topics, from_block=from_block)
 
     def __repr__(self) -> str:
@@ -119,9 +124,18 @@ class TokenTransfers(ASyncIterable[TokenTransfer]):
     NOTE: These do not come back in chronologcal order.
     """
 
-    def __init__(self, address: Address, from_block: int, load_prices: bool = False):
-        self.transfers_in = InboundTokenTransfers(address, from_block, load_prices=load_prices)
-        self.transfers_out = OutboundTokenTransfers(address, from_block, load_prices=load_prices)
+    def __init__(
+        self,
+        address: ChecksumAddress,
+        from_block: BlockNumber,
+        load_prices: bool = False,
+    ) -> None:
+        self.transfers_in: Final = InboundTokenTransfers(
+            address, from_block, load_prices=load_prices
+        )
+        self.transfers_out: Final = OutboundTokenTransfers(
+            address, from_block, load_prices=load_prices
+        )
 
     async def __aiter__(self):
         async for transfer in self.__yield_thru_block(await dank_mids.eth.block_number):
