@@ -79,7 +79,6 @@ try:
             "--disable-error-code=type-arg",
             "--disable-error-code=attr-defined",
             "--disable-error-code=name-defined",
-            "--disable-error-code=no-any-return",
             "--disable-error-code=arg-type",
             "--disable-error-code=no-untyped-call",
             "--disable-error-code=no-untyped-def",
