@@ -69,4 +69,5 @@ def __set_session(sesh: ClientSession) -> None:
     global session
     session = sesh
 
+
 __all__ = ["Metric", "get", "post_data"]
