@@ -23,6 +23,7 @@ import dank_mids
 import eth_retry
 import y
 from a_sync.exceptions import MappingIsEmptyError
+from eth_typing import BlockNumber
 from y import convert
 from y._decorators import stuck_coro_debugger
 from y.datatypes import Address, Block
@@ -312,7 +313,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         return Balance(token=y.EEE_ADDRESS, block=block)
 
     @stuck_coro_debugger
-    async def token_balances(self, block) -> TokenBalances:
+    async def token_balances(self, block: BlockNumber) -> TokenBalances:
         """
         Retrieves the balances for all tokens in the wallet at a given block.
 
