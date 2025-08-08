@@ -21,7 +21,7 @@ from a_sync import ASyncGenericBase, ASyncIterable, ASyncIterator, as_yielded
 from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
-from eth_abi.exceptions import InsufficientDataBytes
+from faster_eth_abi.exceptions import InsufficientDataBytes
 from eth_typing import ChecksumAddress
 from pandas import DataFrame  # type: ignore
 from y import ERC20, Contract, Network
