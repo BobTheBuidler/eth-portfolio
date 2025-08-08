@@ -1,10 +1,11 @@
 from asyncio import gather
-from typing import List, Optional
+from typing import Final, List, Optional
 
 from a_sync import igather
 from async_lru import alru_cache
 from dank_mids.exceptions import Revert
 from eth_typing import HexStr
+from faster_eth_abi import encode
 from y import Contract, Network, contract_creation_block_async, get_price
 from y._decorators import stuck_coro_debugger
 from y.constants import dai
@@ -14,18 +15,13 @@ from eth_portfolio._utils import Decimal
 from eth_portfolio.protocols.lending._base import LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import Balance, TokenBalances
 
-try:
-    # this is only available in 4.0.0+
-    from eth_abi import encode
 
-    encode_bytes = lambda bytestring: encode(["bytes32"], [bytestring])
-except ImportError:
-    from eth_abi import encode_single
-
-    encode_bytes = lambda bytestring: encode_single("bytes32", bytestring)
-
-yfi = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
+yfi: Final = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
 dai: Contract
+
+
+def encode_bytes(bytestring: str) -> bytes:
+    return encode(["bytes32"], [bytestring])
 
 
 class Maker(LendingProtocolWithLockedCollateral):
