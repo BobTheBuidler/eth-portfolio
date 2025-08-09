@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from asyncio import Task, create_task, sleep
 from logging import DEBUG, getLogger
-from typing import AsyncIterator, Final, List
+from typing import Any, AsyncIterator, Final, List
 
 import dank_mids
 import evmspec
@@ -9,6 +9,7 @@ import y._db.log
 from a_sync import ASyncIterable, ASyncIterator, as_yielded
 from brownie import chain
 from eth_typing import BlockNumber, ChecksumAddress
+from faster_eth_abi import encode
 from faster_eth_utils import encode_hex
 from y.utils.events import ProcessedEvents
 
@@ -18,19 +19,13 @@ from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.structs import TokenTransfer
 
 
-try:
-    # this is only available in 4.0.0+
-    from eth_abi import encode
-
-    encode_address = lambda address: encode_hex(encode(["address"], [str(address)]))
-except ImportError:
-    from eth_abi import encode_single
-
-    encode_address = lambda address: encode_hex(encode_single("address", str(address)))
-
 logger: Final = getLogger(__name__)
 _logger_is_enabled_for: Final = logger.isEnabledFor
 _logger_log: Final = logger._log
+
+
+def encode_address(address: Any) -> bytes:
+    return encode_hex(encode(["address"], [str(address)]))
 
 
 class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
