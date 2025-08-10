@@ -19,37 +19,37 @@ eth\_portfolio.address module
 
 .. automodule:: eth_portfolio.address
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 eth\_portfolio.buckets module
 -----------------------------
 
 .. automodule:: eth_portfolio.buckets
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 eth\_portfolio.constants module
 -------------------------------
 
 .. automodule:: eth_portfolio.constants
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 eth\_portfolio.portfolio module
 -------------------------------
 
 .. automodule:: eth_portfolio.portfolio
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: eth_portfolio
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

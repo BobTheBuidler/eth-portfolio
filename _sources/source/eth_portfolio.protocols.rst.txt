@@ -17,29 +17,29 @@ eth\_portfolio.protocols.convex module
 
 .. automodule:: eth_portfolio.protocols.convex
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 eth\_portfolio.protocols.dsr module
 -----------------------------------
 
 .. automodule:: eth_portfolio.protocols.dsr
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 eth\_portfolio.protocols.liquity module
 ---------------------------------------
 
 .. automodule:: eth_portfolio.protocols.liquity
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: eth_portfolio.protocols
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
