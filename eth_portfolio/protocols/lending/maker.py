@@ -3,6 +3,7 @@ from typing import Final, List, Optional
 
 from a_sync import igather
 from async_lru import alru_cache
+from brownie import ZERO_ADDRESS
 from dank_mids.exceptions import Revert
 from eth_typing import HexStr
 from faster_eth_abi import encode
@@ -18,6 +19,8 @@ from eth_portfolio.typing import Balance, TokenBalances
 
 yfi: Final = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
 dai: Contract
+_1e18: Final = Decimal(10**18)
+_1e45: Final = Decimal(10**45)
 
 
 def encode_bytes(bytestring: str) -> bytes:
@@ -46,8 +49,8 @@ class Maker(LendingProtocolWithLockedCollateral):
 
         balances: TokenBalances = TokenBalances(block=block)
         for token, data in zip(gems, ink_data):
-            if ink := data.dict()["ink"]:
-                balance = ink / Decimal(10**18)
+            if token != ZERO_ADDRESS and (ink := data.dict()["ink"]):
+                balance = ink / _1e18
                 value = round(balance * Decimal(await get_price(token, block, sync=False)), 18)
                 balances[token] = Balance(balance, value, token=token, block=block)
         return balances
@@ -71,7 +74,7 @@ class Maker(LendingProtocolWithLockedCollateral):
         for urns, ilk_info in data:
             art = urns.dict()["art"]
             rate = ilk_info.dict()["rate"]
-            debt = art * rate / Decimal(1e45)
+            debt = art * rate / _1e45
             balances[dai.address] += Balance(debt, debt, token=dai, block=block)
         return balances
 
