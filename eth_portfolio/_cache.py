@@ -8,7 +8,7 @@ from os import makedirs
 from os.path import exists, join
 from pickle import dumps, load, loads
 from random import random
-from typing import Any, Callable, Final, List, NoReturn, Optional
+from typing import Any, Callable, Final, List, NoReturn, Optional, Set
 
 from a_sync import PruningThreadPoolExecutor
 from a_sync._typing import P, T
@@ -19,9 +19,17 @@ from a_sync.primitives.queue import log_broken
 from aiofiles import open as _aio_open
 from brownie import chain
 
+from eth_portfolio._executor_shutdown import register_executor_shutdown
+
+
 BASE_PATH: Final = f"./cache/{chain.id}/"
 _THREAD_NAME_PREFIX: Final = "eth-portfolio-cache-decorator"
 _EXISTS_EXECUTOR: Final = PruningThreadPoolExecutor(8, f"{_THREAD_NAME_PREFIX}-exists")
+
+_CACHE_EXECUTORS: Set[PruningThreadPoolExecutor] = set()
+_CACHE_EXECUTORS.add(_EXISTS_EXECUTOR)
+
+register_executor_shutdown(_CACHE_EXECUTORS, name="eth-portfolio cache executors")
 
 
 def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
@@ -36,6 +44,7 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
         return join(cache_path_for_fn, f"{key}.json")
 
     write_executor = PruningThreadPoolExecutor(8, f"{_THREAD_NAME_PREFIX}-{fn.__qualname__}-write")
+    _CACHE_EXECUTORS.add(write_executor)
 
     makedirs(cache_path_for_fn, exist_ok=True)
 
@@ -43,6 +52,7 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
         read_executor = PruningThreadPoolExecutor(
             8, f"{_THREAD_NAME_PREFIX}-{fn.__qualname__}-read"
         )
+        _CACHE_EXECUTORS.add(read_executor)
 
         queue: PriorityQueue = PriorityQueue()
 

@@ -36,6 +36,7 @@ from eth_portfolio._db.entities import (
     TokenExtended,
 )
 from eth_portfolio._decimal import Decimal
+from eth_portfolio._executor_shutdown import register_executor_shutdown
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction, TransactionRLP
 from eth_portfolio.typing import _P, _T, Fn
 
@@ -99,6 +100,51 @@ _internal_transfer_write_executor = PruningThreadPoolExecutor(
     _small_pool_size, "eth-portfolio-internal-transfer write"
 )
 
+
+_DB_EXECUTORS = [
+    _block_executor,
+    _token_executor,
+    _address_executor,
+    _transaction_read_executor,
+    _transaction_write_executor,
+    _token_transfer_read_executor,
+    _token_transfer_write_executor,
+    _internal_transfer_read_executor,
+    _internal_transfer_write_executor,
+]
+
+register_executor_shutdown(_DB_EXECUTORS, name="eth-portfolio db executors")
+
+
+def __bind():
+    try:
+        db.bind(**config.connection_settings)
+    except BindingError as e:
+        if not str(e).startswith("Database object was already bound to"):
+            raise e
+
+__bind()
+
+try:
+    db.generate_mapping(create_tables=True)
+except OperationalError as e:
+    if not str(e).startswith("no such column:"):
+        raise
+    raise OperationalError(
+        "Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script"
+    ) from e
+
+from y._db.decorators import retry_locked
+from y._db.entities import Address, Block, Chain, Contract, Token, insert
+
+# The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
+from y._db.utils import ensure_chain, get_chain
+from y._db.utils.price import _set_price
+from y._db.utils.traces import insert_trace
+from y import ERC20
+from y.constants import EEE_ADDRESS
+from y.exceptions import NonStandardERC20
+from y.contracts import is_contract
 
 def robust_db_session(fn: Fn[_P, _T]) -> Fn[_P, _T]:
     return retry_locked(break_locks(db_session(fn)))
