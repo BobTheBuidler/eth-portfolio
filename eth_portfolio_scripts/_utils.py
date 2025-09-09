@@ -72,7 +72,7 @@ async def aiter_timestamps(
             yield timestamps.pop(-1)
             # yield the most middle timestamp if there is one
             if timestamps:
-                yield timestamps.pop(len(timestamps)//2)
+                yield timestamps.pop(len(timestamps) // 2)
 
     del timestamps
 
