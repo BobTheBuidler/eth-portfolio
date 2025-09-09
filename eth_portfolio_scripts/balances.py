@@ -34,9 +34,8 @@ async def export_balances(args: Namespace) -> None:
     )
 
     if export_start_block := args.export_start_block or args.first_tx_block:
-        start = datetime.fromtimestamp(
-            await dank_mids.eth.get_block_timestamp(args.export_start_block), tz=timezone.utc
-        )
+        start_ts = await dank_mids.eth.get_block_timestamp(export_start_block)
+        start = datetime.fromtimestamp(start_ts, tz=timezone.utc)
     else:
         start = None
 
