@@ -1,3 +1,4 @@
+import asyncio
 from datetime import datetime, timezone
 from logging import getLogger
 from math import floor
@@ -5,10 +6,11 @@ from typing import Awaitable, Callable, Final, Iterator, List, Optional, Tuple
 
 import a_sync
 import eth_retry
+import y
 from a_sync.functools import cached_property_unsafe as cached_property
 from eth_typing import BlockNumber, ChecksumAddress
 from msgspec import ValidationError, json
-from y import ERC20, Network, NonStandardERC20, get_block_at_timestamp
+from y import ERC20, Network, NonStandardERC20
 from y.constants import CHAINID
 from y.time import NoBlockFound
 
@@ -32,6 +34,14 @@ decode: Final = json.decode
 logger: Final = getLogger("eth_portfolio")
 log_debug: Final = logger.debug
 log_error: Final = logger.error
+
+
+async def get_block_at_timestamp(dt: datetime) -> BlockNumber:
+    while True:
+        try:
+            return y.get_block_at_timestamp(dt, sync=False)
+        except NoBlockFound:
+            await asyncio.sleep(10)
 
 
 class ExportablePortfolio(Portfolio):
@@ -77,17 +87,12 @@ class ExportablePortfolio(Portfolio):
     async def export_snapshot(self, dt: datetime) -> None:
         log_debug("checking data at %s for %s", dt, self.label)
         try:
-            if not await self.data_exists(dt, sync=False):
-                while True:
-                    try:
-                        block = await get_block_at_timestamp(dt, sync=False)
-                    except NoBlockFound:
-                        pass
-                    else:
-                        break
-                log_debug("block at %s: %s", dt, block)
-                data = await self.get_data_for_export(block, dt, sync=False)
-                await victoria.post_data(data)
+            if await self.data_exists(dt, sync=False):
+                return
+            block = await get_block_at_timestamp(dt)
+            log_debug("block at %s: %s", dt, block)
+            data = await self.get_data_for_export(block, dt, sync=False)
+            await victoria.post_data(data)
         except Exception as e:
             log_error("Error processing %s:", dt, exc_info=True)
 
