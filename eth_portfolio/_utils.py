@@ -136,10 +136,11 @@ async def _get_price(token: AddressOrContract, block: Optional[int] = None) -> _
             elif isinstance(e.exception, NonStandardERC20):
                 # Can't get symbol for handling like other excs
                 logger.warning(f"NonStandardERC20 while fetching price for {token}")
-            elif isinstance(e.exception, PriceError) and token not in SUPPRESS_ERROR_LOGS:
-                logger.warning(
-                    f"PriceError while fetching price for {await _describe_err(token, block)}"
-                )
+            elif isinstance(e.exception, PriceError):
+                if token not in SUPPRESS_ERROR_LOGS:
+                    logger.warning(
+                        f"PriceError while fetching price for {await _describe_err(token, block)}"
+                    )
             else:
                 logger.warning(f"{e} while fetching price for {await _describe_err(token, block)}")
                 logger.warning(e, exc_info=True)
