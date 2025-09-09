@@ -256,6 +256,7 @@ typedef struct {
     PyObject *_export_start_block;
     PyObject *___mypyc_temp__0;
     tuple_T3OOO ___mypyc_temp__1;
+    PyObject *_start_ts;
     PyObject *_start;
     PyObject *___mypyc_temp__2;
     PyObject *___mypyc_temp__3;
@@ -269,7 +270,6 @@ typedef struct {
     tuple_T3OOO ___mypyc_temp__10;
     PyObject *___mypyc_temp__11;
     tuple_T3OOO ___mypyc_temp__12;
-    PyObject *___mypyc_temp__2_0;
 } eth_portfolio_scripts___balances___export_balances_genObject;
 
 
