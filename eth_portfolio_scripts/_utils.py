@@ -1,18 +1,18 @@
 import re
 from asyncio import Task, create_task, sleep
 from datetime import datetime, timedelta, timezone
-from typing import Any, AsyncGenerator, Dict, List, Optional
+from typing import Any, AsyncGenerator, Dict, Final, List, Optional
 
 from brownie import chain
 
 
-def parse_timedelta(value: str) -> timedelta:
-    regex = re.compile(r"(\d+)([dhms]?)")
-    result = regex.findall(value)
+timedelta_pattern: Final = re.compile(r"(\d+)([dhms]?)")
 
+
+def parse_timedelta(value: str) -> timedelta:
     days, hours, minutes, seconds = 0, 0, 0, 0
 
-    for val, unit in result:
+    for val, unit in timedelta_pattern.findall(value):
         val = int(val)
         if unit == "d":
             days = val
@@ -58,9 +58,23 @@ async def aiter_timestamps(
 
     timestamp = start
 
+    timestamps = []
     while timestamp <= datetime.now(tz=timezone.utc):
-        yield timestamp
+        timestamps.append(timestamp)
         timestamp = timestamp + interval
+
+    # cycle between yielding earliest, latest, and middle from `timestamps` until complete
+    while timestamps:
+        # yield the earliest timestamp
+        yield timestamps.pop(0)
+        # yield the most recent timestamp if there is one
+        if timestamps:
+            yield timestamps.pop(-1)
+            # yield the most middle timestamp if there is one
+            if timestamps:
+                yield timestamps.pop(len(timestamps) // 2)
+
+    del timestamps
 
     while run_forever:
         while timestamp > datetime.now(tz=timezone.utc):
