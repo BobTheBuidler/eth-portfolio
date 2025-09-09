@@ -40,8 +40,10 @@ class ExportablePortfolio(Portfolio):
     def __init__(
         self,
         addresses: Addresses,
+        *,
         start_block: int = 0,
         label: str = _DEFAULT_LABEL,
+        concurrency: int = 60,
         load_prices: bool = True,
         get_bucket: Callable[[ChecksumAddress], Awaitable[str]] = get_token_bucket,
         num_workers_transactions: int = 1000,
@@ -51,7 +53,7 @@ class ExportablePortfolio(Portfolio):
             addresses, start_block, label, load_prices, num_workers_transactions, asynchronous
         )
         self.get_bucket = get_bucket
-        self._semaphore = a_sync.Semaphore(60)
+        self._semaphore = a_sync.Semaphore(concurrency)
 
     @cached_property
     def _data_queries(self) -> Tuple[str, str]:
