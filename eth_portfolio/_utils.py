@@ -47,13 +47,14 @@ if TYPE_CHECKING:
 
 logger: Final = logging.getLogger(__name__)
 
-NON_STANDARD_ERC721: Final[ChecksumAddress] = {
+NON_STANDARD_ERC721: Final[List[ChecksumAddress]] = {
     Network.Mainnet: ["0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB"],  # CryptoPunks
 }.get(CHAINID, [])
 
-SUPPRESS_ERROR_LOGS: Final[ChecksumAddress] = {
+SUPPRESS_ERROR_LOGS: Final[List[ChecksumAddress]] = {
     # put tokens here when you don't expect them to price successfully and do not want to see the associated error logs
 }.get(CHAINID, [])
+"""Put tokens here when you don't expect them to price successfully and do not want to see the associated error logs."""
 
 
 async def get_buffered_chain_height() -> int:
@@ -135,7 +136,7 @@ async def _get_price(token: AddressOrContract, block: Optional[int] = None) -> _
             elif isinstance(e.exception, NonStandardERC20):
                 # Can't get symbol for handling like other excs
                 logger.warning(f"NonStandardERC20 while fetching price for {token}")
-            elif isinstance(e.exception, PriceError):
+            elif isinstance(e.exception, PriceError) and token not in SUPPRESS_ERROR_LOGS:
                 logger.warning(
                     f"PriceError while fetching price for {await _describe_err(token, block)}"
                 )
