@@ -47,8 +47,12 @@ if TYPE_CHECKING:
 
 logger: Final = logging.getLogger(__name__)
 
-NON_STANDARD_ERC721: Final = {
+NON_STANDARD_ERC721: Final[ChecksumAddress] = {
     Network.Mainnet: ["0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB"],  # CryptoPunks
+}.get(CHAINID, [])
+
+SUPPRESS_ERROR_LOGS: Final[ChecksumAddress] = {
+    # put tokens here when you don't expect them to price successfully and do not want to see the associated error logs
 }.get(CHAINID, [])
 
 
