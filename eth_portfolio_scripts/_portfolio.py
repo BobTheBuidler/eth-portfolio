@@ -36,10 +36,10 @@ log_debug: Final = logger.debug
 log_error: Final = logger.error
 
 
-async def get_block_at_timestamp(ts: datetime) -> BlockNumber:
+async def get_block_at_timestamp(dt: datetime) -> BlockNumber:
     while True:
         try:
-            return y.get_block_at_timestamp(ts, sync=False)
+            return y.get_block_at_timestamp(dt, sync=False)
         except NoBlockFound:
             await asyncio.sleep(10)
 
@@ -86,13 +86,10 @@ class ExportablePortfolio(Portfolio):
 
     async def export_snapshot(self, dt: datetime) -> None:
         log_debug("checking data at %s for %s", dt, self.label)
+
         try:
             if await self.data_exists(dt, sync=False):
                 return
-        except Exception as e:
-            log_error("Error checking database for %s:", dt, exc_info=True)
-
-        try:
             block = await get_block_at_timestamp(dt)
             log_debug("block at %s: %s", dt, block)
             data = await self.get_data_for_export(block, dt, sync=False)
