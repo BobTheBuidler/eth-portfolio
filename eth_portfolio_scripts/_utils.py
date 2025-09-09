@@ -70,7 +70,7 @@ async def aiter_timestamps(
         # yield the most recent timestamp if there is one
         if timestamps:
             yield timestamps.pop(-1)
-        
+
     del timestamps
 
     while run_forever:
