@@ -51,6 +51,7 @@ class ExportablePortfolio(Portfolio):
             addresses, start_block, label, load_prices, num_workers_transactions, asynchronous
         )
         self.get_bucket = get_bucket
+        self._semaphore = a_sync.Semaphore(60)
 
     @cached_property
     def _data_queries(self) -> Tuple[str, str]:
@@ -88,36 +89,36 @@ class ExportablePortfolio(Portfolio):
         except Exception as e:
             log_error("Error processing %s:", dt, exc_info=True)
 
-    @a_sync.Semaphore(60)
     async def get_data_for_export(self, block: BlockNumber, ts: datetime) -> List[victoria.Metric]:
-        print(f"exporting {ts} for {self.label}")
-        start = datetime.now(tz=timezone.utc)
+        async with self._semaphore:
+            print(f"exporting {ts} for {self.label}")
+            start = datetime.now(tz=timezone.utc)
 
-        metrics_to_export = []
-        data: PortfolioBalances = await self.describe(block, sync=False)
+            metrics_to_export = []
+            data: PortfolioBalances = await self.describe(block, sync=False)
 
-        for wallet, wallet_data in dict.items(data):
-            for section, section_data in wallet_data.items():
-                if isinstance(section_data, TokenBalances):
-                    for token, bals in dict.items(section_data):
-                        metrics_to_export.extend(
-                            await self.__process_token(ts, section, wallet, token, bals)
-                        )
-                elif isinstance(section_data, RemoteTokenBalances):
-                    if section == "external":
-                        section = "assets"
-                    for protocol, token_bals in section_data.items():
-                        for token, bals in dict.items(token_bals):
+            for wallet, wallet_data in dict.items(data):
+                for section, section_data in wallet_data.items():
+                    if isinstance(section_data, TokenBalances):
+                        for token, bals in dict.items(section_data):
                             metrics_to_export.extend(
-                                await self.__process_token(
-                                    ts, section, wallet, token, bals, protocol=protocol
-                                )
+                                await self.__process_token(ts, section, wallet, token, bals)
                             )
-                else:
-                    raise NotImplementedError()
+                    elif isinstance(section_data, RemoteTokenBalances):
+                        if section == "external":
+                            section = "assets"
+                        for protocol, token_bals in section_data.items():
+                            for token, bals in dict.items(token_bals):
+                                metrics_to_export.extend(
+                                    await self.__process_token(
+                                        ts, section, wallet, token, bals, protocol=protocol
+                                    )
+                                )
+                    else:
+                        raise NotImplementedError()
 
-        print(f"got data for {ts} in {datetime.now(tz=timezone.utc) - start}")
-        return metrics_to_export
+            print(f"got data for {ts} in {datetime.now(tz=timezone.utc) - start}")
+            return metrics_to_export
 
     def __get_data_exists_coros(self, dt: datetime) -> Iterator[str]:
         for query in self._data_queries:
