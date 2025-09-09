@@ -123,6 +123,7 @@ def __bind():
         if not str(e).startswith("Database object was already bound to"):
             raise e
 
+
 __bind()
 
 try:
@@ -145,6 +146,7 @@ from y import ERC20
 from y.constants import EEE_ADDRESS
 from y.exceptions import NonStandardERC20
 from y.contracts import is_contract
+
 
 def robust_db_session(fn: Fn[_P, _T]) -> Fn[_P, _T]:
     return retry_locked(break_locks(db_session(fn)))
