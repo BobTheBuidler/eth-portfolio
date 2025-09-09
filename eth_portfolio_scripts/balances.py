@@ -26,7 +26,11 @@ async def export_balances(args: Namespace) -> None:
 
     interval = parse_timedelta(args.interval)
     portfolio = ExportablePortfolio(
-        args.wallet, label=args.label, start_block=args.first_tx_block, concurrency=args.concurrency, load_prices=False
+        args.wallet,
+        label=args.label,
+        start_block=args.first_tx_block,
+        concurrency=args.concurrency,
+        load_prices=False,
     )
 
     if export_start_block := args.export_start_block or args.first_tx_block:
