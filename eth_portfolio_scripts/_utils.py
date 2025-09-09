@@ -63,13 +63,16 @@ async def aiter_timestamps(
         timestamps.append(timestamp)
         timestamp = timestamp + interval
 
-    # alternate between yielding earliest and latest timestamp until complete
+    # cycle between yielding earliest, latest, and middle from `timestamps` until complete
     while timestamps:
         # yield the earliest timestamp
         yield timestamps.pop(0)
         # yield the most recent timestamp if there is one
         if timestamps:
             yield timestamps.pop(-1)
+            # yield the most middle timestamp if there is one
+            if timestamps:
+                yield timestamps.pop(len(timestamps)//2)
 
     del timestamps
 
