@@ -86,7 +86,6 @@ class ExportablePortfolio(Portfolio):
 
     async def export_snapshot(self, dt: datetime) -> None:
         log_debug("checking data at %s for %s", dt, self.label)
-
         try:
             if await self.data_exists(dt, sync=False):
                 return
