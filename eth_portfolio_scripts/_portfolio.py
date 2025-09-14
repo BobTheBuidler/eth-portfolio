@@ -39,7 +39,7 @@ log_error: Final = logger.error
 async def get_block_at_timestamp(dt: datetime) -> BlockNumber:
     while True:
         try:
-            return y.get_block_at_timestamp(dt, sync=False)
+            return await y.get_block_at_timestamp(dt, sync=False)
         except NoBlockFound:
             await asyncio.sleep(10)
 
