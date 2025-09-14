@@ -35,7 +35,7 @@ logger: Final = getLogger("eth_portfolio")
 log_debug: Final = logger.debug
 log_error: Final = logger.error
 
-_block_at_timestamp_semaphore: Final = a_sync.Semaphore(100, name="eth-portfolio block_at_timestamp_semaphore)
+_block_at_timestamp_semaphore: Final = a_sync.Semaphore(100, name="eth-portfolio get_block_at_timestamp")
 
 
 async def get_block_at_timestamp(dt: datetime) -> BlockNumber:
