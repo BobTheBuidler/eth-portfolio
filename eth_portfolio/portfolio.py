@@ -37,7 +37,7 @@ from eth_portfolio.typing import Addresses, PortfolioBalances
 logger = logging.getLogger(__name__)
 
 
-class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddress]):  # type: ignore [misc]
+class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddress]):  # type: ignore [metaclass]
     """
     A container that holds all :class:`~eth_portfolio.address.PortfolioAddress` objects for a specific :class:`~eth_portfolio.Portfolio`.
 
