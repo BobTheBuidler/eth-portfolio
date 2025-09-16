@@ -80,7 +80,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
     The USD value of the cryptocurrency transferred in the {cls_name}, if price is known.
     """
 
-    def __init_subclass__(cls, **kwargs):
+    def __init_subclass__(cls, **kwargs: Any) -> None:
         super().__init_subclass__(**kwargs)
 
         # Replace {cls_name} in attribute-level docstrings
@@ -273,7 +273,7 @@ class _TransactionBase(
         return self.transaction.yParity
 
     @property
-    def __db_primary_key__(self):
+    def __db_primary_key__(self) -> Dict[str, tuple[int, Address] | int]:
         return {"from_address": (chain.id, self.from_address), "nonce": self.nonce}
 
 
