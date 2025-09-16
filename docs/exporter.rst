@@ -42,6 +42,37 @@ The Portfolio Exporter supports several command-line options to customize its be
 - ``--export-start-block <block>``
   The first block in the range you wish to export. default: 0
 
+Data Maintenance: Deleting Grafana Data
+---------------------------------------
+
+You can use the CLI to perform data maintenance tasks, such as deleting datapoints from VictoriaMetrics (Grafana backend) between two timestamps.
+
+This can be helpful in cases where there was a pricing bug and you need to reload the data without dropping the db.
+
+**WARNING:** This is a destructive operation that deletes **ALL** time series data in the specified range. There is no way to restrict this operation to a subset of metrics.
+
+To delete all datapoints from Grafana (VictoriaMetrics) between two timestamps, use:
+
+.. code-block:: bash
+
+    eth-portfolio delete-grafana-data <start_timestamp> <end_timestamp>
+
+- **start_timestamp**: Start of the range (inclusive)
+- **end_timestamp**: End of the range (exclusive)
+
+**Accepted formats for timestamps:**
+- ISO8601 (e.g. ``2024-01-01T12:34:56``)
+- ``YYYY-MM-DD HH:MM:SS``
+- ``YYYY-MM-DD``
+- Unix epoch seconds (as a string of digits)
+- Most common datetime string formats are supported (uses ``dateutil.parser.parse`` internally)
+
+**Example:**
+
+.. code-block:: bash
+
+    eth-portfolio delete-grafana-data 2024-01-01T00:00:00 2024-01-02T00:00:00
+
 Docker Containers
 -----------------
 When you run the Portfolio Exporter, ETH Portfolio will build and start 3 required Docker containers on your system, as well as up to 1 optional container depending on your configuration. These containers work together to collect, store, and visualize your portfolio data:
@@ -64,7 +95,7 @@ The containers interact as follows:
 
 1. **eth-portfolio** and/or related exporters expose metrics endpoints.
 2. **vmagent** scrapes these endpoints and forwards the data to **victoria-metrics**.
-3. **victoria-metrics** stores the time-series data for long-term analysis.
+3. **victoria-metrics** stores the time-series data for long-term analysis and visualization in Grafana.
 4. **Grafana** is pre-configured to use victoria-metrics as its data source and provides dashboards (such as "Balances") for visualization.
 5. The **renderer** container enables Grafana to export dashboards as images for reporting or sharing (if started with ``--start-renderer``).
 

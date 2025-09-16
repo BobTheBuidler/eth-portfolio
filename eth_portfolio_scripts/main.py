@@ -4,9 +4,10 @@ from os import environ
 
 import brownie
 
-from eth_portfolio_scripts import docker, logger
-from eth_portfolio_scripts._args import add_infra_port_args
+from eth_portfolio_scripts import docker
+from eth_portfolio_scripts._args import add_infra_port_args, add_victoria_port_args
 from eth_portfolio_scripts.balances import export_balances
+from eth_portfolio_scripts.victoria import delete_data
 
 
 parser = ArgumentParser(description="eth-portfolio")
@@ -82,13 +83,61 @@ export_parser.add_argument(
     help="TODO: If True, starts a daemon process instead of running in your terminal. Not currently supported.",
 )
 
+# data maintenance utils
+delete_parser = subparsers.add_parser(
+    "delete-grafana-data",
+    help=(
+        "Delete ALL datapoints from Grafana (VictoriaMetrics) between two timestamps. "
+        "WARNING: This is a destructive operation that deletes ALL time series data in the specified range. "
+        "There is no way to restrict this operation to a subset of metrics. "
+        "All deleted data will be refreshed next time you run the exporter. "
+        "Accepted formats: ISO8601 (e.g. 2024-01-01T12:34:56), 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DD', or Unix epoch seconds. "
+    ),
+)
+delete_parser.add_argument(
+    "start_timestamp",
+    type=str,
+    help=(
+        "Start timestamp (inclusive). "
+        "Accepted formats: ISO8601 (e.g. 2024-01-01T12:34:56), 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DD', or Unix epoch seconds."
+    ),
+)
+delete_parser.add_argument(
+    "end_timestamp",
+    type=str,
+    help=(
+        "End timestamp (exclusive). "
+        "Accepted formats: ISO8601 (e.g. 2024-01-01T12:34:56), 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DD', or Unix epoch seconds."
+    ),
+)
+add_victoria_port_args(delete_parser)
+
+
+def handle_delete_grafana_data(args):
+    # Ensure VictoriaMetrics is running before deletion
+    docker.up("victoria-metrics")
+    # Pass raw datetime strings to delete_data; parsing is handled in victoria module
+    asyncio.get_event_loop().run_until_complete(
+        delete_data(args.start_timestamp, args.end_timestamp)
+    )
+
+
+delete_parser.set_defaults(func=handle_delete_grafana_data)
+
 args = parser.parse_args()
 
 if hasattr(args, "network"):
     environ["BROWNIE_NETWORK_ID"] = args.network
 
-environ["GRAFANA_PORT"] = str(args.grafana_port)
-environ["RENDERER_PORT"] = str(args.renderer_port)
+try:
+    # These 2 attributes will not be present for the `delete-grafana-data` command
+    environ["GRAFANA_PORT"] = str(args.grafana_port)
+    environ["RENDERER_PORT"] = str(args.renderer_port)
+except AttributeError:
+    if args.command != "delete-grafana-data":
+        raise
+
+
 environ["VICTORIA_PORT"] = str(args.victoria_port)
 
 
@@ -107,6 +156,9 @@ def main():
         else:
             raise ValueError(f"{args.target} is not a valid command")
 
+    elif command == "delete-grafana-data":
+        # Call the deletion utility via the handler
+        args.func(args)
     else:
         # The user's command is `export`
         if args.target == "balances":

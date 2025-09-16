@@ -136,3 +136,31 @@ port.describe(chain.height)
 async_port = Portfolio([0xaddress0, 0xaddress1, 0xaddress2], asynchronous=True)
 await port.describe(chain.height)
 ```
+
+### Usage Tips
+
+#### Deleting Grafana Data
+
+You can use the CLI to perform data maintenance tasks, such as deleting datapoints from VictoriaMetrics (Grafana backend) between two timestamps.
+
+**WARNING:** This is a destructive operation that deletes **ALL** time series data in the specified range. There is no way to restrict this operation to a subset of metrics.
+
+To delete all datapoints from Grafana (VictoriaMetrics) between two timestamps, use:
+
+```
+eth-portfolio delete-grafana-data <start_timestamp> <end_timestamp>
+```
+
+- **start_timestamp**: Start of the range (inclusive)
+- **end_timestamp**: End of the range (exclusive)
+
+**Accepted formats for timestamps:**
+- ISO8601 (e.g. `2024-01-01T12:34:56`)
+- `YYYY-MM-DD HH:MM:SS`
+- `YYYY-MM-DD`
+- Unix epoch seconds (as a string of digits)
+- Most common datetime string formats are supported (uses `dateutil.parser.parse` internally)
+
+**Example:**
+```
+eth-portfolio delete-grafana-data 2024-01-01T00:00:00 2024-01-02T00:00:00
