@@ -99,8 +99,9 @@ async def delete_data(start_timestamp: str, end_timestamp: str) -> None:
     """
     start_ts = _parse_datetime(start_timestamp)
     end_ts = _parse_datetime(end_timestamp)
-    # Use match[] (no value) for all-series deletion (correct for VictoriaMetrics OSS)
-    url = f"/api/v1/admin/tsdb/delete_series?match[]&start={start_ts}&end={end_ts}"
+    # Use match[]={} for all-series deletion (correct for VictoriaMetrics OSS)
+    match_query = "match[]={}"
+    url = f"/api/v1/admin/tsdb/delete_series?{match_query}&start={start_ts}&end={end_ts}"
     session = get_session()
     logger.info(
         f"Deleting ALL VictoriaMetrics data from {start_timestamp} to {end_timestamp} (epoch {start_ts} to {end_ts})"
