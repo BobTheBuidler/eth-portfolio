@@ -76,7 +76,6 @@ class Decimal(_decimal.Decimal):
     """
     I'm in the process of moving from floats to decimals, this will help be as I buidl.
     """
-
     # TODO i forget why I had this lol, should I delete?
 
 
