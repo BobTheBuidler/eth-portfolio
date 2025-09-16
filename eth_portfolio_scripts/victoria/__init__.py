@@ -90,7 +90,7 @@ async def delete_data(start_timestamp: str, end_timestamp: str) -> None:
     """
     Delete ALL datapoints from VictoriaMetrics between two timestamps.
 
-    This deletes ALL time series using match[]={} as required by the VictoriaMetrics API.
+    This deletes ALL time series using match[] (empty value) as required by the VictoriaMetrics API.
     There is no way to restrict this operation to a subset of metrics.
 
     Args:
@@ -99,9 +99,8 @@ async def delete_data(start_timestamp: str, end_timestamp: str) -> None:
     """
     start_ts = _parse_datetime(start_timestamp)
     end_ts = _parse_datetime(end_timestamp)
-    # Use match[]={} for all-series deletion (correct for VictoriaMetrics OSS)
-    match_query = 'match[]={}'
-    url = f"/api/v1/admin/tsdb/delete_series?{match_query}&start={start_ts}&end={end_ts}"
+    # Use match[] (no value) for all-series deletion (correct for VictoriaMetrics OSS)
+    url = f"/api/v1/admin/tsdb/delete_series?match[]&start={start_ts}&end={end_ts}"
     session = get_session()
     logger.info(
         f"Deleting ALL VictoriaMetrics data from {start_timestamp} to {end_timestamp} (epoch {start_ts} to {end_ts})"
