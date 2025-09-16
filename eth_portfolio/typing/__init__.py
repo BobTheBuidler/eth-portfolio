@@ -43,7 +43,7 @@ from typing import (
 )
 
 from checksum_dict import DefaultChecksumDict
-from eth_typing import BlockNumber
+from eth_typing import BlockNumber, HexAddress
 from pandas import DataFrame, concat
 from typing_extensions import ParamSpec, Self
 from y import Contract, ERC20
@@ -159,10 +159,10 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):  # 
                     raise
                 self[token.address] += balance
 
-    def __getitem__(self, key) -> Balance:
+    def __getitem__(self, key: HexAddress) -> Balance:
         return super().__getitem__(key) if key in self else Balance(token=key, block=self.block)
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: HexAddress, value: Balance) -> None:
         """
         Sets the balance for a given token address.
 
@@ -911,7 +911,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
                 )
             self[wallet] += balances
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: HexAddress, value: WalletBalances) -> None:
         if not isinstance(value, WalletBalances):
             raise TypeError(
                 f"value must be a `WalletBalances` object. You passed {value}"

@@ -79,10 +79,6 @@ class Decimal(_decimal.Decimal):
 
     # TODO i forget why I had this lol, should I delete?
 
-    def __init__(self, v) -> None:
-        # assert not isinstance(v, _decimal.Decimal)
-        super().__init__()
-
 
 async def _describe_err(token: AddressOrContract, block: Optional[Block]) -> str:
     """
