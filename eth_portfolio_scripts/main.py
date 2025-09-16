@@ -92,7 +92,7 @@ delete_parser = subparsers.add_parser(
         "There is no way to restrict this operation to a subset of metrics. "
         "All deleted data will be refreshed next time you run the exporter. "
         "Accepted formats: ISO8601 (e.g. 2024-01-01T12:34:56), 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DD', or Unix epoch seconds. "
-    )
+    ),
 )
 delete_parser.add_argument(
     "start_timestamp",
@@ -100,7 +100,7 @@ delete_parser.add_argument(
     help=(
         "Start timestamp (inclusive). "
         "Accepted formats: ISO8601 (e.g. 2024-01-01T12:34:56), 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DD', or Unix epoch seconds."
-    )
+    ),
 )
 delete_parser.add_argument(
     "end_timestamp",
@@ -108,14 +108,18 @@ delete_parser.add_argument(
     help=(
         "End timestamp (exclusive). "
         "Accepted formats: ISO8601 (e.g. 2024-01-01T12:34:56), 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DD', or Unix epoch seconds."
-    )
+    ),
 )
+
 
 def handle_delete_grafana_data(args):
     # Ensure VictoriaMetrics is running before deletion
     docker.up("victoria-metrics")
     # Pass raw datetime strings to delete_data; parsing is handled in victoria module
-    asyncio.get_event_loop().run_until_complete(delete_data(args.start_timestamp, args.end_timestamp))
+    asyncio.get_event_loop().run_until_complete(
+        delete_data(args.start_timestamp, args.end_timestamp)
+    )
+
 
 delete_parser.set_defaults(func=handle_delete_grafana_data)
 
