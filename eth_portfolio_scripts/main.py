@@ -5,7 +5,7 @@ from os import environ
 import brownie
 
 from eth_portfolio_scripts import docker
-from eth_portfolio_scripts._args import add_infra_port_args
+from eth_portfolio_scripts._args import add_infra_port_args, add_victoria_port_args
 from eth_portfolio_scripts.balances import export_balances
 from eth_portfolio_scripts.victoria import delete_data
 
@@ -110,6 +110,7 @@ delete_parser.add_argument(
         "Accepted formats: ISO8601 (e.g. 2024-01-01T12:34:56), 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DD', or Unix epoch seconds."
     ),
 )
+add_victoria_port_args(delete_parser)
 
 
 def handle_delete_grafana_data(args):
@@ -128,8 +129,15 @@ args = parser.parse_args()
 if hasattr(args, "network"):
     environ["BROWNIE_NETWORK_ID"] = args.network
 
-environ["GRAFANA_PORT"] = str(args.grafana_port)
-environ["RENDERER_PORT"] = str(args.renderer_port)
+try:
+    # These 2 attributes will not be present for the `delete-grafana-data` command
+    environ["GRAFANA_PORT"] = str(args.grafana_port)
+    environ["RENDERER_PORT"] = str(args.renderer_port)
+except AttributeError:
+    if args.command != "delete-grafana-data":
+        raise
+
+
 environ["VICTORIA_PORT"] = str(args.victoria_port)
 
 
