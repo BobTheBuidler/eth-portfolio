@@ -4,6 +4,7 @@ requires = [
     "wheel",
     "mypy[mypyc]>=1.18.1,<1.18.2",
     "types-aiofiles",
+    "types-python-dateutil",
     "eth-brownie==1.21.0; sys_platform=='linux'",
     "eth-typing==4.4.0",
     "ez-a-sync>=0.32.7,<0.33",
