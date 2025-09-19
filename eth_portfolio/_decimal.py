@@ -3,6 +3,7 @@ import logging
 from typing import Union
 
 from evmspec.data import Wei
+from typing_extensions import Self
 
 
 logger = logging.getLogger(__name__)
@@ -69,61 +70,61 @@ class Decimal(decimal.Decimal):
 
         return string
 
-    def __add__(self, other):
+    def __add__(self, other) -> Self:
         try:
             return type(self)(super().__add__(other))
         except TypeError as e:
             raise TypeError(str(e), other) from e.__cause__
 
-    def __radd__(self, other):
+    def __radd__(self, other) -> Self:
         try:
             return type(self)(super().__radd__(other))
         except TypeError as e:
             raise TypeError(str(e), other) from e.__cause__
 
-    def __sub__(self, other):
+    def __sub__(self, other) -> Self:
         try:
             return type(self)(super().__sub__(other))
         except TypeError as e:
             raise TypeError(str(e), other) from e.__cause__
 
-    def __rsub__(self, other):
+    def __rsub__(self, other) -> Self:
         try:
             return type(self)(super().__rsub__(other))
         except TypeError as e:
             raise TypeError(str(e), other) from e.__cause__
 
-    def __mul__(self, other):
+    def __mul__(self, other) -> Self:
         try:
             return type(self)(super().__mul__(other))
         except TypeError as e:
             raise TypeError(str(e), other) from e.__cause__
 
-    def __rmul__(self, other):
+    def __rmul__(self, other) -> Self:
         try:
             return type(self)(super().__rmul__(other))
         except TypeError as e:
             raise TypeError(str(e), other) from e.__cause__
 
-    def __truediv__(self, other):
+    def __truediv__(self, other) -> Self:
         try:
             return type(self)(super().__truediv__(other))
         except TypeError as e:
             raise TypeError(str(e), other) from e.__cause__
 
-    def __rtruediv__(self, other):
+    def __rtruediv__(self, other) -> Self:
         try:
             return type(self)(super().__rtruediv__(other))
         except TypeError as e:
             raise TypeError(str(e), other) from e.__cause__
 
-    def __floordiv__(self, other):
+    def __floordiv__(self, other) -> Self:
         try:
             return type(self)(super().__floordiv__(other))
         except TypeError as e:
             raise TypeError(str(e), other) from e.__cause__
 
-    def __rfloordiv__(self, other):
+    def __rfloordiv__(self, other) -> Self:
         try:
             return type(self)(super().__rfloordiv__(other))
         except TypeError as e:

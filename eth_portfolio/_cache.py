@@ -30,7 +30,7 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
     cache_path_for_fn = f"{BASE_PATH}{fn.__module__.replace('.', '/')}/{name}"
     logger = getLogger(f"eth_portfolio.cache_to_disk.{name}")
 
-    def get_cache_file_path(args, kwargs):
+    def get_cache_file_path(args: tuple[Any, ...], kwargs: dict[str, Any]) -> str:
         # Create a unique filename based on the function arguments
         key = md5(dumps((args, sorted(kwargs.items())))).hexdigest()
         return join(cache_path_for_fn, f"{key}.json")
@@ -46,7 +46,7 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
 
         queue: PriorityQueue = PriorityQueue()
 
-        async def cache_deco_worker_coro(func) -> NoReturn:
+        async def cache_deco_worker_coro(func: Callable[..., Any]) -> NoReturn:
             try:
                 while True:
                     _, fut, cache_path, args, kwargs = await queue.get()

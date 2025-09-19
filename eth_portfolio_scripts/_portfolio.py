@@ -35,13 +35,18 @@ logger: Final = getLogger("eth_portfolio")
 log_debug: Final = logger.debug
 log_error: Final = logger.error
 
+_block_at_timestamp_semaphore: Final = a_sync.Semaphore(
+    50, name="eth-portfolio get_block_at_timestamp"
+)
+
 
 async def get_block_at_timestamp(dt: datetime) -> BlockNumber:
-    while True:
-        try:
-            return y.get_block_at_timestamp(dt, sync=False)
-        except NoBlockFound:
-            await asyncio.sleep(10)
+    async with _block_at_timestamp_semaphore:
+        while True:
+            try:
+                return await y.get_block_at_timestamp(dt, sync=False)
+            except NoBlockFound:
+                await asyncio.sleep(10)
 
 
 class ExportablePortfolio(Portfolio):

@@ -7,8 +7,7 @@ import evmspec
 import y._db.common
 import y._db.config as config
 from a_sync import PruningThreadPoolExecutor, a_sync
-from brownie import chain
-from eth_typing import ChecksumAddress
+from eth_typing import ChecksumAddress, HexAddress
 from evmspec.data import _decode_hook
 from logging import getLogger
 from msgspec import ValidationError, json
@@ -32,7 +31,6 @@ from eth_portfolio._db.decorators import break_locks, requery_objs_on_diff_tx_er
 from eth_portfolio._db.entities import (
     AddressExtended,
     BlockExtended,
-    ContractExtended,
     TokenExtended,
 )
 from eth_portfolio._decimal import Decimal
@@ -42,7 +40,7 @@ from eth_portfolio.typing import _P, _T, Fn
 logger = getLogger(__name__)
 
 
-def __bind():
+def __bind() -> None:
     try:
         db.bind(**config.connection_settings)
     except BindingError as e:
@@ -176,7 +174,7 @@ def ensure_block(block: int) -> None:
 # )
 
 
-def is_token(address) -> bool:
+def is_token(address: ChecksumAddress) -> bool:
     if address == EEE_ADDRESS:
         return False
     # with suppress(NonStandardERC20):
@@ -188,7 +186,7 @@ def is_token(address) -> bool:
     return get_event_loop().run_until_complete(_is_token(address))
 
 
-async def _is_token(address) -> bool:
+async def _is_token(address: HexAddress) -> bool:
     # just breaking a weird lock, dont mind me
     if retval := await get_event_loop().run_in_executor(process, __is_token, address):  # type: ignore [name-defined]
         logger.debug("%s is token")
@@ -197,7 +195,7 @@ async def _is_token(address) -> bool:
     return retval
 
 
-def __is_token(address) -> bool:
+def __is_token(address: HexAddress) -> bool:
     with suppress(NonStandardERC20):
         erc = ERC20(address, asynchronous=True)
         if all(
@@ -322,7 +320,7 @@ async def get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Trans
 _decoded = 0
 
 
-async def _yield_to_loop():
+async def _yield_to_loop() -> None:
     """dont let the event loop get congested, let your rpc begin work asap"""
     global _decoded
     _decoded += 1
