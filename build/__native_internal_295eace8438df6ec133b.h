@@ -42,7 +42,7 @@ extern CPyModule *CPyModule_eth_portfolio____loaders___utils;
 extern PyObject *CPyStatic_utils___globals;
 extern CPyModule *CPyModule_eth_retry;
 extern CPyModule *CPyModule_msgspec;
-extern CPyModule *CPyModule_async_lru;
+extern CPyModule *CPyModule_faster_async_lru;
 extern CPyModule *CPyModule_eth_portfolio____argspec__internal;
 extern CPyModule *CPyModule_eth_portfolio____argspec;
 extern PyObject *CPyStatic__argspec___globals;
