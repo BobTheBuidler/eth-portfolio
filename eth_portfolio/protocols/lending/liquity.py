@@ -1,6 +1,6 @@
 from typing import Optional
 
-from async_lru import alru_cache
+from faster_async_lru import alru_cache
 from y import Contract, Network, get_price
 from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
