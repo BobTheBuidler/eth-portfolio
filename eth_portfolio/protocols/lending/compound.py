@@ -3,9 +3,9 @@ from typing import List, Optional
 
 import a_sync
 from a_sync import igather
+from async_lru import alru_cache
 from brownie import ZERO_ADDRESS, Contract
 from eth_typing import ChecksumAddress
-from faster_async_lru import alru_cache
 from y import ERC20, Contract, map_prices, weth
 from y._decorators import stuck_coro_debugger
 from y.datatypes import Block
