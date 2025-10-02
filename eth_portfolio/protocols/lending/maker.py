@@ -2,10 +2,10 @@ from asyncio import gather
 from typing import Final, List, Optional
 
 from a_sync import igather
-from async_lru import alru_cache
 from brownie import ZERO_ADDRESS
 from dank_mids.exceptions import Revert
 from eth_typing import HexStr
+from faster_async_lru import alru_cache
 from faster_eth_abi import encode
 from y import Contract, Network, contract_creation_block_async, get_price
 from y._decorators import stuck_coro_debugger
