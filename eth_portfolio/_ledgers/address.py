@@ -37,13 +37,13 @@ import dank_mids
 import eth_retry
 from a_sync.asyncio import sleep0 as yield_to_loop
 from aiohttp import ClientResponseError
-from async_lru import alru_cache
 from brownie import chain
 from dank_mids.eth import TraceFilterParams
 from eth_typing import BlockNumber, ChecksumAddress
 from evmspec import FilterTrace
 from evmspec.structs.receipt import Status
 from evmspec.structs.trace import call, reward
+from faster_async_lru import alru_cache
 from typing_extensions import Unpack
 from pandas import DataFrame  # type: ignore
 from tqdm import tqdm
