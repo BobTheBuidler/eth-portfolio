@@ -2,8 +2,8 @@ import logging
 from typing import Any, Final, Optional, Set
 
 from a_sync import igather
-from async_lru import alru_cache
 from eth_typing import ChecksumAddress
+from faster_async_lru import alru_cache
 from y.constants import CHAINID, STABLECOINS, WRAPPED_GAS_COIN
 from y.convert import to_address
 from y.datatypes import Address, AnyAddressType
