@@ -14764,27 +14764,27 @@ CPyL3: ;
     CPyModule_a_sync = cpy_r_r24;
     CPy_INCREF(CPyModule_a_sync);
     CPy_DECREF(cpy_r_r24);
-    cpy_r_r25 = CPyStatics[648]; /* ('alru_cache',) */
-    cpy_r_r26 = CPyStatics[101]; /* 'async_lru' */
+    cpy_r_r25 = CPyStatics[648]; /* ('HexStr',) */
+    cpy_r_r26 = CPyStatics[41]; /* 'eth_typing' */
     cpy_r_r27 = CPyStatic_utils___globals;
     cpy_r_r28 = CPyImport_ImportFromMany(cpy_r_r26, cpy_r_r25, cpy_r_r25, cpy_r_r27);
     if (unlikely(cpy_r_r28 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", 7, CPyStatic_utils___globals);
         goto CPyL35;
     }
-    CPyModule_async_lru = cpy_r_r28;
-    CPy_INCREF(CPyModule_async_lru);
+    CPyModule_eth_typing = cpy_r_r28;
+    CPy_INCREF(CPyModule_eth_typing);
     CPy_DECREF(cpy_r_r28);
-    cpy_r_r29 = CPyStatics[649]; /* ('HexStr',) */
-    cpy_r_r30 = CPyStatics[41]; /* 'eth_typing' */
+    cpy_r_r29 = CPyStatics[649]; /* ('alru_cache',) */
+    cpy_r_r30 = CPyStatics[102]; /* 'faster_async_lru' */
     cpy_r_r31 = CPyStatic_utils___globals;
     cpy_r_r32 = CPyImport_ImportFromMany(cpy_r_r30, cpy_r_r29, cpy_r_r29, cpy_r_r31);
     if (unlikely(cpy_r_r32 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", 8, CPyStatic_utils___globals);
         goto CPyL35;
     }
-    CPyModule_eth_typing = cpy_r_r32;
-    CPy_INCREF(CPyModule_eth_typing);
+    CPyModule_faster_async_lru = cpy_r_r32;
+    CPy_INCREF(CPyModule_faster_async_lru);
     CPy_DECREF(cpy_r_r32);
     cpy_r_r33 = CPyStatics[638]; /* ('stuck_coro_debugger',) */
     cpy_r_r34 = CPyStatics[82]; /* 'y._decorators' */
@@ -14823,7 +14823,7 @@ CPyL3: ;
         goto CPyL35;
     }
     cpy_r_r47 = CPyStatic_utils___globals;
-    cpy_r_r48 = CPyStatics[102]; /* 'HexStr' */
+    cpy_r_r48 = CPyStatics[100]; /* 'HexStr' */
     cpy_r_r49 = CPyDict_GetItem(cpy_r_r47, cpy_r_r48);
     if (unlikely(cpy_r_r49 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", 13, CPyStatic_utils___globals);
@@ -14893,7 +14893,7 @@ CPyL3: ;
     }
     CPy_DECREF(cpy_r_r63);
     cpy_r_r70 = CPyStatic_utils___globals;
-    cpy_r_r71 = CPyStatics[100]; /* 'alru_cache' */
+    cpy_r_r71 = CPyStatics[101]; /* 'alru_cache' */
     cpy_r_r72 = CPyDict_GetItem(cpy_r_r70, cpy_r_r71);
     if (unlikely(cpy_r_r72 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", 17, CPyStatic_utils___globals);
@@ -27008,8 +27008,8 @@ int CPyGlobalsInit(void)
     CPyModule_eth_retry = Py_None;
     CPyModule_msgspec = Py_None;
     CPyModule_a_sync = Py_None;
-    CPyModule_async_lru = Py_None;
     CPyModule_eth_typing = Py_None;
+    CPyModule_faster_async_lru = Py_None;
     CPyModule_y____decorators = Py_None;
     CPyModule_eth_portfolio____argspec = Py_None;
     CPyModule_builtins = Py_None;
@@ -27096,12 +27096,12 @@ const char * const CPyLit_Str[] = {
     "\004\024eth_portfolio._utils\024eth_portfolio.typing\005_ZERO\b__name__",
     "\005\022load_token_balance\005round\016_builtin_round\tdecode_to\vdecode_hook",
     "\003\teth_retry\amsgspec\037eth_portfolio/_loaders/utils.py",
-    "\006\024SmartProcessingQueue\nalru_cache\tasync_lru\006HexStr\003Raw\016TxReceiptQueue",
-    "\004\030_get_transaction_receipt\amaxsize\nauto_retry\016min_sleep_time",
-    "\004\016max_sleep_time\vmax_retries\rsuppress_logs\027get_transaction_receipt",
-    "\006\031__get_transaction_receipt\016getfullargspec\004self\003Any\006return\ainspect",
-    "\a\bCallable\004List\004Type\002os\030eth_portfolio/_config.py\aenviron\fREORG_BUFFER",
-    "\005\003get\003Set\aNetwork\aconvert\aMainnet",
+    "\005\024SmartProcessingQueue\006HexStr\nalru_cache\020faster_async_lru\003Raw",
+    "\004\016TxReceiptQueue\030_get_transaction_receipt\amaxsize\nauto_retry",
+    "\004\016min_sleep_time\016max_sleep_time\vmax_retries\rsuppress_logs",
+    "\004\027get_transaction_receipt\031__get_transaction_receipt\016getfullargspec\004self",
+    "\b\003Any\006return\ainspect\bCallable\004List\004Type\002os\030eth_portfolio/_config.py",
+    "\a\aenviron\fREORG_BUFFER\003get\003Set\aNetwork\aconvert\aMainnet",
     "\001*0xb8ac53AFCCEBc44AaC33D0C30E2Ae0783E7fde5f",
     "\001*0xe397ef3E332256F38983ffaE987158da3e18c5Ec",
     "\001*0x7452E3fC2fE611C6B7761c6c393BECe059881aC7",
@@ -27508,7 +27508,7 @@ const int CPyLit_Tuple[] = {
     2, 39, 40, 1, 42, 1, 66, 2, 72, 19, 4, 74, 75, 72, 19, 1, 620, 1, 77,
     1, 32, 3, 80, 80, 80, 1, 636, 1, 81, 2, 83, 84, 1, 76, 1, 73, 1, 71,
     2, 94, 95, 3, 96, 96, 96, 3, 97, 97, 97, 3, 626, 644, 645, 1, 99, 1,
-    100, 1, 102, 2, 106, 63, 4, 108, 109, 110, 111, 1, 114, 5, 116, 119,
+    100, 1, 101, 2, 106, 63, 4, 108, 109, 110, 111, 1, 114, 5, 116, 119,
     120, 34, 121, 3, 122, 122, 122, 1, 654, 3, 30, 32, 127, 1, 40, 2, 128,
     129, 1, 427, 3, 128, 129, 456, 3, 514, 515, 516, 5, 518, 519, 520,
     521, 522, 1, 542, 2, 530, 527, 1, 106, 1, 550, 1, 556, 1, 558, 6, 119,
@@ -27545,7 +27545,7 @@ CPyModule *CPyModule_eth_portfolio____loaders___utils;
 PyObject *CPyStatic_utils___globals;
 CPyModule *CPyModule_eth_retry;
 CPyModule *CPyModule_msgspec;
-CPyModule *CPyModule_async_lru;
+CPyModule *CPyModule_faster_async_lru;
 CPyModule *CPyModule_eth_portfolio____argspec__internal = NULL;
 CPyModule *CPyModule_eth_portfolio____argspec;
 PyObject *CPyStatic__argspec___globals;

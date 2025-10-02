@@ -18,9 +18,9 @@ from typing import (
 
 import dank_mids
 from a_sync import ASyncGenericBase, ASyncIterable, ASyncIterator, as_yielded
-from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
+from faster_async_lru import alru_cache
 from faster_eth_abi.exceptions import InsufficientDataBytes
 from eth_typing import ChecksumAddress
 from pandas import DataFrame  # type: ignore

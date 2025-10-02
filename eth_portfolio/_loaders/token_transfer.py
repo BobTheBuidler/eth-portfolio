@@ -7,10 +7,10 @@ from logging import getLogger
 from typing import Final, Optional, Set
 
 from a_sync import create_task, gather
-from async_lru import alru_cache
 from dank_mids import BlockSemaphore
 from eth_typing import ChecksumAddress
 from evmspec.data import TransactionIndex
+from faster_async_lru import alru_cache
 from msgspec import Struct, ValidationError
 from msgspec.json import decode
 from pony.orm import TransactionIntegrityError, UnexpectedError
