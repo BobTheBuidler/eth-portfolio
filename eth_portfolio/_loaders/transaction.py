@@ -15,9 +15,9 @@ import eth_retry
 import evmspec
 import msgspec
 from a_sync import SmartProcessingQueue
-from async_lru import alru_cache
 from eth_typing import ChecksumAddress
 from evmspec import data
+from faster_async_lru import alru_cache
 from pony.orm import TransactionIntegrityError
 from y import get_price
 from y._decorators import stuck_coro_debugger
