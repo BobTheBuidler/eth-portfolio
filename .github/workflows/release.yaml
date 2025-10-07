@@ -73,8 +73,14 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          fetch-tags: true
-          ref: refs/tags/${{ github.event.release.tag_name }}
+
+      # ----------------------------------------------------
+      # Extract version from git tag (strip leading 'v')
+      # ----------------------------------------------------
+      - name: Extract version from tag
+        id: get_version
+        shell: bash
+        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
 
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -95,6 +101,10 @@ jobs:
           CIBW_ARCHS_WINDOWS: ${{ matrix.cibw_archs_windows || '' }}
           # Which wheels to build for Linux (manylinux vs. musllinux)
           CIBW_BUILD: ${{ matrix.cibw_build || '' }}
+          # Use version from git tag (stripped 'v')
+          SETUPTOOLS_SCM_PRETEND_VERSION: ${{ steps.get_version.outputs.version }}
+          # Pass version into Docker for Linux builds
+          CIBW_ENVIRONMENT: "SETUPTOOLS_SCM_PRETEND_VERSION=${{ steps.get_version.outputs.version }}"
         run: |
           python -m cibuildwheel --output-dir wheelhouse
 
@@ -113,8 +123,14 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          fetch-tags: true
-          ref: refs/tags/${{ github.event.release.tag_name }}
+
+      # ----------------------------------------------------
+      # Extract version from git tag (strip leading 'v')
+      # ----------------------------------------------------
+      - name: Extract version from tag
+        id: get_version
+        shell: bash
+        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
 
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -127,8 +143,10 @@ jobs:
           pip install setuptools wheel twine mypy[mypyc] types-aiofiles
 
       - name: Build sdist
-        run: |
-          python setup.py sdist
+        env:
+          # Use version from git tag (stripped 'v')
+          SETUPTOOLS_SCM_PRETEND_VERSION: ${{ steps.get_version.outputs.version }}
+        run: python setup.py sdist
 
       # ----------------------------------------------------
       # Download wheels built on each runner
@@ -170,7 +188,7 @@ jobs:
           path: wheelhouse/windows-x86
 
       # ----------------------------------------------------
-      # Publish all built artifacts to PyPI
+      # Publish sdist and wheels to PyPI
       # ----------------------------------------------------
       - name: Publish sdist and wheels to PyPI
         env:
