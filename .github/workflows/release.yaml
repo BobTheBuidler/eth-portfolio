@@ -5,6 +5,11 @@ on:
     branches:
       - master
     types: [published]
+  workflow_dispatch:
+    inputs:
+      fake_tag:
+        description: 'Fake tag name to use for dry run (e.g. v2.3.4)'
+        required: true
 
 jobs:
   build_wheels:
@@ -75,12 +80,17 @@ jobs:
           fetch-depth: 0
 
       # ----------------------------------------------------
-      # Extract version from git tag (strip leading 'v')
+      # Extract version from git tag or use fake tag for dry run (strip leading 'v')
       # ----------------------------------------------------
       - name: Extract version from tag
         id: get_version
         shell: bash
-        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=$(echo '${{ github.event.inputs.fake_tag }}' | sed 's/^v//')" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+          fi
 
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -125,12 +135,17 @@ jobs:
           fetch-depth: 0
 
       # ----------------------------------------------------
-      # Extract version from git tag (strip leading 'v')
+      # Extract version from git tag or use fake tag for dry run (strip leading 'v')
       # ----------------------------------------------------
       - name: Extract version from tag
         id: get_version
         shell: bash
-        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=$(echo '${{ github.event.inputs.fake_tag }}' | sed 's/^v//')" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+          fi
 
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -191,6 +206,7 @@ jobs:
       # Publish sdist and wheels to PyPI
       # ----------------------------------------------------
       - name: Publish sdist and wheels to PyPI
+        if: ${{ github.event_name != 'workflow_dispatch' }}
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
