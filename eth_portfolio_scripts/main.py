@@ -57,8 +57,8 @@ export_parser.add_argument(
 export_parser.add_argument(
     "--concurrency",
     type=int,
-    help="The max number of historical blocks to export concurrently. default: 60",
-    default=60,
+    help="The max number of historical blocks to export concurrently. default: 40",
+    default=40,
 )
 export_parser.add_argument(
     "--first-tx-block",
