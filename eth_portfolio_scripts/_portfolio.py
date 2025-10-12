@@ -58,7 +58,7 @@ class ExportablePortfolio(Portfolio):
         *,
         start_block: int = 0,
         label: str = _DEFAULT_LABEL,
-        concurrency: int = 60,
+        concurrency: int = 40,
         load_prices: bool = True,
         get_bucket: Callable[[ChecksumAddress], Awaitable[str]] = get_token_bucket,
         num_workers_transactions: int = 1000,
