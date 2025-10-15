@@ -1,8 +1,8 @@
-#ifndef MYPYC_NATIVE_INTERNAL_295eace8438df6ec133b_H
-#define MYPYC_NATIVE_INTERNAL_295eace8438df6ec133b_H
+#ifndef MYPYC_NATIVE_INTERNAL_eth_portfolio_H
+#define MYPYC_NATIVE_INTERNAL_eth_portfolio_H
 #include <Python.h>
 #include <CPy.h>
-#include "__native_295eace8438df6ec133b.h"
+#include "__native_eth_portfolio.h"
 
 int CPyGlobalsInit(void);
 
@@ -200,7 +200,7 @@ extern PyObject *CPyDef__loaders___balances___load_token_balance_gen___close(PyO
 extern PyObject *CPyPy__loaders___balances___load_token_balance_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef__loaders___balances___load_token_balance_gen_____await__(PyObject *cpy_r___mypyc_self__);
 extern PyObject *CPyPy__loaders___balances___load_token_balance_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef__loaders___balances___load_token_balance(PyObject *cpy_r_token, PyObject *cpy_r_address, CPyTagged cpy_r_block);
+extern PyObject *CPyDef__loaders___balances___load_token_balance(PyObject *cpy_r_token, PyObject *cpy_r_address, PyObject *cpy_r_block);
 extern PyObject *CPyPy__loaders___balances___load_token_balance(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef__loaders___balances____calc_value(PyObject *cpy_r_balance, PyObject *cpy_r_price);
 extern PyObject *CPyPy__loaders___balances____calc_value(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
