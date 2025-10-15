@@ -182,7 +182,7 @@ typedef struct {
     double ___mypyc_generator_attribute__ts;
     PyObject *___mypyc_temp__42;
     tuple_T3OOO ___mypyc_temp__43;
-    CPyTagged ___mypyc_generator_attribute__block;
+    PyObject *___mypyc_generator_attribute__block;
     tuple_T3OOO ___mypyc_temp__44;
     PyObject *___mypyc_temp__45;
     tuple_T3OOO ___mypyc_temp__46;
@@ -195,7 +195,7 @@ typedef struct {
     CPyVTableItem *vtable;
     PyObject *___mypyc_generator_attribute__token;
     PyObject *___mypyc_generator_attribute__address;
-    CPyTagged ___mypyc_generator_attribute__block;
+    PyObject *___mypyc_generator_attribute__block;
     int32_t ___mypyc_next_label__;
     PyObject *___mypyc_temp__0;
     tuple_T3OOO ___mypyc_temp__1;
