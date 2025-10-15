@@ -95,6 +95,7 @@ try:
             "--disable-error-code=typeddict-item",
             "--disable-error-code=index",
         ],
+        group_name="eth_portfolio",
     )
 except Exception as e:  # fallback in case build fails
     logging.error("Error compiling eth-portfolio:", exc_info=True)
