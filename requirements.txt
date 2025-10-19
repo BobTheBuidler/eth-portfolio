@@ -5,7 +5,7 @@ eth_retry>=0.3.4,<1
 evmspec>=0.4.1
 ez-a-sync>=0.32.27
 faster-eth-utils
-numpy<3
+numpy<2
 pandas>=1.4.3,<3
 typed-envs>=0.0.9
 ypricemagic>=4.10.0,<5
