@@ -26,7 +26,7 @@ def check_docker_compose() -> str:
 
     Returns:
         A valid compose command.
-    
+
     Raises:
         RuntimeError: If docker-compose is not installed.
     """
