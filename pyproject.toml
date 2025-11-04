@@ -7,6 +7,7 @@ requires = [
     "eth-brownie==1.22.0.dev0; sys_platform=='linux' and platform_machine != 'i686'",
     "eth-typing==5.2.1",
     "ez-a-sync>=0.32.7,<0.33",
+    "faster-async-lru==2.0.5",
 ]
 
 [tool.mypy]
