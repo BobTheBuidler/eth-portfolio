@@ -3,7 +3,7 @@ from functools import wraps
 from importlib import resources
 from os import path
 from subprocess import CalledProcessError, check_output
-from typing import Callable, Final, Iterable, List, Tuple, TypeVar
+from typing import Callable, Final, Iterable, List, Literal, Tuple, TypeVar
 
 from typing_extensions import ParamSpec
 
@@ -19,7 +19,7 @@ COMPOSE_FILE: Final = str(
 
 def up(*services: str) -> None:
     build(*services)
-    print("starting the infra containers...")
+    _print_notice("starting", services)
     _exec_command(["up", "-d", *services])
 
 
@@ -28,17 +28,17 @@ def down() -> None:
 
 
 def build(*services: str) -> None:
-    print("building the grafana containers")
+    _print_notice("building", services)
     _exec_command(["build", *services])
 
 
-def stop(container_name: str) -> None:
+def stop(*services: str) -> None:
     """
     Stop the specified container if it is running.
     Defaults to stopping the 'renderer' container.
     """
-    print(f"stopping the {container_name} container...")
-    _exec_command(["stop", container_name])
+    _print_notice("stopping", services)
+    _exec_command(["stop", *services])
 
 
 _P = ParamSpec("_P")
@@ -65,6 +65,20 @@ def ensure_containers(fn: Callable[_P, _T]) -> Callable[_P, _T]:
             pass
 
     return compose_wrap
+
+
+def _print_notice(
+    doing: Literal["building", "starting"], services: Tuple[str, ...]
+) -> None:
+    if len(services) == 1:
+        container = services[0]
+        print(f"{doing} the {container} container")
+    elif len(services) == 2:
+        first, second = services
+        print(f"{doing} the {first} and {second} containers")
+    else:
+        *all_but_last, last = services
+        print(f"{doing} the {', '.join(all_but_last)}, and {last} containers")
 
 
 def _exec_command(
