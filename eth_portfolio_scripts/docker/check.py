@@ -10,7 +10,7 @@ def check_docker() -> None:
     Raises:
         RuntimeError: If docker is not installed.
     """
-    print("    🔍 checking your computer for docker")
+    print(" 🔍 checking your computer for docker")
     try:
         check_output(["docker", "--version"])
     except (CalledProcessError, FileNotFoundError):
@@ -18,7 +18,7 @@ def check_docker() -> None:
             "Docker is not installed. You must install Docker before using dao-treasury."
         ) from None
     else:
-        print("    ✔️ eth-portfolio found docker!")
+        print(" ✔️ eth-portfolio found docker!")
 
 
 def check_docker_compose() -> List[str]:
@@ -32,15 +32,15 @@ def check_docker_compose() -> List[str]:
         RuntimeError: If docker-compose is not installed.
     """
     for cmd in ["docker-compose", "docker compose"]:
-        print(f"    🔍 checking your computer for {cmd}")
+        print(f" 🔍 checking your computer for {cmd}")
 
         try:
             check_output([*cmd.split(" "), "--version"])
         except (CalledProcessError, FileNotFoundError):
-            print(f"    ❌ {cmd} not found")
+            print(f" ❌ {cmd} not found")
             continue
         else:
-            print(f"    ✔️ eth-portfolio found {cmd}!")
+            print(f" ✔️ eth-portfolio found {cmd}!")
             return cmd.split(" ")
 
     raise RuntimeError(
