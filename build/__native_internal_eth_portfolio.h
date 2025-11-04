@@ -6,7 +6,7 @@
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[683];
+extern PyObject *CPyStatics[687];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -254,13 +254,13 @@ extern char CPyDef_constants_____top_level__(void);
 extern char CPyDef_docker_____top_level__(void);
 extern char CPyDef_check___check_docker(void);
 extern PyObject *CPyPy_check___check_docker(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern char CPyDef_check___check_docker_compose(void);
+extern PyObject *CPyDef_check___check_docker_compose(void);
 extern PyObject *CPyPy_check___check_docker_compose(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern char CPyDef_check___check_system(void);
+extern PyObject *CPyDef_check___check_system(void);
 extern PyObject *CPyPy_check___check_system(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_check_____top_level__(void);
 extern PyObject *CPyStatic_docker_compose___logger;
-extern PyObject *CPyStatic_docker_compose___compose_file;
+extern PyObject *CPyStatic_docker_compose___COMPOSE_FILE;
 extern PyTypeObject *CPyType_docker_compose___ensure_containers_env;
 extern PyObject *CPyDef_docker_compose___ensure_containers_env(void);
 extern CPyThreadLocal eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *docker_compose___ensure_containers_env_free_instance;
@@ -300,7 +300,7 @@ extern PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____
 extern PyObject *CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____call__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_docker_compose___ensure_containers(PyObject *cpy_r_fn);
 extern PyObject *CPyPy_docker_compose___ensure_containers(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern char CPyDef_docker_compose____exec_command(PyObject *cpy_r_command, PyObject *cpy_r_compose_options);
+extern char CPyDef_docker_compose____exec_command(PyObject *cpy_r_command, PyObject *cpy_r_compose_file, PyObject *cpy_r_compose_options);
 extern PyObject *CPyPy_docker_compose____exec_command(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_docker_compose_____top_level__(void);
 extern PyObject *CPyStatic_eth_portfolio_scripts___balances____UTC;

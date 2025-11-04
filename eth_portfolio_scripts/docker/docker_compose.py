@@ -12,7 +12,7 @@ from eth_portfolio_scripts.docker.check import check_system
 
 logger: Final = logging.getLogger(__name__)
 
-compose_file: Final = str(
+COMPOSE_FILE: Final = str(
     resources.files("eth_portfolio_scripts").joinpath("docker/docker-compose.yaml")
 )
 
@@ -67,12 +67,15 @@ def ensure_containers(fn: Callable[_P, _T]) -> Callable[_P, _T]:
     return compose_wrap
 
 
-def _exec_command(command: List[str], *, compose_options: Tuple[str, ...] = ()) -> None:
-    check_system()
+def _exec_command(
+    command: List[str],
+    *,
+    compose_file: str = COMPOSE_FILE,
+    compose_options: Tuple[str, ...] = (),
+) -> None:
+    compose = check_system()
+    full_command = [*compose, *compose_options, "-f", compose_file, *command]
     try:
-        check_output(["docker", "compose", *compose_options, "-f", compose_file, *command])
+        check_output(full_command)
     except (CalledProcessError, FileNotFoundError) as e:
-        try:
-            check_output(["docker-compose", *compose_options, "-f", compose_file, *command])
-        except (CalledProcessError, FileNotFoundError) as _e:
-            raise RuntimeError(f"Error occurred while running {' '.join(command)}: {_e}") from _e
+        raise RuntimeError(f"Error occurred while running `{' '.join(full_command)}`: {e}") from e
