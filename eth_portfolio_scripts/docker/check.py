@@ -1,5 +1,6 @@
 from functools import lru_cache
 from subprocess import CalledProcessError, check_output
+from typing import List
 
 
 def check_docker() -> None:
@@ -20,7 +21,7 @@ def check_docker() -> None:
         print("    ✔️ eth-portfolio found docker!")
 
 
-def check_docker_compose() -> str:
+def check_docker_compose() -> List[str]:
     """
     Check that either `docker-compose` or `docker compose` is installed on the user's system.
 
@@ -30,24 +31,22 @@ def check_docker_compose() -> str:
     Raises:
         RuntimeError: If docker-compose is not installed.
     """
-    print("    🔍 checking your computer for docker-compose")
-    try:
-        check_output(["docker-compose", "--version"])
-    except (CalledProcessError, FileNotFoundError):
-        print("    ❌ docker-compose not found")
-        print("    🔍 checking your computer for docker compose")
+    for cmd in [["docker-compose"], ["docker", "compose"]]:
+        command = " ".join(cmd)
+        print(f"    🔍 checking your computer for {command}")
+        
         try:
-            check_output(["docker", "compose", "--version"])
+            check_output([*cmd, "--version"])
         except (CalledProcessError, FileNotFoundError):
-            raise RuntimeError(
-                "Docker Compose is not installed. You must install Docker Compose before using dao-treasury."
-            ) from None
+            print(f"    ❌ {command} not found")
+            continue
         else:
-            cmd = "docker compose"
-    else:
-        cmd = "docker-compose"
-    print(f"    ✔️ eth-portfolio found {cmd}!")
-    return cmd
+            print(f"    ✔️ eth-portfolio found {command}!")
+            return cmd
+        
+    raise RuntimeError(
+        "Docker Compose is not installed. "You must install Docker Compose before using dao-treasury."
+    ) from None
 
 
 @lru_cache(maxsize=None)
