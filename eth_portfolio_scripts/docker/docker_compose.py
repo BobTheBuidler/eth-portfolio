@@ -71,7 +71,9 @@ def _print_notice(
     doing: Literal["building", "starting", "stopping"],
     services: Tuple[str, ...],
 ) -> None:
-    if len(services) == 1:
+    if len(services) == 0:
+        print(f"{doing} the backend containers")
+    elif len(services) == 1:
         container = services[0]
         print(f"{doing} the {container} container")
     elif len(services) == 2:
