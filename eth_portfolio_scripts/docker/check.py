@@ -33,7 +33,7 @@ def check_docker_compose() -> List[str]:
     """
     for cmd in ["docker-compose", "docker compose"]:
         print(f"    🔍 checking your computer for {cmd}")
-        
+
         try:
             check_output([*cmd.split(" "), "--version"])
         except (CalledProcessError, FileNotFoundError):
@@ -42,7 +42,7 @@ def check_docker_compose() -> List[str]:
         else:
             print(f"    ✔️ eth-portfolio found {cmd}!")
             return cmd.split(" ")
-        
+
     raise RuntimeError(
         "Docker Compose is not installed. You must install Docker Compose before using dao-treasury."
     ) from None
