@@ -9,14 +9,15 @@ def check_docker() -> None:
     Raises:
         RuntimeError: If docker is not installed.
     """
+    print("    🔍 checking your computer for docker")
     try:
         check_output(["docker", "--version"])
-        print("docker found!")
     except (CalledProcessError, FileNotFoundError):
-        print("checking your computer for docker")
         raise RuntimeError(
             "Docker is not installed. You must install Docker before using dao-treasury."
         ) from None
+    else:
+        print("    ✔️ eth-portfolio found docker!")
 
 
 def check_docker_compose() -> None:
@@ -26,19 +27,22 @@ def check_docker_compose() -> None:
     Raises:
         RuntimeError: If docker-compose is not installed.
     """
+    print("    🔍 checking your computer for docker-compose")
     try:
         check_output(["docker-compose", "--version"])
-        print("docker-compose found!")
     except (CalledProcessError, FileNotFoundError):
-        print("checking your computer for docker-compose")
+        print("    ❌ docker-compose not found")
+        print("    🔍 checking your computer for docker compose")
         try:
             check_output(["docker", "compose", "--version"])
-            print("docker compose found!")
         except (CalledProcessError, FileNotFoundError):
-            print("docker-compose not found, checking your computer for docker compose")
             raise RuntimeError(
                 "Docker Compose is not installed. You must install Docker Compose before using dao-treasury."
             ) from None
+        else:
+            print("    ✔️ eth-portfolio found docker compose!")
+    else:
+        print("    ✔️ eth-portfolio found docker-compose!")
 
 
 @lru_cache(maxsize=None)
@@ -49,6 +53,7 @@ def check_system() -> None:
     Raises:
         RuntimeError: If docker-compose is not installed.
     """
+    print("eth-portfolio is checking for the required docker dependencies...")
     check_docker()
     check_docker_compose()
 
