@@ -20,10 +20,13 @@ def check_docker() -> None:
         print("    ✔️ eth-portfolio found docker!")
 
 
-def check_docker_compose() -> None:
+def check_docker_compose() -> str:
     """
-    Check that docker-compose is installed on the user's system.
+    Check that either `docker-compose` or `docker compose` is installed on the user's system.
 
+    Returns:
+        A valid compose command.
+    
     Raises:
         RuntimeError: If docker-compose is not installed.
     """
@@ -40,22 +43,27 @@ def check_docker_compose() -> None:
                 "Docker Compose is not installed. You must install Docker Compose before using dao-treasury."
             ) from None
         else:
-            print("    ✔️ eth-portfolio found docker compose!")
+            cmd = "docker compose"
     else:
-        print("    ✔️ eth-portfolio found docker-compose!")
+        cmd = "docker-compose"
+    print(f"    ✔️ eth-portfolio found {cmd}!")
+    return cmd
 
 
 @lru_cache(maxsize=None)
-def check_system() -> None:
+def check_system() -> str:
     """
     Check that docker and docker-compose is installed on the user's system.
+
+    Returns:
+        A valid compose command.
 
     Raises:
         RuntimeError: If docker-compose is not installed.
     """
     print("eth-portfolio is checking for the required docker dependencies...")
     check_docker()
-    check_docker_compose()
+    return check_docker_compose()
 
 
 __all__ = ["check_docker", "check_docker_compose", "check_system"]
