@@ -68,11 +68,8 @@ def ensure_containers(fn: Callable[_P, _T]) -> Callable[_P, _T]:
 
 
 def _exec_command(command: List[str], *, compose_options: Tuple[str, ...] = ()) -> None:
-    check_system()
+    compose = check_system()
     try:
-        check_output(["docker", "compose", *compose_options, "-f", compose_file, *command])
+        check_output([*compose, *compose_options, "-f", compose_file, *command])
     except (CalledProcessError, FileNotFoundError) as e:
-        try:
-            check_output(["docker-compose", *compose_options, "-f", compose_file, *command])
-        except (CalledProcessError, FileNotFoundError) as _e:
-            raise RuntimeError(f"Error occurred while running {' '.join(command)}: {_e}") from _e
+        raise RuntimeError(f"Error occurred while running {' '.join(command)}: {_e}") from _e
