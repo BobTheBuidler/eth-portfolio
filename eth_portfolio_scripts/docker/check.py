@@ -50,7 +50,7 @@ def check_docker_compose() -> List[str]:
 
 
 @lru_cache(maxsize=None)
-def check_system() -> str:
+def check_system() -> List[str]:
     """
     Check that docker and docker-compose is installed on the user's system.
 
