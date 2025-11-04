@@ -18,25 +18,25 @@ COMPOSE_FILE: Final = str(
 
 
 def up(*services: str) -> None:
+    """Build and start the specified docker-compose services."""
     build(*services)
     _print_notice("starting", services)
     _exec_command(["up", "-d", *services])
 
 
 def down() -> None:
+    """Stop all of eth-portfolio's docker-compose services."""
     _exec_command(["down"])
 
 
 def build(*services: str) -> None:
+    """Build the specified docker-compose services."""
     _print_notice("building", services)
     _exec_command(["build", *services])
 
 
 def stop(*services: str) -> None:
-    """
-    Stop the specified container if it is running.
-    Defaults to stopping the 'renderer' container.
-    """
+    """Stop the specified docker-compose services, if running."""
     _print_notice("stopping", services)
     _exec_command(["stop", *services])
 
@@ -67,7 +67,10 @@ def ensure_containers(fn: Callable[_P, _T]) -> Callable[_P, _T]:
     return compose_wrap
 
 
-def _print_notice(doing: Literal["building", "starting"], services: Tuple[str, ...]) -> None:
+def _print_notice(
+    doing: Literal["building", "starting", "stopping"],
+    services: Tuple[str, ...],
+) -> None:
     if len(services) == 1:
         container = services[0]
         print(f"{doing} the {container} container")
