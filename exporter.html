@@ -55,6 +55,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#data-flow-summary">Data Flow Summary</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#additional-information">Additional Information</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#data-extraction-and-portfolio-calculations">Data Extraction and Portfolio Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-token-bucket-mapping">Custom Token Bucket Mapping</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="new-protocols.html">Contributing: Adding New Protocols</a></li>
@@ -188,6 +189,38 @@ The exporter organizes data into logical sections, such as “assets”, “debt
 <li><p><strong>Metric Formatting:</strong>
 Each data point is formatted as a Prometheus metric, including metadata such as wallet address, token address, token symbol, protocol name, and a logical “bucket” for grouping. Both the raw balance and USD value are exported for each token.</p></li>
 </ul>
+</section>
+<section id="custom-token-bucket-mapping">
+<h2>Custom Token Bucket Mapping<a class="headerlink" href="#custom-token-bucket-mapping" title="Link to this heading"></a></h2>
+<p>You can provide a custom mapping of token addresses to bucket names for your project. This is supported in <code class="docutils literal notranslate"><span class="pre">ExportablePortfolio</span></code> and will override the default bucket logic for any token address present in your mapping.</p>
+<p><strong>How it works:</strong>
+- Pass a <code class="docutils literal notranslate"><span class="pre">custom_buckets</span></code> dictionary to <code class="docutils literal notranslate"><span class="pre">ExportablePortfolio</span></code>.
+- All keys will be lowercased automatically.
+- The mapping is checked after token unwrapping, so you should use the underlying token address.
+- You cannot pass both a custom <code class="docutils literal notranslate"><span class="pre">get_bucket</span></code> function and a <code class="docutils literal notranslate"><span class="pre">custom_buckets</span></code> mapping (this will raise an error).</p>
+<p><strong>Example:</strong></p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">eth_portfolio_scripts._portfolio</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExportablePortfolio</span>
+
+<span class="n">custom_buckets</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&quot;</span><span class="p">:</span> <span class="s2">&quot;My Stablecoin Bucket&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&quot;</span><span class="p">:</span> <span class="s2">&quot;My ETH Bucket&quot;</span>
+<span class="p">}</span>
+
+<span class="n">port</span> <span class="o">=</span> <span class="n">ExportablePortfolio</span><span class="p">(</span>
+    <span class="n">addresses</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">],</span>
+    <span class="n">custom_buckets</span><span class="o">=</span><span class="n">custom_buckets</span>
+<span class="p">)</span>
+
+<span class="c1"># This will override the default bucket for the specified tokens.</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Notes:</strong>
+- This feature is intended for advanced users who need to customize how tokens are grouped in exported metrics.
+- The <code class="docutils literal notranslate"><span class="pre">bucket</span></code> field in exported Prometheus metrics will reflect your custom mapping for any matching token.</p>
+<p><strong>See Also:</strong>
+- <code class="xref py py-func docutils literal notranslate"><span class="pre">eth_portfolio.buckets.get_token_bucket()</span></code></p>
 <p><strong>3. Export and Storage</strong></p>
 <ul class="simple">
 <li><p><strong>Deduplication:</strong>
