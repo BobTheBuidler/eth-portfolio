@@ -21,6 +21,13 @@ jobs:
         with:
           # Check out the PR branch
           ref: ${{ github.head_ref }}
+        continue-on-error: true
+
+      - name: Branch no longer exists on GitHub
+        if: failure()
+        run: |
+          echo "The branch ${{ github.head_ref }} no longer exists on GitHub"
+          exit 0
 
       - name: Set up Python 3.13
         uses: actions/setup-python@v6
