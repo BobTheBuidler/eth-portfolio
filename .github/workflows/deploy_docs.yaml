@@ -16,7 +16,40 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  build-wheel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.head_ref }}
+        continue-on-error: true
+
+      - name: Branch no longer exists on GitHub
+        if: failure()
+        run: |
+          echo "The branch ${{ github.head_ref }} no longer exists on GitHub"
+          exit 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Mypycify
+        uses: BobTheBuidler/mypycify@v0.1.0
+        with:
+          python-version: "3.12"
+          hash-key: |
+            pyproject.toml
+            setup.py
+            eth_portfolio/**/*.py
+          pip-cache-dependency-path: |
+            pyproject.toml
+            requirements.txt
+
   build-and-deploy:
+    needs: build-wheel
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -27,46 +60,49 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Download wheel artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: BobTheBuidler_mypycified_wheel-${{ runner.os }}-py3.12-${{ hashFiles('pyproject.toml', 'setup.py', 'eth_portfolio/**/*.py') }}
+
+      - name: Install wheel artifact
+        run: pip install dist/*.whl
+
       - name: Install dependencies
         run: |
-          pip install wheel cython
-          pip install sphinx sphinx-rtd-theme -r requirements.txt
+          pip install wheel
+          pip install --no-build-isolation "Cython<3" "pyyaml==5.4.1"
+          pip install -r requirements.txt sphinx sphinx-rtd-theme
 
-      - name: Setup brownie networks
-        run: |
-          brownie networks modify mainnet host=${{ secrets.WEB3_PROVIDER }}
-        continue-on-error: true
-        
       - name: Build documentation config
-        run: |
-          pip install .
-          make docs
+        run: make docs
 
       - name: Build documentation
         run: |
           cd docs
           BROWNIE_NETWORK_ID=mainnet ETHERSCAN_TOKEN=${{ secrets.ETHERSCAN_TOKEN }} make html
+        continue-on-error: true
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/_build/html
-          
+
       - name: Checkout
         uses: actions/checkout@v5
         with:
           ref: gh-pages
-          
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
           # Upload entire repository
           path: '.'
-          
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
