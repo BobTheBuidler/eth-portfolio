@@ -71,13 +71,17 @@ class ExportablePortfolio(Portfolio):
         self._semaphore = a_sync.Semaphore(concurrency)
 
         # Lowercase all keys in custom_buckets if provided
-        self.custom_buckets = {k.lower(): v for k, v in custom_buckets.items()} if custom_buckets else None
+        self.custom_buckets = (
+            {k.lower(): v for k, v in custom_buckets.items()} if custom_buckets else None
+        )
 
         # If get_bucket is not provided, use get_token_bucket with the lowercased mapping
         if get_bucket is None:
             self.get_bucket = lambda token: get_token_bucket(token, self.custom_buckets)
         elif custom_buckets:
-            raise RuntimeError("You cannot pass in a custom get_bucket function AND a custom_buckets mapping, choose one.")
+            raise RuntimeError(
+                "You cannot pass in a custom get_bucket function AND a custom_buckets mapping, choose one."
+            )
         else:
             self.get_bucket = get_bucket
 
