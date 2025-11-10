@@ -2,7 +2,7 @@ import asyncio
 from datetime import datetime, timezone
 from logging import getLogger
 from math import floor
-from typing import Awaitable, Callable, Final, Iterator, List, Optional, Tuple
+from typing import Awaitable, Callable, Final, Iterator, List, Optional, Tuple, Dict
 
 import a_sync
 import eth_retry
@@ -60,15 +60,30 @@ class ExportablePortfolio(Portfolio):
         label: str = _DEFAULT_LABEL,
         concurrency: int = 40,
         load_prices: bool = True,
-        get_bucket: Callable[[ChecksumAddress], Awaitable[str]] = get_token_bucket,
+        get_bucket: Callable[[ChecksumAddress], Awaitable[str]] = None,
         num_workers_transactions: int = 1000,
         asynchronous: bool = False,
+        custom_buckets: Optional[Dict[str, str]] = None,
     ):
         super().__init__(
             addresses, start_block, label, load_prices, num_workers_transactions, asynchronous
         )
-        self.get_bucket = get_bucket
         self._semaphore = a_sync.Semaphore(concurrency)
+
+        # Lowercase all keys in custom_buckets if provided
+        self.custom_buckets = (
+            {k.lower(): v for k, v in custom_buckets.items()} if custom_buckets else None
+        )
+
+        # If get_bucket is not provided, use get_token_bucket with the lowercased mapping
+        if get_bucket is None:
+            self.get_bucket = lambda token: get_token_bucket(token, self.custom_buckets)
+        elif custom_buckets:
+            raise RuntimeError(
+                "You cannot pass in a custom get_bucket function AND a custom_buckets mapping, choose one."
+            )
+        else:
+            self.get_bucket = get_bucket
 
     @cached_property
     def _data_queries(self) -> Tuple[str, str]:

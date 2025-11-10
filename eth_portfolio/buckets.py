@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Final, Optional, Set
+from typing import Any, Final, Optional, Set, Dict
 
 from a_sync import igather
 from eth_typing import ChecksumAddress
@@ -23,7 +23,9 @@ SORT_AS_STABLES: Final = STABLECOINS.keys() | STABLEISH_COINS[CHAINID]
 OTHER_LONG_TERM_ASSETS: Final[Set[ChecksumAddress]] = {}.get(CHAINID, set())  # type: ignore [call-overload]
 
 
-async def get_token_bucket(token: AnyAddressType) -> str:
+async def get_token_bucket(
+    token: AnyAddressType, custom_buckets: Optional[Dict[str, str]] = None
+) -> str:
     """
     Categorize a token into a specific bucket based on its type.
 
@@ -35,6 +37,10 @@ async def get_token_bucket(token: AnyAddressType) -> str:
 
     Args:
         token: The address of the token to categorize.
+        custom_buckets: Optional mapping of token_address (lowercase) to bucket name.
+            If provided, after unwrapping the token, the function will check if the
+            unwrapped token address (lowercased) is present in this mapping and, if so,
+            return the mapped bucket name instead of using the default categorization logic.
 
     Returns:
         A string representing the bucket category of the token.
@@ -54,6 +60,12 @@ async def get_token_bucket(token: AnyAddressType) -> str:
         >>> await get_token_bucket("0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE")
         'ETH'
 
+        Use a custom mapping:
+
+        >>> custom_buckets = {"0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "My Stablecoin Bucket"}
+        >>> await get_token_bucket("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", custom_buckets=custom_buckets)
+        'My Stablecoin Bucket'
+
     See Also:
         - :func:`_unwrap_token`
         - :func:`_is_stable`
@@ -63,6 +75,12 @@ async def get_token_bucket(token: AnyAddressType) -> str:
         token_address = await _unwrap_token(token_address)
     except ContractNotVerified as e:
         return "Other short term assets"
+
+    # Check custom mapping AFTER unwrapping
+    if custom_buckets:
+        custom_bucket = custom_buckets.get(str(token_address).lower())
+        if custom_bucket is not None:
+            return custom_bucket
 
     if _is_stable(token_address):
         return "Cash & cash equivalents"
