@@ -15,4 +15,5 @@ build/**/*.yml
 build/ops.txt
 **.o
 **.so
+**.whl
 eth_portfolio_temp.egg-info/
