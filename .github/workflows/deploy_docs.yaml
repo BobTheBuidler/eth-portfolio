@@ -65,14 +65,8 @@ jobs:
         with:
           name: BobTheBuidler_mypycified_wheel-${{ runner.os }}-py3.12-${{ hashFiles('pyproject.toml', 'setup.py', 'eth_portfolio/**/*.py') }}
 
-      - name: Install wheel artifact
-        run: pip install $(find . -name '*.whl')
-
       - name: Install dependencies
-        run: |
-          pip install wheel
-          pip install --no-build-isolation "Cython<3" "pyyaml==5.4.1"
-          pip install -r requirements.txt sphinx sphinx-rtd-theme
+        run: pip install $(find . -name '*.whl') sphinx sphinx-rtd-theme
 
       - name: Build documentation config
         run: make docs
