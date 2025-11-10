@@ -186,6 +186,7 @@ shitcoins: Final = {
         "0xc6a76f7ad66d0e6Ccd1AaAd6e7568c9bd55Dce62",
         "0xB4d4334eB5a251cbE5cC7Afb0Ba26119aCE62281",
         "0xE5c5AE39B98eFd9D3c9E0F2a5457D98fFA4b0b46",
+        "0x912033c6644008DD8438A5C07738a513f38Ded5D",
         # Generally looks like shit (symbol ERC20)
         "0x2adA6e459089292264133d8D7c85f6907423E444",
         "0x356F680eE21c8CeFfA460c38D20A137F3D07D9af",
