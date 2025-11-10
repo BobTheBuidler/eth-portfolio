@@ -36,7 +36,7 @@ log_debug: Final = logger.debug
 log_error: Final = logger.error
 
 _block_at_timestamp_semaphore: Final = a_sync.Semaphore(
-    50, name="eth-portfolio get_block_at_timestamp"
+    1000, name="eth-portfolio get_block_at_timestamp"
 )
 
 
