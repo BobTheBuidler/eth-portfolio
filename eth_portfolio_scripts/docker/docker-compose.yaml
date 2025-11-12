@@ -1,6 +1,9 @@
 networks:
   eth_portfolio:
 
+volumes:
+  ypricemagic-db-data:
+
 services:
   grafana:
     image: grafana/grafana:12.2.1
@@ -56,6 +59,20 @@ services:
       - "-search.disableAutoCacheReset=true"
     ports:
       - 127.0.0.1:${VICTORIA_PORT:-8428}:8428
+    networks:
+      - eth_portfolio
+    restart: always
+
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: eth-portfolio-exporter
+      POSTGRES_PASSWORD: eth-portfolio-exporter
+      POSTGRES_DB: eth-portfolio-exporter
+    volumes:
+      - ypricemagic-db-data:/var/lib/postgresql/data
+    ports:
+      - 127.0.0.1:5445:5432
     networks:
       - eth_portfolio
     restart: always
