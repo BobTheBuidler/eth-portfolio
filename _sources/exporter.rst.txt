@@ -34,7 +34,7 @@ The Portfolio Exporter supports several command-line options to customize its be
   The time interval between datapoints. default: 6h
 
 - ``--concurrency <concurrency>``
-  The max number of historical blocks to export concurrently. default: 40
+  The max number of historical blocks to export concurrently. default: 30
 
 - ``--first-tx-block <block>``
   The block of your portfolio's first transaction, if known. This value, if provided, allows us to speed up processing of your data by limiting the block range we need to query. If not provided, the whole blockchain will be scanned. default: 0
