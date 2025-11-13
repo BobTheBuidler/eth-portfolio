@@ -57,7 +57,7 @@ async def load_token_balance(token: y.ERC20, address: Address, block: Block) -> 
     )
 
 
-def _calc_value(balance, price) -> Decimal:
+def _calc_value(balance: int | float | Decimal, price: int | float | Decimal) -> Decimal:
     """
     Calculate the USD value of a token balance based on its price.
 
