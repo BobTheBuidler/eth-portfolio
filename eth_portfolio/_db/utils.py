@@ -1,3 +1,5 @@
+import decimal
+import threading
 from asyncio import create_task, gather, get_event_loop, sleep
 from contextlib import suppress
 from functools import lru_cache
@@ -572,6 +574,9 @@ async def insert_token_transfer(token_transfer: TokenTransfer) -> None:
     await _insert_token_transfer(token_transfer)
 
 
+_trap_lock = threading.Lock()
+
+
 @a_sync(default="async", executor=_token_transfer_write_executor)
 @requery_objs_on_diff_tx_err
 @robust_db_session
@@ -591,6 +596,15 @@ def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
             raw=json.encode(token_transfer, enc_hook=enc_hook),
         )
         commit()
+    except decimal.InvalidOperation:
+        with _trap_lock:
+            traps = decimal.getcontext().traps
+            # lets remove the trap just for this one insert and see if it works
+            traps[decimal.InvalidOperation] = False
+            try:
+                return _insert_token_transfer(token_transfer, sync=True)
+            finally:
+                traps[decimal.InvalidOperation] = True
     except TransactionIntegrityError:
         pass  # most likely non-issue, debug later if needed
 
