@@ -74,7 +74,6 @@ try:
             "--disable-error-code=import-not-found",
             # temporary
             "--disable-error-code=call-arg",
-            "--disable-error-code=misc",
             "--disable-error-code=type-arg",
             "--disable-error-code=attr-defined",
             "--disable-error-code=no-any-return",
