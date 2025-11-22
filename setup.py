@@ -103,7 +103,7 @@ except Exception as e:  # fallback in case build fails
 
 
 setup(
-    name="eth_portfolio",
+    name="eth_portfolio_temp",
     python_requires=">=3.10,<3.14",
     packages=find_packages(),
     use_scm_version={
