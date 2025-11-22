@@ -151,19 +151,19 @@ def get_block(block: int) -> BlockExtended:
             raise
         for token, price in prices:
             _set_price(token, price, sync=True)
-            
+
     chain = get_chain(sync=True)
     if not isinstance(chain, Chain):
         raise TypeError(chain)
-        
+
     commit()
-    
+
     try:
         if b := insert(type=BlockExtended, chain=chain, number=block):
             return b
     except TransactionIntegrityError:
         pass
-        
+
     return BlockExtended.get(chain=CHAINID, number=block)
 
 
