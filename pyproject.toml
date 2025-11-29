@@ -8,7 +8,7 @@ requires = [
     "eth-brownie==1.22.0.dev0; sys_platform=='linux' and platform_machine != 'i686'",
     "eth-retry==0.3.5",
     "eth-typing==5.2.1",
-    "evmspec==0.4.7",
+    "evmspec==0.4.8",
     "ez-a-sync>=0.32.7,<0.33",
     "faster-async-lru==2.0.5",
 ]
