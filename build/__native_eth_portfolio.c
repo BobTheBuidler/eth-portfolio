@@ -57,6 +57,7 @@ _nonce___BlockCache_dealloc(eth_portfolio____loaders____nonce___BlockCacheObject
     _nonce___BlockCache_clear(self);
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
+    done: ;
 }
 
 static CPyVTableItem _nonce___BlockCache_vtable[1];
@@ -90,6 +91,7 @@ static PyGetSetDef _nonce___BlockCache_getseters[] = {
 };
 
 static PyMethodDef _nonce___BlockCache_methods[] = {
+    {"__internal_mypyc_setup", (PyCFunction)CPyDef__nonce_____mypyc__BlockCache_setup, METH_O, NULL},
     {"__mypyc_defaults_setup",
      (PyCFunction)CPyPy__nonce___BlockCache_____mypyc_defaults_setup,
      METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__mypyc_defaults_setup()\n--\n\n")},
@@ -237,6 +239,7 @@ _nonce_____mypyc_lambda__0_obj_dealloc(eth_portfolio____loaders____nonce_____myp
     _nonce_____mypyc_lambda__0_obj_clear(self);
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
+    done: ;
 }
 
 static CPyVTableItem _nonce_____mypyc_lambda__0_obj_vtable[2];
@@ -258,6 +261,7 @@ static PyGetSetDef _nonce_____mypyc_lambda__0_obj_getseters[] = {
 };
 
 static PyMethodDef _nonce_____mypyc_lambda__0_obj_methods[] = {
+    {"__internal_mypyc_setup", (PyCFunction)CPyDef__nonce_____mypyc___3__mypyc_lambda__0_obj_setup, METH_O, NULL},
     {"__call__",
      (PyCFunction)CPyPy__nonce_____mypyc_lambda__0_obj_____call__,
      METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__call__()\n--\n\n")},
@@ -404,6 +408,7 @@ _nonce___get_nonce_at_block_gen_dealloc(eth_portfolio____loaders____nonce___get_
     _nonce___get_nonce_at_block_gen_clear(self);
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
+    done: ;
 }
 
 static CPyVTableItem _nonce___get_nonce_at_block_gen_vtable[7];
@@ -424,6 +429,7 @@ CPyDef__nonce___get_nonce_at_block_gen_trait_vtable_setup(void)
 }
 
 static PyMethodDef _nonce___get_nonce_at_block_gen_methods[] = {
+    {"__internal_mypyc_setup", (PyCFunction)CPyDef__nonce_____mypyc__get_nonce_at_block_gen_setup, METH_O, NULL},
     {"__next__",
      (PyCFunction)CPyPy__nonce___get_nonce_at_block_gen_____next__,
      METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
@@ -777,6 +783,7 @@ _nonce___get_block_for_nonce_gen_dealloc(eth_portfolio____loaders____nonce___get
     _nonce___get_block_for_nonce_gen_clear(self);
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
+    done: ;
 }
 
 static CPyVTableItem _nonce___get_block_for_nonce_gen_vtable[7];
@@ -797,6 +804,7 @@ CPyDef__nonce___get_block_for_nonce_gen_trait_vtable_setup(void)
 }
 
 static PyMethodDef _nonce___get_block_for_nonce_gen_methods[] = {
+    {"__internal_mypyc_setup", (PyCFunction)CPyDef__nonce_____mypyc__get_block_for_nonce_gen_setup, METH_O, NULL},
     {"__next__",
      (PyCFunction)CPyPy__nonce___get_block_for_nonce_gen_____next__,
      METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
@@ -1145,6 +1153,7 @@ _nonce____get_area_gen_dealloc(eth_portfolio____loaders____nonce____get_area_gen
     _nonce____get_area_gen_clear(self);
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
+    done: ;
 }
 
 static CPyVTableItem _nonce____get_area_gen_vtable[7];
@@ -1165,6 +1174,7 @@ CPyDef__nonce____get_area_gen_trait_vtable_setup(void)
 }
 
 static PyMethodDef _nonce____get_area_gen_methods[] = {
+    {"__internal_mypyc_setup", (PyCFunction)CPyDef__nonce_____mypyc___3_get_area_gen_setup, METH_O, NULL},
     {"__next__",
      (PyCFunction)CPyPy__nonce____get_area_gen_____next__,
      METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
@@ -1365,6 +1375,7 @@ _nonce___get_block_number_gen_dealloc(eth_portfolio____loaders____nonce___get_bl
     _nonce___get_block_number_gen_clear(self);
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
+    done: ;
 }
 
 static CPyVTableItem _nonce___get_block_number_gen_vtable[7];
@@ -1385,6 +1396,7 @@ CPyDef__nonce___get_block_number_gen_trait_vtable_setup(void)
 }
 
 static PyMethodDef _nonce___get_block_number_gen_methods[] = {
+    {"__internal_mypyc_setup", (PyCFunction)CPyDef__nonce_____mypyc__get_block_number_gen_setup, METH_O, NULL},
     {"__next__",
      (PyCFunction)CPyPy__nonce___get_block_number_gen_____next__,
      METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
@@ -1480,18 +1492,23 @@ int CPyExec_eth_portfolio____loaders____nonce(PyObject *module)
     CPyType__nonce_____mypyc_lambda__0_obj = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType__nonce_____mypyc_lambda__0_obj_template, NULL, modname);
     if (unlikely(!CPyType__nonce_____mypyc_lambda__0_obj))
         goto fail;
+    CPyDef__nonce_____mypyc_lambda__0_obj_trait_vtable_setup();
     CPyType__nonce___get_nonce_at_block_gen = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType__nonce___get_nonce_at_block_gen_template, NULL, modname);
     if (unlikely(!CPyType__nonce___get_nonce_at_block_gen))
         goto fail;
+    CPyDef__nonce___get_nonce_at_block_gen_trait_vtable_setup();
     CPyType__nonce___get_block_for_nonce_gen = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType__nonce___get_block_for_nonce_gen_template, NULL, modname);
     if (unlikely(!CPyType__nonce___get_block_for_nonce_gen))
         goto fail;
+    CPyDef__nonce___get_block_for_nonce_gen_trait_vtable_setup();
     CPyType__nonce____get_area_gen = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType__nonce____get_area_gen_template, NULL, modname);
     if (unlikely(!CPyType__nonce____get_area_gen))
         goto fail;
+    CPyDef__nonce____get_area_gen_trait_vtable_setup();
     CPyType__nonce___get_block_number_gen = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType__nonce___get_block_number_gen_template, NULL, modname);
     if (unlikely(!CPyType__nonce___get_block_number_gen))
         goto fail;
+    CPyDef__nonce___get_block_number_gen_trait_vtable_setup();
     if (CPyGlobalsInit() < 0)
         goto fail;
     char result = CPyDef__nonce_____top_level__();
@@ -11650,6 +11667,7 @@ _loaders___balances___load_token_balance_gen_dealloc(eth_portfolio____loaders___
     _loaders___balances___load_token_balance_gen_clear(self);
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
+    done: ;
 }
 
 static CPyVTableItem _loaders___balances___load_token_balance_gen_vtable[7];
@@ -11670,6 +11688,7 @@ CPyDef__loaders___balances___load_token_balance_gen_trait_vtable_setup(void)
 }
 
 static PyMethodDef _loaders___balances___load_token_balance_gen_methods[] = {
+    {"__internal_mypyc_setup", (PyCFunction)CPyDef__loaders___balances_____mypyc__load_token_balance_gen_setup, METH_O, NULL},
     {"__next__",
      (PyCFunction)CPyPy__loaders___balances___load_token_balance_gen_____next__,
      METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
@@ -11757,6 +11776,7 @@ int CPyExec_eth_portfolio____loaders___balances(PyObject *module)
     CPyType__loaders___balances___load_token_balance_gen = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType__loaders___balances___load_token_balance_gen_template, NULL, modname);
     if (unlikely(!CPyType__loaders___balances___load_token_balance_gen))
         goto fail;
+    CPyDef__loaders___balances___load_token_balance_gen_trait_vtable_setup();
     if (CPyGlobalsInit() < 0)
         goto fail;
     char result = CPyDef__loaders___balances_____top_level__();
@@ -13721,6 +13741,7 @@ utils____get_transaction_receipt_gen_dealloc(eth_portfolio____loaders___utils___
     utils____get_transaction_receipt_gen_clear(self);
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
+    done: ;
 }
 
 static CPyVTableItem utils____get_transaction_receipt_gen_vtable[7];
@@ -13741,6 +13762,7 @@ CPyDef_utils____get_transaction_receipt_gen_trait_vtable_setup(void)
 }
 
 static PyMethodDef utils____get_transaction_receipt_gen_methods[] = {
+    {"__internal_mypyc_setup", (PyCFunction)CPyDef_utils_____mypyc___3_get_transaction_receipt_gen_setup, METH_O, NULL},
     {"__next__",
      (PyCFunction)CPyPy_utils____get_transaction_receipt_gen_____next__,
      METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
@@ -13824,6 +13846,7 @@ int CPyExec_eth_portfolio____loaders___utils(PyObject *module)
     CPyType_utils____get_transaction_receipt_gen = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_utils____get_transaction_receipt_gen_template, NULL, modname);
     if (unlikely(!CPyType_utils____get_transaction_receipt_gen))
         goto fail;
+    CPyDef_utils____get_transaction_receipt_gen_trait_vtable_setup();
     if (CPyGlobalsInit() < 0)
         goto fail;
     char result = CPyDef_utils_____top_level__();
@@ -15149,7 +15172,7 @@ CPyL7: ;
         goto CPyL31;
     }
     cpy_r_r20 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'self' */
-    cpy_r_r21 = CPyStr_Equal(cpy_r_r19, cpy_r_r20);
+    cpy_r_r21 = CPyStr_EqualLiteral(cpy_r_r19, cpy_r_r20, 4);
     cpy_r_r22 = cpy_r_r21 == 0;
     if (!cpy_r_r22) goto CPyL32;
     cpy_r_r23 = CPySequenceTuple_GetItem(cpy_r_r6, 12);
@@ -15302,75 +15325,75 @@ PyObject *CPyDef__argspec___get_kwargs_type(PyObject *cpy_r_sample) {
     PyObject *cpy_r_r14;
     char cpy_r_r15;
     PyObject *cpy_r_r16;
-    int32_t cpy_r_r17;
-    char cpy_r_r18;
-    char cpy_r_r19;
-    PyObject *cpy_r_r20;
+    CPyPtr cpy_r_r17;
+    int64_t cpy_r_r18;
+    CPyTagged cpy_r_r19;
+    char cpy_r_r20;
     PyObject *cpy_r_r21;
     PyObject *cpy_r_r22;
-    CPyTagged cpy_r_r23;
+    PyObject *cpy_r_r23;
     CPyTagged cpy_r_r24;
-    PyObject *cpy_r_r25;
+    CPyTagged cpy_r_r25;
     PyObject *cpy_r_r26;
     PyObject *cpy_r_r27;
     PyObject *cpy_r_r28;
     PyObject *cpy_r_r29;
-    int64_t cpy_r_r30;
-    CPyPtr cpy_r_r31;
-    int64_t cpy_r_r32;
-    char cpy_r_r33;
-    CPyPtr cpy_r_r34;
+    PyObject *cpy_r_r30;
+    int64_t cpy_r_r31;
+    CPyPtr cpy_r_r32;
+    int64_t cpy_r_r33;
+    char cpy_r_r34;
     CPyPtr cpy_r_r35;
-    int64_t cpy_r_r36;
-    CPyPtr cpy_r_r37;
-    PyObject *cpy_r_r38;
+    CPyPtr cpy_r_r36;
+    int64_t cpy_r_r37;
+    CPyPtr cpy_r_r38;
     PyObject *cpy_r_r39;
     PyObject *cpy_r_r40;
     PyObject *cpy_r_r41;
-    int32_t cpy_r_r42;
-    char cpy_r_r43;
+    PyObject *cpy_r_r42;
+    int32_t cpy_r_r43;
     char cpy_r_r44;
-    PyObject *cpy_r_r45;
+    char cpy_r_r45;
     PyObject *cpy_r_r46;
     PyObject *cpy_r_r47;
     PyObject *cpy_r_r48;
     PyObject *cpy_r_r49;
     PyObject *cpy_r_r50;
     PyObject *cpy_r_r51;
-    int32_t cpy_r_r52;
-    char cpy_r_r53;
-    int64_t cpy_r_r54;
-    PyObject *cpy_r_r55;
+    PyObject *cpy_r_r52;
+    int32_t cpy_r_r53;
+    char cpy_r_r54;
+    int64_t cpy_r_r55;
     PyObject *cpy_r_r56;
     PyObject *cpy_r_r57;
     PyObject *cpy_r_r58;
     PyObject *cpy_r_r59;
-    char cpy_r_r60;
-    PyObject *cpy_r_r61;
+    PyObject *cpy_r_r60;
+    char cpy_r_r61;
     PyObject *cpy_r_r62;
     PyObject *cpy_r_r63;
     PyObject *cpy_r_r64;
     PyObject *cpy_r_r65;
     PyObject *cpy_r_r66;
-    char cpy_r_r67;
-    PyObject *cpy_r_r68;
+    PyObject *cpy_r_r67;
+    char cpy_r_r68;
     PyObject *cpy_r_r69;
     PyObject *cpy_r_r70;
     PyObject *cpy_r_r71;
     PyObject *cpy_r_r72;
-    tuple_T2OO cpy_r_r73;
-    PyObject *cpy_r_r74;
+    PyObject *cpy_r_r73;
+    tuple_T2OO cpy_r_r74;
     PyObject *cpy_r_r75;
     PyObject *cpy_r_r76;
-    char cpy_r_r77;
-    PyObject *cpy_r_r78;
+    PyObject *cpy_r_r77;
+    char cpy_r_r78;
     PyObject *cpy_r_r79;
     PyObject *cpy_r_r80;
     PyObject *cpy_r_r81;
     PyObject *cpy_r_r82;
     PyObject *cpy_r_r83;
-    tuple_T3OOO cpy_r_r84;
-    PyObject *cpy_r_r85;
+    PyObject *cpy_r_r84;
+    tuple_T3OOO cpy_r_r85;
     PyObject *cpy_r_r86;
     PyObject *cpy_r_r87;
     PyObject *cpy_r_r88;
@@ -15378,12 +15401,13 @@ PyObject *CPyDef__argspec___get_kwargs_type(PyObject *cpy_r_sample) {
     PyObject *cpy_r_r90;
     PyObject *cpy_r_r91;
     PyObject *cpy_r_r92;
+    PyObject *cpy_r_r93;
     cpy_r_r0 = CPyStatic__argspec___globals;
     cpy_r_r1 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'getfullargspec' */
     cpy_r_r2 = CPyDict_GetItem(cpy_r_r0, cpy_r_r1);
     if (unlikely(cpy_r_r2 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL64;
+        goto CPyL63;
     }
     PyObject *cpy_r_r3[1] = {cpy_r_sample};
     cpy_r_r4 = (PyObject **)&cpy_r_r3;
@@ -15391,24 +15415,24 @@ PyObject *CPyDef__argspec___get_kwargs_type(PyObject *cpy_r_sample) {
     CPy_DECREF(cpy_r_r2);
     if (unlikely(cpy_r_r5 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL64;
+        goto CPyL63;
     }
     if (likely(PyTuple_Check(cpy_r_r5)))
         cpy_r_r6 = cpy_r_r5;
     else {
         CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 18, CPyStatic__argspec___globals, "tuple", cpy_r_r5);
-        goto CPyL64;
+        goto CPyL63;
     }
     cpy_r_r7 = CPySequenceTuple_GetItem(cpy_r_r6, 0);
     if (unlikely(cpy_r_r7 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL65;
+        goto CPyL64;
     }
     if (likely(PyList_Check(cpy_r_r7)))
         cpy_r_r8 = cpy_r_r7;
     else {
         CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 19, CPyStatic__argspec___globals, "list", cpy_r_r7);
-        goto CPyL65;
+        goto CPyL64;
     }
     cpy_r_r9 = (CPyPtr)&((PyVarObject *)cpy_r_r8)->ob_size;
     cpy_r_r10 = *(int64_t *)cpy_r_r9;
@@ -15417,7 +15441,7 @@ PyObject *CPyDef__argspec___get_kwargs_type(PyObject *cpy_r_sample) {
     cpy_r_r12 = CPySequenceTuple_GetItem(cpy_r_r6, 6);
     if (unlikely(cpy_r_r12 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL65;
+        goto CPyL64;
     }
     if (PyTuple_Check(cpy_r_r12))
         cpy_r_r13 = cpy_r_r12;
@@ -15432,420 +15456,417 @@ PyObject *CPyDef__argspec___get_kwargs_type(PyObject *cpy_r_sample) {
     }
     if (cpy_r_r13 != NULL) goto __LL45;
     CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 19, CPyStatic__argspec___globals, "tuple or None", cpy_r_r12);
-    goto CPyL65;
+    goto CPyL64;
 __LL45: ;
     cpy_r_r14 = (PyObject *)&_Py_NoneStruct;
     cpy_r_r15 = cpy_r_r13 != cpy_r_r14;
-    if (!cpy_r_r15) goto CPyL66;
+    if (!cpy_r_r15) goto CPyL65;
     CPy_INCREF(cpy_r_r13);
     if (likely(cpy_r_r13 != Py_None))
         cpy_r_r16 = cpy_r_r13;
     else {
         CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 19, CPyStatic__argspec___globals, "tuple", cpy_r_r13);
-        goto CPyL67;
+        goto CPyL66;
     }
-    cpy_r_r17 = PyObject_IsTrue(cpy_r_r16);
+    cpy_r_r17 = (CPyPtr)&((PyVarObject *)cpy_r_r16)->ob_size;
+    cpy_r_r18 = *(int64_t *)cpy_r_r17;
     CPy_DECREF(cpy_r_r16);
-    cpy_r_r18 = cpy_r_r17 >= 0;
-    if (unlikely(!cpy_r_r18)) {
+    cpy_r_r19 = cpy_r_r18 << 1;
+    cpy_r_r20 = cpy_r_r19 != 0;
+    if (!cpy_r_r20) goto CPyL65;
+    if (PyTuple_Check(cpy_r_r13))
+        cpy_r_r21 = cpy_r_r13;
+    else {
+        cpy_r_r21 = NULL;
+    }
+    if (cpy_r_r21 != NULL) goto __LL46;
+    if (PyList_Check(cpy_r_r13))
+        cpy_r_r21 = cpy_r_r13;
+    else {
+        cpy_r_r21 = NULL;
+    }
+    if (cpy_r_r21 != NULL) goto __LL46;
+    CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 19, CPyStatic__argspec___globals, "union[tuple, list]", cpy_r_r13);
+    goto CPyL64;
+__LL46: ;
+    cpy_r_r22 = cpy_r_r21;
+    goto CPyL14;
+CPyL12: ;
+    cpy_r_r23 = PyList_New(0);
+    if (unlikely(cpy_r_r23 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+        goto CPyL64;
+    }
+    cpy_r_r22 = cpy_r_r23;
+CPyL14: ;
+    cpy_r_r24 = CPyObject_Size(cpy_r_r22);
+    CPy_DECREF(cpy_r_r22);
+    if (unlikely(cpy_r_r24 == CPY_INT_TAG)) {
+        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+        goto CPyL64;
+    }
+    cpy_r_r25 = CPyTagged_Subtract(cpy_r_r11, cpy_r_r24);
+    CPyTagged_DECREF(cpy_r_r24);
+    cpy_r_r26 = CPySequenceTuple_GetItem(cpy_r_r6, 0);
+    if (unlikely(cpy_r_r26 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
         goto CPyL67;
     }
-    cpy_r_r19 = cpy_r_r17;
-    if (!cpy_r_r19) goto CPyL66;
-    if (PyTuple_Check(cpy_r_r13))
-        cpy_r_r20 = cpy_r_r13;
+    if (likely(PyList_Check(cpy_r_r26)))
+        cpy_r_r27 = cpy_r_r26;
     else {
-        cpy_r_r20 = NULL;
+        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 20, CPyStatic__argspec___globals, "list", cpy_r_r26);
+        goto CPyL67;
     }
-    if (cpy_r_r20 != NULL) goto __LL46;
-    if (PyList_Check(cpy_r_r13))
-        cpy_r_r20 = cpy_r_r13;
+    cpy_r_r28 = CPyList_GetSlice(cpy_r_r27, cpy_r_r25, 9223372036854775806LL);
+    CPy_DECREF_NO_IMM(cpy_r_r27);
+    if (unlikely(cpy_r_r28 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+        goto CPyL67;
+    }
+    if (likely(PyList_Check(cpy_r_r28)))
+        cpy_r_r29 = cpy_r_r28;
     else {
-        cpy_r_r20 = NULL;
+        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 20, CPyStatic__argspec___globals, "list", cpy_r_r28);
+        goto CPyL67;
     }
-    if (cpy_r_r20 != NULL) goto __LL46;
-    CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 19, CPyStatic__argspec___globals, "union[tuple, list]", cpy_r_r13);
-    goto CPyL65;
-__LL46: ;
-    cpy_r_r21 = cpy_r_r20;
-    goto CPyL15;
-CPyL13: ;
-    cpy_r_r22 = PyList_New(0);
-    if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL65;
-    }
-    cpy_r_r21 = cpy_r_r22;
-CPyL15: ;
-    cpy_r_r23 = CPyObject_Size(cpy_r_r21);
-    CPy_DECREF(cpy_r_r21);
-    if (unlikely(cpy_r_r23 == CPY_INT_TAG)) {
-        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL65;
-    }
-    cpy_r_r24 = CPyTagged_Subtract(cpy_r_r11, cpy_r_r23);
-    CPyTagged_DECREF(cpy_r_r23);
-    cpy_r_r25 = CPySequenceTuple_GetItem(cpy_r_r6, 0);
-    if (unlikely(cpy_r_r25 == NULL)) {
+    cpy_r_r30 = PyDict_New();
+    if (unlikely(cpy_r_r30 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
         goto CPyL68;
     }
-    if (likely(PyList_Check(cpy_r_r25)))
-        cpy_r_r26 = cpy_r_r25;
+    cpy_r_r31 = 0;
+CPyL21: ;
+    cpy_r_r32 = (CPyPtr)&((PyVarObject *)cpy_r_r29)->ob_size;
+    cpy_r_r33 = *(int64_t *)cpy_r_r32;
+    cpy_r_r34 = cpy_r_r31 < cpy_r_r33;
+    if (!cpy_r_r34) goto CPyL69;
+    cpy_r_r35 = (CPyPtr)&((PyListObject *)cpy_r_r29)->ob_item;
+    cpy_r_r36 = *(CPyPtr *)cpy_r_r35;
+    cpy_r_r37 = cpy_r_r31 * 8;
+    cpy_r_r38 = cpy_r_r36 + cpy_r_r37;
+    cpy_r_r39 = *(PyObject * *)cpy_r_r38;
+    CPy_INCREF(cpy_r_r39);
+    if (likely(PyUnicode_Check(cpy_r_r39)))
+        cpy_r_r40 = cpy_r_r39;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 20, CPyStatic__argspec___globals, "list", cpy_r_r25);
-        goto CPyL68;
+        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 21, CPyStatic__argspec___globals, "str", cpy_r_r39);
+        goto CPyL70;
     }
-    cpy_r_r27 = CPyList_GetSlice(cpy_r_r26, cpy_r_r24, 9223372036854775806LL);
-    CPy_DECREF_NO_IMM(cpy_r_r26);
-    if (unlikely(cpy_r_r27 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL68;
-    }
-    if (likely(PyList_Check(cpy_r_r27)))
-        cpy_r_r28 = cpy_r_r27;
-    else {
-        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 20, CPyStatic__argspec___globals, "list", cpy_r_r27);
-        goto CPyL68;
-    }
-    cpy_r_r29 = PyDict_New();
-    if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL69;
-    }
-    cpy_r_r30 = 0;
-CPyL22: ;
-    cpy_r_r31 = (CPyPtr)&((PyVarObject *)cpy_r_r28)->ob_size;
-    cpy_r_r32 = *(int64_t *)cpy_r_r31;
-    cpy_r_r33 = cpy_r_r30 < cpy_r_r32;
-    if (!cpy_r_r33) goto CPyL70;
-    cpy_r_r34 = (CPyPtr)&((PyListObject *)cpy_r_r28)->ob_item;
-    cpy_r_r35 = *(CPyPtr *)cpy_r_r34;
-    cpy_r_r36 = cpy_r_r30 * 8;
-    cpy_r_r37 = cpy_r_r35 + cpy_r_r36;
-    cpy_r_r38 = *(PyObject * *)cpy_r_r37;
-    CPy_INCREF(cpy_r_r38);
-    if (likely(PyUnicode_Check(cpy_r_r38)))
-        cpy_r_r39 = cpy_r_r38;
-    else {
-        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 21, CPyStatic__argspec___globals, "str", cpy_r_r38);
-        goto CPyL71;
-    }
-    cpy_r_r40 = CPySequenceTuple_GetItem(cpy_r_r6, 12);
-    if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL72;
-    }
-    if (likely(PyDict_Check(cpy_r_r40)))
-        cpy_r_r41 = cpy_r_r40;
-    else {
-        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 22, CPyStatic__argspec___globals, "dict", cpy_r_r40);
-        goto CPyL72;
-    }
-    cpy_r_r42 = PyDict_Contains(cpy_r_r41, cpy_r_r39);
-    CPy_DECREF(cpy_r_r41);
-    cpy_r_r43 = cpy_r_r42 >= 0;
-    if (unlikely(!cpy_r_r43)) {
-        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL72;
-    }
-    cpy_r_r44 = cpy_r_r42;
-    if (!cpy_r_r44) goto CPyL32;
-    cpy_r_r45 = CPySequenceTuple_GetItem(cpy_r_r6, 12);
-    if (unlikely(cpy_r_r45 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL72;
-    }
-    if (likely(PyDict_Check(cpy_r_r45)))
-        cpy_r_r46 = cpy_r_r45;
-    else {
-        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 22, CPyStatic__argspec___globals, "dict", cpy_r_r45);
-        goto CPyL72;
-    }
-    cpy_r_r47 = CPyDict_GetItem(cpy_r_r46, cpy_r_r39);
-    CPy_DECREF(cpy_r_r46);
-    if (unlikely(cpy_r_r47 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL72;
-    }
-    cpy_r_r48 = cpy_r_r47;
-    goto CPyL34;
-CPyL32: ;
-    cpy_r_r49 = CPyStatic__argspec___globals;
-    cpy_r_r50 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Any' */
-    cpy_r_r51 = CPyDict_GetItem(cpy_r_r49, cpy_r_r50);
-    if (unlikely(cpy_r_r51 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL72;
-    }
-    cpy_r_r48 = cpy_r_r51;
-CPyL34: ;
-    cpy_r_r52 = PyDict_SetItem(cpy_r_r29, cpy_r_r39, cpy_r_r48);
-    CPy_DECREF(cpy_r_r39);
-    CPy_DECREF(cpy_r_r48);
-    cpy_r_r53 = cpy_r_r52 >= 0;
-    if (unlikely(!cpy_r_r53)) {
+    cpy_r_r41 = CPySequenceTuple_GetItem(cpy_r_r6, 12);
+    if (unlikely(cpy_r_r41 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
         goto CPyL71;
     }
-    cpy_r_r54 = cpy_r_r30 + 1;
-    cpy_r_r30 = cpy_r_r54;
-    goto CPyL22;
-CPyL36: ;
-    cpy_r_r55 = CPyDict_ValuesView(cpy_r_r29);
-    CPy_DECREF(cpy_r_r29);
-    if (unlikely(cpy_r_r55 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL73;
+    if (likely(PyDict_Check(cpy_r_r41)))
+        cpy_r_r42 = cpy_r_r41;
+    else {
+        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 22, CPyStatic__argspec___globals, "dict", cpy_r_r41);
+        goto CPyL71;
     }
-    cpy_r_r56 = (PyObject *)&PyList_Type;
-    cpy_r_r57 = PySequence_Tuple(cpy_r_r55);
-    CPy_DECREF(cpy_r_r55);
-    if (unlikely(cpy_r_r57 == NULL)) {
+    cpy_r_r43 = PyDict_Contains(cpy_r_r42, cpy_r_r40);
+    CPy_DECREF(cpy_r_r42);
+    cpy_r_r44 = cpy_r_r43 >= 0;
+    if (unlikely(!cpy_r_r44)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL73;
+        goto CPyL71;
     }
-    cpy_r_r58 = PyObject_CallObject(cpy_r_r56, cpy_r_r57);
-    CPy_DECREF(cpy_r_r57);
+    cpy_r_r45 = cpy_r_r43;
+    if (!cpy_r_r45) goto CPyL31;
+    cpy_r_r46 = CPySequenceTuple_GetItem(cpy_r_r6, 12);
+    if (unlikely(cpy_r_r46 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+        goto CPyL71;
+    }
+    if (likely(PyDict_Check(cpy_r_r46)))
+        cpy_r_r47 = cpy_r_r46;
+    else {
+        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 22, CPyStatic__argspec___globals, "dict", cpy_r_r46);
+        goto CPyL71;
+    }
+    cpy_r_r48 = CPyDict_GetItem(cpy_r_r47, cpy_r_r40);
+    CPy_DECREF(cpy_r_r47);
+    if (unlikely(cpy_r_r48 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+        goto CPyL71;
+    }
+    cpy_r_r49 = cpy_r_r48;
+    goto CPyL33;
+CPyL31: ;
+    cpy_r_r50 = CPyStatic__argspec___globals;
+    cpy_r_r51 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Any' */
+    cpy_r_r52 = CPyDict_GetItem(cpy_r_r50, cpy_r_r51);
+    if (unlikely(cpy_r_r52 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+        goto CPyL71;
+    }
+    cpy_r_r49 = cpy_r_r52;
+CPyL33: ;
+    cpy_r_r53 = PyDict_SetItem(cpy_r_r30, cpy_r_r40, cpy_r_r49);
+    CPy_DECREF(cpy_r_r40);
+    CPy_DECREF(cpy_r_r49);
+    cpy_r_r54 = cpy_r_r53 >= 0;
+    if (unlikely(!cpy_r_r54)) {
+        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+        goto CPyL70;
+    }
+    cpy_r_r55 = cpy_r_r31 + 1;
+    cpy_r_r31 = cpy_r_r55;
+    goto CPyL21;
+CPyL35: ;
+    cpy_r_r56 = CPyDict_ValuesView(cpy_r_r30);
+    CPy_DECREF(cpy_r_r30);
+    if (unlikely(cpy_r_r56 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+        goto CPyL72;
+    }
+    cpy_r_r57 = (PyObject *)&PyList_Type;
+    cpy_r_r58 = PySequence_Tuple(cpy_r_r56);
+    CPy_DECREF(cpy_r_r56);
     if (unlikely(cpy_r_r58 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL73;
+        goto CPyL72;
     }
-    if (likely(PyList_Check(cpy_r_r58)))
-        cpy_r_r59 = cpy_r_r58;
-    else {
-        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 25, CPyStatic__argspec___globals, "list", cpy_r_r58);
-        goto CPyL73;
-    }
-    cpy_r_r60 = cpy_r_r24 == 2;
-    if (cpy_r_r60) {
-        goto CPyL74;
-    } else
-        goto CPyL46;
-CPyL41: ;
-    cpy_r_r61 = CPyStatic__argspec___globals;
-    cpy_r_r62 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Tuple' */
-    cpy_r_r63 = CPyDict_GetItem(cpy_r_r61, cpy_r_r62);
-    if (unlikely(cpy_r_r63 == NULL)) {
+    cpy_r_r59 = PyObject_CallObject(cpy_r_r57, cpy_r_r58);
+    CPy_DECREF(cpy_r_r58);
+    if (unlikely(cpy_r_r59 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL75;
+        goto CPyL72;
     }
-    cpy_r_r64 = CPyList_GetItemShort(cpy_r_r59, 0);
-    CPy_DECREF_NO_IMM(cpy_r_r59);
+    if (likely(PyList_Check(cpy_r_r59)))
+        cpy_r_r60 = cpy_r_r59;
+    else {
+        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 25, CPyStatic__argspec___globals, "list", cpy_r_r59);
+        goto CPyL72;
+    }
+    cpy_r_r61 = cpy_r_r25 == 2;
+    if (cpy_r_r61) {
+        goto CPyL73;
+    } else
+        goto CPyL45;
+CPyL40: ;
+    cpy_r_r62 = CPyStatic__argspec___globals;
+    cpy_r_r63 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Tuple' */
+    cpy_r_r64 = CPyDict_GetItem(cpy_r_r62, cpy_r_r63);
     if (unlikely(cpy_r_r64 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL76;
+        goto CPyL74;
     }
-    cpy_r_r65 = PyObject_GetItem(cpy_r_r63, cpy_r_r64);
-    CPy_DECREF(cpy_r_r63);
-    CPy_DECREF(cpy_r_r64);
+    cpy_r_r65 = CPyList_GetItemShort(cpy_r_r60, 0);
+    CPy_DECREF_NO_IMM(cpy_r_r60);
     if (unlikely(cpy_r_r65 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL64;
-    }
-    if (likely(PyTuple_Check(cpy_r_r65)))
-        cpy_r_r66 = cpy_r_r65;
-    else {
-        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 27, CPyStatic__argspec___globals, "tuple", cpy_r_r65);
-        goto CPyL64;
-    }
-    return cpy_r_r66;
-CPyL46: ;
-    cpy_r_r67 = cpy_r_r24 == 4;
-    if (cpy_r_r67) {
-        goto CPyL77;
-    } else
-        goto CPyL53;
-CPyL47: ;
-    cpy_r_r68 = CPyStatic__argspec___globals;
-    cpy_r_r69 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Tuple' */
-    cpy_r_r70 = CPyDict_GetItem(cpy_r_r68, cpy_r_r69);
-    if (unlikely(cpy_r_r70 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
         goto CPyL75;
     }
-    cpy_r_r71 = CPyList_GetItemShort(cpy_r_r59, 0);
+    cpy_r_r66 = PyObject_GetItem(cpy_r_r64, cpy_r_r65);
+    CPy_DECREF(cpy_r_r64);
+    CPy_DECREF(cpy_r_r65);
+    if (unlikely(cpy_r_r66 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+        goto CPyL63;
+    }
+    if (likely(PyTuple_Check(cpy_r_r66)))
+        cpy_r_r67 = cpy_r_r66;
+    else {
+        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 27, CPyStatic__argspec___globals, "tuple", cpy_r_r66);
+        goto CPyL63;
+    }
+    return cpy_r_r67;
+CPyL45: ;
+    cpy_r_r68 = cpy_r_r25 == 4;
+    if (cpy_r_r68) {
+        goto CPyL76;
+    } else
+        goto CPyL52;
+CPyL46: ;
+    cpy_r_r69 = CPyStatic__argspec___globals;
+    cpy_r_r70 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Tuple' */
+    cpy_r_r71 = CPyDict_GetItem(cpy_r_r69, cpy_r_r70);
     if (unlikely(cpy_r_r71 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+        goto CPyL74;
+    }
+    cpy_r_r72 = CPyList_GetItemShort(cpy_r_r60, 0);
+    if (unlikely(cpy_r_r72 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+        goto CPyL77;
+    }
+    cpy_r_r73 = CPyList_GetItemShort(cpy_r_r60, 2);
+    CPy_DECREF_NO_IMM(cpy_r_r60);
+    if (unlikely(cpy_r_r73 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
         goto CPyL78;
     }
-    cpy_r_r72 = CPyList_GetItemShort(cpy_r_r59, 2);
-    CPy_DECREF_NO_IMM(cpy_r_r59);
-    if (unlikely(cpy_r_r72 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL79;
-    }
-    cpy_r_r73.f0 = cpy_r_r71;
-    cpy_r_r73.f1 = cpy_r_r72;
-    cpy_r_r74 = PyTuple_New(2);
-    if (unlikely(cpy_r_r74 == NULL))
+    cpy_r_r74.f0 = cpy_r_r72;
+    cpy_r_r74.f1 = cpy_r_r73;
+    cpy_r_r75 = PyTuple_New(2);
+    if (unlikely(cpy_r_r75 == NULL))
         CPyError_OutOfMemory();
-    PyObject *__tmp47 = cpy_r_r73.f0;
-    PyTuple_SET_ITEM(cpy_r_r74, 0, __tmp47);
-    PyObject *__tmp48 = cpy_r_r73.f1;
-    PyTuple_SET_ITEM(cpy_r_r74, 1, __tmp48);
-    cpy_r_r75 = PyObject_GetItem(cpy_r_r70, cpy_r_r74);
-    CPy_DECREF(cpy_r_r70);
-    CPy_DECREF(cpy_r_r74);
-    if (unlikely(cpy_r_r75 == NULL)) {
+    PyObject *__tmp47 = cpy_r_r74.f0;
+    PyTuple_SET_ITEM(cpy_r_r75, 0, __tmp47);
+    PyObject *__tmp48 = cpy_r_r74.f1;
+    PyTuple_SET_ITEM(cpy_r_r75, 1, __tmp48);
+    cpy_r_r76 = PyObject_GetItem(cpy_r_r71, cpy_r_r75);
+    CPy_DECREF(cpy_r_r71);
+    CPy_DECREF(cpy_r_r75);
+    if (unlikely(cpy_r_r76 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL64;
+        goto CPyL63;
     }
-    if (likely(PyTuple_Check(cpy_r_r75)))
-        cpy_r_r76 = cpy_r_r75;
+    if (likely(PyTuple_Check(cpy_r_r76)))
+        cpy_r_r77 = cpy_r_r76;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 29, CPyStatic__argspec___globals, "tuple", cpy_r_r75);
-        goto CPyL64;
+        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 29, CPyStatic__argspec___globals, "tuple", cpy_r_r76);
+        goto CPyL63;
     }
-    return cpy_r_r76;
-CPyL53: ;
-    cpy_r_r77 = cpy_r_r24 == 6;
-    CPyTagged_DECREF(cpy_r_r24);
-    if (!cpy_r_r77) goto CPyL80;
-    cpy_r_r78 = CPyStatic__argspec___globals;
-    cpy_r_r79 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Tuple' */
-    cpy_r_r80 = CPyDict_GetItem(cpy_r_r78, cpy_r_r79);
-    if (unlikely(cpy_r_r80 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL75;
-    }
-    cpy_r_r81 = CPyList_GetItemShort(cpy_r_r59, 0);
+    return cpy_r_r77;
+CPyL52: ;
+    cpy_r_r78 = cpy_r_r25 == 6;
+    CPyTagged_DECREF(cpy_r_r25);
+    if (!cpy_r_r78) goto CPyL79;
+    cpy_r_r79 = CPyStatic__argspec___globals;
+    cpy_r_r80 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Tuple' */
+    cpy_r_r81 = CPyDict_GetItem(cpy_r_r79, cpy_r_r80);
     if (unlikely(cpy_r_r81 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+        goto CPyL74;
+    }
+    cpy_r_r82 = CPyList_GetItemShort(cpy_r_r60, 0);
+    if (unlikely(cpy_r_r82 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+        goto CPyL80;
+    }
+    cpy_r_r83 = CPyList_GetItemShort(cpy_r_r60, 2);
+    if (unlikely(cpy_r_r83 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
         goto CPyL81;
     }
-    cpy_r_r82 = CPyList_GetItemShort(cpy_r_r59, 2);
-    if (unlikely(cpy_r_r82 == NULL)) {
+    cpy_r_r84 = CPyList_GetItemShort(cpy_r_r60, 4);
+    CPy_DECREF_NO_IMM(cpy_r_r60);
+    if (unlikely(cpy_r_r84 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
         goto CPyL82;
     }
-    cpy_r_r83 = CPyList_GetItemShort(cpy_r_r59, 4);
-    CPy_DECREF_NO_IMM(cpy_r_r59);
-    if (unlikely(cpy_r_r83 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL83;
-    }
-    cpy_r_r84.f0 = cpy_r_r81;
-    cpy_r_r84.f1 = cpy_r_r82;
-    cpy_r_r84.f2 = cpy_r_r83;
-    cpy_r_r85 = PyTuple_New(3);
-    if (unlikely(cpy_r_r85 == NULL))
+    cpy_r_r85.f0 = cpy_r_r82;
+    cpy_r_r85.f1 = cpy_r_r83;
+    cpy_r_r85.f2 = cpy_r_r84;
+    cpy_r_r86 = PyTuple_New(3);
+    if (unlikely(cpy_r_r86 == NULL))
         CPyError_OutOfMemory();
-    PyObject *__tmp49 = cpy_r_r84.f0;
-    PyTuple_SET_ITEM(cpy_r_r85, 0, __tmp49);
-    PyObject *__tmp50 = cpy_r_r84.f1;
-    PyTuple_SET_ITEM(cpy_r_r85, 1, __tmp50);
-    PyObject *__tmp51 = cpy_r_r84.f2;
-    PyTuple_SET_ITEM(cpy_r_r85, 2, __tmp51);
-    cpy_r_r86 = PyObject_GetItem(cpy_r_r80, cpy_r_r85);
-    CPy_DECREF(cpy_r_r80);
-    CPy_DECREF(cpy_r_r85);
-    if (unlikely(cpy_r_r86 == NULL)) {
+    PyObject *__tmp49 = cpy_r_r85.f0;
+    PyTuple_SET_ITEM(cpy_r_r86, 0, __tmp49);
+    PyObject *__tmp50 = cpy_r_r85.f1;
+    PyTuple_SET_ITEM(cpy_r_r86, 1, __tmp50);
+    PyObject *__tmp51 = cpy_r_r85.f2;
+    PyTuple_SET_ITEM(cpy_r_r86, 2, __tmp51);
+    cpy_r_r87 = PyObject_GetItem(cpy_r_r81, cpy_r_r86);
+    CPy_DECREF(cpy_r_r81);
+    CPy_DECREF(cpy_r_r86);
+    if (unlikely(cpy_r_r87 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL64;
+        goto CPyL63;
     }
-    if (likely(PyTuple_Check(cpy_r_r86)))
-        cpy_r_r87 = cpy_r_r86;
+    if (likely(PyTuple_Check(cpy_r_r87)))
+        cpy_r_r88 = cpy_r_r87;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 31, CPyStatic__argspec___globals, "tuple", cpy_r_r86);
-        goto CPyL64;
+        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 31, CPyStatic__argspec___globals, "tuple", cpy_r_r87);
+        goto CPyL63;
     }
-    return cpy_r_r87;
-CPyL61: ;
-    cpy_r_r88 = CPyStatic__argspec___globals;
-    cpy_r_r89 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Any' */
-    cpy_r_r90 = CPyDict_GetItem(cpy_r_r88, cpy_r_r89);
-    if (unlikely(cpy_r_r90 == NULL)) {
+    return cpy_r_r88;
+CPyL60: ;
+    cpy_r_r89 = CPyStatic__argspec___globals;
+    cpy_r_r90 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Any' */
+    cpy_r_r91 = CPyDict_GetItem(cpy_r_r89, cpy_r_r90);
+    if (unlikely(cpy_r_r91 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-        goto CPyL64;
+        goto CPyL63;
     }
-    if (likely(PyTuple_Check(cpy_r_r90)))
-        cpy_r_r91 = cpy_r_r90;
+    if (likely(PyTuple_Check(cpy_r_r91)))
+        cpy_r_r92 = cpy_r_r91;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 33, CPyStatic__argspec___globals, "tuple", cpy_r_r90);
-        goto CPyL64;
+        CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 33, CPyStatic__argspec___globals, "tuple", cpy_r_r91);
+        goto CPyL63;
     }
-    return cpy_r_r91;
-CPyL64: ;
-    cpy_r_r92 = NULL;
     return cpy_r_r92;
-CPyL65: ;
+CPyL63: ;
+    cpy_r_r93 = NULL;
+    return cpy_r_r93;
+CPyL64: ;
     CPy_DecRef(cpy_r_r6);
-    goto CPyL64;
-CPyL66: ;
+    goto CPyL63;
+CPyL65: ;
     CPy_DECREF(cpy_r_r13);
-    goto CPyL13;
-CPyL67: ;
+    goto CPyL12;
+CPyL66: ;
     CPy_DecRef(cpy_r_r6);
     CPy_DecRef(cpy_r_r13);
-    goto CPyL64;
+    goto CPyL63;
+CPyL67: ;
+    CPy_DecRef(cpy_r_r6);
+    CPyTagged_DecRef(cpy_r_r25);
+    goto CPyL63;
 CPyL68: ;
     CPy_DecRef(cpy_r_r6);
-    CPyTagged_DecRef(cpy_r_r24);
-    goto CPyL64;
+    CPyTagged_DecRef(cpy_r_r25);
+    CPy_DecRef(cpy_r_r29);
+    goto CPyL63;
 CPyL69: ;
-    CPy_DecRef(cpy_r_r6);
-    CPyTagged_DecRef(cpy_r_r24);
-    CPy_DecRef(cpy_r_r28);
-    goto CPyL64;
-CPyL70: ;
     CPy_DECREF(cpy_r_r6);
-    CPy_DECREF_NO_IMM(cpy_r_r28);
-    goto CPyL36;
+    CPy_DECREF_NO_IMM(cpy_r_r29);
+    goto CPyL35;
+CPyL70: ;
+    CPy_DecRef(cpy_r_r6);
+    CPyTagged_DecRef(cpy_r_r25);
+    CPy_DecRef(cpy_r_r29);
+    CPy_DecRef(cpy_r_r30);
+    goto CPyL63;
 CPyL71: ;
     CPy_DecRef(cpy_r_r6);
-    CPyTagged_DecRef(cpy_r_r24);
-    CPy_DecRef(cpy_r_r28);
+    CPyTagged_DecRef(cpy_r_r25);
     CPy_DecRef(cpy_r_r29);
-    goto CPyL64;
+    CPy_DecRef(cpy_r_r30);
+    CPy_DecRef(cpy_r_r40);
+    goto CPyL63;
 CPyL72: ;
-    CPy_DecRef(cpy_r_r6);
-    CPyTagged_DecRef(cpy_r_r24);
-    CPy_DecRef(cpy_r_r28);
-    CPy_DecRef(cpy_r_r29);
-    CPy_DecRef(cpy_r_r39);
-    goto CPyL64;
+    CPyTagged_DecRef(cpy_r_r25);
+    goto CPyL63;
 CPyL73: ;
-    CPyTagged_DecRef(cpy_r_r24);
-    goto CPyL64;
+    CPyTagged_DECREF(cpy_r_r25);
+    goto CPyL40;
 CPyL74: ;
-    CPyTagged_DECREF(cpy_r_r24);
-    goto CPyL41;
+    CPy_DecRef(cpy_r_r60);
+    goto CPyL63;
 CPyL75: ;
-    CPy_DecRef(cpy_r_r59);
-    goto CPyL64;
+    CPy_DecRef(cpy_r_r64);
+    goto CPyL63;
 CPyL76: ;
-    CPy_DecRef(cpy_r_r63);
-    goto CPyL64;
+    CPyTagged_DECREF(cpy_r_r25);
+    goto CPyL46;
 CPyL77: ;
-    CPyTagged_DECREF(cpy_r_r24);
-    goto CPyL47;
-CPyL78: ;
-    CPy_DecRef(cpy_r_r59);
-    CPy_DecRef(cpy_r_r70);
-    goto CPyL64;
-CPyL79: ;
-    CPy_DecRef(cpy_r_r70);
+    CPy_DecRef(cpy_r_r60);
     CPy_DecRef(cpy_r_r71);
-    goto CPyL64;
+    goto CPyL63;
+CPyL78: ;
+    CPy_DecRef(cpy_r_r71);
+    CPy_DecRef(cpy_r_r72);
+    goto CPyL63;
+CPyL79: ;
+    CPy_DECREF_NO_IMM(cpy_r_r60);
+    goto CPyL60;
 CPyL80: ;
-    CPy_DECREF_NO_IMM(cpy_r_r59);
-    goto CPyL61;
-CPyL81: ;
-    CPy_DecRef(cpy_r_r59);
-    CPy_DecRef(cpy_r_r80);
-    goto CPyL64;
-CPyL82: ;
-    CPy_DecRef(cpy_r_r59);
-    CPy_DecRef(cpy_r_r80);
+    CPy_DecRef(cpy_r_r60);
     CPy_DecRef(cpy_r_r81);
-    goto CPyL64;
-CPyL83: ;
-    CPy_DecRef(cpy_r_r80);
+    goto CPyL63;
+CPyL81: ;
+    CPy_DecRef(cpy_r_r60);
     CPy_DecRef(cpy_r_r81);
     CPy_DecRef(cpy_r_r82);
-    goto CPyL64;
+    goto CPyL63;
+CPyL82: ;
+    CPy_DecRef(cpy_r_r81);
+    CPy_DecRef(cpy_r_r82);
+    CPy_DecRef(cpy_r_r83);
+    goto CPyL63;
 }
 
 PyObject *CPyPy__argspec___get_kwargs_type(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
@@ -21022,6 +21043,7 @@ docker_compose___ensure_containers_env_dealloc(eth_portfolio_scripts___docker___
     docker_compose___ensure_containers_env_clear(self);
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
+    done: ;
 }
 
 static CPyVTableItem docker_compose___ensure_containers_env_vtable[1];
@@ -21036,6 +21058,7 @@ CPyDef_docker_compose___ensure_containers_env_trait_vtable_setup(void)
 }
 
 static PyMethodDef docker_compose___ensure_containers_env_methods[] = {
+    {"__internal_mypyc_setup", (PyCFunction)CPyDef_docker_compose_____mypyc__ensure_containers_env_setup, METH_O, NULL},
     {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
     {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
     {NULL}  /* Sentinel */
@@ -21163,6 +21186,7 @@ docker_compose___compose_wrap_ensure_containers_env_dealloc(eth_portfolio_script
     docker_compose___compose_wrap_ensure_containers_env_clear(self);
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
+    done: ;
 }
 
 static CPyVTableItem docker_compose___compose_wrap_ensure_containers_env_vtable[1];
@@ -21177,6 +21201,7 @@ CPyDef_docker_compose___compose_wrap_ensure_containers_env_trait_vtable_setup(vo
 }
 
 static PyMethodDef docker_compose___compose_wrap_ensure_containers_env_methods[] = {
+    {"__internal_mypyc_setup", (PyCFunction)CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_env_setup, METH_O, NULL},
     {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
     {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
     {NULL}  /* Sentinel */
@@ -21274,6 +21299,7 @@ docker_compose___compose_wrap_ensure_containers_obj_dealloc(eth_portfolio_script
     docker_compose___compose_wrap_ensure_containers_obj_clear(self);
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
+    done: ;
 }
 
 static CPyVTableItem docker_compose___compose_wrap_ensure_containers_obj_vtable[2];
@@ -21302,6 +21328,7 @@ static PyGetSetDef docker_compose___compose_wrap_ensure_containers_obj_getseters
 };
 
 static PyMethodDef docker_compose___compose_wrap_ensure_containers_obj_methods[] = {
+    {"__internal_mypyc_setup", (PyCFunction)CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_obj_setup, METH_O, NULL},
     {"__call__",
      (PyCFunction)CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____call__,
      METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__call__(*$args, **kwargs)\n--\n\n")},
@@ -21442,6 +21469,7 @@ docker_compose___compose_wrap_gen___3_50_dealloc(eth_portfolio_scripts___docker_
     docker_compose___compose_wrap_gen___3_50_clear(self);
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
+    done: ;
 }
 
 static CPyVTableItem docker_compose___compose_wrap_gen___3_50_vtable[7];
@@ -21462,6 +21490,7 @@ CPyDef_docker_compose___compose_wrap_gen___3_50_trait_vtable_setup(void)
 }
 
 static PyMethodDef docker_compose___compose_wrap_gen___3_50_methods[] = {
+    {"__internal_mypyc_setup", (PyCFunction)CPyDef_docker_compose_____mypyc__compose_wrap_gen___3_50_setup, METH_O, NULL},
     {"__next__",
      (PyCFunction)CPyPy_docker_compose___compose_wrap_gen___3_50_____next__,
      METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
@@ -21549,15 +21578,19 @@ int CPyExec_eth_portfolio_scripts___docker___docker_compose(PyObject *module)
     CPyType_docker_compose___ensure_containers_env = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_docker_compose___ensure_containers_env_template, NULL, modname);
     if (unlikely(!CPyType_docker_compose___ensure_containers_env))
         goto fail;
+    CPyDef_docker_compose___ensure_containers_env_trait_vtable_setup();
     CPyType_docker_compose___compose_wrap_ensure_containers_env = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_docker_compose___compose_wrap_ensure_containers_env_template, NULL, modname);
     if (unlikely(!CPyType_docker_compose___compose_wrap_ensure_containers_env))
         goto fail;
+    CPyDef_docker_compose___compose_wrap_ensure_containers_env_trait_vtable_setup();
     CPyType_docker_compose___compose_wrap_ensure_containers_obj = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_docker_compose___compose_wrap_ensure_containers_obj_template, NULL, modname);
     if (unlikely(!CPyType_docker_compose___compose_wrap_ensure_containers_obj))
         goto fail;
+    CPyDef_docker_compose___compose_wrap_ensure_containers_obj_trait_vtable_setup();
     CPyType_docker_compose___compose_wrap_gen___3_50 = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_docker_compose___compose_wrap_gen___3_50_template, NULL, modname);
     if (unlikely(!CPyType_docker_compose___compose_wrap_gen___3_50))
         goto fail;
+    CPyDef_docker_compose___compose_wrap_gen___3_50_trait_vtable_setup();
     if (CPyGlobalsInit() < 0)
         goto fail;
     char result = CPyDef_docker_compose_____top_level__();
@@ -24203,6 +24236,7 @@ eth_portfolio_scripts___balances___export_balances_gen_dealloc(eth_portfolio_scr
     eth_portfolio_scripts___balances___export_balances_gen_clear(self);
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
+    done: ;
 }
 
 static CPyVTableItem eth_portfolio_scripts___balances___export_balances_gen_vtable[7];
@@ -24223,6 +24257,7 @@ CPyDef_eth_portfolio_scripts___balances___export_balances_gen_trait_vtable_setup
 }
 
 static PyMethodDef eth_portfolio_scripts___balances___export_balances_gen_methods[] = {
+    {"__internal_mypyc_setup", (PyCFunction)CPyDef_eth_portfolio_scripts___balances_____mypyc__export_balances_gen_setup, METH_O, NULL},
     {"__next__",
      (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____next__,
      METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
@@ -24311,6 +24346,7 @@ int CPyExec_eth_portfolio_scripts___balances(PyObject *module)
     CPyType_eth_portfolio_scripts___balances___export_balances_gen = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_eth_portfolio_scripts___balances___export_balances_gen_template, NULL, modname);
     if (unlikely(!CPyType_eth_portfolio_scripts___balances___export_balances_gen))
         goto fail;
+    CPyDef_eth_portfolio_scripts___balances___export_balances_gen_trait_vtable_setup();
     if (CPyGlobalsInit() < 0)
         goto fail;
     char result = CPyDef_eth_portfolio_scripts___balances_____top_level__();
