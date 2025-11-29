@@ -1,5 +1,5 @@
-#ifndef MYPYC_NATIVE_INTERNAL_eth_portfolio_H
-#define MYPYC_NATIVE_INTERNAL_eth_portfolio_H
+#ifndef MYPYC_LIBRT_INTERNAL_eth_portfolio_H
+#define MYPYC_LIBRT_INTERNAL_eth_portfolio_H
 #include <Python.h>
 #include <CPy.h>
 #include "__native_eth_portfolio.h"
