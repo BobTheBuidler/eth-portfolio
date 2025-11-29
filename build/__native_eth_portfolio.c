@@ -14626,29 +14626,29 @@ char CPyDef_utils_____top_level__(void) {
     PyObject *cpy_r_r90;
     PyObject *cpy_r_r91;
     PyObject *cpy_r_r92;
-    PyObject *cpy_r_r93;
-    PyObject **cpy_r_r95;
+    PyObject **cpy_r_r94;
+    PyObject *cpy_r_r95;
     PyObject *cpy_r_r96;
-    PyObject *cpy_r_r97;
-    PyObject **cpy_r_r99;
+    PyObject **cpy_r_r98;
+    PyObject *cpy_r_r99;
     PyObject *cpy_r_r100;
     PyObject *cpy_r_r101;
-    PyObject *cpy_r_r102;
-    int32_t cpy_r_r103;
-    char cpy_r_r104;
+    int32_t cpy_r_r102;
+    char cpy_r_r103;
+    PyObject *cpy_r_r104;
     PyObject *cpy_r_r105;
     PyObject *cpy_r_r106;
     PyObject *cpy_r_r107;
     PyObject *cpy_r_r108;
     PyObject *cpy_r_r109;
     PyObject *cpy_r_r110;
-    PyObject *cpy_r_r111;
-    PyObject **cpy_r_r113;
+    PyObject **cpy_r_r112;
+    PyObject *cpy_r_r113;
     PyObject *cpy_r_r114;
     PyObject *cpy_r_r115;
-    PyObject *cpy_r_r116;
-    int32_t cpy_r_r117;
-    char cpy_r_r118;
+    int32_t cpy_r_r116;
+    char cpy_r_r117;
+    PyObject *cpy_r_r118;
     PyObject *cpy_r_r119;
     PyObject *cpy_r_r120;
     PyObject *cpy_r_r121;
@@ -14657,10 +14657,9 @@ char CPyDef_utils_____top_level__(void) {
     PyObject *cpy_r_r124;
     PyObject *cpy_r_r125;
     PyObject *cpy_r_r126;
-    PyObject *cpy_r_r127;
-    int32_t cpy_r_r128;
+    int32_t cpy_r_r127;
+    char cpy_r_r128;
     char cpy_r_r129;
-    char cpy_r_r130;
     cpy_r_r0 = CPyModule_builtins;
     cpy_r_r1 = (PyObject *)&_Py_NoneStruct;
     cpy_r_r2 = cpy_r_r0 != cpy_r_r1;
@@ -14881,117 +14880,116 @@ CPyL3: ;
         goto CPyL43;
     }
     CPy_DECREF(cpy_r_r73);
-    cpy_r_r86 = CPyStatic_utils___globals;
-    cpy_r_r87 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_retry' */
-    cpy_r_r88 = CPyDict_GetItem(cpy_r_r86, cpy_r_r87);
+    cpy_r_r86 = CPyModule_eth_retry;
+    cpy_r_r87 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'auto_retry' */
+    cpy_r_r88 = CPyObject_GetAttr(cpy_r_r86, cpy_r_r87);
     if (unlikely(cpy_r_r88 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
         goto CPyL44;
     }
-    cpy_r_r89 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'auto_retry' */
-    cpy_r_r90 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 1 */
-    cpy_r_r91 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 3 */
-    cpy_r_r92 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 20 */
-    cpy_r_r93 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 1 */
-    PyObject *cpy_r_r94[5] = {cpy_r_r88, cpy_r_r90, cpy_r_r91, cpy_r_r92, cpy_r_r93};
-    cpy_r_r95 = (PyObject **)&cpy_r_r94;
-    cpy_r_r96 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('min_sleep_time', 'max_sleep_time', 'max_retries',
+    cpy_r_r89 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 1 */
+    cpy_r_r90 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 3 */
+    cpy_r_r91 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 20 */
+    cpy_r_r92 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 1 */
+    PyObject *cpy_r_r93[4] = {cpy_r_r89, cpy_r_r90, cpy_r_r91, cpy_r_r92};
+    cpy_r_r94 = (PyObject **)&cpy_r_r93;
+    cpy_r_r95 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('min_sleep_time', 'max_sleep_time', 'max_retries',
                                     'suppress_logs') */
-    cpy_r_r97 = PyObject_VectorcallMethod(cpy_r_r89, cpy_r_r95, 9223372036854775809ULL, cpy_r_r96);
-    if (unlikely(cpy_r_r97 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
-        goto CPyL45;
-    }
+    cpy_r_r96 = PyObject_Vectorcall(cpy_r_r88, cpy_r_r94, 0, cpy_r_r95);
     CPy_DECREF(cpy_r_r88);
-    PyObject *cpy_r_r98[1] = {cpy_r_r85};
-    cpy_r_r99 = (PyObject **)&cpy_r_r98;
-    cpy_r_r100 = PyObject_Vectorcall(cpy_r_r97, cpy_r_r99, 1, 0);
-    CPy_DECREF(cpy_r_r97);
-    if (unlikely(cpy_r_r100 == NULL)) {
+    if (unlikely(cpy_r_r96 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
+        goto CPyL44;
+    }
+    PyObject *cpy_r_r97[1] = {cpy_r_r85};
+    cpy_r_r98 = (PyObject **)&cpy_r_r97;
+    cpy_r_r99 = PyObject_Vectorcall(cpy_r_r96, cpy_r_r98, 1, 0);
+    CPy_DECREF(cpy_r_r96);
+    if (unlikely(cpy_r_r99 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
         goto CPyL44;
     }
     CPy_DECREF(cpy_r_r85);
-    cpy_r_r101 = CPyStatic_utils___globals;
-    cpy_r_r102 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_get_transaction_receipt' */
-    cpy_r_r103 = PyDict_SetItem(cpy_r_r101, cpy_r_r102, cpy_r_r100);
-    CPy_DECREF(cpy_r_r100);
-    cpy_r_r104 = cpy_r_r103 >= 0;
-    if (unlikely(!cpy_r_r104)) {
+    cpy_r_r100 = CPyStatic_utils___globals;
+    cpy_r_r101 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_get_transaction_receipt' */
+    cpy_r_r102 = PyDict_SetItem(cpy_r_r100, cpy_r_r101, cpy_r_r99);
+    CPy_DECREF(cpy_r_r99);
+    cpy_r_r103 = cpy_r_r102 >= 0;
+    if (unlikely(!cpy_r_r103)) {
         CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
         goto CPyL38;
     }
-    cpy_r_r105 = CPyStatic_utils___globals;
-    cpy_r_r106 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_get_transaction_receipt' */
-    cpy_r_r107 = CPyDict_GetItem(cpy_r_r105, cpy_r_r106);
-    if (unlikely(cpy_r_r107 == NULL)) {
+    cpy_r_r104 = CPyStatic_utils___globals;
+    cpy_r_r105 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_get_transaction_receipt' */
+    cpy_r_r106 = CPyDict_GetItem(cpy_r_r104, cpy_r_r105);
+    if (unlikely(cpy_r_r106 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
         goto CPyL38;
     }
-    cpy_r_r108 = CPyStatic_utils___globals;
-    cpy_r_r109 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'SmartProcessingQueue' */
-    cpy_r_r110 = CPyDict_GetItem(cpy_r_r108, cpy_r_r109);
-    if (unlikely(cpy_r_r110 == NULL)) {
+    cpy_r_r107 = CPyStatic_utils___globals;
+    cpy_r_r108 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'SmartProcessingQueue' */
+    cpy_r_r109 = CPyDict_GetItem(cpy_r_r107, cpy_r_r108);
+    if (unlikely(cpy_r_r109 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
-        goto CPyL46;
+        goto CPyL45;
     }
-    cpy_r_r111 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 5000 */
-    PyObject *cpy_r_r112[2] = {cpy_r_r107, cpy_r_r111};
-    cpy_r_r113 = (PyObject **)&cpy_r_r112;
-    cpy_r_r114 = PyObject_Vectorcall(cpy_r_r110, cpy_r_r113, 2, 0);
-    CPy_DECREF(cpy_r_r110);
-    if (unlikely(cpy_r_r114 == NULL)) {
+    cpy_r_r110 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 5000 */
+    PyObject *cpy_r_r111[2] = {cpy_r_r106, cpy_r_r110};
+    cpy_r_r112 = (PyObject **)&cpy_r_r111;
+    cpy_r_r113 = PyObject_Vectorcall(cpy_r_r109, cpy_r_r112, 2, 0);
+    CPy_DECREF(cpy_r_r109);
+    if (unlikely(cpy_r_r113 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
-        goto CPyL46;
+        goto CPyL45;
     }
-    CPy_DECREF(cpy_r_r107);
-    CPyStatic_utils___get_transaction_receipt = cpy_r_r114;
+    CPy_DECREF(cpy_r_r106);
+    CPyStatic_utils___get_transaction_receipt = cpy_r_r113;
     CPy_INCREF(CPyStatic_utils___get_transaction_receipt);
-    cpy_r_r115 = CPyStatic_utils___globals;
-    cpy_r_r116 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'get_transaction_receipt' */
-    cpy_r_r117 = CPyDict_SetItem(cpy_r_r115, cpy_r_r116, cpy_r_r114);
-    CPy_DECREF(cpy_r_r114);
-    cpy_r_r118 = cpy_r_r117 >= 0;
-    if (unlikely(!cpy_r_r118)) {
+    cpy_r_r114 = CPyStatic_utils___globals;
+    cpy_r_r115 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'get_transaction_receipt' */
+    cpy_r_r116 = CPyDict_SetItem(cpy_r_r114, cpy_r_r115, cpy_r_r113);
+    CPy_DECREF(cpy_r_r113);
+    cpy_r_r117 = cpy_r_r116 >= 0;
+    if (unlikely(!cpy_r_r117)) {
         CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
         goto CPyL38;
     }
-    cpy_r_r119 = CPyStatic_utils___globals;
-    cpy_r_r120 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'dank_mids' */
-    cpy_r_r121 = CPyDict_GetItem(cpy_r_r119, cpy_r_r120);
-    if (unlikely(cpy_r_r121 == NULL)) {
+    cpy_r_r118 = CPyStatic_utils___globals;
+    cpy_r_r119 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'dank_mids' */
+    cpy_r_r120 = CPyDict_GetItem(cpy_r_r118, cpy_r_r119);
+    if (unlikely(cpy_r_r120 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
         goto CPyL38;
     }
-    cpy_r_r122 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth' */
-    cpy_r_r123 = CPyObject_GetAttr(cpy_r_r121, cpy_r_r122);
-    CPy_DECREF(cpy_r_r121);
-    if (unlikely(cpy_r_r123 == NULL)) {
+    cpy_r_r121 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth' */
+    cpy_r_r122 = CPyObject_GetAttr(cpy_r_r120, cpy_r_r121);
+    CPy_DECREF(cpy_r_r120);
+    if (unlikely(cpy_r_r122 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
         goto CPyL38;
     }
-    cpy_r_r124 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'get_transaction_receipt' */
-    cpy_r_r125 = CPyObject_GetAttr(cpy_r_r123, cpy_r_r124);
-    CPy_DECREF(cpy_r_r123);
-    if (unlikely(cpy_r_r125 == NULL)) {
+    cpy_r_r123 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'get_transaction_receipt' */
+    cpy_r_r124 = CPyObject_GetAttr(cpy_r_r122, cpy_r_r123);
+    CPy_DECREF(cpy_r_r122);
+    if (unlikely(cpy_r_r124 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
         goto CPyL38;
     }
-    CPyStatic_utils_____get_transaction_receipt = cpy_r_r125;
+    CPyStatic_utils_____get_transaction_receipt = cpy_r_r124;
     CPy_INCREF(CPyStatic_utils_____get_transaction_receipt);
-    cpy_r_r126 = CPyStatic_utils___globals;
-    cpy_r_r127 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '__get_transaction_receipt' */
-    cpy_r_r128 = CPyDict_SetItem(cpy_r_r126, cpy_r_r127, cpy_r_r125);
-    CPy_DECREF(cpy_r_r125);
-    cpy_r_r129 = cpy_r_r128 >= 0;
-    if (unlikely(!cpy_r_r129)) {
+    cpy_r_r125 = CPyStatic_utils___globals;
+    cpy_r_r126 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '__get_transaction_receipt' */
+    cpy_r_r127 = CPyDict_SetItem(cpy_r_r125, cpy_r_r126, cpy_r_r124);
+    CPy_DECREF(cpy_r_r124);
+    cpy_r_r128 = cpy_r_r127 >= 0;
+    if (unlikely(!cpy_r_r128)) {
         CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
         goto CPyL38;
     }
     return 1;
 CPyL38: ;
-    cpy_r_r130 = 2;
-    return cpy_r_r130;
+    cpy_r_r129 = 2;
+    return cpy_r_r129;
 CPyL39: ;
     CPy_DecRef(cpy_r_r48);
     goto CPyL38;
@@ -15014,11 +15012,7 @@ CPyL44: ;
     CPy_DecRef(cpy_r_r85);
     goto CPyL38;
 CPyL45: ;
-    CPy_DecRef(cpy_r_r85);
-    CPy_DecRef(cpy_r_r88);
-    goto CPyL38;
-CPyL46: ;
-    CPy_DecRef(cpy_r_r107);
+    CPy_DecRef(cpy_r_r106);
     goto CPyL38;
 }
 static PyMethodDef _argspecmodule_methods[] = {
@@ -24104,6 +24098,7 @@ static int
 eth_portfolio_scripts___balances___export_balances_gen_traverse(eth_portfolio_scripts___balances___export_balances_genObject *self, visitproc visit, void *arg)
 {
     Py_VISIT(self->___mypyc_generator_attribute__args);
+    Py_VISIT(self->___mypyc_generator_attribute__custom_buckets);
     Py_VISIT(self->___mypyc_generator_attribute__interval);
     Py_VISIT(self->___mypyc_generator_attribute__portfolio);
     Py_VISIT(self->___mypyc_generator_attribute__export_start_block);
@@ -24142,6 +24137,7 @@ static int
 eth_portfolio_scripts___balances___export_balances_gen_clear(eth_portfolio_scripts___balances___export_balances_genObject *self)
 {
     Py_CLEAR(self->___mypyc_generator_attribute__args);
+    Py_CLEAR(self->___mypyc_generator_attribute__custom_buckets);
     Py_CLEAR(self->___mypyc_generator_attribute__interval);
     Py_CLEAR(self->___mypyc_generator_attribute__portfolio);
     Py_CLEAR(self->___mypyc_generator_attribute__export_start_block);
@@ -24183,6 +24179,7 @@ eth_portfolio_scripts___balances___export_balances_gen_dealloc(eth_portfolio_scr
     if (eth_portfolio_scripts___balances___export_balances_gen_free_instance == NULL) {
         eth_portfolio_scripts___balances___export_balances_gen_free_instance = self;
         Py_CLEAR(self->___mypyc_generator_attribute__args);
+        Py_CLEAR(self->___mypyc_generator_attribute__custom_buckets);
         self->___mypyc_next_label__ = -113;
         Py_CLEAR(self->___mypyc_generator_attribute__interval);
         Py_CLEAR(self->___mypyc_generator_attribute__portfolio);
@@ -24315,7 +24312,7 @@ PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen(void)
 }
 
 static PyMethodDef eth_portfolio_scripts___balancesmodule_methods[] = {
-    {"export_balances", (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("export_balances(args)\n--\n\n") /* docstring */},
+    {"export_balances", (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("export_balances(args, custom_buckets=None)\n--\n\n") /* docstring */},
     {NULL, NULL, 0, NULL}
 };
 
@@ -24441,59 +24438,59 @@ PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____mypy
     PyObject *cpy_r_r66;
     PyObject *cpy_r_r67;
     PyObject *cpy_r_r68;
-    PyObject **cpy_r_r70;
-    PyObject *cpy_r_r71;
+    PyObject *cpy_r_r69;
+    PyObject **cpy_r_r71;
     PyObject *cpy_r_r72;
-    char cpy_r_r73;
-    PyObject *cpy_r_r74;
+    PyObject *cpy_r_r73;
+    char cpy_r_r74;
     PyObject *cpy_r_r75;
     PyObject *cpy_r_r76;
-    int32_t cpy_r_r77;
-    char cpy_r_r78;
+    PyObject *cpy_r_r77;
+    int32_t cpy_r_r78;
     char cpy_r_r79;
-    PyObject *cpy_r_r80;
+    char cpy_r_r80;
     PyObject *cpy_r_r81;
     PyObject *cpy_r_r82;
     PyObject *cpy_r_r83;
-    char cpy_r_r84;
-    int32_t cpy_r_r85;
-    char cpy_r_r86;
+    PyObject *cpy_r_r84;
+    char cpy_r_r85;
+    int32_t cpy_r_r86;
     char cpy_r_r87;
-    PyObject *cpy_r_r88;
+    char cpy_r_r88;
     PyObject *cpy_r_r89;
     PyObject *cpy_r_r90;
     PyObject *cpy_r_r91;
     PyObject *cpy_r_r92;
     PyObject *cpy_r_r93;
     PyObject *cpy_r_r94;
-    PyObject **cpy_r_r96;
-    PyObject *cpy_r_r97;
+    PyObject *cpy_r_r95;
+    PyObject **cpy_r_r97;
     PyObject *cpy_r_r98;
-    char cpy_r_r99;
-    PyObject *cpy_r_r100;
+    PyObject *cpy_r_r99;
+    char cpy_r_r100;
     PyObject *cpy_r_r101;
     PyObject *cpy_r_r102;
     PyObject *cpy_r_r103;
     PyObject *cpy_r_r104;
-    char cpy_r_r105;
-    PyObject *cpy_r_r106;
-    char cpy_r_r107;
-    PyObject *cpy_r_r108;
-    char cpy_r_r109;
-    tuple_T3OOO cpy_r_r110;
-    char cpy_r_r111;
-    PyObject **cpy_r_r112;
-    PyObject *cpy_r_r113;
-    char cpy_r_r114;
-    tuple_T3OOO cpy_r_r115;
+    PyObject *cpy_r_r105;
+    char cpy_r_r106;
+    PyObject *cpy_r_r107;
+    char cpy_r_r108;
+    PyObject *cpy_r_r109;
+    char cpy_r_r110;
+    tuple_T3OOO cpy_r_r111;
+    char cpy_r_r112;
+    PyObject **cpy_r_r113;
+    PyObject *cpy_r_r114;
+    char cpy_r_r115;
     tuple_T3OOO cpy_r_r116;
     tuple_T3OOO cpy_r_r117;
-    char cpy_r_r118;
-    PyObject *cpy_r_r119;
+    tuple_T3OOO cpy_r_r118;
+    char cpy_r_r119;
     PyObject *cpy_r_r120;
     PyObject *cpy_r_r121;
-    char cpy_r_r122;
-    PyObject *cpy_r_r123;
+    PyObject *cpy_r_r122;
+    char cpy_r_r123;
     PyObject *cpy_r_r124;
     PyObject *cpy_r_r125;
     PyObject *cpy_r_r126;
@@ -24503,168 +24500,168 @@ PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____mypy
     PyObject *cpy_r_r130;
     PyObject *cpy_r_r131;
     PyObject *cpy_r_r132;
-    PyObject **cpy_r_r134;
-    PyObject *cpy_r_r135;
+    PyObject *cpy_r_r133;
+    PyObject **cpy_r_r135;
     PyObject *cpy_r_r136;
-    char cpy_r_r137;
-    PyObject *cpy_r_r138;
-    char cpy_r_r139;
-    PyObject *cpy_r_r140;
+    PyObject *cpy_r_r137;
+    char cpy_r_r138;
+    PyObject *cpy_r_r139;
+    char cpy_r_r140;
     PyObject *cpy_r_r141;
     PyObject *cpy_r_r142;
     PyObject *cpy_r_r143;
     PyObject *cpy_r_r144;
     PyObject *cpy_r_r145;
     PyObject *cpy_r_r146;
-    PyObject **cpy_r_r148;
-    PyObject *cpy_r_r149;
+    PyObject *cpy_r_r147;
+    PyObject **cpy_r_r149;
     PyObject *cpy_r_r150;
     PyObject *cpy_r_r151;
     PyObject *cpy_r_r152;
     PyObject *cpy_r_r153;
     PyObject *cpy_r_r154;
     PyObject *cpy_r_r155;
-    PyObject **cpy_r_r157;
-    PyObject *cpy_r_r158;
+    PyObject *cpy_r_r156;
+    PyObject **cpy_r_r158;
     PyObject *cpy_r_r159;
     PyObject *cpy_r_r160;
-    char cpy_r_r161;
+    PyObject *cpy_r_r161;
     char cpy_r_r162;
-    PyObject *cpy_r_r163;
+    char cpy_r_r163;
     PyObject *cpy_r_r164;
     PyObject *cpy_r_r165;
-    char cpy_r_r166;
-    PyObject *cpy_r_r167;
+    PyObject *cpy_r_r166;
+    char cpy_r_r167;
     PyObject *cpy_r_r168;
     PyObject *cpy_r_r169;
     PyObject *cpy_r_r170;
-    char cpy_r_r171;
-    PyObject *cpy_r_r172;
-    char cpy_r_r173;
-    PyObject *cpy_r_r174;
-    char cpy_r_r175;
-    tuple_T3OOO cpy_r_r176;
-    char cpy_r_r177;
-    PyObject **cpy_r_r178;
-    PyObject *cpy_r_r179;
-    char cpy_r_r180;
-    tuple_T3OOO cpy_r_r181;
+    PyObject *cpy_r_r171;
+    char cpy_r_r172;
+    PyObject *cpy_r_r173;
+    char cpy_r_r174;
+    PyObject *cpy_r_r175;
+    char cpy_r_r176;
+    tuple_T3OOO cpy_r_r177;
+    char cpy_r_r178;
+    PyObject **cpy_r_r179;
+    PyObject *cpy_r_r180;
+    char cpy_r_r181;
     tuple_T3OOO cpy_r_r182;
     tuple_T3OOO cpy_r_r183;
-    char cpy_r_r184;
-    PyObject *cpy_r_r185;
+    tuple_T3OOO cpy_r_r184;
+    char cpy_r_r185;
     PyObject *cpy_r_r186;
     PyObject *cpy_r_r187;
-    char cpy_r_r188;
-    tuple_T3OOO cpy_r_r189;
-    char cpy_r_r190;
-    CPyPtr cpy_r_r191;
-    PyObject *cpy_r_r192;
-    char cpy_r_r193;
-    tuple_T3OOO cpy_r_r194;
+    PyObject *cpy_r_r188;
+    char cpy_r_r189;
+    tuple_T3OOO cpy_r_r190;
+    char cpy_r_r191;
+    CPyPtr cpy_r_r192;
+    PyObject *cpy_r_r193;
+    char cpy_r_r194;
     tuple_T3OOO cpy_r_r195;
-    char cpy_r_r196;
+    tuple_T3OOO cpy_r_r196;
     char cpy_r_r197;
-    PyObject *cpy_r_r198;
+    char cpy_r_r198;
     PyObject *cpy_r_r199;
     PyObject *cpy_r_r200;
     PyObject *cpy_r_r201;
-    PyObject **cpy_r_r203;
-    PyObject *cpy_r_r204;
+    PyObject *cpy_r_r202;
+    PyObject **cpy_r_r204;
     PyObject *cpy_r_r205;
     PyObject *cpy_r_r206;
     PyObject *cpy_r_r207;
     PyObject *cpy_r_r208;
     PyObject *cpy_r_r209;
     PyObject *cpy_r_r210;
-    char cpy_r_r211;
-    PyObject *cpy_r_r212;
-    PyObject **cpy_r_r214;
-    PyObject *cpy_r_r215;
+    PyObject *cpy_r_r211;
+    char cpy_r_r212;
+    PyObject *cpy_r_r213;
+    PyObject **cpy_r_r215;
     PyObject *cpy_r_r216;
     PyObject *cpy_r_r217;
-    char cpy_r_r218;
-    PyObject *cpy_r_r219;
+    PyObject *cpy_r_r218;
+    char cpy_r_r219;
     PyObject *cpy_r_r220;
-    char cpy_r_r221;
-    PyObject *cpy_r_r222;
+    PyObject *cpy_r_r221;
+    char cpy_r_r222;
     PyObject *cpy_r_r223;
     PyObject *cpy_r_r224;
     PyObject *cpy_r_r225;
     PyObject *cpy_r_r226;
-    char cpy_r_r227;
-    PyObject *cpy_r_r228;
-    char cpy_r_r229;
-    PyObject *cpy_r_r230;
-    char cpy_r_r231;
-    tuple_T3OOO cpy_r_r232;
-    char cpy_r_r233;
-    PyObject **cpy_r_r234;
-    PyObject *cpy_r_r235;
-    char cpy_r_r236;
-    tuple_T3OOO cpy_r_r237;
+    PyObject *cpy_r_r227;
+    char cpy_r_r228;
+    PyObject *cpy_r_r229;
+    char cpy_r_r230;
+    PyObject *cpy_r_r231;
+    char cpy_r_r232;
+    tuple_T3OOO cpy_r_r233;
+    char cpy_r_r234;
+    PyObject **cpy_r_r235;
+    PyObject *cpy_r_r236;
+    char cpy_r_r237;
     tuple_T3OOO cpy_r_r238;
     tuple_T3OOO cpy_r_r239;
-    char cpy_r_r240;
-    PyObject *cpy_r_r241;
+    tuple_T3OOO cpy_r_r240;
+    char cpy_r_r241;
     PyObject *cpy_r_r242;
     PyObject *cpy_r_r243;
     PyObject *cpy_r_r244;
-    char cpy_r_r245;
-    PyObject *cpy_r_r246;
+    PyObject *cpy_r_r245;
+    char cpy_r_r246;
     PyObject *cpy_r_r247;
-    char cpy_r_r248;
-    PyObject *cpy_r_r249;
+    PyObject *cpy_r_r248;
+    char cpy_r_r249;
     PyObject *cpy_r_r250;
     PyObject *cpy_r_r251;
     PyObject *cpy_r_r252;
     PyObject *cpy_r_r253;
-    char cpy_r_r254;
-    PyObject *cpy_r_r255;
-    char cpy_r_r256;
-    PyObject *cpy_r_r257;
-    char cpy_r_r258;
-    tuple_T3OOO cpy_r_r259;
-    char cpy_r_r260;
-    PyObject **cpy_r_r261;
-    PyObject *cpy_r_r262;
-    char cpy_r_r263;
-    tuple_T3OOO cpy_r_r264;
+    PyObject *cpy_r_r254;
+    char cpy_r_r255;
+    PyObject *cpy_r_r256;
+    char cpy_r_r257;
+    PyObject *cpy_r_r258;
+    char cpy_r_r259;
+    tuple_T3OOO cpy_r_r260;
+    char cpy_r_r261;
+    PyObject **cpy_r_r262;
+    PyObject *cpy_r_r263;
+    char cpy_r_r264;
     tuple_T3OOO cpy_r_r265;
     tuple_T3OOO cpy_r_r266;
-    char cpy_r_r267;
-    PyObject *cpy_r_r268;
+    tuple_T3OOO cpy_r_r267;
+    char cpy_r_r268;
     PyObject *cpy_r_r269;
     PyObject *cpy_r_r270;
     PyObject *cpy_r_r271;
-    char cpy_r_r272;
-    PyObject *cpy_r_r273;
+    PyObject *cpy_r_r272;
+    char cpy_r_r273;
     PyObject *cpy_r_r274;
-    char cpy_r_r275;
-    PyObject *cpy_r_r276;
+    PyObject *cpy_r_r275;
+    char cpy_r_r276;
     PyObject *cpy_r_r277;
     PyObject *cpy_r_r278;
     PyObject *cpy_r_r279;
     PyObject *cpy_r_r280;
-    char cpy_r_r281;
-    PyObject *cpy_r_r282;
-    char cpy_r_r283;
-    PyObject *cpy_r_r284;
-    char cpy_r_r285;
-    tuple_T3OOO cpy_r_r286;
-    char cpy_r_r287;
-    PyObject **cpy_r_r288;
-    PyObject *cpy_r_r289;
-    char cpy_r_r290;
-    tuple_T3OOO cpy_r_r291;
+    PyObject *cpy_r_r281;
+    char cpy_r_r282;
+    PyObject *cpy_r_r283;
+    char cpy_r_r284;
+    PyObject *cpy_r_r285;
+    char cpy_r_r286;
+    tuple_T3OOO cpy_r_r287;
+    char cpy_r_r288;
+    PyObject **cpy_r_r289;
+    PyObject *cpy_r_r290;
+    char cpy_r_r291;
     tuple_T3OOO cpy_r_r292;
     tuple_T3OOO cpy_r_r293;
-    char cpy_r_r294;
-    PyObject *cpy_r_r295;
+    tuple_T3OOO cpy_r_r294;
+    char cpy_r_r295;
     PyObject *cpy_r_r296;
     PyObject *cpy_r_r297;
     PyObject *cpy_r_r298;
-    char cpy_r_r299;
+    PyObject *cpy_r_r299;
     char cpy_r_r300;
     char cpy_r_r301;
     char cpy_r_r302;
@@ -24672,7 +24669,8 @@ PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____mypy
     char cpy_r_r304;
     char cpy_r_r305;
     char cpy_r_r306;
-    PyObject *cpy_r_r307;
+    char cpy_r_r307;
+    PyObject *cpy_r_r308;
     cpy_r_r0 = NULL;
     cpy_r_r1 = cpy_r_r0;
     cpy_r_r2 = NULL;
@@ -24686,19 +24684,19 @@ PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____mypy
     cpy_r_r10 = NULL;
     cpy_r_r11 = cpy_r_r10;
     cpy_r_r12 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__;
-    goto CPyL250;
+    goto CPyL251;
 CPyL1: ;
     cpy_r_r13 = (PyObject *)&_Py_NoneStruct;
     cpy_r_r14 = cpy_r_type != cpy_r_r13;
     if (cpy_r_r14) {
-        goto CPyL259;
+        goto CPyL260;
     } else
         goto CPyL4;
 CPyL2: ;
     CPyErr_SetObjectAndTraceback(cpy_r_type, cpy_r_value, cpy_r_traceback);
     if (unlikely(!0)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL258;
+        goto CPyL259;
     }
     CPy_Unreachable();
 CPyL4: ;
@@ -24711,7 +24709,7 @@ CPyL4: ;
     cpy_r_r20 = PyImport_Import(cpy_r_r19);
     if (unlikely(cpy_r_r20 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
     CPyModule_dank_mids = cpy_r_r20;
     CPy_INCREF(CPyModule_dank_mids);
@@ -24723,14 +24721,14 @@ CPyL7: ;
     cpy_r_r24 = CPyDict_GetItem(cpy_r_r22, cpy_r_r23);
     if (unlikely(cpy_r_r24 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
     cpy_r_r25 = CPyDict_SetItem(cpy_r_r15, cpy_r_r21, cpy_r_r24);
     CPy_DECREF(cpy_r_r24);
     cpy_r_r26 = cpy_r_r25 >= 0;
     if (unlikely(!cpy_r_r26)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
     cpy_r_r27 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('ExportablePortfolio',) */
     cpy_r_r28 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts._portfolio' */
@@ -24738,15 +24736,15 @@ CPyL7: ;
     cpy_r_r30 = CPyImport_ImportFromMany(cpy_r_r28, cpy_r_r27, cpy_r_r27, cpy_r_r29);
     if (unlikely(cpy_r_r30 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
     CPyModule_eth_portfolio_scripts____portfolio = cpy_r_r30;
     CPy_INCREF(CPyModule_eth_portfolio_scripts____portfolio);
     CPy_DECREF(cpy_r_r30);
     cpy_r_r31 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__args;
     if (unlikely(cpy_r_r31 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 24, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 28, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
     }
     CPy_INCREF(cpy_r_r31);
 CPyL11: ;
@@ -24755,13 +24753,13 @@ CPyL11: ;
     CPy_DECREF(cpy_r_r31);
     if (unlikely(cpy_r_r33 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
     cpy_r_r34 = 1 ? Py_True : Py_False;
     cpy_r_r35 = cpy_r_r33 == cpy_r_r34;
     CPy_DECREF(cpy_r_r33);
     if (cpy_r_r35) {
-        goto CPyL261;
+        goto CPyL262;
     } else
         goto CPyL17;
 CPyL13: ;
@@ -24771,7 +24769,7 @@ CPyL13: ;
     cpy_r_r39 = CPyObject_GetAttr(cpy_r_r37, cpy_r_r38);
     if (unlikely(cpy_r_r39 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL258;
+        goto CPyL259;
     }
     PyObject *cpy_r_r40[1] = {cpy_r_r36};
     cpy_r_r41 = (PyObject **)&cpy_r_r40;
@@ -24779,20 +24777,20 @@ CPyL13: ;
     CPy_DECREF(cpy_r_r39);
     if (unlikely(cpy_r_r42 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL258;
+        goto CPyL259;
     }
     CPy_Raise(cpy_r_r42);
     CPy_DECREF(cpy_r_r42);
     if (unlikely(!0)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL258;
+        goto CPyL259;
     }
     CPy_Unreachable();
 CPyL17: ;
     cpy_r_r43 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__args;
     if (unlikely(cpy_r_r43 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 27, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 31, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
     }
     CPy_INCREF(cpy_r_r43);
 CPyL18: ;
@@ -24801,14 +24799,14 @@ CPyL18: ;
     CPy_DECREF(cpy_r_r43);
     if (unlikely(cpy_r_r45 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
     cpy_r_r46 = CPyStatic_eth_portfolio_scripts___balances___globals;
     cpy_r_r47 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'parse_timedelta' */
     cpy_r_r48 = CPyDict_GetItem(cpy_r_r46, cpy_r_r47);
     if (unlikely(cpy_r_r48 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL262;
+        goto CPyL263;
     }
     PyObject *cpy_r_r49[1] = {cpy_r_r45};
     cpy_r_r50 = (PyObject **)&cpy_r_r49;
@@ -24816,7 +24814,7 @@ CPyL18: ;
     CPy_DECREF(cpy_r_r48);
     if (unlikely(cpy_r_r51 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL262;
+        goto CPyL263;
     }
     CPy_DECREF(cpy_r_r45);
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__interval != NULL) {
@@ -24826,12 +24824,12 @@ CPyL18: ;
     cpy_r_r52 = 1;
     if (unlikely(!cpy_r_r52)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
     cpy_r_r53 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__args;
     if (unlikely(cpy_r_r53 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 29, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 33, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
     }
     CPy_INCREF(cpy_r_r53);
 CPyL23: ;
@@ -24840,12 +24838,12 @@ CPyL23: ;
     CPy_DECREF(cpy_r_r53);
     if (unlikely(cpy_r_r55 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
     cpy_r_r56 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__args;
     if (unlikely(cpy_r_r56 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 30, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL263;
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 34, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL264;
     }
     CPy_INCREF(cpy_r_r56);
 CPyL25: ;
@@ -24854,12 +24852,12 @@ CPyL25: ;
     CPy_DECREF(cpy_r_r56);
     if (unlikely(cpy_r_r58 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL263;
+        goto CPyL264;
     }
     cpy_r_r59 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__args;
     if (unlikely(cpy_r_r59 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 31, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL264;
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 35, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL265;
     }
     CPy_INCREF(cpy_r_r59);
 CPyL27: ;
@@ -24868,12 +24866,12 @@ CPyL27: ;
     CPy_DECREF(cpy_r_r59);
     if (unlikely(cpy_r_r61 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL264;
+        goto CPyL265;
     }
     cpy_r_r62 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__args;
     if (unlikely(cpy_r_r62 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 32, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL265;
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 36, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL266;
     }
     CPy_INCREF(cpy_r_r62);
 CPyL29: ;
@@ -24882,1755 +24880,1775 @@ CPyL29: ;
     CPy_DECREF(cpy_r_r62);
     if (unlikely(cpy_r_r64 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL265;
-    }
-    cpy_r_r65 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r66 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ExportablePortfolio' */
-    cpy_r_r67 = CPyDict_GetItem(cpy_r_r65, cpy_r_r66);
-    if (unlikely(cpy_r_r67 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL266;
     }
-    cpy_r_r68 = 0 ? Py_True : Py_False;
-    PyObject *cpy_r_r69[5] = {cpy_r_r55, cpy_r_r58, cpy_r_r61, cpy_r_r64, cpy_r_r68};
-    cpy_r_r70 = (PyObject **)&cpy_r_r69;
-    cpy_r_r71 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('label', 'start_block', 'concurrency', 'load_prices') */
-    cpy_r_r72 = PyObject_Vectorcall(cpy_r_r67, cpy_r_r70, 1, cpy_r_r71);
-    CPy_DECREF(cpy_r_r67);
-    if (unlikely(cpy_r_r72 == NULL)) {
+    cpy_r_r65 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__custom_buckets;
+    if (unlikely(cpy_r_r65 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "custom_buckets", 37, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL267;
+    }
+    CPy_INCREF(cpy_r_r65);
+CPyL31: ;
+    cpy_r_r66 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r67 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ExportablePortfolio' */
+    cpy_r_r68 = CPyDict_GetItem(cpy_r_r66, cpy_r_r67);
+    if (unlikely(cpy_r_r68 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL266;
+        goto CPyL268;
+    }
+    cpy_r_r69 = 0 ? Py_True : Py_False;
+    PyObject *cpy_r_r70[6] = {
+        cpy_r_r55, cpy_r_r58, cpy_r_r61, cpy_r_r64, cpy_r_r65,
+        cpy_r_r69
+    };
+    cpy_r_r71 = (PyObject **)&cpy_r_r70;
+    cpy_r_r72 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('label', 'start_block', 'concurrency', 'custom_buckets',
+                                    'load_prices') */
+    cpy_r_r73 = PyObject_Vectorcall(cpy_r_r68, cpy_r_r71, 1, cpy_r_r72);
+    CPy_DECREF(cpy_r_r68);
+    if (unlikely(cpy_r_r73 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL268;
     }
     CPy_DECREF(cpy_r_r55);
     CPy_DECREF(cpy_r_r58);
     CPy_DECREF(cpy_r_r61);
     CPy_DECREF(cpy_r_r64);
+    CPy_DECREF(cpy_r_r65);
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__portfolio != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__portfolio);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__portfolio = cpy_r_r72;
-    cpy_r_r73 = 1;
-    if (unlikely(!cpy_r_r73)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__portfolio = cpy_r_r73;
+    cpy_r_r74 = 1;
+    if (unlikely(!cpy_r_r74)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-    cpy_r_r74 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__args;
-    if (unlikely(cpy_r_r74 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 36, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+    cpy_r_r75 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__args;
+    if (unlikely(cpy_r_r75 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 41, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
     }
-    CPy_INCREF(cpy_r_r74);
-CPyL34: ;
-    cpy_r_r75 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'export_start_block' */
-    cpy_r_r76 = CPyObject_GetAttr(cpy_r_r74, cpy_r_r75);
-    CPy_DECREF(cpy_r_r74);
-    if (unlikely(cpy_r_r76 == NULL)) {
+    CPy_INCREF(cpy_r_r75);
+CPyL35: ;
+    cpy_r_r76 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'export_start_block' */
+    cpy_r_r77 = CPyObject_GetAttr(cpy_r_r75, cpy_r_r76);
+    CPy_DECREF(cpy_r_r75);
+    if (unlikely(cpy_r_r77 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-    cpy_r_r77 = PyObject_IsTrue(cpy_r_r76);
-    cpy_r_r78 = cpy_r_r77 >= 0;
-    if (unlikely(!cpy_r_r78)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL267;
-    }
-    cpy_r_r79 = cpy_r_r77;
-    if (!cpy_r_r79) goto CPyL268;
-    cpy_r_r80 = cpy_r_r76;
-    goto CPyL41;
-CPyL38: ;
-    cpy_r_r81 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__args;
-    if (unlikely(cpy_r_r81 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 36, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
-    }
-    CPy_INCREF(cpy_r_r81);
-CPyL39: ;
-    cpy_r_r82 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'first_tx_block' */
-    cpy_r_r83 = CPyObject_GetAttr(cpy_r_r81, cpy_r_r82);
-    CPy_DECREF(cpy_r_r81);
-    if (unlikely(cpy_r_r83 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
-    }
-    cpy_r_r80 = cpy_r_r83;
-CPyL41: ;
-    CPy_INCREF(cpy_r_r80);
-    if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__export_start_block != NULL) {
-        CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__export_start_block);
-    }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__export_start_block = cpy_r_r80;
-    cpy_r_r84 = 1;
-    if (unlikely(!cpy_r_r84)) {
+    cpy_r_r78 = PyObject_IsTrue(cpy_r_r77);
+    cpy_r_r79 = cpy_r_r78 >= 0;
+    if (unlikely(!cpy_r_r79)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL269;
     }
-    cpy_r_r85 = PyObject_IsTrue(cpy_r_r80);
-    CPy_DECREF(cpy_r_r80);
-    cpy_r_r86 = cpy_r_r85 >= 0;
-    if (unlikely(!cpy_r_r86)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+    cpy_r_r80 = cpy_r_r78;
+    if (!cpy_r_r80) goto CPyL270;
+    cpy_r_r81 = cpy_r_r77;
+    goto CPyL42;
+CPyL39: ;
+    cpy_r_r82 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__args;
+    if (unlikely(cpy_r_r82 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "args", 41, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
     }
-    cpy_r_r87 = cpy_r_r85;
-    if (!cpy_r_r87) goto CPyL83;
-    cpy_r_r88 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r89 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'dank_mids' */
-    cpy_r_r90 = CPyDict_GetItem(cpy_r_r88, cpy_r_r89);
-    if (unlikely(cpy_r_r90 == NULL)) {
+    CPy_INCREF(cpy_r_r82);
+CPyL40: ;
+    cpy_r_r83 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'first_tx_block' */
+    cpy_r_r84 = CPyObject_GetAttr(cpy_r_r82, cpy_r_r83);
+    CPy_DECREF(cpy_r_r82);
+    if (unlikely(cpy_r_r84 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-    cpy_r_r91 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth' */
-    cpy_r_r92 = CPyObject_GetAttr(cpy_r_r90, cpy_r_r91);
-    CPy_DECREF(cpy_r_r90);
-    if (unlikely(cpy_r_r92 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+    cpy_r_r81 = cpy_r_r84;
+CPyL42: ;
+    CPy_INCREF(cpy_r_r81);
+    if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__export_start_block != NULL) {
+        CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__export_start_block);
     }
-    cpy_r_r93 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__export_start_block;
-    if (unlikely(cpy_r_r93 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "export_start_block", 37, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL270;
-    }
-    CPy_INCREF(cpy_r_r93);
-CPyL47: ;
-    cpy_r_r94 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'get_block_timestamp' */
-    PyObject *cpy_r_r95[2] = {cpy_r_r92, cpy_r_r93};
-    cpy_r_r96 = (PyObject **)&cpy_r_r95;
-    cpy_r_r97 = PyObject_VectorcallMethod(cpy_r_r94, cpy_r_r96, 9223372036854775810ULL, 0);
-    if (unlikely(cpy_r_r97 == NULL)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__export_start_block = cpy_r_r81;
+    cpy_r_r85 = 1;
+    if (unlikely(!cpy_r_r85)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL271;
     }
-    CPy_DECREF(cpy_r_r92);
-    CPy_DECREF(cpy_r_r93);
-    cpy_r_r98 = CPy_GetCoro(cpy_r_r97);
-    CPy_DECREF(cpy_r_r97);
+    cpy_r_r86 = PyObject_IsTrue(cpy_r_r81);
+    CPy_DECREF(cpy_r_r81);
+    cpy_r_r87 = cpy_r_r86 >= 0;
+    if (unlikely(!cpy_r_r87)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
+    }
+    cpy_r_r88 = cpy_r_r86;
+    if (!cpy_r_r88) goto CPyL84;
+    cpy_r_r89 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r90 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'dank_mids' */
+    cpy_r_r91 = CPyDict_GetItem(cpy_r_r89, cpy_r_r90);
+    if (unlikely(cpy_r_r91 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
+    }
+    cpy_r_r92 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth' */
+    cpy_r_r93 = CPyObject_GetAttr(cpy_r_r91, cpy_r_r92);
+    CPy_DECREF(cpy_r_r91);
+    if (unlikely(cpy_r_r93 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
+    }
+    cpy_r_r94 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__export_start_block;
+    if (unlikely(cpy_r_r94 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "export_start_block", 42, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL272;
+    }
+    CPy_INCREF(cpy_r_r94);
+CPyL48: ;
+    cpy_r_r95 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'get_block_timestamp' */
+    PyObject *cpy_r_r96[2] = {cpy_r_r93, cpy_r_r94};
+    cpy_r_r97 = (PyObject **)&cpy_r_r96;
+    cpy_r_r98 = PyObject_VectorcallMethod(cpy_r_r95, cpy_r_r97, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r98 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
-    }
-    if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0 != NULL) {
-        CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0);
-    }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0 = cpy_r_r98;
-    cpy_r_r99 = 1;
-    if (unlikely(!cpy_r_r99)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
-    }
-    cpy_r_r100 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
-    if (unlikely(cpy_r_r100 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__0", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
-    }
-    CPy_INCREF(cpy_r_r100);
-CPyL51: ;
-    cpy_r_r101 = CPyIter_Next(cpy_r_r100);
-    CPy_DECREF(cpy_r_r100);
-    if (cpy_r_r101 != NULL) goto CPyL272;
-    cpy_r_r102 = CPy_FetchStopIterationValue();
-    if (unlikely(cpy_r_r102 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
-    }
-    cpy_r_r103 = cpy_r_r102;
-    cpy_r_r104 = NULL;
-    if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0 != NULL) {
-        CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0);
-    }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0 = cpy_r_r104;
-    cpy_r_r105 = 1;
-    if (unlikely(!cpy_r_r105)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL273;
+    }
+    CPy_DECREF(cpy_r_r93);
+    CPy_DECREF(cpy_r_r94);
+    cpy_r_r99 = CPy_GetCoro(cpy_r_r98);
+    CPy_DECREF(cpy_r_r98);
+    if (unlikely(cpy_r_r99 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
+    }
+    if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0 != NULL) {
+        CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0);
+    }
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0 = cpy_r_r99;
+    cpy_r_r100 = 1;
+    if (unlikely(!cpy_r_r100)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
+    }
+    cpy_r_r101 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
+    if (unlikely(cpy_r_r101 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__0", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
+    }
+    CPy_INCREF(cpy_r_r101);
+CPyL52: ;
+    cpy_r_r102 = CPyIter_Next(cpy_r_r101);
+    CPy_DECREF(cpy_r_r101);
+    if (cpy_r_r102 != NULL) goto CPyL274;
+    cpy_r_r103 = CPy_FetchStopIterationValue();
+    if (unlikely(cpy_r_r103 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
+    }
+    cpy_r_r104 = cpy_r_r103;
+    cpy_r_r105 = NULL;
+    if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0 != NULL) {
+        CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0);
+    }
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0 = cpy_r_r105;
+    cpy_r_r106 = 1;
+    if (unlikely(!cpy_r_r106)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL275;
     } else
-        goto CPyL76;
-CPyL54: ;
-    cpy_r_r106 = cpy_r_r101;
+        goto CPyL77;
 CPyL55: ;
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = 1;
-    return cpy_r_r106;
+    cpy_r_r107 = cpy_r_r102;
 CPyL56: ;
-    cpy_r_r108 = (PyObject *)&_Py_NoneStruct;
-    cpy_r_r109 = cpy_r_type != cpy_r_r108;
-    if (!cpy_r_r109) goto CPyL274;
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = 1;
+    return cpy_r_r107;
+CPyL57: ;
+    cpy_r_r109 = (PyObject *)&_Py_NoneStruct;
+    cpy_r_r110 = cpy_r_type != cpy_r_r109;
+    if (!cpy_r_r110) goto CPyL276;
     CPyErr_SetObjectAndTraceback(cpy_r_type, cpy_r_value, cpy_r_traceback);
     if (unlikely(!0)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL60;
+        goto CPyL61;
     } else
-        goto CPyL275;
-CPyL58: ;
-    CPy_Unreachable();
+        goto CPyL277;
 CPyL59: ;
-    CPy_INCREF(cpy_r_arg);
-    goto CPyL71;
+    CPy_Unreachable();
 CPyL60: ;
-    cpy_r_r110 = CPy_CatchError();
+    CPy_INCREF(cpy_r_arg);
+    goto CPyL72;
+CPyL61: ;
+    cpy_r_r111 = CPy_CatchError();
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1.f0 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1.f0);
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1.f1);
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1.f2);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1 = cpy_r_r110;
-    cpy_r_r111 = 1;
-    if (unlikely(!cpy_r_r111)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1 = cpy_r_r111;
+    cpy_r_r112 = 1;
+    if (unlikely(!cpy_r_r112)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL276;
-    }
-    cpy_r_r112 = (PyObject **)&cpy_r_r1;
-    cpy_r_r113 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
-    if (unlikely(cpy_r_r113 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__0", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL276;
-    }
-    CPy_INCREF(cpy_r_r113);
-CPyL62: ;
-    cpy_r_r114 = CPy_YieldFromErrorHandle(cpy_r_r113, cpy_r_r112);
-    CPy_DecRef(cpy_r_r113);
-    if (unlikely(cpy_r_r114 == 2)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL276;
-    }
-    if (cpy_r_r114) {
-        goto CPyL66;
-    } else
-        goto CPyL277;
-CPyL64: ;
-    cpy_r_r106 = cpy_r_r1;
-    cpy_r_r115 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
-    if (unlikely(cpy_r_r115.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__1", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL278;
     }
-    CPy_INCREF(cpy_r_r115.f0);
-    CPy_INCREF(cpy_r_r115.f1);
-    CPy_INCREF(cpy_r_r115.f2);
+    cpy_r_r113 = (PyObject **)&cpy_r_r1;
+    cpy_r_r114 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
+    if (unlikely(cpy_r_r114 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__0", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL278;
+    }
+    CPy_INCREF(cpy_r_r114);
+CPyL63: ;
+    cpy_r_r115 = CPy_YieldFromErrorHandle(cpy_r_r114, cpy_r_r113);
+    CPy_DecRef(cpy_r_r114);
+    if (unlikely(cpy_r_r115 == 2)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL278;
+    }
+    if (cpy_r_r115) {
+        goto CPyL67;
+    } else
+        goto CPyL279;
 CPyL65: ;
-    CPy_RestoreExcInfo(cpy_r_r115);
-    CPy_DecRef(cpy_r_r115.f0);
-    CPy_DecRef(cpy_r_r115.f1);
-    CPy_DecRef(cpy_r_r115.f2);
-    goto CPyL55;
-CPyL66: ;
-    cpy_r_r103 = cpy_r_r1;
+    cpy_r_r107 = cpy_r_r1;
     cpy_r_r116 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
     if (unlikely(cpy_r_r116.f0 == NULL)) {
         CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__1", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL279;
+        goto CPyL280;
     }
     CPy_INCREF(cpy_r_r116.f0);
     CPy_INCREF(cpy_r_r116.f1);
     CPy_INCREF(cpy_r_r116.f2);
-CPyL67: ;
+CPyL66: ;
     CPy_RestoreExcInfo(cpy_r_r116);
     CPy_DecRef(cpy_r_r116.f0);
     CPy_DecRef(cpy_r_r116.f1);
     CPy_DecRef(cpy_r_r116.f2);
-    goto CPyL76;
-CPyL68: ;
+    goto CPyL56;
+CPyL67: ;
+    cpy_r_r104 = cpy_r_r1;
     cpy_r_r117 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
     if (unlikely(cpy_r_r117.f0 == NULL)) {
         CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__1", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL258;
+        goto CPyL281;
     }
     CPy_INCREF(cpy_r_r117.f0);
     CPy_INCREF(cpy_r_r117.f1);
     CPy_INCREF(cpy_r_r117.f2);
-CPyL69: ;
+CPyL68: ;
     CPy_RestoreExcInfo(cpy_r_r117);
     CPy_DecRef(cpy_r_r117.f0);
     CPy_DecRef(cpy_r_r117.f1);
     CPy_DecRef(cpy_r_r117.f2);
-    cpy_r_r118 = CPy_KeepPropagating();
-    if (!cpy_r_r118) goto CPyL258;
+    goto CPyL77;
+CPyL69: ;
+    cpy_r_r118 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
+    if (unlikely(cpy_r_r118.f0 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__1", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL259;
+    }
+    CPy_INCREF(cpy_r_r118.f0);
+    CPy_INCREF(cpy_r_r118.f1);
+    CPy_INCREF(cpy_r_r118.f2);
+CPyL70: ;
+    CPy_RestoreExcInfo(cpy_r_r118);
+    CPy_DecRef(cpy_r_r118.f0);
+    CPy_DecRef(cpy_r_r118.f1);
+    CPy_DecRef(cpy_r_r118.f2);
+    cpy_r_r119 = CPy_KeepPropagating();
+    if (!cpy_r_r119) goto CPyL259;
     CPy_Unreachable();
-CPyL71: ;
-    cpy_r_r119 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
-    if (unlikely(cpy_r_r119 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__0", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL280;
-    }
-    CPy_INCREF(cpy_r_r119);
 CPyL72: ;
-    cpy_r_r120 = CPyIter_Send(cpy_r_r119, cpy_r_arg);
-    CPy_DECREF(cpy_r_r119);
-    CPy_DECREF(cpy_r_arg);
-    if (cpy_r_r120 == NULL) {
-        goto CPyL74;
-    } else
-        goto CPyL281;
-CPyL73: ;
-    cpy_r_r106 = cpy_r_r120;
-    goto CPyL55;
-CPyL74: ;
-    cpy_r_r121 = CPy_FetchStopIterationValue();
-    if (unlikely(cpy_r_r121 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+    cpy_r_r120 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
+    if (unlikely(cpy_r_r120 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__0", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL282;
     }
-    cpy_r_r103 = cpy_r_r121;
-CPyL76: ;
+    CPy_INCREF(cpy_r_r120);
+CPyL73: ;
+    cpy_r_r121 = CPyIter_Send(cpy_r_r120, cpy_r_arg);
+    CPy_DECREF(cpy_r_r120);
+    CPy_DECREF(cpy_r_arg);
+    if (cpy_r_r121 == NULL) {
+        goto CPyL75;
+    } else
+        goto CPyL283;
+CPyL74: ;
+    cpy_r_r107 = cpy_r_r121;
+    goto CPyL56;
+CPyL75: ;
+    cpy_r_r122 = CPy_FetchStopIterationValue();
+    if (unlikely(cpy_r_r122 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
+    }
+    cpy_r_r104 = cpy_r_r122;
+CPyL77: ;
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start_ts != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start_ts);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start_ts = cpy_r_r103;
-    cpy_r_r122 = 1;
-    if (unlikely(!cpy_r_r122)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start_ts = cpy_r_r104;
+    cpy_r_r123 = 1;
+    if (unlikely(!cpy_r_r123)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-    cpy_r_r123 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r124 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'datetime' */
-    cpy_r_r125 = CPyDict_GetItem(cpy_r_r123, cpy_r_r124);
-    if (unlikely(cpy_r_r125 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
-    }
-    cpy_r_r126 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start_ts;
+    cpy_r_r124 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r125 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'datetime' */
+    cpy_r_r126 = CPyDict_GetItem(cpy_r_r124, cpy_r_r125);
     if (unlikely(cpy_r_r126 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "start_ts", 38, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL282;
-    }
-    CPy_INCREF(cpy_r_r126);
-CPyL79: ;
-    cpy_r_r127 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r128 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'timezone' */
-    cpy_r_r129 = CPyDict_GetItem(cpy_r_r127, cpy_r_r128);
-    if (unlikely(cpy_r_r129 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL283;
+        goto CPyL261;
     }
-    cpy_r_r130 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'utc' */
-    cpy_r_r131 = CPyObject_GetAttr(cpy_r_r129, cpy_r_r130);
-    CPy_DECREF(cpy_r_r129);
-    if (unlikely(cpy_r_r131 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL283;
-    }
-    cpy_r_r132 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'fromtimestamp' */
-    PyObject *cpy_r_r133[3] = {cpy_r_r125, cpy_r_r126, cpy_r_r131};
-    cpy_r_r134 = (PyObject **)&cpy_r_r133;
-    cpy_r_r135 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('tz',) */
-    cpy_r_r136 = PyObject_VectorcallMethod(cpy_r_r132, cpy_r_r134, 9223372036854775810ULL, cpy_r_r135);
-    if (unlikely(cpy_r_r136 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+    cpy_r_r127 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start_ts;
+    if (unlikely(cpy_r_r127 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "start_ts", 43, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL284;
     }
-    CPy_DECREF(cpy_r_r125);
+    CPy_INCREF(cpy_r_r127);
+CPyL80: ;
+    cpy_r_r128 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r129 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'timezone' */
+    cpy_r_r130 = CPyDict_GetItem(cpy_r_r128, cpy_r_r129);
+    if (unlikely(cpy_r_r130 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL285;
+    }
+    cpy_r_r131 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'utc' */
+    cpy_r_r132 = CPyObject_GetAttr(cpy_r_r130, cpy_r_r131);
+    CPy_DECREF(cpy_r_r130);
+    if (unlikely(cpy_r_r132 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL285;
+    }
+    cpy_r_r133 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'fromtimestamp' */
+    PyObject *cpy_r_r134[3] = {cpy_r_r126, cpy_r_r127, cpy_r_r132};
+    cpy_r_r135 = (PyObject **)&cpy_r_r134;
+    cpy_r_r136 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('tz',) */
+    cpy_r_r137 = PyObject_VectorcallMethod(cpy_r_r133, cpy_r_r135, 9223372036854775810ULL, cpy_r_r136);
+    if (unlikely(cpy_r_r137 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL286;
+    }
     CPy_DECREF(cpy_r_r126);
-    CPy_DECREF(cpy_r_r131);
+    CPy_DECREF(cpy_r_r127);
+    CPy_DECREF(cpy_r_r132);
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start = cpy_r_r136;
-    cpy_r_r137 = 1;
-    if (unlikely(!cpy_r_r137)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start = cpy_r_r137;
+    cpy_r_r138 = 1;
+    if (unlikely(!cpy_r_r138)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     } else
-        goto CPyL84;
-CPyL83: ;
-    cpy_r_r138 = Py_None;
+        goto CPyL85;
+CPyL84: ;
+    cpy_r_r139 = Py_None;
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start = cpy_r_r138;
-    cpy_r_r139 = 1;
-    if (unlikely(!cpy_r_r139)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start = cpy_r_r139;
+    cpy_r_r140 = 1;
+    if (unlikely(!cpy_r_r140)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-CPyL84: ;
-    cpy_r_r140 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Exporting ' */
-    cpy_r_r141 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__portfolio;
-    if (unlikely(cpy_r_r141 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "portfolio", 42, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
-    }
-    CPy_INCREF(cpy_r_r141);
 CPyL85: ;
-    cpy_r_r142 = PyObject_Str(cpy_r_r141);
-    CPy_DECREF(cpy_r_r141);
+    cpy_r_r141 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Exporting ' */
+    cpy_r_r142 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__portfolio;
     if (unlikely(cpy_r_r142 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "portfolio", 47, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
     }
-    cpy_r_r143 = CPyStr_Build(2, cpy_r_r140, cpy_r_r142);
+    CPy_INCREF(cpy_r_r142);
+CPyL86: ;
+    cpy_r_r143 = PyObject_Str(cpy_r_r142);
     CPy_DECREF(cpy_r_r142);
     if (unlikely(cpy_r_r143 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-    cpy_r_r144 = CPyModule_builtins;
-    cpy_r_r145 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'print' */
-    cpy_r_r146 = CPyObject_GetAttr(cpy_r_r144, cpy_r_r145);
-    if (unlikely(cpy_r_r146 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL285;
-    }
-    PyObject *cpy_r_r147[1] = {cpy_r_r143};
-    cpy_r_r148 = (PyObject **)&cpy_r_r147;
-    cpy_r_r149 = PyObject_Vectorcall(cpy_r_r146, cpy_r_r148, 1, 0);
-    CPy_DECREF(cpy_r_r146);
-    if (unlikely(cpy_r_r149 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL285;
-    } else
-        goto CPyL286;
-CPyL89: ;
+    cpy_r_r144 = CPyStr_Build(2, cpy_r_r141, cpy_r_r143);
     CPy_DECREF(cpy_r_r143);
-    cpy_r_r150 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start;
-    if (unlikely(cpy_r_r150 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "start", 43, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+    if (unlikely(cpy_r_r144 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
     }
-    CPy_INCREF(cpy_r_r150);
-CPyL90: ;
-    cpy_r_r151 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__interval;
-    if (unlikely(cpy_r_r151 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "interval", 43, CPyStatic_eth_portfolio_scripts___balances___globals);
+    cpy_r_r145 = CPyModule_builtins;
+    cpy_r_r146 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'print' */
+    cpy_r_r147 = CPyObject_GetAttr(cpy_r_r145, cpy_r_r146);
+    if (unlikely(cpy_r_r147 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL287;
+    }
+    PyObject *cpy_r_r148[1] = {cpy_r_r144};
+    cpy_r_r149 = (PyObject **)&cpy_r_r148;
+    cpy_r_r150 = PyObject_Vectorcall(cpy_r_r147, cpy_r_r149, 1, 0);
+    CPy_DECREF(cpy_r_r147);
+    if (unlikely(cpy_r_r150 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL287;
+    } else
+        goto CPyL288;
+CPyL90: ;
+    CPy_DECREF(cpy_r_r144);
+    cpy_r_r151 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__start;
+    if (unlikely(cpy_r_r151 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "start", 48, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
     }
     CPy_INCREF(cpy_r_r151);
 CPyL91: ;
-    cpy_r_r152 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r153 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'aiter_timestamps' */
-    cpy_r_r154 = CPyDict_GetItem(cpy_r_r152, cpy_r_r153);
-    if (unlikely(cpy_r_r154 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL288;
+    cpy_r_r152 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__interval;
+    if (unlikely(cpy_r_r152 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "interval", 48, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL289;
     }
-    cpy_r_r155 = 1 ? Py_True : Py_False;
-    PyObject *cpy_r_r156[3] = {cpy_r_r150, cpy_r_r151, cpy_r_r155};
-    cpy_r_r157 = (PyObject **)&cpy_r_r156;
-    cpy_r_r158 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('start', 'interval', 'run_forever') */
-    cpy_r_r159 = PyObject_Vectorcall(cpy_r_r154, cpy_r_r157, 0, cpy_r_r158);
-    CPy_DECREF(cpy_r_r154);
-    if (unlikely(cpy_r_r159 == NULL)) {
+    CPy_INCREF(cpy_r_r152);
+CPyL92: ;
+    cpy_r_r153 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r154 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'aiter_timestamps' */
+    cpy_r_r155 = CPyDict_GetItem(cpy_r_r153, cpy_r_r154);
+    if (unlikely(cpy_r_r155 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL288;
+        goto CPyL290;
     }
-    CPy_DECREF(cpy_r_r150);
-    CPy_DECREF(cpy_r_r151);
-    cpy_r_r160 = CPy_GetAIter(cpy_r_r159);
+    cpy_r_r156 = 1 ? Py_True : Py_False;
+    PyObject *cpy_r_r157[3] = {cpy_r_r151, cpy_r_r152, cpy_r_r156};
+    cpy_r_r158 = (PyObject **)&cpy_r_r157;
+    cpy_r_r159 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('start', 'interval', 'run_forever') */
+    cpy_r_r160 = PyObject_Vectorcall(cpy_r_r155, cpy_r_r158, 0, cpy_r_r159);
+    CPy_DECREF(cpy_r_r155);
     if (unlikely(cpy_r_r160 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL289;
+        goto CPyL290;
+    }
+    CPy_DECREF(cpy_r_r151);
+    CPy_DECREF(cpy_r_r152);
+    cpy_r_r161 = CPy_GetAIter(cpy_r_r160);
+    if (unlikely(cpy_r_r161 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL291;
     }
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__2 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__2);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__2 = cpy_r_r159;
-    cpy_r_r161 = 1;
-    if (unlikely(!cpy_r_r161)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__2 = cpy_r_r160;
+    cpy_r_r162 = 1;
+    if (unlikely(!cpy_r_r162)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL290;
+        goto CPyL292;
     }
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3 = cpy_r_r160;
-    cpy_r_r162 = 1;
-    if (unlikely(!cpy_r_r162)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3 = cpy_r_r161;
+    cpy_r_r163 = 1;
+    if (unlikely(!cpy_r_r163)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-CPyL96: ;
-    cpy_r_r163 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3;
-    if (unlikely(cpy_r_r163 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__3", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL127;
-    }
-    CPy_INCREF(cpy_r_r163);
 CPyL97: ;
-    cpy_r_r164 = CPy_GetANext(cpy_r_r163);
-    CPy_DECREF(cpy_r_r163);
+    cpy_r_r164 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3;
     if (unlikely(cpy_r_r164 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL127;
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__3", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL128;
     }
-    cpy_r_r165 = CPy_GetCoro(cpy_r_r164);
+    CPy_INCREF(cpy_r_r164);
+CPyL98: ;
+    cpy_r_r165 = CPy_GetANext(cpy_r_r164);
     CPy_DECREF(cpy_r_r164);
     if (unlikely(cpy_r_r165 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL127;
+        goto CPyL128;
+    }
+    cpy_r_r166 = CPy_GetCoro(cpy_r_r165);
+    CPy_DECREF(cpy_r_r165);
+    if (unlikely(cpy_r_r166 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL128;
     }
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4 = cpy_r_r165;
-    cpy_r_r166 = 1;
-    if (unlikely(!cpy_r_r166)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4 = cpy_r_r166;
+    cpy_r_r167 = 1;
+    if (unlikely(!cpy_r_r167)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL127;
+        goto CPyL128;
     }
-    cpy_r_r167 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4;
-    if (unlikely(cpy_r_r167 == NULL)) {
+    cpy_r_r168 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4;
+    if (unlikely(cpy_r_r168 == NULL)) {
         CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__4", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL127;
+        goto CPyL128;
     }
-    CPy_INCREF(cpy_r_r167);
-CPyL101: ;
-    cpy_r_r168 = CPyIter_Next(cpy_r_r167);
-    CPy_DECREF(cpy_r_r167);
-    if (cpy_r_r168 != NULL) goto CPyL291;
-    cpy_r_r169 = CPy_FetchStopIterationValue();
-    if (unlikely(cpy_r_r169 == NULL)) {
+    CPy_INCREF(cpy_r_r168);
+CPyL102: ;
+    cpy_r_r169 = CPyIter_Next(cpy_r_r168);
+    CPy_DECREF(cpy_r_r168);
+    if (cpy_r_r169 != NULL) goto CPyL293;
+    cpy_r_r170 = CPy_FetchStopIterationValue();
+    if (unlikely(cpy_r_r170 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL127;
+        goto CPyL128;
     } else
-        goto CPyL292;
-CPyL103: ;
-    cpy_r_r5 = cpy_r_r169;
-    cpy_r_r170 = NULL;
+        goto CPyL294;
+CPyL104: ;
+    cpy_r_r5 = cpy_r_r170;
+    cpy_r_r171 = NULL;
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4 = cpy_r_r170;
-    cpy_r_r171 = 1;
-    if (unlikely(!cpy_r_r171)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4 = cpy_r_r171;
+    cpy_r_r172 = 1;
+    if (unlikely(!cpy_r_r172)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL127;
+        goto CPyL128;
     } else
-        goto CPyL126;
-CPyL104: ;
-    cpy_r_r172 = cpy_r_r168;
+        goto CPyL127;
 CPyL105: ;
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = 2;
-    return cpy_r_r172;
+    cpy_r_r173 = cpy_r_r169;
 CPyL106: ;
-    cpy_r_r174 = (PyObject *)&_Py_NoneStruct;
-    cpy_r_r175 = cpy_r_type != cpy_r_r174;
-    if (!cpy_r_r175) goto CPyL293;
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = 2;
+    return cpy_r_r173;
+CPyL107: ;
+    cpy_r_r175 = (PyObject *)&_Py_NoneStruct;
+    cpy_r_r176 = cpy_r_type != cpy_r_r175;
+    if (!cpy_r_r176) goto CPyL295;
     CPyErr_SetObjectAndTraceback(cpy_r_type, cpy_r_value, cpy_r_traceback);
     if (unlikely(!0)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL110;
+        goto CPyL111;
     } else
-        goto CPyL294;
-CPyL108: ;
-    CPy_Unreachable();
+        goto CPyL296;
 CPyL109: ;
-    CPy_INCREF(cpy_r_arg);
-    goto CPyL121;
+    CPy_Unreachable();
 CPyL110: ;
-    cpy_r_r176 = CPy_CatchError();
+    CPy_INCREF(cpy_r_arg);
+    goto CPyL122;
+CPyL111: ;
+    cpy_r_r177 = CPy_CatchError();
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5.f0 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5.f0);
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5.f1);
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5.f2);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5 = cpy_r_r176;
-    cpy_r_r177 = 1;
-    if (unlikely(!cpy_r_r177)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5 = cpy_r_r177;
+    cpy_r_r178 = 1;
+    if (unlikely(!cpy_r_r178)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL295;
-    }
-    cpy_r_r178 = (PyObject **)&cpy_r_r3;
-    cpy_r_r179 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4;
-    if (unlikely(cpy_r_r179 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__4", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL295;
-    }
-    CPy_INCREF(cpy_r_r179);
-CPyL112: ;
-    cpy_r_r180 = CPy_YieldFromErrorHandle(cpy_r_r179, cpy_r_r178);
-    CPy_DecRef(cpy_r_r179);
-    if (unlikely(cpy_r_r180 == 2)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL295;
-    }
-    if (cpy_r_r180) goto CPyL296;
-    cpy_r_r172 = cpy_r_r3;
-    cpy_r_r181 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5;
-    if (unlikely(cpy_r_r181.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__5", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL297;
     }
-    CPy_INCREF(cpy_r_r181.f0);
-    CPy_INCREF(cpy_r_r181.f1);
-    CPy_INCREF(cpy_r_r181.f2);
-    goto CPyL298;
-CPyL115: ;
-    CPy_RestoreExcInfo(cpy_r_r181);
-    CPy_DecRef(cpy_r_r181.f0);
-    CPy_DecRef(cpy_r_r181.f1);
-    CPy_DecRef(cpy_r_r181.f2);
-    goto CPyL105;
-CPyL116: ;
-    cpy_r_r5 = cpy_r_r3;
+    cpy_r_r179 = (PyObject **)&cpy_r_r3;
+    cpy_r_r180 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4;
+    if (unlikely(cpy_r_r180 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__4", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL297;
+    }
+    CPy_INCREF(cpy_r_r180);
+CPyL113: ;
+    cpy_r_r181 = CPy_YieldFromErrorHandle(cpy_r_r180, cpy_r_r179);
+    CPy_DecRef(cpy_r_r180);
+    if (unlikely(cpy_r_r181 == 2)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL297;
+    }
+    if (cpy_r_r181) goto CPyL298;
+    cpy_r_r173 = cpy_r_r3;
     cpy_r_r182 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5;
     if (unlikely(cpy_r_r182.f0 == NULL)) {
         CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__5", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL118;
+        goto CPyL299;
     }
     CPy_INCREF(cpy_r_r182.f0);
     CPy_INCREF(cpy_r_r182.f1);
     CPy_INCREF(cpy_r_r182.f2);
-CPyL117: ;
+    goto CPyL300;
+CPyL116: ;
     CPy_RestoreExcInfo(cpy_r_r182);
     CPy_DecRef(cpy_r_r182.f0);
     CPy_DecRef(cpy_r_r182.f1);
     CPy_DecRef(cpy_r_r182.f2);
-    goto CPyL126;
-CPyL118: ;
+    goto CPyL106;
+CPyL117: ;
+    cpy_r_r5 = cpy_r_r3;
     cpy_r_r183 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5;
     if (unlikely(cpy_r_r183.f0 == NULL)) {
         CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__5", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL127;
+        goto CPyL119;
     }
     CPy_INCREF(cpy_r_r183.f0);
     CPy_INCREF(cpy_r_r183.f1);
     CPy_INCREF(cpy_r_r183.f2);
-CPyL119: ;
+CPyL118: ;
     CPy_RestoreExcInfo(cpy_r_r183);
     CPy_DecRef(cpy_r_r183.f0);
     CPy_DecRef(cpy_r_r183.f1);
     CPy_DecRef(cpy_r_r183.f2);
-    cpy_r_r184 = CPy_KeepPropagating();
-    if (!cpy_r_r184) {
-        goto CPyL127;
-    } else
-        goto CPyL299;
-CPyL120: ;
-    CPy_Unreachable();
-CPyL121: ;
-    cpy_r_r185 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4;
-    if (unlikely(cpy_r_r185 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__4", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL300;
+    goto CPyL127;
+CPyL119: ;
+    cpy_r_r184 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5;
+    if (unlikely(cpy_r_r184.f0 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__5", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL128;
     }
-    CPy_INCREF(cpy_r_r185);
-CPyL122: ;
-    cpy_r_r186 = CPyIter_Send(cpy_r_r185, cpy_r_arg);
-    CPy_DECREF(cpy_r_r185);
-    CPy_DECREF(cpy_r_arg);
-    if (cpy_r_r186 == NULL) {
-        goto CPyL124;
+    CPy_INCREF(cpy_r_r184.f0);
+    CPy_INCREF(cpy_r_r184.f1);
+    CPy_INCREF(cpy_r_r184.f2);
+CPyL120: ;
+    CPy_RestoreExcInfo(cpy_r_r184);
+    CPy_DecRef(cpy_r_r184.f0);
+    CPy_DecRef(cpy_r_r184.f1);
+    CPy_DecRef(cpy_r_r184.f2);
+    cpy_r_r185 = CPy_KeepPropagating();
+    if (!cpy_r_r185) {
+        goto CPyL128;
     } else
         goto CPyL301;
-CPyL123: ;
-    cpy_r_r172 = cpy_r_r186;
-    goto CPyL105;
-CPyL124: ;
-    cpy_r_r187 = CPy_FetchStopIterationValue();
-    if (unlikely(cpy_r_r187 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL127;
-    } else
+CPyL121: ;
+    CPy_Unreachable();
+CPyL122: ;
+    cpy_r_r186 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4;
+    if (unlikely(cpy_r_r186 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__4", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL302;
+    }
+    CPy_INCREF(cpy_r_r186);
+CPyL123: ;
+    cpy_r_r187 = CPyIter_Send(cpy_r_r186, cpy_r_arg);
+    CPy_DECREF(cpy_r_r186);
+    CPy_DECREF(cpy_r_arg);
+    if (cpy_r_r187 == NULL) {
+        goto CPyL125;
+    } else
+        goto CPyL303;
+CPyL124: ;
+    cpy_r_r173 = cpy_r_r187;
+    goto CPyL106;
 CPyL125: ;
-    cpy_r_r5 = cpy_r_r187;
+    cpy_r_r188 = CPy_FetchStopIterationValue();
+    if (unlikely(cpy_r_r188 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL128;
+    } else
+        goto CPyL304;
 CPyL126: ;
-    cpy_r_r188 = 0;
-    goto CPyL137;
+    cpy_r_r5 = cpy_r_r188;
 CPyL127: ;
-    cpy_r_r189 = CPy_CatchError();
+    cpy_r_r189 = 0;
+    goto CPyL138;
+CPyL128: ;
+    cpy_r_r190 = CPy_CatchError();
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6.f0 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6.f0);
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6.f1);
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6.f2);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6 = cpy_r_r189;
-    cpy_r_r190 = 1;
-    if (unlikely(!cpy_r_r190)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6 = cpy_r_r190;
+    cpy_r_r191 = 1;
+    if (unlikely(!cpy_r_r191)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL303;
+        goto CPyL305;
     }
-    cpy_r_r191 = (CPyPtr)&PyExc_StopAsyncIteration;
-    cpy_r_r192 = *(PyObject * *)cpy_r_r191;
-    cpy_r_r193 = CPy_ExceptionMatches(cpy_r_r192);
-    if (!cpy_r_r193) goto CPyL304;
-    cpy_r_r188 = 1;
-    goto CPyL132;
-CPyL130: ;
+    cpy_r_r192 = (CPyPtr)&PyExc_StopAsyncIteration;
+    cpy_r_r193 = *(PyObject * *)cpy_r_r192;
+    cpy_r_r194 = CPy_ExceptionMatches(cpy_r_r193);
+    if (!cpy_r_r194) goto CPyL306;
+    cpy_r_r189 = 1;
+    goto CPyL133;
+CPyL131: ;
     CPy_Reraise();
-    if (!0) goto CPyL134;
+    if (!0) goto CPyL135;
     CPy_Unreachable();
-CPyL132: ;
-    cpy_r_r194 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6;
-    if (unlikely(cpy_r_r194.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__6", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
-    }
-    CPy_INCREF(cpy_r_r194.f0);
-    CPy_INCREF(cpy_r_r194.f1);
-    CPy_INCREF(cpy_r_r194.f2);
 CPyL133: ;
-    CPy_RestoreExcInfo(cpy_r_r194);
-    CPy_DecRef(cpy_r_r194.f0);
-    CPy_DecRef(cpy_r_r194.f1);
-    CPy_DecRef(cpy_r_r194.f2);
-    goto CPyL137;
-CPyL134: ;
     cpy_r_r195 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6;
     if (unlikely(cpy_r_r195.f0 == NULL)) {
         CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__6", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL258;
+        goto CPyL261;
     }
     CPy_INCREF(cpy_r_r195.f0);
     CPy_INCREF(cpy_r_r195.f1);
     CPy_INCREF(cpy_r_r195.f2);
-CPyL135: ;
+CPyL134: ;
     CPy_RestoreExcInfo(cpy_r_r195);
     CPy_DecRef(cpy_r_r195.f0);
     CPy_DecRef(cpy_r_r195.f1);
     CPy_DecRef(cpy_r_r195.f2);
-    cpy_r_r196 = CPy_KeepPropagating();
-    if (!cpy_r_r196) goto CPyL258;
+    goto CPyL138;
+CPyL135: ;
+    cpy_r_r196 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6;
+    if (unlikely(cpy_r_r196.f0 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__6", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL259;
+    }
+    CPy_INCREF(cpy_r_r196.f0);
+    CPy_INCREF(cpy_r_r196.f1);
+    CPy_INCREF(cpy_r_r196.f2);
+CPyL136: ;
+    CPy_RestoreExcInfo(cpy_r_r196);
+    CPy_DecRef(cpy_r_r196.f0);
+    CPy_DecRef(cpy_r_r196.f1);
+    CPy_DecRef(cpy_r_r196.f2);
+    cpy_r_r197 = CPy_KeepPropagating();
+    if (!cpy_r_r197) goto CPyL259;
     CPy_Unreachable();
-CPyL137: ;
-    if (cpy_r_r188) goto CPyL305;
+CPyL138: ;
+    if (cpy_r_r189) goto CPyL307;
     CPy_INCREF(cpy_r_r5);
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__ts != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__ts);
     }
     ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__ts = cpy_r_r5;
-    cpy_r_r197 = 1;
-    if (unlikely(!cpy_r_r197)) {
+    cpy_r_r198 = 1;
+    if (unlikely(!cpy_r_r198)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-    cpy_r_r198 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__portfolio;
-    if (unlikely(cpy_r_r198 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "portfolio", 45, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
-    }
-    CPy_INCREF(cpy_r_r198);
-CPyL140: ;
-    cpy_r_r199 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__ts;
+    cpy_r_r199 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__portfolio;
     if (unlikely(cpy_r_r199 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "ts", 45, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL306;
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "portfolio", 50, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
     }
     CPy_INCREF(cpy_r_r199);
 CPyL141: ;
-    cpy_r_r200 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'export_snapshot' */
-    cpy_r_r201 = 0 ? Py_True : Py_False;
-    PyObject *cpy_r_r202[3] = {cpy_r_r198, cpy_r_r199, cpy_r_r201};
-    cpy_r_r203 = (PyObject **)&cpy_r_r202;
-    cpy_r_r204 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('sync',) */
-    cpy_r_r205 = PyObject_VectorcallMethod(cpy_r_r200, cpy_r_r203, 9223372036854775810ULL, cpy_r_r204);
-    if (unlikely(cpy_r_r205 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL307;
+    cpy_r_r200 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__ts;
+    if (unlikely(cpy_r_r200 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "ts", 50, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL308;
     }
-    CPy_DECREF(cpy_r_r198);
+    CPy_INCREF(cpy_r_r200);
+CPyL142: ;
+    cpy_r_r201 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'export_snapshot' */
+    cpy_r_r202 = 0 ? Py_True : Py_False;
+    PyObject *cpy_r_r203[3] = {cpy_r_r199, cpy_r_r200, cpy_r_r202};
+    cpy_r_r204 = (PyObject **)&cpy_r_r203;
+    cpy_r_r205 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('sync',) */
+    cpy_r_r206 = PyObject_VectorcallMethod(cpy_r_r201, cpy_r_r204, 9223372036854775810ULL, cpy_r_r205);
+    if (unlikely(cpy_r_r206 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL309;
+    }
     CPy_DECREF(cpy_r_r199);
-    cpy_r_r206 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth-portfolio export snapshot ' */
-    cpy_r_r207 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__ts;
-    if (unlikely(cpy_r_r207 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "ts", 46, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL308;
-    }
-    CPy_INCREF(cpy_r_r207);
-CPyL143: ;
-    cpy_r_r208 = PyObject_Str(cpy_r_r207);
-    CPy_DECREF(cpy_r_r207);
+    CPy_DECREF(cpy_r_r200);
+    cpy_r_r207 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth-portfolio export snapshot ' */
+    cpy_r_r208 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__ts;
     if (unlikely(cpy_r_r208 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL308;
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "ts", 51, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL310;
     }
-    cpy_r_r209 = CPyStr_Build(2, cpy_r_r206, cpy_r_r208);
+    CPy_INCREF(cpy_r_r208);
+CPyL144: ;
+    cpy_r_r209 = PyObject_Str(cpy_r_r208);
     CPy_DECREF(cpy_r_r208);
     if (unlikely(cpy_r_r209 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL308;
+        goto CPyL310;
     }
-    cpy_r_r210 = CPyStatic_eth_portfolio_scripts___balances___create_task;
+    cpy_r_r210 = CPyStr_Build(2, cpy_r_r207, cpy_r_r209);
+    CPy_DECREF(cpy_r_r209);
     if (unlikely(cpy_r_r210 == NULL)) {
-        goto CPyL309;
-    } else
-        goto CPyL148;
-CPyL146: ;
-    PyErr_SetString(PyExc_NameError, "value for final name \"create_task\" was not set");
-    cpy_r_r211 = 0;
-    if (unlikely(!cpy_r_r211)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL258;
-    }
-    CPy_Unreachable();
-CPyL148: ;
-    cpy_r_r212 = 1 ? Py_True : Py_False;
-    PyObject *cpy_r_r213[3] = {cpy_r_r205, cpy_r_r209, cpy_r_r212};
-    cpy_r_r214 = (PyObject **)&cpy_r_r213;
-    cpy_r_r215 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('coro', 'name', 'skip_gc_until_done') */
-    cpy_r_r216 = PyObject_Vectorcall(cpy_r_r210, cpy_r_r214, 0, cpy_r_r215);
-    if (unlikely(cpy_r_r216 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL310;
-    } else
+    }
+    cpy_r_r211 = CPyStatic_eth_portfolio_scripts___balances___create_task;
+    if (unlikely(cpy_r_r211 == NULL)) {
         goto CPyL311;
-CPyL149: ;
-    CPy_DECREF(cpy_r_r205);
-    CPy_DECREF(cpy_r_r209);
-    cpy_r_r217 = CPyStatic_eth_portfolio_scripts___balances___yield_to_loop;
-    if (unlikely(cpy_r_r217 == NULL)) {
-        goto CPyL312;
     } else
-        goto CPyL152;
-CPyL150: ;
-    PyErr_SetString(PyExc_NameError, "value for final name \"yield_to_loop\" was not set");
-    cpy_r_r218 = 0;
-    if (unlikely(!cpy_r_r218)) {
+        goto CPyL149;
+CPyL147: ;
+    PyErr_SetString(PyExc_NameError, "value for final name \"create_task\" was not set");
+    cpy_r_r212 = 0;
+    if (unlikely(!cpy_r_r212)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL258;
+        goto CPyL259;
     }
     CPy_Unreachable();
-CPyL152: ;
-    cpy_r_r219 = PyObject_Vectorcall(cpy_r_r217, 0, 0, 0);
-    if (unlikely(cpy_r_r219 == NULL)) {
+CPyL149: ;
+    cpy_r_r213 = 1 ? Py_True : Py_False;
+    PyObject *cpy_r_r214[3] = {cpy_r_r206, cpy_r_r210, cpy_r_r213};
+    cpy_r_r215 = (PyObject **)&cpy_r_r214;
+    cpy_r_r216 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('coro', 'name', 'skip_gc_until_done') */
+    cpy_r_r217 = PyObject_Vectorcall(cpy_r_r211, cpy_r_r215, 0, cpy_r_r216);
+    if (unlikely(cpy_r_r217 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL312;
+    } else
+        goto CPyL313;
+CPyL150: ;
+    CPy_DECREF(cpy_r_r206);
+    CPy_DECREF(cpy_r_r210);
+    cpy_r_r218 = CPyStatic_eth_portfolio_scripts___balances___yield_to_loop;
+    if (unlikely(cpy_r_r218 == NULL)) {
+        goto CPyL314;
+    } else
+        goto CPyL153;
+CPyL151: ;
+    PyErr_SetString(PyExc_NameError, "value for final name \"yield_to_loop\" was not set");
+    cpy_r_r219 = 0;
+    if (unlikely(!cpy_r_r219)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL259;
     }
-    cpy_r_r220 = CPy_GetCoro(cpy_r_r219);
-    CPy_DECREF(cpy_r_r219);
+    CPy_Unreachable();
+CPyL153: ;
+    cpy_r_r220 = PyObject_Vectorcall(cpy_r_r218, 0, 0, 0);
     if (unlikely(cpy_r_r220 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
+    }
+    cpy_r_r221 = CPy_GetCoro(cpy_r_r220);
+    CPy_DECREF(cpy_r_r220);
+    if (unlikely(cpy_r_r221 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
     }
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7 = cpy_r_r220;
-    cpy_r_r221 = 1;
-    if (unlikely(!cpy_r_r221)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7 = cpy_r_r221;
+    cpy_r_r222 = 1;
+    if (unlikely(!cpy_r_r222)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-    cpy_r_r222 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7;
-    if (unlikely(cpy_r_r222 == NULL)) {
+    cpy_r_r223 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7;
+    if (unlikely(cpy_r_r223 == NULL)) {
         CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__7", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-    CPy_INCREF(cpy_r_r222);
-CPyL156: ;
-    cpy_r_r223 = CPyIter_Next(cpy_r_r222);
-    CPy_DECREF(cpy_r_r222);
-    if (cpy_r_r223 != NULL) goto CPyL313;
-    cpy_r_r224 = CPy_FetchStopIterationValue();
-    if (unlikely(cpy_r_r224 == NULL)) {
+    CPy_INCREF(cpy_r_r223);
+CPyL157: ;
+    cpy_r_r224 = CPyIter_Next(cpy_r_r223);
+    CPy_DECREF(cpy_r_r223);
+    if (cpy_r_r224 != NULL) goto CPyL315;
+    cpy_r_r225 = CPy_FetchStopIterationValue();
+    if (unlikely(cpy_r_r225 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-    cpy_r_r225 = cpy_r_r224;
-    CPy_DECREF(cpy_r_r225);
-    cpy_r_r226 = NULL;
+    cpy_r_r226 = cpy_r_r225;
+    CPy_DECREF(cpy_r_r226);
+    cpy_r_r227 = NULL;
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7 = cpy_r_r226;
-    cpy_r_r227 = 1;
-    if (unlikely(!cpy_r_r227)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7 = cpy_r_r227;
+    cpy_r_r228 = 1;
+    if (unlikely(!cpy_r_r228)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     } else
-        goto CPyL181;
-CPyL159: ;
-    cpy_r_r228 = cpy_r_r223;
+        goto CPyL182;
 CPyL160: ;
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = 3;
-    return cpy_r_r228;
+    cpy_r_r229 = cpy_r_r224;
 CPyL161: ;
-    cpy_r_r230 = (PyObject *)&_Py_NoneStruct;
-    cpy_r_r231 = cpy_r_type != cpy_r_r230;
-    if (!cpy_r_r231) goto CPyL314;
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = 3;
+    return cpy_r_r229;
+CPyL162: ;
+    cpy_r_r231 = (PyObject *)&_Py_NoneStruct;
+    cpy_r_r232 = cpy_r_type != cpy_r_r231;
+    if (!cpy_r_r232) goto CPyL316;
     CPyErr_SetObjectAndTraceback(cpy_r_type, cpy_r_value, cpy_r_traceback);
     if (unlikely(!0)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL165;
+        goto CPyL166;
     } else
-        goto CPyL315;
-CPyL163: ;
-    CPy_Unreachable();
+        goto CPyL317;
 CPyL164: ;
-    CPy_INCREF(cpy_r_arg);
-    goto CPyL176;
+    CPy_Unreachable();
 CPyL165: ;
-    cpy_r_r232 = CPy_CatchError();
+    CPy_INCREF(cpy_r_arg);
+    goto CPyL177;
+CPyL166: ;
+    cpy_r_r233 = CPy_CatchError();
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8.f0 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8.f0);
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8.f1);
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8.f2);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8 = cpy_r_r232;
-    cpy_r_r233 = 1;
-    if (unlikely(!cpy_r_r233)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8 = cpy_r_r233;
+    cpy_r_r234 = 1;
+    if (unlikely(!cpy_r_r234)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL316;
-    }
-    cpy_r_r234 = (PyObject **)&cpy_r_r7;
-    cpy_r_r235 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7;
-    if (unlikely(cpy_r_r235 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__7", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL316;
-    }
-    CPy_INCREF(cpy_r_r235);
-CPyL167: ;
-    cpy_r_r236 = CPy_YieldFromErrorHandle(cpy_r_r235, cpy_r_r234);
-    CPy_DecRef(cpy_r_r235);
-    if (unlikely(cpy_r_r236 == 2)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL316;
-    }
-    if (cpy_r_r236) {
-        goto CPyL171;
-    } else
-        goto CPyL317;
-CPyL169: ;
-    cpy_r_r228 = cpy_r_r7;
-    cpy_r_r237 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8;
-    if (unlikely(cpy_r_r237.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__8", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL318;
     }
-    CPy_INCREF(cpy_r_r237.f0);
-    CPy_INCREF(cpy_r_r237.f1);
-    CPy_INCREF(cpy_r_r237.f2);
+    cpy_r_r235 = (PyObject **)&cpy_r_r7;
+    cpy_r_r236 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7;
+    if (unlikely(cpy_r_r236 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__7", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL318;
+    }
+    CPy_INCREF(cpy_r_r236);
+CPyL168: ;
+    cpy_r_r237 = CPy_YieldFromErrorHandle(cpy_r_r236, cpy_r_r235);
+    CPy_DecRef(cpy_r_r236);
+    if (unlikely(cpy_r_r237 == 2)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL318;
+    }
+    if (cpy_r_r237) {
+        goto CPyL172;
+    } else
+        goto CPyL319;
 CPyL170: ;
-    CPy_RestoreExcInfo(cpy_r_r237);
-    CPy_DecRef(cpy_r_r237.f0);
-    CPy_DecRef(cpy_r_r237.f1);
-    CPy_DecRef(cpy_r_r237.f2);
-    goto CPyL160;
-CPyL171: ;
-    cpy_r_r225 = cpy_r_r7;
-    CPy_DecRef(cpy_r_r225);
+    cpy_r_r229 = cpy_r_r7;
     cpy_r_r238 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8;
     if (unlikely(cpy_r_r238.f0 == NULL)) {
         CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__8", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL319;
+        goto CPyL320;
     }
     CPy_INCREF(cpy_r_r238.f0);
     CPy_INCREF(cpy_r_r238.f1);
     CPy_INCREF(cpy_r_r238.f2);
-CPyL172: ;
+CPyL171: ;
     CPy_RestoreExcInfo(cpy_r_r238);
     CPy_DecRef(cpy_r_r238.f0);
     CPy_DecRef(cpy_r_r238.f1);
     CPy_DecRef(cpy_r_r238.f2);
-    goto CPyL181;
-CPyL173: ;
+    goto CPyL161;
+CPyL172: ;
+    cpy_r_r226 = cpy_r_r7;
+    CPy_DecRef(cpy_r_r226);
     cpy_r_r239 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8;
     if (unlikely(cpy_r_r239.f0 == NULL)) {
         CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__8", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL258;
+        goto CPyL321;
     }
     CPy_INCREF(cpy_r_r239.f0);
     CPy_INCREF(cpy_r_r239.f1);
     CPy_INCREF(cpy_r_r239.f2);
-CPyL174: ;
+CPyL173: ;
     CPy_RestoreExcInfo(cpy_r_r239);
     CPy_DecRef(cpy_r_r239.f0);
     CPy_DecRef(cpy_r_r239.f1);
     CPy_DecRef(cpy_r_r239.f2);
-    cpy_r_r240 = CPy_KeepPropagating();
-    if (!cpy_r_r240) goto CPyL258;
-    CPy_Unreachable();
-CPyL176: ;
-    cpy_r_r241 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7;
-    if (unlikely(cpy_r_r241 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__7", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL320;
+    goto CPyL182;
+CPyL174: ;
+    cpy_r_r240 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8;
+    if (unlikely(cpy_r_r240.f0 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__8", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL259;
     }
-    CPy_INCREF(cpy_r_r241);
+    CPy_INCREF(cpy_r_r240.f0);
+    CPy_INCREF(cpy_r_r240.f1);
+    CPy_INCREF(cpy_r_r240.f2);
+CPyL175: ;
+    CPy_RestoreExcInfo(cpy_r_r240);
+    CPy_DecRef(cpy_r_r240.f0);
+    CPy_DecRef(cpy_r_r240.f1);
+    CPy_DecRef(cpy_r_r240.f2);
+    cpy_r_r241 = CPy_KeepPropagating();
+    if (!cpy_r_r241) goto CPyL259;
+    CPy_Unreachable();
 CPyL177: ;
-    cpy_r_r242 = CPyIter_Send(cpy_r_r241, cpy_r_arg);
-    CPy_DECREF(cpy_r_r241);
-    CPy_DECREF(cpy_r_arg);
-    if (cpy_r_r242 == NULL) {
-        goto CPyL179;
-    } else
-        goto CPyL321;
-CPyL178: ;
-    cpy_r_r228 = cpy_r_r242;
-    goto CPyL160;
-CPyL179: ;
-    cpy_r_r243 = CPy_FetchStopIterationValue();
-    if (unlikely(cpy_r_r243 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
-    }
-    cpy_r_r225 = cpy_r_r243;
-    CPy_DECREF(cpy_r_r225);
-CPyL181: ;
-    cpy_r_r244 = CPyStatic_eth_portfolio_scripts___balances___yield_to_loop;
-    if (unlikely(cpy_r_r244 == NULL)) {
+    cpy_r_r242 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7;
+    if (unlikely(cpy_r_r242 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__7", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL322;
+    }
+    CPy_INCREF(cpy_r_r242);
+CPyL178: ;
+    cpy_r_r243 = CPyIter_Send(cpy_r_r242, cpy_r_arg);
+    CPy_DECREF(cpy_r_r242);
+    CPy_DECREF(cpy_r_arg);
+    if (cpy_r_r243 == NULL) {
+        goto CPyL180;
     } else
-        goto CPyL184;
-CPyL182: ;
-    PyErr_SetString(PyExc_NameError, "value for final name \"yield_to_loop\" was not set");
-    cpy_r_r245 = 0;
-    if (unlikely(!cpy_r_r245)) {
+        goto CPyL323;
+CPyL179: ;
+    cpy_r_r229 = cpy_r_r243;
+    goto CPyL161;
+CPyL180: ;
+    cpy_r_r244 = CPy_FetchStopIterationValue();
+    if (unlikely(cpy_r_r244 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL258;
+        goto CPyL261;
+    }
+    cpy_r_r226 = cpy_r_r244;
+    CPy_DECREF(cpy_r_r226);
+CPyL182: ;
+    cpy_r_r245 = CPyStatic_eth_portfolio_scripts___balances___yield_to_loop;
+    if (unlikely(cpy_r_r245 == NULL)) {
+        goto CPyL324;
+    } else
+        goto CPyL185;
+CPyL183: ;
+    PyErr_SetString(PyExc_NameError, "value for final name \"yield_to_loop\" was not set");
+    cpy_r_r246 = 0;
+    if (unlikely(!cpy_r_r246)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL259;
     }
     CPy_Unreachable();
-CPyL184: ;
-    cpy_r_r246 = PyObject_Vectorcall(cpy_r_r244, 0, 0, 0);
-    if (unlikely(cpy_r_r246 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
-    }
-    cpy_r_r247 = CPy_GetCoro(cpy_r_r246);
-    CPy_DECREF(cpy_r_r246);
+CPyL185: ;
+    cpy_r_r247 = PyObject_Vectorcall(cpy_r_r245, 0, 0, 0);
     if (unlikely(cpy_r_r247 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
+    }
+    cpy_r_r248 = CPy_GetCoro(cpy_r_r247);
+    CPy_DECREF(cpy_r_r247);
+    if (unlikely(cpy_r_r248 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
     }
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9 = cpy_r_r247;
-    cpy_r_r248 = 1;
-    if (unlikely(!cpy_r_r248)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9 = cpy_r_r248;
+    cpy_r_r249 = 1;
+    if (unlikely(!cpy_r_r249)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-    cpy_r_r249 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9;
-    if (unlikely(cpy_r_r249 == NULL)) {
+    cpy_r_r250 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9;
+    if (unlikely(cpy_r_r250 == NULL)) {
         CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__9", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-    CPy_INCREF(cpy_r_r249);
-CPyL188: ;
-    cpy_r_r250 = CPyIter_Next(cpy_r_r249);
-    CPy_DECREF(cpy_r_r249);
-    if (cpy_r_r250 != NULL) goto CPyL323;
-    cpy_r_r251 = CPy_FetchStopIterationValue();
-    if (unlikely(cpy_r_r251 == NULL)) {
+    CPy_INCREF(cpy_r_r250);
+CPyL189: ;
+    cpy_r_r251 = CPyIter_Next(cpy_r_r250);
+    CPy_DECREF(cpy_r_r250);
+    if (cpy_r_r251 != NULL) goto CPyL325;
+    cpy_r_r252 = CPy_FetchStopIterationValue();
+    if (unlikely(cpy_r_r252 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-    cpy_r_r252 = cpy_r_r251;
-    CPy_DECREF(cpy_r_r252);
-    cpy_r_r253 = NULL;
+    cpy_r_r253 = cpy_r_r252;
+    CPy_DECREF(cpy_r_r253);
+    cpy_r_r254 = NULL;
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9 = cpy_r_r253;
-    cpy_r_r254 = 1;
-    if (unlikely(!cpy_r_r254)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9 = cpy_r_r254;
+    cpy_r_r255 = 1;
+    if (unlikely(!cpy_r_r255)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     } else
-        goto CPyL213;
-CPyL191: ;
-    cpy_r_r255 = cpy_r_r250;
+        goto CPyL214;
 CPyL192: ;
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = 4;
-    return cpy_r_r255;
+    cpy_r_r256 = cpy_r_r251;
 CPyL193: ;
-    cpy_r_r257 = (PyObject *)&_Py_NoneStruct;
-    cpy_r_r258 = cpy_r_type != cpy_r_r257;
-    if (!cpy_r_r258) goto CPyL324;
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = 4;
+    return cpy_r_r256;
+CPyL194: ;
+    cpy_r_r258 = (PyObject *)&_Py_NoneStruct;
+    cpy_r_r259 = cpy_r_type != cpy_r_r258;
+    if (!cpy_r_r259) goto CPyL326;
     CPyErr_SetObjectAndTraceback(cpy_r_type, cpy_r_value, cpy_r_traceback);
     if (unlikely(!0)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL197;
+        goto CPyL198;
     } else
-        goto CPyL325;
-CPyL195: ;
-    CPy_Unreachable();
+        goto CPyL327;
 CPyL196: ;
-    CPy_INCREF(cpy_r_arg);
-    goto CPyL208;
+    CPy_Unreachable();
 CPyL197: ;
-    cpy_r_r259 = CPy_CatchError();
+    CPy_INCREF(cpy_r_arg);
+    goto CPyL209;
+CPyL198: ;
+    cpy_r_r260 = CPy_CatchError();
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10.f0 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10.f0);
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10.f1);
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10.f2);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10 = cpy_r_r259;
-    cpy_r_r260 = 1;
-    if (unlikely(!cpy_r_r260)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10 = cpy_r_r260;
+    cpy_r_r261 = 1;
+    if (unlikely(!cpy_r_r261)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL326;
-    }
-    cpy_r_r261 = (PyObject **)&cpy_r_r9;
-    cpy_r_r262 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9;
-    if (unlikely(cpy_r_r262 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__9", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL326;
-    }
-    CPy_INCREF(cpy_r_r262);
-CPyL199: ;
-    cpy_r_r263 = CPy_YieldFromErrorHandle(cpy_r_r262, cpy_r_r261);
-    CPy_DecRef(cpy_r_r262);
-    if (unlikely(cpy_r_r263 == 2)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL326;
-    }
-    if (cpy_r_r263) {
-        goto CPyL203;
-    } else
-        goto CPyL327;
-CPyL201: ;
-    cpy_r_r255 = cpy_r_r9;
-    cpy_r_r264 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10;
-    if (unlikely(cpy_r_r264.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__10", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL328;
     }
-    CPy_INCREF(cpy_r_r264.f0);
-    CPy_INCREF(cpy_r_r264.f1);
-    CPy_INCREF(cpy_r_r264.f2);
+    cpy_r_r262 = (PyObject **)&cpy_r_r9;
+    cpy_r_r263 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9;
+    if (unlikely(cpy_r_r263 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__9", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL328;
+    }
+    CPy_INCREF(cpy_r_r263);
+CPyL200: ;
+    cpy_r_r264 = CPy_YieldFromErrorHandle(cpy_r_r263, cpy_r_r262);
+    CPy_DecRef(cpy_r_r263);
+    if (unlikely(cpy_r_r264 == 2)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL328;
+    }
+    if (cpy_r_r264) {
+        goto CPyL204;
+    } else
+        goto CPyL329;
 CPyL202: ;
-    CPy_RestoreExcInfo(cpy_r_r264);
-    CPy_DecRef(cpy_r_r264.f0);
-    CPy_DecRef(cpy_r_r264.f1);
-    CPy_DecRef(cpy_r_r264.f2);
-    goto CPyL192;
-CPyL203: ;
-    cpy_r_r252 = cpy_r_r9;
-    CPy_DecRef(cpy_r_r252);
+    cpy_r_r256 = cpy_r_r9;
     cpy_r_r265 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10;
     if (unlikely(cpy_r_r265.f0 == NULL)) {
         CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__10", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL329;
+        goto CPyL330;
     }
     CPy_INCREF(cpy_r_r265.f0);
     CPy_INCREF(cpy_r_r265.f1);
     CPy_INCREF(cpy_r_r265.f2);
-CPyL204: ;
+CPyL203: ;
     CPy_RestoreExcInfo(cpy_r_r265);
     CPy_DecRef(cpy_r_r265.f0);
     CPy_DecRef(cpy_r_r265.f1);
     CPy_DecRef(cpy_r_r265.f2);
-    goto CPyL213;
-CPyL205: ;
+    goto CPyL193;
+CPyL204: ;
+    cpy_r_r253 = cpy_r_r9;
+    CPy_DecRef(cpy_r_r253);
     cpy_r_r266 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10;
     if (unlikely(cpy_r_r266.f0 == NULL)) {
         CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__10", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL258;
+        goto CPyL331;
     }
     CPy_INCREF(cpy_r_r266.f0);
     CPy_INCREF(cpy_r_r266.f1);
     CPy_INCREF(cpy_r_r266.f2);
-CPyL206: ;
+CPyL205: ;
     CPy_RestoreExcInfo(cpy_r_r266);
     CPy_DecRef(cpy_r_r266.f0);
     CPy_DecRef(cpy_r_r266.f1);
     CPy_DecRef(cpy_r_r266.f2);
-    cpy_r_r267 = CPy_KeepPropagating();
-    if (!cpy_r_r267) goto CPyL258;
-    CPy_Unreachable();
-CPyL208: ;
-    cpy_r_r268 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9;
-    if (unlikely(cpy_r_r268 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__9", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL330;
+    goto CPyL214;
+CPyL206: ;
+    cpy_r_r267 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10;
+    if (unlikely(cpy_r_r267.f0 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__10", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL259;
     }
-    CPy_INCREF(cpy_r_r268);
+    CPy_INCREF(cpy_r_r267.f0);
+    CPy_INCREF(cpy_r_r267.f1);
+    CPy_INCREF(cpy_r_r267.f2);
+CPyL207: ;
+    CPy_RestoreExcInfo(cpy_r_r267);
+    CPy_DecRef(cpy_r_r267.f0);
+    CPy_DecRef(cpy_r_r267.f1);
+    CPy_DecRef(cpy_r_r267.f2);
+    cpy_r_r268 = CPy_KeepPropagating();
+    if (!cpy_r_r268) goto CPyL259;
+    CPy_Unreachable();
 CPyL209: ;
-    cpy_r_r269 = CPyIter_Send(cpy_r_r268, cpy_r_arg);
-    CPy_DECREF(cpy_r_r268);
-    CPy_DECREF(cpy_r_arg);
-    if (cpy_r_r269 == NULL) {
-        goto CPyL211;
-    } else
-        goto CPyL331;
-CPyL210: ;
-    cpy_r_r255 = cpy_r_r269;
-    goto CPyL192;
-CPyL211: ;
-    cpy_r_r270 = CPy_FetchStopIterationValue();
-    if (unlikely(cpy_r_r270 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
-    }
-    cpy_r_r252 = cpy_r_r270;
-    CPy_DECREF(cpy_r_r252);
-CPyL213: ;
-    cpy_r_r271 = CPyStatic_eth_portfolio_scripts___balances___yield_to_loop;
-    if (unlikely(cpy_r_r271 == NULL)) {
+    cpy_r_r269 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9;
+    if (unlikely(cpy_r_r269 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__9", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL332;
+    }
+    CPy_INCREF(cpy_r_r269);
+CPyL210: ;
+    cpy_r_r270 = CPyIter_Send(cpy_r_r269, cpy_r_arg);
+    CPy_DECREF(cpy_r_r269);
+    CPy_DECREF(cpy_r_arg);
+    if (cpy_r_r270 == NULL) {
+        goto CPyL212;
     } else
-        goto CPyL216;
-CPyL214: ;
-    PyErr_SetString(PyExc_NameError, "value for final name \"yield_to_loop\" was not set");
-    cpy_r_r272 = 0;
-    if (unlikely(!cpy_r_r272)) {
+        goto CPyL333;
+CPyL211: ;
+    cpy_r_r256 = cpy_r_r270;
+    goto CPyL193;
+CPyL212: ;
+    cpy_r_r271 = CPy_FetchStopIterationValue();
+    if (unlikely(cpy_r_r271 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL258;
+        goto CPyL261;
+    }
+    cpy_r_r253 = cpy_r_r271;
+    CPy_DECREF(cpy_r_r253);
+CPyL214: ;
+    cpy_r_r272 = CPyStatic_eth_portfolio_scripts___balances___yield_to_loop;
+    if (unlikely(cpy_r_r272 == NULL)) {
+        goto CPyL334;
+    } else
+        goto CPyL217;
+CPyL215: ;
+    PyErr_SetString(PyExc_NameError, "value for final name \"yield_to_loop\" was not set");
+    cpy_r_r273 = 0;
+    if (unlikely(!cpy_r_r273)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL259;
     }
     CPy_Unreachable();
-CPyL216: ;
-    cpy_r_r273 = PyObject_Vectorcall(cpy_r_r271, 0, 0, 0);
-    if (unlikely(cpy_r_r273 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
-    }
-    cpy_r_r274 = CPy_GetCoro(cpy_r_r273);
-    CPy_DECREF(cpy_r_r273);
+CPyL217: ;
+    cpy_r_r274 = PyObject_Vectorcall(cpy_r_r272, 0, 0, 0);
     if (unlikely(cpy_r_r274 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
+    }
+    cpy_r_r275 = CPy_GetCoro(cpy_r_r274);
+    CPy_DECREF(cpy_r_r274);
+    if (unlikely(cpy_r_r275 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
     }
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11 = cpy_r_r274;
-    cpy_r_r275 = 1;
-    if (unlikely(!cpy_r_r275)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11 = cpy_r_r275;
+    cpy_r_r276 = 1;
+    if (unlikely(!cpy_r_r276)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-    cpy_r_r276 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11;
-    if (unlikely(cpy_r_r276 == NULL)) {
+    cpy_r_r277 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11;
+    if (unlikely(cpy_r_r277 == NULL)) {
         CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__11", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-    CPy_INCREF(cpy_r_r276);
-CPyL220: ;
-    cpy_r_r277 = CPyIter_Next(cpy_r_r276);
-    CPy_DECREF(cpy_r_r276);
-    if (cpy_r_r277 != NULL) goto CPyL333;
-    cpy_r_r278 = CPy_FetchStopIterationValue();
-    if (unlikely(cpy_r_r278 == NULL)) {
+    CPy_INCREF(cpy_r_r277);
+CPyL221: ;
+    cpy_r_r278 = CPyIter_Next(cpy_r_r277);
+    CPy_DECREF(cpy_r_r277);
+    if (cpy_r_r278 != NULL) goto CPyL335;
+    cpy_r_r279 = CPy_FetchStopIterationValue();
+    if (unlikely(cpy_r_r279 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     }
-    cpy_r_r279 = cpy_r_r278;
-    CPy_DECREF(cpy_r_r279);
-    cpy_r_r280 = NULL;
+    cpy_r_r280 = cpy_r_r279;
+    CPy_DECREF(cpy_r_r280);
+    cpy_r_r281 = NULL;
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11 = cpy_r_r280;
-    cpy_r_r281 = 1;
-    if (unlikely(!cpy_r_r281)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11 = cpy_r_r281;
+    cpy_r_r282 = 1;
+    if (unlikely(!cpy_r_r282)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+        goto CPyL261;
     } else
-        goto CPyL96;
-CPyL223: ;
-    cpy_r_r282 = cpy_r_r277;
+        goto CPyL97;
 CPyL224: ;
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = 5;
-    return cpy_r_r282;
+    cpy_r_r283 = cpy_r_r278;
 CPyL225: ;
-    cpy_r_r284 = (PyObject *)&_Py_NoneStruct;
-    cpy_r_r285 = cpy_r_type != cpy_r_r284;
-    if (!cpy_r_r285) goto CPyL334;
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = 5;
+    return cpy_r_r283;
+CPyL226: ;
+    cpy_r_r285 = (PyObject *)&_Py_NoneStruct;
+    cpy_r_r286 = cpy_r_type != cpy_r_r285;
+    if (!cpy_r_r286) goto CPyL336;
     CPyErr_SetObjectAndTraceback(cpy_r_type, cpy_r_value, cpy_r_traceback);
     if (unlikely(!0)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL229;
+        goto CPyL230;
     } else
-        goto CPyL335;
-CPyL227: ;
-    CPy_Unreachable();
+        goto CPyL337;
 CPyL228: ;
-    CPy_INCREF(cpy_r_arg);
-    goto CPyL240;
+    CPy_Unreachable();
 CPyL229: ;
-    cpy_r_r286 = CPy_CatchError();
+    CPy_INCREF(cpy_r_arg);
+    goto CPyL241;
+CPyL230: ;
+    cpy_r_r287 = CPy_CatchError();
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12.f0 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12.f0);
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12.f1);
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12.f2);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12 = cpy_r_r286;
-    cpy_r_r287 = 1;
-    if (unlikely(!cpy_r_r287)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12 = cpy_r_r287;
+    cpy_r_r288 = 1;
+    if (unlikely(!cpy_r_r288)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL336;
-    }
-    cpy_r_r288 = (PyObject **)&cpy_r_r11;
-    cpy_r_r289 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11;
-    if (unlikely(cpy_r_r289 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__11", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL336;
-    }
-    CPy_INCREF(cpy_r_r289);
-CPyL231: ;
-    cpy_r_r290 = CPy_YieldFromErrorHandle(cpy_r_r289, cpy_r_r288);
-    CPy_DecRef(cpy_r_r289);
-    if (unlikely(cpy_r_r290 == 2)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL336;
-    }
-    if (cpy_r_r290) {
-        goto CPyL235;
-    } else
-        goto CPyL337;
-CPyL233: ;
-    cpy_r_r282 = cpy_r_r11;
-    cpy_r_r291 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12;
-    if (unlikely(cpy_r_r291.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__12", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL338;
     }
-    CPy_INCREF(cpy_r_r291.f0);
-    CPy_INCREF(cpy_r_r291.f1);
-    CPy_INCREF(cpy_r_r291.f2);
+    cpy_r_r289 = (PyObject **)&cpy_r_r11;
+    cpy_r_r290 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11;
+    if (unlikely(cpy_r_r290 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__11", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL338;
+    }
+    CPy_INCREF(cpy_r_r290);
+CPyL232: ;
+    cpy_r_r291 = CPy_YieldFromErrorHandle(cpy_r_r290, cpy_r_r289);
+    CPy_DecRef(cpy_r_r290);
+    if (unlikely(cpy_r_r291 == 2)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL338;
+    }
+    if (cpy_r_r291) {
+        goto CPyL236;
+    } else
+        goto CPyL339;
 CPyL234: ;
-    CPy_RestoreExcInfo(cpy_r_r291);
-    CPy_DecRef(cpy_r_r291.f0);
-    CPy_DecRef(cpy_r_r291.f1);
-    CPy_DecRef(cpy_r_r291.f2);
-    goto CPyL224;
-CPyL235: ;
-    cpy_r_r279 = cpy_r_r11;
-    CPy_DecRef(cpy_r_r279);
+    cpy_r_r283 = cpy_r_r11;
     cpy_r_r292 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12;
     if (unlikely(cpy_r_r292.f0 == NULL)) {
         CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__12", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL339;
+        goto CPyL340;
     }
     CPy_INCREF(cpy_r_r292.f0);
     CPy_INCREF(cpy_r_r292.f1);
     CPy_INCREF(cpy_r_r292.f2);
-CPyL236: ;
+CPyL235: ;
     CPy_RestoreExcInfo(cpy_r_r292);
     CPy_DecRef(cpy_r_r292.f0);
     CPy_DecRef(cpy_r_r292.f1);
     CPy_DecRef(cpy_r_r292.f2);
-    goto CPyL96;
-CPyL237: ;
+    goto CPyL225;
+CPyL236: ;
+    cpy_r_r280 = cpy_r_r11;
+    CPy_DecRef(cpy_r_r280);
     cpy_r_r293 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12;
     if (unlikely(cpy_r_r293.f0 == NULL)) {
         CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__12", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL258;
+        goto CPyL341;
     }
     CPy_INCREF(cpy_r_r293.f0);
     CPy_INCREF(cpy_r_r293.f1);
     CPy_INCREF(cpy_r_r293.f2);
-CPyL238: ;
+CPyL237: ;
     CPy_RestoreExcInfo(cpy_r_r293);
     CPy_DecRef(cpy_r_r293.f0);
     CPy_DecRef(cpy_r_r293.f1);
     CPy_DecRef(cpy_r_r293.f2);
-    cpy_r_r294 = CPy_KeepPropagating();
-    if (!cpy_r_r294) goto CPyL258;
-    CPy_Unreachable();
-CPyL240: ;
-    cpy_r_r295 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11;
-    if (unlikely(cpy_r_r295 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__11", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL340;
+    goto CPyL97;
+CPyL238: ;
+    cpy_r_r294 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12;
+    if (unlikely(cpy_r_r294.f0 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__12", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL259;
     }
-    CPy_INCREF(cpy_r_r295);
+    CPy_INCREF(cpy_r_r294.f0);
+    CPy_INCREF(cpy_r_r294.f1);
+    CPy_INCREF(cpy_r_r294.f2);
+CPyL239: ;
+    CPy_RestoreExcInfo(cpy_r_r294);
+    CPy_DecRef(cpy_r_r294.f0);
+    CPy_DecRef(cpy_r_r294.f1);
+    CPy_DecRef(cpy_r_r294.f2);
+    cpy_r_r295 = CPy_KeepPropagating();
+    if (!cpy_r_r295) goto CPyL259;
+    CPy_Unreachable();
 CPyL241: ;
-    cpy_r_r296 = CPyIter_Send(cpy_r_r295, cpy_r_arg);
-    CPy_DECREF(cpy_r_r295);
-    CPy_DECREF(cpy_r_arg);
-    if (cpy_r_r296 == NULL) {
-        goto CPyL243;
-    } else
-        goto CPyL341;
-CPyL242: ;
-    cpy_r_r282 = cpy_r_r296;
-    goto CPyL224;
-CPyL243: ;
-    cpy_r_r297 = CPy_FetchStopIterationValue();
-    if (unlikely(cpy_r_r297 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL260;
+    cpy_r_r296 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11;
+    if (unlikely(cpy_r_r296 == NULL)) {
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__11", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL342;
     }
-    cpy_r_r279 = cpy_r_r297;
-    CPy_DECREF(cpy_r_r279);
-    goto CPyL96;
-CPyL245: ;
-    cpy_r_r298 = Py_None;
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = -1;
-    if (cpy_r_stop_iter_ptr != NULL) goto CPyL249;
-    CPyGen_SetStopIterationValue(cpy_r_r298);
-    if (!0) goto CPyL258;
-    CPy_Unreachable();
-CPyL249: ;
-    *(PyObject * *)cpy_r_stop_iter_ptr = cpy_r_r298;
-    return 0;
-CPyL250: ;
-    cpy_r_r300 = cpy_r_r12 == 0;
-    if (cpy_r_r300) goto CPyL342;
-    cpy_r_r301 = cpy_r_r12 == 1;
-    if (cpy_r_r301) {
-        goto CPyL343;
+    CPy_INCREF(cpy_r_r296);
+CPyL242: ;
+    cpy_r_r297 = CPyIter_Send(cpy_r_r296, cpy_r_arg);
+    CPy_DECREF(cpy_r_r296);
+    CPy_DECREF(cpy_r_arg);
+    if (cpy_r_r297 == NULL) {
+        goto CPyL244;
     } else
-        goto CPyL344;
-CPyL252: ;
-    cpy_r_r302 = cpy_r_r12 == 2;
+        goto CPyL343;
+CPyL243: ;
+    cpy_r_r283 = cpy_r_r297;
+    goto CPyL225;
+CPyL244: ;
+    cpy_r_r298 = CPy_FetchStopIterationValue();
+    if (unlikely(cpy_r_r298 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL261;
+    }
+    cpy_r_r280 = cpy_r_r298;
+    CPy_DECREF(cpy_r_r280);
+    goto CPyL97;
+CPyL246: ;
+    cpy_r_r299 = Py_None;
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = -1;
+    if (cpy_r_stop_iter_ptr != NULL) goto CPyL250;
+    CPyGen_SetStopIterationValue(cpy_r_r299);
+    if (!0) goto CPyL259;
+    CPy_Unreachable();
+CPyL250: ;
+    *(PyObject * *)cpy_r_stop_iter_ptr = cpy_r_r299;
+    return 0;
+CPyL251: ;
+    cpy_r_r301 = cpy_r_r12 == 0;
+    if (cpy_r_r301) goto CPyL344;
+    cpy_r_r302 = cpy_r_r12 == 1;
     if (cpy_r_r302) {
         goto CPyL345;
     } else
         goto CPyL346;
 CPyL253: ;
-    cpy_r_r303 = cpy_r_r12 == 3;
+    cpy_r_r303 = cpy_r_r12 == 2;
     if (cpy_r_r303) {
         goto CPyL347;
     } else
         goto CPyL348;
 CPyL254: ;
-    cpy_r_r304 = cpy_r_r12 == 4;
+    cpy_r_r304 = cpy_r_r12 == 3;
     if (cpy_r_r304) {
         goto CPyL349;
     } else
         goto CPyL350;
 CPyL255: ;
-    cpy_r_r305 = cpy_r_r12 == 5;
+    cpy_r_r305 = cpy_r_r12 == 4;
     if (cpy_r_r305) {
-        goto CPyL225;
-    } else
         goto CPyL351;
+    } else
+        goto CPyL352;
 CPyL256: ;
+    cpy_r_r306 = cpy_r_r12 == 5;
+    if (cpy_r_r306) {
+        goto CPyL226;
+    } else
+        goto CPyL353;
+CPyL257: ;
     PyErr_SetNone(PyExc_StopIteration);
-    cpy_r_r306 = 0;
-    if (unlikely(!cpy_r_r306)) {
+    cpy_r_r307 = 0;
+    if (unlikely(!cpy_r_r307)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL258;
+        goto CPyL259;
     }
     CPy_Unreachable();
-CPyL258: ;
-    cpy_r_r307 = NULL;
-    return cpy_r_r307;
 CPyL259: ;
+    cpy_r_r308 = NULL;
+    return cpy_r_r308;
+CPyL260: ;
     CPy_XDECREF(cpy_r_r5);
     goto CPyL2;
-CPyL260: ;
-    CPy_XDecRef(cpy_r_r5);
-    goto CPyL258;
 CPyL261: ;
+    CPy_XDecRef(cpy_r_r5);
+    goto CPyL259;
+CPyL262: ;
     CPy_XDECREF(cpy_r_r5);
     goto CPyL13;
-CPyL262: ;
-    CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r45);
-    goto CPyL258;
 CPyL263: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r55);
-    goto CPyL258;
+    CPy_DecRef(cpy_r_r45);
+    goto CPyL259;
 CPyL264: ;
     CPy_XDecRef(cpy_r_r5);
     CPy_DecRef(cpy_r_r55);
-    CPy_DecRef(cpy_r_r58);
-    goto CPyL258;
+    goto CPyL259;
 CPyL265: ;
     CPy_XDecRef(cpy_r_r5);
     CPy_DecRef(cpy_r_r55);
     CPy_DecRef(cpy_r_r58);
-    CPy_DecRef(cpy_r_r61);
-    goto CPyL258;
+    goto CPyL259;
 CPyL266: ;
     CPy_XDecRef(cpy_r_r5);
     CPy_DecRef(cpy_r_r55);
     CPy_DecRef(cpy_r_r58);
     CPy_DecRef(cpy_r_r61);
-    CPy_DecRef(cpy_r_r64);
-    goto CPyL258;
+    goto CPyL259;
 CPyL267: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r76);
-    goto CPyL258;
+    CPy_DecRef(cpy_r_r55);
+    CPy_DecRef(cpy_r_r58);
+    CPy_DecRef(cpy_r_r61);
+    CPy_DecRef(cpy_r_r64);
+    goto CPyL259;
 CPyL268: ;
-    CPy_DECREF(cpy_r_r76);
-    goto CPyL38;
+    CPy_XDecRef(cpy_r_r5);
+    CPy_DecRef(cpy_r_r55);
+    CPy_DecRef(cpy_r_r58);
+    CPy_DecRef(cpy_r_r61);
+    CPy_DecRef(cpy_r_r64);
+    CPy_DecRef(cpy_r_r65);
+    goto CPyL259;
 CPyL269: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r80);
-    goto CPyL258;
+    CPy_DecRef(cpy_r_r77);
+    goto CPyL259;
 CPyL270: ;
-    CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r92);
-    goto CPyL258;
+    CPy_DECREF(cpy_r_r77);
+    goto CPyL39;
 CPyL271: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r92);
-    CPy_DecRef(cpy_r_r93);
-    goto CPyL258;
+    CPy_DecRef(cpy_r_r81);
+    goto CPyL259;
 CPyL272: ;
-    CPy_XDECREF(cpy_r_r5);
-    goto CPyL54;
+    CPy_XDecRef(cpy_r_r5);
+    CPy_DecRef(cpy_r_r93);
+    goto CPyL259;
 CPyL273: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r103);
-    goto CPyL258;
+    CPy_DecRef(cpy_r_r93);
+    CPy_DecRef(cpy_r_r94);
+    goto CPyL259;
 CPyL274: ;
-    CPy_XDECREF(cpy_r_r1);
-    goto CPyL59;
+    CPy_XDECREF(cpy_r_r5);
+    goto CPyL55;
 CPyL275: ;
+    CPy_XDecRef(cpy_r_r5);
+    CPy_DecRef(cpy_r_r104);
+    goto CPyL259;
+CPyL276: ;
+    CPy_XDECREF(cpy_r_r1);
+    goto CPyL60;
+CPyL277: ;
     CPy_XDECREF(cpy_r_r1);
     CPy_XDECREF(cpy_r_r5);
-    goto CPyL58;
-CPyL276: ;
+    goto CPyL59;
+CPyL278: ;
     CPy_XDecRef(cpy_r_r1);
     CPy_XDecRef(cpy_r_r5);
-    goto CPyL68;
-CPyL277: ;
-    CPy_XDecRef(cpy_r_r5);
-    goto CPyL64;
-CPyL278: ;
-    CPy_DecRef(cpy_r_r106);
-    goto CPyL68;
+    goto CPyL69;
 CPyL279: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r103);
-    goto CPyL68;
+    goto CPyL65;
 CPyL280: ;
-    CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_arg);
-    goto CPyL258;
+    CPy_DecRef(cpy_r_r107);
+    goto CPyL69;
 CPyL281: ;
-    CPy_XDECREF(cpy_r_r5);
-    goto CPyL73;
+    CPy_XDecRef(cpy_r_r5);
+    CPy_DecRef(cpy_r_r104);
+    goto CPyL69;
 CPyL282: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r125);
-    goto CPyL258;
+    CPy_DecRef(cpy_r_arg);
+    goto CPyL259;
 CPyL283: ;
-    CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r125);
-    CPy_DecRef(cpy_r_r126);
-    goto CPyL258;
+    CPy_XDECREF(cpy_r_r5);
+    goto CPyL74;
 CPyL284: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r125);
     CPy_DecRef(cpy_r_r126);
-    CPy_DecRef(cpy_r_r131);
-    goto CPyL258;
+    goto CPyL259;
 CPyL285: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r143);
-    goto CPyL258;
+    CPy_DecRef(cpy_r_r126);
+    CPy_DecRef(cpy_r_r127);
+    goto CPyL259;
 CPyL286: ;
-    CPy_DECREF(cpy_r_r149);
-    goto CPyL89;
+    CPy_XDecRef(cpy_r_r5);
+    CPy_DecRef(cpy_r_r126);
+    CPy_DecRef(cpy_r_r127);
+    CPy_DecRef(cpy_r_r132);
+    goto CPyL259;
 CPyL287: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r150);
-    goto CPyL258;
+    CPy_DecRef(cpy_r_r144);
+    goto CPyL259;
 CPyL288: ;
-    CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r150);
-    CPy_DecRef(cpy_r_r151);
-    goto CPyL258;
+    CPy_DECREF(cpy_r_r150);
+    goto CPyL90;
 CPyL289: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r159);
-    goto CPyL258;
+    CPy_DecRef(cpy_r_r151);
+    goto CPyL259;
 CPyL290: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r160);
-    goto CPyL258;
+    CPy_DecRef(cpy_r_r151);
+    CPy_DecRef(cpy_r_r152);
+    goto CPyL259;
 CPyL291: ;
+    CPy_XDecRef(cpy_r_r5);
+    CPy_DecRef(cpy_r_r160);
+    goto CPyL259;
+CPyL292: ;
+    CPy_XDecRef(cpy_r_r5);
+    CPy_DecRef(cpy_r_r161);
+    goto CPyL259;
+CPyL293: ;
+    CPy_XDECREF(cpy_r_r5);
+    goto CPyL105;
+CPyL294: ;
     CPy_XDECREF(cpy_r_r5);
     goto CPyL104;
-CPyL292: ;
-    CPy_XDECREF(cpy_r_r5);
-    goto CPyL103;
-CPyL293: ;
-    CPy_XDECREF(cpy_r_r3);
-    goto CPyL109;
-CPyL294: ;
-    CPy_XDECREF(cpy_r_r3);
-    CPy_XDECREF(cpy_r_r5);
-    goto CPyL108;
 CPyL295: ;
-    CPy_XDecRef(cpy_r_r3);
-    goto CPyL118;
+    CPy_XDECREF(cpy_r_r3);
+    goto CPyL110;
 CPyL296: ;
-    CPy_XDecRef(cpy_r_r5);
-    goto CPyL116;
+    CPy_XDECREF(cpy_r_r3);
+    CPy_XDECREF(cpy_r_r5);
+    goto CPyL109;
 CPyL297: ;
-    CPy_DecRef(cpy_r_r172);
-    goto CPyL118;
+    CPy_XDecRef(cpy_r_r3);
+    goto CPyL119;
 CPyL298: ;
     CPy_XDecRef(cpy_r_r5);
-    goto CPyL115;
+    goto CPyL117;
 CPyL299: ;
-    CPy_XDecRef(cpy_r_r5);
-    goto CPyL120;
+    CPy_DecRef(cpy_r_r173);
+    goto CPyL119;
 CPyL300: ;
-    CPy_DecRef(cpy_r_arg);
-    goto CPyL127;
+    CPy_XDecRef(cpy_r_r5);
+    goto CPyL116;
 CPyL301: ;
-    CPy_XDECREF(cpy_r_r5);
-    goto CPyL123;
+    CPy_XDecRef(cpy_r_r5);
+    goto CPyL121;
 CPyL302: ;
-    CPy_XDECREF(cpy_r_r5);
-    goto CPyL125;
+    CPy_DecRef(cpy_r_arg);
+    goto CPyL128;
 CPyL303: ;
-    CPy_XDecRef(cpy_r_r5);
-    goto CPyL134;
-CPyL304: ;
-    CPy_XDecRef(cpy_r_r5);
-    goto CPyL130;
-CPyL305: ;
     CPy_XDECREF(cpy_r_r5);
-    goto CPyL245;
+    goto CPyL124;
+CPyL304: ;
+    CPy_XDECREF(cpy_r_r5);
+    goto CPyL126;
+CPyL305: ;
+    CPy_XDecRef(cpy_r_r5);
+    goto CPyL135;
 CPyL306: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r198);
-    goto CPyL258;
+    goto CPyL131;
 CPyL307: ;
-    CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r198);
-    CPy_DecRef(cpy_r_r199);
-    goto CPyL258;
+    CPy_XDECREF(cpy_r_r5);
+    goto CPyL246;
 CPyL308: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r205);
-    goto CPyL258;
+    CPy_DecRef(cpy_r_r199);
+    goto CPyL259;
 CPyL309: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r205);
-    CPy_DecRef(cpy_r_r209);
-    goto CPyL146;
+    CPy_DecRef(cpy_r_r199);
+    CPy_DecRef(cpy_r_r200);
+    goto CPyL259;
 CPyL310: ;
     CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r205);
-    CPy_DecRef(cpy_r_r209);
-    goto CPyL258;
+    CPy_DecRef(cpy_r_r206);
+    goto CPyL259;
 CPyL311: ;
-    CPy_DECREF(cpy_r_r216);
-    goto CPyL149;
+    CPy_XDecRef(cpy_r_r5);
+    CPy_DecRef(cpy_r_r206);
+    CPy_DecRef(cpy_r_r210);
+    goto CPyL147;
 CPyL312: ;
     CPy_XDecRef(cpy_r_r5);
-    goto CPyL150;
+    CPy_DecRef(cpy_r_r206);
+    CPy_DecRef(cpy_r_r210);
+    goto CPyL259;
 CPyL313: ;
-    CPy_XDECREF(cpy_r_r5);
-    goto CPyL159;
+    CPy_DECREF(cpy_r_r217);
+    goto CPyL150;
 CPyL314: ;
-    CPy_XDECREF(cpy_r_r7);
-    goto CPyL164;
+    CPy_XDecRef(cpy_r_r5);
+    goto CPyL151;
 CPyL315: ;
     CPy_XDECREF(cpy_r_r5);
-    CPy_XDECREF(cpy_r_r7);
-    goto CPyL163;
+    goto CPyL160;
 CPyL316: ;
+    CPy_XDECREF(cpy_r_r7);
+    goto CPyL165;
+CPyL317: ;
+    CPy_XDECREF(cpy_r_r5);
+    CPy_XDECREF(cpy_r_r7);
+    goto CPyL164;
+CPyL318: ;
     CPy_XDecRef(cpy_r_r5);
     CPy_XDecRef(cpy_r_r7);
-    goto CPyL173;
-CPyL317: ;
-    CPy_XDecRef(cpy_r_r5);
-    goto CPyL169;
-CPyL318: ;
-    CPy_DecRef(cpy_r_r228);
-    goto CPyL173;
+    goto CPyL174;
 CPyL319: ;
     CPy_XDecRef(cpy_r_r5);
-    goto CPyL173;
+    goto CPyL170;
 CPyL320: ;
-    CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_arg);
-    goto CPyL258;
+    CPy_DecRef(cpy_r_r229);
+    goto CPyL174;
 CPyL321: ;
-    CPy_XDECREF(cpy_r_r5);
-    goto CPyL178;
+    CPy_XDecRef(cpy_r_r5);
+    goto CPyL174;
 CPyL322: ;
     CPy_XDecRef(cpy_r_r5);
-    goto CPyL182;
+    CPy_DecRef(cpy_r_arg);
+    goto CPyL259;
 CPyL323: ;
     CPy_XDECREF(cpy_r_r5);
-    goto CPyL191;
+    goto CPyL179;
 CPyL324: ;
-    CPy_XDECREF(cpy_r_r9);
-    goto CPyL196;
+    CPy_XDecRef(cpy_r_r5);
+    goto CPyL183;
 CPyL325: ;
     CPy_XDECREF(cpy_r_r5);
-    CPy_XDECREF(cpy_r_r9);
-    goto CPyL195;
+    goto CPyL192;
 CPyL326: ;
+    CPy_XDECREF(cpy_r_r9);
+    goto CPyL197;
+CPyL327: ;
+    CPy_XDECREF(cpy_r_r5);
+    CPy_XDECREF(cpy_r_r9);
+    goto CPyL196;
+CPyL328: ;
     CPy_XDecRef(cpy_r_r5);
     CPy_XDecRef(cpy_r_r9);
-    goto CPyL205;
-CPyL327: ;
-    CPy_XDecRef(cpy_r_r5);
-    goto CPyL201;
-CPyL328: ;
-    CPy_DecRef(cpy_r_r255);
-    goto CPyL205;
+    goto CPyL206;
 CPyL329: ;
     CPy_XDecRef(cpy_r_r5);
-    goto CPyL205;
+    goto CPyL202;
 CPyL330: ;
-    CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_arg);
-    goto CPyL258;
+    CPy_DecRef(cpy_r_r256);
+    goto CPyL206;
 CPyL331: ;
-    CPy_XDECREF(cpy_r_r5);
-    goto CPyL210;
+    CPy_XDecRef(cpy_r_r5);
+    goto CPyL206;
 CPyL332: ;
     CPy_XDecRef(cpy_r_r5);
-    goto CPyL214;
+    CPy_DecRef(cpy_r_arg);
+    goto CPyL259;
 CPyL333: ;
     CPy_XDECREF(cpy_r_r5);
-    goto CPyL223;
+    goto CPyL211;
 CPyL334: ;
-    CPy_XDECREF(cpy_r_r11);
-    goto CPyL228;
+    CPy_XDecRef(cpy_r_r5);
+    goto CPyL215;
 CPyL335: ;
     CPy_XDECREF(cpy_r_r5);
-    CPy_XDECREF(cpy_r_r11);
-    goto CPyL227;
+    goto CPyL224;
 CPyL336: ;
+    CPy_XDECREF(cpy_r_r11);
+    goto CPyL229;
+CPyL337: ;
+    CPy_XDECREF(cpy_r_r5);
+    CPy_XDECREF(cpy_r_r11);
+    goto CPyL228;
+CPyL338: ;
     CPy_XDecRef(cpy_r_r5);
     CPy_XDecRef(cpy_r_r11);
-    goto CPyL237;
-CPyL337: ;
-    CPy_XDecRef(cpy_r_r5);
-    goto CPyL233;
-CPyL338: ;
-    CPy_DecRef(cpy_r_r282);
-    goto CPyL237;
+    goto CPyL238;
 CPyL339: ;
     CPy_XDecRef(cpy_r_r5);
-    goto CPyL237;
+    goto CPyL234;
 CPyL340: ;
+    CPy_DecRef(cpy_r_r283);
+    goto CPyL238;
+CPyL341: ;
+    CPy_XDecRef(cpy_r_r5);
+    goto CPyL238;
+CPyL342: ;
     CPy_XDecRef(cpy_r_r5);
     CPy_DecRef(cpy_r_arg);
-    goto CPyL258;
-CPyL341: ;
+    goto CPyL259;
+CPyL343: ;
     CPy_XDECREF(cpy_r_r5);
-    goto CPyL242;
-CPyL342: ;
+    goto CPyL243;
+CPyL344: ;
     CPy_XDECREF(cpy_r_r1);
     CPy_XDECREF(cpy_r_r3);
     CPy_XDECREF(cpy_r_r7);
     CPy_XDECREF(cpy_r_r9);
     CPy_XDECREF(cpy_r_r11);
     goto CPyL1;
-CPyL343: ;
-    CPy_XDECREF(cpy_r_r3);
-    CPy_XDECREF(cpy_r_r7);
-    CPy_XDECREF(cpy_r_r9);
-    CPy_XDECREF(cpy_r_r11);
-    goto CPyL56;
-CPyL344: ;
-    CPy_XDECREF(cpy_r_r1);
-    goto CPyL252;
 CPyL345: ;
+    CPy_XDECREF(cpy_r_r3);
     CPy_XDECREF(cpy_r_r7);
     CPy_XDECREF(cpy_r_r9);
     CPy_XDECREF(cpy_r_r11);
-    goto CPyL106;
+    goto CPyL57;
 CPyL346: ;
-    CPy_XDECREF(cpy_r_r3);
+    CPy_XDECREF(cpy_r_r1);
     goto CPyL253;
 CPyL347: ;
+    CPy_XDECREF(cpy_r_r7);
     CPy_XDECREF(cpy_r_r9);
     CPy_XDECREF(cpy_r_r11);
-    goto CPyL161;
+    goto CPyL107;
 CPyL348: ;
-    CPy_XDECREF(cpy_r_r7);
+    CPy_XDECREF(cpy_r_r3);
     goto CPyL254;
 CPyL349: ;
-    CPy_XDECREF(cpy_r_r11);
-    goto CPyL193;
-CPyL350: ;
     CPy_XDECREF(cpy_r_r9);
+    CPy_XDECREF(cpy_r_r11);
+    goto CPyL162;
+CPyL350: ;
+    CPy_XDECREF(cpy_r_r7);
     goto CPyL255;
 CPyL351: ;
+    CPy_XDECREF(cpy_r_r11);
+    goto CPyL194;
+CPyL352: ;
+    CPy_XDECREF(cpy_r_r9);
+    goto CPyL256;
+CPyL353: ;
     CPy_XDECREF(cpy_r_r5);
     CPy_XDECREF(cpy_r_r11);
-    goto CPyL256;
+    goto CPyL257;
 }
 
 PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____next__(PyObject *cpy_r___mypyc_self__) {
@@ -26921,45 +26939,91 @@ fail: ;
     return NULL;
 }
 
-PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances(PyObject *cpy_r_args) {
+PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances(PyObject *cpy_r_args, PyObject *cpy_r_custom_buckets) {
     PyObject *cpy_r_r0;
-    char cpy_r_r1;
+    PyObject *cpy_r_r1;
     char cpy_r_r2;
-    PyObject *cpy_r_r3;
-    cpy_r_r0 = CPyDef_eth_portfolio_scripts___balances___export_balances_gen();
-    if (unlikely(cpy_r_r0 == NULL)) {
+    char cpy_r_r3;
+    char cpy_r_r4;
+    PyObject *cpy_r_r5;
+    if (cpy_r_custom_buckets != NULL) goto CPyL7;
+    cpy_r_r0 = Py_None;
+    cpy_r_custom_buckets = cpy_r_r0;
+CPyL2: ;
+    cpy_r_r1 = CPyDef_eth_portfolio_scripts___balances___export_balances_gen();
+    if (unlikely(cpy_r_r1 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL3;
+        goto CPyL8;
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r_r0)->___mypyc_next_label__ = 0;
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r_r1)->___mypyc_next_label__ = 0;
     CPy_INCREF(cpy_r_args);
-    if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r_r0)->___mypyc_generator_attribute__args != NULL) {
-        CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r_r0)->___mypyc_generator_attribute__args);
+    if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r_r1)->___mypyc_generator_attribute__args != NULL) {
+        CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r_r1)->___mypyc_generator_attribute__args);
     }
-    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r_r0)->___mypyc_generator_attribute__args = cpy_r_args;
-    cpy_r_r2 = 1;
-    if (unlikely(!cpy_r_r2)) {
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r_r1)->___mypyc_generator_attribute__args = cpy_r_args;
+    cpy_r_r3 = 1;
+    if (unlikely(!cpy_r_r3)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL4;
+        goto CPyL9;
     }
-    return cpy_r_r0;
-CPyL3: ;
-    cpy_r_r3 = NULL;
-    return cpy_r_r3;
-CPyL4: ;
-    CPy_DecRef(cpy_r_r0);
-    goto CPyL3;
+    if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r_r1)->___mypyc_generator_attribute__custom_buckets != NULL) {
+        CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r_r1)->___mypyc_generator_attribute__custom_buckets);
+    }
+    ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r_r1)->___mypyc_generator_attribute__custom_buckets = cpy_r_custom_buckets;
+    cpy_r_r4 = 1;
+    if (unlikely(!cpy_r_r4)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL10;
+    }
+    return cpy_r_r1;
+CPyL6: ;
+    cpy_r_r5 = NULL;
+    return cpy_r_r5;
+CPyL7: ;
+    CPy_INCREF(cpy_r_custom_buckets);
+    goto CPyL2;
+CPyL8: ;
+    CPy_DecRef(cpy_r_custom_buckets);
+    goto CPyL6;
+CPyL9: ;
+    CPy_DecRef(cpy_r_custom_buckets);
+    CPy_DecRef(cpy_r_r1);
+    goto CPyL6;
+CPyL10: ;
+    CPy_DecRef(cpy_r_r1);
+    goto CPyL6;
 }
 
 PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"args", 0};
-    static CPyArg_Parser parser = {"O:export_balances", kwlist, 0};
+    static const char * const kwlist[] = {"args", "custom_buckets", 0};
+    static CPyArg_Parser parser = {"O|O:export_balances", kwlist, 0};
     PyObject *obj_args;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_args)) {
+    PyObject *obj_custom_buckets = NULL;
+    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_args, &obj_custom_buckets)) {
         return NULL;
     }
     PyObject *arg_args = obj_args;
-    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances(arg_args);
+    PyObject *arg_custom_buckets;
+    if (obj_custom_buckets == NULL) {
+        arg_custom_buckets = NULL;
+        goto __LL79;
+    }
+    if (PyDict_Check(obj_custom_buckets))
+        arg_custom_buckets = obj_custom_buckets;
+    else {
+        arg_custom_buckets = NULL;
+    }
+    if (arg_custom_buckets != NULL) goto __LL79;
+    if (obj_custom_buckets == Py_None)
+        arg_custom_buckets = obj_custom_buckets;
+    else {
+        arg_custom_buckets = NULL;
+    }
+    if (arg_custom_buckets != NULL) goto __LL79;
+    CPy_TypeError("dict or None", obj_custom_buckets); 
+    goto fail;
+__LL79: ;
+    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances(arg_args, arg_custom_buckets);
     return retval;
 fail: ;
     CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
@@ -27008,37 +27072,41 @@ char CPyDef_eth_portfolio_scripts___balances_____top_level__(void) {
     PyObject *cpy_r_r40;
     PyObject *cpy_r_r41;
     PyObject *cpy_r_r42;
-    int32_t cpy_r_r43;
-    char cpy_r_r44;
+    PyObject *cpy_r_r43;
+    PyObject *cpy_r_r44;
     PyObject *cpy_r_r45;
     PyObject *cpy_r_r46;
-    PyObject *cpy_r_r47;
-    PyObject *cpy_r_r48;
+    int32_t cpy_r_r47;
+    char cpy_r_r48;
     PyObject *cpy_r_r49;
-    int32_t cpy_r_r50;
-    char cpy_r_r51;
+    PyObject *cpy_r_r50;
+    PyObject *cpy_r_r51;
     PyObject *cpy_r_r52;
     PyObject *cpy_r_r53;
-    PyObject *cpy_r_r54;
-    PyObject *cpy_r_r55;
+    int32_t cpy_r_r54;
+    char cpy_r_r55;
     PyObject *cpy_r_r56;
-    int32_t cpy_r_r57;
-    char cpy_r_r58;
+    PyObject *cpy_r_r57;
+    PyObject *cpy_r_r58;
     PyObject *cpy_r_r59;
     PyObject *cpy_r_r60;
-    PyObject *cpy_r_r61;
-    PyObject *cpy_r_r62;
+    int32_t cpy_r_r61;
+    char cpy_r_r62;
     PyObject *cpy_r_r63;
     PyObject *cpy_r_r64;
     PyObject *cpy_r_r65;
     PyObject *cpy_r_r66;
-    PyObject **cpy_r_r68;
+    PyObject *cpy_r_r67;
+    PyObject *cpy_r_r68;
     PyObject *cpy_r_r69;
     PyObject *cpy_r_r70;
-    PyObject *cpy_r_r71;
-    int32_t cpy_r_r72;
-    char cpy_r_r73;
-    char cpy_r_r74;
+    PyObject **cpy_r_r72;
+    PyObject *cpy_r_r73;
+    PyObject *cpy_r_r74;
+    PyObject *cpy_r_r75;
+    int32_t cpy_r_r76;
+    char cpy_r_r77;
+    char cpy_r_r78;
     cpy_r_r0 = CPyModule_builtins;
     cpy_r_r1 = (PyObject *)&_Py_NoneStruct;
     cpy_r_r2 = cpy_r_r0 != cpy_r_r1;
@@ -27047,7 +27115,7 @@ char CPyDef_eth_portfolio_scripts___balances_____top_level__(void) {
     cpy_r_r4 = PyImport_Import(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL22;
+        goto CPyL23;
     }
     CPyModule_builtins = cpy_r_r4;
     CPy_INCREF(CPyModule_builtins);
@@ -27059,7 +27127,7 @@ CPyL3: ;
     cpy_r_r8 = CPyImport_ImportFromMany(cpy_r_r6, cpy_r_r5, cpy_r_r5, cpy_r_r7);
     if (unlikely(cpy_r_r8 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL22;
+        goto CPyL23;
     }
     CPyModule_argparse = cpy_r_r8;
     CPy_INCREF(CPyModule_argparse);
@@ -27070,18 +27138,18 @@ CPyL3: ;
     cpy_r_r12 = CPyImport_ImportFromMany(cpy_r_r10, cpy_r_r9, cpy_r_r9, cpy_r_r11);
     if (unlikely(cpy_r_r12 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL22;
+        goto CPyL23;
     }
     CPyModule_datetime = cpy_r_r12;
     CPy_INCREF(CPyModule_datetime);
     CPy_DECREF(cpy_r_r12);
-    cpy_r_r13 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('Final',) */
+    cpy_r_r13 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('Dict', 'Final', 'Optional') */
     cpy_r_r14 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'typing' */
     cpy_r_r15 = CPyStatic_eth_portfolio_scripts___balances___globals;
     cpy_r_r16 = CPyImport_ImportFromMany(cpy_r_r14, cpy_r_r13, cpy_r_r13, cpy_r_r15);
     if (unlikely(cpy_r_r16 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL22;
+        goto CPyL23;
     }
     CPyModule_typing = cpy_r_r16;
     CPy_INCREF(CPyModule_typing);
@@ -27098,136 +27166,147 @@ CPyL3: ;
     cpy_r_r25 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts/balances.py' */
     cpy_r_r26 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '<module>' */
     cpy_r_r27 = CPyImport_ImportMany(cpy_r_r23, cpy_r_r20, cpy_r_r24, cpy_r_r25, cpy_r_r26, cpy_r_r22);
-    if (!cpy_r_r27) goto CPyL22;
-    cpy_r_r28 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('docker',) */
-    cpy_r_r29 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts' */
+    if (!cpy_r_r27) goto CPyL23;
+    cpy_r_r28 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('HexAddress',) */
+    cpy_r_r29 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_typing' */
     cpy_r_r30 = CPyStatic_eth_portfolio_scripts___balances___globals;
     cpy_r_r31 = CPyImport_ImportFromMany(cpy_r_r29, cpy_r_r28, cpy_r_r28, cpy_r_r30);
     if (unlikely(cpy_r_r31 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL22;
+        goto CPyL23;
     }
-    CPyModule_eth_portfolio_scripts = cpy_r_r31;
-    CPy_INCREF(CPyModule_eth_portfolio_scripts);
+    CPyModule_eth_typing = cpy_r_r31;
+    CPy_INCREF(CPyModule_eth_typing);
     CPy_DECREF(cpy_r_r31);
-    cpy_r_r32 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('aiter_timestamps', 'parse_timedelta') */
-    cpy_r_r33 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts._utils' */
+    cpy_r_r32 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('docker',) */
+    cpy_r_r33 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts' */
     cpy_r_r34 = CPyStatic_eth_portfolio_scripts___balances___globals;
     cpy_r_r35 = CPyImport_ImportFromMany(cpy_r_r33, cpy_r_r32, cpy_r_r32, cpy_r_r34);
     if (unlikely(cpy_r_r35 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL22;
+        goto CPyL23;
     }
-    CPyModule_eth_portfolio_scripts____utils = cpy_r_r35;
-    CPy_INCREF(CPyModule_eth_portfolio_scripts____utils);
+    CPyModule_eth_portfolio_scripts = cpy_r_r35;
+    CPy_INCREF(CPyModule_eth_portfolio_scripts);
     CPy_DECREF(cpy_r_r35);
-    cpy_r_r36 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r37 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'timezone' */
-    cpy_r_r38 = CPyDict_GetItem(cpy_r_r36, cpy_r_r37);
-    if (unlikely(cpy_r_r38 == NULL)) {
+    cpy_r_r36 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('aiter_timestamps', 'parse_timedelta') */
+    cpy_r_r37 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts._utils' */
+    cpy_r_r38 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r39 = CPyImport_ImportFromMany(cpy_r_r37, cpy_r_r36, cpy_r_r36, cpy_r_r38);
+    if (unlikely(cpy_r_r39 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL22;
+        goto CPyL23;
     }
-    cpy_r_r39 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'utc' */
-    cpy_r_r40 = CPyObject_GetAttr(cpy_r_r38, cpy_r_r39);
-    CPy_DECREF(cpy_r_r38);
-    if (unlikely(cpy_r_r40 == NULL)) {
+    CPyModule_eth_portfolio_scripts____utils = cpy_r_r39;
+    CPy_INCREF(CPyModule_eth_portfolio_scripts____utils);
+    CPy_DECREF(cpy_r_r39);
+    cpy_r_r40 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r41 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'timezone' */
+    cpy_r_r42 = CPyDict_GetItem(cpy_r_r40, cpy_r_r41);
+    if (unlikely(cpy_r_r42 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL22;
+        goto CPyL23;
     }
-    CPyStatic_eth_portfolio_scripts___balances____UTC = cpy_r_r40;
+    cpy_r_r43 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'utc' */
+    cpy_r_r44 = CPyObject_GetAttr(cpy_r_r42, cpy_r_r43);
+    CPy_DECREF(cpy_r_r42);
+    if (unlikely(cpy_r_r44 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL23;
+    }
+    CPyStatic_eth_portfolio_scripts___balances____UTC = cpy_r_r44;
     CPy_INCREF(CPyStatic_eth_portfolio_scripts___balances____UTC);
-    cpy_r_r41 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r42 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_UTC' */
-    cpy_r_r43 = CPyDict_SetItem(cpy_r_r41, cpy_r_r42, cpy_r_r40);
-    CPy_DECREF(cpy_r_r40);
-    cpy_r_r44 = cpy_r_r43 >= 0;
-    if (unlikely(!cpy_r_r44)) {
+    cpy_r_r45 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r46 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_UTC' */
+    cpy_r_r47 = CPyDict_SetItem(cpy_r_r45, cpy_r_r46, cpy_r_r44);
+    CPy_DECREF(cpy_r_r44);
+    cpy_r_r48 = cpy_r_r47 >= 0;
+    if (unlikely(!cpy_r_r48)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL22;
+        goto CPyL23;
     }
-    cpy_r_r45 = CPyModule_a_sync;
-    cpy_r_r46 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'create_task' */
-    cpy_r_r47 = CPyObject_GetAttr(cpy_r_r45, cpy_r_r46);
-    if (unlikely(cpy_r_r47 == NULL)) {
+    cpy_r_r49 = CPyModule_a_sync;
+    cpy_r_r50 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'create_task' */
+    cpy_r_r51 = CPyObject_GetAttr(cpy_r_r49, cpy_r_r50);
+    if (unlikely(cpy_r_r51 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL22;
+        goto CPyL23;
     }
-    CPyStatic_eth_portfolio_scripts___balances___create_task = cpy_r_r47;
+    CPyStatic_eth_portfolio_scripts___balances___create_task = cpy_r_r51;
     CPy_INCREF(CPyStatic_eth_portfolio_scripts___balances___create_task);
-    cpy_r_r48 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r49 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'create_task' */
-    cpy_r_r50 = CPyDict_SetItem(cpy_r_r48, cpy_r_r49, cpy_r_r47);
-    CPy_DECREF(cpy_r_r47);
-    cpy_r_r51 = cpy_r_r50 >= 0;
-    if (unlikely(!cpy_r_r51)) {
+    cpy_r_r52 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r53 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'create_task' */
+    cpy_r_r54 = CPyDict_SetItem(cpy_r_r52, cpy_r_r53, cpy_r_r51);
+    CPy_DECREF(cpy_r_r51);
+    cpy_r_r55 = cpy_r_r54 >= 0;
+    if (unlikely(!cpy_r_r55)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL22;
+        goto CPyL23;
     }
-    cpy_r_r52 = CPyModule_a_sync___asyncio;
-    cpy_r_r53 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'sleep0' */
-    cpy_r_r54 = CPyObject_GetAttr(cpy_r_r52, cpy_r_r53);
-    if (unlikely(cpy_r_r54 == NULL)) {
+    cpy_r_r56 = CPyModule_a_sync___asyncio;
+    cpy_r_r57 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'sleep0' */
+    cpy_r_r58 = CPyObject_GetAttr(cpy_r_r56, cpy_r_r57);
+    if (unlikely(cpy_r_r58 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL22;
+        goto CPyL23;
     }
-    CPyStatic_eth_portfolio_scripts___balances___yield_to_loop = cpy_r_r54;
+    CPyStatic_eth_portfolio_scripts___balances___yield_to_loop = cpy_r_r58;
     CPy_INCREF(CPyStatic_eth_portfolio_scripts___balances___yield_to_loop);
-    cpy_r_r55 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r56 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'yield_to_loop' */
-    cpy_r_r57 = CPyDict_SetItem(cpy_r_r55, cpy_r_r56, cpy_r_r54);
-    CPy_DECREF(cpy_r_r54);
-    cpy_r_r58 = cpy_r_r57 >= 0;
-    if (unlikely(!cpy_r_r58)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL22;
-    }
     cpy_r_r59 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r60 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'export_balances' */
-    cpy_r_r61 = CPyDict_GetItem(cpy_r_r59, cpy_r_r60);
-    if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL22;
-    }
-    cpy_r_r62 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r63 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'docker' */
-    cpy_r_r64 = CPyDict_GetItem(cpy_r_r62, cpy_r_r63);
-    if (unlikely(cpy_r_r64 == NULL)) {
+    cpy_r_r60 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'yield_to_loop' */
+    cpy_r_r61 = CPyDict_SetItem(cpy_r_r59, cpy_r_r60, cpy_r_r58);
+    CPy_DECREF(cpy_r_r58);
+    cpy_r_r62 = cpy_r_r61 >= 0;
+    if (unlikely(!cpy_r_r62)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL23;
     }
-    cpy_r_r65 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ensure_containers' */
-    cpy_r_r66 = CPyObject_GetAttr(cpy_r_r64, cpy_r_r65);
-    CPy_DECREF(cpy_r_r64);
-    if (unlikely(cpy_r_r66 == NULL)) {
+    cpy_r_r63 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r64 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'export_balances' */
+    cpy_r_r65 = CPyDict_GetItem(cpy_r_r63, cpy_r_r64);
+    if (unlikely(cpy_r_r65 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL23;
     }
-    PyObject *cpy_r_r67[1] = {cpy_r_r61};
-    cpy_r_r68 = (PyObject **)&cpy_r_r67;
-    cpy_r_r69 = PyObject_Vectorcall(cpy_r_r66, cpy_r_r68, 1, 0);
-    CPy_DECREF(cpy_r_r66);
-    if (unlikely(cpy_r_r69 == NULL)) {
+    cpy_r_r66 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r67 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'docker' */
+    cpy_r_r68 = CPyDict_GetItem(cpy_r_r66, cpy_r_r67);
+    if (unlikely(cpy_r_r68 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL24;
+    }
+    cpy_r_r69 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ensure_containers' */
+    cpy_r_r70 = CPyObject_GetAttr(cpy_r_r68, cpy_r_r69);
+    CPy_DECREF(cpy_r_r68);
+    if (unlikely(cpy_r_r70 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL24;
+    }
+    PyObject *cpy_r_r71[1] = {cpy_r_r65};
+    cpy_r_r72 = (PyObject **)&cpy_r_r71;
+    cpy_r_r73 = PyObject_Vectorcall(cpy_r_r70, cpy_r_r72, 1, 0);
+    CPy_DECREF(cpy_r_r70);
+    if (unlikely(cpy_r_r73 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL24;
+    }
+    CPy_DECREF(cpy_r_r65);
+    cpy_r_r74 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r75 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'export_balances' */
+    cpy_r_r76 = PyDict_SetItem(cpy_r_r74, cpy_r_r75, cpy_r_r73);
+    CPy_DECREF(cpy_r_r73);
+    cpy_r_r77 = cpy_r_r76 >= 0;
+    if (unlikely(!cpy_r_r77)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL23;
-    }
-    CPy_DECREF(cpy_r_r61);
-    cpy_r_r70 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r71 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'export_balances' */
-    cpy_r_r72 = PyDict_SetItem(cpy_r_r70, cpy_r_r71, cpy_r_r69);
-    CPy_DECREF(cpy_r_r69);
-    cpy_r_r73 = cpy_r_r72 >= 0;
-    if (unlikely(!cpy_r_r73)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL22;
     }
     return 1;
-CPyL22: ;
-    cpy_r_r74 = 2;
-    return cpy_r_r74;
 CPyL23: ;
-    CPy_DecRef(cpy_r_r61);
-    goto CPyL22;
+    cpy_r_r78 = 2;
+    return cpy_r_r78;
+CPyL24: ;
+    CPy_DecRef(cpy_r_r65);
+    goto CPyL23;
 }
 
 int CPyGlobalsInit(void)
@@ -27320,6 +27399,7 @@ int CPyGlobalsInit(void)
     CPyModule_typing = Py_None;
     CPyModule_a_sync = Py_None;
     CPyModule_a_sync___asyncio = Py_None;
+    CPyModule_eth_typing = Py_None;
     CPyModule_eth_portfolio_scripts = Py_None;
     CPyModule_eth_portfolio_scripts____utils = Py_None;
     CPyModule_dank_mids = Py_None;
@@ -27757,12 +27837,13 @@ const char * const CPyLit_Str[] = {
     "\002 eth_portfolio_scripts._portfolio\006daemon",
     "\003 This feature must be implemented\023NotImplementedError\binterval",
     "\006\017parse_timedelta\006wallet\005label\016first_tx_block\vconcurrency\vstart_block",
-    "\005\vload_prices\022export_start_block\023get_block_timestamp\bdatetime\btimezone",
-    "\a\003utc\rfromtimestamp\002tz\nExporting \020aiter_timestamps\005start\vrun_forever",
-    "\004\017export_snapshot\036eth-portfolio export snapshot \004coro\004name",
-    "\004\022skip_gc_until_done\tNamespace\bargparse\016a_sync.asyncio",
-    "\003!eth_portfolio_scripts/balances.py\034eth_portfolio_scripts._utils\004_UTC",
-    "\004\vcreate_task\006sleep0\ryield_to_loop\017export_balances",
+    "\004\016custom_buckets\vload_prices\022export_start_block\023get_block_timestamp",
+    "\a\bdatetime\btimezone\003utc\rfromtimestamp\002tz\nExporting \020aiter_timestamps",
+    "\005\005start\vrun_forever\017export_snapshot\036eth-portfolio export snapshot \004coro",
+    "\005\004name\022skip_gc_until_done\tNamespace\bargparse\016a_sync.asyncio",
+    "\002!eth_portfolio_scripts/balances.py\nHexAddress",
+    "\005\034eth_portfolio_scripts._utils\004_UTC\vcreate_task\006sleep0\ryield_to_loop",
+    "\001\017export_balances",
     "",
 };
 const char * const CPyLit_Bytes[] = {
@@ -27775,18 +27856,19 @@ const char * const CPyLit_Int[] = {
 const double CPyLit_Float[] = {0};
 const double CPyLit_Complex[] = {0};
 const int CPyLit_Tuple[] = {
-    66, 1, 4, 3, 24, 24, 24, 3, 25, 25, 25, 2, 643, 644, 1, 3, 1, 29, 7,
-    30, 31, 32, 33, 34, 35, 36, 3, 38, 38, 38, 3, 20, 20, 20, 2, 649, 650,
-    2, 39, 40, 1, 42, 1, 66, 2, 73, 19, 4, 75, 76, 73, 19, 1, 644, 1, 78,
-    1, 33, 3, 67, 67, 67, 1, 660, 1, 81, 2, 83, 84, 1, 77, 1, 74, 1, 72,
-    2, 94, 95, 3, 96, 96, 96, 3, 97, 97, 97, 3, 650, 668, 669, 1, 99, 1,
+    68, 1, 4, 3, 24, 24, 24, 3, 25, 25, 25, 2, 645, 646, 1, 3, 1, 29, 7,
+    30, 31, 32, 33, 34, 35, 36, 3, 38, 38, 38, 3, 20, 20, 20, 2, 651, 652,
+    2, 39, 40, 1, 42, 1, 66, 2, 73, 19, 4, 75, 76, 73, 19, 1, 646, 1, 78,
+    1, 33, 3, 67, 67, 67, 1, 662, 1, 81, 2, 83, 84, 1, 77, 1, 74, 1, 72,
+    2, 94, 95, 3, 96, 96, 96, 3, 97, 97, 97, 3, 652, 670, 671, 1, 99, 1,
     100, 1, 101, 2, 106, 63, 4, 108, 109, 110, 111, 1, 114, 5, 116, 119,
-    120, 35, 121, 3, 122, 122, 122, 1, 678, 3, 31, 33, 127, 1, 40, 2, 128,
+    120, 35, 121, 3, 122, 122, 122, 1, 680, 3, 31, 33, 127, 1, 40, 2, 128,
     129, 1, 436, 3, 128, 129, 465, 3, 528, 529, 530, 5, 532, 533, 534,
     535, 536, 1, 559, 2, 544, 543, 1, 120, 1, 106, 1, 566, 1, 579, 1, 581,
-    7, 119, 33, 582, 120, 583, 35, 584, 1, 585, 1, 530, 1, 594, 4, 602,
-    605, 604, 606, 1, 613, 3, 616, 599, 617, 3, 620, 621, 622, 1, 623, 2,
-    609, 610, 3, 625, 38, 38, 2, 649, 704, 1, 541, 2, 615, 600
+    7, 119, 33, 582, 120, 583, 35, 584, 1, 585, 1, 530, 1, 594, 5, 602,
+    605, 604, 606, 607, 1, 614, 3, 617, 599, 618, 3, 621, 622, 623, 1,
+    624, 2, 610, 611, 3, 32, 33, 34, 3, 626, 38, 38, 2, 651, 707, 1, 628,
+    1, 541, 2, 616, 600
 };
 const int CPyLit_FrozenSet[] = {0};
 CPyModule *CPyModule_eth_portfolio____loaders____nonce__internal = NULL;
@@ -28099,7 +28181,7 @@ PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen___close(
 PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____await__(PyObject *cpy_r___mypyc_self__);
 PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances(PyObject *cpy_r_args);
+PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances(PyObject *cpy_r_args, PyObject *cpy_r_custom_buckets);
 PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 char CPyDef_eth_portfolio_scripts___balances_____top_level__(void);
 

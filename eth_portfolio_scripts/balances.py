@@ -1,9 +1,10 @@
 from argparse import Namespace
 from datetime import datetime, timezone
-from typing import Final
+from typing import Dict, Final, Optional
 
 import a_sync
 import a_sync.asyncio
+from eth_typing import HexAddress
 
 from eth_portfolio_scripts import docker
 from eth_portfolio_scripts._utils import aiter_timestamps, parse_timedelta
@@ -16,7 +17,10 @@ yield_to_loop: Final = a_sync.asyncio.sleep0
 
 
 @docker.ensure_containers
-async def export_balances(args: Namespace) -> None:
+async def export_balances(
+    args: Namespace,
+    custom_buckets: Optional[Dict[HexAddress, str]] = None,
+) -> None:
     import dank_mids
 
     from eth_portfolio_scripts._portfolio import ExportablePortfolio
@@ -30,6 +34,7 @@ async def export_balances(args: Namespace) -> None:
         label=args.label,
         start_block=args.first_tx_block,
         concurrency=args.concurrency,
+        custom_buckets=custom_buckets,
         load_prices=False,
     )
 

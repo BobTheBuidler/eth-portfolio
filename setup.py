@@ -103,10 +103,8 @@ except Exception as e:  # fallback in case build fails
 
 
 setup(
-    # NOTE: somebody stole our name on pypi, we have this placeholder until we steal it back
-    name="eth_portfolio_temp",
+    name="eth_portfolio",
     python_requires=">=3.10,<3.14",
-    # name="eth-portfolio",
     packages=find_packages(),
     use_scm_version={
         "root": ".",
