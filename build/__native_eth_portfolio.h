@@ -266,6 +266,7 @@ typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
     PyObject *___mypyc_generator_attribute__args;
+    PyObject *___mypyc_generator_attribute__custom_buckets;
     int32_t ___mypyc_next_label__;
     PyObject *___mypyc_generator_attribute__interval;
     PyObject *___mypyc_generator_attribute__portfolio;

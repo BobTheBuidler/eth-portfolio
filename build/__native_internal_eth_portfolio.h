@@ -6,7 +6,7 @@
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[708];
+extern PyObject *CPyStatics[712];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -324,7 +324,7 @@ extern PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen__
 extern PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____await__(PyObject *cpy_r___mypyc_self__);
 extern PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances(PyObject *cpy_r_args);
+extern PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances(PyObject *cpy_r_args, PyObject *cpy_r_custom_buckets);
 extern PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_eth_portfolio_scripts___balances_____top_level__(void);
 #endif
