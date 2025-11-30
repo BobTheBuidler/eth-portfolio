@@ -1,10 +1,12 @@
 from asyncio import gather
-from typing import Final, List, Optional, Union
+from typing import Final, List, Optional, Tuple
 
 from a_sync import igather
 from brownie import ZERO_ADDRESS
+from brownie.convert.datatypes import ReturnValue
 from dank_mids.exceptions import Revert
-from eth_typing import HexAddress, HexStr
+from eth_abi.exceptions import InsufficientDataBytes
+from eth_typing import HexStr
 from faster_async_lru import alru_cache
 from faster_eth_abi import encode
 from y import Contract, Network, contract_creation_block_async, get_price
@@ -97,13 +99,14 @@ class Maker(LendingProtocolWithLockedCollateral):
         cdp = await self._cdp(address)
         return await self.cdp_manager.urns.coroutine(cdp)
 
-    async def _get_ilk_data(
-        self, ilk: bytes, block: Optional[int]
-    ) -> Optional[List[List[Union[HexAddress, bytes]]]]:
+    async def _get_ilk_data(self, ilk: bytes, block: Optional[int]) -> Optional[Tuple[List[ReturnValue], List[ReturnValue]]]:
+        vat = self.vat
         try:
-            return await gather(
-                self.vat.urns.coroutine(ilk, urn, block_identifier=block),
-                self.vat.ilks.coroutine(ilk, block_identifier=block),
+            urns, ilks gather(
+                vat.urns.coroutine(ilk, urn, block_identifier=block),
+                vat.ilks.coroutine(ilk, block_identifier=block),
             )
         except InsufficientDataBytes:
             return None
+        else:
+            return urns, ilks
