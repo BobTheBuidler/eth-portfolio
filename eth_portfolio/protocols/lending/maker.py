@@ -1,10 +1,10 @@
 from asyncio import gather
-from typing import Final, List, Optional
+from typing import Final, List, Optional, Union
 
 from a_sync import igather
 from brownie import ZERO_ADDRESS
 from dank_mids.exceptions import Revert
-from eth_typing import HexStr
+from eth_typing import HexAddress, HexStr
 from faster_async_lru import alru_cache
 from faster_eth_abi import encode
 from y import Contract, Network, contract_creation_block_async, get_price
@@ -62,13 +62,7 @@ class Maker(LendingProtocolWithLockedCollateral):
 
         ilks, urn = await gather(self.get_ilks(block), self._urn(address))
 
-        data = await igather(
-            gather(
-                self.vat.urns.coroutine(ilk, urn, block_identifier=block),
-                self.vat.ilks.coroutine(ilk, block_identifier=block),
-            )
-            for ilk in ilks
-        )
+        data = list(filter(None, await igather(self._get_ilk_data(ilk, block) for ilk in ilks)))
 
         balances: TokenBalances = TokenBalances(block=block)
         for urns, ilk_info in data:
@@ -102,3 +96,12 @@ class Maker(LendingProtocolWithLockedCollateral):
     async def _urn(self, address: Address) -> Address:
         cdp = await self._cdp(address)
         return await self.cdp_manager.urns.coroutine(cdp)
+
+    async def _get_ilk_data(self, ilk: bytes, block: Optional[int]) -> Optional[List[List[Union[HexAddress, bytes]]]]:
+        try:
+            return await gather(
+                self.vat.urns.coroutine(ilk, urn, block_identifier=block),
+                self.vat.ilks.coroutine(ilk, block_identifier=block),
+            )
+        except InsufficientDataBytes:
+            return None
