@@ -38,7 +38,12 @@ class Maker(LendingProtocolWithLockedCollateral):
 
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        ilks, urn = await gather(self.get_ilks(block), self._urn(address))
+        if block is not None and block <= await contract_creation_block_async(self.ilk_registry):
+            return TokenBalances(block=block)
+
+        # `self._urn` is cached after the first call so we will await these without gather
+        urn = await self._urn(address)
+        ilks = await self.get_ilks(block)
 
         gem_coros = igather(map(self.get_gem, map(str, ilks)))
         ink_coros = igather(
@@ -60,7 +65,9 @@ class Maker(LendingProtocolWithLockedCollateral):
         if block is not None and block <= await contract_creation_block_async(self.ilk_registry):
             return TokenBalances(block=block)
 
-        ilks, urn = await gather(self.get_ilks(block), self._urn(address))
+        # `self._urn` is cached after the first call so we will await these without gather
+        urn = await self._urn(address)
+        ilks = await self.get_ilks(block)
 
         data = await igather(
             gather(
