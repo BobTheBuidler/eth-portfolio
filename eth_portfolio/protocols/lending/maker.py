@@ -4,7 +4,6 @@ from typing import Final, List, Optional
 from a_sync import igather
 from brownie import ZERO_ADDRESS
 from dank_mids.exceptions import Revert
-from eth_abi.exceptions import InsufficientDataBytes
 from eth_typing import HexStr
 from faster_async_lru import alru_cache
 from faster_eth_abi import encode
@@ -90,7 +89,7 @@ class Maker(LendingProtocolWithLockedCollateral):
         """List all ilks (cdp keys of sorts) for MakerDAO"""
         try:
             return await self.ilk_registry.list.coroutine(block_identifier=block)
-        except (Revert, InsufficientDataBytes):
+        except Revert:
             return []
 
     @alru_cache
