@@ -40,7 +40,7 @@ class Maker(LendingProtocolWithLockedCollateral):
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
         if block is not None and block <= await contract_creation_block_async(self.ilk_registry):
             return TokenBalances(block=block)
-        
+
         # `self._urn` is cached after the first call so we will await these without gather
         urn = await self._urn(address)
         ilks = await self.get_ilks(block)
@@ -64,7 +64,7 @@ class Maker(LendingProtocolWithLockedCollateral):
     async def _debt(self, address: Address, block: Optional[int] = None) -> TokenBalances:
         if block is not None and block <= await contract_creation_block_async(self.ilk_registry):
             return TokenBalances(block=block)
-        
+
         # `self._urn` is cached after the first call so we will await these without gather
         urn = await self._urn(address)
         ilks = await self.get_ilks(block)
