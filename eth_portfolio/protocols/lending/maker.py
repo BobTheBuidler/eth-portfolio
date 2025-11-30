@@ -97,7 +97,9 @@ class Maker(LendingProtocolWithLockedCollateral):
         cdp = await self._cdp(address)
         return await self.cdp_manager.urns.coroutine(cdp)
 
-    async def _get_ilk_data(self, ilk: bytes, block: Optional[int]) -> Optional[List[List[Union[HexAddress, bytes]]]]:
+    async def _get_ilk_data(
+        self, ilk: bytes, block: Optional[int]
+    ) -> Optional[List[List[Union[HexAddress, bytes]]]]:
         try:
             return await gather(
                 self.vat.urns.coroutine(ilk, urn, block_identifier=block),
