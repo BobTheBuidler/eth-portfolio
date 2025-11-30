@@ -4,6 +4,7 @@ from typing import Final, List, Optional
 from a_sync import igather
 from brownie import ZERO_ADDRESS
 from dank_mids.exceptions import Revert
+from eth_abi.exceptions import InsufficientDataBytes
 from eth_typing import HexStr
 from faster_async_lru import alru_cache
 from faster_eth_abi import encode
@@ -38,7 +39,12 @@ class Maker(LendingProtocolWithLockedCollateral):
 
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
-        ilks, urn = await gather(self.get_ilks(block), self._urn(address))
+        if block is not None and block <= await contract_creation_block_async(self.ilk_registry):
+            return TokenBalances(block=block)
+        
+        # `self._urn` is cached after the first call so we will await these without gather
+        urn = await self._urn(address)
+        ilks = await self.get_ilks(block)
 
         gem_coros = igather(map(self.get_gem, map(str, ilks)))
         ink_coros = igather(
@@ -59,8 +65,10 @@ class Maker(LendingProtocolWithLockedCollateral):
     async def _debt(self, address: Address, block: Optional[int] = None) -> TokenBalances:
         if block is not None and block <= await contract_creation_block_async(self.ilk_registry):
             return TokenBalances(block=block)
-
-        ilks, urn = await gather(self.get_ilks(block), self._urn(address))
+        
+        # `self._urn` is cached after the first call so we will await these without gather
+        urn = await self._urn(address)
+        ilks = await self.get_ilks(block)
 
         data = await igather(
             gather(
@@ -82,7 +90,7 @@ class Maker(LendingProtocolWithLockedCollateral):
         """List all ilks (cdp keys of sorts) for MakerDAO"""
         try:
             return await self.ilk_registry.list.coroutine(block_identifier=block)
-        except Revert:
+        except (Revert, InsufficientDataBytes):
             return []
 
     @alru_cache
