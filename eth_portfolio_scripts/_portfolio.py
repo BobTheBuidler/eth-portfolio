@@ -68,7 +68,7 @@ class ExportablePortfolio(Portfolio):
         super().__init__(
             addresses, start_block, label, load_prices, num_workers_transactions, asynchronous
         )
-        self._semaphore = a_sync.Semaphore(concurrency)
+        self._semaphore = a_sync.Semaphore(concurrency, name=f"semaphore for {self!r}")
 
         # Lowercase all keys in custom_buckets if provided
         self.custom_buckets = (
@@ -91,7 +91,7 @@ class ExportablePortfolio(Portfolio):
         return f"{label}_assets", f"{label}_debts"
 
     @eth_retry.auto_retry
-    @a_sync.Semaphore(16)
+    @a_sync.Semaphore(16, name="eth_portfolio_scripts.data_exists")
     async def data_exists(self, dt: datetime) -> bool:
         # sourcery skip: use-contextlib-suppress
         async for data in a_sync.as_completed(list(self.__get_data_exists_coros(dt)), aiter=True):
