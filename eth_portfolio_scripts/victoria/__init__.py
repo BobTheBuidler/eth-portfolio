@@ -44,7 +44,7 @@ async def get(url: str) -> bytes:
             continue
 
 
-@a_sync.Semaphore(2, name="eth_portfolio_scripts.victoria.post_data)
+@a_sync.Semaphore(2, name="eth_portfolio_scripts.victoria.post_data")
 async def post_data(metrics_to_export: List["Metric"]) -> None:
     """Post all metrics at once."""
     data = compress(b"\n".join(map(encode, metrics_to_export)))
