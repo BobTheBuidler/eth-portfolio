@@ -10,7 +10,7 @@ requires = [
     "eth-typing==5.2.1",
     "evmspec==0.4.8",
     "ez-a-sync>=0.32.7,<0.33",
-    "faster-async-lru==2.0.5",
+    "faster-async-lru==2.0.5.2",
 ]
 
 [tool.mypy]
