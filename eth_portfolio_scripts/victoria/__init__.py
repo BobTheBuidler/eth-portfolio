@@ -39,7 +39,7 @@ async def get(url: str) -> bytes:
         try:
             async with session.get(url=url, headers={"Connection": "close"}) as response:
                 return await response.read()
-        except ServerDisconnectedError:
+        except ServerDisconnectedError as e:
             logger.warning("%s: %s", url, e)
             continue
 
