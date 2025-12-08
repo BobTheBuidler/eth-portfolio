@@ -40,13 +40,14 @@ async def get(url: str) -> bytes:
             async with session.get(url=url, headers={"Connection": "close"}) as response:
                 return await response.read()
         except ServerDisconnectedError:
+            logger.warning("%s: %s", url, e)
             continue
 
 
-@a_sync.Semaphore(2)
+@a_sync.Semaphore(2, name="eth_portfolio_scripts.victoria.post_data)
 async def post_data(metrics_to_export: List["Metric"]) -> None:
     """Post all metrics at once."""
-    data = compress(b"\n".join(encode(metric) for metric in metrics_to_export))
+    data = compress(b"\n".join(map(encode, metrics_to_export)))
     attempts = 0
     session = get_session()
     while True:
