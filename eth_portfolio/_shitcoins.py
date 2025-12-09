@@ -97,6 +97,7 @@ shitcoins: Final = {
         "0x0e1CD6d2715432e4DBedFE969b0Eb2867FF61d5b",
         "0x9aE357521153FB07bE6F5792CE7a49752638fbb7",
         # Generally looks like shit
+        "0x2fFBB3549D034b5e5879670f4af58727CDc72946",
         "0xc39B6cf191f402697ba2F3Bedf5faA9837038d42",
         "0x5e43e50A3cB43Fb71eD2500bC847E8d25b8335f9",
         "0xE8ED1fca5af1c7dd46A3D5bbDFf7e99749D9e0aa",
