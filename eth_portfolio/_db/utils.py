@@ -478,9 +478,15 @@ async def get_token_transfer(transfer: evmspec.Log) -> Optional[TokenTransfer]:
         "log_index": transfer.logIndex,
     }
     startup_xfers = await token_transfers_known_at_startup(CHAINID)
-    data = startup_xfers.pop(tuple(pk.values()), None) or await __get_token_transfer_bytes_from_db(
-        pk
-    )
+    data_at_startup = startup_xfers.pop(tuple(pk.values()), None)
+    try:
+        data = data_at_startup or await __get_token_transfer_bytes_from_db(pk)
+    except TypeError:
+        # NoneType object is not subscriptable
+        # I'm not sure why this happens on occasion, I think it can occur if the script is interrupted mid-insert
+        # Doesn't really matter why, we can just fetch from the chain and insert the correct data now.
+        return None
+
     if data:
         await _yield_to_loop()
         with reraise_excs_with_extra_context(data):
