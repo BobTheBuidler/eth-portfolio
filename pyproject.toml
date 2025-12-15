@@ -2,7 +2,7 @@
 requires = [
     "setuptools",
     "wheel",
-    "mypy[mypyc]==1.19.0",
+    "mypy[mypyc]==1.19.1",
     "pony-stubs==0.5.2",
     "types-aiofiles",
     "eth-brownie==1.22.0.dev0; sys_platform=='linux' and platform_machine != 'i686'",
