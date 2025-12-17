@@ -23,13 +23,11 @@ from typing import (
     Callable,
     Final,
     Generic,
-    List,
     NoReturn,
-    Optional,
-    Tuple,
     Type,
     TypeVar,
     Union,
+    final,
 )
 
 import a_sync
@@ -164,7 +162,6 @@ class AddressLedgerBase(
         """
         Type of list used to store ledger entries.
         """
-        ...
 
     @property
     def _start_block(self) -> int:
@@ -277,7 +274,7 @@ class AddressLedgerBase(
         return self[start_block, end_block]  # type: ignore [index, return-value]
 
     async def sent(
-        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+        self, start_block: Block | None = None, end_block: Block | None = None
     ) -> AsyncIterator[T]:
         address = self.portfolio_address.address
         async for obj in self[start_block:end_block]:
@@ -285,7 +282,7 @@ class AddressLedgerBase(
                 yield obj
 
     async def received(
-        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+        self, start_block: Block | None = None, end_block: Block | None = None
     ) -> AsyncIterator[T]:
         address = self.portfolio_address.address
         async for obj in self[start_block:end_block]:
@@ -329,7 +326,7 @@ class AddressLedgerBase(
 
     def _check_blocks_against_cache(
         self, start_block: Block, end_block: Block
-    ) -> Tuple[Block, Block]:
+    ) -> tuple[Block, Block]:
         """
         Checks the specified block range against the cached block range.
 
@@ -439,6 +436,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         self._ready = Queue()
         self._num_workers = num_workers
         self._workers = []
+        self._worker_name = f"AddressTransactionsLedger worker for {self.address}"
 
     def __del__(self) -> None:
         self.__stop_workers()
@@ -510,27 +508,31 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     def _ensure_workers(self, num_workers: int) -> None:
         len_workers = len(self._workers)
         if len_workers < num_workers:
-            worker_fn = self.__worker_fn
-            address = self.address
-            load_prices = self.load_prices
-            queue_get = stuck_coro_debugger(self._queue.get)
-            put_ready = self._ready.put_nowait
+            for _ in range(num_workers - len_workers):
+                coro = self.__worker_fn(self.address, self.load_prices)
+                task = create_task(coro=coro, name=self._worker_name)
+                task.add_done_callback(self._worker_exception_handler_cb)
+                self._workers.append(task)
 
-            self._workers.extend(
-                create_task(
-                    coro=worker_fn(address, load_prices, queue_get, put_ready),
-                    name=f"AddressTransactionsLedger worker {i} for {address}",
-                )
-                for i in range(num_workers - len_workers)
-            )
+    def _worker_exception_handler_cb(self, t: Task[NoReturn]) -> None:
+        """Propagate worker Exceptions to waiters."""
+        self._workers.remove(t)
+        if t.cancelled():
+            # I'm not really sure if this is necessary but theres a CancelledError
+            # floating around somewhere where it shouldn't be, so we must ensure
+            # we have at least one worker at all times
+            self._ensure_workers(1)
+        elif exc := t.exception():
+            for waiter in self._ready._getters:
+                # the waiter can plausibly be done already in some circumstances, we must check
+                if not waiter.done():
+                    waiter.set_exception(exc)
 
-    async def __worker_fn(
-        self,
-        address: ChecksumAddress,
-        load_prices: bool,
-        queue_get: Callable[[], Nonce],
-        put_ready: Callable[[Nonce, Optional[Transaction]], None],
-    ) -> NoReturn:
+    @final
+    async def __worker_fn(self, address: ChecksumAddress, load_prices: bool) -> NoReturn:
+        queue_get: Callable[[], Nonce] = stuck_coro_debugger(self._queue.get)
+        put_ready: Callable[[Nonce, Transaction | None], None] = self._ready.put_nowait
+
         try:
             while True:
                 nonce = await queue_get()
@@ -543,7 +545,13 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             logger.exception(e)
             raise
 
+    @final
     def __stop_workers(self) -> None:
+        """
+        Stop the worker tasks once all entries have been yielded.
+
+        This function is also called once during garbage collection.
+        """
         logger.debug("stopping workers for %s", self)
         workers = self._workers
         pop_next = workers.pop
@@ -564,7 +572,7 @@ async def trace_filter(
     from_block: BlockNumber,
     to_block: BlockNumber,
     params: TraceFilterParams,
-) -> List[FilterTrace]:
+) -> list[FilterTrace]:
     return await __trace_filter(from_block, to_block, params)
 
 
@@ -572,7 +580,7 @@ async def __trace_filter(
     from_block: BlockNumber,
     to_block: BlockNumber,
     params: TraceFilterParams,
-) -> List[FilterTrace]:
+) -> list[FilterTrace]:
     try:
         return await dank_mids.eth.trace_filter(
             {"fromBlock": from_block, "toBlock": to_block, **params}
@@ -625,7 +633,7 @@ async def get_traces(
     from_block: BlockNumber,
     to_block: BlockNumber,
     filter_params: TraceFilterParams,
-) -> List[FilterTrace]:
+) -> list[FilterTrace]:
     """
     Retrieves traces from the web3 provider using the given parameters.
 
@@ -653,7 +661,7 @@ async def get_traces(
 
 @stuck_coro_debugger
 @eth_retry.auto_retry
-async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
+async def _check_traces(traces: list[FilterTrace]) -> list[FilterTrace]:
     good_traces = []
     append = good_traces.append
 
@@ -690,10 +698,10 @@ async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
     ]
 
 
-BlockRange = Tuple[Block, Block]
+BlockRange = tuple[Block, Block]
 
 
-def _get_block_ranges(start_block: Block, end_block: Block) -> List[BlockRange]:
+def _get_block_ranges(start_block: Block, end_block: Block) -> list[BlockRange]:
     return [(i, i + BATCH_SIZE - 1) for i in range(start_block, end_block, BATCH_SIZE)]
 
 
@@ -852,27 +860,27 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         """
 
     @stuck_coro_debugger
-    async def list_tokens_at_block(self, block: Optional[int] = None) -> List[ERC20]:
+    async def list_tokens_at_block(self, block: int | None = None) -> list[ERC20]:
         """
         Lists the tokens held at a specific block.
 
         Args:
-            block (Optional[int], optional): The block number. Defaults to None.
+            block (int | None, optional): The block number. Defaults to None.
 
         Returns:
-            List[ERC20]: The list of ERC20 tokens.
+            list[ERC20]: The list of ERC20 tokens.
 
         Examples:
             >>> tokens = await ledger.list_tokens_at_block(12345678)
         """
         return [token async for token in self._yield_tokens_at_block(block)]
 
-    async def _yield_tokens_at_block(self, block: Optional[int] = None) -> AsyncIterator[ERC20]:
+    async def _yield_tokens_at_block(self, block: int | None = None) -> AsyncIterator[ERC20]:
         """
         Yields the tokens held at a specific block.
 
         Args:
-            block (Optional[int], optional): The block number. Defaults to None.
+            block (int | None, optional): The block number. Defaults to None.
 
         Yields:
             AsyncIterator[ERC20]: An async iterator of ERC20 tokens.
