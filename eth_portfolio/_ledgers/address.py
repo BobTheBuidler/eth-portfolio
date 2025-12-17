@@ -530,13 +530,13 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
                 # the waiter can plausibly be done already in some circumstances, we must check
                 if not waiter.done():
                     waiter.set_exception(exc)
-    
+
     @final
     async def __worker_fn(self, address: ChecksumAddress, load_prices: bool) -> NoReturn:
 
         queue_get: Callable[[], Nonce] = stuck_coro_debugger(self._queue.get)
         put_ready: Callable[[Nonce, Optional[Transaction]], None] = self._ready.put_nowait
-        
+
         try:
             while True:
                 nonce = await queue_get()
@@ -553,7 +553,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     def __stop_workers(self) -> None:
         """
         Stop the worker tasks once all entries have been yielded.
-        
+
         This function is also called once during garbage collection.
         """
         logger.debug("stopping workers for %s", self)
