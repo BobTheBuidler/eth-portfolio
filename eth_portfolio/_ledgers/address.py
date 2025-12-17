@@ -23,10 +23,7 @@ from typing import (
     Callable,
     Final,
     Generic,
-    List,
     NoReturn,
-    Optional,
-    Tuple,
     Type,
     TypeVar,
     Union,
@@ -277,7 +274,7 @@ class AddressLedgerBase(
         return self[start_block, end_block]  # type: ignore [index, return-value]
 
     async def sent(
-        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+        self, start_block: Block | None = None, end_block: Block | None = None
     ) -> AsyncIterator[T]:
         address = self.portfolio_address.address
         async for obj in self[start_block:end_block]:
@@ -285,7 +282,7 @@ class AddressLedgerBase(
                 yield obj
 
     async def received(
-        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+        self, start_block: Block | None = None, end_block: Block | None = None
     ) -> AsyncIterator[T]:
         address = self.portfolio_address.address
         async for obj in self[start_block:end_block]:
@@ -329,7 +326,7 @@ class AddressLedgerBase(
 
     def _check_blocks_against_cache(
         self, start_block: Block, end_block: Block
-    ) -> Tuple[Block, Block]:
+    ) -> tuple[Block, Block]:
         """
         Checks the specified block range against the cached block range.
 
@@ -533,9 +530,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
 
     @final
     async def __worker_fn(self, address: ChecksumAddress, load_prices: bool) -> NoReturn:
-
         queue_get: Callable[[], Nonce] = stuck_coro_debugger(self._queue.get)
-        put_ready: Callable[[Nonce, Optional[Transaction]], None] = self._ready.put_nowait
+        put_ready: Callable[[Nonce, Transaction | None], None] = self._ready.put_nowait
 
         try:
             while True:
@@ -576,7 +572,7 @@ async def trace_filter(
     from_block: BlockNumber,
     to_block: BlockNumber,
     params: TraceFilterParams,
-) -> List[FilterTrace]:
+) -> list[FilterTrace]:
     return await __trace_filter(from_block, to_block, params)
 
 
@@ -584,7 +580,7 @@ async def __trace_filter(
     from_block: BlockNumber,
     to_block: BlockNumber,
     params: TraceFilterParams,
-) -> List[FilterTrace]:
+) -> list[FilterTrace]:
     try:
         return await dank_mids.eth.trace_filter(
             {"fromBlock": from_block, "toBlock": to_block, **params}
@@ -637,7 +633,7 @@ async def get_traces(
     from_block: BlockNumber,
     to_block: BlockNumber,
     filter_params: TraceFilterParams,
-) -> List[FilterTrace]:
+) -> list[FilterTrace]:
     """
     Retrieves traces from the web3 provider using the given parameters.
 
@@ -665,7 +661,7 @@ async def get_traces(
 
 @stuck_coro_debugger
 @eth_retry.auto_retry
-async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
+async def _check_traces(traces: list[FilterTrace]) -> list[FilterTrace]:
     good_traces = []
     append = good_traces.append
 
@@ -702,10 +698,10 @@ async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
     ]
 
 
-BlockRange = Tuple[Block, Block]
+BlockRange = tuple[Block, Block]
 
 
-def _get_block_ranges(start_block: Block, end_block: Block) -> List[BlockRange]:
+def _get_block_ranges(start_block: Block, end_block: Block) -> list[BlockRange]:
     return [(i, i + BATCH_SIZE - 1) for i in range(start_block, end_block, BATCH_SIZE)]
 
 
@@ -864,27 +860,27 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         """
 
     @stuck_coro_debugger
-    async def list_tokens_at_block(self, block: Optional[int] = None) -> List[ERC20]:
+    async def list_tokens_at_block(self, block: int | None = None) -> list[ERC20]:
         """
         Lists the tokens held at a specific block.
 
         Args:
-            block (Optional[int], optional): The block number. Defaults to None.
+            block (int | None, optional): The block number. Defaults to None.
 
         Returns:
-            List[ERC20]: The list of ERC20 tokens.
+            list[ERC20]: The list of ERC20 tokens.
 
         Examples:
             >>> tokens = await ledger.list_tokens_at_block(12345678)
         """
         return [token async for token in self._yield_tokens_at_block(block)]
 
-    async def _yield_tokens_at_block(self, block: Optional[int] = None) -> AsyncIterator[ERC20]:
+    async def _yield_tokens_at_block(self, block: int | None = None) -> AsyncIterator[ERC20]:
         """
         Yields the tokens held at a specific block.
 
         Args:
-            block (Optional[int], optional): The block number. Defaults to None.
+            block (int | None, optional): The block number. Defaults to None.
 
         Yields:
             AsyncIterator[ERC20]: An async iterator of ERC20 tokens.
