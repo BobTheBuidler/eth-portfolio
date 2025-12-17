@@ -30,6 +30,7 @@ from typing import (
     Type,
     TypeVar,
     Union,
+    final,
 )
 
 import a_sync
@@ -164,7 +165,6 @@ class AddressLedgerBase(
         """
         Type of list used to store ledger entries.
         """
-        ...
 
     @property
     def _start_block(self) -> int:
@@ -439,6 +439,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         self._ready = Queue()
         self._num_workers = num_workers
         self._workers = []
+        self._worker_name = f"AddressTransactionsLedger worker for {self.address}"
 
     def __del__(self) -> None:
         self.__stop_workers()
@@ -508,29 +509,37 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             self.cached_thru = end_block
 
     def _ensure_workers(self, num_workers: int) -> None:
-        len_workers = len(self._workers)
+        workers = self._workers
+        len_workers = len(workers)
         if len_workers < num_workers:
-            worker_fn = self.__worker_fn
-            address = self.address
             load_prices = self.load_prices
-            queue_get = stuck_coro_debugger(self._queue.get)
-            put_ready = self._ready.put_nowait
 
-            self._workers.extend(
-                create_task(
-                    coro=worker_fn(address, load_prices, queue_get, put_ready),
-                    name=f"AddressTransactionsLedger worker {i} for {address}",
-                )
-                for i in range(num_workers - len_workers)
-            )
+            def worker_exception_handler(t: Task[NoReturn]) -> None:
+                workers.remove(t)
+                if t.cancelled():
+                    # I'm not really sure if this is necessary but theres a CancelledError
+                    # floating around somewhere where it shouldn't be, so we must ensure
+                    # we have at least one worker at all times
+                    self._ensure_workers(1)
+                elif exc := t.exception():
+                    for waiter in self._ready._getters:
+                        # the waiter can plausibly be done already in some circumstances, we must check
+                        if not waiter.done():
+                            waiter.set_exception(exc)
+                
+            for _ in range(num_workers - len_workers):
+                coro = self.__worker_fn(self.address, load_prices)
+                task = create_task(coro=coro, name=self._worker_name)
+                task.add_done_callback(worker_exception_handler)
+                workers.append(task)
+                    
+    
+    @final
+    async def __worker_fn(self, address: ChecksumAddress, load_prices: bool) -> NoReturn:
 
-    async def __worker_fn(
-        self,
-        address: ChecksumAddress,
-        load_prices: bool,
-        queue_get: Callable[[], Nonce],
-        put_ready: Callable[[Nonce, Optional[Transaction]], None],
-    ) -> NoReturn:
+        queue_get: Callable[[], Nonce] = stuck_coro_debugger(self._queue.get)
+        put_ready: Callable[[Nonce, Optional[Transaction]], None] = self._ready.put_nowait
+        
         try:
             while True:
                 nonce = await queue_get()
@@ -543,7 +552,13 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             logger.exception(e)
             raise
 
+    @final
     def __stop_workers(self) -> None:
+        """
+        Stop the worker tasks once all entries have been yielded.
+        
+        This function is also called once during garbage collection.
+        """
         logger.debug("stopping workers for %s", self)
         workers = self._workers
         pop_next = workers.pop
