@@ -509,36 +509,34 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             self.cached_thru = end_block
 
     def _ensure_workers(self, num_workers: int) -> None:
-        workers = self._workers
-        len_workers = len(workers)
+        len_workers = len(self._workers)
         if len_workers < num_workers:
-            load_prices = self.load_prices
-
-            def worker_exception_handler(t: Task[NoReturn]) -> None:
-                workers.remove(t)
-                if t.cancelled():
-                    # I'm not really sure if this is necessary but theres a CancelledError
-                    # floating around somewhere where it shouldn't be, so we must ensure
-                    # we have at least one worker at all times
-                    self._ensure_workers(1)
-                elif exc := t.exception():
-                    for waiter in self._ready._getters:
-                        # the waiter can plausibly be done already in some circumstances, we must check
-                        if not waiter.done():
-                            waiter.set_exception(exc)
-
             for _ in range(num_workers - len_workers):
-                coro = self.__worker_fn(self.address, load_prices)
+                coro = self.__worker_fn(self.address, self.load_prices)
                 task = create_task(coro=coro, name=self._worker_name)
-                task.add_done_callback(worker_exception_handler)
-                workers.append(task)
+                task.add_done_callback(self._worker_exception_handler_cb)
+                self._workers.append(task)
 
+    def _worker_exception_handler_cb(self, t: Task[NoReturn]) -> None:
+        """Propagate worker Exceptions to waiters."""
+        self._workers.remove(t)
+        if t.cancelled():
+            # I'm not really sure if this is necessary but theres a CancelledError
+            # floating around somewhere where it shouldn't be, so we must ensure
+            # we have at least one worker at all times
+            self._ensure_workers(1)
+        elif exc := t.exception():
+            for waiter in self._ready._getters:
+                # the waiter can plausibly be done already in some circumstances, we must check
+                if not waiter.done():
+                    waiter.set_exception(exc)
+    
     @final
     async def __worker_fn(self, address: ChecksumAddress, load_prices: bool) -> NoReturn:
 
         queue_get: Callable[[], Nonce] = stuck_coro_debugger(self._queue.get)
         put_ready: Callable[[Nonce, Optional[Transaction]], None] = self._ready.put_nowait
-
+        
         try:
             while True:
                 nonce = await queue_get()
@@ -555,7 +553,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
     def __stop_workers(self) -> None:
         """
         Stop the worker tasks once all entries have been yielded.
-
+        
         This function is also called once during garbage collection.
         """
         logger.debug("stopping workers for %s", self)
