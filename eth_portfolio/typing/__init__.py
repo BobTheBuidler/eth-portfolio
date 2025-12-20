@@ -557,10 +557,12 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
 
 CategoryLabel = Literal["assets", "debt", "external"]
 
+
 class _WalletBalancesTD(TypedDict):
     assets: TokenBalances
     debt: TokenBalances
     external: RemoteTokenBalances
+
 
 _WBSeed = Union[_WalletBalancesTD, Iterable[tuple[CategoryLabel, TokenBalances]]]
 
