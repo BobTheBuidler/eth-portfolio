@@ -23,13 +23,13 @@ class Metric(TypedDict):
 @final
 class PrometheusItem(TypedDict):
     metric: Metric
-    values: List[float]
-    timestamps: List[float]
+    values: list[float]
+    timestamps: list[float]
 
 
 @final
 class Data(Struct):
-    result: Tuple[Raw, ...]
+    result: tuple[Raw, ...]
 
 
 @final

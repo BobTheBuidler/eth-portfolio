@@ -133,7 +133,7 @@ async def _get_area(
     lo: BlockNumber,
     hi: BlockNumber,
     range_size: int,
-) -> Tuple[BlockNumber, BlockNumber]:
+) -> tuple[BlockNumber, BlockNumber]:
     num_chunks = _get_num_chunks(range_size)
     chunk_size = range_size // num_chunks
     points = [BlockNumber(lo + i * chunk_size) for i in range(num_chunks)]

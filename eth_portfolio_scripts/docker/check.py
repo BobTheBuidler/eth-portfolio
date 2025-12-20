@@ -21,7 +21,7 @@ def check_docker() -> None:
         print(" ✔️ eth-portfolio found docker!")
 
 
-def check_docker_compose() -> List[str]:
+def check_docker_compose() -> list[str]:
     """
     Check that either `docker-compose` or `docker compose` is installed on the user's system.
 
@@ -49,7 +49,7 @@ def check_docker_compose() -> List[str]:
 
 
 @lru_cache(maxsize=None)
-def check_system() -> List[str]:
+def check_system() -> list[str]:
     """
     Check that docker and docker-compose is installed on the user's system.
 

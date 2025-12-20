@@ -31,7 +31,6 @@ from typing import (
     DefaultDict,
     Dict,
     Final,
-    Iterable,
     List,
     Literal,
     Optional,
@@ -41,6 +40,7 @@ from typing import (
     Union,
     final,
 )
+from collections.abc import Iterable
 
 from checksum_dict import DefaultChecksumDict
 from eth_typing import BlockNumber, HexAddress
@@ -115,7 +115,7 @@ class _SummableNonNumericMixin:
         return self if other == 0 else self.__add__(other)  # type: ignore
 
 
-_TBSeed = Union[Dict[Address, Balance], Iterable[Tuple[Address, Balance]]]
+_TBSeed = Union[dict[Address, Balance], Iterable[tuple[Address, Balance]]]
 
 
 @final
@@ -352,7 +352,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):  # 
     __slots__ = ("block",)
 
 
-_RTBSeed = Dict[ProtocolLabel, TokenBalances]
+_RTBSeed = dict[ProtocolLabel, TokenBalances]
 
 
 @final
@@ -422,7 +422,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
         Returns:
             A DataFrame representation of the remote token balances.
         """
-        dfs: List[DataFrame] = []
+        dfs: list[DataFrame] = []
         for protocol, balances in dict.items(self):
             df = balances.dataframe
             df["protocol"] = protocol
@@ -557,21 +557,19 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
 
 CategoryLabel = Literal["assets", "debt", "external"]
 
-_WalletBalancesTD = TypedDict(
-    "_WalletBalancesTD",
-    {
-        "assets": TokenBalances,
-        "debt": TokenBalances,
-        "external": RemoteTokenBalances,
-    },
-)
 
-_WBSeed = Union[_WalletBalancesTD, Iterable[Tuple[CategoryLabel, TokenBalances]]]
+class _WalletBalancesTD(TypedDict):
+    assets: TokenBalances
+    debt: TokenBalances
+    external: RemoteTokenBalances
+
+
+_WBSeed = Union[_WalletBalancesTD, Iterable[tuple[CategoryLabel, TokenBalances]]]
 
 
 @final
 class WalletBalances(
-    Dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalances]], _SummableNonNumericMixin
+    dict[CategoryLabel, Union[TokenBalances, RemoteTokenBalances]], _SummableNonNumericMixin
 ):
     """
     Organizes token balances into categories such as assets, debts, and external balances for a single wallet.
@@ -652,7 +650,7 @@ class WalletBalances(
         Returns:
             A DataFrame representation of the wallet balances.
         """
-        dfs: List[DataFrame] = []
+        dfs: list[DataFrame] = []
         for category, category_bals in dict.items(self):
             df = category_bals.dataframe
             df["category"] = category
@@ -873,7 +871,7 @@ class WalletBalances(
             raise NotImplementedError(f"key {key} is not yet implemented.")
 
 
-_PBSeed = Union[Dict[Address, WalletBalances], Iterable[Tuple[Address, WalletBalances]]]
+_PBSeed = Union[dict[Address, WalletBalances], Iterable[tuple[Address, WalletBalances]]]
 
 
 @final
@@ -926,7 +924,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         Returns:
             A DataFrame representation of the portfolio balances.
         """
-        dfs: List[DataFrame] = []
+        dfs: list[DataFrame] = []
         for wallet, balances in dict.items(self):
             df = balances.dataframe
             df["wallet"] = wallet
@@ -1088,7 +1086,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
     __slots__ = ("block",)
 
 
-_WTBInput = Union[Dict[Address, TokenBalances], Iterable[Tuple[Address, TokenBalances]]]
+_WTBInput = Union[dict[Address, TokenBalances], Iterable[tuple[Address, TokenBalances]]]
 
 
 @final
@@ -1251,7 +1249,7 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
 
 
 _CBInput = Union[
-    Dict[CategoryLabel, WalletBalancesRaw], Iterable[Tuple[CategoryLabel, WalletBalancesRaw]]
+    dict[CategoryLabel, WalletBalancesRaw], Iterable[tuple[CategoryLabel, WalletBalancesRaw]]
 ]
 
 

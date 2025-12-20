@@ -44,7 +44,7 @@ async def get(url: str) -> bytes:
 
 
 @a_sync.Semaphore(2)
-async def post_data(metrics_to_export: List["Metric"]) -> None:
+async def post_data(metrics_to_export: list["Metric"]) -> None:
     """Post all metrics at once."""
     data = compress(b"\n".join(encode(metric) for metric in metrics_to_export))
     attempts = 0

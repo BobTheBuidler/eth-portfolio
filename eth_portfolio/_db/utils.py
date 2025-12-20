@@ -501,12 +501,12 @@ def __get_token_transfer_bytes_from_db(pk: dict) -> Optional[bytes]:
         return entity.raw
 
 
-_TPK = Tuple[Tuple[int, ChecksumAddress], int]
+_TPK = tuple[tuple[int, ChecksumAddress], int]
 
 
 @a_sync(default="async", executor=_transaction_read_executor, ram_cache_maxsize=None)
 @robust_db_session
-def transactions_known_at_startup(chainid: int, from_address: ChecksumAddress) -> Dict[_TPK, bytes]:
+def transactions_known_at_startup(chainid: int, from_address: ChecksumAddress) -> dict[_TPK, bytes]:
     return dict(
         select(
             (t.nonce, t.raw)
@@ -516,12 +516,12 @@ def transactions_known_at_startup(chainid: int, from_address: ChecksumAddress) -
     )
 
 
-_TokenTransferPK = Tuple[Tuple[int, int], int, int]
+_TokenTransferPK = tuple[tuple[int, int], int, int]
 
 
 @a_sync(default="async", executor=_transaction_read_executor, ram_cache_maxsize=None)
 @robust_db_session
-def token_transfers_known_at_startup(chainid: int) -> Dict[_TokenTransferPK, bytes]:
+def token_transfers_known_at_startup(chainid: int) -> dict[_TokenTransferPK, bytes]:
     block: int
     tx_index: int
     log_index: int

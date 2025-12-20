@@ -1,5 +1,6 @@
 import logging
-from typing import TYPE_CHECKING, AsyncIterator, Dict, Generic, Optional, TypeVar
+from typing import TYPE_CHECKING, Dict, Generic, Optional, TypeVar
+from collections.abc import AsyncIterator
 
 import a_sync
 from pandas import DataFrame, concat  # type: ignore
@@ -26,7 +27,7 @@ T = TypeVar("T")
 
 class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_LedgerEntryList, T]):
     property_name: str
-    object_caches: Dict[Address, AddressLedgerBase[_LedgerEntryList, T]]
+    object_caches: dict[Address, AddressLedgerBase[_LedgerEntryList, T]]
 
     def __init__(self, portfolio: "Portfolio"):  # type: ignore
         assert hasattr(self, "property_name"), "Subclasses must define a property_name"
@@ -72,7 +73,7 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
         return self.portfolio.asynchronous
 
     @set_end_block_if_none
-    async def get(self, start_block: Block, end_block: Block) -> Dict[Address, _LedgerEntryList]:
+    async def get(self, start_block: Block, end_block: Block) -> dict[Address, _LedgerEntryList]:
         """
         Fetches ledger entries for all portfolio addresses within the specified block range.
 
@@ -170,7 +171,7 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
             This method returns raw data that may contain duplicates or require further processing.
             For cleaned and deduplicated data, use the `df()` method instead.
         """
-        data: Dict[Address, _LedgerEntryList] = await self.get(start_block, end_block, sync=False)
+        data: dict[Address, _LedgerEntryList] = await self.get(start_block, end_block, sync=False)
         return concat(pandable.df for pandable in data.values())
 
     @classmethod

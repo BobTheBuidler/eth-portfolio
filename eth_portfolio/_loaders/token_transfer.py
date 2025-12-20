@@ -152,7 +152,7 @@ async def _insert_to_db(transfer: TokenTransfer, load_prices: bool) -> None:
             pass
 
 
-_non_standard_erc20: Final[Set[ChecksumAddress]] = set()
+_non_standard_erc20: Final[set[ChecksumAddress]] = set()
 
 
 @stuck_coro_debugger

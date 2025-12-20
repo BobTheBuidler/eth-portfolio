@@ -18,8 +18,6 @@ from itertools import product
 from logging import getLogger
 from typing import (
     TYPE_CHECKING,
-    AsyncGenerator,
-    AsyncIterator,
     Callable,
     Final,
     Generic,
@@ -31,6 +29,7 @@ from typing import (
     TypeVar,
     Union,
 )
+from collections.abc import AsyncGenerator, AsyncIterator
 
 import a_sync
 import dank_mids
@@ -160,7 +159,7 @@ class AddressLedgerBase(
 
     @property
     @abstractmethod
-    def _list_type(self) -> Type[_LedgerEntryList]:
+    def _list_type(self) -> type[_LedgerEntryList]:
         """
         Type of list used to store ledger entries.
         """
@@ -329,7 +328,7 @@ class AddressLedgerBase(
 
     def _check_blocks_against_cache(
         self, start_block: Block, end_block: Block
-    ) -> Tuple[Block, Block]:
+    ) -> tuple[Block, Block]:
         """
         Checks the specified block range against the cached block range.
 
@@ -564,7 +563,7 @@ async def trace_filter(
     from_block: BlockNumber,
     to_block: BlockNumber,
     params: TraceFilterParams,
-) -> List[FilterTrace]:
+) -> list[FilterTrace]:
     return await __trace_filter(from_block, to_block, params)
 
 
@@ -572,7 +571,7 @@ async def __trace_filter(
     from_block: BlockNumber,
     to_block: BlockNumber,
     params: TraceFilterParams,
-) -> List[FilterTrace]:
+) -> list[FilterTrace]:
     try:
         return await dank_mids.eth.trace_filter(
             {"fromBlock": from_block, "toBlock": to_block, **params}
@@ -625,7 +624,7 @@ async def get_traces(
     from_block: BlockNumber,
     to_block: BlockNumber,
     filter_params: TraceFilterParams,
-) -> List[FilterTrace]:
+) -> list[FilterTrace]:
     """
     Retrieves traces from the web3 provider using the given parameters.
 
@@ -653,7 +652,7 @@ async def get_traces(
 
 @stuck_coro_debugger
 @eth_retry.auto_retry
-async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
+async def _check_traces(traces: list[FilterTrace]) -> list[FilterTrace]:
     good_traces = []
     append = good_traces.append
 
@@ -690,10 +689,10 @@ async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
     ]
 
 
-BlockRange = Tuple[Block, Block]
+BlockRange = tuple[Block, Block]
 
 
-def _get_block_ranges(start_block: Block, end_block: Block) -> List[BlockRange]:
+def _get_block_ranges(start_block: Block, end_block: Block) -> list[BlockRange]:
     return [(i, i + BATCH_SIZE - 1) for i in range(start_block, end_block, BATCH_SIZE)]
 
 
@@ -852,7 +851,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         """
 
     @stuck_coro_debugger
-    async def list_tokens_at_block(self, block: Optional[int] = None) -> List[ERC20]:
+    async def list_tokens_at_block(self, block: Optional[int] = None) -> list[ERC20]:
         """
         Lists the tokens held at a specific block.
 
