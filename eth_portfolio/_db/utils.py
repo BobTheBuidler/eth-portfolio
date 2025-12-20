@@ -608,4 +608,3 @@ def enc_hook(obj: Any) -> Any:
         if type(obj) is Decimal:
             return obj.jsonify()
         raise TypeError(type(obj), obj) from None
-
