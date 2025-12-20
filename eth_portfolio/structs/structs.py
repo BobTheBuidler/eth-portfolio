@@ -89,7 +89,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
                 attr.__doc__ = attr.__doc__.replace("{cls_name}", cls.__name__)
 
 
-def _get_init_kwargs(original_struct: Struct) -> Dict[str, Any]:
+def _get_init_kwargs(original_struct: Struct) -> dict[str, Any]:
     kwargs = {}
     for key in original_struct.__struct_fields__:
         try:
@@ -259,7 +259,7 @@ class _TransactionBase(
         return self.transaction.v
 
     @property
-    def access_list(self) -> Optional[Tuple[AccessListEntry, ...]]:
+    def access_list(self) -> Optional[tuple[AccessListEntry, ...]]:
         """
         List of addresses and storage keys the transaction plans to access (for EIP-2930 and EIP-1559 transactions).
         """
@@ -273,7 +273,7 @@ class _TransactionBase(
         return self.transaction.yParity
 
     @property
-    def __db_primary_key__(self) -> Dict[str, tuple[int, Address] | int]:
+    def __db_primary_key__(self) -> dict[str, tuple[int, Address] | int]:
         return {"from_address": (chain.id, self.from_address), "nonce": self.nonce}
 
 
@@ -459,7 +459,7 @@ class InternalTransfer(
         return self.trace.type
 
     @property
-    def trace_address(self) -> List[int]:
+    def trace_address(self) -> list[int]:
         """
         The path of sub-calls to reach this InternalTransfer within the transaction,
 

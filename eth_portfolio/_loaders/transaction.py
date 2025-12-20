@@ -7,7 +7,8 @@ The primary focus of this module is to support eth-portfolio's internal operatio
 """
 
 from logging import getLogger
-from typing import Awaitable, Callable, Final, List, Optional, Tuple
+from typing import Callable, Final, List, Optional, Tuple
+from collections.abc import Awaitable
 
 import a_sync
 import dank_mids
@@ -35,7 +36,7 @@ from eth_portfolio._loaders._nonce import get_nonce_at_block as _get_nonce_at_bl
 from eth_portfolio._loaders.utils import get_transaction_receipt
 
 
-Transactions = List[evmspec.Transaction]
+Transactions = list[evmspec.Transaction]
 
 
 logger: Final = getLogger(__name__)
@@ -45,7 +46,7 @@ logger: Final = getLogger(__name__)
 @stuck_coro_debugger
 async def load_transaction(
     address: ChecksumAddress, nonce: Nonce, load_prices: bool
-) -> Tuple[Nonce, Optional[structs.Transaction]]:
+) -> tuple[Nonce, Optional[structs.Transaction]]:
     """
     Loads a transaction by address and nonce.
 
@@ -171,7 +172,7 @@ class ReceiptContractAddress(msgspec.Struct):
 
 
 class ReceiptLogs(msgspec.Struct):
-    logs: List[evmspec.Log]
+    logs: list[evmspec.Log]
 
 
 get_transaction_count: Final = dank_mids.eth.get_transaction_count

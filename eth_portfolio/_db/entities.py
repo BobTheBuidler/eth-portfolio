@@ -159,7 +159,7 @@ class Transaction(DbEntity):
         return self.decoded.v
 
     @property
-    def access_list(self) -> typing.List[AccessListEntry]:
+    def access_list(self) -> list[AccessListEntry]:
         """EIP-2930 access list (if present)."""
         return self.decoded.access_list
 

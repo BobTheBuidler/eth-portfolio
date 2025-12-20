@@ -25,7 +25,7 @@ class ProtocolABC(metaclass=abc.ABCMeta):
 
 
 class ProtocolWithStakingABC(ProtocolABC, metaclass=abc.ABCMeta):
-    pools: List["StakingPoolABC"]
+    pools: list["StakingPoolABC"]
 
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:

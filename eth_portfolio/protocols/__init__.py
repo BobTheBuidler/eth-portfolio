@@ -11,7 +11,7 @@ from eth_portfolio.typing import RemoteTokenBalances
 
 import_submodules()
 
-protocols: List[StakingPoolABC] = get_protocols()  # type: ignore [assignment]
+protocols: list[StakingPoolABC] = get_protocols()  # type: ignore [assignment]
 
 
 @a_sync.future
