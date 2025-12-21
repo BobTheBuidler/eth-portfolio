@@ -4,7 +4,7 @@ This module orchestrates the process of loading and processing token transfers w
 
 import decimal
 from logging import getLogger
-from typing import Final, Optional, Set
+from typing import Final
 
 from a_sync import create_task, gather
 from dank_mids import BlockSemaphore
@@ -39,7 +39,7 @@ token_transfer_semaphore: Final = BlockSemaphore(
 @stuck_coro_debugger
 async def load_token_transfer(
     transfer_log: "Log", load_prices: bool
-) -> Optional[TokenTransfer]:  # sourcery skip: simplify-boolean-comparison
+) -> TokenTransfer | None:  # sourcery skip: simplify-boolean-comparison
     """
     Processes and loads a token transfer from a log entry, with comprehensive error handling and optional price fetching.
 
@@ -156,7 +156,7 @@ _non_standard_erc20: Final[set[ChecksumAddress]] = set()
 
 
 @stuck_coro_debugger
-async def get_symbol(token: ERC20) -> Optional[str]:
+async def get_symbol(token: ERC20) -> str | None:
     """
     Retrieves the symbol of a given ERC20 token, with error handling for non-standard implementations.
 

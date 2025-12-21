@@ -6,9 +6,9 @@ The functions defined here use various async operations to retrieve transaction 
 The primary focus of this module is to support eth-portfolio's internal operations such as loading transactions by address and nonce, retrieving transaction details from specific blocks, and managing transaction-related data.
 """
 
+from collections.abc import Awaitable, Callable
 from logging import getLogger
-from typing import Callable, Final, List, Optional, Tuple
-from collections.abc import Awaitable
+from typing import Final
 
 import a_sync
 import dank_mids
@@ -46,7 +46,7 @@ logger: Final = getLogger(__name__)
 @stuck_coro_debugger
 async def load_transaction(
     address: ChecksumAddress, nonce: Nonce, load_prices: bool
-) -> tuple[Nonce, Optional[structs.Transaction]]:
+) -> tuple[Nonce, structs.Transaction | None]:
     """
     Loads a transaction by address and nonce.
 
@@ -110,7 +110,7 @@ async def _insert_to_db(transaction: structs.Transaction, load_prices: bool) -> 
 @cache_to_disk
 async def get_transaction_by_nonce_and_block(
     address: ChecksumAddress, nonce: int, block: Block
-) -> Optional[evmspec.Transaction]:
+) -> evmspec.Transaction | None:
     """
     This function retrieves a transaction for a specifified address by its nonce and block, if any match.
 
