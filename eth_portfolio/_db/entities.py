@@ -1,5 +1,5 @@
-import typing
 from functools import cached_property
+from typing import TYPE_CHECKING
 
 from evmspec.structs.transaction import AccessListEntry
 from hexbytes import HexBytes
@@ -16,7 +16,7 @@ class BlockExtended(Block):
     Extends the base Block entity to add relationships to transactions, internal transfers, and token transfers.
     """
 
-    if typing.TYPE_CHECKING:
+    if TYPE_CHECKING:
         # if we execute this code we get `TypeError: 'type' object is not subscriptable`
         transactions: Set["Transaction"]
         internal_transfers: Set["InternalTransfer"]
@@ -37,7 +37,7 @@ class AddressExtended(Address):
     Extends the base Address entity to add relationships for sent/received transactions, internal transfers, and token transfers.
     """
 
-    if typing.TYPE_CHECKING:
+    if TYPE_CHECKING:
         # if we execute this code we get `TypeError: 'type' object is not subscriptable`
         transactions_sent: Set["Transaction"]
         transactions_received: Set["Transaction"]
@@ -76,7 +76,7 @@ class TokenExtended(Token, AddressExtended):
     Extends both Token and AddressExtended to represent a token contract with address relationships.
     """
 
-    if typing.TYPE_CHECKING:
+    if TYPE_CHECKING:
         # if we execute this code we get `TypeError: 'type' object is not subscriptable`
         transfers: Set["TokenTransfer"]
 
