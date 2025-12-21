@@ -140,9 +140,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):  # 
         Decimal('100')
     """
 
-    def __init__(
-        self, seed: _TBSeed | None = None, *, block: BlockNumber | None = None
-    ) -> None:
+    def __init__(self, seed: _TBSeed | None = None, *, block: BlockNumber | None = None) -> None:
         super().__init__(Balance)
         self.block: Final = block
         if seed is None:
@@ -375,9 +373,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
 
     __slots__ = ("block",)
 
-    def __init__(
-        self, seed: _RTBSeed | None = None, *, block: BlockNumber | None = None
-    ) -> None:
+    def __init__(self, seed: _RTBSeed | None = None, *, block: BlockNumber | None = None) -> None:
         super().__init__(lambda: TokenBalances(block=block))
         self.block: Final = block
         if seed is None:
@@ -804,9 +800,7 @@ class WalletBalances(
         self.__validatekey(key)
         return super().__getitem__(key)
 
-    def __setitem__(
-        self, key: CategoryLabel, value: TokenBalances | RemoteTokenBalances
-    ) -> None:
+    def __setitem__(self, key: CategoryLabel, value: TokenBalances | RemoteTokenBalances) -> None:
         """
         Sets the balance associated with the given category key.
 
@@ -891,9 +885,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
         Decimal('100')
     """
 
-    def __init__(
-        self, seed: _PBSeed | None = None, *, block: BlockNumber | None = None
-    ) -> None:
+    def __init__(self, seed: _PBSeed | None = None, *, block: BlockNumber | None = None) -> None:
         super().__init__(lambda: WalletBalances(block=block))
         self.block: Final = block
         if seed is None:
@@ -1110,9 +1102,7 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
         Decimal('100')
     """
 
-    def __init__(
-        self, seed: _WTBInput | None = None, *, block: BlockNumber | None = None
-    ) -> None:
+    def __init__(self, seed: _WTBInput | None = None, *, block: BlockNumber | None = None) -> None:
         super().__init__(lambda: TokenBalances(block=block))
         self.block: Final = block
         if seed is None:
@@ -1273,9 +1263,7 @@ class PortfolioBalancesByCategory(
         Decimal('100')
     """
 
-    def __init__(
-        self, seed: _CBInput | None = None, *, block: BlockNumber | None = None
-    ) -> None:
+    def __init__(self, seed: _CBInput | None = None, *, block: BlockNumber | None = None) -> None:
         super().__init__(lambda: WalletBalancesRaw(block=block))
         self.block: Final = block
         if seed is None:
