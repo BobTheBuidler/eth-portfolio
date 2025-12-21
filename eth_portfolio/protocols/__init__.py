@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 import a_sync
 from y.datatypes import Address, Block
 
