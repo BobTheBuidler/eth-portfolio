@@ -5,18 +5,7 @@ The classes are designed to provide a consistent and flexible interface for work
 """
 
 from functools import cached_property
-from typing import (
-    Any,
-    ClassVar,
-    Dict,
-    List,
-    Literal,
-    Optional,
-    Tuple,
-    TypeVar,
-    Union,
-    final,
-)
+from typing import Any, ClassVar, Literal, TypeVar, Union, final
 
 import evmspec
 from brownie import chain
@@ -522,17 +511,17 @@ class InternalTransfer(
         return self.trace.result.output
 
     '''
-    init: Optional[HexBytes] = UNSET
+    init: HexBytes | None = UNSET
     """
     The initialization code for contract creation, if this is a create operation.
     """
     
-    address: Optional[HexBytes] = UNSET
+    address: HexBytes | None = UNSET
     """
     The address of the account or contract involved in this InternalTransfer.
     """
     
-    code: Optional[HexBytes] = UNSET
+    code: HexBytes | None = UNSET
     """
     The code of the contract involved in this InternalTransfer, if applicable.
     """
