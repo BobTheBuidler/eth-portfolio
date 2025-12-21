@@ -12,24 +12,12 @@ and processing without blocking, thus improving the overall responsiveness and p
 from abc import ABCMeta, abstractmethod
 from asyncio import Lock, Queue, create_task, gather, sleep
 from collections import defaultdict
+from collections.abc import AsyncGenerator, AsyncIterator, Callable
 from functools import partial
 from http import HTTPStatus
 from itertools import product
 from logging import getLogger
-from typing import (
-    TYPE_CHECKING,
-    Final,
-    Generic,
-    List,
-    NoReturn,
-    Optional,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-)
-from collections.abc import Callable
-from collections.abc import AsyncGenerator, AsyncIterator
+from typing import TYPE_CHECKING, Final, Generic, NoReturn, TypeVar, Union
 
 import a_sync
 import dank_mids
@@ -337,7 +325,7 @@ class AddressLedgerBase(
             end_block: The ending block number.
 
         Returns:
-            Tuple: The adjusted block range.
+            The adjusted block range.
 
         Raises:
             ValueError: If the start block is after the end block.
@@ -856,7 +844,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         Lists the tokens held at a specific block.
 
         Args:
-            block (Optional[int], optional): The block number. Defaults to None.
+            block (int | None): The block number. Defaults to None.
 
         Returns:
             List[ERC20]: The list of ERC20 tokens.
@@ -871,7 +859,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         Yields the tokens held at a specific block.
 
         Args:
-            block (Optional[int], optional): The block number. Defaults to None.
+            block (int | None): The block number. Defaults to None.
 
         Yields:
             AsyncIterator[ERC20]: An async iterator of ERC20 tokens.
