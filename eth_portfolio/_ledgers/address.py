@@ -18,7 +18,6 @@ from itertools import product
 from logging import getLogger
 from typing import (
     TYPE_CHECKING,
-    Callable,
     Final,
     Generic,
     List,
@@ -29,6 +28,7 @@ from typing import (
     TypeVar,
     Union,
 )
+from collections.abc import Callable
 from collections.abc import AsyncGenerator, AsyncIterator
 
 import a_sync
@@ -276,7 +276,7 @@ class AddressLedgerBase(
         return self[start_block, end_block]  # type: ignore [index, return-value]
 
     async def sent(
-        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+        self, start_block: Block | None = None, end_block: Block | None = None
     ) -> AsyncIterator[T]:
         address = self.portfolio_address.address
         async for obj in self[start_block:end_block]:
@@ -284,7 +284,7 @@ class AddressLedgerBase(
                 yield obj
 
     async def received(
-        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+        self, start_block: Block | None = None, end_block: Block | None = None
     ) -> AsyncIterator[T]:
         address = self.portfolio_address.address
         async for obj in self[start_block:end_block]:
@@ -478,7 +478,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             self._ensure_workers(min(len_nonces, self._num_workers))
 
             transactions = []
-            transaction: Optional[Transaction]
+            transaction: Transaction | None
             for _ in tqdm(range(len_nonces), desc=f"Transactions        {address}"):
                 nonce, transaction = await self._ready.get()
                 if transaction:
@@ -528,7 +528,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         address: ChecksumAddress,
         load_prices: bool,
         queue_get: Callable[[], Nonce],
-        put_ready: Callable[[Nonce, Optional[Transaction]], None],
+        put_ready: Callable[[Nonce, Transaction | None], None],
     ) -> NoReturn:
         try:
             while True:
@@ -851,7 +851,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         """
 
     @stuck_coro_debugger
-    async def list_tokens_at_block(self, block: Optional[int] = None) -> list[ERC20]:
+    async def list_tokens_at_block(self, block: int | None = None) -> list[ERC20]:
         """
         Lists the tokens held at a specific block.
 
@@ -866,7 +866,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         """
         return [token async for token in self._yield_tokens_at_block(block)]
 
-    async def _yield_tokens_at_block(self, block: Optional[int] = None) -> AsyncIterator[ERC20]:
+    async def _yield_tokens_at_block(self, block: int | None = None) -> AsyncIterator[ERC20]:
         """
         Yields the tokens held at a specific block.
 

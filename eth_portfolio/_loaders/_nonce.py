@@ -62,8 +62,8 @@ async def get_nonce_at_block(address: ChecksumAddress, block: BlockNumber) -> in
 
 
 async def get_block_for_nonce(address: ChecksumAddress, nonce: Nonce) -> int:
-    highest_known_nonce_lt_query: Optional[int]
-    lowest_known_nonce_gt_query: Optional[int]
+    highest_known_nonce_lt_query: int | None
+    lowest_known_nonce_gt_query: int | None
 
     async with locks[address]:
         highest_known_nonce_lt_query = None

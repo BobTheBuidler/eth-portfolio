@@ -15,7 +15,7 @@ protocols: list[StakingPoolABC] = get_protocols()  # type: ignore [assignment]
 
 
 @a_sync.future
-async def balances(address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
+async def balances(address: Address, block: Block | None = None) -> RemoteTokenBalances:
     """
     Fetch token balances for a given address across various protocols.
 

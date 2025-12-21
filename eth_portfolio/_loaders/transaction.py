@@ -7,7 +7,8 @@ The primary focus of this module is to support eth-portfolio's internal operatio
 """
 
 from logging import getLogger
-from typing import Callable, Final, List, Optional, Tuple
+from typing import Final, List, Optional, Tuple
+from collections.abc import Callable
 from collections.abc import Awaitable
 
 import a_sync
@@ -46,7 +47,7 @@ logger: Final = getLogger(__name__)
 @stuck_coro_debugger
 async def load_transaction(
     address: ChecksumAddress, nonce: Nonce, load_prices: bool
-) -> tuple[Nonce, Optional[structs.Transaction]]:
+) -> tuple[Nonce, structs.Transaction | None]:
     """
     Loads a transaction by address and nonce.
 
@@ -110,7 +111,7 @@ async def _insert_to_db(transaction: structs.Transaction, load_prices: bool) -> 
 @cache_to_disk
 async def get_transaction_by_nonce_and_block(
     address: ChecksumAddress, nonce: int, block: Block
-) -> Optional[evmspec.Transaction]:
+) -> evmspec.Transaction | None:
     """
     This function retrieves a transaction for a specifified address by its nonce and block, if any match.
 

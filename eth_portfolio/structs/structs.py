@@ -47,7 +47,7 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
     """
 
     @property
-    def _evm_object(self) -> Union[evmspec.Transaction, evmspec.FilterTrace, Log]:
+    def _evm_object(self) -> evmspec.Transaction | evmspec.FilterTrace | Log:
         """
         The EVM object associated with {cls_name}, exactly as it was received from the RPC.
         """
@@ -70,12 +70,12 @@ class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True
         """
         return self._evm_object.block
 
-    price: Optional[Decimal] = None
+    price: Decimal | None = None
     """
     The price of the cryptocurrency at the time of the {cls_name}, if known.
     """
 
-    value_usd: Optional[Decimal] = None
+    value_usd: Decimal | None = None
     """
     The USD value of the cryptocurrency transferred in the {cls_name}, if price is known.
     """
@@ -135,8 +135,8 @@ class _TransactionBase(
         cls,
         transaction: evmspec.Transaction,
         *,
-        price: Optional[Decimal] = None,
-        value_usd: Optional[Decimal] = None,
+        price: Decimal | None = None,
+        value_usd: Decimal | None = None,
     ) -> "Transaction":
         return cls(
             transaction=transaction,
@@ -159,7 +159,7 @@ class _TransactionBase(
         return self.transaction.blockHash
 
     @property
-    def transaction_index(self) -> Optional[int]:
+    def transaction_index(self) -> int | None:
         """
         The index of the transaction within its block, if applicable.
         """
@@ -173,7 +173,7 @@ class _TransactionBase(
         return self.transaction.nonce
 
     @cached_property
-    def type(self) -> Optional[int]:
+    def type(self) -> int | None:
         """
         The transaction type (e.g., 0 for legacy, 1 for EIP-2930, 2 for EIP-1559).
         None for chains that don't specify transaction types.
@@ -182,14 +182,14 @@ class _TransactionBase(
             return int(typ.hex(), 16)
 
     @property
-    def from_address(self) -> Optional[Address]:
+    def from_address(self) -> Address | None:
         """
         The address from which the transaction was sent, if applicable.
         """
         return self.transaction.sender
 
     @property
-    def to_address(self) -> Optional[Address]:
+    def to_address(self) -> Address | None:
         """
         The address to which the transaction was sent, if applicable.
         """
@@ -217,14 +217,14 @@ class _TransactionBase(
         return self.transaction.gasPrice
 
     @property
-    def max_fee_per_gas(self) -> Optional[int]:
+    def max_fee_per_gas(self) -> int | None:
         """
         The maximum total fee per gas the sender is willing to pay (for EIP-1559 transactions only).
         """
         return self.transaction.maxFeePerGas
 
     @property
-    def max_priority_fee_per_gas(self) -> Optional[int]:
+    def max_priority_fee_per_gas(self) -> int | None:
         """
         The maximum priority fee per gas the sender is willing to pay (for EIP-1559 transactions only).
         """
@@ -259,14 +259,14 @@ class _TransactionBase(
         return self.transaction.v
 
     @property
-    def access_list(self) -> Optional[tuple[AccessListEntry, ...]]:
+    def access_list(self) -> tuple[AccessListEntry, ...] | None:
         """
         List of addresses and storage keys the transaction plans to access (for EIP-2930 and EIP-1559 transactions).
         """
         return self.transaction.accessList
 
     @property
-    def y_parity(self) -> Optional[int]:
+    def y_parity(self) -> int | None:
         """
         The Y parity of the transaction signature, used in EIP-2718 typed transactions.
         """
@@ -414,14 +414,14 @@ class InternalTransfer(
         return self.trace.blockHash
 
     @property
-    def transaction_index(self) -> Optional[int]:
+    def transaction_index(self) -> int | None:
         """
         The index of the transaction within its block, if applicable.
         """
         return self.trace.transactionPosition
 
     @property
-    def hash(self) -> Union[HexBytes, str]:
+    def hash(self) -> HexBytes | str:
         """
         The unique hash of the transaction containing this internal transfer.
         """
@@ -439,7 +439,7 @@ class InternalTransfer(
         return self.trace.action.sender
 
     @property
-    def to_address(self) -> Optional[Address]:
+    def to_address(self) -> Address | None:
         """
         The address to which the internal transfer was sent, if applicable.
         """
@@ -494,14 +494,14 @@ class InternalTransfer(
         return self.trace.subtraces
 
     @property
-    def call_type(self) -> Optional[str]:
+    def call_type(self) -> str | None:
         """
         The type of call made in this InternalTransfer (e.g., "call", "delegatecall", "staticcall").
         """
         return self.trace.action.callType.name
 
     @property
-    def reward_type(self) -> Optional[str]:
+    def reward_type(self) -> str | None:
         """
         The type of the reward, for reward transactions.
         """
@@ -601,7 +601,7 @@ class TokenTransfer(
         """
         return self.log.logIndex
 
-    token: Optional[str]
+    token: str | None
     """
     The symbol of the token being transferred, if known.
     """

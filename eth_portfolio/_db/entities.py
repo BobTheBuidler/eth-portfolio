@@ -164,7 +164,7 @@ class Transaction(DbEntity):
         return self.decoded.access_list
 
     @property
-    def y_parity(self) -> typing.Optional[int]:
+    def y_parity(self) -> int | None:
         """EIP-1559 y-parity value (if present)."""
         return self.decoded.y_parity
 

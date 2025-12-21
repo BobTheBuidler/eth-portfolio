@@ -27,7 +27,6 @@ without managing or altering any underlying assets.
 from functools import cached_property
 from typing import (
     Any,
-    Callable,
     DefaultDict,
     Dict,
     Final,
@@ -40,6 +39,7 @@ from typing import (
     Union,
     final,
 )
+from collections.abc import Callable
 from collections.abc import Iterable
 
 from checksum_dict import DefaultChecksumDict
@@ -88,7 +88,7 @@ class _SummableNonNumericMixin:
         """
         raise NotImplementedError
 
-    def __radd__(self, other: Union[Self, Literal[0]]) -> Self:
+    def __radd__(self, other: Self | Literal[0]) -> Self:
         """
         Supports the addition operation from the right side to enable use of `sum`.
 
@@ -141,7 +141,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):  # 
     """
 
     def __init__(
-        self, seed: Optional[_TBSeed] = None, *, block: Optional[BlockNumber] = None
+        self, seed: _TBSeed | None = None, *, block: BlockNumber | None = None
     ) -> None:
         super().__init__(Balance)
         self.block: Final = block
@@ -376,7 +376,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
     __slots__ = ("block",)
 
     def __init__(
-        self, seed: Optional[_RTBSeed] = None, *, block: Optional[BlockNumber] = None
+        self, seed: _RTBSeed | None = None, *, block: BlockNumber | None = None
     ) -> None:
         super().__init__(lambda: TokenBalances(block=block))
         self.block: Final = block
@@ -588,9 +588,9 @@ class WalletBalances(
 
     def __init__(
         self,
-        seed: Optional[Union["WalletBalances", _WBSeed]] = None,
+        seed: Union["WalletBalances", _WBSeed] | None = None,
         *,
-        block: Optional[BlockNumber] = None,
+        block: BlockNumber | None = None,
     ) -> None:
         self.block: Final = block
         self._keys = "assets", "debt", "external"
@@ -782,7 +782,7 @@ class WalletBalances(
                 del subtracted[category]
         return subtracted
 
-    def __getitem__(self, key: CategoryLabel) -> Union[TokenBalances, RemoteTokenBalances]:
+    def __getitem__(self, key: CategoryLabel) -> TokenBalances | RemoteTokenBalances:
         """
         Retrieves the balance associated with the given category key.
 
@@ -805,7 +805,7 @@ class WalletBalances(
         return super().__getitem__(key)
 
     def __setitem__(
-        self, key: CategoryLabel, value: Union[TokenBalances, RemoteTokenBalances]
+        self, key: CategoryLabel, value: TokenBalances | RemoteTokenBalances
     ) -> None:
         """
         Sets the balance associated with the given category key.
@@ -892,7 +892,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
     """
 
     def __init__(
-        self, seed: Optional[_PBSeed] = None, *, block: Optional[BlockNumber] = None
+        self, seed: _PBSeed | None = None, *, block: BlockNumber | None = None
     ) -> None:
         super().__init__(lambda: WalletBalances(block=block))
         self.block: Final = block
@@ -1111,7 +1111,7 @@ class WalletBalancesRaw(DefaultChecksumDict[TokenBalances], _SummableNonNumericM
     """
 
     def __init__(
-        self, seed: Optional[_WTBInput] = None, *, block: Optional[BlockNumber] = None
+        self, seed: _WTBInput | None = None, *, block: BlockNumber | None = None
     ) -> None:
         super().__init__(lambda: TokenBalances(block=block))
         self.block: Final = block
@@ -1274,7 +1274,7 @@ class PortfolioBalancesByCategory(
     """
 
     def __init__(
-        self, seed: Optional[_CBInput] = None, *, block: Optional[BlockNumber] = None
+        self, seed: _CBInput | None = None, *, block: BlockNumber | None = None
     ) -> None:
         super().__init__(lambda: WalletBalancesRaw(block=block))
         self.block: Final = block

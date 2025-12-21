@@ -3,7 +3,8 @@ from functools import wraps
 from importlib import resources
 from os import path
 from subprocess import CalledProcessError, check_output
-from typing import Callable, Final, List, Literal, Tuple, TypeVar
+from typing import Final, List, Literal, Tuple, TypeVar
+from collections.abc import Callable
 from collections.abc import Iterable
 
 from typing_extensions import ParamSpec

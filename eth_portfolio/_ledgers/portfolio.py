@@ -126,7 +126,7 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
         return df
 
     async def sent(
-        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+        self, start_block: Block | None = None, end_block: Block | None = None
     ) -> AsyncIterator[T]:
         portfolio_addresses = set(self.portfolio.addresses.keys())
         async for obj in self[start_block:end_block]:
@@ -137,7 +137,7 @@ class PortfolioLedgerBase(a_sync.ASyncGenericBase, _AiterMixin[T], Generic[_Ledg
                 yield obj
 
     async def received(
-        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+        self, start_block: Block | None = None, end_block: Block | None = None
     ) -> AsyncIterator[T]:
         portfolio_addresses = set(self.portfolio.addresses.keys())
         async for obj in self[start_block:end_block]:

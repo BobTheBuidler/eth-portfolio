@@ -309,7 +309,7 @@ def ensure_token(token_address: ChecksumAddress) -> None:
     get_token(token_address, sync=True)
 
 
-async def get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Transaction]:
+async def get_transaction(sender: ChecksumAddress, nonce: int) -> Transaction | None:
     startup_txs = await transactions_known_at_startup(CHAINID, sender)
     data = startup_txs.pop(nonce, None) or await __get_transaction_bytes_from_db(sender, nonce)
     if data:
@@ -330,13 +330,13 @@ async def _yield_to_loop() -> None:
 
 @a_sync(default="async", executor=_transaction_read_executor)
 @robust_db_session
-def __get_transaction_bytes_from_db(sender: ChecksumAddress, nonce: int) -> Optional[bytes]:
+def __get_transaction_bytes_from_db(sender: ChecksumAddress, nonce: int) -> bytes | None:
     entity: entities.Transaction
     if entity := entities.Transaction.get(from_address=(CHAINID, sender), nonce=nonce):
         return entity.raw
 
 
-def decode_transaction(data: bytes) -> Union[Transaction, TransactionRLP]:
+def decode_transaction(data: bytes) -> Transaction | TransactionRLP:
     try:
         try:
             return json.decode(data, type=Transaction, dec_hook=_decode_hook)
@@ -393,7 +393,7 @@ def _insert_transaction(transaction: Transaction) -> None:
 
 @a_sync(default="async", executor=_internal_transfer_read_executor)
 @robust_db_session
-def get_internal_transfer(trace: evmspec.FilterTrace) -> Optional[InternalTransfer]:
+def get_internal_transfer(trace: evmspec.FilterTrace) -> InternalTransfer | None:
     block = trace.blockNumber
     entity: entities.InternalTransfer
     if entity := entities.InternalTransfer.get(
@@ -471,7 +471,7 @@ def _insert_internal_transfer(transfer: InternalTransfer) -> None:
     )
 
 
-async def get_token_transfer(transfer: evmspec.Log) -> Optional[TokenTransfer]:
+async def get_token_transfer(transfer: evmspec.Log) -> TokenTransfer | None:
     pk = {
         "block": (CHAINID, transfer.blockNumber),
         "transaction_index": transfer.transactionIndex,
@@ -495,7 +495,7 @@ async def get_token_transfer(transfer: evmspec.Log) -> Optional[TokenTransfer]:
 
 @a_sync(default="async", executor=_token_transfer_read_executor)
 @robust_db_session
-def __get_token_transfer_bytes_from_db(pk: dict) -> Optional[bytes]:
+def __get_token_transfer_bytes_from_db(pk: dict) -> bytes | None:
     entity: entities.TokenTransfer
     if entity := entities.TokenTransfer.get(**pk):
         return entity.raw
