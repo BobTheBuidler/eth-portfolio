@@ -1,9 +1,9 @@
 import logging
-from typing import TYPE_CHECKING, Dict, Generic, Optional, TypeVar
+from typing import TYPE_CHECKING, Generic, TypeVar
 from collections.abc import AsyncIterator
 
 import a_sync
-from pandas import DataFrame, concat  # type: ignore
+from pandas import DataFrame, concat
 from y.datatypes import Address, Block
 
 from eth_portfolio._decorators import set_end_block_if_none
