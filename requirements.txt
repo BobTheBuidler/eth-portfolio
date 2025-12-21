@@ -1,5 +1,5 @@
 checksum_dict>=2.1.7
-dank_mids>=4.20.154
+dank_mids>=4.20.190
 eth-brownie>=1.22.0.dev0,<1.23
 eth_retry>=0.3.4,<1
 evmspec>=0.4.1
@@ -8,5 +8,5 @@ faster-async-lru==2.0.5.2
 faster-eth-utils
 numpy<3
 pandas>=1.4.3,<3
-typed-envs>=0.0.9
+typed-envs>=0.2.3
 ypricemagic>=5.1,<5.2
