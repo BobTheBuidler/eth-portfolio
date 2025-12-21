@@ -1,5 +1,5 @@
 import asyncio
-from typing import ClassVar, Final, Optional, final
+from typing import ClassVar, Final, final
 
 import y
 from y.datatypes import Address, Block
