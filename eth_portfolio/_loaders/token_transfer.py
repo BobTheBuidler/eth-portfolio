@@ -4,7 +4,7 @@ This module orchestrates the process of loading and processing token transfers w
 
 import decimal
 from logging import getLogger
-from typing import Final, Optional, Set
+from typing import Final
 
 from a_sync import create_task, gather
 from dank_mids import BlockSemaphore
