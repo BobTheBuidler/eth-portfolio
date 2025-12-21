@@ -260,7 +260,7 @@ typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
     PyObject *___mypyc_env__;
-} eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_51Object;
+} eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_52Object;
 
 typedef struct {
     PyObject_HEAD
