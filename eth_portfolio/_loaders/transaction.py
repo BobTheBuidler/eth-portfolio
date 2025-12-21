@@ -6,10 +6,9 @@ The functions defined here use various async operations to retrieve transaction 
 The primary focus of this module is to support eth-portfolio's internal operations such as loading transactions by address and nonce, retrieving transaction details from specific blocks, and managing transaction-related data.
 """
 
+from collections.abc import Awaitable, Callable
 from logging import getLogger
-from typing import Final, List, Optional, Tuple
-from collections.abc import Callable
-from collections.abc import Awaitable
+from typing import Final
 
 import a_sync
 import dank_mids
