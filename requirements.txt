@@ -9,4 +9,4 @@ faster-eth-utils
 numpy<3
 pandas>=1.4.3,<3
 typed-envs>=0.0.9
-ypricemagic>=5,<5.2
+ypricemagic>=5.1,<5.2
