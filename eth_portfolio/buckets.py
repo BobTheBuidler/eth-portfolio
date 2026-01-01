@@ -1,12 +1,12 @@
 import logging
-from typing import Any, Final, Optional, Set, Dict
+from typing import Any, Final
 
 from a_sync import igather
 from eth_typing import ChecksumAddress
 from faster_async_lru import alru_cache
 from y.constants import CHAINID, STABLECOINS, WRAPPED_GAS_COIN
 from y.convert import to_address
-from y.datatypes import Address, AnyAddressType
+from y.datatypes import AnyAddressType
 from y.exceptions import ContractNotVerified
 from y.prices.lending.aave import aave
 from y.prices.lending.compound import CToken, compound
@@ -20,11 +20,11 @@ logger: Final = logging.getLogger(__name__)
 log_debug: Final = logger.debug
 
 SORT_AS_STABLES: Final = STABLECOINS.keys() | STABLEISH_COINS[CHAINID]
-OTHER_LONG_TERM_ASSETS: Final[Set[ChecksumAddress]] = {}.get(CHAINID, set())  # type: ignore [call-overload]
+OTHER_LONG_TERM_ASSETS: Final[set[ChecksumAddress]] = {}.get(CHAINID, set())  # type: ignore [call-overload]
 
 
 async def get_token_bucket(
-    token: AnyAddressType, custom_buckets: Optional[Dict[str, str]] = None
+    token: AnyAddressType, custom_buckets: dict[str, str] | None = None
 ) -> str:
     """
     Categorize a token into a specific bucket based on its type.
@@ -150,7 +150,7 @@ async def _unwrap_token(token: Any) -> ChecksumAddress:
     return token
 
 
-def _pool_bucket(pool_tokens: set) -> Optional[str]:
+def _pool_bucket(pool_tokens: set) -> str | None:
     """
     Determine the bucket for a set of pool tokens.
 

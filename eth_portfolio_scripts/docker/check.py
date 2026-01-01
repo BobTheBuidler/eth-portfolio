@@ -1,6 +1,5 @@
 from functools import lru_cache
 from subprocess import CalledProcessError, check_output
-from typing import List
 
 
 def check_docker() -> None:

@@ -1,7 +1,8 @@
 import re
 from asyncio import Task, create_task, sleep
 from datetime import datetime, timedelta, timezone
-from typing import Any, AsyncGenerator, Dict, Final, List, Optional
+from typing import Any, Final
+from collections.abc import AsyncGenerator
 
 from brownie import chain
 
@@ -28,7 +29,7 @@ def parse_timedelta(value: str) -> timedelta:
 
 async def aiter_timestamps(
     *,
-    start: Optional[datetime] = None,
+    start: datetime | None = None,
     interval: timedelta = timedelta(days=1),
     run_forever: bool = False,
 ) -> AsyncGenerator[datetime, None]:
@@ -83,7 +84,7 @@ async def aiter_timestamps(
         timestamp += interval
 
 
-_waiters: Dict[datetime, "Task[None]"] = {}
+_waiters: dict[datetime, "Task[None]"] = {}
 
 
 def _get_waiter(timestamp: datetime) -> "Task[None]":

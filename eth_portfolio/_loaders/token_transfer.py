@@ -149,7 +149,6 @@ async def _insert_to_db(transfer: TokenTransfer, load_prices: bool) -> None:
         except decimal.InvalidOperation as e:
             # TODO: debug why this happens sometimes
             logger.exception("%s %s", e, transfer)
-            pass
 
 
 _non_standard_erc20: Final[set[ChecksumAddress]] = set()

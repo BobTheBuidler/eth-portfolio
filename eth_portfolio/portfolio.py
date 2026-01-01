@@ -8,7 +8,8 @@ This file is part of a larger system that includes modules for handling portfoli
 
 import logging
 from functools import wraps
-from typing import Any, AsyncIterator, Dict, Iterable, Iterator, List, Optional, Tuple, Union
+from typing import Any
+from collections.abc import AsyncIterator, Iterable, Iterator
 
 import a_sync
 from a_sync import igather
@@ -37,7 +38,7 @@ from eth_portfolio.typing import Addresses, PortfolioBalances
 logger = logging.getLogger(__name__)
 
 
-class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddress]):  # type: ignore [metaclass]
+class PortfolioWallets(Iterable[PortfolioAddress], dict[Address, PortfolioAddress]):  # type: ignore [metaclass]
     """
     A container that holds all :class:`~eth_portfolio.address.PortfolioAddress` objects for a specific :class:`~eth_portfolio.Portfolio`.
 
@@ -90,7 +91,7 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         """
         return f"<{type(self).__name__} wallets={list(self._wallets.values())}>"
 
-    def __contains__(self, address: Union[Address, PortfolioAddress]) -> bool:
+    def __contains__(self, address: Address | PortfolioAddress) -> bool:
         """
         Check if an address is in the portfolio wallets.
 
@@ -159,7 +160,7 @@ class PortfolioWallets(Iterable[PortfolioAddress], Dict[Address, PortfolioAddres
         """
         return self._wallets.values()
 
-    def items(self) -> Iterable[Tuple[Address, PortfolioAddress]]:
+    def items(self) -> Iterable[tuple[Address, PortfolioAddress]]:
         """
         Get the items (address, :class:`~eth_portfolio.address.PortfolioAddress` pairs) of the wallets.
 
@@ -391,8 +392,8 @@ class Portfolio(a_sync.ASyncGenericBase):
 
     async def sent(
         self,
-        start_block: Optional[Block] = None,
-        end_block: Optional[Block] = None,
+        start_block: Block | None = None,
+        end_block: Block | None = None,
         *,
         mem_cache: bool = True,
     ) -> AsyncIterator[LedgerEntry]:
@@ -401,8 +402,8 @@ class Portfolio(a_sync.ASyncGenericBase):
 
     async def received(
         self,
-        start_block: Optional[Block] = None,
-        end_block: Optional[Block] = None,
+        start_block: Block | None = None,
+        end_block: Block | None = None,
         *,
         mem_cache: bool = True,
     ) -> AsyncIterator[LedgerEntry]:
@@ -446,7 +447,7 @@ for func_name, func in async_functions.items():
     logger.debug("Ported %s from PortfolioAddress to Portfolio", func_name)
 
 
-def _get_missing_cols_from_KeyError(e: KeyError) -> List[str]:
+def _get_missing_cols_from_KeyError(e: KeyError) -> list[str]:
     """
     Extract missing column names from a KeyError.
 
@@ -496,7 +497,7 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
 
     async def all_entries(
         self, start_block: Block, end_block: Block
-    ) -> Dict[PortfolioAddress, Dict[str, PandableLedgerEntryList]]:
+    ) -> dict[PortfolioAddress, dict[str, PandableLedgerEntryList]]:
         """
         Returns a mapping containing all transactions, internal transfers, and token transfers to or from each wallet in your portfolio.
 
@@ -626,8 +627,8 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
 
     async def sent(
         self,
-        start_block: Optional[Block] = None,
-        end_block: Optional[Block] = None,
+        start_block: Block | None = None,
+        end_block: Block | None = None,
         *,
         mem_cache: bool = True,
     ) -> AsyncIterator[LedgerEntry]:
@@ -642,8 +643,8 @@ class PortfolioLedger(_LedgeredBase[PortfolioLedgerBase]):
 
     async def received(
         self,
-        start_block: Optional[Block] = None,
-        end_block: Optional[Block] = None,
+        start_block: Block | None = None,
+        end_block: Block | None = None,
         *,
         mem_cache: bool = True,
     ) -> AsyncIterator[LedgerEntry]:

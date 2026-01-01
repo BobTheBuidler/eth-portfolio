@@ -60,7 +60,7 @@ except OperationalError as e:
     ) from e
 
 from y._db.decorators import retry_locked
-from y._db.entities import Address, Block, Chain, Contract, Token, insert
+from y._db.entities import Address, Block, Chain, insert
 
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
 from y._db.utils import ensure_chain, get_chain
@@ -69,7 +69,6 @@ from y._db.utils.traces import insert_trace
 from y import ERC20
 from y.constants import EEE_ADDRESS
 from y.exceptions import NonStandardERC20
-from y.contracts import is_contract
 
 
 _big_pool_size = 4 if ENVS.DB_PROVIDER == "sqlite" else 10

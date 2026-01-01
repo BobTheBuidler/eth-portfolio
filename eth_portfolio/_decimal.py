@@ -1,6 +1,5 @@
 import decimal
 import logging
-from typing import Union
 
 from evmspec.data import Wei
 from typing_extensions import Self
@@ -24,7 +23,7 @@ class Decimal(decimal.Decimal):
         - :class:`decimal.Decimal`
     """
 
-    def jsonify(self) -> Union[str, int]:
+    def jsonify(self) -> str | int:
         """
         Converts the :class:`Decimal` to a JSON-friendly format.
 

@@ -18,8 +18,6 @@ class BlockRangeIsCached(Exception):
         >>> raise BlockRangeIsCached("Block range is already cached.")
     """
 
-    pass
-
 
 class BlockRangeOutOfBounds(Exception):
     """

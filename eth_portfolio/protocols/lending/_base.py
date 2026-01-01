@@ -1,5 +1,4 @@
 import abc
-from typing import Optional
 
 import a_sync
 from y.datatypes import Address, Block
@@ -27,11 +26,11 @@ class LendingProtocol(metaclass=abc.ABCMeta):
     """
 
     @a_sync.future
-    async def debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+    async def debt(self, address: Address, block: Block | None = None) -> TokenBalances:
         return await self._debt(address, block)  # type: ignore
 
     @abc.abstractmethod
-    async def _debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances: ...
+    async def _debt(self, address: Address, block: Block | None = None) -> TokenBalances: ...
 
 
 class LendingProtocolWithLockedCollateral(LendingProtocol, ProtocolABC):

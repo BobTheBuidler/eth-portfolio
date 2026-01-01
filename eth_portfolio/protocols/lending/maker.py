@@ -1,5 +1,5 @@
 from asyncio import gather
-from typing import Final, List, Optional
+from typing import Final
 
 from a_sync import igather
 from brownie import ZERO_ADDRESS
@@ -37,7 +37,7 @@ class Maker(LendingProtocolWithLockedCollateral):
         self.vat = Contract("0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B")
 
     @stuck_coro_debugger
-    async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+    async def _balances(self, address: Address, block: Block | None = None) -> TokenBalances:
         if block is not None and block <= await contract_creation_block_async(self.ilk_registry):
             return TokenBalances(block=block)
 
@@ -61,7 +61,7 @@ class Maker(LendingProtocolWithLockedCollateral):
         return balances
 
     @stuck_coro_debugger
-    async def _debt(self, address: Address, block: Optional[int] = None) -> TokenBalances:
+    async def _debt(self, address: Address, block: int | None = None) -> TokenBalances:
         if block is not None and block <= await contract_creation_block_async(self.ilk_registry):
             return TokenBalances(block=block)
 
@@ -85,7 +85,7 @@ class Maker(LendingProtocolWithLockedCollateral):
             balances[dai.address] += Balance(debt, debt, token=dai, block=block)
         return balances
 
-    async def get_ilks(self, block: Optional[int]) -> List[HexStr]:
+    async def get_ilks(self, block: int | None) -> list[HexStr]:
         """List all ilks (cdp keys of sorts) for MakerDAO"""
         try:
             return await self.ilk_registry.list.coroutine(block_identifier=block)

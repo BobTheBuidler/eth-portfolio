@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import DefaultDict, Final, Set
+from typing import DefaultDict, Final
 
 from eth_typing import ChecksumAddress
 from y import Network, convert
@@ -335,7 +335,7 @@ shitcoins: Final = {
     ],
 }
 
-SHITCOINS: DefaultDict[Network, Set[ChecksumAddress]] = defaultdict(set)
+SHITCOINS: DefaultDict[Network, set[ChecksumAddress]] = defaultdict(set)
 """A dictionary that contains, for each chain, a set of shitcoins that will be fully ignored by eth_portfolio. Add your own shitcoins to this object to boost eth_portfolio's performance."""
 
 for chain, tokens in shitcoins.items():

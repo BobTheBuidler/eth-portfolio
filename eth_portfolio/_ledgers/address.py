@@ -31,7 +31,6 @@ from evmspec import FilterTrace
 from evmspec.structs.receipt import Status
 from evmspec.structs.trace import call, reward
 from faster_async_lru import alru_cache
-from typing_extensions import Unpack
 from pandas import DataFrame  # type: ignore
 from tqdm import tqdm
 from y import ERC20, Network
@@ -39,7 +38,7 @@ from y._decorators import stuck_coro_debugger
 from y.datatypes import Block
 from y.utils.events import BATCH_SIZE
 
-from eth_portfolio import _exceptions, _loaders
+from eth_portfolio import _exceptions
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._decorators import set_end_block_if_none
 from eth_portfolio._loaders.transaction import get_nonce_at_block, load_transaction

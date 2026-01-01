@@ -3,7 +3,7 @@ These 2 helpers enable us to decode only the relevant data in the json response 
 They're in a separate file so mypyc doesn't try to compile them
 """
 
-from typing import List, Tuple, TypedDict, final
+from typing import TypedDict, final
 
 from eth_typing import ChecksumAddress
 from msgspec import Raw, Struct

@@ -8,8 +8,6 @@ import a_sync
 import dank_mids
 from eth_typing import BlockNumber, ChecksumAddress
 
-from eth_portfolio._loaders import utils
-
 
 logger: Final = logging.getLogger("eth_portfolio.nonces")
 logger_is_enabled: Final = logger.isEnabledFor

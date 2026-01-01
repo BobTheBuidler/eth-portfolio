@@ -2,7 +2,8 @@ import asyncio
 from datetime import datetime, timezone
 from logging import getLogger
 from math import floor
-from typing import Awaitable, Callable, Final, Iterator, List, Optional, Tuple, Dict
+from typing import Final
+from collections.abc import Awaitable, Callable, Iterator
 
 import a_sync
 import eth_retry
@@ -63,7 +64,7 @@ class ExportablePortfolio(Portfolio):
         get_bucket: Callable[[ChecksumAddress], Awaitable[str]] = None,
         num_workers_transactions: int = 1000,
         asynchronous: bool = False,
-        custom_buckets: Optional[Dict[str, str]] = None,
+        custom_buckets: dict[str, str] | None = None,
     ):
         super().__init__(
             addresses, start_block, label, load_prices, num_workers_transactions, asynchronous
@@ -86,7 +87,7 @@ class ExportablePortfolio(Portfolio):
             self.get_bucket = get_bucket
 
     @cached_property
-    def _data_queries(self) -> Tuple[str, str]:
+    def _data_queries(self) -> tuple[str, str]:
         label = self.label.lower().replace(" ", "_")
         return f"{label}_assets", f"{label}_debts"
 
@@ -116,7 +117,7 @@ class ExportablePortfolio(Portfolio):
         except Exception as e:
             log_error("Error processing %s:", dt, exc_info=True)
 
-    async def get_data_for_export(self, block: BlockNumber, ts: datetime) -> List[victoria.Metric]:
+    async def get_data_for_export(self, block: BlockNumber, ts: datetime) -> list[victoria.Metric]:
         async with self._semaphore:
             print(f"exporting {ts} for {self.label}")
             start = datetime.now(tz=timezone.utc)
@@ -158,8 +159,8 @@ class ExportablePortfolio(Portfolio):
         wallet: ChecksumAddress,
         token: ChecksumAddress,
         bal: Balance,
-        protocol: Optional[str] = None,
-    ) -> Tuple[victoria.types.PrometheusItem, victoria.types.PrometheusItem]:
+        protocol: str | None = None,
+    ) -> tuple[victoria.types.PrometheusItem, victoria.types.PrometheusItem]:
         # TODO wallet nicknames in grafana
         # wallet = KNOWN_ADDRESSES[wallet] if wallet in KNOWN_ADDRESSES else wallet
         if protocol is not None:
