@@ -19,7 +19,6 @@ class BlockRangeIsCached(Exception):
     """
 
 
-
 class BlockRangeOutOfBounds(Exception):
     """
     Exception raised when a block range is out of bounds.

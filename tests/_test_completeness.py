@@ -2,7 +2,6 @@
 This is temporarily disabled, might be removed
 """
 
-
 import eth_portfolio.protocols.lending
 import eth_portfolio.protocols.staking
 import pytest

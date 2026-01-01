@@ -9,7 +9,6 @@ import dank_mids
 from eth_typing import BlockNumber, ChecksumAddress
 
 
-
 logger: Final = logging.getLogger("eth_portfolio.nonces")
 logger_is_enabled: Final = logger.isEnabledFor
 __log: Final = logger._log
