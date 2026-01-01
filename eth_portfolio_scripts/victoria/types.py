@@ -36,3 +36,4 @@ class Data(Struct):
 class Response(Struct):
     status: str
     data: Data
+
