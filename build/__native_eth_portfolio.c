@@ -1638,7 +1638,7 @@ PyObject *CPyDef__nonce_____mypyc_lambda__0_obj_____call__(PyObject *cpy_r___myp
     if (likely(PyDict_Check(cpy_r_r6)))
         cpy_r_r7 = cpy_r_r6;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "<lambda>", 23, CPyStatic__nonce___globals, "dict", cpy_r_r6);
+        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "<lambda>", 22, CPyStatic__nonce___globals, "dict", cpy_r_r6);
         goto CPyL4;
     }
     return cpy_r_r7;
@@ -1766,14 +1766,14 @@ CPyL1: ;
 CPyL4: ;
     cpy_r_r5 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "address", 53, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "address", 52, CPyStatic__nonce___globals);
         goto CPyL51;
     }
     CPy_INCREF(cpy_r_r5);
 CPyL5: ;
     cpy_r_r6 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__block;
     if (unlikely(cpy_r_r6 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "block", 53, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "block", 52, CPyStatic__nonce___globals);
         goto CPyL87;
     }
     CPyTagged_INCREF(cpy_r_r6);
@@ -1981,21 +1981,21 @@ CPyL38: ;
     }
     cpy_r_r41 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
     if (unlikely(cpy_r_r41 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "address", 54, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "address", 53, CPyStatic__nonce___globals);
         goto CPyL51;
     }
     CPy_INCREF(cpy_r_r41);
 CPyL41: ;
     cpy_r_r42 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonce;
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "nonce", 54, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "nonce", 53, CPyStatic__nonce___globals);
         goto CPyL97;
     }
     CPy_INCREF(cpy_r_r42);
 CPyL42: ;
     cpy_r_r43 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__block;
     if (unlikely(cpy_r_r43 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "block", 54, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "block", 53, CPyStatic__nonce___globals);
         goto CPyL98;
     }
     CPyTagged_INCREF(cpy_r_r43);
@@ -2020,7 +2020,7 @@ CPyL43: ;
     }
     cpy_r_r46 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonce;
     if (unlikely(cpy_r_r46 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "nonce", 55, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "nonce", 54, CPyStatic__nonce___globals);
         goto CPyL51;
     }
     CPy_INCREF(cpy_r_r46);
@@ -2070,7 +2070,7 @@ CPyL51: ;
     cpy_r_r56 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'error creating execution cursor' */
     cpy_r_r57 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__e;
     if (unlikely(cpy_r_r57 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "e", 58, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "e", 57, CPyStatic__nonce___globals);
         goto CPyL79;
     }
     CPy_INCREF(cpy_r_r57);
@@ -2092,7 +2092,7 @@ CPyL56: ;
     if (!cpy_r_r61) goto CPyL67;
     cpy_r_r62 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__block;
     if (unlikely(cpy_r_r62 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "block", 58, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "block", 57, CPyStatic__nonce___globals);
         goto CPyL79;
     }
     CPyTagged_INCREF(cpy_r_r62);
@@ -2126,7 +2126,7 @@ CPyL67: ;
     cpy_r_r67 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'For ' */
     cpy_r_r68 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
     if (unlikely(cpy_r_r68 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "address", 60, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "address", 59, CPyStatic__nonce___globals);
         goto CPyL79;
     }
     CPy_INCREF(cpy_r_r68);
@@ -2134,7 +2134,7 @@ CPyL68: ;
     cpy_r_r69 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ' at ' */
     cpy_r_r70 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__block;
     if (unlikely(cpy_r_r70 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "block", 60, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "block", 59, CPyStatic__nonce___globals);
         goto CPyL100;
     }
     CPyTagged_INCREF(cpy_r_r70);
@@ -2148,7 +2148,7 @@ CPyL69: ;
     cpy_r_r72 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ': ' */
     cpy_r_r73 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__e;
     if (unlikely(cpy_r_r73 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "e", 60, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "e", 59, CPyStatic__nonce___globals);
         goto CPyL101;
     }
     CPy_INCREF(cpy_r_r73);
@@ -3201,7 +3201,7 @@ CPyL4: ;
 CPyL7: ;
     cpy_r_r29 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 67, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 66, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPy_INCREF(cpy_r_r29);
@@ -3453,7 +3453,7 @@ CPyL43: ;
 CPyL48: ;
     cpy_r_r72 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
     if (unlikely(cpy_r_r72 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 72, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 71, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPy_INCREF(cpy_r_r72);
@@ -3467,7 +3467,7 @@ CPyL49: ;
     if (likely(PyDict_Check(cpy_r_r73)))
         cpy_r_r74 = cpy_r_r73;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", 72, CPyStatic__nonce___globals, "dict", cpy_r_r73);
+        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", 71, CPyStatic__nonce___globals, "dict", cpy_r_r73);
         goto CPyL206;
     }
     CPy_INCREF(cpy_r_r74);
@@ -3488,7 +3488,7 @@ CPyL49: ;
     }
     cpy_r_r77 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8;
     if (unlikely(cpy_r_r77 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__8", 72, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__8", 71, CPyStatic__nonce___globals);
         goto CPyL468;
     }
     CPy_INCREF(cpy_r_r77);
@@ -3519,14 +3519,14 @@ CPyL54: ;
 CPyL57: ;
     cpy_r_r82 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11;
     if (unlikely(cpy_r_r82 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__11", 72, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__11", 71, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPy_INCREF(cpy_r_r82);
 CPyL58: ;
     cpy_r_r83 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9;
     if (unlikely(cpy_r_r83 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__9", 72, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__9", 71, CPyStatic__nonce___globals);
         goto CPyL469;
     }
 CPyL59: ;
@@ -3565,14 +3565,14 @@ CPyL59: ;
     }
     cpy_r_r91 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__n;
     if (unlikely(cpy_r_r91 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "n", 73, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "n", 72, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPyTagged_INCREF(cpy_r_r91);
 CPyL64: ;
     cpy_r_r92 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonce;
     if (unlikely(cpy_r_r92 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "nonce", 73, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "nonce", 72, CPyStatic__nonce___globals);
         goto CPyL472;
     }
     CPyTagged_INCREF(cpy_r_r92);
@@ -3596,7 +3596,7 @@ CPyL69: ;
     if (!cpy_r_r98) goto CPyL82;
     cpy_r_r100 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__highest_known_nonce_lt_query;
     if (unlikely(cpy_r_r100 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "highest_known_nonce_lt_query", 74, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "highest_known_nonce_lt_query", 73, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPy_INCREF(cpy_r_r100);
@@ -3607,14 +3607,14 @@ CPyL71: ;
     if (cpy_r_r102) goto CPyL80;
     cpy_r_r103 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__n;
     if (unlikely(cpy_r_r103 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "n", 74, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "n", 73, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPyTagged_INCREF(cpy_r_r103);
 CPyL73: ;
     cpy_r_r104 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__highest_known_nonce_lt_query;
     if (unlikely(cpy_r_r104 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "highest_known_nonce_lt_query", 74, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "highest_known_nonce_lt_query", 73, CPyStatic__nonce___globals);
         goto CPyL473;
     }
     CPy_INCREF(cpy_r_r104);
@@ -3649,7 +3649,7 @@ CPyL79: ;
 CPyL80: ;
     cpy_r_r113 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__n;
     if (unlikely(cpy_r_r113 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "n", 75, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "n", 74, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPyTagged_INCREF(cpy_r_r113);
@@ -3668,14 +3668,14 @@ CPyL81: ;
 CPyL82: ;
     cpy_r_r116 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__n;
     if (unlikely(cpy_r_r116 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "n", 76, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "n", 75, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPyTagged_INCREF(cpy_r_r116);
 CPyL83: ;
     cpy_r_r117 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonce;
     if (unlikely(cpy_r_r117 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "nonce", 76, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "nonce", 75, CPyStatic__nonce___globals);
         goto CPyL474;
     }
     CPyTagged_INCREF(cpy_r_r117);
@@ -3695,7 +3695,7 @@ CPyL87: ;
     if (cpy_r_r121) goto CPyL100;
     cpy_r_r123 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lowest_known_nonce_gt_query;
     if (unlikely(cpy_r_r123 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lowest_known_nonce_gt_query", 78, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lowest_known_nonce_gt_query", 77, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPy_INCREF(cpy_r_r123);
@@ -3706,14 +3706,14 @@ CPyL89: ;
     if (cpy_r_r125) goto CPyL98;
     cpy_r_r126 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__n;
     if (unlikely(cpy_r_r126 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "n", 78, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "n", 77, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPyTagged_INCREF(cpy_r_r126);
 CPyL91: ;
     cpy_r_r127 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lowest_known_nonce_gt_query;
     if (unlikely(cpy_r_r127 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lowest_known_nonce_gt_query", 78, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lowest_known_nonce_gt_query", 77, CPyStatic__nonce___globals);
         goto CPyL475;
     }
     CPy_INCREF(cpy_r_r127);
@@ -3748,7 +3748,7 @@ CPyL97: ;
 CPyL98: ;
     cpy_r_r136 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__n;
     if (unlikely(cpy_r_r136 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "n", 79, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "n", 78, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPyTagged_INCREF(cpy_r_r136);
@@ -3766,14 +3766,14 @@ CPyL99: ;
 CPyL100: ;
     cpy_r_r139 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8;
     if (unlikely(cpy_r_r139 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__8", 72, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__8", 71, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPy_INCREF(cpy_r_r139);
 CPyL101: ;
     cpy_r_r140 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10;
     if (unlikely(cpy_r_r140 == -113)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__10", 72, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__10", 71, CPyStatic__nonce___globals);
         goto CPyL476;
     }
 CPyL102: ;
@@ -3792,7 +3792,7 @@ CPyL103: ;
     }
     cpy_r_r143 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__highest_known_nonce_lt_query;
     if (unlikely(cpy_r_r143 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "highest_known_nonce_lt_query", 81, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "highest_known_nonce_lt_query", 80, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPy_INCREF(cpy_r_r143);
@@ -3813,7 +3813,7 @@ CPyL105: ;
 CPyL109: ;
     cpy_r_r148 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
     if (unlikely(cpy_r_r148 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 82, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 81, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPy_INCREF(cpy_r_r148);
@@ -3827,12 +3827,12 @@ CPyL110: ;
     if (likely(PyDict_Check(cpy_r_r149)))
         cpy_r_r150 = cpy_r_r149;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", 82, CPyStatic__nonce___globals, "dict", cpy_r_r149);
+        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", 81, CPyStatic__nonce___globals, "dict", cpy_r_r149);
         goto CPyL206;
     }
     cpy_r_r151 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__highest_known_nonce_lt_query;
     if (unlikely(cpy_r_r151 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "highest_known_nonce_lt_query", 82, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "highest_known_nonce_lt_query", 81, CPyStatic__nonce___globals);
         goto CPyL477;
     }
     CPy_INCREF(cpy_r_r151);
@@ -3888,7 +3888,7 @@ CPyL117: ;
 CPyL118: ;
     cpy_r_r158 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lowest_known_nonce_gt_query;
     if (unlikely(cpy_r_r158 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lowest_known_nonce_gt_query", 86, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lowest_known_nonce_gt_query", 85, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPy_INCREF(cpy_r_r158);
@@ -3909,7 +3909,7 @@ CPyL119: ;
 CPyL123: ;
     cpy_r_r163 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
     if (unlikely(cpy_r_r163 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 87, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 86, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPy_INCREF(cpy_r_r163);
@@ -3923,12 +3923,12 @@ CPyL124: ;
     if (likely(PyDict_Check(cpy_r_r164)))
         cpy_r_r165 = cpy_r_r164;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", 87, CPyStatic__nonce___globals, "dict", cpy_r_r164);
+        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", 86, CPyStatic__nonce___globals, "dict", cpy_r_r164);
         goto CPyL206;
     }
     cpy_r_r166 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lowest_known_nonce_gt_query;
     if (unlikely(cpy_r_r166 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lowest_known_nonce_gt_query", 87, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lowest_known_nonce_gt_query", 86, CPyStatic__nonce___globals);
         goto CPyL478;
     }
     CPy_INCREF(cpy_r_r166);
@@ -4157,14 +4157,14 @@ CPyL159: ;
 CPyL161: ;
     cpy_r_r201 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__hi;
     if (unlikely(cpy_r_r201 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "hi", 92, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "hi", 91, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPyTagged_INCREF(cpy_r_r201);
 CPyL162: ;
     cpy_r_r202 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r202 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 92, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 91, CPyStatic__nonce___globals);
         goto CPyL488;
     }
     CPyTagged_INCREF(cpy_r_r202);
@@ -4185,7 +4185,7 @@ CPyL163: ;
     }
     cpy_r_r206 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__range_size;
     if (unlikely(cpy_r_r206 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "range_size", 93, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "range_size", 92, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPyTagged_INCREF(cpy_r_r206);
@@ -4208,35 +4208,35 @@ CPyL169: ;
     if (!cpy_r_r212) goto CPyL248;
     cpy_r_r214 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
     if (unlikely(cpy_r_r214 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 94, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 93, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPy_INCREF(cpy_r_r214);
 CPyL171: ;
     cpy_r_r215 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonce;
     if (unlikely(cpy_r_r215 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "nonce", 94, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "nonce", 93, CPyStatic__nonce___globals);
         goto CPyL489;
     }
     CPyTagged_INCREF(cpy_r_r215);
 CPyL172: ;
     cpy_r_r216 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r216 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 94, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 93, CPyStatic__nonce___globals);
         goto CPyL490;
     }
     CPyTagged_INCREF(cpy_r_r216);
 CPyL173: ;
     cpy_r_r217 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__hi;
     if (unlikely(cpy_r_r217 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "hi", 94, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "hi", 93, CPyStatic__nonce___globals);
         goto CPyL491;
     }
     CPyTagged_INCREF(cpy_r_r217);
 CPyL174: ;
     cpy_r_r218 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__range_size;
     if (unlikely(cpy_r_r218 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "range_size", 94, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "range_size", 93, CPyStatic__nonce___globals);
         goto CPyL492;
     }
     CPyTagged_INCREF(cpy_r_r218);
@@ -5015,14 +5015,14 @@ CPyL299: ;
     if (!1) goto CPyL444;
     cpy_r_r339 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
     if (unlikely(cpy_r_r339 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 98, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 97, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPy_INCREF(cpy_r_r339);
 CPyL301: ;
     cpy_r_r340 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r340 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 98, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 97, CPyStatic__nonce___globals);
         goto CPyL525;
     }
     CPyTagged_INCREF(cpy_r_r340);
@@ -5213,14 +5213,14 @@ CPyL330: ;
     }
     cpy_r_r370 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute___nonce;
     if (unlikely(cpy_r_r370 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "_nonce", 100, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "_nonce", 99, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPyTagged_INCREF(cpy_r_r370);
 CPyL333: ;
     cpy_r_r371 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonce;
     if (unlikely(cpy_r_r371 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "nonce", 100, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "nonce", 99, CPyStatic__nonce___globals);
         goto CPyL535;
     }
     CPyTagged_INCREF(cpy_r_r371);
@@ -5244,7 +5244,7 @@ CPyL338: ;
     if (!cpy_r_r377) goto CPyL365;
     cpy_r_r379 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r379 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 101, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 100, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPyTagged_INCREF(cpy_r_r379);
@@ -5260,21 +5260,21 @@ CPyL340: ;
     }
     cpy_r_r381 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r381 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 102, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 101, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPyTagged_INCREF(cpy_r_r381);
 CPyL342: ;
     cpy_r_r382 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__hi;
     if (unlikely(cpy_r_r382 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "hi", 102, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "hi", 101, CPyStatic__nonce___globals);
         goto CPyL536;
     }
     CPyTagged_INCREF(cpy_r_r382);
 CPyL343: ;
     cpy_r_r383 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r383 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 102, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 101, CPyStatic__nonce___globals);
         goto CPyL537;
     }
     CPyTagged_INCREF(cpy_r_r383);
@@ -5322,7 +5322,7 @@ CPyL350: ;
     }
     cpy_r_r393 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__debug_logs_enabled;
     if (unlikely(cpy_r_r393 == 2)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "debug_logs_enabled", 103, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "debug_logs_enabled", 102, CPyStatic__nonce___globals);
         goto CPyL459;
     }
 CPyL352: ;
@@ -5341,28 +5341,28 @@ CPyL356: ;
     cpy_r_r396 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Nonce for %s at %s is %s, checking higher block %s' */
     cpy_r_r397 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
     if (unlikely(cpy_r_r397 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 107, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 106, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPy_INCREF(cpy_r_r397);
 CPyL357: ;
     cpy_r_r398 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__old_lo;
     if (unlikely(cpy_r_r398 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "old_lo", 107, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "old_lo", 106, CPyStatic__nonce___globals);
         goto CPyL539;
     }
     CPyTagged_INCREF(cpy_r_r398);
 CPyL358: ;
     cpy_r_r399 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute___nonce;
     if (unlikely(cpy_r_r399 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "_nonce", 107, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "_nonce", 106, CPyStatic__nonce___globals);
         goto CPyL540;
     }
     CPyTagged_INCREF(cpy_r_r399);
 CPyL359: ;
     cpy_r_r400 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r400 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 107, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 106, CPyStatic__nonce___globals);
         goto CPyL541;
     }
     CPyTagged_INCREF(cpy_r_r400);
@@ -5413,14 +5413,14 @@ CPyL364: ;
 CPyL365: ;
     cpy_r_r409 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
     if (unlikely(cpy_r_r409 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 111, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 110, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPy_INCREF(cpy_r_r409);
 CPyL366: ;
     cpy_r_r410 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r410 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 111, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 110, CPyStatic__nonce___globals);
         goto CPyL545;
     }
     CPyTagged_INCREF(cpy_r_r410);
@@ -5613,14 +5613,14 @@ CPyL395: ;
     }
     cpy_r_r441 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__prev_block_nonce;
     if (unlikely(cpy_r_r441 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "prev_block_nonce", 112, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "prev_block_nonce", 111, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPyTagged_INCREF(cpy_r_r441);
 CPyL398: ;
     cpy_r_r442 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonce;
     if (unlikely(cpy_r_r442 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "nonce", 112, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "nonce", 111, CPyStatic__nonce___globals);
         goto CPyL555;
     }
     CPyTagged_INCREF(cpy_r_r442);
@@ -5645,7 +5645,7 @@ CPyL403: ;
     if (!cpy_r_r449) goto CPyL425;
     cpy_r_r451 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r451 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 113, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 112, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPyTagged_INCREF(cpy_r_r451);
@@ -5661,7 +5661,7 @@ CPyL405: ;
     }
     cpy_r_r453 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r453 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 114, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 113, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPyTagged_INCREF(cpy_r_r453);
@@ -5696,7 +5696,7 @@ CPyL410: ;
     }
     cpy_r_r459 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__debug_logs_enabled;
     if (unlikely(cpy_r_r459 == 2)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "debug_logs_enabled", 115, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "debug_logs_enabled", 114, CPyStatic__nonce___globals);
         goto CPyL459;
     }
 CPyL412: ;
@@ -5715,28 +5715,28 @@ CPyL416: ;
     cpy_r_r462 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Nonce for %s at %s is %s, checking lower block %s' */
     cpy_r_r463 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
     if (unlikely(cpy_r_r463 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 119, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 118, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPy_INCREF(cpy_r_r463);
 CPyL417: ;
     cpy_r_r464 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__hi;
     if (unlikely(cpy_r_r464 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "hi", 119, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "hi", 118, CPyStatic__nonce___globals);
         goto CPyL556;
     }
     CPyTagged_INCREF(cpy_r_r464);
 CPyL418: ;
     cpy_r_r465 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute___nonce;
     if (unlikely(cpy_r_r465 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "_nonce", 119, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "_nonce", 118, CPyStatic__nonce___globals);
         goto CPyL557;
     }
     CPyTagged_INCREF(cpy_r_r465);
 CPyL419: ;
     cpy_r_r466 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r466 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 119, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 118, CPyStatic__nonce___globals);
         goto CPyL558;
     }
     CPyTagged_INCREF(cpy_r_r466);
@@ -5787,7 +5787,7 @@ CPyL424: ;
 CPyL425: ;
     cpy_r_r475 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__debug_logs_enabled;
     if (unlikely(cpy_r_r475 == 2)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "debug_logs_enabled", 123, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "debug_logs_enabled", 122, CPyStatic__nonce___globals);
         goto CPyL459;
     }
 CPyL426: ;
@@ -5806,21 +5806,21 @@ CPyL430: ;
     cpy_r_r478 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Found nonce %s for %s at block %s' */
     cpy_r_r479 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonce;
     if (unlikely(cpy_r_r479 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "nonce", 124, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "nonce", 123, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPyTagged_INCREF(cpy_r_r479);
 CPyL431: ;
     cpy_r_r480 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
     if (unlikely(cpy_r_r480 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 124, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "address", 123, CPyStatic__nonce___globals);
         goto CPyL562;
     }
     CPy_INCREF(cpy_r_r480);
 CPyL432: ;
     cpy_r_r481 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r481 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 124, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 123, CPyStatic__nonce___globals);
         goto CPyL563;
     }
     CPyTagged_INCREF(cpy_r_r481);
@@ -5867,7 +5867,7 @@ CPyL437: ;
 CPyL438: ;
     cpy_r_r490 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r490 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 126, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "lo", 125, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPyTagged_INCREF(cpy_r_r490);
@@ -6925,7 +6925,7 @@ CPyL1: ;
 CPyL4: ;
     cpy_r_r5 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__range_size;
     if (unlikely(cpy_r_r5 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "range_size", 136, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "range_size", 135, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPyTagged_INCREF(cpy_r_r5);
@@ -6947,14 +6947,14 @@ CPyL5: ;
     }
     cpy_r_r8 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__range_size;
     if (unlikely(cpy_r_r8 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "range_size", 137, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "range_size", 136, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPyTagged_INCREF(cpy_r_r8);
 CPyL8: ;
     cpy_r_r9 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__num_chunks;
     if (unlikely(cpy_r_r9 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "num_chunks", 137, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "num_chunks", 136, CPyStatic__nonce___globals);
         goto CPyL133;
     }
     CPyTagged_INCREF(cpy_r_r9);
@@ -6991,7 +6991,7 @@ CPyL9: ;
     }
     cpy_r_r14 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__num_chunks;
     if (unlikely(cpy_r_r14 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "num_chunks", 138, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "num_chunks", 137, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPyTagged_INCREF(cpy_r_r14);
@@ -7017,7 +7017,7 @@ CPyL14: ;
     }
     cpy_r_r18 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27;
     if (unlikely(cpy_r_r18 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__27", 138, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__27", 137, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPyTagged_INCREF(cpy_r_r18);
@@ -7034,14 +7034,14 @@ CPyL17: ;
 CPyL18: ;
     cpy_r_r20 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27;
     if (unlikely(cpy_r_r20 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__27", 138, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__27", 137, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPyTagged_INCREF(cpy_r_r20);
 CPyL19: ;
     cpy_r_r21 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__26;
     if (unlikely(cpy_r_r21 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__26", 138, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__26", 137, CPyStatic__nonce___globals);
         goto CPyL134;
     }
     CPyTagged_INCREF(cpy_r_r21);
@@ -7065,21 +7065,21 @@ CPyL24: ;
     if (!cpy_r_r27) goto CPyL33;
     cpy_r_r29 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r29 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "lo", 138, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "lo", 137, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPyTagged_INCREF(cpy_r_r29);
 CPyL26: ;
     cpy_r_r30 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__i;
     if (unlikely(cpy_r_r30 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "i", 138, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "i", 137, CPyStatic__nonce___globals);
         goto CPyL135;
     }
     CPyTagged_INCREF(cpy_r_r30);
 CPyL27: ;
     cpy_r_r31 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__chunk_size;
     if (unlikely(cpy_r_r31 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "chunk_size", 138, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "chunk_size", 137, CPyStatic__nonce___globals);
         goto CPyL136;
     }
     CPyTagged_INCREF(cpy_r_r31);
@@ -7108,7 +7108,7 @@ CPyL29: ;
     }
     cpy_r_r38 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27;
     if (unlikely(cpy_r_r38 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__27", 138, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__27", 137, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPyTagged_INCREF(cpy_r_r38);
@@ -7154,7 +7154,7 @@ CPyL34: ;
     }
     cpy_r_r44 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__points;
     if (unlikely(cpy_r_r44 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "points", 139, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "points", 138, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPy_INCREF_NO_IMM(cpy_r_r44);
@@ -7184,7 +7184,7 @@ CPyL36: ;
 CPyL39: ;
     cpy_r_r50 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__28;
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__28", 139, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__28", 138, CPyStatic__nonce___globals);
         goto CPyL140;
     }
     CPy_INCREF_NO_IMM(cpy_r_r50);
@@ -7194,7 +7194,7 @@ CPyL40: ;
     CPy_DECREF_NO_IMM(cpy_r_r50);
     cpy_r_r53 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__29;
     if (unlikely(cpy_r_r53 == -113)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__29", 139, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__29", 138, CPyStatic__nonce___globals);
         goto CPyL140;
     }
 CPyL41: ;
@@ -7202,14 +7202,14 @@ CPyL41: ;
     if (!cpy_r_r54) goto CPyL53;
     cpy_r_r55 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__28;
     if (unlikely(cpy_r_r55 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__28", 139, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__28", 138, CPyStatic__nonce___globals);
         goto CPyL140;
     }
     CPy_INCREF_NO_IMM(cpy_r_r55);
 CPyL43: ;
     cpy_r_r56 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__29;
     if (unlikely(cpy_r_r56 == -113)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__29", 139, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__29", 138, CPyStatic__nonce___globals);
         goto CPyL141;
     }
 CPyL44: ;
@@ -7247,14 +7247,14 @@ CPyL44: ;
 CPyL47: ;
     cpy_r_r65 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
     if (unlikely(cpy_r_r65 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "address", 139, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "address", 138, CPyStatic__nonce___globals);
         goto CPyL140;
     }
     CPy_INCREF(cpy_r_r65);
 CPyL48: ;
     cpy_r_r66 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__point;
     if (unlikely(cpy_r_r66 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "point", 139, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "point", 138, CPyStatic__nonce___globals);
         goto CPyL142;
     }
     CPyTagged_INCREF(cpy_r_r66);
@@ -7269,7 +7269,7 @@ CPyL49: ;
     CPyList_SetItemUnsafe(cpy_r_r47, cpy_r_r64, cpy_r_r67);
     cpy_r_r68 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__29;
     if (unlikely(cpy_r_r68 == -113)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__29", 139, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__29", 138, CPyStatic__nonce___globals);
         goto CPyL140;
     }
 CPyL52: ;
@@ -7481,7 +7481,7 @@ CPyL86: ;
     }
     cpy_r_r102 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__points;
     if (unlikely(cpy_r_r102 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "points", 140, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "points", 139, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPy_INCREF_NO_IMM(cpy_r_r102);
@@ -7503,7 +7503,7 @@ CPyL88: ;
     }
     cpy_r_r105 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonces;
     if (unlikely(cpy_r_r105 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "nonces", 140, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "nonces", 139, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPy_INCREF(cpy_r_r105);
@@ -7534,7 +7534,7 @@ CPyL91: ;
 CPyL94: ;
     cpy_r_r109 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__32;
     if (unlikely(cpy_r_r109 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__32", 140, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__32", 139, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPy_INCREF_NO_IMM(cpy_r_r109);
@@ -7544,7 +7544,7 @@ CPyL95: ;
     CPy_DECREF_NO_IMM(cpy_r_r109);
     cpy_r_r112 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__33;
     if (unlikely(cpy_r_r112 == -113)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__33", 140, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__33", 139, CPyStatic__nonce___globals);
         goto CPyL132;
     }
 CPyL96: ;
@@ -7552,7 +7552,7 @@ CPyL96: ;
     if (!cpy_r_r113) goto CPyL120;
     cpy_r_r114 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__35;
     if (unlikely(cpy_r_r114 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__35", 140, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__35", 139, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPy_INCREF(cpy_r_r114);
@@ -7562,14 +7562,14 @@ CPyL98: ;
     if (cpy_r_r115 == NULL) goto CPyL120;
     cpy_r_r116 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__32;
     if (unlikely(cpy_r_r116 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__32", 140, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__32", 139, CPyStatic__nonce___globals);
         goto CPyL154;
     }
     CPy_INCREF_NO_IMM(cpy_r_r116);
 CPyL100: ;
     cpy_r_r117 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__33;
     if (unlikely(cpy_r_r117 == -113)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__33", 140, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__33", 139, CPyStatic__nonce___globals);
         goto CPyL155;
     }
 CPyL101: ;
@@ -7610,14 +7610,14 @@ CPyL101: ;
     }
     cpy_r_r126 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__n;
     if (unlikely(cpy_r_r126 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "n", 141, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "n", 140, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPy_INCREF(cpy_r_r126);
 CPyL105: ;
     cpy_r_r127 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonce;
     if (unlikely(cpy_r_r127 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "nonce", 141, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "nonce", 140, CPyStatic__nonce___globals);
         goto CPyL156;
     }
     CPyTagged_INCREF(cpy_r_r127);
@@ -7641,14 +7641,14 @@ CPyL106: ;
     if (!cpy_r_r132) goto CPyL116;
     cpy_r_r133 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r133 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "lo", 142, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "lo", 141, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPyTagged_INCREF(cpy_r_r133);
 CPyL110: ;
     cpy_r_r134 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__block;
     if (unlikely(cpy_r_r134 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "block", 142, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "block", 141, CPyStatic__nonce___globals);
         goto CPyL157;
     }
     CPyTagged_INCREF(cpy_r_r134);
@@ -7674,7 +7674,7 @@ CPyL115: ;
 CPyL116: ;
     cpy_r_r138 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__block;
     if (unlikely(cpy_r_r138 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "block", 143, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "block", 142, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPyTagged_INCREF(cpy_r_r138);
@@ -7690,7 +7690,7 @@ CPyL117: ;
     }
     cpy_r_r140 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__33;
     if (unlikely(cpy_r_r140 == -113)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__33", 140, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__33", 139, CPyStatic__nonce___globals);
         goto CPyL132;
     }
 CPyL119: ;
@@ -7710,14 +7710,14 @@ CPyL120: ;
     }
     cpy_r_r144 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r144 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "lo", 144, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "lo", 143, CPyStatic__nonce___globals);
         goto CPyL132;
     }
     CPyTagged_INCREF(cpy_r_r144);
 CPyL122: ;
     cpy_r_r145 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__hi;
     if (unlikely(cpy_r_r145 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "hi", 144, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "hi", 143, CPyStatic__nonce___globals);
         goto CPyL158;
     }
     CPyTagged_INCREF(cpy_r_r145);
@@ -8302,7 +8302,7 @@ CPyL3: ;
     if (likely(PyDict_Check(cpy_r_r2)))
         cpy_r_r3 = cpy_r_r2;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "_update_nonces", 149, CPyStatic__nonce___globals, "dict", cpy_r_r2);
+        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "_update_nonces", 148, CPyStatic__nonce___globals, "dict", cpy_r_r2);
         goto CPyL19;
     }
     CPyTagged_INCREF(cpy_r_nonce);
@@ -8358,7 +8358,7 @@ CPyL15: ;
     if (likely(PyDict_Check(cpy_r_r16)))
         cpy_r_r17 = cpy_r_r16;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "_update_nonces", 150, CPyStatic__nonce___globals, "dict", cpy_r_r16);
+        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "_update_nonces", 149, CPyStatic__nonce___globals, "dict", cpy_r_r16);
         goto CPyL19;
     }
     CPyTagged_INCREF(cpy_r_nonce);
@@ -9685,7 +9685,7 @@ CPyL113: ;
 CPyL114: ;
     cpy_r_r141 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__block;
     if (unlikely(cpy_r_r141 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "block", 195, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "block", 194, CPyStatic__nonce___globals);
         goto CPyL116;
     }
     CPyTagged_INCREF(cpy_r_r141);
@@ -11264,7 +11264,7 @@ CPyL20: ;
     if (likely(PyDict_Check(cpy_r_r118)))
         cpy_r_r119 = cpy_r_r118;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", 23, CPyStatic__nonce___globals, "dict", cpy_r_r118);
+        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", 22, CPyStatic__nonce___globals, "dict", cpy_r_r118);
         goto CPyL63;
     }
     CPyStatic__nonce___nonces = cpy_r_r119;
@@ -11304,7 +11304,7 @@ CPyL20: ;
     if (likely(PyDict_Check(cpy_r_r132)))
         cpy_r_r133 = cpy_r_r132;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", 24, CPyStatic__nonce___globals, "dict", cpy_r_r132);
+        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", 23, CPyStatic__nonce___globals, "dict", cpy_r_r132);
         goto CPyL63;
     }
     CPyStatic__nonce___locks = cpy_r_r133;
