@@ -2,7 +2,7 @@ from importlib import import_module
 from inspect import getmodule, stack
 from pkgutil import walk_packages
 from types import ModuleType
-from typing import Dict, Final, List
+from typing import Final
 
 import y.constants
 

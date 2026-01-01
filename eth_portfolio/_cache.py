@@ -8,7 +8,7 @@ from os import makedirs
 from os.path import exists, join
 from pickle import dumps, load, loads
 from random import random
-from typing import Any, Final, List, NoReturn, Optional
+from typing import Any, Final, NoReturn
 from collections.abc import Callable
 
 from a_sync import PruningThreadPoolExecutor
@@ -16,7 +16,6 @@ from a_sync._typing import P, T
 from a_sync.asyncio import create_task
 
 # TODO: rip out this deprecated func
-from a_sync.primitives.queue import log_broken
 from aiofiles import open as _aio_open
 from brownie import chain
 

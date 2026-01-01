@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from asyncio import Task, create_task, sleep
 from logging import DEBUG, getLogger
-from typing import Any, Final, List
+from typing import Any, Final
 from collections.abc import AsyncIterator
 
 import dank_mids

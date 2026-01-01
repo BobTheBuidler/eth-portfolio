@@ -1,6 +1,6 @@
 from argparse import Namespace
 from datetime import datetime, timezone
-from typing import Dict, Final, Optional
+from typing import Final
 
 import a_sync
 import a_sync.asyncio

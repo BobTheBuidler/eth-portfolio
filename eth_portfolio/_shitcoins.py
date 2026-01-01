@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import DefaultDict, Final, Set
+from typing import DefaultDict, Final
 
 from eth_typing import ChecksumAddress
 from y import Network, convert

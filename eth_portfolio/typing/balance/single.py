@@ -1,4 +1,4 @@
-from typing import Literal, Optional, Union, final
+from typing import Literal, Union, final
 
 from dictstruct import DictStruct
 from eth_typing import BlockNumber, ChecksumAddress

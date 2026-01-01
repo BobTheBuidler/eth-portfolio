@@ -1,5 +1,4 @@
 from asyncio import gather
-from typing import List, Optional
 
 import a_sync
 from a_sync import igather

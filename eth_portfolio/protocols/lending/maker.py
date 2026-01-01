@@ -1,5 +1,5 @@
 from asyncio import gather
-from typing import Final, List, Optional
+from typing import Final
 
 from a_sync import igather
 from brownie import ZERO_ADDRESS

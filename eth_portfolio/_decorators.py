@@ -2,7 +2,7 @@ import logging
 from asyncio import iscoroutinefunction
 from functools import wraps
 from inspect import isasyncgenfunction
-from typing import Optional, overload
+from typing import overload
 from collections.abc import AsyncIterator, Callable
 
 from a_sync.iter import ASyncGeneratorFunction

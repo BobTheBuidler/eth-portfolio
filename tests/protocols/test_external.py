@@ -1,8 +1,7 @@
-from unittest.mock import AsyncMock, create_autospec, patch
+from unittest.mock import AsyncMock, patch
 
 import pytest
 from eth_portfolio import protocols
-from eth_portfolio.protocols._base import StakingPoolABC
 from eth_portfolio.typing import Balance, RemoteTokenBalances, TokenBalances
 
 SOME_ADDRESS = "0x0000000000000000000000000000000000000001"

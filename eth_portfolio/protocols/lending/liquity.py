@@ -1,4 +1,3 @@
-from typing import Optional
 
 from faster_async_lru import alru_cache
 from y import Contract, Network, get_price

@@ -1,6 +1,5 @@
 import decimal
 import logging
-from typing import Union
 
 from evmspec.data import Wei
 from typing_extensions import Self

@@ -1,5 +1,4 @@
 import abc
-from typing import Optional
 
 import a_sync
 from y.datatypes import Address, Block

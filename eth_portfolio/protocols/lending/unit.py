@@ -1,4 +1,3 @@
-from typing import Optional
 
 from y import Contract, Network
 from y._decorators import stuck_coro_debugger

@@ -7,11 +7,7 @@ from typing import (
     TYPE_CHECKING,
     Final,
     Generic,
-    List,
-    Optional,
-    Tuple,
     TypeVar,
-    Union,
 )
 from collections.abc import AsyncGenerator, AsyncIterator
 

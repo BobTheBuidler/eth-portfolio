@@ -2,7 +2,6 @@
 This is temporarily disabled, might be removed
 """
 
-from collections.abc import Callable
 
 import eth_portfolio.protocols.lending
 import eth_portfolio.protocols.staking

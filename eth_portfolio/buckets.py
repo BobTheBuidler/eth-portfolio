@@ -1,12 +1,12 @@
 import logging
-from typing import Any, Final, Optional, Set, Dict
+from typing import Any, Final
 
 from a_sync import igather
 from eth_typing import ChecksumAddress
 from faster_async_lru import alru_cache
 from y.constants import CHAINID, STABLECOINS, WRAPPED_GAS_COIN
 from y.convert import to_address
-from y.datatypes import Address, AnyAddressType
+from y.datatypes import AnyAddressType
 from y.exceptions import ContractNotVerified
 from y.prices.lending.aave import aave
 from y.prices.lending.compound import CToken, compound
