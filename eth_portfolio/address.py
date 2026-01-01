@@ -205,7 +205,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         return WalletBalances(await a_sync.gather(coros), block=block)  # type: ignore [arg-type]
 
     @stuck_coro_debugger
-    async def assets(self, block: Optional[Block] = None) -> TokenBalances:
+    async def assets(self, block: Block | None = None) -> TokenBalances:
         """
         Retrieves the balances for every asset in the wallet at a given block.
 
@@ -221,7 +221,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         return await self.balances(block=block, sync=False)  # type: ignore [return-value]
 
     @stuck_coro_debugger
-    async def debt(self, block: Optional[Block] = None) -> RemoteTokenBalances:
+    async def debt(self, block: Block | None = None) -> RemoteTokenBalances:
         """
         Retrieves all debt balances for the wallet at a given block.
 
@@ -237,7 +237,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         return await protocols.lending.debt(self.address, block=block)
 
     @stuck_coro_debugger
-    async def external_balances(self, block: Optional[Block] = None) -> RemoteTokenBalances:
+    async def external_balances(self, block: Block | None = None) -> RemoteTokenBalances:
         """
         Retrieves the balances owned by the wallet, but not held *in* the wallet, at a given block.
 
@@ -265,7 +265,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     # Assets
 
     @stuck_coro_debugger
-    async def balances(self, block: Optional[Block]) -> TokenBalances:
+    async def balances(self, block: Block | None) -> TokenBalances:
         """
         Retrieves balances for all assets in the wallet at a given block.
 
@@ -287,7 +287,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
 
     @eth_retry.auto_retry
     @stuck_coro_debugger
-    async def eth_balance(self, block: Optional[Block]) -> Balance:
+    async def eth_balance(self, block: Block | None) -> Balance:
         """
         Retrieves the ETH balance for the wallet at a given block.
 
@@ -338,7 +338,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
             return TokenBalances(block=block)
 
     @stuck_coro_debugger
-    async def collateral(self, block: Optional[Block] = None) -> RemoteTokenBalances:
+    async def collateral(self, block: Block | None = None) -> RemoteTokenBalances:
         """
         Retrieves all balances held by lending protocols on behalf of the wallet at a given block.
 
@@ -354,7 +354,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         return await protocols.lending.collateral(self.address, block=block)
 
     @stuck_coro_debugger
-    async def staking(self, block: Optional[Block] = None) -> RemoteTokenBalances:
+    async def staking(self, block: Block | None = None) -> RemoteTokenBalances:
         """
         Retrieves all balances staked in protocols supported by eth_portfolio on behalf of the wallet at a given block.
 
@@ -372,7 +372,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
     # Ledger Entries
 
     @stuck_coro_debugger
-    async def all(self, start_block: Block, end_block: Block) -> Dict[str, PandableLedgerEntryList]:
+    async def all(self, start_block: Block, end_block: Block) -> dict[str, PandableLedgerEntryList]:
         """
         Retrieves all ledger entries between two blocks.
 

@@ -24,7 +24,7 @@ class Decimal(decimal.Decimal):
         - :class:`decimal.Decimal`
     """
 
-    def jsonify(self) -> Union[str, int]:
+    def jsonify(self) -> str | int:
         """
         Converts the :class:`Decimal` to a JSON-friendly format.
 

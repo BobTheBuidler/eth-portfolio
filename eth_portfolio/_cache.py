@@ -8,7 +8,8 @@ from os import makedirs
 from os.path import exists, join
 from pickle import dumps, load, loads
 from random import random
-from typing import Any, Callable, Final, List, NoReturn, Optional
+from typing import Any, Final, List, NoReturn, Optional
+from collections.abc import Callable
 
 from a_sync import PruningThreadPoolExecutor
 from a_sync._typing import P, T
@@ -60,8 +61,8 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
                 logger.exception(e)
                 raise
 
-        loop: Optional[AbstractEventLoop] = None
-        workers: List[Task[NoReturn]] = []
+        loop: AbstractEventLoop | None = None
+        workers: list[Task[NoReturn]] = []
 
         @functools.wraps(fn)
         async def disk_cache_wrap(*args: P.args, **kwargs: P.kwargs) -> T:

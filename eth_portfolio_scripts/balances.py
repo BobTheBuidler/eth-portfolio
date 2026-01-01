@@ -19,7 +19,7 @@ yield_to_loop: Final = a_sync.asyncio.sleep0
 @docker.ensure_containers
 async def export_balances(
     args: Namespace,
-    custom_buckets: Optional[Dict[HexAddress, str]] = None,
+    custom_buckets: dict[HexAddress, str] | None = None,
 ) -> None:
     import dank_mids
 

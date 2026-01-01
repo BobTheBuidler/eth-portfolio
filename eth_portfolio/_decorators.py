@@ -2,11 +2,12 @@ import logging
 from asyncio import iscoroutinefunction
 from functools import wraps
 from inspect import isasyncgenfunction
-from typing import AsyncIterator, Callable, Optional, overload
+from typing import Optional, overload
+from collections.abc import AsyncIterator, Callable
 
 from a_sync.iter import ASyncGeneratorFunction
 from brownie import chain
-from typing_extensions import Concatenate
+from typing import Concatenate
 from y.datatypes import Block
 
 from eth_portfolio import _config
@@ -19,18 +20,18 @@ logger = logging.getLogger(__name__)
 @overload
 def set_end_block_if_none(
     func: Callable[Concatenate[_I, Block, Block, _P], AsyncIterator[_T]],
-) -> Callable[Concatenate[_I, Block, Optional[Block], _P], AsyncIterator[_T]]: ...
+) -> Callable[Concatenate[_I, Block, Block | None, _P], AsyncIterator[_T]]: ...
 
 
 @overload
 def set_end_block_if_none(
     func: Callable[Concatenate[_I, Block, Block, _P], _T],
-) -> Callable[Concatenate[_I, Block, Optional[Block], _P], _T]: ...
+) -> Callable[Concatenate[_I, Block, Block | None, _P], _T]: ...
 
 
 def set_end_block_if_none(
     func: Callable[Concatenate[_I, Block, Block, _P], _T],
-) -> Callable[Concatenate[_I, Block, Optional[Block], _P], _T]:
+) -> Callable[Concatenate[_I, Block, Block | None, _P], _T]:
     """
     Used to set `end_block` = `chain.height - _config.REORG_BUFFER` if `end_block` is None.
     Only works with a class function that takes args (self, start_block, end_block, *args, **kwargs).
@@ -41,7 +42,7 @@ def set_end_block_if_none(
         async def wrap(
             obj: _I,
             start_block: Block,
-            end_block: Optional[Block],
+            end_block: Block | None,
             *args: _P.args,
             **kwargs: _P.kwargs,
         ) -> AsyncIterator[_T]:

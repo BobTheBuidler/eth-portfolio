@@ -35,12 +35,12 @@ class Balance(
     The USD equivalent value of the token amount.
     """
 
-    token: Optional[ChecksumAddress] = None
+    token: ChecksumAddress | None = None
     """
     The token the balance is of, if known.
     """
 
-    block: Optional[BlockNumber] = None
+    block: BlockNumber | None = None
     """
     The block from which the balance was taken, if known.
     """

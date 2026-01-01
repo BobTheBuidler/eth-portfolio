@@ -13,14 +13,14 @@ from y.datatypes import Address, Block
 
 import_submodules()
 
-protocols: List[Union[LendingProtocol, LendingProtocolWithLockedCollateral]] = get_protocols()  # type: ignore [assignment]
+protocols: list[LendingProtocol | LendingProtocolWithLockedCollateral] = get_protocols()  # type: ignore [assignment]
 
 has_collateral = lambda protocol: isinstance(protocol, LendingProtocolWithLockedCollateral)
 
 
 @a_sync.future
 @stuck_coro_debugger
-async def collateral(address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
+async def collateral(address: Address, block: Block | None = None) -> RemoteTokenBalances:
     protocol_balances = a_sync.map(
         lambda protocol: protocol.balances(address, block),
         filter(has_collateral, protocols),
@@ -35,7 +35,7 @@ async def collateral(address: Address, block: Optional[Block] = None) -> RemoteT
 
 @a_sync.future
 @stuck_coro_debugger
-async def debt(address: Address, block: Optional[Block] = None) -> RemoteTokenBalances:
+async def debt(address: Address, block: Block | None = None) -> RemoteTokenBalances:
     if not protocols:
         return RemoteTokenBalances(block=block)
     protocol_debts = a_sync.map(
