@@ -47,7 +47,7 @@ services:
     restart: always
 
   victoria-metrics:
-    image: victoriametrics/victoria-metrics:v1.132.0
+    image: victoriametrics/victoria-metrics:v1.133.0
     volumes:
       - ~/.eth-portfolio/data/victoria/:/victoria-metrics-data
     command:
