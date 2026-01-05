@@ -6,7 +6,7 @@
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[704];
+extern PyObject *CPyStatics[709];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -183,6 +183,7 @@ extern PyObject *CPyPy__nonce___get_block_number(PyObject *self, PyObject *const
 extern char CPyDef__nonce_____top_level__(void);
 extern PyObject *CPyStatic__loaders___balances____ZERO;
 extern PyObject *CPyStatic__loaders___balances___logger;
+extern PyObject *CPyStatic__loaders___balances___rounding_logger;
 extern PyObject *CPyStatic__loaders___balances____builtin_round;
 extern PyTypeObject *CPyType__loaders___balances___load_token_balance_gen;
 extern PyObject *CPyDef__loaders___balances___load_token_balance_gen(void);
