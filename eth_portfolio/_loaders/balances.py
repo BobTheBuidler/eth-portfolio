@@ -13,7 +13,8 @@ from eth_portfolio.typing import Balance
 
 _ZERO: Final = Decimal(0)
 
-logger: Final = logging.getLogger(__name__)
+logger: Final = logging.getLogger("eth_portfolio.balances")
+rounding_logger: Final = logging.getLogger("eth_portfolio.rounding")
 
 
 @stuck_coro_debugger
@@ -91,4 +92,5 @@ def round(value: Decimal, digits: int) -> Decimal:
     try:
         return _builtin_round(value, digits)  # type: ignore [return-value]
     except InvalidOperation:
+        rounding_logger.error("InvalidOperation when rounding %s to %s digits", value, digits)
         return value
