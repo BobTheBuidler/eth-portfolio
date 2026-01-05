@@ -1,5 +1,6 @@
 from asyncio import create_task, gather, get_event_loop, sleep
 from contextlib import suppress
+from decimal import getcontext
 from functools import lru_cache
 from typing import Any
 
@@ -371,23 +372,30 @@ async def insert_transaction(transaction: Transaction) -> None:
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def _insert_transaction(transaction: Transaction) -> None:
+    # we need to temporarily set the Context for Decimal objects to ensure we have enough precision for our postgres column
+    decimal_context = getcontext()
+    decimal_precision = decimal_context.prec
+    decimal_context.prec = 38
     with reraise_excs_with_extra_context(transaction):
-        entities.Transaction(
-            **transaction.__db_primary_key__,
-            block=(CHAINID, transaction.block_number),
-            transaction_index=transaction.transaction_index,
-            hash=transaction.hash.hex(),
-            to_address=(CHAINID, transaction.to_address) if transaction.to_address else None,
-            value=transaction.value,
-            price=transaction.price,
-            value_usd=transaction.value_usd,
-            type=getattr(transaction, "type", None),
-            gas=transaction.gas,
-            gas_price=transaction.gas_price,
-            max_fee_per_gas=getattr(transaction, "max_fee_per_gas", None),
-            max_priority_fee_per_gas=getattr(transaction, "max_priority_fee_per_gas", None),
-            raw=json.encode(transaction, enc_hook=enc_hook),
-        )
+        try:
+            entities.Transaction(
+                **transaction.__db_primary_key__,
+                block=(CHAINID, transaction.block_number),
+                transaction_index=transaction.transaction_index,
+                hash=transaction.hash.hex(),
+                to_address=(CHAINID, transaction.to_address) if transaction.to_address else None,
+                value=transaction.value,
+                price=transaction.price,
+                value_usd=transaction.value_usd,
+                type=getattr(transaction, "type", None),
+                gas=transaction.gas,
+                gas_price=transaction.gas_price,
+                max_fee_per_gas=getattr(transaction, "max_fee_per_gas", None),
+                max_priority_fee_per_gas=getattr(transaction, "max_priority_fee_per_gas", None),
+                raw=json.encode(transaction, enc_hook=enc_hook),
+            )
+        finally:
+            decimal_context.prec = decimal_precision
 
 
 @a_sync(default="async", executor=_internal_transfer_read_executor)
