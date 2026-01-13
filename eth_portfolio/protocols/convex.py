@@ -1,6 +1,7 @@
 from y import ERC20, Network
 
-from eth_portfolio.protocols._base import ProtocolWithStakingABC, SingleTokenStakingPoolABC
+from eth_portfolio.protocols._base import (ProtocolWithStakingABC,
+                                           SingleTokenStakingPoolABC)
 
 
 class _CvxLockerV2(SingleTokenStakingPoolABC):
