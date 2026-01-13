@@ -12,39 +12,25 @@ and processing without blocking, thus improving the overall responsiveness and p
 from abc import ABCMeta, abstractmethod
 from asyncio import Lock, Queue, create_task, gather, sleep
 from collections import defaultdict
+from collections.abc import AsyncGenerator, AsyncIterator, Callable
 from functools import partial
 from http import HTTPStatus
 from itertools import product
 from logging import getLogger
-from typing import (
-    TYPE_CHECKING,
-    AsyncGenerator,
-    AsyncIterator,
-    Callable,
-    Final,
-    Generic,
-    List,
-    NoReturn,
-    Optional,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-)
+from typing import TYPE_CHECKING, Final, Generic, NoReturn, TypeVar, Union
 
 import a_sync
 import dank_mids
 import eth_retry
 from a_sync.asyncio import sleep0 as yield_to_loop
 from aiohttp import ClientResponseError
-from async_lru import alru_cache
 from brownie import chain
 from dank_mids.eth import TraceFilterParams
 from eth_typing import BlockNumber, ChecksumAddress
 from evmspec import FilterTrace
 from evmspec.structs.receipt import Status
 from evmspec.structs.trace import call, reward
-from typing_extensions import Unpack
+from faster_async_lru import alru_cache
 from pandas import DataFrame  # type: ignore
 from tqdm import tqdm
 from y import ERC20, Network
@@ -52,7 +38,7 @@ from y._decorators import stuck_coro_debugger
 from y.datatypes import Block
 from y.utils.events import BATCH_SIZE
 
-from eth_portfolio import _exceptions, _loaders
+from eth_portfolio import _exceptions
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._decorators import set_end_block_if_none
 from eth_portfolio._loaders.transaction import get_nonce_at_block, load_transaction
@@ -160,7 +146,7 @@ class AddressLedgerBase(
 
     @property
     @abstractmethod
-    def _list_type(self) -> Type[_LedgerEntryList]:
+    def _list_type(self) -> type[_LedgerEntryList]:
         """
         Type of list used to store ledger entries.
         """
@@ -277,7 +263,7 @@ class AddressLedgerBase(
         return self[start_block, end_block]  # type: ignore [index, return-value]
 
     async def sent(
-        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+        self, start_block: Block | None = None, end_block: Block | None = None
     ) -> AsyncIterator[T]:
         address = self.portfolio_address.address
         async for obj in self[start_block:end_block]:
@@ -285,7 +271,7 @@ class AddressLedgerBase(
                 yield obj
 
     async def received(
-        self, start_block: Optional[Block] = None, end_block: Optional[Block] = None
+        self, start_block: Block | None = None, end_block: Block | None = None
     ) -> AsyncIterator[T]:
         address = self.portfolio_address.address
         async for obj in self[start_block:end_block]:
@@ -329,7 +315,7 @@ class AddressLedgerBase(
 
     def _check_blocks_against_cache(
         self, start_block: Block, end_block: Block
-    ) -> Tuple[Block, Block]:
+    ) -> tuple[Block, Block]:
         """
         Checks the specified block range against the cached block range.
 
@@ -338,7 +324,7 @@ class AddressLedgerBase(
             end_block: The ending block number.
 
         Returns:
-            Tuple: The adjusted block range.
+            The adjusted block range.
 
         Raises:
             ValueError: If the start block is after the end block.
@@ -479,7 +465,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
             self._ensure_workers(min(len_nonces, self._num_workers))
 
             transactions = []
-            transaction: Optional[Transaction]
+            transaction: Transaction | None
             for _ in tqdm(range(len_nonces), desc=f"Transactions        {address}"):
                 nonce, transaction = await self._ready.get()
                 if transaction:
@@ -529,7 +515,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         address: ChecksumAddress,
         load_prices: bool,
         queue_get: Callable[[], Nonce],
-        put_ready: Callable[[Nonce, Optional[Transaction]], None],
+        put_ready: Callable[[Nonce, Transaction | None], None],
     ) -> NoReturn:
         try:
             while True:
@@ -564,7 +550,7 @@ async def trace_filter(
     from_block: BlockNumber,
     to_block: BlockNumber,
     params: TraceFilterParams,
-) -> List[FilterTrace]:
+) -> list[FilterTrace]:
     return await __trace_filter(from_block, to_block, params)
 
 
@@ -572,7 +558,7 @@ async def __trace_filter(
     from_block: BlockNumber,
     to_block: BlockNumber,
     params: TraceFilterParams,
-) -> List[FilterTrace]:
+) -> list[FilterTrace]:
     try:
         return await dank_mids.eth.trace_filter(
             {"fromBlock": from_block, "toBlock": to_block, **params}
@@ -625,7 +611,7 @@ async def get_traces(
     from_block: BlockNumber,
     to_block: BlockNumber,
     filter_params: TraceFilterParams,
-) -> List[FilterTrace]:
+) -> list[FilterTrace]:
     """
     Retrieves traces from the web3 provider using the given parameters.
 
@@ -653,7 +639,7 @@ async def get_traces(
 
 @stuck_coro_debugger
 @eth_retry.auto_retry
-async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
+async def _check_traces(traces: list[FilterTrace]) -> list[FilterTrace]:
     good_traces = []
     append = good_traces.append
 
@@ -690,10 +676,10 @@ async def _check_traces(traces: List[FilterTrace]) -> List[FilterTrace]:
     ]
 
 
-BlockRange = Tuple[Block, Block]
+BlockRange = tuple[Block, Block]
 
 
-def _get_block_ranges(start_block: Block, end_block: Block) -> List[BlockRange]:
+def _get_block_ranges(start_block: Block, end_block: Block) -> list[BlockRange]:
     return [(i, i + BATCH_SIZE - 1) for i in range(start_block, end_block, BATCH_SIZE)]
 
 
@@ -852,12 +838,12 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         """
 
     @stuck_coro_debugger
-    async def list_tokens_at_block(self, block: Optional[int] = None) -> List[ERC20]:
+    async def list_tokens_at_block(self, block: int | None = None) -> list[ERC20]:
         """
         Lists the tokens held at a specific block.
 
         Args:
-            block (Optional[int], optional): The block number. Defaults to None.
+            block (int | None): The block number. Defaults to None.
 
         Returns:
             List[ERC20]: The list of ERC20 tokens.
@@ -867,12 +853,12 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         """
         return [token async for token in self._yield_tokens_at_block(block)]
 
-    async def _yield_tokens_at_block(self, block: Optional[int] = None) -> AsyncIterator[ERC20]:
+    async def _yield_tokens_at_block(self, block: int | None = None) -> AsyncIterator[ERC20]:
         """
         Yields the tokens held at a specific block.
 
         Args:
-            block (Optional[int], optional): The block number. Defaults to None.
+            block (int | None): The block number. Defaults to None.
 
         Yields:
             AsyncIterator[ERC20]: An async iterator of ERC20 tokens.

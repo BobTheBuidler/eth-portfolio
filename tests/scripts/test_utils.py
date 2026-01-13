@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
+from unittest.mock import AsyncMock
 
 import pytest
-from unittest.mock import AsyncMock
 
 from eth_portfolio_scripts._utils import aiter_timestamps, parse_timedelta
 

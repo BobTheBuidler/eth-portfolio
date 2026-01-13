@@ -1,5 +1,3 @@
-from typing import Optional
-
 from y import Contract, Network
 from y._decorators import stuck_coro_debugger
 from y.datatypes import Address, Block
@@ -22,7 +20,7 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
         self.start_block = 11315910
 
     @stuck_coro_debugger
-    async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+    async def _balances(self, address: Address, block: Block | None = None) -> TokenBalances:
         balances: TokenBalances = TokenBalances(block=block)
         if block and block < self.start_block:
             return balances
@@ -33,7 +31,7 @@ class UnitXyz(LendingProtocolWithLockedCollateral):
         return balances
 
     @stuck_coro_debugger
-    async def _debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+    async def _debt(self, address: Address, block: Block | None = None) -> TokenBalances:
         balances: TokenBalances = TokenBalances(block=block)
         if block and block < self.start_block:
             return balances

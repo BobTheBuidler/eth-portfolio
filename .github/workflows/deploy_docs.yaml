@@ -10,59 +10,93 @@ permissions:
   contents: write
   id-token: write
   pages: write
-  
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build-and-deploy:
+  build-wheel:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v5
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref }}
+        continue-on-error: true
+
+      - name: Branch no longer exists on GitHub
+        if: failure()
+        run: |
+          echo "The branch ${{ github.head_ref }} no longer exists on GitHub"
+          exit 0
 
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
-        run: |
-          pip install wheel cython
-          pip install sphinx sphinx-rtd-theme -r requirements.txt
+      - name: Mypycify
+        uses: BobTheBuidler/mypycify@v0.2.6
+        with:
+          python-version: "3.12"
+          hash-key: |
+            pyproject.toml
+            setup.py
+            eth_portfolio/**/*.py
+          pip-cache-dependency-path: |
+            pyproject.toml
+            requirements.txt
 
-      - name: Setup brownie networks
-        run: |
-          brownie networks modify mainnet host=${{ secrets.WEB3_PROVIDER }}
-        continue-on-error: true
-        
+  build-and-deploy:
+    needs: build-wheel
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Download wheel artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: BobTheBuidler_mypycified_wheel-${{ runner.os }}-py3.12-source-${{ hashFiles('pyproject.toml', 'setup.py', 'eth_portfolio/**/*.py') }}-source
+
+      - name: Install dependencies
+        run: pip install $(find . -name '*.whl') sphinx sphinx-rtd-theme
+
       - name: Build documentation config
-        run: |
-          pip install .
-          make docs
+        run: make docs
 
       - name: Build documentation
         run: |
           cd docs
           BROWNIE_NETWORK_ID=mainnet ETHERSCAN_TOKEN=${{ secrets.ETHERSCAN_TOKEN }} make html
+        continue-on-error: true
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/_build/html
-          
+
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: gh-pages
-          
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
           # Upload entire repository
           path: '.'
-          
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

@@ -2,15 +2,14 @@ from importlib import import_module
 from inspect import getmodule, stack
 from pkgutil import walk_packages
 from types import ModuleType
-from typing import Dict, Final, List
+from typing import Final
 
 import y.constants
-
 
 CHAINID: Final = y.constants.CHAINID
 
 
-def get_submodules_for_module(module: ModuleType) -> List[ModuleType]:
+def get_submodules_for_module(module: ModuleType) -> list[ModuleType]:
     """
     Returns a list of submodules of `module`.
     """
@@ -22,7 +21,7 @@ def get_submodules_for_module(module: ModuleType) -> List[ModuleType]:
     ]
 
 
-def get_class_defs_from_module(module: ModuleType) -> List[type]:
+def get_class_defs_from_module(module: ModuleType) -> list[type]:
     """
     Returns a list of class definitions from a module.
     """
@@ -33,7 +32,7 @@ def get_class_defs_from_module(module: ModuleType) -> List[type]:
     ]
 
 
-def get_protocols() -> List[type]:
+def get_protocols() -> list[type]:
     """
     Used to initialize a submodule's class object.
     Returns a list of initialized protocol objects.
@@ -56,7 +55,7 @@ def get_protocols() -> List[type]:
     ]
 
 
-def import_submodules() -> Dict[str, ModuleType]:
+def import_submodules() -> dict[str, ModuleType]:
     """
     Import all submodules of the module from which this was called, recursively.
     Ignores submodules named `"base"`.

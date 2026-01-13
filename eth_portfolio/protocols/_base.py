@@ -1,6 +1,5 @@
 import abc
 from asyncio import gather
-from typing import List, Optional
 
 import a_sync
 from a_sync import igather
@@ -17,18 +16,18 @@ from eth_portfolio.typing import Balance, TokenBalances
 
 class ProtocolABC(metaclass=abc.ABCMeta):
     @a_sync.future
-    async def balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+    async def balances(self, address: Address, block: Block | None = None) -> TokenBalances:
         return await self._balances(address, block=block)
 
     @abc.abstractmethod
-    async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances: ...
+    async def _balances(self, address: Address, block: Block | None = None) -> TokenBalances: ...
 
 
 class ProtocolWithStakingABC(ProtocolABC, metaclass=abc.ABCMeta):
-    pools: List["StakingPoolABC"]
+    pools: list["StakingPoolABC"]
 
     @stuck_coro_debugger
-    async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+    async def _balances(self, address: Address, block: Block | None = None) -> TokenBalances:
         return sum(await igather(pool.balances(address, block) for pool in self.pools))  # type: ignore
 
 
@@ -44,7 +43,7 @@ class StakingPoolABC(ProtocolABC, metaclass=abc.ABCMeta):
     """
 
     @a_sync.future
-    async def __call__(self, *args, block: Optional[Block] = None, **_) -> int:
+    async def __call__(self, *args, block: Block | None = None, **_) -> int:
         if _:
             raise ValueError(
                 "SingleTokenStakingPoolABC.__call__ does not support keyword arguments"
@@ -63,7 +62,7 @@ class StakingPoolABC(ProtocolABC, metaclass=abc.ABCMeta):
     def deploy_block(self) -> Block:
         return contract_creation_block(self.contract_address)
 
-    def should_check(self, block: Optional[Block]) -> bool:
+    def should_check(self, block: Block | None) -> bool:
         return block is None or block >= self.deploy_block
 
 
@@ -95,7 +94,7 @@ class SingleTokenStakingPoolABC(StakingPoolABC, metaclass=abc.ABCMeta):
         return self.token.__scale__
 
     @stuck_coro_debugger
-    async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+    async def _balances(self, address: Address, block: Block | None = None) -> TokenBalances:
         balances: TokenBalances = TokenBalances(block=block)
         if self.should_check(block):
             balance = Decimal(await self(address, block=block))  # type: ignore

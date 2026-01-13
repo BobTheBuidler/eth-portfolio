@@ -6,8 +6,9 @@ The functions defined here use various async operations to retrieve transaction 
 The primary focus of this module is to support eth-portfolio's internal operations such as loading transactions by address and nonce, retrieving transaction details from specific blocks, and managing transaction-related data.
 """
 
+from collections.abc import Awaitable, Callable
 from logging import getLogger
-from typing import Awaitable, Callable, Final, List, Optional, Tuple
+from typing import Final
 
 import a_sync
 import dank_mids
@@ -15,9 +16,9 @@ import eth_retry
 import evmspec
 import msgspec
 from a_sync import SmartProcessingQueue
-from async_lru import alru_cache
 from eth_typing import ChecksumAddress
 from evmspec import data
+from faster_async_lru import alru_cache
 from pony.orm import TransactionIntegrityError
 from y import get_price
 from y._decorators import stuck_coro_debugger
@@ -26,16 +27,15 @@ from y.datatypes import Block
 from y.exceptions import reraise_excs_with_extra_context
 from y.utils.events import decode_logs
 
-from eth_portfolio.structs import structs
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._db import utils as db
 from eth_portfolio._decimal import Decimal
 from eth_portfolio._loaders._nonce import Nonce, get_block_for_nonce
 from eth_portfolio._loaders._nonce import get_nonce_at_block as _get_nonce_at_block
 from eth_portfolio._loaders.utils import get_transaction_receipt
+from eth_portfolio.structs import structs
 
-
-Transactions = List[evmspec.Transaction]
+Transactions = list[evmspec.Transaction]
 
 
 logger: Final = getLogger(__name__)
@@ -45,7 +45,7 @@ logger: Final = getLogger(__name__)
 @stuck_coro_debugger
 async def load_transaction(
     address: ChecksumAddress, nonce: Nonce, load_prices: bool
-) -> Tuple[Nonce, Optional[structs.Transaction]]:
+) -> tuple[Nonce, structs.Transaction | None]:
     """
     Loads a transaction by address and nonce.
 
@@ -109,7 +109,7 @@ async def _insert_to_db(transaction: structs.Transaction, load_prices: bool) -> 
 @cache_to_disk
 async def get_transaction_by_nonce_and_block(
     address: ChecksumAddress, nonce: int, block: Block
-) -> Optional[evmspec.Transaction]:
+) -> evmspec.Transaction | None:
     """
     This function retrieves a transaction for a specifified address by its nonce and block, if any match.
 
@@ -171,7 +171,7 @@ class ReceiptContractAddress(msgspec.Struct):
 
 
 class ReceiptLogs(msgspec.Struct):
-    logs: List[evmspec.Log]
+    logs: list[evmspec.Log]
 
 
 get_transaction_count: Final = dank_mids.eth.get_transaction_count

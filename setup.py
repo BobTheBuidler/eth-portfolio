@@ -35,6 +35,7 @@ See Also:
 
 import logging
 from pathlib import Path
+
 from setuptools import find_packages, setup  # type: ignore
 
 try:
@@ -74,7 +75,7 @@ try:
             "--disable-error-code=import-not-found",
             # temporary
             "--disable-error-code=call-arg",
-            "--disable-error-code=misc",
+            "--disable-error-code=untyped-decorator",
             "--disable-error-code=type-arg",
             "--disable-error-code=attr-defined",
             "--disable-error-code=no-any-return",
@@ -94,7 +95,9 @@ try:
             "--disable-error-code=has-type",
             "--disable-error-code=typeddict-item",
             "--disable-error-code=index",
+            "--disable-error-code=misc",
         ],
+        group_name="eth_portfolio",
     )
 except Exception as e:  # fallback in case build fails
     logging.error("Error compiling eth-portfolio:", exc_info=True)
@@ -102,10 +105,8 @@ except Exception as e:  # fallback in case build fails
 
 
 setup(
-    # NOTE: somebody stole our name on pypi, we have this placeholder until we steal it back
-    name="eth_portfolio_temp",
+    name="eth_portfolio",
     python_requires=">=3.10,<3.14",
-    # name="eth-portfolio",
     packages=find_packages(),
     use_scm_version={
         "root": ".",

@@ -1,7 +1,8 @@
 from abc import abstractmethod
 from asyncio import Task, create_task, sleep
+from collections.abc import AsyncIterator
 from logging import DEBUG, getLogger
-from typing import Any, AsyncIterator, Final, List
+from typing import Any, Final
 
 import dank_mids
 import evmspec
@@ -17,7 +18,6 @@ from eth_portfolio._loaders import load_token_transfer
 from eth_portfolio._shitcoins import SHITCOINS
 from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.structs import TokenTransfer
-
 
 logger: Final = getLogger(__name__)
 _logger_is_enabled_for: Final = logger.isEnabledFor
@@ -48,7 +48,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
 
     @property
     @abstractmethod
-    def _topics(self) -> List: ...
+    def _topics(self) -> list: ...
 
     @ASyncIterator.wrap  # type: ignore [call-overload]
     async def yield_thru_block(self, block: BlockNumber) -> AsyncIterator["Task[TokenTransfer]"]:
@@ -67,7 +67,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
             yield task
         _logger_log(DEBUG, "%s yield thru %s complete", (self, block))
 
-    async def _extend(self, objs: List[evmspec.Log]) -> None:
+    async def _extend(self, objs: list[evmspec.Log]) -> None:
         shitcoins = SHITCOINS.get(chain.id, set())
         append_loader_task = self._objects.append
         done = 0
@@ -101,7 +101,7 @@ class InboundTokenTransfers(_TokenTransfers):
     """A container that fetches and iterates over all inbound token transfers for a particular wallet address"""
 
     @property
-    def _topics(self) -> List:
+    def _topics(self) -> list:
         return [TRANSFER_SIGS, None, encode_address(self.address)]
 
 
@@ -109,7 +109,7 @@ class OutboundTokenTransfers(_TokenTransfers):
     """A container that fetches and iterates over all outbound token transfers for a particular wallet address"""
 
     @property
-    def _topics(self) -> List:
+    def _topics(self) -> list:
         return [TRANSFER_SIGS, encode_address(self.address)]
 
 

@@ -1,7 +1,10 @@
+import threading
 from asyncio import create_task, gather, get_event_loop, sleep
 from contextlib import suppress
+from decimal import getcontext
 from functools import lru_cache
-from typing import Any, Dict, Optional, Tuple, Union
+from logging import getLogger
+from typing import Any
 
 import evmspec
 import y._db.common
@@ -9,7 +12,6 @@ import y._db.config as config
 from a_sync import PruningThreadPoolExecutor, a_sync
 from eth_typing import ChecksumAddress, HexAddress
 from evmspec.data import _decode_hook
-from logging import getLogger
 from msgspec import ValidationError, json
 from multicall.utils import get_event_loop
 from pony.orm import (
@@ -28,11 +30,7 @@ from y.exceptions import reraise_excs_with_extra_context
 
 from eth_portfolio._db import entities
 from eth_portfolio._db.decorators import break_locks, requery_objs_on_diff_tx_err
-from eth_portfolio._db.entities import (
-    AddressExtended,
-    BlockExtended,
-    TokenExtended,
-)
+from eth_portfolio._db.entities import AddressExtended, BlockExtended, TokenExtended
 from eth_portfolio._decimal import Decimal
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction, TransactionRLP
 from eth_portfolio.typing import _P, _T, Fn
@@ -59,18 +57,16 @@ except OperationalError as e:
         "Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script"
     ) from e
 
+from y import ERC20
 from y._db.decorators import retry_locked
-from y._db.entities import Address, Block, Chain, Contract, Token, insert
+from y._db.entities import Address, Block, Chain, insert
 
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
 from y._db.utils import ensure_chain, get_chain
 from y._db.utils.price import _set_price
 from y._db.utils.traces import insert_trace
-from y import ERC20
 from y.constants import EEE_ADDRESS
 from y.exceptions import NonStandardERC20
-from y.contracts import is_contract
-
 
 _big_pool_size = 4 if ENVS.DB_PROVIDER == "sqlite" else 10
 _small_pool_size = 2 if ENVS.DB_PROVIDER == "sqlite" else 4
@@ -309,7 +305,7 @@ def ensure_token(token_address: ChecksumAddress) -> None:
     get_token(token_address, sync=True)
 
 
-async def get_transaction(sender: ChecksumAddress, nonce: int) -> Optional[Transaction]:
+async def get_transaction(sender: ChecksumAddress, nonce: int) -> Transaction | None:
     startup_txs = await transactions_known_at_startup(CHAINID, sender)
     data = startup_txs.pop(nonce, None) or await __get_transaction_bytes_from_db(sender, nonce)
     if data:
@@ -330,13 +326,13 @@ async def _yield_to_loop() -> None:
 
 @a_sync(default="async", executor=_transaction_read_executor)
 @robust_db_session
-def __get_transaction_bytes_from_db(sender: ChecksumAddress, nonce: int) -> Optional[bytes]:
+def __get_transaction_bytes_from_db(sender: ChecksumAddress, nonce: int) -> bytes | None:
     entity: entities.Transaction
     if entity := entities.Transaction.get(from_address=(CHAINID, sender), nonce=nonce):
         return entity.raw
 
 
-def decode_transaction(data: bytes) -> Union[Transaction, TransactionRLP]:
+def decode_transaction(data: bytes) -> Transaction | TransactionRLP:
     try:
         try:
             return json.decode(data, type=Transaction, dec_hook=_decode_hook)
@@ -393,7 +389,7 @@ def _insert_transaction(transaction: Transaction) -> None:
 
 @a_sync(default="async", executor=_internal_transfer_read_executor)
 @robust_db_session
-def get_internal_transfer(trace: evmspec.FilterTrace) -> Optional[InternalTransfer]:
+def get_internal_transfer(trace: evmspec.FilterTrace) -> InternalTransfer | None:
     block = trace.blockNumber
     entity: entities.InternalTransfer
     if entity := entities.InternalTransfer.get(
@@ -471,16 +467,22 @@ def _insert_internal_transfer(transfer: InternalTransfer) -> None:
     )
 
 
-async def get_token_transfer(transfer: evmspec.Log) -> Optional[TokenTransfer]:
+async def get_token_transfer(transfer: evmspec.Log) -> TokenTransfer | None:
     pk = {
         "block": (CHAINID, transfer.blockNumber),
         "transaction_index": transfer.transactionIndex,
         "log_index": transfer.logIndex,
     }
     startup_xfers = await token_transfers_known_at_startup(CHAINID)
-    data = startup_xfers.pop(tuple(pk.values()), None) or await __get_token_transfer_bytes_from_db(
-        pk
-    )
+    data_at_startup = startup_xfers.pop(tuple(pk.values()), None)
+    try:
+        data = data_at_startup or await __get_token_transfer_bytes_from_db(pk)
+    except TypeError:
+        # NoneType object is not subscriptable
+        # I'm not sure why this happens on occasion, I think it can occur if the script is interrupted mid-insert
+        # Doesn't really matter why, we can just fetch from the chain and insert the correct data now.
+        return None
+
     if data:
         await _yield_to_loop()
         with reraise_excs_with_extra_context(data):
@@ -489,18 +491,18 @@ async def get_token_transfer(transfer: evmspec.Log) -> Optional[TokenTransfer]:
 
 @a_sync(default="async", executor=_token_transfer_read_executor)
 @robust_db_session
-def __get_token_transfer_bytes_from_db(pk: dict) -> Optional[bytes]:
+def __get_token_transfer_bytes_from_db(pk: dict) -> bytes | None:
     entity: entities.TokenTransfer
     if entity := entities.TokenTransfer.get(**pk):
         return entity.raw
 
 
-_TPK = Tuple[Tuple[int, ChecksumAddress], int]
+_TPK = tuple[tuple[int, ChecksumAddress], int]
 
 
 @a_sync(default="async", executor=_transaction_read_executor, ram_cache_maxsize=None)
 @robust_db_session
-def transactions_known_at_startup(chainid: int, from_address: ChecksumAddress) -> Dict[_TPK, bytes]:
+def transactions_known_at_startup(chainid: int, from_address: ChecksumAddress) -> dict[_TPK, bytes]:
     return dict(
         select(
             (t.nonce, t.raw)
@@ -510,12 +512,12 @@ def transactions_known_at_startup(chainid: int, from_address: ChecksumAddress) -
     )
 
 
-_TokenTransferPK = Tuple[Tuple[int, int], int, int]
+_TokenTransferPK = tuple[tuple[int, int], int, int]
 
 
 @a_sync(default="async", executor=_transaction_read_executor, ram_cache_maxsize=None)
 @robust_db_session
-def token_transfers_known_at_startup(chainid: int) -> Dict[_TokenTransferPK, bytes]:
+def token_transfers_known_at_startup(chainid: int) -> dict[_TokenTransferPK, bytes]:
     block: int
     tx_index: int
     log_index: int
@@ -572,27 +574,37 @@ async def insert_token_transfer(token_transfer: TokenTransfer) -> None:
     await _insert_token_transfer(token_transfer)
 
 
+__tt_lock = threading.Lock()
+
+
 @a_sync(default="async", executor=_token_transfer_write_executor)
 @requery_objs_on_diff_tx_err
 @robust_db_session
 def _insert_token_transfer(token_transfer: TokenTransfer) -> None:
-    try:
-        entities.TokenTransfer(
-            block=(CHAINID, token_transfer.block_number),
-            transaction_index=token_transfer.transaction_index,
-            log_index=token_transfer.log_index,
-            hash=token_transfer.hash.hex(),
-            token=(CHAINID, token_transfer.token_address),
-            from_address=(CHAINID, token_transfer.from_address),
-            to_address=(CHAINID, token_transfer.to_address),
-            value=token_transfer.value,
-            price=token_transfer.price,
-            value_usd=token_transfer.value_usd,
-            raw=json.encode(token_transfer, enc_hook=enc_hook),
-        )
-        commit()
-    except TransactionIntegrityError:
-        pass  # most likely non-issue, debug later if needed
+    with __tt_lock:
+        # we need to temporarily set the Context for Decimal objects to ensure we have enough precision for our postgres column
+        decimal_context = getcontext()
+        decimal_precision = decimal_context.prec
+        decimal_context.prec = 38
+        try:
+            entities.TokenTransfer(
+                block=(CHAINID, token_transfer.block_number),
+                transaction_index=token_transfer.transaction_index,
+                log_index=token_transfer.log_index,
+                hash=token_transfer.hash.hex(),
+                token=(CHAINID, token_transfer.token_address),
+                from_address=(CHAINID, token_transfer.from_address),
+                to_address=(CHAINID, token_transfer.to_address),
+                value=token_transfer.value,
+                price=token_transfer.price,
+                value_usd=token_transfer.value_usd,
+                raw=json.encode(token_transfer, enc_hook=enc_hook),
+            )
+            commit()
+        except TransactionIntegrityError:
+            pass  # most likely non-issue, debug later if needed
+        finally:
+            decimal_context.prec = decimal_precision
 
 
 def enc_hook(obj: Any) -> Any:

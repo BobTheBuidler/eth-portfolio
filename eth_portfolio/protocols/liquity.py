@@ -1,5 +1,6 @@
-from eth_portfolio.protocols._base import SingleTokenStakingPoolABC
 from y import ERC20, Network
+
+from eth_portfolio.protocols._base import SingleTokenStakingPoolABC
 
 
 class LqtyStakingPool(SingleTokenStakingPoolABC):
