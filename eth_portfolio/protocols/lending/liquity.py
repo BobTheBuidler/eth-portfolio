@@ -4,8 +4,7 @@ from y._decorators import stuck_coro_debugger
 from y.constants import EEE_ADDRESS
 from y.datatypes import Address, Block
 
-from eth_portfolio.protocols.lending._base import \
-    LendingProtocolWithLockedCollateral
+from eth_portfolio.protocols.lending._base import LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import Balance, TokenBalances
 
 lusd = "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0"

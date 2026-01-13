@@ -1,8 +1,7 @@
 import warnings
 from logging import INFO, basicConfig, getLogger
 
-from brownie.exceptions import (BrownieCompilerWarning,
-                                BrownieEnvironmentWarning)
+from brownie.exceptions import BrownieCompilerWarning, BrownieEnvironmentWarning
 
 logger = getLogger(__name__)
 

@@ -23,8 +23,7 @@ from y.datatypes import Block
 
 from eth_portfolio._decimal import Decimal
 from eth_portfolio._utils import _get_price
-from eth_portfolio.structs.modified import (ModifiedTrace,
-                                            _modified_trace_type_map)
+from eth_portfolio.structs.modified import ModifiedTrace, _modified_trace_type_map
 
 
 class _LedgerEntryBase(DictStruct, kw_only=True, frozen=True, omit_defaults=True, repr_omit_defaults=True):  # type: ignore [call-arg]
