@@ -1,9 +1,9 @@
 import asyncio
+from collections.abc import Awaitable, Callable, Iterator
 from datetime import datetime, timezone
 from logging import getLogger
 from math import floor
 from typing import Final
-from collections.abc import Awaitable, Callable, Iterator
 
 import a_sync
 import eth_retry
@@ -21,12 +21,11 @@ from eth_portfolio.portfolio import _DEFAULT_LABEL
 from eth_portfolio.typing import (
     Addresses,
     Balance,
-    RemoteTokenBalances,
     PortfolioBalances,
+    RemoteTokenBalances,
     TokenBalances,
 )
 from eth_portfolio_scripts import victoria
-
 
 NETWORK_LABEL: Final = Network.label(CHAINID)
 

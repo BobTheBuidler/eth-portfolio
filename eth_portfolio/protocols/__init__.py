@@ -1,11 +1,10 @@
 import a_sync
 from y.datatypes import Address, Block
 
-from eth_portfolio._submodules import import_submodules, get_protocols
+from eth_portfolio._submodules import get_protocols, import_submodules
 from eth_portfolio.protocols import lending
 from eth_portfolio.protocols._base import StakingPoolABC
 from eth_portfolio.typing import RemoteTokenBalances
-
 
 import_submodules()
 

@@ -1,16 +1,15 @@
 from asyncio import iscoroutinefunction
 from asyncio import sleep as aio_sleep
+from collections.abc import Callable
 from functools import wraps
 from logging import DEBUG, getLogger
 from random import random
 from time import sleep as time_sleep
 from typing import Final, TypeVar
-from collections.abc import Callable
 
 from a_sync._typing import AnyFn
 from pony.orm import OperationalError, TransactionError
 from typing_extensions import ParamSpec
-
 
 P = ParamSpec("P")
 T = TypeVar("T")

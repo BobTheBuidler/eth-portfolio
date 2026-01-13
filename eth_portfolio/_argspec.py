@@ -1,6 +1,6 @@
+from collections.abc import Callable
 from inspect import getfullargspec
 from typing import Any
-from collections.abc import Callable
 
 # WIP:
 

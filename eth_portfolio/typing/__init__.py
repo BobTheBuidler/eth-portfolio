@@ -24,20 +24,19 @@ These classes are designed for efficient parsing, manipulation, and summarizatio
 without managing or altering any underlying assets.
 """
 
+from collections.abc import Callable, Iterable
 from functools import cached_property
 from typing import Any, DefaultDict, Final, Literal, TypedDict, TypeVar, Union, final
-from collections.abc import Callable, Iterable
 
 from checksum_dict import DefaultChecksumDict
 from eth_typing import BlockNumber, HexAddress
 from pandas import DataFrame, concat
 from typing_extensions import ParamSpec, Self
-from y import Contract, ERC20
+from y import ERC20, Contract
 from y.datatypes import Address
 
 from eth_portfolio._decimal import Decimal
 from eth_portfolio.typing.balance.single import Balance
-
 
 _T = TypeVar("_T")
 _I = TypeVar("_I")

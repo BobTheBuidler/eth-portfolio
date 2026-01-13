@@ -37,9 +37,8 @@ from eth_portfolio._ledgers.address import (
     PandableLedgerEntryList,
 )
 from eth_portfolio._loaders import balances
-from eth_portfolio._utils import _LedgeredBase, _get_price
+from eth_portfolio._utils import _get_price, _LedgeredBase
 from eth_portfolio.typing import Balance, RemoteTokenBalances, TokenBalances, WalletBalances
-
 
 logger: Final = logging.getLogger(__name__)
 

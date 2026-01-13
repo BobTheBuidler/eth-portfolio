@@ -27,14 +27,13 @@ from y.datatypes import Block
 from y.exceptions import reraise_excs_with_extra_context
 from y.utils.events import decode_logs
 
-from eth_portfolio.structs import structs
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._db import utils as db
 from eth_portfolio._decimal import Decimal
 from eth_portfolio._loaders._nonce import Nonce, get_block_for_nonce
 from eth_portfolio._loaders._nonce import get_nonce_at_block as _get_nonce_at_block
 from eth_portfolio._loaders.utils import get_transaction_receipt
-
+from eth_portfolio.structs import structs
 
 Transactions = list[evmspec.Transaction]
 

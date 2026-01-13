@@ -1,6 +1,6 @@
 import logging
-from typing import TYPE_CHECKING, Generic, TypeVar
 from collections.abc import AsyncIterator
+from typing import TYPE_CHECKING, Generic, TypeVar
 
 import a_sync
 from pandas import DataFrame, concat

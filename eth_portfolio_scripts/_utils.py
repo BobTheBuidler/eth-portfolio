@@ -1,11 +1,10 @@
 import re
 from asyncio import Task, create_task, sleep
+from collections.abc import AsyncGenerator
 from datetime import datetime, timedelta, timezone
 from typing import Any, Final
-from collections.abc import AsyncGenerator
 
 from brownie import chain
-
 
 timedelta_pattern: Final = re.compile(r"(\d+)([dhms]?)")
 

@@ -1,14 +1,13 @@
 import logging
+from collections.abc import Callable
 from functools import wraps
 from importlib import resources
 from subprocess import CalledProcessError, check_output
 from typing import Final, Literal, TypeVar
-from collections.abc import Callable
 
 from typing_extensions import ParamSpec
 
 from eth_portfolio_scripts.docker.check import check_system
-
 
 logger: Final = logging.getLogger(__name__)
 

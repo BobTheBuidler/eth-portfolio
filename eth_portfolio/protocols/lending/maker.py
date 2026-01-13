@@ -16,7 +16,6 @@ from eth_portfolio._utils import Decimal
 from eth_portfolio.protocols.lending._base import LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import Balance, TokenBalances
 
-
 yfi: Final = "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
 dai: Contract
 _1e18: Final = Decimal(10**18)

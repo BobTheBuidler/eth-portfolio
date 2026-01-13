@@ -8,7 +8,6 @@ from eth_portfolio import _decimal
 from eth_portfolio.protocols._base import ProtocolABC
 from eth_portfolio.typing import Balance, TokenBalances
 
-
 gather: Final = asyncio.gather
 
 Contract: Final = y.Contract

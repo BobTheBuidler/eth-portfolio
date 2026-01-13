@@ -13,8 +13,8 @@ from y.prices.lending.compound import CToken, compound
 from y.prices.stable_swap.curve import curve
 from y.prices.yearn import YearnInspiredVault, is_yearn_vault
 
-from eth_portfolio.constants import BTC_LIKE, ETH_LIKE, INTL_STABLECOINS
 from eth_portfolio._stableish import STABLEISH_COINS
+from eth_portfolio.constants import BTC_LIKE, ETH_LIKE, INTL_STABLECOINS
 
 logger: Final = logging.getLogger(__name__)
 log_debug: Final = logger.debug

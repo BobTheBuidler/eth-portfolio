@@ -8,7 +8,6 @@ from eth_portfolio_scripts import docker
 from eth_portfolio_scripts._args import add_infra_port_args
 from eth_portfolio_scripts.balances import export_balances
 
-
 parser = ArgumentParser(description="eth-portfolio")
 
 subparsers = parser.add_subparsers(title="Commands", dest="command", required=True)

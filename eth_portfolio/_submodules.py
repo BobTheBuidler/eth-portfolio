@@ -6,7 +6,6 @@ from typing import Final
 
 import y.constants
 
-
 CHAINID: Final = y.constants.CHAINID
 
 

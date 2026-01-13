@@ -1,6 +1,7 @@
 import functools
 import inspect
 from asyncio import AbstractEventLoop, PriorityQueue, Task, current_task, get_event_loop
+from collections.abc import Callable
 from concurrent.futures import Executor
 from hashlib import md5
 from logging import getLogger
@@ -9,12 +10,10 @@ from os.path import exists, join
 from pickle import dumps, load, loads
 from random import random
 from typing import Any, Final, NoReturn
-from collections.abc import Callable
 
 from a_sync import PruningThreadPoolExecutor
 from a_sync._typing import P, T
 from a_sync.asyncio import create_task
-
 from aiofiles import open as _aio_open
 from brownie import chain
 

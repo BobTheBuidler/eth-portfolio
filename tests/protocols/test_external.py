@@ -1,6 +1,7 @@
 from unittest.mock import AsyncMock, patch
 
 import pytest
+
 from eth_portfolio import protocols
 from eth_portfolio.typing import Balance, RemoteTokenBalances, TokenBalances
 

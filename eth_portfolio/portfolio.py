@@ -7,9 +7,9 @@ This file is part of a larger system that includes modules for handling portfoli
 """
 
 import logging
+from collections.abc import AsyncIterator, Iterable, Iterator
 from functools import wraps
 from typing import Any
-from collections.abc import AsyncIterator, Iterable, Iterator
 
 import a_sync
 from a_sync import igather

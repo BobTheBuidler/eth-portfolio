@@ -8,7 +8,6 @@ from eth_typing import HexStr
 from faster_async_lru import alru_cache
 from y._decorators import stuck_coro_debugger
 
-
 Raw: Final = msgspec.Raw
 TxReceiptQueue = SmartProcessingQueue[HexStr, [], msgspec.Raw]
 
