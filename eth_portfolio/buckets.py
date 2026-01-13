@@ -136,7 +136,7 @@ async def _unwrap_token(token: Any) -> ChecksumAddress:
         log_debug("pool_tokens: %s", pool_tokens)
         if pool_bucket := _pool_bucket(pool_tokens):
             log_debug("returning pool bucket: %s", pool_bucket)
-            return pool_bucket  # type: ignore
+            return pool_bucket
     if aave and await aave.is_atoken(token):
         log_debug("atoken")
         return str(await aave.underlying(token))

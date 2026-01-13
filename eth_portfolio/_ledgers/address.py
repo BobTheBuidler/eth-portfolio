@@ -31,7 +31,7 @@ from evmspec import FilterTrace
 from evmspec.structs.receipt import Status
 from evmspec.structs.trace import call, reward
 from faster_async_lru import alru_cache
-from pandas import DataFrame  # type: ignore
+from pandas import DataFrame
 from tqdm import tqdm
 from y import ERC20, Network
 from y._decorators import stuck_coro_debugger
@@ -117,12 +117,12 @@ class AddressLedgerBase(
         """
 
         # NOTE: The following two properties will both be ints once the cache has contents
-        self.cached_from: int = None  # type: ignore
+        self.cached_from: int | None = None
         """
         The block from which all entries for this ledger have been loaded into memory.
         """
 
-        self.cached_thru: int = None  # type: ignore
+        self.cached_thru: int | None = None
         """
         The block through which all entries for this ledger have been loaded into memory.
         """

@@ -117,7 +117,7 @@ class Balance(
             >>> sum_balance.balance
             Decimal('100')
         """
-        return self if other == 0 else self.__add__(other)  # type: ignore
+        return self if other == 0 else self.__add__(other)
 
     def __sub__(self, other: "Balance") -> "Balance":
         """
