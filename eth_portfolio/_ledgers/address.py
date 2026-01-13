@@ -117,12 +117,12 @@ class AddressLedgerBase(
         """
 
         # NOTE: The following two properties will both be ints once the cache has contents
-        self.cached_from: int | None = None
+        self.cached_from: int = None
         """
         The block from which all entries for this ledger have been loaded into memory.
         """
 
-        self.cached_thru: int | None = None
+        self.cached_thru: int = None
         """
         The block through which all entries for this ledger have been loaded into memory.
         """
