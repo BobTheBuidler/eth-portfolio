@@ -1,6 +1,7 @@
 import functools
 import inspect
-from asyncio import AbstractEventLoop, PriorityQueue, Task, current_task, get_event_loop
+from asyncio import (AbstractEventLoop, PriorityQueue, Task, current_task,
+                     get_event_loop)
 from collections.abc import Callable
 from concurrent.futures import Executor
 from hashlib import md5

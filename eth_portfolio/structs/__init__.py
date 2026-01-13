@@ -23,13 +23,9 @@ See Also:
     - :class:`~eth_portfolio.structs.structs.TransactionRLP`
 """
 
-from eth_portfolio.structs.structs import (
-    InternalTransfer,
-    LedgerEntry,
-    TokenTransfer,
-    Transaction,
-    TransactionRLP,
-)
+from eth_portfolio.structs.structs import (InternalTransfer, LedgerEntry,
+                                           TokenTransfer, Transaction,
+                                           TransactionRLP)
 
 __all__ = [
     # main union type

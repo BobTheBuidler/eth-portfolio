@@ -17,15 +17,9 @@ from pandas import DataFrame  # type: ignore
 from y import ERC20, Contract, Network
 from y.constants import CHAINID, NETWORK_NAME
 from y.datatypes import AddressOrContract, Block
-from y.exceptions import (
-    CantFetchParam,
-    ContractNotVerified,
-    NodeNotSynced,
-    NonStandardERC20,
-    PriceError,
-    reraise_excs_with_extra_context,
-    yPriceMagicError,
-)
+from y.exceptions import (CantFetchParam, ContractNotVerified, NodeNotSynced,
+                          NonStandardERC20, PriceError,
+                          reraise_excs_with_extra_context, yPriceMagicError)
 from y.prices.magic import get_price
 
 from eth_portfolio import _config, _decimal

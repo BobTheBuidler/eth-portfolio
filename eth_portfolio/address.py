@@ -29,16 +29,15 @@ from y._decorators import stuck_coro_debugger
 from y.datatypes import Address, Block
 
 from eth_portfolio import protocols
-from eth_portfolio._ledgers.address import (
-    AddressInternalTransfersLedger,
-    AddressLedgerBase,
-    AddressTokenTransfersLedger,
-    AddressTransactionsLedger,
-    PandableLedgerEntryList,
-)
+from eth_portfolio._ledgers.address import (AddressInternalTransfersLedger,
+                                            AddressLedgerBase,
+                                            AddressTokenTransfersLedger,
+                                            AddressTransactionsLedger,
+                                            PandableLedgerEntryList)
 from eth_portfolio._loaders import balances
 from eth_portfolio._utils import _get_price, _LedgeredBase
-from eth_portfolio.typing import Balance, RemoteTokenBalances, TokenBalances, WalletBalances
+from eth_portfolio.typing import (Balance, RemoteTokenBalances, TokenBalances,
+                                  WalletBalances)
 
 logger: Final = logging.getLogger(__name__)
 
