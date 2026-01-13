@@ -9,7 +9,6 @@ from eth_typing import HexAddress
 from eth_portfolio_scripts import docker
 from eth_portfolio_scripts._utils import aiter_timestamps, parse_timedelta
 
-
 _UTC: Final = timezone.utc
 
 create_task: Final = a_sync.create_task

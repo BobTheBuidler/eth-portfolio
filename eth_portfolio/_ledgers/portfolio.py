@@ -1,19 +1,16 @@
 import logging
-from typing import TYPE_CHECKING, Generic, TypeVar
 from collections.abc import AsyncIterator
+from typing import TYPE_CHECKING, Generic, TypeVar
 
 import a_sync
 from pandas import DataFrame, concat
 from y.datatypes import Address, Block
 
 from eth_portfolio._decorators import set_end_block_if_none
-from eth_portfolio._ledgers.address import (
-    AddressLedgerBase,
-    InternalTransfersList,
-    TokenTransfersList,
-    TransactionsList,
-    _LedgerEntryList,
-)
+from eth_portfolio._ledgers.address import (AddressLedgerBase,
+                                            InternalTransfersList,
+                                            TokenTransfersList,
+                                            TransactionsList, _LedgerEntryList)
 from eth_portfolio._utils import _AiterMixin
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 

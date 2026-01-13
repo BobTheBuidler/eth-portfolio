@@ -4,7 +4,6 @@ import logging
 from evmspec.data import Wei
 from typing_extensions import Self
 
-
 logger = logging.getLogger(__name__)
 
 # we need to enlarge the precision for Decimal objects so we don't get errors when doing math

@@ -3,6 +3,7 @@ from asyncio import create_task, gather, get_event_loop, sleep
 from contextlib import suppress
 from decimal import getcontext
 from functools import lru_cache
+from logging import getLogger
 from typing import Any
 
 import evmspec
@@ -11,32 +12,24 @@ import y._db.config as config
 from a_sync import PruningThreadPoolExecutor, a_sync
 from eth_typing import ChecksumAddress, HexAddress
 from evmspec.data import _decode_hook
-from logging import getLogger
 from msgspec import ValidationError, json
 from multicall.utils import get_event_loop
-from pony.orm import (
-    BindingError,
-    OperationalError,
-    TransactionIntegrityError,
-    commit,
-    db_session,
-    flush,
-    select,
-)
+from pony.orm import (BindingError, OperationalError,
+                      TransactionIntegrityError, commit, db_session, flush,
+                      select)
 from y import ENVIRONMENT_VARIABLES as ENVS
 from y._db.entities import db
 from y.constants import CHAINID
 from y.exceptions import reraise_excs_with_extra_context
 
 from eth_portfolio._db import entities
-from eth_portfolio._db.decorators import break_locks, requery_objs_on_diff_tx_err
-from eth_portfolio._db.entities import (
-    AddressExtended,
-    BlockExtended,
-    TokenExtended,
-)
+from eth_portfolio._db.decorators import (break_locks,
+                                          requery_objs_on_diff_tx_err)
+from eth_portfolio._db.entities import (AddressExtended, BlockExtended,
+                                        TokenExtended)
 from eth_portfolio._decimal import Decimal
-from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction, TransactionRLP
+from eth_portfolio.structs import (InternalTransfer, TokenTransfer,
+                                   Transaction, TransactionRLP)
 from eth_portfolio.typing import _P, _T, Fn
 
 logger = getLogger(__name__)
@@ -61,17 +54,15 @@ except OperationalError as e:
         "Since eth-portfolio extends the ypricemagic database with additional column definitions, you will need to delete your ypricemagic database at ~/.ypricemagic and rerun this script"
     ) from e
 
+from y import ERC20
 from y._db.decorators import retry_locked
 from y._db.entities import Address, Block, Chain, insert
-
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
 from y._db.utils import ensure_chain, get_chain
 from y._db.utils.price import _set_price
 from y._db.utils.traces import insert_trace
-from y import ERC20
 from y.constants import EEE_ADDRESS
 from y.exceptions import NonStandardERC20
-
 
 _big_pool_size = 4 if ENVS.DB_PROVIDER == "sqlite" else 10
 _small_pool_size = 2 if ENVS.DB_PROVIDER == "sqlite" else 4

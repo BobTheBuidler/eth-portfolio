@@ -7,9 +7,9 @@ This file is part of a larger system that includes modules for handling portfoli
 """
 
 import logging
+from collections.abc import AsyncIterator, Iterable, Iterator
 from functools import wraps
 from typing import Any
-from collections.abc import AsyncIterator, Iterable, Iterator
 
 import a_sync
 from a_sync import igather
@@ -23,12 +23,10 @@ from y.datatypes import Address, Block
 from eth_portfolio import _argspec
 from eth_portfolio._decorators import set_end_block_if_none
 from eth_portfolio._ledgers.address import PandableLedgerEntryList
-from eth_portfolio._ledgers.portfolio import (
-    PortfolioInternalTransfersLedger,
-    PortfolioLedgerBase,
-    PortfolioTokenTransfersLedger,
-    PortfolioTransactionsLedger,
-)
+from eth_portfolio._ledgers.portfolio import (PortfolioInternalTransfersLedger,
+                                              PortfolioLedgerBase,
+                                              PortfolioTokenTransfersLedger,
+                                              PortfolioTransactionsLedger)
 from eth_portfolio._utils import _LedgeredBase
 from eth_portfolio.address import PortfolioAddress
 from eth_portfolio.constants import ADDRESSES

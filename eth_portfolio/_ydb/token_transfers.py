@@ -1,8 +1,8 @@
 from abc import abstractmethod
 from asyncio import Task, create_task, sleep
+from collections.abc import AsyncIterator
 from logging import DEBUG, getLogger
 from typing import Any, Final
-from collections.abc import AsyncIterator
 
 import dank_mids
 import evmspec
@@ -18,7 +18,6 @@ from eth_portfolio._loaders import load_token_transfer
 from eth_portfolio._shitcoins import SHITCOINS
 from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.structs import TokenTransfer
-
 
 logger: Final = getLogger(__name__)
 _logger_is_enabled_for: Final = logger.isEnabledFor

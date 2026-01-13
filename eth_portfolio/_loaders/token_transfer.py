@@ -26,7 +26,6 @@ from eth_portfolio._loaders.utils import get_transaction_receipt
 from eth_portfolio._utils import _get_price
 from eth_portfolio.structs import TokenTransfer
 
-
 logger = getLogger(__name__)
 
 token_transfer_semaphore: Final = BlockSemaphore(

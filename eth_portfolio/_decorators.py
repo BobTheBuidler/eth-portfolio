@@ -1,13 +1,12 @@
 import logging
 from asyncio import iscoroutinefunction
+from collections.abc import AsyncIterator, Callable
 from functools import wraps
 from inspect import isasyncgenfunction
-from typing import overload
-from collections.abc import AsyncIterator, Callable
+from typing import Concatenate, overload
 
 from a_sync.iter import ASyncGeneratorFunction
 from brownie import chain
-from typing import Concatenate
 from y.datatypes import Block
 
 from eth_portfolio import _config

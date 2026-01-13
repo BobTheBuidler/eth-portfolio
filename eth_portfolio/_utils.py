@@ -1,36 +1,25 @@
 import logging
 import sqlite3
 from abc import abstractmethod
+from collections.abc import AsyncGenerator, AsyncIterator
 from datetime import datetime
 from functools import cached_property
-from typing import (
-    TYPE_CHECKING,
-    Final,
-    Generic,
-    TypeVar,
-)
-from collections.abc import AsyncGenerator, AsyncIterator
+from typing import TYPE_CHECKING, Final, Generic, TypeVar
 
 import dank_mids
 from a_sync import ASyncGenericBase, ASyncIterable, ASyncIterator, as_yielded
 from brownie import chain
 from brownie.exceptions import ContractNotFound
+from eth_typing import ChecksumAddress
 from faster_async_lru import alru_cache
 from faster_eth_abi.exceptions import InsufficientDataBytes
-from eth_typing import ChecksumAddress
 from pandas import DataFrame  # type: ignore
 from y import ERC20, Contract, Network
 from y.constants import CHAINID, NETWORK_NAME
 from y.datatypes import AddressOrContract, Block
-from y.exceptions import (
-    CantFetchParam,
-    ContractNotVerified,
-    NodeNotSynced,
-    NonStandardERC20,
-    PriceError,
-    reraise_excs_with_extra_context,
-    yPriceMagicError,
-)
+from y.exceptions import (CantFetchParam, ContractNotVerified, NodeNotSynced,
+                          NonStandardERC20, PriceError,
+                          reraise_excs_with_extra_context, yPriceMagicError)
 from y.prices.magic import get_price
 
 from eth_portfolio import _config, _decimal

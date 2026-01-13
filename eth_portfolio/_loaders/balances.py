@@ -10,7 +10,6 @@ from eth_portfolio._decimal import Decimal
 from eth_portfolio._utils import _get_price
 from eth_portfolio.typing import Balance
 
-
 _ZERO: Final = Decimal(0)
 
 logger: Final = logging.getLogger("eth_portfolio.balances")

@@ -1,15 +1,13 @@
 from typing import List, Optional, Union
 
 import a_sync
-from eth_portfolio._submodules import import_submodules, get_protocols
-from eth_portfolio.protocols.lending._base import (
-    LendingProtocol,
-    LendingProtocolWithLockedCollateral,
-)
-from eth_portfolio.typing import RemoteTokenBalances
 from y._decorators import stuck_coro_debugger
 from y.datatypes import Address, Block
 
+from eth_portfolio._submodules import get_protocols, import_submodules
+from eth_portfolio.protocols.lending._base import (
+    LendingProtocol, LendingProtocolWithLockedCollateral)
+from eth_portfolio.typing import RemoteTokenBalances
 
 import_submodules()
 

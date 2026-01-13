@@ -10,7 +10,6 @@ from msgspec import json
 from eth_portfolio_scripts.victoria import types
 from eth_portfolio_scripts.victoria.types import Metric
 
-
 BASE_URL: Final = environ.get("VM_URL", "http://127.0.0.1:8430")
 
 # this will be populated later
