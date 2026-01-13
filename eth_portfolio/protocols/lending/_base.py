@@ -27,7 +27,7 @@ class LendingProtocol(metaclass=abc.ABCMeta):
 
     @a_sync.future
     async def debt(self, address: Address, block: Block | None = None) -> TokenBalances:
-        return await self._debt(address, block)  # type: ignore
+        return await self._debt(address, block)
 
     @abc.abstractmethod
     async def _debt(self, address: Address, block: Block | None = None) -> TokenBalances: ...

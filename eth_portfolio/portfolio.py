@@ -16,7 +16,7 @@ from a_sync import igather
 from a_sync.a_sync import ASyncFunction
 from brownie import web3
 from checksum_dict import ChecksumAddressDict
-from pandas import DataFrame, concat  # type: ignore
+from pandas import DataFrame, concat
 from web3 import Web3
 from y.datatypes import Address, Block
 
@@ -422,7 +422,9 @@ for func_name, func in async_functions.items():
 
     @a_sync.a_sync(default=func.default)
     @wraps(func)
-    async def imported_func(self: Portfolio, *args: Any, **kwargs: Any) -> _argspec.get_return_type(getattr(PortfolioAddress, func_name)):  # type: ignore
+    async def imported_func(
+        self: Portfolio, *args: Any, **kwargs: Any
+    ) -> _argspec.get_return_type(getattr(PortfolioAddress, func_name)):
         """
         Import an asynchronous function from :class:`~eth_portfolio.address.PortfolioAddress` to :class:`~eth_portfolio.Portfolio`.
 

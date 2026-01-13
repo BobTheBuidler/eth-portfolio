@@ -28,7 +28,7 @@ class ProtocolWithStakingABC(ProtocolABC, metaclass=abc.ABCMeta):
 
     @stuck_coro_debugger
     async def _balances(self, address: Address, block: Block | None = None) -> TokenBalances:
-        return sum(await igather(pool.balances(address, block) for pool in self.pools))  # type: ignore
+        return sum(await igather(pool.balances(address, block) for pool in self.pools))
 
 
 class StakingPoolABC(ProtocolABC, metaclass=abc.ABCMeta):
@@ -97,10 +97,10 @@ class SingleTokenStakingPoolABC(StakingPoolABC, metaclass=abc.ABCMeta):
     async def _balances(self, address: Address, block: Block | None = None) -> TokenBalances:
         balances: TokenBalances = TokenBalances(block=block)
         if self.should_check(block):
-            balance = Decimal(await self(address, block=block))  # type: ignore
+            balance = Decimal(await self(address, block=block))
             if balance:
                 scale, price = await gather(self.scale, self.price(block, sync=False))
-                balance /= scale  # type: ignore
+                balance /= scale
                 balances[self.token.address] = Balance(
                     balance, balance * Decimal(price), token=self.token.address, block=block
                 )
