@@ -6,7 +6,9 @@ from y.datatypes import Address, Block
 
 from eth_portfolio._submodules import get_protocols, import_submodules
 from eth_portfolio.protocols.lending._base import (
-    LendingProtocol, LendingProtocolWithLockedCollateral)
+    LendingProtocol,
+    LendingProtocolWithLockedCollateral,
+)
 from eth_portfolio.typing import RemoteTokenBalances
 
 import_submodules()

@@ -4,8 +4,7 @@ from y.datatypes import Address, Block
 
 from eth_portfolio._decimal import Decimal
 from eth_portfolio._utils import _get_price
-from eth_portfolio.protocols.lending._base import \
-    LendingProtocolWithLockedCollateral
+from eth_portfolio.protocols.lending._base import LendingProtocolWithLockedCollateral
 from eth_portfolio.typing import Balance, TokenBalances
 
 # NOTE: This only works for YFI collateral, must extend before using for other collaterals

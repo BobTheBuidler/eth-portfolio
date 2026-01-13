@@ -14,22 +14,25 @@ from eth_typing import ChecksumAddress, HexAddress
 from evmspec.data import _decode_hook
 from msgspec import ValidationError, json
 from multicall.utils import get_event_loop
-from pony.orm import (BindingError, OperationalError,
-                      TransactionIntegrityError, commit, db_session, flush,
-                      select)
+from pony.orm import (
+    BindingError,
+    OperationalError,
+    TransactionIntegrityError,
+    commit,
+    db_session,
+    flush,
+    select,
+)
 from y import ENVIRONMENT_VARIABLES as ENVS
 from y._db.entities import db
 from y.constants import CHAINID
 from y.exceptions import reraise_excs_with_extra_context
 
 from eth_portfolio._db import entities
-from eth_portfolio._db.decorators import (break_locks,
-                                          requery_objs_on_diff_tx_err)
-from eth_portfolio._db.entities import (AddressExtended, BlockExtended,
-                                        TokenExtended)
+from eth_portfolio._db.decorators import break_locks, requery_objs_on_diff_tx_err
+from eth_portfolio._db.entities import AddressExtended, BlockExtended, TokenExtended
 from eth_portfolio._decimal import Decimal
-from eth_portfolio.structs import (InternalTransfer, TokenTransfer,
-                                   Transaction, TransactionRLP)
+from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction, TransactionRLP
 from eth_portfolio.typing import _P, _T, Fn
 
 logger = getLogger(__name__)
@@ -57,6 +60,7 @@ except OperationalError as e:
 from y import ERC20
 from y._db.decorators import retry_locked
 from y._db.entities import Address, Block, Chain, insert
+
 # The db must be bound before we do this since we're adding some new columns to the tables defined in ypricemagic
 from y._db.utils import ensure_chain, get_chain
 from y._db.utils.price import _set_price

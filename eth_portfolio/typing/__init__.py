@@ -26,8 +26,7 @@ without managing or altering any underlying assets.
 
 from collections.abc import Callable, Iterable
 from functools import cached_property
-from typing import (Any, DefaultDict, Final, Literal, TypedDict, TypeVar,
-                    Union, final)
+from typing import Any, DefaultDict, Final, Literal, TypedDict, TypeVar, Union, final
 
 from checksum_dict import DefaultChecksumDict
 from eth_typing import BlockNumber, HexAddress

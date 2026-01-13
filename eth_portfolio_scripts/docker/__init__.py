@@ -1,9 +1,5 @@
-from eth_portfolio_scripts.docker.check import (check_docker,
-                                                check_docker_compose,
-                                                check_system)
-from eth_portfolio_scripts.docker.docker_compose import (build, down,
-                                                         ensure_containers,
-                                                         stop, up)
+from eth_portfolio_scripts.docker.check import check_docker, check_docker_compose, check_system
+from eth_portfolio_scripts.docker.docker_compose import build, down, ensure_containers, stop, up
 
 __all__ = [
     # commands
