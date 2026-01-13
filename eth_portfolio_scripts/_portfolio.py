@@ -18,8 +18,13 @@ from y.time import NoBlockFound
 from eth_portfolio import Portfolio
 from eth_portfolio.buckets import get_token_bucket
 from eth_portfolio.portfolio import _DEFAULT_LABEL
-from eth_portfolio.typing import (Addresses, Balance, PortfolioBalances,
-                                  RemoteTokenBalances, TokenBalances)
+from eth_portfolio.typing import (
+    Addresses,
+    Balance,
+    PortfolioBalances,
+    RemoteTokenBalances,
+    TokenBalances,
+)
 from eth_portfolio_scripts import victoria
 
 NETWORK_LABEL: Final = Network.label(CHAINID)
