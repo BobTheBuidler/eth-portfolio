@@ -67,6 +67,6 @@ def import_submodules() -> dict[str, ModuleType]:
     parent = f"{called_from_module.__name__}."
     return {
         name: import_module(parent + name)
-        for loader, name, is_pkg in walk_packages(called_from_module.__path__)  # type: ignore
+        for loader, name, is_pkg in walk_packages(called_from_module.__path__)
         if name != "base"
     }

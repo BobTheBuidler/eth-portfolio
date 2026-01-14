@@ -36,7 +36,7 @@ See Also:
 import logging
 from pathlib import Path
 
-from setuptools import find_packages, setup  # type: ignore
+from setuptools import find_packages, setup
 
 try:
     from mypyc.build import mypycify
@@ -87,7 +87,6 @@ try:
             "--disable-error-code=return-value",
             "--disable-error-code=assignment",
             "--disable-error-code=union-attr",
-            "--disable-error-code=comparison-overlap",
             "--disable-error-code=no-redef",
             "--disable-error-code=valid-type",
             "--disable-error-code=call-overload",

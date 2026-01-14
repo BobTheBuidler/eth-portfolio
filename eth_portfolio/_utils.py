@@ -13,7 +13,7 @@ from brownie.exceptions import ContractNotFound
 from eth_typing import ChecksumAddress
 from faster_async_lru import alru_cache
 from faster_eth_abi.exceptions import InsufficientDataBytes
-from pandas import DataFrame  # type: ignore
+from pandas import DataFrame
 from y import ERC20, Contract, Network
 from y.constants import CHAINID, NETWORK_NAME
 from y.datatypes import AddressOrContract, Block

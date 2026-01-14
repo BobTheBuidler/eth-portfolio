@@ -97,7 +97,7 @@ class _SummableNonNumericMixin:
             >>> sum_result.value
             30
         """
-        return self if other == 0 else self.__add__(other)  # type: ignore
+        return self if other == 0 else self.__add__(other)
 
 
 _TBSeed = Union[dict[Address, Balance], Iterable[tuple[Address, Balance]]]
@@ -131,7 +131,7 @@ class TokenBalances(DefaultChecksumDict[Balance], _SummableNonNumericMixin):  # 
         if seed is None:
             return
         if isinstance(seed, dict):
-            seed = seed.items()
+            seed = seed.items()  # type: ignore [assignment]
         if not isinstance(seed, Iterable):
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
         for token, balance in seed:  # type: ignore [misc]
@@ -582,10 +582,10 @@ class WalletBalances(
         if seed is None:
             return
         if isinstance(seed, dict):
-            seed = seed.items()  # type: ignore
+            seed = seed.items()  # type: ignore [assignment]
         if not isinstance(seed, Iterable):
             raise TypeError(f"{seed} is not a valid input for WalletBalances")
-        for key, balances in seed:  # type: ignore
+        for key, balances in seed:  # type: ignore [misc]
             if self.block != balances.block:
                 raise ValueError(
                     f"These objects are not from the same block ({self.block} and {balances.block})"
@@ -601,7 +601,7 @@ class WalletBalances(
         Returns:
             :class:`~eth_portfolio.typing.TokenBalances`: The :class:`~eth_portfolio.typing.TokenBalances` object representing the wallet's assets.
         """
-        return self["assets"]  # type: ignore
+        return self["assets"]  # type: ignore [return-value]
 
     @property
     def debt(self) -> RemoteTokenBalances:
@@ -757,7 +757,7 @@ class WalletBalances(
         # We need a new object to avoid mutating the inputs
         subtracted: WalletBalances = WalletBalances(self, block=self.block)
         for category, balances in dict.items(other):
-            subtracted[category] -= balances  # type: ignore
+            subtracted[category] -= balances  # type: ignore [operator]
         for category, balances in dict(subtracted).items():
             if not balances:
                 del subtracted[category]
@@ -921,7 +921,7 @@ class PortfolioBalances(DefaultChecksumDict[WalletBalances], _SummableNonNumeric
             >>> total_usd
             Decimal('2000')
         """
-        return sum(balances.sum_usd() for balances in dict.values(self))  # type: ignore
+        return sum(balances.sum_usd() for balances in dict.values(self))  # type: ignore [return-value]
 
     @cached_property
     def inverted(self) -> "PortfolioBalancesByCategory":
@@ -1257,7 +1257,7 @@ class PortfolioBalancesByCategory(
             seed = seed.items()
         if not isinstance(seed, Iterable):
             raise TypeError(f"{seed} is not a valid input for PortfolioBalancesByCategory")
-        for label, balances in seed:  # type: ignore
+        for label, balances in seed:
             if self.block != balances.block:
                 raise ValueError(
                     f"These objects are not from the same block ({self.block} and {balances.block})"

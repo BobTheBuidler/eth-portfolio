@@ -75,8 +75,8 @@ def test_parse_timedelta_error_cases(test_input):
         parse_timedelta(test_input)
 
 
-_ts_is_ready = AsyncMock()  # type: ignore
-_get_waiter = AsyncMock()  # type: ignore
+_ts_is_ready = AsyncMock()
+_get_waiter = AsyncMock()
 
 
 @pytest.mark.asyncio

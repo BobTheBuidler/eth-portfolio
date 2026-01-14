@@ -71,7 +71,7 @@ class PortfolioAddress(_LedgeredBase[AddressLedgerBase]):
         load_prices: bool,
         num_workers_transactions: int = 1000,
         asynchronous: bool = False,
-    ) -> None:  # type: ignore
+    ) -> None:
         """
         Initializes the :class:`~PortfolioAddress` instance.
 
