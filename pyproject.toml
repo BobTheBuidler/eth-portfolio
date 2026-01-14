@@ -6,6 +6,7 @@ requires = [
     "pandas-stubs==2.3.3.260113",
     "pony-stubs==0.5.2",
     "types-aiofiles",
+    "types-tqdm",
     "dank-mids==4.20.192; platform_system == 'MacOS' or (platform_system == 'Linux' and platform_machine != 'i686')",
     "eth-brownie==1.22.0.dev0; sys_platform=='linux' and platform_machine != 'i686'",
     "eth-retry==0.3.5",
