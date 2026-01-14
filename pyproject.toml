@@ -8,7 +8,7 @@ requires = [
     "types-aiofiles",
     "types-tqdm",
     "dank-mids==4.20.192; platform_system == 'MacOS' or (platform_system == 'Linux' and platform_machine != 'i686')",
-    "eth-brownie==1.22.0.dev0; sys_platform=='linux' and platform_machine != 'i686'",
+    "eth-brownie==1.22.0.dev2; sys_platform=='linux' and platform_machine != 'i686'",
     "eth-retry==0.3.5",
     "eth-typing==5.2.1",
     "evmspec==0.4.8; sys_platform!='win32'",
@@ -18,7 +18,6 @@ requires = [
 
 [tool.mypy]
 exclude = ["build/","cache/","env/"]
-disable_error_code = ["return"]
 
 [tool.black]
 line-length = 100

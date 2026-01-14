@@ -169,6 +169,8 @@ class _TransactionBase(
         """
         if typ := self.transaction.type:
             return int(typ.hex(), 16)
+        else:
+            return None
 
     @property
     def from_address(self) -> Address | None:
