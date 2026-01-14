@@ -2,7 +2,7 @@ from abc import abstractmethod
 from asyncio import Task, create_task, sleep
 from collections.abc import AsyncIterator
 from logging import DEBUG, getLogger
-from typing import Any, Final
+from typing import Any, Final, cast
 
 import dank_mids
 import evmspec
@@ -72,7 +72,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
         append_loader_task = self._objects.append
         done = 0
         for log in objs:
-            if log.address in shitcoins:
+            if cast(ChecksumAddress, log.address) in shitcoins:
                 continue
             # save i/o
             array_encodable_log = y._db.log.Log(**log)
