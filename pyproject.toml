@@ -17,7 +17,6 @@ requires = [
 [tool.mypy]
 exclude = ["build/","cache/","env/"]
 ignore_missing_imports = true
-disable_error_code = ["return"]
 
 [tool.black]
 line-length = 100
