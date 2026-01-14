@@ -1,14 +1,13 @@
 import logging
+from collections.abc import Callable
 from functools import wraps
 from importlib import resources
-from os import path
 from subprocess import CalledProcessError, check_output
-from typing import Callable, Final, Iterable, List, Literal, Tuple, TypeVar
+from typing import Final, Literal, TypeVar
 
 from typing_extensions import ParamSpec
 
 from eth_portfolio_scripts.docker.check import check_system
-
 
 logger: Final = logging.getLogger(__name__)
 
@@ -69,7 +68,7 @@ def ensure_containers(fn: Callable[_P, _T]) -> Callable[_P, _T]:
 
 def _print_notice(
     doing: Literal["building", "starting", "stopping"],
-    services: Tuple[str, ...],
+    services: tuple[str, ...],
 ) -> None:
     if len(services) == 0:
         print(f"{doing} the backend containers")
@@ -85,10 +84,10 @@ def _print_notice(
 
 
 def _exec_command(
-    command: List[str],
+    command: list[str],
     *,
     compose_file: str = COMPOSE_FILE,
-    compose_options: Tuple[str, ...] = (),
+    compose_options: tuple[str, ...] = (),
 ) -> None:
     compose = check_system()
     full_command = [*compose, *compose_options, "-f", compose_file, *command]

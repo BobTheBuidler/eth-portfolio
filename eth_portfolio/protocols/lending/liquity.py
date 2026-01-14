@@ -1,5 +1,3 @@
-from typing import Optional
-
 from faster_async_lru import alru_cache
 from y import Contract, Network, get_price
 from y._decorators import stuck_coro_debugger
@@ -54,7 +52,7 @@ class Liquity(LendingProtocolWithLockedCollateral):
         return await self.troveManager.Troves.coroutine(address, block_identifier=block)
 
     @stuck_coro_debugger
-    async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+    async def _balances(self, address: Address, block: Block | None = None) -> TokenBalances:
         """
         Retrieves the collateral balances for a given address at a specific block.
 
@@ -83,7 +81,7 @@ class Liquity(LendingProtocolWithLockedCollateral):
         return balances
 
     @stuck_coro_debugger
-    async def _debt(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+    async def _debt(self, address: Address, block: Block | None = None) -> TokenBalances:
         """
         Retrieves the debt balances for a given address at a specific block.
 

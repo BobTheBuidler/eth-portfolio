@@ -170,9 +170,9 @@ typedef struct {
     PyObject *___mypyc_temp__32;
     int64_t ___mypyc_temp__33;
     PyObject *___mypyc_temp__34;
-    int64_t ___mypyc_temp__35;
+    PyObject *___mypyc_temp__35;
     CPyTagged ___mypyc_generator_attribute__block;
-    CPyTagged ___mypyc_generator_attribute__n;
+    PyObject *___mypyc_generator_attribute__n;
 } eth_portfolio____loaders____nonce____get_area_genObject;
 
 typedef struct {
@@ -189,7 +189,7 @@ typedef struct {
     double ___mypyc_generator_attribute__ts;
     PyObject *___mypyc_temp__42;
     tuple_T3OOO ___mypyc_temp__43;
-    PyObject *___mypyc_generator_attribute__block;
+    CPyTagged ___mypyc_generator_attribute__block;
     tuple_T3OOO ___mypyc_temp__44;
     PyObject *___mypyc_temp__45;
     tuple_T3OOO ___mypyc_temp__46;
@@ -260,12 +260,13 @@ typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
     PyObject *___mypyc_env__;
-} eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_50Object;
+} eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object;
 
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
     PyObject *___mypyc_generator_attribute__args;
+    PyObject *___mypyc_generator_attribute__custom_buckets;
     int32_t ___mypyc_next_label__;
     PyObject *___mypyc_generator_attribute__interval;
     PyObject *___mypyc_generator_attribute__portfolio;

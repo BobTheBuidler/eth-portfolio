@@ -1,5 +1,5 @@
 import asyncio
-from typing import ClassVar, Final, Optional, final
+from typing import ClassVar, Final, final
 
 import y
 from y.datatypes import Address, Block
@@ -7,7 +7,6 @@ from y.datatypes import Address, Block
 from eth_portfolio import _decimal
 from eth_portfolio.protocols._base import ProtocolABC
 from eth_portfolio.typing import Balance, TokenBalances
-
 
 gather: Final = asyncio.gather
 
@@ -34,7 +33,7 @@ class MakerDSR(ProtocolABC):
         self._get_chi: Final = self.pot.chi.coroutine
         self._get_pie: Final = self.dsr_manager.pieOf.coroutine
 
-    async def _balances(self, address: Address, block: Optional[Block] = None) -> TokenBalances:
+    async def _balances(self, address: Address, block: Block | None = None) -> TokenBalances:
         balances = TokenBalances(block=block)
         if block and block < self._start_block:
             return balances
@@ -47,5 +46,5 @@ class MakerDSR(ProtocolABC):
             balances[dai] = Balance(dai_in_dsr, dai_in_dsr, token=dai, block=block)
         return balances
 
-    async def _exchange_rate(self, block: Optional[Block] = None) -> Decimal:
+    async def _exchange_rate(self, block: Block | None = None) -> Decimal:
         return Decimal(await self._get_chi(block_identifier=block)) / 10**27

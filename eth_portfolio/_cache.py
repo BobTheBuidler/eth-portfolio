@@ -1,6 +1,7 @@
 import functools
 import inspect
 from asyncio import AbstractEventLoop, PriorityQueue, Task, current_task, get_event_loop
+from collections.abc import Callable
 from concurrent.futures import Executor
 from hashlib import md5
 from logging import getLogger
@@ -8,14 +9,11 @@ from os import makedirs
 from os.path import exists, join
 from pickle import dumps, load, loads
 from random import random
-from typing import Any, Callable, Final, List, NoReturn, Optional
+from typing import Any, Final, NoReturn
 
 from a_sync import PruningThreadPoolExecutor
 from a_sync._typing import P, T
 from a_sync.asyncio import create_task
-
-# TODO: rip out this deprecated func
-from a_sync.primitives.queue import log_broken
 from aiofiles import open as _aio_open
 from brownie import chain
 
@@ -60,8 +58,8 @@ def cache_to_disk(fn: Callable[P, T]) -> Callable[P, T]:
                 logger.exception(e)
                 raise
 
-        loop: Optional[AbstractEventLoop] = None
-        workers: List[Task[NoReturn]] = []
+        loop: AbstractEventLoop | None = None
+        workers: list[Task[NoReturn]] = []
 
         @functools.wraps(fn)
         async def disk_cache_wrap(*args: P.args, **kwargs: P.kwargs) -> T:

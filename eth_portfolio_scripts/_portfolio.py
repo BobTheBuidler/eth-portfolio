@@ -1,8 +1,9 @@
 import asyncio
+from collections.abc import Awaitable, Callable, Iterator
 from datetime import datetime, timezone
 from logging import getLogger
 from math import floor
-from typing import Awaitable, Callable, Final, Iterator, List, Optional, Tuple
+from typing import Final
 
 import a_sync
 import eth_retry
@@ -20,12 +21,11 @@ from eth_portfolio.portfolio import _DEFAULT_LABEL
 from eth_portfolio.typing import (
     Addresses,
     Balance,
-    RemoteTokenBalances,
     PortfolioBalances,
+    RemoteTokenBalances,
     TokenBalances,
 )
 from eth_portfolio_scripts import victoria
-
 
 NETWORK_LABEL: Final = Network.label(CHAINID)
 
@@ -58,20 +58,35 @@ class ExportablePortfolio(Portfolio):
         *,
         start_block: int = 0,
         label: str = _DEFAULT_LABEL,
-        concurrency: int = 40,
+        concurrency: int = 30,
         load_prices: bool = True,
-        get_bucket: Callable[[ChecksumAddress], Awaitable[str]] = get_token_bucket,
+        get_bucket: Callable[[ChecksumAddress], Awaitable[str]] = None,
         num_workers_transactions: int = 1000,
         asynchronous: bool = False,
+        custom_buckets: dict[str, str] | None = None,
     ):
         super().__init__(
             addresses, start_block, label, load_prices, num_workers_transactions, asynchronous
         )
-        self.get_bucket = get_bucket
         self._semaphore = a_sync.Semaphore(concurrency)
 
+        # Lowercase all keys in custom_buckets if provided
+        self.custom_buckets = (
+            {k.lower(): v for k, v in custom_buckets.items()} if custom_buckets else None
+        )
+
+        # If get_bucket is not provided, use get_token_bucket with the lowercased mapping
+        if get_bucket is None:
+            self.get_bucket = lambda token: get_token_bucket(token, self.custom_buckets)
+        elif custom_buckets:
+            raise RuntimeError(
+                "You cannot pass in a custom get_bucket function AND a custom_buckets mapping, choose one."
+            )
+        else:
+            self.get_bucket = get_bucket
+
     @cached_property
-    def _data_queries(self) -> Tuple[str, str]:
+    def _data_queries(self) -> tuple[str, str]:
         label = self.label.lower().replace(" ", "_")
         return f"{label}_assets", f"{label}_debts"
 
@@ -101,7 +116,7 @@ class ExportablePortfolio(Portfolio):
         except Exception as e:
             log_error("Error processing %s:", dt, exc_info=True)
 
-    async def get_data_for_export(self, block: BlockNumber, ts: datetime) -> List[victoria.Metric]:
+    async def get_data_for_export(self, block: BlockNumber, ts: datetime) -> list[victoria.Metric]:
         async with self._semaphore:
             print(f"exporting {ts} for {self.label}")
             start = datetime.now(tz=timezone.utc)
@@ -143,8 +158,8 @@ class ExportablePortfolio(Portfolio):
         wallet: ChecksumAddress,
         token: ChecksumAddress,
         bal: Balance,
-        protocol: Optional[str] = None,
-    ) -> Tuple[victoria.types.PrometheusItem, victoria.types.PrometheusItem]:
+        protocol: str | None = None,
+    ) -> tuple[victoria.types.PrometheusItem, victoria.types.PrometheusItem]:
         # TODO wallet nicknames in grafana
         # wallet = KNOWN_ADDRESSES[wallet] if wallet in KNOWN_ADDRESSES else wallet
         if protocol is not None:

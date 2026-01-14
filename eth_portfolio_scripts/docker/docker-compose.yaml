@@ -3,7 +3,7 @@ networks:
 
 services:
   grafana:
-    image: grafana/grafana:12.2.1
+    image: grafana/grafana:12.3.1
     ports:
       - 127.0.0.1:${GRAFANA_PORT:-3000}:3000
     environment:
@@ -47,7 +47,7 @@ services:
     restart: always
 
   victoria-metrics:
-    image: victoriametrics/victoria-metrics:v1.129.1
+    image: victoriametrics/victoria-metrics:v1.133.0
     volumes:
       - ~/.eth-portfolio/data/victoria/:/victoria-metrics-data
     command:
