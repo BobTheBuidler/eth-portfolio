@@ -8,7 +8,7 @@ The primary focus of this module is to support eth-portfolio's internal operatio
 
 from collections.abc import Awaitable, Callable
 from logging import getLogger
-from typing import Final
+from typing import Final, cast
 
 import a_sync
 import dank_mids
@@ -132,7 +132,7 @@ async def get_transaction_by_nonce_and_block(
         ...     print(transaction.hash)
     """
     for tx in await get_block_transactions(block):
-        if tx.sender == address and tx.nonce == nonce:
+        if cast(ChecksumAddress, tx.sender) == address and tx.nonce == nonce:
             return tx
 
         receipt_bytes: msgspec.Raw
@@ -144,7 +144,7 @@ async def get_transaction_by_nonce_and_block(
                 type=ReceiptContractAddress,
                 dec_hook=data.Address._decode_hook,
             )
-            if receipt_0.contractAddress == address:
+            if cast(ChecksumAddress, receipt_0.contractAddress) == address:
                 return tx
         # Special handler for Gnosis Safe deployments
         elif tx.to == "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2":
