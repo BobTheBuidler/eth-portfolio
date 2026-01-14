@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import DefaultDict, Final, Set
+from typing import DefaultDict, Final
 
 from eth_typing import ChecksumAddress
 from y import Network, convert
@@ -97,6 +97,11 @@ shitcoins: Final = {
         "0x0e1CD6d2715432e4DBedFE969b0Eb2867FF61d5b",
         "0x9aE357521153FB07bE6F5792CE7a49752638fbb7",
         # Generally looks like shit
+        "0x322Ec1ed696575670D66649Ea1284ff243fE4A1e",
+        "0x9DeB0fc809955b79c85e82918E8586d3b7d2695a",
+        "0x2fFBB3549D034b5e5879670f4af58727CDc72946",
+        "0xc39B6cf191f402697ba2F3Bedf5faA9837038d42",
+        "0x5e43e50A3cB43Fb71eD2500bC847E8d25b8335f9",
         "0xE8ED1fca5af1c7dd46A3D5bbDFf7e99749D9e0aa",
         "0x00d0F0250364C431376cC64AADd3aa13c6A8998D",
         "0x256099A072ea5fd35eC134758440413095967109",
@@ -185,7 +190,26 @@ shitcoins: Final = {
         "0xc6a76f7ad66d0e6Ccd1AaAd6e7568c9bd55Dce62",
         "0xB4d4334eB5a251cbE5cC7Afb0Ba26119aCE62281",
         "0xE5c5AE39B98eFd9D3c9E0F2a5457D98fFA4b0b46",
+        "0x912033c6644008DD8438A5C07738a513f38Ded5D",
+        "0xffE49E3BB3725d499223611e571215029877A6Cf",
+        "0x7d593cC8E0b8ceBF645342AaFf5631e689FB5249",
+        "0x3E67A4D218061263202c1480ddB479080C59dd0E",
+        "0xac4607A2D8a2bfA721955a23D3F290B0E176612E",
+        "0x27ed436e67515C1dD33633537EEBd59207c51806",
+        "0x92b48cf18a947c66557CE4aC829D6DB012D11Aa5",
+        "0x16D6FB8a5c736feB50579106a39F6e14798A3D22",
         # Generally looks like shit (symbol ERC20)
+        "0x2adA6e459089292264133d8D7c85f6907423E444",
+        "0x356F680eE21c8CeFfA460c38D20A137F3D07D9af",
+        "0x683eAca6CD17383FA93e95f17e7DE443666160eB",
+        "0x7452cc6Bd1FA968dd1672FF447f3D7ff1ce210A8",
+        "0x773F67800a6d79C0198E8Ac798658f80cb346083",
+        "0xaE977D03F5A3999c762eb42a203c436dFF3Df03C",
+        "0xbD67D76edFD88719efD7669583258209015B0aB5",
+        "0xd814cd86ed2e85156d9Cf3A9319261259458f50c",
+        "0xd0E6420b900dE49113B3404b437ee153Bf220B36",
+        "0xf1D1C6ea9166bcF97A099A1388E1663933bB2E48",
+        "0xF8B49aEC3E356f911f86F58Ff9204242d4b0e6A5",
         "0xe37be01D1337E77aCB0b4293DDb4D410D80010a7",
         "0x7EeAcC32C81e4D78E9705fBf0b977f5A858Bf0F3",
         "0x90133FF815ade1977EA2f1454dBC1d309EAA33f6",
@@ -311,7 +335,7 @@ shitcoins: Final = {
     ],
 }
 
-SHITCOINS: DefaultDict[Network, Set[ChecksumAddress]] = defaultdict(set)
+SHITCOINS: DefaultDict[Network, set[ChecksumAddress]] = defaultdict(set)
 """A dictionary that contains, for each chain, a set of shitcoins that will be fully ignored by eth_portfolio. Add your own shitcoins to this object to boost eth_portfolio's performance."""
 
 for chain, tokens in shitcoins.items():

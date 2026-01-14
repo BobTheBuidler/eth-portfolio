@@ -2,14 +2,11 @@ import asyncio
 import logging
 from collections import defaultdict
 from time import time
-from typing import ClassVar, DefaultDict, Dict, Final, Optional, Tuple, final
+from typing import ClassVar, DefaultDict, Final, final
 
 import a_sync
 import dank_mids
 from eth_typing import BlockNumber, ChecksumAddress
-
-from eth_portfolio._loaders import utils
-
 
 logger: Final = logging.getLogger("eth_portfolio.nonces")
 logger_is_enabled: Final = logger.isEnabledFor
@@ -62,8 +59,8 @@ async def get_nonce_at_block(address: ChecksumAddress, block: BlockNumber) -> in
 
 
 async def get_block_for_nonce(address: ChecksumAddress, nonce: Nonce) -> int:
-    highest_known_nonce_lt_query: Optional[int]
-    lowest_known_nonce_gt_query: Optional[int]
+    highest_known_nonce_lt_query: int | None
+    lowest_known_nonce_gt_query: int | None
 
     async with locks[address]:
         highest_known_nonce_lt_query = None
@@ -133,7 +130,7 @@ async def _get_area(
     lo: BlockNumber,
     hi: BlockNumber,
     range_size: int,
-) -> Tuple[BlockNumber, BlockNumber]:
+) -> tuple[BlockNumber, BlockNumber]:
     num_chunks = _get_num_chunks(range_size)
     chunk_size = range_size // num_chunks
     points = [BlockNumber(lo + i * chunk_size) for i in range(num_chunks)]

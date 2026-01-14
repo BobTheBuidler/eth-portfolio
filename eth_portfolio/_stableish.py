@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import DefaultDict, Final, Set
+from typing import DefaultDict, Final
 
 from eth_typing import ChecksumAddress
 from y import Network, convert
@@ -31,7 +31,7 @@ stableish: Final = {
     ],
 }
 
-STABLEISH_COINS: DefaultDict[int, Set[ChecksumAddress]] = defaultdict(set)
+STABLEISH_COINS: DefaultDict[int, set[ChecksumAddress]] = defaultdict(set)
 """
 A dictionary that contains, for each chain, a set of 'stable-ish' coins that are considered stable by the wider market but not by ypriceamgic.
 
