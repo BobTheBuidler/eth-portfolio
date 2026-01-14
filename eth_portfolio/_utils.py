@@ -1,29 +1,19 @@
 import logging
 import sqlite3
 from abc import abstractmethod
+from collections.abc import AsyncGenerator, AsyncIterator
 from datetime import datetime
 from functools import cached_property
-from typing import (
-    TYPE_CHECKING,
-    AsyncGenerator,
-    AsyncIterator,
-    Final,
-    Generic,
-    List,
-    Optional,
-    Tuple,
-    TypeVar,
-    Union,
-)
+from typing import TYPE_CHECKING, Final, Generic, TypeVar
 
 import dank_mids
 from a_sync import ASyncGenericBase, ASyncIterable, ASyncIterator, as_yielded
-from async_lru import alru_cache
 from brownie import chain
 from brownie.exceptions import ContractNotFound
-from eth_abi.exceptions import InsufficientDataBytes
 from eth_typing import ChecksumAddress
-from pandas import DataFrame  # type: ignore
+from faster_async_lru import alru_cache
+from faster_eth_abi.exceptions import InsufficientDataBytes
+from pandas import DataFrame
 from y import ERC20, Contract, Network
 from y.constants import CHAINID, NETWORK_NAME
 from y.datatypes import AddressOrContract, Block
@@ -47,9 +37,14 @@ if TYPE_CHECKING:
 
 logger: Final = logging.getLogger(__name__)
 
-NON_STANDARD_ERC721: Final = {
+NON_STANDARD_ERC721: Final[list[ChecksumAddress]] = {
     Network.Mainnet: ["0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB"],  # CryptoPunks
 }.get(CHAINID, [])
+
+SUPPRESS_ERROR_LOGS: Final[list[ChecksumAddress]] = {
+    # put tokens here when you don't expect them to price successfully and do not want to see the associated error logs
+}.get(CHAINID, [])
+"""Put tokens here when you don't expect them to price successfully and do not want to see the associated error logs."""
 
 
 async def get_buffered_chain_height() -> int:
@@ -57,7 +52,7 @@ async def get_buffered_chain_height() -> int:
     return await dank_mids.eth.get_block_number() - _config.REORG_BUFFER
 
 
-class PandableList(List[_T]):
+class PandableList(list[_T]):
     @cached_property
     def df(self) -> DataFrame:
         return self._df()
@@ -74,12 +69,8 @@ class Decimal(_decimal.Decimal):
 
     # TODO i forget why I had this lol, should I delete?
 
-    def __init__(self, v) -> None:
-        # assert not isinstance(v, _decimal.Decimal)
-        super().__init__()
 
-
-async def _describe_err(token: AddressOrContract, block: Optional[Block]) -> str:
+async def _describe_err(token: AddressOrContract, block: Block | None) -> str:
     """
     Assembles a string used to provide as much useful information as possible in PriceError messages
     """
@@ -112,7 +103,7 @@ _to_raise: Final = (
 )
 
 
-async def _get_price(token: AddressOrContract, block: Optional[int] = None) -> _decimal.Decimal:
+async def _get_price(token: AddressOrContract, block: int | None = None) -> _decimal.Decimal:
     token = str(token)
     with reraise_excs_with_extra_context(token, block):
         try:
@@ -132,9 +123,10 @@ async def _get_price(token: AddressOrContract, block: Optional[int] = None) -> _
                 # Can't get symbol for handling like other excs
                 logger.warning(f"NonStandardERC20 while fetching price for {token}")
             elif isinstance(e.exception, PriceError):
-                logger.warning(
-                    f"PriceError while fetching price for {await _describe_err(token, block)}"
-                )
+                if token not in SUPPRESS_ERROR_LOGS:
+                    logger.warning(
+                        f"PriceError while fetching price for {await _describe_err(token, block)}"
+                    )
             else:
                 logger.warning(f"{e} while fetching price for {await _describe_err(token, block)}")
                 logger.warning(e, exc_info=True)
@@ -156,7 +148,7 @@ async def is_erc721(token: ChecksumAddress) -> bool:
     return False
 
 
-def _unpack_indicies(indicies: Union[Block, Tuple[Block, Block]]) -> Tuple[Block, Block]:
+def _unpack_indicies(indicies: Block | tuple[Block, Block]) -> tuple[Block, Block]:
     """Unpacks indicies and returns a tuple (start_block, end_block)."""
     if isinstance(indicies, tuple):
         start_block, end_block = indicies
@@ -213,7 +205,7 @@ class _LedgeredBase(ASyncGenericBase, _AiterMixin["LedgerEntry"], Generic[_LT]):
         return self.start_block
 
     @cached_property
-    def _ledgers(self) -> Tuple[_LT, _LT, _LT]:
+    def _ledgers(self) -> tuple[_LT, _LT, _LT]:
         """A tuple with the 3 ledgers (transactions, internal transfers, token transfers)"""
         return self.transactions, self.internal_transfers, self.token_transfers
 

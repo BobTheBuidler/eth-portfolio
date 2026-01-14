@@ -33,6 +33,9 @@ The Portfolio Exporter supports several command-line options to customize its be
 - ``--interval <interval>``
   The time interval between datapoints. default: 6h
 
+- ``--concurrency <concurrency>``
+  The max number of historical blocks to export concurrently. default: 30
+
 - ``--first-tx-block <block>``
   The block of your portfolio's first transaction, if known. This value, if provided, allows us to speed up processing of your data by limiting the block range we need to query. If not provided, the whole blockchain will be scanned. default: 0
   
@@ -114,6 +117,42 @@ The Portfolio Exporter performs a comprehensive extraction and calculation proce
 
 - **Metric Formatting:**  
   Each data point is formatted as a Prometheus metric, including metadata such as wallet address, token address, token symbol, protocol name, and a logical "bucket" for grouping. Both the raw balance and USD value are exported for each token.
+
+Custom Token Bucket Mapping
+---------------------------
+
+You can provide a custom mapping of token addresses to bucket names for your project. This is supported in ``ExportablePortfolio`` and will override the default bucket logic for any token address present in your mapping.
+
+**How it works:**
+- Pass a ``custom_buckets`` dictionary to ``ExportablePortfolio``.
+- All keys will be lowercased automatically.
+- The mapping is checked after token unwrapping, so you should use the underlying token address.
+- You cannot pass both a custom ``get_bucket`` function and a ``custom_buckets`` mapping (this will raise an error).
+
+**Example:**
+
+  .. code-block:: python
+
+      from eth_portfolio_scripts._portfolio import ExportablePortfolio
+
+      custom_buckets = {
+          "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "My Stablecoin Bucket",
+          "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee": "My ETH Bucket"
+      }
+
+      port = ExportablePortfolio(
+          addresses=[...],
+          custom_buckets=custom_buckets
+      )
+
+      # This will override the default bucket for the specified tokens.
+
+**Notes:**
+- This feature is intended for advanced users who need to customize how tokens are grouped in exported metrics.
+- The ``bucket`` field in exported Prometheus metrics will reflect your custom mapping for any matching token.
+
+**See Also:**
+- :py:func:`eth_portfolio.buckets.get_token_bucket`
 
 **3. Export and Storage**
 

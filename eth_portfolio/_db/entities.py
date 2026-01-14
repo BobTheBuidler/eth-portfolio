@@ -1,5 +1,5 @@
-import typing
 from functools import cached_property
+from typing import TYPE_CHECKING
 
 from evmspec.structs.transaction import AccessListEntry
 from hexbytes import HexBytes
@@ -16,7 +16,7 @@ class BlockExtended(Block):
     Extends the base Block entity to add relationships to transactions, internal transfers, and token transfers.
     """
 
-    if typing.TYPE_CHECKING:
+    if TYPE_CHECKING:
         # if we execute this code we get `TypeError: 'type' object is not subscriptable`
         transactions: Set["Transaction"]
         internal_transfers: Set["InternalTransfer"]
@@ -37,7 +37,7 @@ class AddressExtended(Address):
     Extends the base Address entity to add relationships for sent/received transactions, internal transfers, and token transfers.
     """
 
-    if typing.TYPE_CHECKING:
+    if TYPE_CHECKING:
         # if we execute this code we get `TypeError: 'type' object is not subscriptable`
         transactions_sent: Set["Transaction"]
         transactions_received: Set["Transaction"]
@@ -76,7 +76,7 @@ class TokenExtended(Token, AddressExtended):
     Extends both Token and AddressExtended to represent a token contract with address relationships.
     """
 
-    if typing.TYPE_CHECKING:
+    if TYPE_CHECKING:
         # if we execute this code we get `TypeError: 'type' object is not subscriptable`
         transfers: Set["TokenTransfer"]
 
@@ -159,12 +159,12 @@ class Transaction(DbEntity):
         return self.decoded.v
 
     @property
-    def access_list(self) -> typing.List[AccessListEntry]:
+    def access_list(self) -> list[AccessListEntry]:
         """EIP-2930 access list (if present)."""
         return self.decoded.access_list
 
     @property
-    def y_parity(self) -> typing.Optional[int]:
+    def y_parity(self) -> int | None:
         """EIP-1559 y-parity value (if present)."""
         return self.decoded.y_parity
 

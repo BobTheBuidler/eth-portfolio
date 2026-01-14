@@ -2,8 +2,8 @@
 Use `eth-portfolio` to output information about your portfolio in a streamlined, speed-optimized way.
 
 ### Requirements
-- Python 3.9 or higher.
-- At least 16GB of RAM.
+- Python 3.10 or higher.
+- At least 16GB of RAM, 32GB for Base chain.
 
 ### Prerequisites
 - First, you will need to bring your own archive node. This can be one you run yourself, or one from one of the common providers (Tenderly, Alchemy, QuickNode, etc.)

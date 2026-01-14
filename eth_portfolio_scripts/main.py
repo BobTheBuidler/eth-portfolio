@@ -4,10 +4,9 @@ from os import environ
 
 import brownie
 
-from eth_portfolio_scripts import docker, logger
+from eth_portfolio_scripts import docker
 from eth_portfolio_scripts._args import add_infra_port_args
 from eth_portfolio_scripts.balances import export_balances
-
 
 parser = ArgumentParser(description="eth-portfolio")
 
@@ -53,6 +52,12 @@ export_parser.add_argument(
     type=str,
     help="The time interval between datapoints. default: 6h",
     default="6h",
+)
+export_parser.add_argument(
+    "--concurrency",
+    type=int,
+    help="The max number of historical blocks to export concurrently. default: 30",
+    default=30,
 )
 export_parser.add_argument(
     "--first-tx-block",

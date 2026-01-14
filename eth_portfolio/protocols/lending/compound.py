@@ -1,5 +1,4 @@
 from asyncio import gather
-from typing import List, Optional
 
 import a_sync
 from a_sync import igather
@@ -17,7 +16,7 @@ from eth_portfolio.protocols.lending._base import LendingProtocol
 from eth_portfolio.typing import Balance, TokenBalances
 
 
-def _get_contract(market: CToken) -> Optional[Contract]:
+def _get_contract(market: CToken) -> Contract | None:
     try:
         return market.contract
     except ContractNotVerified:
@@ -26,12 +25,12 @@ def _get_contract(market: CToken) -> Optional[Contract]:
 
 
 class Compound(LendingProtocol):
-    _markets: List[Contract]
+    _markets: list[Contract]
 
     @a_sync.future
     @alru_cache(ttl=300)
     @stuck_coro_debugger
-    async def underlyings(self) -> List[ERC20]:
+    async def underlyings(self) -> list[ERC20]:
         """
         Fetches the underlying ERC20 tokens for all Compound markets.
 
@@ -54,10 +53,10 @@ class Compound(LendingProtocol):
         See Also:
             - :meth:`markets`: To get the list of market contracts.
         """
-        all_markets: List[List[CToken]] = await igather(
+        all_markets: list[list[CToken]] = await igather(
             comp.markets for comp in compound.trollers.values()
         )
-        markets: List[Contract] = [
+        markets: list[Contract] = [
             market.contract
             for troller in all_markets
             for market in troller
@@ -81,7 +80,7 @@ class Compound(LendingProtocol):
 
     @a_sync.future
     @stuck_coro_debugger
-    async def markets(self) -> List[Contract]:
+    async def markets(self) -> list[Contract]:
         """
         Fetches the list of market contracts for the Compound protocol.
 
@@ -103,7 +102,7 @@ class Compound(LendingProtocol):
         await self.underlyings()
         return self._markets
 
-    async def _debt(self, address: ChecksumAddress, block: Optional[Block] = None) -> TokenBalances:
+    async def _debt(self, address: ChecksumAddress, block: Block | None = None) -> TokenBalances:
         """
         Calculates the debt balance for a given address in the Compound protocol.
 
@@ -131,8 +130,8 @@ class Compound(LendingProtocol):
             return TokenBalances(block=block)
 
         address = str(address)
-        markets: List[Contract]
-        underlyings: List[ERC20]
+        markets: list[Contract]
+        underlyings: list[ERC20]
         markets, underlyings = await gather(self.markets(), self.underlyings())
         debt_data, underlying_scale = await gather(
             igather(_borrow_balance_stored(market, address, block) for market in markets),
@@ -155,8 +154,8 @@ class Compound(LendingProtocol):
 
 @stuck_coro_debugger
 async def _borrow_balance_stored(
-    market: Contract, address: ChecksumAddress, block: Optional[Block] = None
-) -> Optional[int]:
+    market: Contract, address: ChecksumAddress, block: Block | None = None
+) -> int | None:
     """
     Fetches the stored borrow balance for a given market and address.
 

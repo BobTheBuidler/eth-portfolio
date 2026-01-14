@@ -4,10 +4,9 @@ import dank_mids
 import eth_retry
 import msgspec
 from a_sync import SmartProcessingQueue
-from async_lru import alru_cache
 from eth_typing import HexStr
+from faster_async_lru import alru_cache
 from y._decorators import stuck_coro_debugger
-
 
 Raw: Final = msgspec.Raw
 TxReceiptQueue = SmartProcessingQueue[HexStr, [], msgspec.Raw]

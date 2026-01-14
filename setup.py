@@ -35,7 +35,8 @@ See Also:
 
 import logging
 from pathlib import Path
-from setuptools import find_packages, setup  # type: ignore
+
+from setuptools import find_packages, setup
 
 try:
     from mypyc.build import mypycify
@@ -72,13 +73,11 @@ try:
             "--install-types",
             "--disable-error-code=unused-ignore",
             "--disable-error-code=import-not-found",
-            "--disable-error-code=import-untyped",
             # temporary
             "--disable-error-code=call-arg",
-            "--disable-error-code=misc",
+            "--disable-error-code=untyped-decorator",
             "--disable-error-code=type-arg",
             "--disable-error-code=attr-defined",
-            "--disable-error-code=name-defined",
             "--disable-error-code=arg-type",
             "--disable-error-code=no-untyped-call",
             "--disable-error-code=no-untyped-def",
@@ -94,9 +93,10 @@ try:
             "--disable-error-code=dict-item",
             "--disable-error-code=has-type",
             "--disable-error-code=typeddict-item",
-            "--disable-error-code=str-bytes-safe",
             "--disable-error-code=index",
+            "--disable-error-code=misc",
         ],
+        group_name="eth_portfolio",
     )
 except Exception as e:  # fallback in case build fails
     logging.error("Error compiling eth-portfolio:", exc_info=True)
@@ -104,10 +104,8 @@ except Exception as e:  # fallback in case build fails
 
 
 setup(
-    # NOTE: somebody stole our name on pypi, we have this placeholder until we steal it back
-    name="eth_portfolio_temp",
-    python_requires=">=3.9,<3.13",
-    # name="eth-portfolio",
+    name="eth_portfolio",
+    python_requires=">=3.10,<3.14",
     packages=find_packages(),
     use_scm_version={
         "root": ".",

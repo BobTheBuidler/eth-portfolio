@@ -1,14 +1,17 @@
+import asyncio
+from collections.abc import Awaitable, Callable, Iterator
 from datetime import datetime, timezone
 from logging import getLogger
 from math import floor
-from typing import Awaitable, Callable, Final, Iterator, List, Optional, Tuple
+from typing import Final
 
 import a_sync
 import eth_retry
+import y
 from a_sync.functools import cached_property_unsafe as cached_property
 from eth_typing import BlockNumber, ChecksumAddress
 from msgspec import ValidationError, json
-from y import ERC20, Network, NonStandardERC20, get_block_at_timestamp
+from y import ERC20, Network, NonStandardERC20
 from y.constants import CHAINID
 from y.time import NoBlockFound
 
@@ -18,12 +21,11 @@ from eth_portfolio.portfolio import _DEFAULT_LABEL
 from eth_portfolio.typing import (
     Addresses,
     Balance,
-    RemoteTokenBalances,
     PortfolioBalances,
+    RemoteTokenBalances,
     TokenBalances,
 )
 from eth_portfolio_scripts import victoria
-
 
 NETWORK_LABEL: Final = Network.label(CHAINID)
 
@@ -33,6 +35,19 @@ logger: Final = getLogger("eth_portfolio")
 log_debug: Final = logger.debug
 log_error: Final = logger.error
 
+_block_at_timestamp_semaphore: Final = a_sync.Semaphore(
+    50, name="eth-portfolio get_block_at_timestamp"
+)
+
+
+async def get_block_at_timestamp(dt: datetime) -> BlockNumber:
+    async with _block_at_timestamp_semaphore:
+        while True:
+            try:
+                return await y.get_block_at_timestamp(dt, sync=False)
+            except NoBlockFound:
+                await asyncio.sleep(10)
+
 
 class ExportablePortfolio(Portfolio):
     """Adds methods to export full portoflio data."""
@@ -40,20 +55,38 @@ class ExportablePortfolio(Portfolio):
     def __init__(
         self,
         addresses: Addresses,
+        *,
         start_block: int = 0,
         label: str = _DEFAULT_LABEL,
+        concurrency: int = 30,
         load_prices: bool = True,
-        get_bucket: Callable[[ChecksumAddress], Awaitable[str]] = get_token_bucket,
+        get_bucket: Callable[[ChecksumAddress], Awaitable[str]] = None,
         num_workers_transactions: int = 1000,
         asynchronous: bool = False,
+        custom_buckets: dict[str, str] | None = None,
     ):
         super().__init__(
             addresses, start_block, label, load_prices, num_workers_transactions, asynchronous
         )
-        self.get_bucket = get_bucket
+        self._semaphore = a_sync.Semaphore(concurrency)
+
+        # Lowercase all keys in custom_buckets if provided
+        self.custom_buckets = (
+            {k.lower(): v for k, v in custom_buckets.items()} if custom_buckets else None
+        )
+
+        # If get_bucket is not provided, use get_token_bucket with the lowercased mapping
+        if get_bucket is None:
+            self.get_bucket = lambda token: get_token_bucket(token, self.custom_buckets)
+        elif custom_buckets:
+            raise RuntimeError(
+                "You cannot pass in a custom get_bucket function AND a custom_buckets mapping, choose one."
+            )
+        else:
+            self.get_bucket = get_bucket
 
     @cached_property
-    def _data_queries(self) -> Tuple[str, str]:
+    def _data_queries(self) -> tuple[str, str]:
         label = self.label.lower().replace(" ", "_")
         return f"{label}_assets", f"{label}_debts"
 
@@ -71,53 +104,48 @@ class ExportablePortfolio(Portfolio):
                 return True
         return False
 
-    async def export_snapshot(self, dt: datetime):
+    async def export_snapshot(self, dt: datetime) -> None:
         log_debug("checking data at %s for %s", dt, self.label)
         try:
-            if not await self.data_exists(dt, sync=False):
-                while True:
-                    try:
-                        block = await get_block_at_timestamp(dt, sync=False)
-                    except NoBlockFound:
-                        pass
-                    else:
-                        break
-                log_debug("block at %s: %s", dt, block)
-                data = await self.get_data_for_export(block, dt, sync=False)
-                await victoria.post_data(data)
+            if await self.data_exists(dt, sync=False):
+                return
+            block = await get_block_at_timestamp(dt)
+            log_debug("block at %s: %s", dt, block)
+            data = await self.get_data_for_export(block, dt, sync=False)
+            await victoria.post_data(data)
         except Exception as e:
             log_error("Error processing %s:", dt, exc_info=True)
 
-    @a_sync.Semaphore(60)
-    async def get_data_for_export(self, block: BlockNumber, ts: datetime) -> List[victoria.Metric]:
-        print(f"exporting {ts} for {self.label}")
-        start = datetime.now(tz=timezone.utc)
+    async def get_data_for_export(self, block: BlockNumber, ts: datetime) -> list[victoria.Metric]:
+        async with self._semaphore:
+            print(f"exporting {ts} for {self.label}")
+            start = datetime.now(tz=timezone.utc)
 
-        metrics_to_export = []
-        data: PortfolioBalances = await self.describe(block, sync=False)
+            metrics_to_export = []
+            data: PortfolioBalances = await self.describe(block, sync=False)
 
-        for wallet, wallet_data in dict.items(data):
-            for section, section_data in wallet_data.items():
-                if isinstance(section_data, TokenBalances):
-                    for token, bals in dict.items(section_data):
-                        metrics_to_export.extend(
-                            await self.__process_token(ts, section, wallet, token, bals)
-                        )
-                elif isinstance(section_data, RemoteTokenBalances):
-                    if section == "external":
-                        section = "assets"
-                    for protocol, token_bals in section_data.items():
-                        for token, bals in dict.items(token_bals):
+            for wallet, wallet_data in dict.items(data):
+                for section, section_data in wallet_data.items():
+                    if isinstance(section_data, TokenBalances):
+                        for token, bals in dict.items(section_data):
                             metrics_to_export.extend(
-                                await self.__process_token(
-                                    ts, section, wallet, token, bals, protocol=protocol
-                                )
+                                await self.__process_token(ts, section, wallet, token, bals)
                             )
-                else:
-                    raise NotImplementedError()
+                    elif isinstance(section_data, RemoteTokenBalances):
+                        if section == "external":
+                            section = "assets"
+                        for protocol, token_bals in section_data.items():
+                            for token, bals in dict.items(token_bals):
+                                metrics_to_export.extend(
+                                    await self.__process_token(
+                                        ts, section, wallet, token, bals, protocol=protocol
+                                    )
+                                )
+                    else:
+                        raise NotImplementedError()
 
-        print(f"got data for {ts} in {datetime.now(tz=timezone.utc) - start}")
-        return metrics_to_export
+            print(f"got data for {ts} in {datetime.now(tz=timezone.utc) - start}")
+            return metrics_to_export
 
     def __get_data_exists_coros(self, dt: datetime) -> Iterator[str]:
         for query in self._data_queries:
@@ -130,8 +158,8 @@ class ExportablePortfolio(Portfolio):
         wallet: ChecksumAddress,
         token: ChecksumAddress,
         bal: Balance,
-        protocol: Optional[str] = None,
-    ):
+        protocol: str | None = None,
+    ) -> tuple[victoria.types.PrometheusItem, victoria.types.PrometheusItem]:
         # TODO wallet nicknames in grafana
         # wallet = KNOWN_ADDRESSES[wallet] if wallet in KNOWN_ADDRESSES else wallet
         if protocol is not None:
@@ -172,7 +200,7 @@ class ExportablePortfolio(Portfolio):
         )
 
 
-async def _get_symbol(token) -> str:
+async def _get_symbol(token: str) -> str:
     if token == "ETH":
         return "ETH"
     try:

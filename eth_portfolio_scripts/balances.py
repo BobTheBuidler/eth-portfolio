@@ -4,10 +4,10 @@ from typing import Final
 
 import a_sync
 import a_sync.asyncio
+from eth_typing import HexAddress
 
 from eth_portfolio_scripts import docker
 from eth_portfolio_scripts._utils import aiter_timestamps, parse_timedelta
-
 
 _UTC: Final = timezone.utc
 
@@ -16,7 +16,10 @@ yield_to_loop: Final = a_sync.asyncio.sleep0
 
 
 @docker.ensure_containers
-async def export_balances(args: Namespace) -> None:
+async def export_balances(
+    args: Namespace,
+    custom_buckets: dict[HexAddress, str] | None = None,
+) -> None:
     import dank_mids
 
     from eth_portfolio_scripts._portfolio import ExportablePortfolio
@@ -26,13 +29,17 @@ async def export_balances(args: Namespace) -> None:
 
     interval = parse_timedelta(args.interval)
     portfolio = ExportablePortfolio(
-        args.wallet, label=args.label, start_block=args.first_tx_block, load_prices=False
+        args.wallet,
+        label=args.label,
+        start_block=args.first_tx_block,
+        concurrency=args.concurrency,
+        custom_buckets=custom_buckets,
+        load_prices=False,
     )
 
     if export_start_block := args.export_start_block or args.first_tx_block:
-        start = datetime.fromtimestamp(
-            await dank_mids.eth.get_block_timestamp(args.export_start_block), tz=timezone.utc
-        )
+        start_ts = await dank_mids.eth.get_block_timestamp(export_start_block)
+        start = datetime.fromtimestamp(start_ts, tz=timezone.utc)
     else:
         start = None
 

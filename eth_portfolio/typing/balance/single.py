@@ -1,4 +1,4 @@
-from typing import Literal, Optional, Union, final
+from typing import Literal, Union, final
 
 from dictstruct import DictStruct
 from eth_typing import BlockNumber, ChecksumAddress
@@ -35,12 +35,12 @@ class Balance(
     The USD equivalent value of the token amount.
     """
 
-    token: Optional[ChecksumAddress] = None
+    token: ChecksumAddress | None = None
     """
     The token the balance is of, if known.
     """
 
-    block: Optional[BlockNumber] = None
+    block: BlockNumber | None = None
     """
     The block from which the balance was taken, if known.
     """
@@ -117,7 +117,7 @@ class Balance(
             >>> sum_balance.balance
             Decimal('100')
         """
-        return self if other == 0 else self.__add__(other)  # type: ignore
+        return self if other == 0 else self.__add__(other)
 
     def __sub__(self, other: "Balance") -> "Balance":
         """
