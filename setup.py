@@ -81,7 +81,6 @@ try:
             "--disable-error-code=no-any-return",
             "--disable-error-code=arg-type",
             "--disable-error-code=no-untyped-call",
-            "--disable-error-code=no-untyped-def",
             "--disable-error-code=override",
             "--disable-error-code=var-annotated",
             "--disable-error-code=return-value",
