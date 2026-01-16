@@ -4,6 +4,7 @@ env/
 .mypy_cache/
 .hypothesis
 .pytest_cache
+.worktrees
 __pycache__/
 eth_portfolio.egg-info/
 build/**/*.py
