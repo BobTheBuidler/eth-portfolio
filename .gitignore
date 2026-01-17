@@ -17,3 +17,4 @@ build/ops.txt
 **.so
 **.whl
 eth_portfolio_temp.egg-info/
+.worktrees
