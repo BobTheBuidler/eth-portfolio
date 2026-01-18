@@ -316,13 +316,14 @@ async def get_transaction(sender: ChecksumAddress, nonce: int) -> Transaction | 
 
 
 _decoded = 0
+_DECODE_YIELD_EVERY = 1000
 
 
 async def _yield_to_loop() -> None:
     """dont let the event loop get congested, let your rpc begin work asap"""
     global _decoded
     _decoded += 1
-    if _decoded % 1000 == 0:
+    if _decoded % _DECODE_YIELD_EVERY == 0:
         await sleep(0)
 
 
