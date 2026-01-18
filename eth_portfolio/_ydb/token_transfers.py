@@ -71,7 +71,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
         shitcoins = SHITCOINS.get(chain.id, set())
         append_loader_task = self._objects.append
         done = 0
-        yield_every = 100
+        yield_every: Final = 100
         for log in objs:
             if cast(ChecksumAddress, log.address) in shitcoins:
                 continue
