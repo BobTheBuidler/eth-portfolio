@@ -7,6 +7,10 @@ on:
     paths-ignore:
       - '.github/workflows/**'
       - '!.github/workflows/compile.yaml'
+      - '!AGENTS.md'
+      - '!CONTRIBUTING.md'
+      - '!README.md'
+      - '!renovate.json'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
