@@ -57,12 +57,13 @@ class PortfolioWallets(Iterable[PortfolioAddress], dict[Address, PortfolioAddres
         start_block: Block,
         load_prices: bool,
         num_workers_transactions: int,
+        asynchronous: bool,
     ) -> None:
         """
         Initialize a PortfolioWallets instance.
 
         Args:
-            portfolio: The :class:`~eth_portfolio.Portfolio` instance to which this wallet belongs.
+            asynchronous: Whether the parent portfolio is asynchronous.
             addresses: An iterable of addresses to be included in the portfolio.
         """
         self._wallets: ChecksumAddressDict[PortfolioAddress] = ChecksumAddressDict()
@@ -79,7 +80,7 @@ class PortfolioWallets(Iterable[PortfolioAddress], dict[Address, PortfolioAddres
                 start_block,
                 load_prices,
                 num_workers_transactions=num_workers_transactions,
-                asynchronous=portfolio.asynchronous,
+                asynchronous=asynchronous,
             )
 
     def __repr__(self) -> str:
@@ -248,7 +249,11 @@ class Portfolio(a_sync.ASyncGenericBase):
             raise TypeError(f"`addresses` must be an iterable, not {type(addresses)}")
 
         self.addresses = PortfolioWallets(
-            addresses, start_block, load_prices, num_workers_transactions
+            addresses,
+            start_block,
+            load_prices,
+            num_workers_transactions,
+            self.asynchronous,
         )
         """
         A container for the :class:`~eth_portfolio.Portfolio`'s :class:`~eth_portfolio.address.PortfolioAddress` objects.
