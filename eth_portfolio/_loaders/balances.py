@@ -1,6 +1,5 @@
-import decimal
 import logging
-from numbers import Number
+from decimal import InvalidOperation
 from typing import Final
 
 import y
@@ -58,7 +57,7 @@ async def load_token_balance(token: y.ERC20, address: Address, block: Block) -> 
     )
 
 
-def _calc_value(balance: Number, price: Number) -> Decimal:
+def _calc_value(balance: int | float | Decimal, price: int | float | Decimal | None) -> Decimal:
     """
     Calculate the USD value of a token balance based on its price.
 
@@ -87,10 +86,10 @@ def _calc_value(balance: Number, price: Number) -> Decimal:
 _builtin_round: Final = round
 
 
-def round(value: decimal.Decimal, digits: int) -> decimal.Decimal:
+def round(value: Decimal, digits: int) -> Decimal:
     # For a Decimal with precision < 18, rounding is both impossible and unnecessary.
     try:
         return _builtin_round(value, digits)  # type: ignore [return-value]
-    except decimal.InvalidOperation:
+    except InvalidOperation:
         rounding_logger.error("InvalidOperation when rounding %s to %s digits", value, digits)
         return value
