@@ -4,7 +4,7 @@ from contextlib import suppress
 from decimal import getcontext
 from functools import lru_cache
 from logging import getLogger
-from typing import Any
+from typing import Any, Final
 
 import evmspec
 import y._db.common
@@ -316,7 +316,7 @@ async def get_transaction(sender: ChecksumAddress, nonce: int) -> Transaction | 
 
 
 _decoded = 0
-_DECODE_YIELD_EVERY = 1000
+_DECODE_YIELD_EVERY: Final = 1000
 
 
 async def _yield_to_loop() -> None:
