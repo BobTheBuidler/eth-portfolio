@@ -71,8 +71,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
     async def _extend(self, objs: list[evmspec.Log]) -> None:
         shitcoins = SHITCOINS.get(chain.id, set())
         append_loader_task = self._objects.append
-        yield_every: Final = 100
-        yielder = _YieldEvery(yield_every)
+        yielder = _YieldEvery(100)
         for log in objs:
             if cast(ChecksumAddress, log.address) in shitcoins:
                 continue
