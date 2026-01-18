@@ -71,6 +71,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
         shitcoins = SHITCOINS.get(chain.id, set())
         append_loader_task = self._objects.append
         done = 0
+        yield_every = 100
         for log in objs:
             if cast(ChecksumAddress, log.address) in shitcoins:
                 continue
@@ -81,7 +82,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
             append_loader_task(task)
             done += 1
             # Make sure the event loop doesn't get blocked
-            if done % 100 == 0:
+            if done % yield_every == 0:
                 await sleep(0)
 
     def _get_block_for_obj(self, task: "Task[TokenTransfer]") -> int:
