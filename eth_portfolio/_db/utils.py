@@ -1,5 +1,5 @@
 import threading
-from asyncio import create_task, gather, get_event_loop, sleep
+from asyncio import create_task, gather, get_event_loop
 from contextlib import suppress
 from decimal import getcontext
 from functools import lru_cache
@@ -32,6 +32,7 @@ from eth_portfolio._db import entities
 from eth_portfolio._db.decorators import break_locks, requery_objs_on_diff_tx_err
 from eth_portfolio._db.entities import AddressExtended, BlockExtended, TokenExtended
 from eth_portfolio._decimal import Decimal
+from eth_portfolio._utils import _YieldEvery
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction, TransactionRLP
 from eth_portfolio.typing import _P, _T, Fn
 
@@ -309,22 +310,13 @@ async def get_transaction(sender: ChecksumAddress, nonce: int) -> Transaction | 
     startup_txs = await transactions_known_at_startup(CHAINID, sender)
     data = startup_txs.pop(nonce, None) or await __get_transaction_bytes_from_db(sender, nonce)
     if data:
-        await _yield_to_loop()
+        await _decode_yielder.tick()
         return decode_transaction(data)
     else:
         return None
 
 
-_decoded = 0
-_DECODE_YIELD_EVERY: Final = 1000
-
-
-async def _yield_to_loop() -> None:
-    """dont let the event loop get congested, let your rpc begin work asap"""
-    global _decoded
-    _decoded += 1
-    if _decoded % _DECODE_YIELD_EVERY == 0:
-        await sleep(0)
+_decode_yielder: Final = _YieldEvery(1000)
 
 
 @a_sync(default="async", executor=_transaction_read_executor)
@@ -491,7 +483,7 @@ async def get_token_transfer(transfer: evmspec.Log) -> TokenTransfer | None:
         return None
 
     if data:
-        await _yield_to_loop()
+        await _decode_yielder.tick()
         with reraise_excs_with_extra_context(data):
             return json.decode(data, type=TokenTransfer, dec_hook=_decode_hook)
     else:
