@@ -10,6 +10,9 @@ Use `eth-portfolio` to output information about your portfolio in a streamlined,
 - You must configure a [brownie network](https://eth-brownie.readthedocs.io/en/stable/network-management.html) to use your RPC.
 - You will also need an auth token for [Etherscan](https://etherscan.io/)'s API. Follow their [guide](https://docs.etherscan.io/etherscan-v2/getting-an-api-key) to get your key, and set env var `ETHERSCAN_TOKEN` with its value.
 
+### Debug logging
+If you are debugging ypricemagic price lookups, enable the `y.stuck?` logger at DEBUG to surface long-running calls. Details: [y.stuck? logger](CONTRIBUTING.md#y-stuck-logger).
+
 ### Installation:
 - Make sure you are using Python >= 3.9 and < 3.13. You should start with a fresh virtual environment, and then just...
 ```
