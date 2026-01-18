@@ -7,6 +7,10 @@ on:
     paths-ignore:
       - '.github/workflows/**'
       - '!.github/workflows/compile.yaml'
+      - '!AGENTS.md'
+      - '!CONTRIBUTING.md'
+      - '!README.md'
+      - '!renovate.json'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -35,7 +39,7 @@ jobs:
           python-version: "3.13"
 
       - name: Mypycify
-        uses: BobTheBuidler/mypycify@v0.3.0
+        uses: BobTheBuidler/mypycify@v0.3.1
         with:
           python-version: "3.13"
           hash-key: |

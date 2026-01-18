@@ -442,6 +442,8 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         Yields:
             AsyncIterator[Transaction]: An async iterator of transaction entries.
         """
+        # NOTE: start_block is intentionally ignored for now. Filtering by block here risks
+        # corrupting the nonce-based cache (cached_thru_nonce) unless we refactor cache semantics.
         if self.cached_thru and end_block < self.cached_thru:
             return
         if not mem_cache:
