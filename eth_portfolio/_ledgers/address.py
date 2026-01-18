@@ -456,7 +456,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
 
                 # Keep the event loop relatively unblocked
                 # and let the rpc start doing work asap
-                if i % 1000:
+                if i % 1000 == 0:
                     await yield_to_loop()
 
             len_nonces = len(nonces)
