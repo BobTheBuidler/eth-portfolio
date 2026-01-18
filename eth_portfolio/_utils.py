@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING, Final, Generic, TypeVar
 
 import dank_mids
 from a_sync import ASyncGenericBase, ASyncIterable, ASyncIterator, as_yielded
+from a_sync.asyncio import sleep0 as yield_to_loop
 from brownie import chain
 from brownie.exceptions import ContractNotFound
 from eth_typing import ChecksumAddress
@@ -156,6 +157,19 @@ def _unpack_indicies(indicies: Block | tuple[Block, Block]) -> tuple[Block, Bloc
         start_block = 0
         end_block = indicies
     return start_block, end_block
+
+
+class _YieldEvery:
+    __slots__ = ("_every", "_count")
+
+    def __init__(self, every: int) -> None:
+        self._every: Final = every
+        self._count = 0
+
+    async def tick(self) -> None:
+        self._count += 1
+        if self._count % self._every == 0:
+            await yield_to_loop()
 
 
 class _AiterMixin(ASyncIterable[_T]):
