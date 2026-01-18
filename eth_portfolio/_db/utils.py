@@ -311,6 +311,8 @@ async def get_transaction(sender: ChecksumAddress, nonce: int) -> Transaction | 
     if data:
         await _yield_to_loop()
         return decode_transaction(data)
+    else:
+        return None
 
 
 _decoded = 0
@@ -330,6 +332,8 @@ def __get_transaction_bytes_from_db(sender: ChecksumAddress, nonce: int) -> byte
     entity: entities.Transaction
     if entity := entities.Transaction.get(from_address=(CHAINID, sender), nonce=nonce):
         return entity.raw
+    else:
+        return None
 
 
 def decode_transaction(data: bytes) -> Transaction | TransactionRLP:
@@ -410,6 +414,8 @@ def get_internal_transfer(trace: evmspec.FilterTrace) -> InternalTransfer | None
         address=(CHAINID, trace.address),
     ):
         return json.decode(entity.raw, type=InternalTransfer, dec_hook=_decode_hook)
+    else:
+        return None
 
 
 @a_sync(default="async", executor=_internal_transfer_write_executor)
@@ -487,6 +493,8 @@ async def get_token_transfer(transfer: evmspec.Log) -> TokenTransfer | None:
         await _yield_to_loop()
         with reraise_excs_with_extra_context(data):
             return json.decode(data, type=TokenTransfer, dec_hook=_decode_hook)
+    else:
+        return None
 
 
 @a_sync(default="async", executor=_token_transfer_read_executor)
@@ -495,6 +503,8 @@ def __get_token_transfer_bytes_from_db(pk: dict) -> bytes | None:
     entity: entities.TokenTransfer
     if entity := entities.TokenTransfer.get(**pk):
         return entity.raw
+    else:
+        return None
 
 
 _TPK = tuple[tuple[int, ChecksumAddress], int]
