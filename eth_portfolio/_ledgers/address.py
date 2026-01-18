@@ -178,17 +178,10 @@ class AddressLedgerBase(
         yield_every: Final = 500
         yielder = _YieldEvery(yield_every)
 
-        async def unblock_loop() -> None:
-            """
-            Let the event loop run at least once for every 100
-            objects yielded so it doesn't get too congested.
-            """
-            await yielder.tick()
-
         if not mem_cache:
             async for ledger_entry in self._get_new_objects(start_block, end_block, False):
                 yield ledger_entry
-                await unblock_loop()
+                await yielder.tick()
             return
 
         if self.objects and end_block and self.objects[-1].block_number > end_block:
@@ -199,7 +192,7 @@ class AddressLedgerBase(
                 elif block > end_block:
                     return
                 yield ledger_entry
-                await unblock_loop()
+                await yielder.tick()
 
         yielded = set()
         for ledger_entry in self.objects:
@@ -210,12 +203,12 @@ class AddressLedgerBase(
                 break
             yield ledger_entry
             yielded.add(ledger_entry)
-            await unblock_loop()
+            await yielder.tick()
         async for ledger_entry in self._get_new_objects(start_block, end_block, True):  # type: ignore [assignment, misc]
             if ledger_entry not in yielded:
                 yield ledger_entry
                 yielded.add(ledger_entry)
-                await unblock_loop()
+                await yielder.tick()
         for ledger_entry in self.objects:
             block = ledger_entry.block_number
             if block < start_block:
@@ -225,7 +218,7 @@ class AddressLedgerBase(
             if ledger_entry not in yielded:
                 yield ledger_entry
                 yielded.add(ledger_entry)
-                await unblock_loop()
+                await yielder.tick()
 
     @set_end_block_if_none
     @stuck_coro_debugger
