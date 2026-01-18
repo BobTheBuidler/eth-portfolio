@@ -176,7 +176,7 @@ class AddressLedgerBase(
             AsyncGenerator[T, None]: An async generator of ledger entries.
         """
         num_yielded = 0
-        yield_every = 500
+        yield_every: Final = 500
 
         async def unblock_loop() -> None:
             """
@@ -452,7 +452,7 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         address = self.address
         end_block_nonce: int = await get_nonce_at_block(address, end_block)
         if nonces := tuple(range(self.cached_thru_nonce + 1, end_block_nonce + 1)):
-            yield_every = 1000
+            yield_every: Final = 1000
             for i, nonce in enumerate(nonces, 1):
                 self._queue.put_nowait(nonce)
 
@@ -647,7 +647,7 @@ async def _check_traces(traces: list[FilterTrace]) -> list[FilterTrace]:
 
     check_status_tasks = a_sync.TaskMapping(get_transaction_status)
 
-    yield_every = 500
+    yield_every: Final = 500
     for i, trace in enumerate(traces, 1):
         # Make sure we don't block up the event loop
         if i % yield_every == 0:
@@ -755,7 +755,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             append_transfer = internal_transfers.append
 
         done = 0
-        yield_every = 1000
+        yield_every: Final = 1000
         if self.load_prices:
             traces = []
             async for chunk in generator_function(trace_filter_coros, aiter=True):
@@ -905,7 +905,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
             token_transfers = []
             append_token_transfer = token_transfers.append
             done = 0
-            yield_every = 100
+            yield_every: Final = 100
             async for token_transfer in a_sync.as_completed(
                 tasks, aiter=True, tqdm=True, desc=f"Token Transfers     {self.address}"
             ):
