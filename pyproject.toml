@@ -14,6 +14,7 @@ requires = [
     "evmspec==0.4.8; sys_platform!='win32'",
     "ez-a-sync>=0.33.6,<0.34",
     "faster-async-lru==2.0.5.3",
+    "typed-envs==0.2.3",
 ]
 
 [tool.mypy]
