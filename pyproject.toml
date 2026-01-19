@@ -14,10 +14,12 @@ requires = [
     "evmspec==0.4.8; sys_platform!='win32'",
     "ez-a-sync>=0.33.6,<0.34",
     "faster-async-lru==2.0.5.3",
+    "typed-envs==0.2.4",
 ]
 
 [tool.mypy]
 exclude = ["build/","cache/","env/"]
+plugins = ["typed_envs.mypy_plugin"]
 
 [tool.black]
 line-length = 100
