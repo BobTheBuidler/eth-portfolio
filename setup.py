@@ -77,7 +77,6 @@ try:
             "--disable-error-code=call-arg",
             "--disable-error-code=untyped-decorator",
             "--disable-error-code=type-arg",
-            "--disable-error-code=attr-defined",
             "--disable-error-code=no-any-return",
             "--disable-error-code=arg-type",
             "--disable-error-code=no-untyped-call",
