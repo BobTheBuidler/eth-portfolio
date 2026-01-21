@@ -12,7 +12,7 @@ requires = [
     "eth-retry==0.3.5",
     "eth-typing==5.2.1",
     "evmspec==0.4.8; sys_platform!='win32'",
-    "ez-a-sync>=0.33.6,<0.34",
+    "ez-a-sync>=0.33.12,<0.34",
     "faster-async-lru==2.0.5.3",
     "typed-envs==0.2.4",
 ]
