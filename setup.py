@@ -74,7 +74,6 @@ try:
             "--disable-error-code=unused-ignore",
             "--disable-error-code=import-not-found",
             # temporary
-            "--disable-error-code=call-arg",
             "--disable-error-code=untyped-decorator",
             "--disable-error-code=type-arg",
             "--disable-error-code=attr-defined",
