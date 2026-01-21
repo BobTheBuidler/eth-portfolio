@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from asyncio import Task, create_task, sleep
+from asyncio import Task, create_task
 from collections.abc import AsyncIterator
 from logging import DEBUG, getLogger
 from typing import Any, Final, cast
@@ -16,6 +16,7 @@ from y.utils.events import ProcessedEvents
 
 from eth_portfolio._loaders import load_token_transfer
 from eth_portfolio._shitcoins import SHITCOINS
+from eth_portfolio._utils import _YieldEvery
 from eth_portfolio.constants import TRANSFER_SIGS
 from eth_portfolio.structs import TokenTransfer
 
@@ -70,7 +71,7 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
     async def _extend(self, objs: list[evmspec.Log]) -> None:
         shitcoins = SHITCOINS.get(chain.id, set())
         append_loader_task = self._objects.append
-        done = 0
+        yielder = _YieldEvery(100)
         for log in objs:
             if cast(ChecksumAddress, log.address) in shitcoins:
                 continue
@@ -79,10 +80,8 @@ class _TokenTransfers(ProcessedEvents["Task[TokenTransfer]"]):
             task = create_task(load_token_transfer(array_encodable_log, self._load_prices))
             task.block = log.block  # type: ignore [attr-defined]
             append_loader_task(task)
-            done += 1
             # Make sure the event loop doesn't get blocked
-            if done % 100 == 0:
-                await sleep(0)
+            await yielder.tick()
 
     def _get_block_for_obj(self, task: "Task[TokenTransfer]") -> int:
         return task.block  # type: ignore [attr-defined]

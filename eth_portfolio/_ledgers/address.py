@@ -42,7 +42,7 @@ from eth_portfolio import _exceptions
 from eth_portfolio._cache import cache_to_disk
 from eth_portfolio._decorators import set_end_block_if_none
 from eth_portfolio._loaders.transaction import get_nonce_at_block, load_transaction
-from eth_portfolio._utils import PandableList, _AiterMixin, get_buffered_chain_height
+from eth_portfolio._utils import PandableList, _AiterMixin, _YieldEvery, get_buffered_chain_height
 from eth_portfolio._ydb.token_transfers import TokenTransfers
 from eth_portfolio.structs import InternalTransfer, TokenTransfer, Transaction
 
@@ -175,17 +175,14 @@ class AddressLedgerBase(
         Yields:
             AsyncGenerator[T, None]: An async generator of ledger entries.
         """
-        num_yielded = 0
+        yielder = _YieldEvery(500)
 
         async def unblock_loop() -> None:
             """
             Let the event loop run at least once for every 100
             objects yielded so it doesn't get too congested.
             """
-            nonlocal num_yielded
-            num_yielded += 1
-            if num_yielded % 500 == 0:
-                await yield_to_loop()
+            await yielder.tick()
 
         if not mem_cache:
             async for ledger_entry in self._get_new_objects(start_block, end_block, False):
@@ -453,13 +450,13 @@ class AddressTransactionsLedger(AddressLedgerBase[TransactionsList, Transaction]
         address = self.address
         end_block_nonce: int = await get_nonce_at_block(address, end_block)
         if nonces := tuple(range(self.cached_thru_nonce + 1, end_block_nonce + 1)):
-            for i, nonce in enumerate(nonces):
+            yielder = _YieldEvery(1000)
+            for nonce in nonces:
                 self._queue.put_nowait(nonce)
 
                 # Keep the event loop relatively unblocked
                 # and let the rpc start doing work asap
-                if i % 1000:
-                    await yield_to_loop()
+                await yielder.tick()
 
             len_nonces = len(nonces)
             del nonces
@@ -647,10 +644,10 @@ async def _check_traces(traces: list[FilterTrace]) -> list[FilterTrace]:
 
     check_status_tasks = a_sync.TaskMapping(get_transaction_status)
 
-    for i, trace in enumerate(traces):
+    yielder = _YieldEvery(500)
+    for trace in traces:
         # Make sure we don't block up the event loop
-        if i % 500:
-            await yield_to_loop()
+        await yielder.tick()
 
         if "error" in trace:
             continue
@@ -753,7 +750,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
             internal_transfers = []
             append_transfer = internal_transfers.append
 
-        done = 0
+        yielder = _YieldEvery(1000)
         if self.load_prices:
             traces = []
             async for chunk in generator_function(trace_filter_coros, aiter=True):
@@ -778,9 +775,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
                             append_transfer(internal_transfer)
                         yield internal_transfer
 
-                    done += 1
-                    if done % 1000 == 0:
-                        await yield_to_loop()
+                    await yielder.tick()
 
         else:
             async for chunk in generator_function(trace_filter_coros, aiter=True):
@@ -791,9 +786,7 @@ class AddressInternalTransfersLedger(AddressLedgerBase[InternalTransfersList, In
                             append_transfer(internal_transfer)
                         yield internal_transfer
 
-                    done += 1
-                    if done % 1000 == 0:
-                        await yield_to_loop()
+                    await yielder.tick()
 
         if mem_cache and internal_transfers:
             self.objects.extend(internal_transfers)
@@ -902,7 +895,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
         ]:
             token_transfers = []
             append_token_transfer = token_transfers.append
-            done = 0
+            yielder = _YieldEvery(100)
             async for token_transfer in a_sync.as_completed(
                 tasks, aiter=True, tqdm=True, desc=f"Token Transfers     {self.address}"
             ):
@@ -912,9 +905,7 @@ class AddressTokenTransfersLedger(AddressLedgerBase[TokenTransfersList, TokenTra
                     yield token_transfer
 
                 # Don't let the event loop get congested
-                done += 1
-                if done % 100 == 0:
-                    await yield_to_loop()
+                await yielder.tick()
 
             if mem_cache and token_transfers:
                 self.objects.extend(token_transfers)
