@@ -94,7 +94,6 @@ try:
             "--disable-error-code=has-type",
             "--disable-error-code=typeddict-item",
             "--disable-error-code=index",
-            "--disable-error-code=misc",
         ],
         group_name="eth_portfolio",
     )
