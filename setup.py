@@ -34,73 +34,76 @@ See Also:
 """
 
 import logging
+import sys
 from pathlib import Path
 
-from setuptools import find_packages, setup
+from setuptools import Extension, find_packages, setup
 
-try:
-    from mypyc.build import mypycify
-except ModuleNotFoundError:
-    logging.warning("Cannot find mypyc, installing in iterpreted python mode (without compiling)")
-    mypycify = lambda *a, **k: []
 
+SKIP_MYPYC = any(
+    cmd in sys.argv
+    for cmd in ("sdist", "egg_info", "--name", "--version", "--help", "--help-commands")
+)
 
 requirements = list(map(str.strip, Path("requirements.txt").read_text().split("\n")))[:-1]
 
-try:
-    ext_modules = mypycify(
-        [
-            "eth_portfolio/_loaders/_nonce.py",
-            "eth_portfolio/_loaders/balances.py",
-            "eth_portfolio/_loaders/utils.py",
-            # NOTE: disabled until https://github.com/mypyc/mypyc/issues/1112 is fixed
-            # "eth_portfolio/protocols/dsr.py",
-            # NOTE: disabled until https://github.com/mypyc/mypyc/issues/1113 is fixed
-            # "eth_portfolio/typing/balance/single.py",
-            "eth_portfolio/_argspec.py",
-            "eth_portfolio/_config.py",
-            "eth_portfolio/_shitcoins.py",
-            "eth_portfolio/_stableish.py",
-            # "eth_portfolio/_submodules.py",
-            "eth_portfolio/constants.py",
-            "eth_portfolio_scripts/docker",
-            # "eth_portfolio_scripts/victoria/__init__.py",  # this one built fine with other files but wont alone
-            # "eth_portfolio_scripts/_portfolio.py",
-            # "eth_portfolio_scripts/_utils.py",
-            "eth_portfolio_scripts/balances.py",
-            "--strict",
-            "--pretty",
-            "--install-types",
-            "--disable-error-code=unused-ignore",
-            "--disable-error-code=import-not-found",
-            # temporary
-            "--disable-error-code=call-arg",
-            "--disable-error-code=untyped-decorator",
-            "--disable-error-code=type-arg",
-            "--disable-error-code=attr-defined",
-            "--disable-error-code=no-any-return",
-            "--disable-error-code=arg-type",
-            "--disable-error-code=no-untyped-call",
-            "--disable-error-code=no-untyped-def",
-            "--disable-error-code=override",
-            "--disable-error-code=var-annotated",
-            "--disable-error-code=return-value",
-            "--disable-error-code=assignment",
-            "--disable-error-code=union-attr",
-            "--disable-error-code=no-redef",
-            "--disable-error-code=valid-type",
-            "--disable-error-code=call-overload",
-            "--disable-error-code=dict-item",
-            "--disable-error-code=has-type",
-            "--disable-error-code=typeddict-item",
-            "--disable-error-code=index",
-            "--disable-error-code=misc",
-        ],
-        group_name="eth_portfolio",
+ext_modules: list[Extension] = []
+
+if not SKIP_MYPYC:
+    from mypyc.build import mypycify
+
+    ext_modules.extend(
+        mypycify(
+            [
+                "eth_portfolio/_loaders/_nonce.py",
+                "eth_portfolio/_loaders/balances.py",
+                "eth_portfolio/_loaders/utils.py",
+                # NOTE: disabled until https://github.com/mypyc/mypyc/issues/1112 is fixed
+                # "eth_portfolio/protocols/dsr.py",
+                # NOTE: disabled until https://github.com/mypyc/mypyc/issues/1113 is fixed
+                # "eth_portfolio/typing/balance/single.py",
+                "eth_portfolio/_argspec.py",
+                "eth_portfolio/_config.py",
+                "eth_portfolio/_shitcoins.py",
+                "eth_portfolio/_stableish.py",
+                # "eth_portfolio/_submodules.py",
+                "eth_portfolio/constants.py",
+                "eth_portfolio_scripts/docker",
+                # "eth_portfolio_scripts/victoria/__init__.py",  # this one built fine with other files but wont alone
+                # "eth_portfolio_scripts/_portfolio.py",
+                # "eth_portfolio_scripts/_utils.py",
+                "eth_portfolio_scripts/balances.py",
+                "--strict",
+                "--pretty",
+                "--install-types",
+                "--disable-error-code=unused-ignore",
+                "--disable-error-code=import-not-found",
+                # temporary
+                "--disable-error-code=call-arg",
+                "--disable-error-code=untyped-decorator",
+                "--disable-error-code=type-arg",
+                "--disable-error-code=attr-defined",
+                "--disable-error-code=no-any-return",
+                "--disable-error-code=arg-type",
+                "--disable-error-code=no-untyped-call",
+                "--disable-error-code=no-untyped-def",
+                "--disable-error-code=override",
+                "--disable-error-code=var-annotated",
+                "--disable-error-code=return-value",
+                "--disable-error-code=assignment",
+                "--disable-error-code=union-attr",
+                "--disable-error-code=no-redef",
+                "--disable-error-code=valid-type",
+                "--disable-error-code=call-overload",
+                "--disable-error-code=dict-item",
+                "--disable-error-code=has-type",
+                "--disable-error-code=typeddict-item",
+                "--disable-error-code=index",
+                "--disable-error-code=misc",
+            ],
+            group_name="eth_portfolio",
+        )
     )
-except Exception as e:  # fallback in case build fails
-    logging.error("Error compiling eth-portfolio:", exc_info=True)
-    ext_modules = []
 
 
 setup(
