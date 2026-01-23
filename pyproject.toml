@@ -9,7 +9,7 @@ requires = [
     "types-tqdm",
     "dank-mids==4.20.192; platform_system == 'MacOS' or (platform_system == 'Linux' and platform_machine != 'i686')",
     "eth-brownie==1.22.0.dev2; sys_platform=='linux' and platform_machine != 'i686'",
-    "eth-retry==0.3.5",
+    "eth-retry==0.3.6",
     "eth-typing==5.2.1",
     "evmspec==0.4.8; sys_platform!='win32'",
     "ez-a-sync>=0.33.6,<0.34",
