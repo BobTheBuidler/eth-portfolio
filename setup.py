@@ -34,6 +34,7 @@ See Also:
 """
 
 import logging
+import sys
 from pathlib import Path
 
 from setuptools import Extension, find_packages, setup
