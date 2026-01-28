@@ -11,4 +11,4 @@ pandas>=1.4.3,<4
 pandas-stubs>=1.4.3,<4
 typed-envs>=0.2.3
 types-tqdm
-ypricemagic>=5.1.5,<5.2
+ypricemagic>=5.2,<5.3
