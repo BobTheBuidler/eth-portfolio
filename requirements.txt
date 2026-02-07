@@ -7,8 +7,10 @@ ez-a-sync>=0.33.10
 faster-async-lru==2.0.5.3
 faster-eth-utils
 numpy<3
-pandas>=1.4.3,<4
-pandas-stubs>=1.4.3,<4
+pandas>=1.4.3,<3; python_version < '3.11'
+pandas>=1.4.3,<4; python_version >= '3.11'
+pandas-stubs>=1.4.3,<3; python_version < '3.11'
+pandas-stubs>=1.4.3,<4; python_version >= '3.11'
 typed-envs>=0.2.3
 types-tqdm
 ypricemagic>=5.2,<5.3
