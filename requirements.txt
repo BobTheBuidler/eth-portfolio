@@ -9,7 +9,7 @@ faster-eth-utils
 numpy<3
 pandas>=1.4.3,<3; python_version < '3.11'
 pandas>=1.4.3,<4; python_version >= '3.11'
-pandas-stubs>=1.4.3,<3; python_version < '3.11'
+pandas-stubs>=3,<4; python_version < '3.11'
 pandas-stubs>=1.4.3,<4; python_version >= '3.11'
 typed-envs>=0.2.3
 types-tqdm
