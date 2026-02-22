@@ -7,6 +7,7 @@ from typing import ClassVar, DefaultDict, Final, final
 import a_sync
 import dank_mids
 from eth_typing import BlockNumber, ChecksumAddress
+from mypy_extensions import i16
 
 logger: Final = logging.getLogger("eth_portfolio.nonces")
 logger_is_enabled: Final = logger.isEnabledFor
@@ -14,11 +15,11 @@ __log: Final = logger._log
 
 DEBUG: Final = logging.DEBUG
 
-Nonce = int
+Nonce = i16
 AccountNonces = DefaultDict[Nonce, BlockNumber]
 GlobalNonces = DefaultDict[ChecksumAddress, AccountNonces]
 
-nonces: Final[GlobalNonces] = defaultdict(lambda: defaultdict(int))  # type: ignore [arg-type]
+nonces: Final[GlobalNonces] = defaultdict(lambda: defaultdict(i16))  # type: ignore [arg-type]
 locks: Final[DefaultDict[ChecksumAddress, asyncio.Lock]] = defaultdict(asyncio.Lock)
 
 get_transaction_count: Final = dank_mids.eth.get_transaction_count
