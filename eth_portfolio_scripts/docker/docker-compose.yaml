@@ -35,7 +35,7 @@ services:
     networks:
       - eth_portfolio
     restart: always
-  
+
   vmagent:
     image: victoriametrics/vmagent:heads-public-single-node-0-g52eb9c99e
     command:
@@ -51,7 +51,7 @@ services:
     volumes:
       - ~/.eth-portfolio/data/victoria/:/victoria-metrics-data
     command:
-      - '-memory.allowedBytes=3GB'
+      - "-memory.allowedBytes=3GB"
       - "-retentionPeriod=10y"
       - "-search.disableAutoCacheReset=true"
     ports:

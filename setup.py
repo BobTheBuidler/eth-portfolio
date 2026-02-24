@@ -33,12 +33,10 @@ See Also:
     - :mod:`requirements.txt`: For more information on managing dependencies.
 """
 
-import logging
 import sys
 from pathlib import Path
 
 from setuptools import Extension, find_packages, setup
-
 
 SKIP_MYPYC = any(
     cmd in sys.argv
