@@ -1,25 +1,25 @@
 [build-system]
 requires = [
-    "setuptools",
-    "wheel",
-    "mypy[mypyc]==1.19.1",
-    "pandas-stubs==2.3.3.260113; python_version < '3.11'",
-    "pandas-stubs==3.0.0.260204; python_version >= '3.11'",
-    "pony-stubs==0.5.2",
-    "types-aiofiles",
-    "types-tqdm",
-    "dank-mids==4.20.195; platform_system == 'MacOS' or (platform_system == 'Linux' and platform_machine != 'i686')",
-    "eth-brownie==1.22.0.dev2; sys_platform=='linux' and platform_machine != 'i686'",
-    "eth-retry==0.3.7",
-    "eth-typing==5.2.1",
-    "evmspec==0.5.0; sys_platform!='win32'",
-    "ez-a-sync>=0.33.6,<0.34",
-    "faster-async-lru==2.0.5.3",
-    "typed-envs==0.2.4",
+  "setuptools",
+  "wheel",
+  "mypy[mypyc]==1.19.1",
+  "pandas-stubs==2.3.3.260113; python_version < '3.11'",
+  "pandas-stubs==3.0.0.260204; python_version >= '3.11'",
+  "pony-stubs==0.5.2",
+  "types-aiofiles",
+  "types-tqdm",
+  "dank-mids==4.20.195; platform_system == 'MacOS' or (platform_system == 'Linux' and platform_machine != 'i686')",
+  "eth-brownie==1.22.0.dev2; sys_platform=='linux' and platform_machine != 'i686'",
+  "eth-retry==0.3.7",
+  "eth-typing==5.2.1",
+  "evmspec==0.5.0; sys_platform!='win32'",
+  "ez-a-sync>=0.33.6,<0.34",
+  "faster-async-lru==2.0.5.3",
+  "typed-envs==0.2.4",
 ]
 
 [tool.mypy]
-exclude = ["build/","cache/","env/"]
+exclude = ["build/", "cache/", "env/"]
 plugins = ["typed_envs.mypy_plugin"]
 
 [tool.black]
