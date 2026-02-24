@@ -170,9 +170,9 @@ typedef struct {
     PyObject *___mypyc_temp__32;
     int64_t ___mypyc_temp__33;
     PyObject *___mypyc_temp__34;
-    PyObject *___mypyc_temp__35;
+    int64_t ___mypyc_temp__35;
     CPyTagged ___mypyc_generator_attribute__block;
-    PyObject *___mypyc_generator_attribute__n;
+    CPyTagged ___mypyc_generator_attribute__n;
 } eth_portfolio____loaders____nonce____get_area_genObject;
 
 typedef struct {
