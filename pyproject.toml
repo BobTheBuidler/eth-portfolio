@@ -11,7 +11,7 @@ requires = [
     "dank-mids==4.20.206; platform_system == 'MacOS' or (platform_system == 'Linux' and platform_machine != 'i686')",
     "eth-brownie==1.22.0.dev2; sys_platform=='linux' and platform_machine != 'i686'",
     "eth-retry==0.3.7",
-    "eth-typing==5.2.1",
+    "eth-typing==6.0.0",
     "evmspec==0.5.1; sys_platform!='win32'",
     "ez-a-sync>=0.34,<0.35",
     "faster-async-lru==2.0.5.3",
