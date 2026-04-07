@@ -228,7 +228,7 @@ typedef struct {
     CPyVTableItem *vtable;
     PyObject *___mypyc_self__;
     PyObject *_fn;
-    PyObject *_compose_wrap;
+    PyObject *___mypyc_generator_attribute__compose_wrap;
 } eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject;
 
 typedef struct {
@@ -254,6 +254,7 @@ typedef struct {
     CPyVTableItem *vtable;
     vectorcallfunc vectorcall;
     PyObject *___mypyc_env__;
+    PyObject *___cpyfunction__;
 } eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject;
 
 typedef struct {

@@ -16,6 +16,7 @@
 #include "misc_ops.c"
 #include "generic_ops.c"
 #include "pythonsupport.c"
+#include "function_wrapper.c"
 #include "__native_eth_portfolio.h"
 #include "__native_internal_eth_portfolio.h"
 
@@ -68,6 +69,12 @@ CPyDef__nonce___BlockCache_trait_vtable_setup(void)
         (CPyVTableItem)CPyDef__nonce___BlockCache_____mypyc_defaults_setup,
     };
     memcpy(_nonce___BlockCache_vtable, _nonce___BlockCache_vtable_scratch, sizeof(_nonce___BlockCache_vtable));
+    return 1;
+}
+
+static bool
+CPyDef__nonce___BlockCache_coroutine_setup(PyObject *type)
+{
     return 1;
 }
 
@@ -254,6 +261,12 @@ CPyDef__nonce_____mypyc_lambda__0_obj_trait_vtable_setup(void)
     return 1;
 }
 
+static bool
+CPyDef__nonce_____mypyc_lambda__0_obj_coroutine_setup(PyObject *type)
+{
+    return 1;
+}
+
 
 static PyGetSetDef _nonce_____mypyc_lambda__0_obj_getseters[] = {
     {"__dict__", PyObject_GenericGetDict, PyObject_GenericSetDict},
@@ -425,6 +438,12 @@ CPyDef__nonce___get_nonce_at_block_gen_trait_vtable_setup(void)
         (CPyVTableItem)CPyDef__nonce___get_nonce_at_block_gen_____await__,
     };
     memcpy(_nonce___get_nonce_at_block_gen_vtable, _nonce___get_nonce_at_block_gen_vtable_scratch, sizeof(_nonce___get_nonce_at_block_gen_vtable));
+    return 1;
+}
+
+static bool
+CPyDef__nonce___get_nonce_at_block_gen_coroutine_setup(PyObject *type)
+{
     return 1;
 }
 
@@ -803,6 +822,12 @@ CPyDef__nonce___get_block_for_nonce_gen_trait_vtable_setup(void)
     return 1;
 }
 
+static bool
+CPyDef__nonce___get_block_for_nonce_gen_coroutine_setup(PyObject *type)
+{
+    return 1;
+}
+
 static PyMethodDef _nonce___get_block_for_nonce_gen_methods[] = {
     {"__internal_mypyc_setup", (PyCFunction)CPyDef__nonce_____mypyc__get_block_for_nonce_gen_setup, METH_O, NULL},
     {"__next__",
@@ -1173,6 +1198,12 @@ CPyDef__nonce____get_area_gen_trait_vtable_setup(void)
     return 1;
 }
 
+static bool
+CPyDef__nonce____get_area_gen_coroutine_setup(PyObject *type)
+{
+    return 1;
+}
+
 static PyMethodDef _nonce____get_area_gen_methods[] = {
     {"__internal_mypyc_setup", (PyCFunction)CPyDef__nonce_____mypyc___3_get_area_gen_setup, METH_O, NULL},
     {"__next__",
@@ -1395,6 +1426,12 @@ CPyDef__nonce___get_block_number_gen_trait_vtable_setup(void)
     return 1;
 }
 
+static bool
+CPyDef__nonce___get_block_number_gen_coroutine_setup(PyObject *type)
+{
+    return 1;
+}
+
 static PyMethodDef _nonce___get_block_number_gen_methods[] = {
     {"__internal_mypyc_setup", (PyCFunction)CPyDef__nonce_____mypyc__get_block_number_gen_setup, METH_O, NULL},
     {"__next__",
@@ -1473,21 +1510,50 @@ PyObject *CPyDef__nonce___get_block_number_gen(void)
 }
 
 static PyMethodDef _noncemodule_methods[] = {
-    {"get_nonce_at_block", (PyCFunction)CPyPy__nonce___get_nonce_at_block, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("get_nonce_at_block(address, block)\n--\n\n") /* docstring */},
-    {"get_block_for_nonce", (PyCFunction)CPyPy__nonce___get_block_for_nonce, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("get_block_for_nonce(address, nonce)\n--\n\n") /* docstring */},
-    {"_get_area", (PyCFunction)CPyPy__nonce____get_area, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("_get_area(address, nonce, lo, hi, range_size)\n--\n\n") /* docstring */},
     {"_update_nonces", (PyCFunction)CPyPy__nonce____update_nonces, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("_update_nonces(address, nonce, block)\n--\n\n") /* docstring */},
     {"_get_num_chunks", (PyCFunction)CPyPy__nonce____get_num_chunks, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("_get_num_chunks(range_size)\n--\n\n") /* docstring */},
-    {"get_block_number", (PyCFunction)CPyPy__nonce___get_block_number, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("get_block_number()\n--\n\n") /* docstring */},
     {NULL, NULL, 0, NULL}
 };
 
 int CPyExec_eth_portfolio____loaders____nonce(PyObject *module)
 {
+    intern_strings();
     PyObject* modname = NULL;
     modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio____loaders____nonce__internal, "__name__");
     CPyStatic__nonce___globals = PyModule_GetDict(CPyModule_eth_portfolio____loaders____nonce__internal);
     if (unlikely(CPyStatic__nonce___globals == NULL))
+        goto fail;
+    PyObject* CPyPy__nonce___get_nonce_at_block_wrapper = CPyFunction_New(CPyModule_eth_portfolio____loaders____nonce, "eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", (PyCFunction)CPyPy__nonce___get_nonce_at_block, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("get_nonce_at_block(address, block)\n--\n\n"), 31, CO_COROUTINE, false);
+    if (unlikely(!CPyPy__nonce___get_nonce_at_block_wrapper))
+        goto fail;
+    PyObject *CPyPy__nonce___get_nonce_at_block_wrapper_name = PyUnicode_FromString("get_nonce_at_block");
+    if (unlikely(!CPyPy__nonce___get_nonce_at_block_wrapper_name))
+        goto fail;
+    if (PyDict_SetItem(CPyStatic__nonce___globals, CPyPy__nonce___get_nonce_at_block_wrapper_name, (PyObject *)CPyPy__nonce___get_nonce_at_block_wrapper) < 0)
+        goto fail;
+    PyObject* CPyPy__nonce___get_block_for_nonce_wrapper = CPyFunction_New(CPyModule_eth_portfolio____loaders____nonce, "eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", (PyCFunction)CPyPy__nonce___get_block_for_nonce, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("get_block_for_nonce(address, nonce)\n--\n\n"), 61, CO_COROUTINE, false);
+    if (unlikely(!CPyPy__nonce___get_block_for_nonce_wrapper))
+        goto fail;
+    PyObject *CPyPy__nonce___get_block_for_nonce_wrapper_name = PyUnicode_FromString("get_block_for_nonce");
+    if (unlikely(!CPyPy__nonce___get_block_for_nonce_wrapper_name))
+        goto fail;
+    if (PyDict_SetItem(CPyStatic__nonce___globals, CPyPy__nonce___get_block_for_nonce_wrapper_name, (PyObject *)CPyPy__nonce___get_block_for_nonce_wrapper) < 0)
+        goto fail;
+    PyObject* CPyPy__nonce____get_area_wrapper = CPyFunction_New(CPyModule_eth_portfolio____loaders____nonce, "eth_portfolio/_loaders/_nonce.py", "_get_area", (PyCFunction)CPyPy__nonce____get_area, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("_get_area(address, nonce, lo, hi, range_size)\n--\n\n"), 127, CO_COROUTINE, false);
+    if (unlikely(!CPyPy__nonce____get_area_wrapper))
+        goto fail;
+    PyObject *CPyPy__nonce____get_area_wrapper_name = PyUnicode_FromString("_get_area");
+    if (unlikely(!CPyPy__nonce____get_area_wrapper_name))
+        goto fail;
+    if (PyDict_SetItem(CPyStatic__nonce___globals, CPyPy__nonce____get_area_wrapper_name, (PyObject *)CPyPy__nonce____get_area_wrapper) < 0)
+        goto fail;
+    PyObject* CPyPy__nonce___get_block_number_wrapper = CPyFunction_New(CPyModule_eth_portfolio____loaders____nonce, "eth_portfolio/_loaders/_nonce.py", "get_block_number", (PyCFunction)CPyPy__nonce___get_block_number, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("get_block_number()\n--\n\n"), 184, CO_COROUTINE, false);
+    if (unlikely(!CPyPy__nonce___get_block_number_wrapper))
+        goto fail;
+    PyObject *CPyPy__nonce___get_block_number_wrapper_name = PyUnicode_FromString("get_block_number");
+    if (unlikely(!CPyPy__nonce___get_block_number_wrapper_name))
+        goto fail;
+    if (PyDict_SetItem(CPyStatic__nonce___globals, CPyPy__nonce___get_block_number_wrapper_name, (PyObject *)CPyPy__nonce___get_block_number_wrapper) < 0)
         goto fail;
     CPyType__nonce_____mypyc_lambda__0_obj = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType__nonce_____mypyc_lambda__0_obj_template, NULL, modname);
     if (unlikely(!CPyType__nonce_____mypyc_lambda__0_obj))
@@ -1555,8 +1621,19 @@ static struct PyModuleDef _noncemodule = {
     NULL,
 };
 
+PyObject *CPyInitOnly_eth_portfolio____loaders____nonce(void)
+{
+    if (CPyModule_eth_portfolio____loaders____nonce__internal) {
+        Py_INCREF(CPyModule_eth_portfolio____loaders____nonce__internal);
+        return CPyModule_eth_portfolio____loaders____nonce__internal;
+    }
+    CPyModule_eth_portfolio____loaders____nonce__internal = PyModule_Create(&_noncemodule);
+    return CPyModule_eth_portfolio____loaders____nonce__internal;
+}
+
 PyObject *CPyInit_eth_portfolio____loaders____nonce(void)
 {
+    PyObject* modname = NULL;
     if (CPyModule_eth_portfolio____loaders____nonce__internal) {
         Py_INCREF(CPyModule_eth_portfolio____loaders____nonce__internal);
         return CPyModule_eth_portfolio____loaders____nonce__internal;
@@ -1564,13 +1641,31 @@ PyObject *CPyInit_eth_portfolio____loaders____nonce(void)
     CPyModule_eth_portfolio____loaders____nonce__internal = PyModule_Create(&_noncemodule);
     if (unlikely(CPyModule_eth_portfolio____loaders____nonce__internal == NULL))
         goto fail;
+    modname = PyUnicode_FromString("eth_portfolio._loaders._nonce");
+    if (modname == NULL) CPyError_OutOfMemory();
+    if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio____loaders____nonce__internal) < 0)
+        goto fail;
+    Py_CLEAR(modname);
     if (CPyExec_eth_portfolio____loaders____nonce(CPyModule_eth_portfolio____loaders____nonce__internal) != 0)
         goto fail;
     return CPyModule_eth_portfolio____loaders____nonce__internal;
     fail:
-    return NULL;
-}
-
+    {
+            PyObject *exc_type, *exc_val, *exc_tb;
+            PyErr_Fetch(&exc_type, &exc_val, &exc_tb);
+            if (modname == NULL) {
+                    modname = PyUnicode_FromString("eth_portfolio._loaders._nonce");
+                    if (modname == NULL) CPyError_OutOfMemory();
+                }
+                PyObject_DelItem(PyImport_GetModuleDict(), modname);
+                PyErr_Clear();
+                Py_DECREF(modname);
+                Py_CLEAR(CPyModule_eth_portfolio____loaders____nonce__internal);
+                PyErr_Restore(exc_type, exc_val, exc_tb);
+        }
+        return NULL;
+    }
+    
 PyObject *CPyDef__nonce_____mypyc_lambda__0_obj_____get__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
@@ -1589,26 +1684,26 @@ CPyL4: ;
     cpy_r_r3 = NULL;
     return cpy_r_r3;
 }
-
-PyObject *CPyPy__nonce_____mypyc_lambda__0_obj_____get__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"instance", "owner", 0};
-    static CPyArg_Parser parser = {"OO:__get__", kwlist, 0};
-    PyObject *obj_instance;
-    PyObject *obj_owner;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_instance, &obj_owner)) {
+    
+    PyObject *CPyPy__nonce_____mypyc_lambda__0_obj_____get__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {"instance", "owner", 0};
+        static CPyArg_Parser parser = {"OO:__get__", kwlist, 0};
+        PyObject *obj_instance;
+        PyObject *obj_owner;
+        if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_instance, &obj_owner)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__ = obj___mypyc_self__;
+        PyObject *arg_instance = obj_instance;
+        PyObject *arg_owner = obj_owner;
+        PyObject *retval = CPyDef__nonce_____mypyc_lambda__0_obj_____get__(arg___mypyc_self__, arg_instance, arg_owner);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__get__", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__ = obj___mypyc_self__;
-    PyObject *arg_instance = obj_instance;
-    PyObject *arg_owner = obj_owner;
-    PyObject *retval = CPyDef__nonce_____mypyc_lambda__0_obj_____get__(arg___mypyc_self__, arg_instance, arg_owner);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__get__", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce_____mypyc_lambda__0_obj_____call__(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -1645,22 +1740,22 @@ CPyL4: ;
     cpy_r_r8 = NULL;
     return cpy_r_r8;
 }
-
-PyObject *CPyPy__nonce_____mypyc_lambda__0_obj_____call__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__call__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, PyVectorcall_NARGS(nargs), kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce_____mypyc_lambda__0_obj_____call__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":__call__", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, PyVectorcall_NARGS(nargs), kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__ = obj___mypyc_self__;
+        PyObject *retval = CPyDef__nonce_____mypyc_lambda__0_obj_____call__(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<lambda>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__ = obj___mypyc_self__;
-    PyObject *retval = CPyDef__nonce_____mypyc_lambda__0_obj_____call__(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<lambda>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_nonce_at_block_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -1813,13 +1908,10 @@ CPyL9: ;
     }
     ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0 = cpy_r_r14;
     cpy_r_r15 = 1;
-    if (unlikely(!cpy_r_r15)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", -1, CPyStatic__nonce___globals);
-        goto CPyL51;
-    }
+    if (!cpy_r_r15) goto CPyL51;
     cpy_r_r16 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__0", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__0", 51, CPyStatic__nonce___globals);
         goto CPyL51;
     }
     CPy_INCREF(cpy_r_r16);
@@ -1873,14 +1965,11 @@ CPyL22: ;
     }
     ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1 = cpy_r_r26;
     cpy_r_r27 = 1;
-    if (unlikely(!cpy_r_r27)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", -1, CPyStatic__nonce___globals);
-        goto CPyL93;
-    }
+    if (!cpy_r_r27) goto CPyL93;
     cpy_r_r28 = (PyObject **)&cpy_r_r1;
     cpy_r_r29 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__0", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__0", 51, CPyStatic__nonce___globals);
         goto CPyL93;
     }
     CPy_INCREF(cpy_r_r29);
@@ -1895,7 +1984,7 @@ CPyL24: ;
     cpy_r_r22 = cpy_r_r1;
     cpy_r_r31 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
     if (unlikely(cpy_r_r31.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__1", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__1", 51, CPyStatic__nonce___globals);
         goto CPyL94;
     }
     CPy_INCREF(cpy_r_r31.f0);
@@ -1911,7 +2000,7 @@ CPyL28: ;
     cpy_r_r19 = cpy_r_r1;
     cpy_r_r32 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
     if (unlikely(cpy_r_r32.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__1", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__1", 51, CPyStatic__nonce___globals);
         goto CPyL95;
     }
     CPy_INCREF(cpy_r_r32.f0);
@@ -1926,7 +2015,7 @@ CPyL29: ;
 CPyL30: ;
     cpy_r_r33 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
     if (unlikely(cpy_r_r33.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__1", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__1", 51, CPyStatic__nonce___globals);
         goto CPyL51;
     }
     CPy_INCREF(cpy_r_r33.f0);
@@ -1943,7 +2032,7 @@ CPyL31: ;
 CPyL33: ;
     cpy_r_r35 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
     if (unlikely(cpy_r_r35 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__0", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__0", 51, CPyStatic__nonce___globals);
         goto CPyL96;
     }
     CPy_INCREF(cpy_r_r35);
@@ -2042,10 +2131,7 @@ CPyL51: ;
     }
     ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__2 = cpy_r_r48;
     cpy_r_r49 = 1;
-    if (unlikely(!cpy_r_r49)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", -1, CPyStatic__nonce___globals);
-        goto CPyL79;
-    }
+    if (!cpy_r_r49) goto CPyL79;
     cpy_r_r50 = CPyModule_builtins;
     cpy_r_r51 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ValueError' */
     cpy_r_r52 = CPyObject_GetAttr(cpy_r_r50, cpy_r_r51);
@@ -2054,7 +2140,7 @@ CPyL51: ;
         goto CPyL79;
     }
     cpy_r_r53 = CPy_ExceptionMatches(cpy_r_r52);
-    CPy_DecRef(cpy_r_r52);
+    CPy_DECREF(cpy_r_r52);
     if (!cpy_r_r53) goto CPyL77;
     cpy_r_r54 = CPy_GetExcValue();
     if (((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__e != NULL) {
@@ -2075,13 +2161,13 @@ CPyL51: ;
     CPy_INCREF(cpy_r_r57);
 CPyL56: ;
     cpy_r_r58 = PyObject_Str(cpy_r_r57);
-    CPy_DecRef(cpy_r_r57);
+    CPy_DECREF(cpy_r_r57);
     if (unlikely(cpy_r_r58 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL79;
     }
     cpy_r_r59 = PyUnicode_Contains(cpy_r_r58, cpy_r_r56);
-    CPy_DecRef(cpy_r_r58);
+    CPy_DECREF(cpy_r_r58);
     cpy_r_r60 = cpy_r_r59 >= 0;
     if (unlikely(!cpy_r_r60)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
@@ -2097,12 +2183,12 @@ CPyL56: ;
     CPyTagged_INCREF(cpy_r_r62);
 CPyL60: ;
     cpy_r_r63 = cpy_r_r62 == 0;
-    CPyTagged_DecRef(cpy_r_r62);
+    CPyTagged_DECREF(cpy_r_r62);
     if (!cpy_r_r63) goto CPyL67;
     cpy_r_r64 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* -1 */
     cpy_r_r65 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__2;
     if (unlikely(cpy_r_r65.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__2", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__2", 57, CPyStatic__nonce___globals);
         goto CPyL79;
     }
     CPy_INCREF(cpy_r_r65.f0);
@@ -2110,9 +2196,9 @@ CPyL60: ;
     CPy_INCREF(cpy_r_r65.f2);
 CPyL62: ;
     CPy_RestoreExcInfo(cpy_r_r65);
-    CPy_DecRef(cpy_r_r65.f0);
-    CPy_DecRef(cpy_r_r65.f1);
-    CPy_DecRef(cpy_r_r65.f2);
+    CPy_DECREF(cpy_r_r65.f0);
+    CPy_DECREF(cpy_r_r65.f1);
+    CPy_DECREF(cpy_r_r65.f2);
     ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = -1;
     if (cpy_r_stop_iter_ptr != NULL) goto CPyL66;
     CPyGen_SetStopIterationValue(cpy_r_r64);
@@ -2139,7 +2225,7 @@ CPyL68: ;
     CPyTagged_INCREF(cpy_r_r70);
 CPyL69: ;
     cpy_r_r71 = CPyTagged_Str(cpy_r_r70);
-    CPyTagged_DecRef(cpy_r_r70);
+    CPyTagged_DECREF(cpy_r_r70);
     if (unlikely(cpy_r_r71 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL100;
@@ -2153,15 +2239,15 @@ CPyL69: ;
     CPy_INCREF(cpy_r_r73);
 CPyL71: ;
     cpy_r_r74 = PyObject_Str(cpy_r_r73);
-    CPy_DecRef(cpy_r_r73);
+    CPy_DECREF(cpy_r_r73);
     if (unlikely(cpy_r_r74 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL101;
     }
     cpy_r_r75 = CPyStr_Build(6, cpy_r_r67, cpy_r_r68, cpy_r_r69, cpy_r_r71, cpy_r_r72, cpy_r_r74);
-    CPy_DecRef(cpy_r_r68);
-    CPy_DecRef(cpy_r_r71);
-    CPy_DecRef(cpy_r_r74);
+    CPy_DECREF(cpy_r_r68);
+    CPy_DECREF(cpy_r_r71);
+    CPy_DECREF(cpy_r_r74);
     if (unlikely(cpy_r_r75 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL79;
@@ -2176,14 +2262,14 @@ CPyL71: ;
     PyObject *cpy_r_r79[1] = {cpy_r_r75};
     cpy_r_r80 = (PyObject **)&cpy_r_r79;
     cpy_r_r81 = PyObject_Vectorcall(cpy_r_r78, cpy_r_r80, 1, 0);
-    CPy_DecRef(cpy_r_r78);
+    CPy_DECREF(cpy_r_r78);
     if (unlikely(cpy_r_r81 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL102;
     }
-    CPy_DecRef(cpy_r_r75);
+    CPy_DECREF(cpy_r_r75);
     CPy_Raise(cpy_r_r81);
-    CPy_DecRef(cpy_r_r81);
+    CPy_DECREF(cpy_r_r81);
     if (unlikely(!0)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL79;
@@ -2196,7 +2282,7 @@ CPyL77: ;
 CPyL79: ;
     cpy_r_r82 = ((eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__2;
     if (unlikely(cpy_r_r82.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__2", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", "get_nonce_at_block_gen", "__mypyc_temp__2", 50, CPyStatic__nonce___globals);
         goto CPyL86;
     }
     CPy_INCREF(cpy_r_r82.f0);
@@ -2204,9 +2290,9 @@ CPyL79: ;
     CPy_INCREF(cpy_r_r82.f2);
 CPyL80: ;
     CPy_RestoreExcInfo(cpy_r_r82);
-    CPy_DecRef(cpy_r_r82.f0);
-    CPy_DecRef(cpy_r_r82.f1);
-    CPy_DecRef(cpy_r_r82.f2);
+    CPy_DECREF(cpy_r_r82.f0);
+    CPy_DECREF(cpy_r_r82.f1);
+    CPy_DECREF(cpy_r_r82.f2);
     cpy_r_r83 = CPy_KeepPropagating();
     if (!cpy_r_r83) goto CPyL86;
     CPy_Unreachable();
@@ -2289,7 +2375,7 @@ CPyL104: ;
     CPy_XDECREF(cpy_r_r1);
     goto CPyL84;
 }
-
+    
 PyObject *CPyDef__nonce___get_nonce_at_block_gen_____next__(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -2302,28 +2388,28 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy__nonce___get_nonce_at_block_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__next__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce___get_nonce_at_block_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":__next__", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_nonce_at_block_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_nonce_at_block_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce___get_nonce_at_block_gen_____next__(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__next__", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_nonce_at_block_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_nonce_at_block_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce___get_nonce_at_block_gen_____next__(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__next__", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_nonce_at_block_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -2336,56 +2422,56 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy__nonce___get_nonce_at_block_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"arg", 0};
-    static CPyArg_Parser parser = {"O:send", kwlist, 0};
-    PyObject *obj_arg;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
+    
+    PyObject *CPyPy__nonce___get_nonce_at_block_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {"arg", 0};
+        static CPyArg_Parser parser = {"O:send", kwlist, 0};
+        PyObject *obj_arg;
+        if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_nonce_at_block_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_nonce_at_block_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *arg_arg = obj_arg;
+        PyObject *retval = CPyDef__nonce___get_nonce_at_block_gen___send(arg___mypyc_self__, arg_arg);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "send", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_nonce_at_block_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_nonce_at_block_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_arg = obj_arg;
-    PyObject *retval = CPyDef__nonce___get_nonce_at_block_gen___send(arg___mypyc_self__, arg_arg);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "send", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_nonce_at_block_gen_____iter__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy__nonce___get_nonce_at_block_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__iter__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce___get_nonce_at_block_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":__iter__", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_nonce_at_block_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_nonce_at_block_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce___get_nonce_at_block_gen_____iter__(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__iter__", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_nonce_at_block_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_nonce_at_block_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce___get_nonce_at_block_gen_____iter__(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__iter__", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_nonce_at_block_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -2414,44 +2500,44 @@ CPyL8: ;
     CPy_INCREF(cpy_r_traceback);
     goto CPyL4;
 }
-
-PyObject *CPyPy__nonce___get_nonce_at_block_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"type", "value", "traceback", 0};
-    static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
-    PyObject *obj_type;
-    PyObject *obj_value = NULL;
-    PyObject *obj_traceback = NULL;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
+    
+    PyObject *CPyPy__nonce___get_nonce_at_block_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {"type", "value", "traceback", 0};
+        static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
+        PyObject *obj_type;
+        PyObject *obj_value = NULL;
+        PyObject *obj_traceback = NULL;
+        if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_nonce_at_block_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_nonce_at_block_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *arg_type = obj_type;
+        PyObject *arg_value;
+        if (obj_value == NULL) {
+            arg_value = NULL;
+        } else {
+            arg_value = obj_value; 
+        }
+        PyObject *arg_traceback;
+        if (obj_traceback == NULL) {
+            arg_traceback = NULL;
+        } else {
+            arg_traceback = obj_traceback; 
+        }
+        PyObject *retval = CPyDef__nonce___get_nonce_at_block_gen___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "throw", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_nonce_at_block_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_nonce_at_block_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_type = obj_type;
-    PyObject *arg_value;
-    if (obj_value == NULL) {
-        arg_value = NULL;
-    } else {
-        arg_value = obj_value; 
-    }
-    PyObject *arg_traceback;
-    if (obj_traceback == NULL) {
-        arg_traceback = NULL;
-    } else {
-        arg_traceback = obj_traceback; 
-    }
-    PyObject *retval = CPyDef__nonce___get_nonce_at_block_gen___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "throw", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_nonce_at_block_gen___close(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -2530,54 +2616,54 @@ CPyL13: ;
     CPy_DECREF(cpy_r_r6.f2);
     goto CPyL6;
 }
-
-PyObject *CPyPy__nonce___get_nonce_at_block_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":close", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce___get_nonce_at_block_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":close", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_nonce_at_block_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_nonce_at_block_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce___get_nonce_at_block_gen___close(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "close", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_nonce_at_block_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_nonce_at_block_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce___get_nonce_at_block_gen___close(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "close", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_nonce_at_block_gen_____await__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy__nonce___get_nonce_at_block_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__await__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce___get_nonce_at_block_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":__await__", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_nonce_at_block_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_nonce_at_block_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce___get_nonce_at_block_gen_____await__(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__await__", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_nonce_at_block_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_nonce_at_block_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce___get_nonce_at_block_gen_____await__(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__await__", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_nonce_at_block(PyObject *cpy_r_address, CPyTagged cpy_r_block) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
@@ -2618,35 +2704,35 @@ CPyL5: ;
     CPy_DecRef(cpy_r_r0);
     goto CPyL4;
 }
-
-PyObject *CPyPy__nonce___get_nonce_at_block(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"address", "block", 0};
-    static CPyArg_Parser parser = {"OO:get_nonce_at_block", kwlist, 0};
-    PyObject *obj_address;
-    PyObject *obj_block;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_address, &obj_block)) {
+    
+    PyObject *CPyPy__nonce___get_nonce_at_block(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        static const char * const kwlist[] = {"address", "block", 0};
+        static CPyArg_Parser parser = {"OO:get_nonce_at_block", kwlist, 0};
+        PyObject *obj_address;
+        PyObject *obj_block;
+        if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_address, &obj_block)) {
+            return NULL;
+        }
+        PyObject *arg_address;
+        if (likely(PyUnicode_Check(obj_address)))
+            arg_address = obj_address;
+        else {
+            CPy_TypeError("str", obj_address); 
+            goto fail;
+        }
+        CPyTagged arg_block;
+        if (likely(PyLong_Check(obj_block)))
+            arg_block = CPyTagged_BorrowFromObject(obj_block);
+        else {
+            CPy_TypeError("int", obj_block); goto fail;
+        }
+        PyObject *retval = CPyDef__nonce___get_nonce_at_block(arg_address, arg_block);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg_address;
-    if (likely(PyUnicode_Check(obj_address)))
-        arg_address = obj_address;
-    else {
-        CPy_TypeError("str", obj_address); 
-        goto fail;
-    }
-    CPyTagged arg_block;
-    if (likely(PyLong_Check(obj_block)))
-        arg_block = CPyTagged_BorrowFromObject(obj_block);
-    else {
-        CPy_TypeError("int", obj_block); goto fail;
-    }
-    PyObject *retval = CPyDef__nonce___get_nonce_at_block(arg_address, arg_block);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_nonce_at_block", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_block_for_nonce_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -3223,10 +3309,7 @@ CPyL8: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3 = cpy_r_r33;
     cpy_r_r34 = 1;
-    if (unlikely(!cpy_r_r34)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL460;
-    }
+    if (!cpy_r_r34) goto CPyL460;
     cpy_r_r35 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '__aenter__' */
     cpy_r_r36 = CPyObject_GetAttr(cpy_r_r31, cpy_r_r35);
     CPy_DECREF(cpy_r_r31);
@@ -3247,16 +3330,10 @@ CPyL8: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4 = cpy_r_r30;
     cpy_r_r40 = 1;
-    if (unlikely(!cpy_r_r40)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL462;
-    }
+    if (!cpy_r_r40) goto CPyL462;
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5 = 1;
     cpy_r_r41 = 1;
-    if (unlikely(!cpy_r_r41)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL462;
-    }
+    if (!cpy_r_r41) goto CPyL462;
     cpy_r_r42 = CPy_GetCoro(cpy_r_r39);
     CPy_DECREF(cpy_r_r39);
     if (unlikely(cpy_r_r42 == NULL)) {
@@ -3268,13 +3345,10 @@ CPyL8: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6 = cpy_r_r42;
     cpy_r_r43 = 1;
-    if (unlikely(!cpy_r_r43)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL459;
-    }
+    if (!cpy_r_r43) goto CPyL459;
     cpy_r_r44 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6;
     if (unlikely(cpy_r_r44 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__6", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__6", 65, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPy_INCREF(cpy_r_r44);
@@ -3329,14 +3403,11 @@ CPyL27: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7 = cpy_r_r54;
     cpy_r_r55 = 1;
-    if (unlikely(!cpy_r_r55)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL465;
-    }
+    if (!cpy_r_r55) goto CPyL465;
     cpy_r_r56 = (PyObject **)&cpy_r_r1;
     cpy_r_r57 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6;
     if (unlikely(cpy_r_r57 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__6", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__6", 65, CPyStatic__nonce___globals);
         goto CPyL465;
     }
     CPy_INCREF(cpy_r_r57);
@@ -3351,7 +3422,7 @@ CPyL29: ;
     cpy_r_r50 = cpy_r_r1;
     cpy_r_r59 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7;
     if (unlikely(cpy_r_r59.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__7", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__7", 65, CPyStatic__nonce___globals);
         goto CPyL466;
     }
     CPy_INCREF(cpy_r_r59.f0);
@@ -3368,7 +3439,7 @@ CPyL33: ;
     CPy_DecRef(cpy_r_r47);
     cpy_r_r60 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7;
     if (unlikely(cpy_r_r60.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__7", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__7", 65, CPyStatic__nonce___globals);
         goto CPyL35;
     }
     CPy_INCREF(cpy_r_r60.f0);
@@ -3383,7 +3454,7 @@ CPyL34: ;
 CPyL35: ;
     cpy_r_r61 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7;
     if (unlikely(cpy_r_r61.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__7", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__7", 65, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPy_INCREF(cpy_r_r61.f0);
@@ -3400,7 +3471,7 @@ CPyL36: ;
 CPyL38: ;
     cpy_r_r63 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6;
     if (unlikely(cpy_r_r63 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__6", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__6", 65, CPyStatic__nonce___globals);
         goto CPyL467;
     }
     CPy_INCREF(cpy_r_r63);
@@ -3475,16 +3546,10 @@ CPyL49: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8 = cpy_r_r74;
     cpy_r_r75 = 1;
-    if (unlikely(!cpy_r_r75)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL468;
-    }
+    if (!cpy_r_r75) goto CPyL468;
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9 = 0;
     cpy_r_r76 = 1;
-    if (unlikely(!cpy_r_r76)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL468;
-    }
+    if (!cpy_r_r76) goto CPyL468;
     cpy_r_r77 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8;
     if (unlikely(cpy_r_r77 == NULL)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__8", 70, CPyStatic__nonce___globals);
@@ -3496,10 +3561,7 @@ CPyL54: ;
     CPy_DECREF(cpy_r_r77);
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10 = cpy_r_r78;
     cpy_r_r79 = 1;
-    if (unlikely(!cpy_r_r79)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL468;
-    }
+    if (!cpy_r_r79) goto CPyL468;
     cpy_r_r80 = CPyDict_GetKeysIter(cpy_r_r74);
     CPy_DECREF(cpy_r_r74);
     if (unlikely(cpy_r_r80 == NULL)) {
@@ -3511,10 +3573,7 @@ CPyL54: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11 = cpy_r_r80;
     cpy_r_r81 = 1;
-    if (unlikely(!cpy_r_r81)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL206;
-    }
+    if (!cpy_r_r81) goto CPyL206;
 CPyL57: ;
     cpy_r_r82 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11;
     if (unlikely(cpy_r_r82 == NULL)) {
@@ -3981,13 +4040,10 @@ CPyL131: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12 = cpy_r_r172;
     cpy_r_r173 = 1;
-    if (unlikely(!cpy_r_r173)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL206;
-    }
+    if (!cpy_r_r173) goto CPyL206;
     cpy_r_r174 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12;
     if (unlikely(cpy_r_r174 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__12", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__12", 87, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPy_INCREF_NO_IMM(cpy_r_r174);
@@ -4001,7 +4057,7 @@ CPyL134: ;
     if (cpy_r_r178 != NULL) goto CPyL479;
     cpy_r_r179 = cpy_r_r3 != 0;
     if (unlikely(!cpy_r_r179)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL480;
     }
     cpy_r_r180 = cpy_r_r3;
@@ -4045,14 +4101,11 @@ CPyL143: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__13 = cpy_r_r187;
     cpy_r_r188 = 1;
-    if (unlikely(!cpy_r_r188)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL484;
-    }
+    if (!cpy_r_r188) goto CPyL484;
     cpy_r_r189 = (PyObject **)&cpy_r_r5;
     cpy_r_r190 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12;
     if (unlikely(cpy_r_r190 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__12", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__12", 87, CPyStatic__nonce___globals);
         goto CPyL484;
     }
     CPy_INCREF_NO_IMM(cpy_r_r190);
@@ -4067,7 +4120,7 @@ CPyL145: ;
     cpy_r_r183 = cpy_r_r5;
     cpy_r_r192 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__13;
     if (unlikely(cpy_r_r192.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__13", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__13", 87, CPyStatic__nonce___globals);
         goto CPyL485;
     }
     CPy_INCREF(cpy_r_r192.f0);
@@ -4083,7 +4136,7 @@ CPyL149: ;
     cpy_r_r180 = cpy_r_r5;
     cpy_r_r193 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__13;
     if (unlikely(cpy_r_r193.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__13", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__13", 87, CPyStatic__nonce___globals);
         goto CPyL486;
     }
     CPy_INCREF(cpy_r_r193.f0);
@@ -4098,7 +4151,7 @@ CPyL150: ;
 CPyL151: ;
     cpy_r_r194 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__13;
     if (unlikely(cpy_r_r194.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__13", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__13", 87, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPy_INCREF(cpy_r_r194.f0);
@@ -4115,7 +4168,7 @@ CPyL152: ;
 CPyL154: ;
     cpy_r_r196 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12;
     if (unlikely(cpy_r_r196 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__12", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__12", 87, CPyStatic__nonce___globals);
         goto CPyL487;
     }
     CPy_INCREF_NO_IMM(cpy_r_r196);
@@ -4255,13 +4308,10 @@ CPyL175: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__14 = cpy_r_r219;
     cpy_r_r220 = 1;
-    if (unlikely(!cpy_r_r220)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL206;
-    }
+    if (!cpy_r_r220) goto CPyL206;
     cpy_r_r221 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__14;
     if (unlikely(cpy_r_r221 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__14", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__14", 92, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPy_INCREF_NO_IMM(cpy_r_r221);
@@ -4275,7 +4325,7 @@ CPyL178: ;
     if (cpy_r_r225 != NULL) goto CPyL493;
     cpy_r_r226 = cpy_r_r7 != 0;
     if (unlikely(!cpy_r_r226)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL494;
     }
     cpy_r_r227 = cpy_r_r7;
@@ -4319,14 +4369,11 @@ CPyL187: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__15 = cpy_r_r234;
     cpy_r_r235 = 1;
-    if (unlikely(!cpy_r_r235)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL498;
-    }
+    if (!cpy_r_r235) goto CPyL498;
     cpy_r_r236 = (PyObject **)&cpy_r_r9;
     cpy_r_r237 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__14;
     if (unlikely(cpy_r_r237 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__14", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__14", 92, CPyStatic__nonce___globals);
         goto CPyL498;
     }
     CPy_INCREF_NO_IMM(cpy_r_r237);
@@ -4341,7 +4388,7 @@ CPyL189: ;
     cpy_r_r230 = cpy_r_r9;
     cpy_r_r239 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__15;
     if (unlikely(cpy_r_r239.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__15", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__15", 92, CPyStatic__nonce___globals);
         goto CPyL499;
     }
     CPy_INCREF(cpy_r_r239.f0);
@@ -4357,7 +4404,7 @@ CPyL193: ;
     cpy_r_r227 = cpy_r_r9;
     cpy_r_r240 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__15;
     if (unlikely(cpy_r_r240.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__15", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__15", 92, CPyStatic__nonce___globals);
         goto CPyL500;
     }
     CPy_INCREF(cpy_r_r240.f0);
@@ -4372,7 +4419,7 @@ CPyL194: ;
 CPyL195: ;
     cpy_r_r241 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__15;
     if (unlikely(cpy_r_r241.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__15", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__15", 92, CPyStatic__nonce___globals);
         goto CPyL206;
     }
     CPy_INCREF(cpy_r_r241.f0);
@@ -4389,7 +4436,7 @@ CPyL196: ;
 CPyL198: ;
     cpy_r_r243 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__14;
     if (unlikely(cpy_r_r243 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__14", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__14", 92, CPyStatic__nonce___globals);
         goto CPyL501;
     }
     CPy_INCREF_NO_IMM(cpy_r_r243);
@@ -4483,10 +4530,7 @@ CPyL206: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__16 = cpy_r_r253;
     cpy_r_r254 = 1;
-    if (unlikely(!cpy_r_r254)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL245;
-    }
+    if (!cpy_r_r254) goto CPyL245;
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5 = 0;
     cpy_r_r255 = 1;
     if (unlikely(!cpy_r_r255)) {
@@ -4500,19 +4544,19 @@ CPyL206: ;
     CPy_INCREF(cpy_r_r258);
     cpy_r_r259 = cpy_r_r256.f2;
     CPy_INCREF(cpy_r_r259);
-    CPy_DecRef(cpy_r_r256.f0);
-    CPy_DecRef(cpy_r_r256.f1);
-    CPy_DecRef(cpy_r_r256.f2);
+    CPy_DECREF(cpy_r_r256.f0);
+    CPy_DECREF(cpy_r_r256.f1);
+    CPy_DECREF(cpy_r_r256.f2);
     cpy_r_r260 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3;
     if (unlikely(cpy_r_r260 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__3", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__3", 65, CPyStatic__nonce___globals);
         goto CPyL502;
     }
     CPy_INCREF(cpy_r_r260);
 CPyL209: ;
     cpy_r_r261 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4;
     if (unlikely(cpy_r_r261 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__4", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__4", 65, CPyStatic__nonce___globals);
         goto CPyL503;
     }
     CPy_INCREF(cpy_r_r261);
@@ -4520,17 +4564,17 @@ CPyL210: ;
     PyObject *cpy_r_r262[4] = {cpy_r_r261, cpy_r_r257, cpy_r_r258, cpy_r_r259};
     cpy_r_r263 = (PyObject **)&cpy_r_r262;
     cpy_r_r264 = PyObject_Vectorcall(cpy_r_r260, cpy_r_r263, 4, 0);
-    CPy_DecRef(cpy_r_r260);
+    CPy_DECREF(cpy_r_r260);
     if (unlikely(cpy_r_r264 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL504;
     }
-    CPy_DecRef(cpy_r_r261);
-    CPy_DecRef(cpy_r_r257);
-    CPy_DecRef(cpy_r_r258);
-    CPy_DecRef(cpy_r_r259);
+    CPy_DECREF(cpy_r_r261);
+    CPy_DECREF(cpy_r_r257);
+    CPy_DECREF(cpy_r_r258);
+    CPy_DECREF(cpy_r_r259);
     cpy_r_r265 = CPy_GetCoro(cpy_r_r264);
-    CPy_DecRef(cpy_r_r264);
+    CPy_DECREF(cpy_r_r264);
     if (unlikely(cpy_r_r265 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL245;
@@ -4540,19 +4584,16 @@ CPyL210: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__17 = cpy_r_r265;
     cpy_r_r266 = 1;
-    if (unlikely(!cpy_r_r266)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL245;
-    }
+    if (!cpy_r_r266) goto CPyL245;
     cpy_r_r267 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__17;
     if (unlikely(cpy_r_r267 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__17", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__17", 65, CPyStatic__nonce___globals);
         goto CPyL245;
     }
     CPy_INCREF(cpy_r_r267);
 CPyL214: ;
     cpy_r_r268 = CPyIter_Next(cpy_r_r267);
-    CPy_DecRef(cpy_r_r267);
+    CPy_DECREF(cpy_r_r267);
     if (cpy_r_r268 != NULL) goto CPyL217;
     cpy_r_r269 = CPy_FetchStopIterationValue();
     if (unlikely(cpy_r_r269 == NULL)) {
@@ -4600,14 +4641,11 @@ CPyL223: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__18 = cpy_r_r277;
     cpy_r_r278 = 1;
-    if (unlikely(!cpy_r_r278)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL508;
-    }
+    if (!cpy_r_r278) goto CPyL508;
     cpy_r_r279 = (PyObject **)&cpy_r_r11;
     cpy_r_r280 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__17;
     if (unlikely(cpy_r_r280 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__17", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__17", 65, CPyStatic__nonce___globals);
         goto CPyL508;
     }
     CPy_INCREF(cpy_r_r280);
@@ -4622,7 +4660,7 @@ CPyL225: ;
     cpy_r_r273 = cpy_r_r11;
     cpy_r_r282 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__18;
     if (unlikely(cpy_r_r282.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__18", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__18", 65, CPyStatic__nonce___globals);
         goto CPyL509;
     }
     CPy_INCREF(cpy_r_r282.f0);
@@ -4638,7 +4676,7 @@ CPyL229: ;
     cpy_r_r270 = cpy_r_r11;
     cpy_r_r283 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__18;
     if (unlikely(cpy_r_r283.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__18", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__18", 65, CPyStatic__nonce___globals);
         goto CPyL510;
     }
     CPy_INCREF(cpy_r_r283.f0);
@@ -4653,7 +4691,7 @@ CPyL230: ;
 CPyL231: ;
     cpy_r_r284 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__18;
     if (unlikely(cpy_r_r284.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__18", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__18", 65, CPyStatic__nonce___globals);
         goto CPyL245;
     }
     CPy_INCREF(cpy_r_r284.f0);
@@ -4670,7 +4708,7 @@ CPyL232: ;
 CPyL234: ;
     cpy_r_r286 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__17;
     if (unlikely(cpy_r_r286 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__17", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__17", 65, CPyStatic__nonce___globals);
         goto CPyL511;
     }
     CPy_INCREF(cpy_r_r286);
@@ -4693,7 +4731,7 @@ CPyL239: ;
     CPy_DECREF(cpy_r_r270);
     cpy_r_r290 = cpy_r_r289 >= 0;
     if (unlikely(!cpy_r_r290)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL245;
     }
     cpy_r_r291 = cpy_r_r289;
@@ -4704,7 +4742,7 @@ CPyL239: ;
 CPyL243: ;
     cpy_r_r292 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__16;
     if (unlikely(cpy_r_r292.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__16", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__16", 65, CPyStatic__nonce___globals);
         goto CPyL249;
     }
     CPy_INCREF(cpy_r_r292.f0);
@@ -4719,7 +4757,7 @@ CPyL244: ;
 CPyL245: ;
     cpy_r_r293 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__16;
     if (unlikely(cpy_r_r293.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__16", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__16", 65, CPyStatic__nonce___globals);
         goto CPyL249;
     }
     CPy_INCREF(cpy_r_r293.f0);
@@ -4744,7 +4782,7 @@ CPyL249: ;
 CPyL250: ;
     cpy_r_r297 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5;
     if (unlikely(cpy_r_r297 == 2)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__5", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__5", 65, CPyStatic__nonce___globals);
         goto CPyL286;
     }
 CPyL251: ;
@@ -4753,14 +4791,14 @@ CPyL252: ;
     cpy_r_r298 = (PyObject *)&_Py_NoneStruct;
     cpy_r_r299 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3;
     if (unlikely(cpy_r_r299 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__3", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__3", 65, CPyStatic__nonce___globals);
         goto CPyL286;
     }
     CPy_INCREF(cpy_r_r299);
 CPyL253: ;
     cpy_r_r300 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4;
     if (unlikely(cpy_r_r300 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__4", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__4", 65, CPyStatic__nonce___globals);
         goto CPyL512;
     }
     CPy_INCREF(cpy_r_r300);
@@ -4785,13 +4823,10 @@ CPyL254: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__19 = cpy_r_r304;
     cpy_r_r305 = 1;
-    if (unlikely(!cpy_r_r305)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL286;
-    }
+    if (!cpy_r_r305) goto CPyL286;
     cpy_r_r306 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__19;
     if (unlikely(cpy_r_r306 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__19", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__19", 65, CPyStatic__nonce___globals);
         goto CPyL286;
     }
     CPy_INCREF(cpy_r_r306);
@@ -4846,14 +4881,11 @@ CPyL267: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__20 = cpy_r_r316;
     cpy_r_r317 = 1;
-    if (unlikely(!cpy_r_r317)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL517;
-    }
+    if (!cpy_r_r317) goto CPyL517;
     cpy_r_r318 = (PyObject **)&cpy_r_r13;
     cpy_r_r319 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__19;
     if (unlikely(cpy_r_r319 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__19", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__19", 65, CPyStatic__nonce___globals);
         goto CPyL517;
     }
     CPy_INCREF(cpy_r_r319);
@@ -4868,7 +4900,7 @@ CPyL269: ;
     cpy_r_r312 = cpy_r_r13;
     cpy_r_r321 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__20;
     if (unlikely(cpy_r_r321.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__20", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__20", 65, CPyStatic__nonce___globals);
         goto CPyL518;
     }
     CPy_INCREF(cpy_r_r321.f0);
@@ -4886,7 +4918,7 @@ CPyL273: ;
     CPy_DecRef(cpy_r_r309);
     cpy_r_r322 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__20;
     if (unlikely(cpy_r_r322.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__20", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__20", 65, CPyStatic__nonce___globals);
         goto CPyL275;
     }
     CPy_INCREF(cpy_r_r322.f0);
@@ -4901,7 +4933,7 @@ CPyL274: ;
 CPyL275: ;
     cpy_r_r323 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__20;
     if (unlikely(cpy_r_r323.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__20", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__20", 65, CPyStatic__nonce___globals);
         goto CPyL286;
     }
     CPy_INCREF(cpy_r_r323.f0);
@@ -4922,7 +4954,7 @@ CPyL277: ;
 CPyL278: ;
     cpy_r_r325 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__19;
     if (unlikely(cpy_r_r325 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__19", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__19", 65, CPyStatic__nonce___globals);
         goto CPyL521;
     }
     CPy_INCREF(cpy_r_r325);
@@ -5038,13 +5070,10 @@ CPyL302: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__21 = cpy_r_r341;
     cpy_r_r342 = 1;
-    if (unlikely(!cpy_r_r342)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL459;
-    }
+    if (!cpy_r_r342) goto CPyL459;
     cpy_r_r343 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__21;
     if (unlikely(cpy_r_r343 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__21", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__21", 96, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPy_INCREF_NO_IMM(cpy_r_r343);
@@ -5058,7 +5087,7 @@ CPyL305: ;
     if (cpy_r_r347 != NULL) goto CPyL526;
     cpy_r_r348 = cpy_r_r17 != 0;
     if (unlikely(!cpy_r_r348)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL527;
     }
     cpy_r_r349 = cpy_r_r17;
@@ -5102,14 +5131,11 @@ CPyL314: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__22 = cpy_r_r356;
     cpy_r_r357 = 1;
-    if (unlikely(!cpy_r_r357)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL531;
-    }
+    if (!cpy_r_r357) goto CPyL531;
     cpy_r_r358 = (PyObject **)&cpy_r_r19;
     cpy_r_r359 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__21;
     if (unlikely(cpy_r_r359 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__21", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__21", 96, CPyStatic__nonce___globals);
         goto CPyL531;
     }
     CPy_INCREF_NO_IMM(cpy_r_r359);
@@ -5124,7 +5150,7 @@ CPyL316: ;
     cpy_r_r352 = cpy_r_r19;
     cpy_r_r361 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__22;
     if (unlikely(cpy_r_r361.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__22", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__22", 96, CPyStatic__nonce___globals);
         goto CPyL532;
     }
     CPy_INCREF(cpy_r_r361.f0);
@@ -5140,7 +5166,7 @@ CPyL320: ;
     cpy_r_r349 = cpy_r_r19;
     cpy_r_r362 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__22;
     if (unlikely(cpy_r_r362.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__22", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__22", 96, CPyStatic__nonce___globals);
         goto CPyL533;
     }
     CPy_INCREF(cpy_r_r362.f0);
@@ -5155,7 +5181,7 @@ CPyL321: ;
 CPyL322: ;
     cpy_r_r363 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__22;
     if (unlikely(cpy_r_r363.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__22", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__22", 96, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPy_INCREF(cpy_r_r363.f0);
@@ -5172,7 +5198,7 @@ CPyL323: ;
 CPyL325: ;
     cpy_r_r365 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__21;
     if (unlikely(cpy_r_r365 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__21", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__21", 96, CPyStatic__nonce___globals);
         goto CPyL534;
     }
     CPy_INCREF_NO_IMM(cpy_r_r365);
@@ -5438,13 +5464,10 @@ CPyL367: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__23 = cpy_r_r412;
     cpy_r_r413 = 1;
-    if (unlikely(!cpy_r_r413)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL459;
-    }
+    if (!cpy_r_r413) goto CPyL459;
     cpy_r_r414 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__23;
     if (unlikely(cpy_r_r414 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__23", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__23", 109, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPy_INCREF_NO_IMM(cpy_r_r414);
@@ -5458,7 +5481,7 @@ CPyL370: ;
     if (cpy_r_r418 != NULL) goto CPyL546;
     cpy_r_r419 = cpy_r_r21 != 0;
     if (unlikely(!cpy_r_r419)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL547;
     }
     cpy_r_r420 = cpy_r_r21;
@@ -5502,14 +5525,11 @@ CPyL379: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__24 = cpy_r_r427;
     cpy_r_r428 = 1;
-    if (unlikely(!cpy_r_r428)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", -1, CPyStatic__nonce___globals);
-        goto CPyL551;
-    }
+    if (!cpy_r_r428) goto CPyL551;
     cpy_r_r429 = (PyObject **)&cpy_r_r23;
     cpy_r_r430 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__23;
     if (unlikely(cpy_r_r430 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__23", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__23", 109, CPyStatic__nonce___globals);
         goto CPyL551;
     }
     CPy_INCREF_NO_IMM(cpy_r_r430);
@@ -5524,7 +5544,7 @@ CPyL381: ;
     cpy_r_r423 = cpy_r_r23;
     cpy_r_r432 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__24;
     if (unlikely(cpy_r_r432.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__24", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__24", 109, CPyStatic__nonce___globals);
         goto CPyL552;
     }
     CPy_INCREF(cpy_r_r432.f0);
@@ -5540,7 +5560,7 @@ CPyL385: ;
     cpy_r_r420 = cpy_r_r23;
     cpy_r_r433 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__24;
     if (unlikely(cpy_r_r433.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__24", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__24", 109, CPyStatic__nonce___globals);
         goto CPyL553;
     }
     CPy_INCREF(cpy_r_r433.f0);
@@ -5555,7 +5575,7 @@ CPyL386: ;
 CPyL387: ;
     cpy_r_r434 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__24;
     if (unlikely(cpy_r_r434.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__24", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__24", 109, CPyStatic__nonce___globals);
         goto CPyL459;
     }
     CPy_INCREF(cpy_r_r434.f0);
@@ -5572,7 +5592,7 @@ CPyL388: ;
 CPyL390: ;
     cpy_r_r436 = ((eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__23;
     if (unlikely(cpy_r_r436 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__23", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", "get_block_for_nonce_gen", "__mypyc_temp__23", 109, CPyStatic__nonce___globals);
         goto CPyL554;
     }
     CPy_INCREF_NO_IMM(cpy_r_r436);
@@ -5947,14 +5967,14 @@ CPyL459: ;
     cpy_r_r504 = NULL;
     return cpy_r_r504;
 CPyL460: ;
-    CPy_DecRef(cpy_r_r30);
-    CPy_DecRef(cpy_r_r31);
+    CPy_DECREF(cpy_r_r30);
+    CPy_DECREF(cpy_r_r31);
     goto CPyL459;
 CPyL461: ;
     CPy_DecRef(cpy_r_r30);
     goto CPyL459;
 CPyL462: ;
-    CPy_DecRef(cpy_r_r39);
+    CPy_DECREF(cpy_r_r39);
     goto CPyL459;
 CPyL463: ;
     CPy_XDECREF(cpy_r_r1);
@@ -5972,7 +5992,7 @@ CPyL467: ;
     CPy_DecRef(cpy_r_arg);
     goto CPyL459;
 CPyL468: ;
-    CPy_DecRef(cpy_r_r74);
+    CPy_DECREF(cpy_r_r74);
     goto CPyL206;
 CPyL469: ;
     CPy_DecRef(cpy_r_r82);
@@ -6396,7 +6416,7 @@ CPyL580: ;
     CPy_XDECREF(cpy_r_r23);
     goto CPyL457;
 }
-
+    
 PyObject *CPyDef__nonce___get_block_for_nonce_gen_____next__(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -6409,28 +6429,28 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy__nonce___get_block_for_nonce_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__next__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce___get_block_for_nonce_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":__next__", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_for_nonce_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_block_for_nonce_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce___get_block_for_nonce_gen_____next__(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__next__", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_for_nonce_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_block_for_nonce_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce___get_block_for_nonce_gen_____next__(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__next__", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_block_for_nonce_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -6443,56 +6463,56 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy__nonce___get_block_for_nonce_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"arg", 0};
-    static CPyArg_Parser parser = {"O:send", kwlist, 0};
-    PyObject *obj_arg;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
+    
+    PyObject *CPyPy__nonce___get_block_for_nonce_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {"arg", 0};
+        static CPyArg_Parser parser = {"O:send", kwlist, 0};
+        PyObject *obj_arg;
+        if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_for_nonce_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_block_for_nonce_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *arg_arg = obj_arg;
+        PyObject *retval = CPyDef__nonce___get_block_for_nonce_gen___send(arg___mypyc_self__, arg_arg);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "send", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_for_nonce_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_block_for_nonce_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_arg = obj_arg;
-    PyObject *retval = CPyDef__nonce___get_block_for_nonce_gen___send(arg___mypyc_self__, arg_arg);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "send", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_block_for_nonce_gen_____iter__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy__nonce___get_block_for_nonce_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__iter__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce___get_block_for_nonce_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":__iter__", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_for_nonce_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_block_for_nonce_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce___get_block_for_nonce_gen_____iter__(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__iter__", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_for_nonce_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_block_for_nonce_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce___get_block_for_nonce_gen_____iter__(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__iter__", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_block_for_nonce_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -6521,44 +6541,44 @@ CPyL8: ;
     CPy_INCREF(cpy_r_traceback);
     goto CPyL4;
 }
-
-PyObject *CPyPy__nonce___get_block_for_nonce_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"type", "value", "traceback", 0};
-    static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
-    PyObject *obj_type;
-    PyObject *obj_value = NULL;
-    PyObject *obj_traceback = NULL;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
+    
+    PyObject *CPyPy__nonce___get_block_for_nonce_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {"type", "value", "traceback", 0};
+        static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
+        PyObject *obj_type;
+        PyObject *obj_value = NULL;
+        PyObject *obj_traceback = NULL;
+        if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_for_nonce_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_block_for_nonce_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *arg_type = obj_type;
+        PyObject *arg_value;
+        if (obj_value == NULL) {
+            arg_value = NULL;
+        } else {
+            arg_value = obj_value; 
+        }
+        PyObject *arg_traceback;
+        if (obj_traceback == NULL) {
+            arg_traceback = NULL;
+        } else {
+            arg_traceback = obj_traceback; 
+        }
+        PyObject *retval = CPyDef__nonce___get_block_for_nonce_gen___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "throw", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_for_nonce_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_block_for_nonce_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_type = obj_type;
-    PyObject *arg_value;
-    if (obj_value == NULL) {
-        arg_value = NULL;
-    } else {
-        arg_value = obj_value; 
-    }
-    PyObject *arg_traceback;
-    if (obj_traceback == NULL) {
-        arg_traceback = NULL;
-    } else {
-        arg_traceback = obj_traceback; 
-    }
-    PyObject *retval = CPyDef__nonce___get_block_for_nonce_gen___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "throw", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_block_for_nonce_gen___close(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -6637,54 +6657,54 @@ CPyL13: ;
     CPy_DECREF(cpy_r_r6.f2);
     goto CPyL6;
 }
-
-PyObject *CPyPy__nonce___get_block_for_nonce_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":close", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce___get_block_for_nonce_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":close", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_for_nonce_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_block_for_nonce_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce___get_block_for_nonce_gen___close(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "close", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_for_nonce_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_block_for_nonce_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce___get_block_for_nonce_gen___close(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "close", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_block_for_nonce_gen_____await__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy__nonce___get_block_for_nonce_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__await__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce___get_block_for_nonce_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":__await__", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_for_nonce_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_block_for_nonce_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce___get_block_for_nonce_gen_____await__(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__await__", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_for_nonce_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_block_for_nonce_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce___get_block_for_nonce_gen_____await__(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__await__", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_block_for_nonce(PyObject *cpy_r_address, CPyTagged cpy_r_nonce) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
@@ -6725,35 +6745,35 @@ CPyL5: ;
     CPy_DecRef(cpy_r_r0);
     goto CPyL4;
 }
-
-PyObject *CPyPy__nonce___get_block_for_nonce(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"address", "nonce", 0};
-    static CPyArg_Parser parser = {"OO:get_block_for_nonce", kwlist, 0};
-    PyObject *obj_address;
-    PyObject *obj_nonce;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_address, &obj_nonce)) {
+    
+    PyObject *CPyPy__nonce___get_block_for_nonce(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        static const char * const kwlist[] = {"address", "nonce", 0};
+        static CPyArg_Parser parser = {"OO:get_block_for_nonce", kwlist, 0};
+        PyObject *obj_address;
+        PyObject *obj_nonce;
+        if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_address, &obj_nonce)) {
+            return NULL;
+        }
+        PyObject *arg_address;
+        if (likely(PyUnicode_Check(obj_address)))
+            arg_address = obj_address;
+        else {
+            CPy_TypeError("str", obj_address); 
+            goto fail;
+        }
+        CPyTagged arg_nonce;
+        if (likely(PyLong_Check(obj_nonce)))
+            arg_nonce = CPyTagged_BorrowFromObject(obj_nonce);
+        else {
+            CPy_TypeError("int", obj_nonce); goto fail;
+        }
+        PyObject *retval = CPyDef__nonce___get_block_for_nonce(arg_address, arg_nonce);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg_address;
-    if (likely(PyUnicode_Check(obj_address)))
-        arg_address = obj_address;
-    else {
-        CPy_TypeError("str", obj_address); 
-        goto fail;
-    }
-    CPyTagged arg_nonce;
-    if (likely(PyLong_Check(obj_nonce)))
-        arg_nonce = CPyTagged_BorrowFromObject(obj_nonce);
-    else {
-        CPy_TypeError("int", obj_nonce); goto fail;
-    }
-    PyObject *retval = CPyDef__nonce___get_block_for_nonce(arg_address, arg_nonce);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_for_nonce", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce____get_area_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -6785,148 +6805,149 @@ PyObject *CPyDef__nonce____get_area_gen_____mypyc_generator_helper__(PyObject *c
     char cpy_r_r27;
     char cpy_r_r28;
     CPyTagged cpy_r_r29;
-    CPyTagged cpy_r_r30;
+    char cpy_r_r30;
     CPyTagged cpy_r_r31;
     CPyTagged cpy_r_r32;
     CPyTagged cpy_r_r33;
-    PyObject *cpy_r_r34;
-    PyObject *cpy_r_r35;
-    int32_t cpy_r_r36;
-    char cpy_r_r37;
-    CPyTagged cpy_r_r38;
-    CPyTagged cpy_r_r39;
-    char cpy_r_r40;
-    char cpy_r_r41;
-    PyObject *cpy_r_r42;
-    char cpy_r_r43;
-    PyObject *cpy_r_r44;
-    CPyPtr cpy_r_r45;
-    int64_t cpy_r_r46;
-    PyObject *cpy_r_r47;
-    char cpy_r_r48;
+    CPyTagged cpy_r_r34;
+    CPyTagged cpy_r_r35;
+    PyObject *cpy_r_r36;
+    PyObject *cpy_r_r37;
+    int32_t cpy_r_r38;
+    char cpy_r_r39;
+    CPyTagged cpy_r_r40;
+    CPyTagged cpy_r_r41;
+    char cpy_r_r42;
+    PyObject *cpy_r_r43;
+    char cpy_r_r44;
+    PyObject *cpy_r_r45;
+    CPyPtr cpy_r_r46;
+    int64_t cpy_r_r47;
+    PyObject *cpy_r_r48;
     char cpy_r_r49;
-    PyObject *cpy_r_r50;
-    CPyPtr cpy_r_r51;
-    int64_t cpy_r_r52;
+    char cpy_r_r50;
+    PyObject *cpy_r_r51;
+    CPyPtr cpy_r_r52;
     int64_t cpy_r_r53;
-    char cpy_r_r54;
-    PyObject *cpy_r_r55;
-    int64_t cpy_r_r56;
-    CPyPtr cpy_r_r57;
+    int64_t cpy_r_r54;
+    char cpy_r_r55;
+    PyObject *cpy_r_r56;
+    int64_t cpy_r_r57;
     CPyPtr cpy_r_r58;
-    int64_t cpy_r_r59;
-    CPyPtr cpy_r_r60;
-    PyObject *cpy_r_r61;
-    CPyTagged cpy_r_r62;
-    char cpy_r_r63;
-    int64_t cpy_r_r64;
-    PyObject *cpy_r_r65;
-    CPyTagged cpy_r_r66;
-    PyObject *cpy_r_r67;
-    int64_t cpy_r_r68;
+    CPyPtr cpy_r_r59;
+    int64_t cpy_r_r60;
+    CPyPtr cpy_r_r61;
+    PyObject *cpy_r_r62;
+    CPyTagged cpy_r_r63;
+    char cpy_r_r64;
+    int64_t cpy_r_r65;
+    PyObject *cpy_r_r66;
+    CPyTagged cpy_r_r67;
+    PyObject *cpy_r_r68;
     int64_t cpy_r_r69;
-    char cpy_r_r70;
-    PyObject *cpy_r_r71;
+    int64_t cpy_r_r70;
+    char cpy_r_r71;
     PyObject *cpy_r_r72;
-    char cpy_r_r73;
-    PyObject **cpy_r_r75;
-    PyObject *cpy_r_r76;
+    PyObject *cpy_r_r73;
+    char cpy_r_r74;
+    PyObject **cpy_r_r76;
     PyObject *cpy_r_r77;
-    char cpy_r_r78;
-    PyObject *cpy_r_r79;
+    PyObject *cpy_r_r78;
+    char cpy_r_r79;
     PyObject *cpy_r_r80;
     PyObject *cpy_r_r81;
     PyObject *cpy_r_r82;
     PyObject *cpy_r_r83;
-    char cpy_r_r84;
-    PyObject *cpy_r_r85;
-    char cpy_r_r86;
-    PyObject *cpy_r_r87;
-    char cpy_r_r88;
-    tuple_T3OOO cpy_r_r89;
-    char cpy_r_r90;
-    PyObject **cpy_r_r91;
-    PyObject *cpy_r_r92;
-    char cpy_r_r93;
-    tuple_T3OOO cpy_r_r94;
+    PyObject *cpy_r_r84;
+    char cpy_r_r85;
+    PyObject *cpy_r_r86;
+    char cpy_r_r87;
+    PyObject *cpy_r_r88;
+    char cpy_r_r89;
+    tuple_T3OOO cpy_r_r90;
+    char cpy_r_r91;
+    PyObject **cpy_r_r92;
+    PyObject *cpy_r_r93;
+    char cpy_r_r94;
     tuple_T3OOO cpy_r_r95;
     tuple_T3OOO cpy_r_r96;
-    char cpy_r_r97;
-    PyObject *cpy_r_r98;
+    tuple_T3OOO cpy_r_r97;
+    char cpy_r_r98;
     PyObject *cpy_r_r99;
     PyObject *cpy_r_r100;
     PyObject *cpy_r_r101;
-    char cpy_r_r102;
-    PyObject *cpy_r_r103;
-    char cpy_r_r104;
+    PyObject *cpy_r_r102;
+    char cpy_r_r103;
+    PyObject *cpy_r_r104;
     char cpy_r_r105;
-    PyObject *cpy_r_r106;
-    char cpy_r_r107;
+    char cpy_r_r106;
+    PyObject *cpy_r_r107;
     char cpy_r_r108;
-    PyObject *cpy_r_r109;
-    CPyPtr cpy_r_r110;
-    int64_t cpy_r_r111;
+    char cpy_r_r109;
+    PyObject *cpy_r_r110;
+    CPyPtr cpy_r_r111;
     int64_t cpy_r_r112;
-    char cpy_r_r113;
-    PyObject *cpy_r_r114;
-    CPyPtr cpy_r_r115;
-    int64_t cpy_r_r116;
+    int64_t cpy_r_r113;
+    char cpy_r_r114;
+    PyObject *cpy_r_r115;
+    CPyPtr cpy_r_r116;
     int64_t cpy_r_r117;
-    char cpy_r_r118;
-    PyObject *cpy_r_r119;
-    int64_t cpy_r_r120;
-    CPyPtr cpy_r_r121;
+    int64_t cpy_r_r118;
+    char cpy_r_r119;
+    PyObject *cpy_r_r120;
+    int64_t cpy_r_r121;
     CPyPtr cpy_r_r122;
-    int64_t cpy_r_r123;
-    CPyPtr cpy_r_r124;
-    PyObject *cpy_r_r125;
-    CPyTagged cpy_r_r126;
-    char cpy_r_r127;
-    PyObject *cpy_r_r128;
-    int64_t cpy_r_r129;
-    CPyPtr cpy_r_r130;
+    CPyPtr cpy_r_r123;
+    int64_t cpy_r_r124;
+    CPyPtr cpy_r_r125;
+    PyObject *cpy_r_r126;
+    CPyTagged cpy_r_r127;
+    char cpy_r_r128;
+    PyObject *cpy_r_r129;
+    int64_t cpy_r_r130;
     CPyPtr cpy_r_r131;
-    int64_t cpy_r_r132;
-    CPyPtr cpy_r_r133;
-    PyObject *cpy_r_r134;
-    CPyTagged cpy_r_r135;
-    char cpy_r_r136;
-    CPyTagged cpy_r_r137;
+    CPyPtr cpy_r_r132;
+    int64_t cpy_r_r133;
+    CPyPtr cpy_r_r134;
+    PyObject *cpy_r_r135;
+    CPyTagged cpy_r_r136;
+    char cpy_r_r137;
     CPyTagged cpy_r_r138;
-    int64_t cpy_r_r139;
-    char cpy_r_r140;
-    int64_t cpy_r_r141;
-    char cpy_r_r142;
+    CPyTagged cpy_r_r139;
+    int64_t cpy_r_r140;
+    char cpy_r_r141;
+    int64_t cpy_r_r142;
     char cpy_r_r143;
     char cpy_r_r144;
     char cpy_r_r145;
     char cpy_r_r146;
-    CPyTagged cpy_r_r147;
+    char cpy_r_r147;
     CPyTagged cpy_r_r148;
-    tuple_T2II cpy_r_r149;
-    PyObject *cpy_r_r150;
-    char cpy_r_r151;
-    CPyTagged cpy_r_r152;
-    char cpy_r_r153;
-    int64_t cpy_r_r154;
+    CPyTagged cpy_r_r149;
+    tuple_T2II cpy_r_r150;
+    PyObject *cpy_r_r151;
+    char cpy_r_r152;
+    CPyTagged cpy_r_r153;
+    char cpy_r_r154;
     int64_t cpy_r_r155;
-    char cpy_r_r156;
-    int64_t cpy_r_r157;
+    int64_t cpy_r_r156;
+    char cpy_r_r157;
     int64_t cpy_r_r158;
-    char cpy_r_r159;
-    CPyTagged cpy_r_r160;
+    int64_t cpy_r_r159;
+    char cpy_r_r160;
     CPyTagged cpy_r_r161;
-    tuple_T2II cpy_r_r162;
-    PyObject *cpy_r_r163;
-    char cpy_r_r164;
+    CPyTagged cpy_r_r162;
+    tuple_T2II cpy_r_r163;
+    PyObject *cpy_r_r164;
     char cpy_r_r165;
     char cpy_r_r166;
     char cpy_r_r167;
-    PyObject *cpy_r_r168;
+    char cpy_r_r168;
+    PyObject *cpy_r_r169;
     cpy_r_r0 = NULL;
     cpy_r_r1 = cpy_r_r0;
     cpy_r_r2 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__;
-    goto CPyL135;
+    goto CPyL136;
 CPyL1: ;
     cpy_r_r3 = (PyObject *)&_Py_NoneStruct;
     cpy_r_r4 = cpy_r_type != cpy_r_r3;
@@ -6934,14 +6955,14 @@ CPyL1: ;
     CPyErr_SetObjectAndTraceback(cpy_r_type, cpy_r_value, cpy_r_traceback);
     if (unlikely(!0)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     CPy_Unreachable();
 CPyL4: ;
     cpy_r_r5 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__range_size;
     if (unlikely(cpy_r_r5 == CPY_INT_TAG)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "range_size", 134, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     CPyTagged_INCREF(cpy_r_r5);
 CPyL5: ;
@@ -6949,7 +6970,7 @@ CPyL5: ;
     CPyTagged_DECREF(cpy_r_r5);
     if (unlikely(cpy_r_r6 == CPY_INT_TAG)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__num_chunks != CPY_INT_TAG) {
         CPyTagged_DECREF(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__num_chunks);
@@ -6958,19 +6979,19 @@ CPyL5: ;
     cpy_r_r7 = 1;
     if (unlikely(!cpy_r_r7)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     cpy_r_r8 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__range_size;
     if (unlikely(cpy_r_r8 == CPY_INT_TAG)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "range_size", 135, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     CPyTagged_INCREF(cpy_r_r8);
 CPyL8: ;
     cpy_r_r9 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__num_chunks;
     if (unlikely(cpy_r_r9 == CPY_INT_TAG)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "num_chunks", 135, CPyStatic__nonce___globals);
-        goto CPyL140;
+        goto CPyL141;
     }
     CPyTagged_INCREF(cpy_r_r9);
 CPyL9: ;
@@ -6979,7 +7000,7 @@ CPyL9: ;
     CPyTagged_DECREF(cpy_r_r9);
     if (unlikely(cpy_r_r10 == CPY_INT_TAG)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__chunk_size != CPY_INT_TAG) {
         CPyTagged_DECREF(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__chunk_size);
@@ -6988,26 +7009,23 @@ CPyL9: ;
     cpy_r_r11 = 1;
     if (unlikely(!cpy_r_r11)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     cpy_r_r12 = PyList_New(0);
     if (unlikely(cpy_r_r12 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__25 != NULL) {
         CPy_DECREF_NO_IMM(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__25);
     }
     ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__25 = cpy_r_r12;
     cpy_r_r13 = 1;
-    if (unlikely(!cpy_r_r13)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", -1, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
+    if (!cpy_r_r13) goto CPyL140;
     cpy_r_r14 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__num_chunks;
     if (unlikely(cpy_r_r14 == CPY_INT_TAG)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "num_chunks", 136, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     CPyTagged_INCREF(cpy_r_r14);
 CPyL14: ;
@@ -7016,24 +7034,18 @@ CPyL14: ;
     }
     ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__26 = cpy_r_r14;
     cpy_r_r15 = 1;
-    if (unlikely(!cpy_r_r15)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", -1, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
+    if (!cpy_r_r15) goto CPyL140;
     cpy_r_r16 = 0;
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27 != CPY_INT_TAG) {
         CPyTagged_DECREF(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27);
     }
     ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27 = cpy_r_r16;
     cpy_r_r17 = 1;
-    if (unlikely(!cpy_r_r17)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", -1, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
+    if (!cpy_r_r17) goto CPyL140;
     cpy_r_r18 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27;
     if (unlikely(cpy_r_r18 == CPY_INT_TAG)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__27", 136, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     CPyTagged_INCREF(cpy_r_r18);
 CPyL17: ;
@@ -7044,20 +7056,20 @@ CPyL17: ;
     cpy_r_r19 = 1;
     if (unlikely(!cpy_r_r19)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
 CPyL18: ;
     cpy_r_r20 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27;
     if (unlikely(cpy_r_r20 == CPY_INT_TAG)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__27", 136, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     CPyTagged_INCREF(cpy_r_r20);
 CPyL19: ;
     cpy_r_r21 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__26;
     if (unlikely(cpy_r_r21 == CPY_INT_TAG)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__26", 136, CPyStatic__nonce___globals);
-        goto CPyL141;
+        goto CPyL142;
     }
     CPyTagged_INCREF(cpy_r_r21);
 CPyL20: ;
@@ -7077,831 +7089,810 @@ CPyL23: ;
 CPyL24: ;
     CPyTagged_DECREF(cpy_r_r20);
     CPyTagged_DECREF(cpy_r_r21);
-    if (!cpy_r_r27) goto CPyL33;
-    cpy_r_r29 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
+    if (!cpy_r_r27) goto CPyL34;
+    cpy_r_r29 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27;
     if (unlikely(cpy_r_r29 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "lo", 136, CPyStatic__nonce___globals);
-        goto CPyL139;
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__27", 136, CPyStatic__nonce___globals);
+        goto CPyL140;
     }
     CPyTagged_INCREF(cpy_r_r29);
 CPyL26: ;
-    cpy_r_r30 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__i;
-    if (unlikely(cpy_r_r30 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "i", 136, CPyStatic__nonce___globals);
-        goto CPyL142;
-    }
-    CPyTagged_INCREF(cpy_r_r30);
-CPyL27: ;
-    cpy_r_r31 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__chunk_size;
-    if (unlikely(cpy_r_r31 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "chunk_size", 136, CPyStatic__nonce___globals);
-        goto CPyL143;
-    }
-    CPyTagged_INCREF(cpy_r_r31);
-CPyL28: ;
-    cpy_r_r32 = CPyTagged_Multiply(cpy_r_r30, cpy_r_r31);
-    CPyTagged_DECREF(cpy_r_r30);
-    CPyTagged_DECREF(cpy_r_r31);
-    cpy_r_r33 = CPyTagged_Add(cpy_r_r29, cpy_r_r32);
-    CPyTagged_DECREF(cpy_r_r29);
-    CPyTagged_DECREF(cpy_r_r32);
-    cpy_r_r34 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__25;
-    if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__25", -1, CPyStatic__nonce___globals);
-        goto CPyL144;
-    }
-    CPy_INCREF_NO_IMM(cpy_r_r34);
-CPyL29: ;
-    cpy_r_r35 = CPyTagged_StealAsObject(cpy_r_r33);
-    cpy_r_r36 = PyList_Append(cpy_r_r34, cpy_r_r35);
-    CPy_DECREF_NO_IMM(cpy_r_r34);
-    CPy_DECREF(cpy_r_r35);
-    cpy_r_r37 = cpy_r_r36 >= 0;
-    if (unlikely(!cpy_r_r37)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
-    cpy_r_r38 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27;
-    if (unlikely(cpy_r_r38 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__27", 136, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
-    CPyTagged_INCREF(cpy_r_r38);
-CPyL31: ;
-    cpy_r_r39 = CPyTagged_Add(cpy_r_r38, 2);
-    CPyTagged_DECREF(cpy_r_r38);
-    CPyTagged_INCREF(cpy_r_r39);
-    if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27 != CPY_INT_TAG) {
-        CPyTagged_DECREF(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27);
-    }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27 = cpy_r_r39;
-    cpy_r_r40 = 1;
-    if (unlikely(!cpy_r_r40)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL145;
-    }
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__i != CPY_INT_TAG) {
         CPyTagged_DECREF(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__i);
     }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__i = cpy_r_r39;
-    cpy_r_r41 = 1;
-    if (unlikely(!cpy_r_r41)) {
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__i = cpy_r_r29;
+    cpy_r_r30 = 1;
+    if (unlikely(!cpy_r_r30)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
+    }
+    cpy_r_r31 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
+    if (unlikely(cpy_r_r31 == CPY_INT_TAG)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "lo", 136, CPyStatic__nonce___globals);
+        goto CPyL140;
+    }
+    CPyTagged_INCREF(cpy_r_r31);
+CPyL28: ;
+    cpy_r_r32 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__i;
+    if (unlikely(cpy_r_r32 == CPY_INT_TAG)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "i", 136, CPyStatic__nonce___globals);
+        goto CPyL143;
+    }
+    CPyTagged_INCREF(cpy_r_r32);
+CPyL29: ;
+    cpy_r_r33 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__chunk_size;
+    if (unlikely(cpy_r_r33 == CPY_INT_TAG)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "chunk_size", 136, CPyStatic__nonce___globals);
+        goto CPyL144;
+    }
+    CPyTagged_INCREF(cpy_r_r33);
+CPyL30: ;
+    cpy_r_r34 = CPyTagged_Multiply(cpy_r_r32, cpy_r_r33);
+    CPyTagged_DECREF(cpy_r_r32);
+    CPyTagged_DECREF(cpy_r_r33);
+    cpy_r_r35 = CPyTagged_Add(cpy_r_r31, cpy_r_r34);
+    CPyTagged_DECREF(cpy_r_r31);
+    CPyTagged_DECREF(cpy_r_r34);
+    cpy_r_r36 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__25;
+    if (unlikely(cpy_r_r36 == NULL)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__25", 136, CPyStatic__nonce___globals);
+        goto CPyL145;
+    }
+    CPy_INCREF_NO_IMM(cpy_r_r36);
+CPyL31: ;
+    cpy_r_r37 = CPyTagged_StealAsObject(cpy_r_r35);
+    cpy_r_r38 = PyList_Append(cpy_r_r36, cpy_r_r37);
+    CPy_DECREF_NO_IMM(cpy_r_r36);
+    CPy_DECREF(cpy_r_r37);
+    cpy_r_r39 = cpy_r_r38 >= 0;
+    if (unlikely(!cpy_r_r39)) {
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
+        goto CPyL140;
+    }
+    cpy_r_r40 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27;
+    if (unlikely(cpy_r_r40 == CPY_INT_TAG)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__27", 136, CPyStatic__nonce___globals);
+        goto CPyL140;
+    }
+    CPyTagged_INCREF(cpy_r_r40);
+CPyL33: ;
+    cpy_r_r41 = CPyTagged_Add(cpy_r_r40, 2);
+    CPyTagged_DECREF(cpy_r_r40);
+    if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27 != CPY_INT_TAG) {
+        CPyTagged_DECREF(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27);
+    }
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__27 = cpy_r_r41;
+    cpy_r_r42 = 1;
+    if (unlikely(!cpy_r_r42)) {
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
+        goto CPyL140;
     } else
         goto CPyL18;
-CPyL33: ;
-    cpy_r_r42 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__25;
-    if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__25", -1, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
-    CPy_INCREF_NO_IMM(cpy_r_r42);
 CPyL34: ;
+    cpy_r_r43 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__25;
+    if (unlikely(cpy_r_r43 == NULL)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__25", 136, CPyStatic__nonce___globals);
+        goto CPyL140;
+    }
+    CPy_INCREF_NO_IMM(cpy_r_r43);
+CPyL35: ;
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__points != NULL) {
         CPy_DECREF_NO_IMM(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__points);
     }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__points = cpy_r_r42;
-    cpy_r_r43 = 1;
-    if (unlikely(!cpy_r_r43)) {
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__points = cpy_r_r43;
+    cpy_r_r44 = 1;
+    if (unlikely(!cpy_r_r44)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
-    cpy_r_r44 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__points;
-    if (unlikely(cpy_r_r44 == NULL)) {
+    cpy_r_r45 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__points;
+    if (unlikely(cpy_r_r45 == NULL)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "points", 137, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
-    CPy_INCREF_NO_IMM(cpy_r_r44);
-CPyL36: ;
-    cpy_r_r45 = (CPyPtr)&((PyVarObject *)cpy_r_r44)->ob_size;
-    cpy_r_r46 = *(int64_t *)cpy_r_r45;
-    cpy_r_r47 = PyList_New(cpy_r_r46);
-    if (unlikely(cpy_r_r47 == NULL)) {
+    CPy_INCREF_NO_IMM(cpy_r_r45);
+CPyL37: ;
+    cpy_r_r46 = (CPyPtr)((CPyPtr)cpy_r_r45 + offsetof(PyVarObject, ob_size));
+    cpy_r_r47 = *(int64_t *)cpy_r_r46;
+    cpy_r_r48 = PyList_New(cpy_r_r47);
+    if (unlikely(cpy_r_r48 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL146;
     }
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__28 != NULL) {
         CPy_DECREF_NO_IMM(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__28);
     }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__28 = cpy_r_r44;
-    cpy_r_r48 = 1;
-    if (unlikely(!cpy_r_r48)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", -1, CPyStatic__nonce___globals);
-        goto CPyL147;
-    }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__29 = 0;
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__28 = cpy_r_r45;
     cpy_r_r49 = 1;
-    if (unlikely(!cpy_r_r49)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", -1, CPyStatic__nonce___globals);
-        goto CPyL147;
-    }
-CPyL39: ;
-    cpy_r_r50 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__28;
-    if (unlikely(cpy_r_r50 == NULL)) {
+    if (!cpy_r_r49) goto CPyL147;
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__29 = 0;
+    cpy_r_r50 = 1;
+    if (!cpy_r_r50) goto CPyL147;
+CPyL40: ;
+    cpy_r_r51 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__28;
+    if (unlikely(cpy_r_r51 == NULL)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__28", 137, CPyStatic__nonce___globals);
         goto CPyL147;
     }
-    CPy_INCREF_NO_IMM(cpy_r_r50);
-CPyL40: ;
-    cpy_r_r51 = (CPyPtr)&((PyVarObject *)cpy_r_r50)->ob_size;
-    cpy_r_r52 = *(int64_t *)cpy_r_r51;
-    CPy_DECREF_NO_IMM(cpy_r_r50);
-    cpy_r_r53 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__29;
-    if (unlikely(cpy_r_r53 == -113)) {
+    CPy_INCREF_NO_IMM(cpy_r_r51);
+CPyL41: ;
+    cpy_r_r52 = (CPyPtr)((CPyPtr)cpy_r_r51 + offsetof(PyVarObject, ob_size));
+    cpy_r_r53 = *(int64_t *)cpy_r_r52;
+    CPy_DECREF_NO_IMM(cpy_r_r51);
+    cpy_r_r54 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__29;
+    if (unlikely(cpy_r_r54 == -113)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__29", 137, CPyStatic__nonce___globals);
         goto CPyL147;
     }
-CPyL41: ;
-    cpy_r_r54 = cpy_r_r53 < cpy_r_r52;
-    if (!cpy_r_r54) goto CPyL53;
-    cpy_r_r55 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__28;
-    if (unlikely(cpy_r_r55 == NULL)) {
+CPyL42: ;
+    cpy_r_r55 = cpy_r_r54 < cpy_r_r53;
+    if (!cpy_r_r55) goto CPyL54;
+    cpy_r_r56 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__28;
+    if (unlikely(cpy_r_r56 == NULL)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__28", 137, CPyStatic__nonce___globals);
         goto CPyL147;
     }
-    CPy_INCREF_NO_IMM(cpy_r_r55);
-CPyL43: ;
-    cpy_r_r56 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__29;
-    if (unlikely(cpy_r_r56 == -113)) {
+    CPy_INCREF_NO_IMM(cpy_r_r56);
+CPyL44: ;
+    cpy_r_r57 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__29;
+    if (unlikely(cpy_r_r57 == -113)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__29", 137, CPyStatic__nonce___globals);
         goto CPyL148;
     }
-CPyL44: ;
-    cpy_r_r57 = (CPyPtr)&((PyListObject *)cpy_r_r55)->ob_item;
-    cpy_r_r58 = *(CPyPtr *)cpy_r_r57;
-    cpy_r_r59 = cpy_r_r56 * 8;
-    cpy_r_r60 = cpy_r_r58 + cpy_r_r59;
-    cpy_r_r61 = *(PyObject * *)cpy_r_r60;
-    CPy_INCREF(cpy_r_r61);
-    CPy_DECREF_NO_IMM(cpy_r_r55);
-    if (likely(PyLong_Check(cpy_r_r61)))
-        cpy_r_r62 = CPyTagged_FromObject(cpy_r_r61);
+CPyL45: ;
+    cpy_r_r58 = (CPyPtr)((CPyPtr)cpy_r_r56 + offsetof(PyListObject, ob_item));
+    cpy_r_r59 = *(CPyPtr *)cpy_r_r58;
+    cpy_r_r60 = cpy_r_r57 * 8;
+    cpy_r_r61 = cpy_r_r59 + cpy_r_r60;
+    cpy_r_r62 = *(PyObject * *)cpy_r_r61;
+    CPy_INCREF(cpy_r_r62);
+    CPy_DECREF_NO_IMM(cpy_r_r56);
+    if (likely(PyLong_Check(cpy_r_r62)))
+        cpy_r_r63 = CPyTagged_FromObject(cpy_r_r62);
     else {
-        CPy_TypeError("int", cpy_r_r61); cpy_r_r62 = CPY_INT_TAG;
+        CPy_TypeError("int", cpy_r_r62); cpy_r_r63 = CPY_INT_TAG;
     }
-    CPy_DECREF(cpy_r_r61);
-    if (unlikely(cpy_r_r62 == CPY_INT_TAG)) {
+    CPy_DECREF(cpy_r_r62);
+    if (unlikely(cpy_r_r63 == CPY_INT_TAG)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL147;
     }
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__point != CPY_INT_TAG) {
         CPyTagged_DECREF(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__point);
     }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__point = cpy_r_r62;
-    cpy_r_r63 = 1;
-    if (unlikely(!cpy_r_r63)) {
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__point = cpy_r_r63;
+    cpy_r_r64 = 1;
+    if (unlikely(!cpy_r_r64)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL147;
     }
-    cpy_r_r64 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__29;
-    if (unlikely(cpy_r_r64 == -113)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__29", -1, CPyStatic__nonce___globals);
-        goto CPyL147;
-    }
-CPyL47: ;
-    cpy_r_r65 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
-    if (unlikely(cpy_r_r65 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "address", 137, CPyStatic__nonce___globals);
-        goto CPyL147;
-    }
-    CPy_INCREF(cpy_r_r65);
-CPyL48: ;
-    cpy_r_r66 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__point;
-    if (unlikely(cpy_r_r66 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "point", 137, CPyStatic__nonce___globals);
-        goto CPyL149;
-    }
-    CPyTagged_INCREF(cpy_r_r66);
-CPyL49: ;
-    cpy_r_r67 = CPyDef__nonce___get_nonce_at_block(cpy_r_r65, cpy_r_r66);
-    CPy_DECREF(cpy_r_r65);
-    CPyTagged_DECREF(cpy_r_r66);
-    if (unlikely(cpy_r_r67 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL147;
-    }
-    CPyList_SetItemUnsafe(cpy_r_r47, cpy_r_r64, cpy_r_r67);
-    cpy_r_r68 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__29;
-    if (unlikely(cpy_r_r68 == -113)) {
+    cpy_r_r65 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__29;
+    if (unlikely(cpy_r_r65 == -113)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__29", 137, CPyStatic__nonce___globals);
         goto CPyL147;
     }
-CPyL52: ;
-    cpy_r_r69 = cpy_r_r68 + 1;
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__29 = cpy_r_r69;
-    cpy_r_r70 = 1;
-    if (unlikely(!cpy_r_r70)) {
+CPyL48: ;
+    cpy_r_r66 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__address;
+    if (unlikely(cpy_r_r66 == NULL)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "address", 137, CPyStatic__nonce___globals);
+        goto CPyL147;
+    }
+    CPy_INCREF(cpy_r_r66);
+CPyL49: ;
+    cpy_r_r67 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__point;
+    if (unlikely(cpy_r_r67 == CPY_INT_TAG)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "point", 137, CPyStatic__nonce___globals);
+        goto CPyL149;
+    }
+    CPyTagged_INCREF(cpy_r_r67);
+CPyL50: ;
+    cpy_r_r68 = CPyDef__nonce___get_nonce_at_block(cpy_r_r66, cpy_r_r67);
+    CPy_DECREF(cpy_r_r66);
+    CPyTagged_DECREF(cpy_r_r67);
+    if (unlikely(cpy_r_r68 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
+        goto CPyL147;
+    }
+    CPyList_SetItemUnsafe(cpy_r_r48, cpy_r_r65, cpy_r_r68);
+    cpy_r_r69 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__29;
+    if (unlikely(cpy_r_r69 == -113)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__29", 137, CPyStatic__nonce___globals);
+        goto CPyL147;
+    }
+CPyL53: ;
+    cpy_r_r70 = cpy_r_r69 + 1;
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__29 = cpy_r_r70;
+    cpy_r_r71 = 1;
+    if (unlikely(!cpy_r_r71)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL147;
     } else
-        goto CPyL39;
-CPyL53: ;
-    cpy_r_r71 = PyObject_GetIter(cpy_r_r47);
-    CPy_DECREF_NO_IMM(cpy_r_r47);
-    if (unlikely(cpy_r_r71 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
-    cpy_r_r72 = CPyStatic__nonce___igather;
+        goto CPyL40;
+CPyL54: ;
+    cpy_r_r72 = PyObject_GetIter(cpy_r_r48);
+    CPy_DECREF_NO_IMM(cpy_r_r48);
     if (unlikely(cpy_r_r72 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
+        goto CPyL140;
+    }
+    cpy_r_r73 = CPyStatic__nonce___igather;
+    if (unlikely(cpy_r_r73 == NULL)) {
         goto CPyL150;
     } else
-        goto CPyL57;
-CPyL55: ;
+        goto CPyL58;
+CPyL56: ;
     PyErr_SetString(PyExc_NameError, "value for final name \"igather\" was not set");
-    cpy_r_r73 = 0;
-    if (unlikely(!cpy_r_r73)) {
+    cpy_r_r74 = 0;
+    if (unlikely(!cpy_r_r74)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     CPy_Unreachable();
-CPyL57: ;
-    PyObject *cpy_r_r74[1] = {cpy_r_r71};
-    cpy_r_r75 = (PyObject **)&cpy_r_r74;
-    cpy_r_r76 = PyObject_Vectorcall(cpy_r_r72, cpy_r_r75, 1, 0);
-    if (unlikely(cpy_r_r76 == NULL)) {
+CPyL58: ;
+    PyObject *cpy_r_r75[1] = {cpy_r_r72};
+    cpy_r_r76 = (PyObject **)&cpy_r_r75;
+    cpy_r_r77 = PyObject_Vectorcall(cpy_r_r73, cpy_r_r76, 1, 0);
+    if (unlikely(cpy_r_r77 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL151;
     }
-    CPy_DECREF(cpy_r_r71);
-    cpy_r_r77 = CPy_GetCoro(cpy_r_r76);
-    CPy_DECREF(cpy_r_r76);
-    if (unlikely(cpy_r_r77 == NULL)) {
+    CPy_DECREF(cpy_r_r72);
+    cpy_r_r78 = CPy_GetCoro(cpy_r_r77);
+    CPy_DECREF(cpy_r_r77);
+    if (unlikely(cpy_r_r78 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__30 != NULL) {
         CPy_DECREF(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__30);
     }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__30 = cpy_r_r77;
-    cpy_r_r78 = 1;
-    if (unlikely(!cpy_r_r78)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", -1, CPyStatic__nonce___globals);
-        goto CPyL139;
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__30 = cpy_r_r78;
+    cpy_r_r79 = 1;
+    if (!cpy_r_r79) goto CPyL140;
+    cpy_r_r80 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__30;
+    if (unlikely(cpy_r_r80 == NULL)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__30", 137, CPyStatic__nonce___globals);
+        goto CPyL140;
     }
-    cpy_r_r79 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__30;
-    if (unlikely(cpy_r_r79 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__30", -1, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
-    CPy_INCREF(cpy_r_r79);
-CPyL61: ;
-    cpy_r_r80 = CPyIter_Next(cpy_r_r79);
-    CPy_DECREF(cpy_r_r79);
-    if (cpy_r_r80 != NULL) goto CPyL64;
-    cpy_r_r81 = CPy_FetchStopIterationValue();
-    if (unlikely(cpy_r_r81 == NULL)) {
+    CPy_INCREF(cpy_r_r80);
+CPyL62: ;
+    cpy_r_r81 = CPyIter_Next(cpy_r_r80);
+    CPy_DECREF(cpy_r_r80);
+    if (cpy_r_r81 != NULL) goto CPyL65;
+    cpy_r_r82 = CPy_FetchStopIterationValue();
+    if (unlikely(cpy_r_r82 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
-    cpy_r_r82 = cpy_r_r81;
-    cpy_r_r83 = NULL;
+    cpy_r_r83 = cpy_r_r82;
+    cpy_r_r84 = NULL;
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__30 != NULL) {
         CPy_DECREF(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__30);
     }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__30 = cpy_r_r83;
-    cpy_r_r84 = 1;
-    if (unlikely(!cpy_r_r84)) {
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__30 = cpy_r_r84;
+    cpy_r_r85 = 1;
+    if (unlikely(!cpy_r_r85)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL152;
     } else
-        goto CPyL86;
-CPyL64: ;
-    cpy_r_r85 = cpy_r_r80;
+        goto CPyL87;
 CPyL65: ;
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = 1;
-    return cpy_r_r85;
+    cpy_r_r86 = cpy_r_r81;
 CPyL66: ;
-    cpy_r_r87 = (PyObject *)&_Py_NoneStruct;
-    cpy_r_r88 = cpy_r_type != cpy_r_r87;
-    if (!cpy_r_r88) goto CPyL153;
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = 1;
+    return cpy_r_r86;
+CPyL67: ;
+    cpy_r_r88 = (PyObject *)&_Py_NoneStruct;
+    cpy_r_r89 = cpy_r_type != cpy_r_r88;
+    if (!cpy_r_r89) goto CPyL153;
     CPyErr_SetObjectAndTraceback(cpy_r_type, cpy_r_value, cpy_r_traceback);
     if (unlikely(!0)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL70;
+        goto CPyL71;
     } else
         goto CPyL154;
-CPyL68: ;
-    CPy_Unreachable();
 CPyL69: ;
-    CPy_INCREF(cpy_r_arg);
-    goto CPyL81;
+    CPy_Unreachable();
 CPyL70: ;
-    cpy_r_r89 = CPy_CatchError();
+    CPy_INCREF(cpy_r_arg);
+    goto CPyL82;
+CPyL71: ;
+    cpy_r_r90 = CPy_CatchError();
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__31.f0 != NULL) {
         CPy_DECREF(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__31.f0);
         CPy_DECREF(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__31.f1);
         CPy_DECREF(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__31.f2);
     }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__31 = cpy_r_r89;
-    cpy_r_r90 = 1;
-    if (unlikely(!cpy_r_r90)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", -1, CPyStatic__nonce___globals);
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__31 = cpy_r_r90;
+    cpy_r_r91 = 1;
+    if (!cpy_r_r91) goto CPyL155;
+    cpy_r_r92 = (PyObject **)&cpy_r_r1;
+    cpy_r_r93 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__30;
+    if (unlikely(cpy_r_r93 == NULL)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__30", 137, CPyStatic__nonce___globals);
         goto CPyL155;
     }
-    cpy_r_r91 = (PyObject **)&cpy_r_r1;
-    cpy_r_r92 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__30;
-    if (unlikely(cpy_r_r92 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__30", -1, CPyStatic__nonce___globals);
-        goto CPyL155;
-    }
-    CPy_INCREF(cpy_r_r92);
-CPyL72: ;
-    cpy_r_r93 = CPy_YieldFromErrorHandle(cpy_r_r92, cpy_r_r91);
-    CPy_DecRef(cpy_r_r92);
-    if (unlikely(cpy_r_r93 == 2)) {
+    CPy_INCREF(cpy_r_r93);
+CPyL73: ;
+    cpy_r_r94 = CPy_YieldFromErrorHandle(cpy_r_r93, cpy_r_r92);
+    CPy_DecRef(cpy_r_r93);
+    if (unlikely(cpy_r_r94 == 2)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL155;
     }
-    if (cpy_r_r93) goto CPyL76;
-    cpy_r_r85 = cpy_r_r1;
-    cpy_r_r94 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__31;
-    if (unlikely(cpy_r_r94.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__31", -1, CPyStatic__nonce___globals);
-        goto CPyL156;
-    }
-    CPy_INCREF(cpy_r_r94.f0);
-    CPy_INCREF(cpy_r_r94.f1);
-    CPy_INCREF(cpy_r_r94.f2);
-CPyL75: ;
-    CPy_RestoreExcInfo(cpy_r_r94);
-    CPy_DecRef(cpy_r_r94.f0);
-    CPy_DecRef(cpy_r_r94.f1);
-    CPy_DecRef(cpy_r_r94.f2);
-    goto CPyL65;
-CPyL76: ;
-    cpy_r_r82 = cpy_r_r1;
+    if (cpy_r_r94) goto CPyL77;
+    cpy_r_r86 = cpy_r_r1;
     cpy_r_r95 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__31;
     if (unlikely(cpy_r_r95.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__31", -1, CPyStatic__nonce___globals);
-        goto CPyL157;
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__31", 137, CPyStatic__nonce___globals);
+        goto CPyL156;
     }
     CPy_INCREF(cpy_r_r95.f0);
     CPy_INCREF(cpy_r_r95.f1);
     CPy_INCREF(cpy_r_r95.f2);
-CPyL77: ;
+CPyL76: ;
     CPy_RestoreExcInfo(cpy_r_r95);
     CPy_DecRef(cpy_r_r95.f0);
     CPy_DecRef(cpy_r_r95.f1);
     CPy_DecRef(cpy_r_r95.f2);
-    goto CPyL86;
-CPyL78: ;
+    goto CPyL66;
+CPyL77: ;
+    cpy_r_r83 = cpy_r_r1;
     cpy_r_r96 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__31;
     if (unlikely(cpy_r_r96.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__31", -1, CPyStatic__nonce___globals);
-        goto CPyL139;
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__31", 137, CPyStatic__nonce___globals);
+        goto CPyL157;
     }
     CPy_INCREF(cpy_r_r96.f0);
     CPy_INCREF(cpy_r_r96.f1);
     CPy_INCREF(cpy_r_r96.f2);
-CPyL79: ;
+CPyL78: ;
     CPy_RestoreExcInfo(cpy_r_r96);
     CPy_DecRef(cpy_r_r96.f0);
     CPy_DecRef(cpy_r_r96.f1);
     CPy_DecRef(cpy_r_r96.f2);
-    cpy_r_r97 = CPy_KeepPropagating();
-    if (!cpy_r_r97) goto CPyL139;
+    goto CPyL87;
+CPyL79: ;
+    cpy_r_r97 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__31;
+    if (unlikely(cpy_r_r97.f0 == NULL)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__31", 137, CPyStatic__nonce___globals);
+        goto CPyL140;
+    }
+    CPy_INCREF(cpy_r_r97.f0);
+    CPy_INCREF(cpy_r_r97.f1);
+    CPy_INCREF(cpy_r_r97.f2);
+CPyL80: ;
+    CPy_RestoreExcInfo(cpy_r_r97);
+    CPy_DecRef(cpy_r_r97.f0);
+    CPy_DecRef(cpy_r_r97.f1);
+    CPy_DecRef(cpy_r_r97.f2);
+    cpy_r_r98 = CPy_KeepPropagating();
+    if (!cpy_r_r98) goto CPyL140;
     CPy_Unreachable();
-CPyL81: ;
-    cpy_r_r98 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__30;
-    if (unlikely(cpy_r_r98 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__30", -1, CPyStatic__nonce___globals);
+CPyL82: ;
+    cpy_r_r99 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__30;
+    if (unlikely(cpy_r_r99 == NULL)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__30", 137, CPyStatic__nonce___globals);
         goto CPyL158;
     }
-    CPy_INCREF(cpy_r_r98);
-CPyL82: ;
-    cpy_r_r99 = CPyIter_Send(cpy_r_r98, cpy_r_arg);
-    CPy_DECREF(cpy_r_r98);
+    CPy_INCREF(cpy_r_r99);
+CPyL83: ;
+    cpy_r_r100 = CPyIter_Send(cpy_r_r99, cpy_r_arg);
+    CPy_DECREF(cpy_r_r99);
     CPy_DECREF(cpy_r_arg);
-    if (cpy_r_r99 == NULL) goto CPyL84;
-    cpy_r_r85 = cpy_r_r99;
-    goto CPyL65;
-CPyL84: ;
-    cpy_r_r100 = CPy_FetchStopIterationValue();
-    if (unlikely(cpy_r_r100 == NULL)) {
+    if (cpy_r_r100 == NULL) goto CPyL85;
+    cpy_r_r86 = cpy_r_r100;
+    goto CPyL66;
+CPyL85: ;
+    cpy_r_r101 = CPy_FetchStopIterationValue();
+    if (unlikely(cpy_r_r101 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
-    cpy_r_r82 = cpy_r_r100;
-CPyL86: ;
-    if (likely(PyList_Check(cpy_r_r82)))
-        cpy_r_r101 = cpy_r_r82;
+    cpy_r_r83 = cpy_r_r101;
+CPyL87: ;
+    if (likely(PyList_Check(cpy_r_r83)))
+        cpy_r_r102 = cpy_r_r83;
     else {
-        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", 137, CPyStatic__nonce___globals, "list", cpy_r_r82);
-        goto CPyL139;
+        CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", 137, CPyStatic__nonce___globals, "list", cpy_r_r83);
+        goto CPyL140;
     }
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonces != NULL) {
         CPy_DECREF_NO_IMM(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonces);
     }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonces = cpy_r_r101;
-    cpy_r_r102 = 1;
-    if (unlikely(!cpy_r_r102)) {
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonces = cpy_r_r102;
+    cpy_r_r103 = 1;
+    if (unlikely(!cpy_r_r103)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
-    cpy_r_r103 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__points;
-    if (unlikely(cpy_r_r103 == NULL)) {
+    cpy_r_r104 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__points;
+    if (unlikely(cpy_r_r104 == NULL)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "points", 138, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
-    CPy_INCREF_NO_IMM(cpy_r_r103);
-CPyL89: ;
+    CPy_INCREF_NO_IMM(cpy_r_r104);
+CPyL90: ;
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__32 != NULL) {
         CPy_DECREF_NO_IMM(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__32);
     }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__32 = cpy_r_r103;
-    cpy_r_r104 = 1;
-    if (unlikely(!cpy_r_r104)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", -1, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__33 = 0;
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__32 = cpy_r_r104;
     cpy_r_r105 = 1;
-    if (unlikely(!cpy_r_r105)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", -1, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
-    cpy_r_r106 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonces;
-    if (unlikely(cpy_r_r106 == NULL)) {
+    if (!cpy_r_r105) goto CPyL140;
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__33 = 0;
+    cpy_r_r106 = 1;
+    if (!cpy_r_r106) goto CPyL140;
+    cpy_r_r107 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonces;
+    if (unlikely(cpy_r_r107 == NULL)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "nonces", 138, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
-    CPy_INCREF_NO_IMM(cpy_r_r106);
-CPyL92: ;
+    CPy_INCREF_NO_IMM(cpy_r_r107);
+CPyL93: ;
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__34 != NULL) {
         CPy_DECREF_NO_IMM(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__34);
     }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__34 = cpy_r_r106;
-    cpy_r_r107 = 1;
-    if (unlikely(!cpy_r_r107)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", -1, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__35 = 0;
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__34 = cpy_r_r107;
     cpy_r_r108 = 1;
-    if (unlikely(!cpy_r_r108)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", -1, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
-CPyL94: ;
-    cpy_r_r109 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__32;
-    if (unlikely(cpy_r_r109 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__32", 138, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
-    CPy_INCREF_NO_IMM(cpy_r_r109);
+    if (!cpy_r_r108) goto CPyL140;
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__35 = 0;
+    cpy_r_r109 = 1;
+    if (!cpy_r_r109) goto CPyL140;
 CPyL95: ;
-    cpy_r_r110 = (CPyPtr)&((PyVarObject *)cpy_r_r109)->ob_size;
-    cpy_r_r111 = *(int64_t *)cpy_r_r110;
-    CPy_DECREF_NO_IMM(cpy_r_r109);
-    cpy_r_r112 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__33;
-    if (unlikely(cpy_r_r112 == -113)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__33", 138, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
-CPyL96: ;
-    cpy_r_r113 = cpy_r_r112 < cpy_r_r111;
-    if (!cpy_r_r113) goto CPyL128;
-    cpy_r_r114 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__34;
-    if (unlikely(cpy_r_r114 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__34", 138, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
-    CPy_INCREF_NO_IMM(cpy_r_r114);
-CPyL98: ;
-    cpy_r_r115 = (CPyPtr)&((PyVarObject *)cpy_r_r114)->ob_size;
-    cpy_r_r116 = *(int64_t *)cpy_r_r115;
-    CPy_DECREF_NO_IMM(cpy_r_r114);
-    cpy_r_r117 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__35;
-    if (unlikely(cpy_r_r117 == -113)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__35", 138, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
-CPyL99: ;
-    cpy_r_r118 = cpy_r_r117 < cpy_r_r116;
-    if (!cpy_r_r118) goto CPyL128;
-    cpy_r_r119 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__32;
-    if (unlikely(cpy_r_r119 == NULL)) {
+    cpy_r_r110 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__32;
+    if (unlikely(cpy_r_r110 == NULL)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__32", 138, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
-    CPy_INCREF_NO_IMM(cpy_r_r119);
-CPyL101: ;
-    cpy_r_r120 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__33;
-    if (unlikely(cpy_r_r120 == -113)) {
+    CPy_INCREF_NO_IMM(cpy_r_r110);
+CPyL96: ;
+    cpy_r_r111 = (CPyPtr)((CPyPtr)cpy_r_r110 + offsetof(PyVarObject, ob_size));
+    cpy_r_r112 = *(int64_t *)cpy_r_r111;
+    CPy_DECREF_NO_IMM(cpy_r_r110);
+    cpy_r_r113 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__33;
+    if (unlikely(cpy_r_r113 == -113)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__33", 138, CPyStatic__nonce___globals);
+        goto CPyL140;
+    }
+CPyL97: ;
+    cpy_r_r114 = cpy_r_r113 < cpy_r_r112;
+    if (!cpy_r_r114) goto CPyL129;
+    cpy_r_r115 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__34;
+    if (unlikely(cpy_r_r115 == NULL)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__34", 138, CPyStatic__nonce___globals);
+        goto CPyL140;
+    }
+    CPy_INCREF_NO_IMM(cpy_r_r115);
+CPyL99: ;
+    cpy_r_r116 = (CPyPtr)((CPyPtr)cpy_r_r115 + offsetof(PyVarObject, ob_size));
+    cpy_r_r117 = *(int64_t *)cpy_r_r116;
+    CPy_DECREF_NO_IMM(cpy_r_r115);
+    cpy_r_r118 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__35;
+    if (unlikely(cpy_r_r118 == -113)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__35", 138, CPyStatic__nonce___globals);
+        goto CPyL140;
+    }
+CPyL100: ;
+    cpy_r_r119 = cpy_r_r118 < cpy_r_r117;
+    if (!cpy_r_r119) goto CPyL129;
+    cpy_r_r120 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__32;
+    if (unlikely(cpy_r_r120 == NULL)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__32", 138, CPyStatic__nonce___globals);
+        goto CPyL140;
+    }
+    CPy_INCREF_NO_IMM(cpy_r_r120);
+CPyL102: ;
+    cpy_r_r121 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__33;
+    if (unlikely(cpy_r_r121 == -113)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__33", 138, CPyStatic__nonce___globals);
         goto CPyL159;
     }
-CPyL102: ;
-    cpy_r_r121 = (CPyPtr)&((PyListObject *)cpy_r_r119)->ob_item;
-    cpy_r_r122 = *(CPyPtr *)cpy_r_r121;
-    cpy_r_r123 = cpy_r_r120 * 8;
-    cpy_r_r124 = cpy_r_r122 + cpy_r_r123;
-    cpy_r_r125 = *(PyObject * *)cpy_r_r124;
-    CPy_INCREF(cpy_r_r125);
-    CPy_DECREF_NO_IMM(cpy_r_r119);
-    if (likely(PyLong_Check(cpy_r_r125)))
-        cpy_r_r126 = CPyTagged_FromObject(cpy_r_r125);
+CPyL103: ;
+    cpy_r_r122 = (CPyPtr)((CPyPtr)cpy_r_r120 + offsetof(PyListObject, ob_item));
+    cpy_r_r123 = *(CPyPtr *)cpy_r_r122;
+    cpy_r_r124 = cpy_r_r121 * 8;
+    cpy_r_r125 = cpy_r_r123 + cpy_r_r124;
+    cpy_r_r126 = *(PyObject * *)cpy_r_r125;
+    CPy_INCREF(cpy_r_r126);
+    CPy_DECREF_NO_IMM(cpy_r_r120);
+    if (likely(PyLong_Check(cpy_r_r126)))
+        cpy_r_r127 = CPyTagged_FromObject(cpy_r_r126);
     else {
-        CPy_TypeError("int", cpy_r_r125); cpy_r_r126 = CPY_INT_TAG;
+        CPy_TypeError("int", cpy_r_r126); cpy_r_r127 = CPY_INT_TAG;
     }
-    CPy_DECREF(cpy_r_r125);
-    if (unlikely(cpy_r_r126 == CPY_INT_TAG)) {
+    CPy_DECREF(cpy_r_r126);
+    if (unlikely(cpy_r_r127 == CPY_INT_TAG)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__block != CPY_INT_TAG) {
         CPyTagged_DECREF(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__block);
     }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__block = cpy_r_r126;
-    cpy_r_r127 = 1;
-    if (unlikely(!cpy_r_r127)) {
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__block = cpy_r_r127;
+    cpy_r_r128 = 1;
+    if (unlikely(!cpy_r_r128)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
-    cpy_r_r128 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__34;
-    if (unlikely(cpy_r_r128 == NULL)) {
+    cpy_r_r129 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__34;
+    if (unlikely(cpy_r_r129 == NULL)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__34", 138, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
-    CPy_INCREF_NO_IMM(cpy_r_r128);
-CPyL105: ;
-    cpy_r_r129 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__35;
-    if (unlikely(cpy_r_r129 == -113)) {
+    CPy_INCREF_NO_IMM(cpy_r_r129);
+CPyL106: ;
+    cpy_r_r130 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__35;
+    if (unlikely(cpy_r_r130 == -113)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__35", 138, CPyStatic__nonce___globals);
         goto CPyL160;
     }
-CPyL106: ;
-    cpy_r_r130 = (CPyPtr)&((PyListObject *)cpy_r_r128)->ob_item;
-    cpy_r_r131 = *(CPyPtr *)cpy_r_r130;
-    cpy_r_r132 = cpy_r_r129 * 8;
-    cpy_r_r133 = cpy_r_r131 + cpy_r_r132;
-    cpy_r_r134 = *(PyObject * *)cpy_r_r133;
-    CPy_INCREF(cpy_r_r134);
-    CPy_DECREF_NO_IMM(cpy_r_r128);
-    if (likely(PyLong_Check(cpy_r_r134)))
-        cpy_r_r135 = CPyTagged_FromObject(cpy_r_r134);
+CPyL107: ;
+    cpy_r_r131 = (CPyPtr)((CPyPtr)cpy_r_r129 + offsetof(PyListObject, ob_item));
+    cpy_r_r132 = *(CPyPtr *)cpy_r_r131;
+    cpy_r_r133 = cpy_r_r130 * 8;
+    cpy_r_r134 = cpy_r_r132 + cpy_r_r133;
+    cpy_r_r135 = *(PyObject * *)cpy_r_r134;
+    CPy_INCREF(cpy_r_r135);
+    CPy_DECREF_NO_IMM(cpy_r_r129);
+    if (likely(PyLong_Check(cpy_r_r135)))
+        cpy_r_r136 = CPyTagged_FromObject(cpy_r_r135);
     else {
-        CPy_TypeError("int", cpy_r_r134); cpy_r_r135 = CPY_INT_TAG;
+        CPy_TypeError("int", cpy_r_r135); cpy_r_r136 = CPY_INT_TAG;
     }
-    CPy_DECREF(cpy_r_r134);
-    if (unlikely(cpy_r_r135 == CPY_INT_TAG)) {
+    CPy_DECREF(cpy_r_r135);
+    if (unlikely(cpy_r_r136 == CPY_INT_TAG)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__n != CPY_INT_TAG) {
         CPyTagged_DECREF(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__n);
     }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__n = cpy_r_r135;
-    cpy_r_r136 = 1;
-    if (unlikely(!cpy_r_r136)) {
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__n = cpy_r_r136;
+    cpy_r_r137 = 1;
+    if (unlikely(!cpy_r_r137)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
-    cpy_r_r137 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__n;
-    if (unlikely(cpy_r_r137 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "n", 139, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
-    CPyTagged_INCREF(cpy_r_r137);
-CPyL109: ;
-    cpy_r_r138 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonce;
+    cpy_r_r138 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__n;
     if (unlikely(cpy_r_r138 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "nonce", 139, CPyStatic__nonce___globals);
-        goto CPyL161;
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "n", 139, CPyStatic__nonce___globals);
+        goto CPyL140;
     }
     CPyTagged_INCREF(cpy_r_r138);
 CPyL110: ;
-    cpy_r_r139 = cpy_r_r137 & 1;
-    cpy_r_r140 = cpy_r_r139 != 0;
-    if (cpy_r_r140) goto CPyL112;
-    cpy_r_r141 = cpy_r_r138 & 1;
-    cpy_r_r142 = cpy_r_r141 != 0;
-    if (!cpy_r_r142) goto CPyL113;
-CPyL112: ;
-    cpy_r_r143 = CPyTagged_IsLt_(cpy_r_r137, cpy_r_r138);
-    cpy_r_r144 = cpy_r_r143 ^ 1;
-    cpy_r_r145 = cpy_r_r144;
-    goto CPyL114;
-CPyL113: ;
-    cpy_r_r146 = (Py_ssize_t)cpy_r_r137 >= (Py_ssize_t)cpy_r_r138;
-    cpy_r_r145 = cpy_r_r146;
-CPyL114: ;
-    CPyTagged_DECREF(cpy_r_r137);
-    CPyTagged_DECREF(cpy_r_r138);
-    if (!cpy_r_r145) goto CPyL122;
-    cpy_r_r147 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
-    if (unlikely(cpy_r_r147 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "lo", 140, CPyStatic__nonce___globals);
-        goto CPyL139;
+    cpy_r_r139 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__nonce;
+    if (unlikely(cpy_r_r139 == CPY_INT_TAG)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "nonce", 139, CPyStatic__nonce___globals);
+        goto CPyL161;
     }
-    CPyTagged_INCREF(cpy_r_r147);
-CPyL116: ;
-    cpy_r_r148 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__block;
+    CPyTagged_INCREF(cpy_r_r139);
+CPyL111: ;
+    cpy_r_r140 = cpy_r_r138 & 1;
+    cpy_r_r141 = cpy_r_r140 != 0;
+    if (cpy_r_r141) goto CPyL113;
+    cpy_r_r142 = cpy_r_r139 & 1;
+    cpy_r_r143 = cpy_r_r142 != 0;
+    if (!cpy_r_r143) goto CPyL114;
+CPyL113: ;
+    cpy_r_r144 = CPyTagged_IsLt_(cpy_r_r138, cpy_r_r139);
+    cpy_r_r145 = cpy_r_r144 ^ 1;
+    cpy_r_r146 = cpy_r_r145;
+    goto CPyL115;
+CPyL114: ;
+    cpy_r_r147 = (Py_ssize_t)cpy_r_r138 >= (Py_ssize_t)cpy_r_r139;
+    cpy_r_r146 = cpy_r_r147;
+CPyL115: ;
+    CPyTagged_DECREF(cpy_r_r138);
+    CPyTagged_DECREF(cpy_r_r139);
+    if (!cpy_r_r146) goto CPyL123;
+    cpy_r_r148 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r148 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "block", 140, CPyStatic__nonce___globals);
-        goto CPyL162;
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "lo", 140, CPyStatic__nonce___globals);
+        goto CPyL140;
     }
     CPyTagged_INCREF(cpy_r_r148);
 CPyL117: ;
-    cpy_r_r149.f0 = cpy_r_r147;
-    cpy_r_r149.f1 = cpy_r_r148;
-    cpy_r_r150 = PyTuple_New(2);
-    if (unlikely(cpy_r_r150 == NULL))
-        CPyError_OutOfMemory();
-    PyObject *__tmp24 = CPyTagged_StealAsObject(cpy_r_r149.f0);
-    PyTuple_SET_ITEM(cpy_r_r150, 0, __tmp24);
-    PyObject *__tmp25 = CPyTagged_StealAsObject(cpy_r_r149.f1);
-    PyTuple_SET_ITEM(cpy_r_r150, 1, __tmp25);
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = -1;
-    if (cpy_r_stop_iter_ptr != NULL) goto CPyL121;
-    CPyGen_SetStopIterationValue(cpy_r_r150);
-    CPy_DECREF(cpy_r_r150);
-    if (!0) goto CPyL139;
-    CPy_Unreachable();
-CPyL121: ;
-    *(PyObject * *)cpy_r_stop_iter_ptr = cpy_r_r150;
-    return 0;
-CPyL122: ;
-    cpy_r_r152 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__block;
-    if (unlikely(cpy_r_r152 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "block", 141, CPyStatic__nonce___globals);
-        goto CPyL139;
+    cpy_r_r149 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__block;
+    if (unlikely(cpy_r_r149 == CPY_INT_TAG)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "block", 140, CPyStatic__nonce___globals);
+        goto CPyL162;
     }
-    CPyTagged_INCREF(cpy_r_r152);
+    CPyTagged_INCREF(cpy_r_r149);
+CPyL118: ;
+    cpy_r_r150.f0 = cpy_r_r148;
+    cpy_r_r150.f1 = cpy_r_r149;
+    cpy_r_r151 = PyTuple_New(2);
+    if (unlikely(cpy_r_r151 == NULL))
+        CPyError_OutOfMemory();
+    PyObject *__tmp24 = CPyTagged_StealAsObject(cpy_r_r150.f0);
+    PyTuple_SET_ITEM(cpy_r_r151, 0, __tmp24);
+    PyObject *__tmp25 = CPyTagged_StealAsObject(cpy_r_r150.f1);
+    PyTuple_SET_ITEM(cpy_r_r151, 1, __tmp25);
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = -1;
+    if (cpy_r_stop_iter_ptr != NULL) goto CPyL122;
+    CPyGen_SetStopIterationValue(cpy_r_r151);
+    CPy_DECREF(cpy_r_r151);
+    if (!0) goto CPyL140;
+    CPy_Unreachable();
+CPyL122: ;
+    *(PyObject * *)cpy_r_stop_iter_ptr = cpy_r_r151;
+    return 0;
 CPyL123: ;
+    cpy_r_r153 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__block;
+    if (unlikely(cpy_r_r153 == CPY_INT_TAG)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "block", 141, CPyStatic__nonce___globals);
+        goto CPyL140;
+    }
+    CPyTagged_INCREF(cpy_r_r153);
+CPyL124: ;
     if (((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo != CPY_INT_TAG) {
         CPyTagged_DECREF(((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo);
     }
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo = cpy_r_r152;
-    cpy_r_r153 = 1;
-    if (unlikely(!cpy_r_r153)) {
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo = cpy_r_r153;
+    cpy_r_r154 = 1;
+    if (unlikely(!cpy_r_r154)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
-    cpy_r_r154 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__33;
-    if (unlikely(cpy_r_r154 == -113)) {
+    cpy_r_r155 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__33;
+    if (unlikely(cpy_r_r155 == -113)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__33", 138, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
-CPyL125: ;
-    cpy_r_r155 = cpy_r_r154 + 1;
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__33 = cpy_r_r155;
-    cpy_r_r156 = 1;
-    if (unlikely(!cpy_r_r156)) {
+CPyL126: ;
+    cpy_r_r156 = cpy_r_r155 + 1;
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__33 = cpy_r_r156;
+    cpy_r_r157 = 1;
+    if (unlikely(!cpy_r_r157)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
-    cpy_r_r157 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__35;
-    if (unlikely(cpy_r_r157 == -113)) {
+    cpy_r_r158 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__35;
+    if (unlikely(cpy_r_r158 == -113)) {
         CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "__mypyc_temp__35", 138, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
-CPyL127: ;
-    cpy_r_r158 = cpy_r_r157 + 1;
-    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__35 = cpy_r_r158;
-    cpy_r_r159 = 1;
-    if (unlikely(!cpy_r_r159)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
-    } else
-        goto CPyL94;
 CPyL128: ;
-    cpy_r_r160 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
-    if (unlikely(cpy_r_r160 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "lo", 142, CPyStatic__nonce___globals);
-        goto CPyL139;
-    }
-    CPyTagged_INCREF(cpy_r_r160);
+    cpy_r_r159 = cpy_r_r158 + 1;
+    ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__35 = cpy_r_r159;
+    cpy_r_r160 = 1;
+    if (unlikely(!cpy_r_r160)) {
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
+        goto CPyL140;
+    } else
+        goto CPyL95;
 CPyL129: ;
-    cpy_r_r161 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__hi;
+    cpy_r_r161 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__lo;
     if (unlikely(cpy_r_r161 == CPY_INT_TAG)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "hi", 142, CPyStatic__nonce___globals);
-        goto CPyL163;
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "lo", 142, CPyStatic__nonce___globals);
+        goto CPyL140;
     }
     CPyTagged_INCREF(cpy_r_r161);
 CPyL130: ;
-    cpy_r_r162.f0 = cpy_r_r160;
-    cpy_r_r162.f1 = cpy_r_r161;
-    cpy_r_r163 = PyTuple_New(2);
-    if (unlikely(cpy_r_r163 == NULL))
+    cpy_r_r162 = ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_generator_attribute__hi;
+    if (unlikely(cpy_r_r162 == CPY_INT_TAG)) {
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "_get_area", "_get_area_gen", "hi", 142, CPyStatic__nonce___globals);
+        goto CPyL163;
+    }
+    CPyTagged_INCREF(cpy_r_r162);
+CPyL131: ;
+    cpy_r_r163.f0 = cpy_r_r161;
+    cpy_r_r163.f1 = cpy_r_r162;
+    cpy_r_r164 = PyTuple_New(2);
+    if (unlikely(cpy_r_r164 == NULL))
         CPyError_OutOfMemory();
-    PyObject *__tmp26 = CPyTagged_StealAsObject(cpy_r_r162.f0);
-    PyTuple_SET_ITEM(cpy_r_r163, 0, __tmp26);
-    PyObject *__tmp27 = CPyTagged_StealAsObject(cpy_r_r162.f1);
-    PyTuple_SET_ITEM(cpy_r_r163, 1, __tmp27);
+    PyObject *__tmp26 = CPyTagged_StealAsObject(cpy_r_r163.f0);
+    PyTuple_SET_ITEM(cpy_r_r164, 0, __tmp26);
+    PyObject *__tmp27 = CPyTagged_StealAsObject(cpy_r_r163.f1);
+    PyTuple_SET_ITEM(cpy_r_r164, 1, __tmp27);
     ((eth_portfolio____loaders____nonce____get_area_genObject *)cpy_r___mypyc_self__)->___mypyc_next_label__ = -1;
-    if (cpy_r_stop_iter_ptr != NULL) goto CPyL134;
-    CPyGen_SetStopIterationValue(cpy_r_r163);
-    CPy_DECREF(cpy_r_r163);
-    if (!0) goto CPyL139;
+    if (cpy_r_stop_iter_ptr != NULL) goto CPyL135;
+    CPyGen_SetStopIterationValue(cpy_r_r164);
+    CPy_DECREF(cpy_r_r164);
+    if (!0) goto CPyL140;
     CPy_Unreachable();
-CPyL134: ;
-    *(PyObject * *)cpy_r_stop_iter_ptr = cpy_r_r163;
-    return 0;
 CPyL135: ;
-    cpy_r_r165 = cpy_r_r2 == 0;
-    if (cpy_r_r165) goto CPyL164;
-    cpy_r_r166 = cpy_r_r2 == 1;
-    if (cpy_r_r166) {
-        goto CPyL66;
+    *(PyObject * *)cpy_r_stop_iter_ptr = cpy_r_r164;
+    return 0;
+CPyL136: ;
+    cpy_r_r166 = cpy_r_r2 == 0;
+    if (cpy_r_r166) goto CPyL164;
+    cpy_r_r167 = cpy_r_r2 == 1;
+    if (cpy_r_r167) {
+        goto CPyL67;
     } else
         goto CPyL165;
-CPyL137: ;
+CPyL138: ;
     PyErr_SetNone(PyExc_StopIteration);
-    cpy_r_r167 = 0;
-    if (unlikely(!cpy_r_r167)) {
+    cpy_r_r168 = 0;
+    if (unlikely(!cpy_r_r168)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL139;
+        goto CPyL140;
     }
     CPy_Unreachable();
-CPyL139: ;
-    cpy_r_r168 = NULL;
-    return cpy_r_r168;
 CPyL140: ;
-    CPyTagged_DecRef(cpy_r_r8);
-    goto CPyL139;
+    cpy_r_r169 = NULL;
+    return cpy_r_r169;
 CPyL141: ;
-    CPyTagged_DecRef(cpy_r_r20);
-    goto CPyL139;
+    CPyTagged_DecRef(cpy_r_r8);
+    goto CPyL140;
 CPyL142: ;
-    CPyTagged_DecRef(cpy_r_r29);
-    goto CPyL139;
+    CPyTagged_DecRef(cpy_r_r20);
+    goto CPyL140;
 CPyL143: ;
-    CPyTagged_DecRef(cpy_r_r29);
-    CPyTagged_DecRef(cpy_r_r30);
-    goto CPyL139;
+    CPyTagged_DecRef(cpy_r_r31);
+    goto CPyL140;
 CPyL144: ;
-    CPyTagged_DecRef(cpy_r_r33);
-    goto CPyL139;
+    CPyTagged_DecRef(cpy_r_r31);
+    CPyTagged_DecRef(cpy_r_r32);
+    goto CPyL140;
 CPyL145: ;
-    CPyTagged_DecRef(cpy_r_r39);
-    goto CPyL139;
+    CPyTagged_DecRef(cpy_r_r35);
+    goto CPyL140;
 CPyL146: ;
-    CPy_DecRef(cpy_r_r44);
-    goto CPyL139;
+    CPy_DecRef(cpy_r_r45);
+    goto CPyL140;
 CPyL147: ;
-    CPy_DecRef(cpy_r_r47);
-    goto CPyL139;
+    CPy_DECREF_NO_IMM(cpy_r_r48);
+    goto CPyL140;
 CPyL148: ;
-    CPy_DecRef(cpy_r_r47);
-    CPy_DecRef(cpy_r_r55);
-    goto CPyL139;
+    CPy_DecRef(cpy_r_r48);
+    CPy_DecRef(cpy_r_r56);
+    goto CPyL140;
 CPyL149: ;
-    CPy_DecRef(cpy_r_r47);
-    CPy_DecRef(cpy_r_r65);
-    goto CPyL139;
+    CPy_DecRef(cpy_r_r48);
+    CPy_DecRef(cpy_r_r66);
+    goto CPyL140;
 CPyL150: ;
-    CPy_DecRef(cpy_r_r71);
-    goto CPyL55;
+    CPy_DecRef(cpy_r_r72);
+    goto CPyL56;
 CPyL151: ;
-    CPy_DecRef(cpy_r_r71);
-    goto CPyL139;
+    CPy_DecRef(cpy_r_r72);
+    goto CPyL140;
 CPyL152: ;
-    CPy_DecRef(cpy_r_r82);
-    goto CPyL139;
+    CPy_DecRef(cpy_r_r83);
+    goto CPyL140;
 CPyL153: ;
     CPy_XDECREF(cpy_r_r1);
-    goto CPyL69;
+    goto CPyL70;
 CPyL154: ;
     CPy_XDECREF(cpy_r_r1);
-    goto CPyL68;
+    goto CPyL69;
 CPyL155: ;
     CPy_XDecRef(cpy_r_r1);
-    goto CPyL78;
+    goto CPyL79;
 CPyL156: ;
-    CPy_DecRef(cpy_r_r85);
-    goto CPyL78;
+    CPy_DecRef(cpy_r_r86);
+    goto CPyL79;
 CPyL157: ;
-    CPy_DecRef(cpy_r_r82);
-    goto CPyL78;
+    CPy_DecRef(cpy_r_r83);
+    goto CPyL79;
 CPyL158: ;
     CPy_DecRef(cpy_r_arg);
-    goto CPyL139;
+    goto CPyL140;
 CPyL159: ;
-    CPy_DecRef(cpy_r_r119);
-    goto CPyL139;
+    CPy_DecRef(cpy_r_r120);
+    goto CPyL140;
 CPyL160: ;
-    CPy_DecRef(cpy_r_r128);
-    goto CPyL139;
+    CPy_DecRef(cpy_r_r129);
+    goto CPyL140;
 CPyL161: ;
-    CPyTagged_DecRef(cpy_r_r137);
-    goto CPyL139;
+    CPyTagged_DecRef(cpy_r_r138);
+    goto CPyL140;
 CPyL162: ;
-    CPyTagged_DecRef(cpy_r_r147);
-    goto CPyL139;
+    CPyTagged_DecRef(cpy_r_r148);
+    goto CPyL140;
 CPyL163: ;
-    CPyTagged_DecRef(cpy_r_r160);
-    goto CPyL139;
+    CPyTagged_DecRef(cpy_r_r161);
+    goto CPyL140;
 CPyL164: ;
     CPy_XDECREF(cpy_r_r1);
     goto CPyL1;
 CPyL165: ;
     CPy_XDECREF(cpy_r_r1);
-    goto CPyL137;
+    goto CPyL138;
 }
-
+    
 PyObject *CPyDef__nonce____get_area_gen_____next__(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -7914,28 +7905,28 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy__nonce____get_area_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__next__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce____get_area_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":__next__", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce____get_area_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce._get_area_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce____get_area_gen_____next__(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__next__", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce____get_area_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce._get_area_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce____get_area_gen_____next__(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__next__", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce____get_area_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -7948,56 +7939,56 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy__nonce____get_area_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"arg", 0};
-    static CPyArg_Parser parser = {"O:send", kwlist, 0};
-    PyObject *obj_arg;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
+    
+    PyObject *CPyPy__nonce____get_area_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {"arg", 0};
+        static CPyArg_Parser parser = {"O:send", kwlist, 0};
+        PyObject *obj_arg;
+        if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce____get_area_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce._get_area_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *arg_arg = obj_arg;
+        PyObject *retval = CPyDef__nonce____get_area_gen___send(arg___mypyc_self__, arg_arg);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "send", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce____get_area_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce._get_area_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_arg = obj_arg;
-    PyObject *retval = CPyDef__nonce____get_area_gen___send(arg___mypyc_self__, arg_arg);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "send", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce____get_area_gen_____iter__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy__nonce____get_area_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__iter__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce____get_area_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":__iter__", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce____get_area_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce._get_area_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce____get_area_gen_____iter__(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__iter__", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce____get_area_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce._get_area_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce____get_area_gen_____iter__(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__iter__", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce____get_area_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -8026,44 +8017,44 @@ CPyL8: ;
     CPy_INCREF(cpy_r_traceback);
     goto CPyL4;
 }
-
-PyObject *CPyPy__nonce____get_area_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"type", "value", "traceback", 0};
-    static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
-    PyObject *obj_type;
-    PyObject *obj_value = NULL;
-    PyObject *obj_traceback = NULL;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
+    
+    PyObject *CPyPy__nonce____get_area_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {"type", "value", "traceback", 0};
+        static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
+        PyObject *obj_type;
+        PyObject *obj_value = NULL;
+        PyObject *obj_traceback = NULL;
+        if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce____get_area_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce._get_area_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *arg_type = obj_type;
+        PyObject *arg_value;
+        if (obj_value == NULL) {
+            arg_value = NULL;
+        } else {
+            arg_value = obj_value; 
+        }
+        PyObject *arg_traceback;
+        if (obj_traceback == NULL) {
+            arg_traceback = NULL;
+        } else {
+            arg_traceback = obj_traceback; 
+        }
+        PyObject *retval = CPyDef__nonce____get_area_gen___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "throw", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce____get_area_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce._get_area_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_type = obj_type;
-    PyObject *arg_value;
-    if (obj_value == NULL) {
-        arg_value = NULL;
-    } else {
-        arg_value = obj_value; 
-    }
-    PyObject *arg_traceback;
-    if (obj_traceback == NULL) {
-        arg_traceback = NULL;
-    } else {
-        arg_traceback = obj_traceback; 
-    }
-    PyObject *retval = CPyDef__nonce____get_area_gen___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "throw", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce____get_area_gen___close(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -8142,54 +8133,54 @@ CPyL13: ;
     CPy_DECREF(cpy_r_r6.f2);
     goto CPyL6;
 }
-
-PyObject *CPyPy__nonce____get_area_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":close", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce____get_area_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":close", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce____get_area_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce._get_area_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce____get_area_gen___close(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "close", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce____get_area_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce._get_area_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce____get_area_gen___close(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "close", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce____get_area_gen_____await__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy__nonce____get_area_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__await__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce____get_area_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":__await__", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce____get_area_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce._get_area_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce____get_area_gen_____await__(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__await__", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce____get_area_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce._get_area_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce____get_area_gen_____await__(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__await__", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce____get_area(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, CPyTagged cpy_r_lo, CPyTagged cpy_r_hi, CPyTagged cpy_r_range_size) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
@@ -8263,56 +8254,56 @@ CPyL8: ;
     CPy_DecRef(cpy_r_r0);
     goto CPyL7;
 }
-
-PyObject *CPyPy__nonce____get_area(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"address", "nonce", "lo", "hi", "range_size", 0};
-    static CPyArg_Parser parser = {"OOOOO:_get_area", kwlist, 0};
-    PyObject *obj_address;
-    PyObject *obj_nonce;
-    PyObject *obj_lo;
-    PyObject *obj_hi;
-    PyObject *obj_range_size;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_address, &obj_nonce, &obj_lo, &obj_hi, &obj_range_size)) {
+    
+    PyObject *CPyPy__nonce____get_area(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        static const char * const kwlist[] = {"address", "nonce", "lo", "hi", "range_size", 0};
+        static CPyArg_Parser parser = {"OOOOO:_get_area", kwlist, 0};
+        PyObject *obj_address;
+        PyObject *obj_nonce;
+        PyObject *obj_lo;
+        PyObject *obj_hi;
+        PyObject *obj_range_size;
+        if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_address, &obj_nonce, &obj_lo, &obj_hi, &obj_range_size)) {
+            return NULL;
+        }
+        PyObject *arg_address;
+        if (likely(PyUnicode_Check(obj_address)))
+            arg_address = obj_address;
+        else {
+            CPy_TypeError("str", obj_address); 
+            goto fail;
+        }
+        CPyTagged arg_nonce;
+        if (likely(PyLong_Check(obj_nonce)))
+            arg_nonce = CPyTagged_BorrowFromObject(obj_nonce);
+        else {
+            CPy_TypeError("int", obj_nonce); goto fail;
+        }
+        CPyTagged arg_lo;
+        if (likely(PyLong_Check(obj_lo)))
+            arg_lo = CPyTagged_BorrowFromObject(obj_lo);
+        else {
+            CPy_TypeError("int", obj_lo); goto fail;
+        }
+        CPyTagged arg_hi;
+        if (likely(PyLong_Check(obj_hi)))
+            arg_hi = CPyTagged_BorrowFromObject(obj_hi);
+        else {
+            CPy_TypeError("int", obj_hi); goto fail;
+        }
+        CPyTagged arg_range_size;
+        if (likely(PyLong_Check(obj_range_size)))
+            arg_range_size = CPyTagged_BorrowFromObject(obj_range_size);
+        else {
+            CPy_TypeError("int", obj_range_size); goto fail;
+        }
+        PyObject *retval = CPyDef__nonce____get_area(arg_address, arg_nonce, arg_lo, arg_hi, arg_range_size);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg_address;
-    if (likely(PyUnicode_Check(obj_address)))
-        arg_address = obj_address;
-    else {
-        CPy_TypeError("str", obj_address); 
-        goto fail;
-    }
-    CPyTagged arg_nonce;
-    if (likely(PyLong_Check(obj_nonce)))
-        arg_nonce = CPyTagged_BorrowFromObject(obj_nonce);
-    else {
-        CPy_TypeError("int", obj_nonce); goto fail;
-    }
-    CPyTagged arg_lo;
-    if (likely(PyLong_Check(obj_lo)))
-        arg_lo = CPyTagged_BorrowFromObject(obj_lo);
-    else {
-        CPy_TypeError("int", obj_lo); goto fail;
-    }
-    CPyTagged arg_hi;
-    if (likely(PyLong_Check(obj_hi)))
-        arg_hi = CPyTagged_BorrowFromObject(obj_hi);
-    else {
-        CPy_TypeError("int", obj_hi); goto fail;
-    }
-    CPyTagged arg_range_size;
-    if (likely(PyLong_Check(obj_range_size)))
-        arg_range_size = CPyTagged_BorrowFromObject(obj_range_size);
-    else {
-        CPy_TypeError("int", obj_range_size); goto fail;
-    }
-    PyObject *retval = CPyDef__nonce____get_area(arg_address, arg_nonce, arg_lo, arg_hi, arg_range_size);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_area", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 char CPyDef__nonce____update_nonces(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, CPyTagged cpy_r_block) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
@@ -8433,47 +8424,47 @@ CPyL19: ;
     cpy_r_r22 = 2;
     return cpy_r_r22;
 }
-
-PyObject *CPyPy__nonce____update_nonces(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"address", "nonce", "block", 0};
-    static CPyArg_Parser parser = {"OOO:_update_nonces", kwlist, 0};
-    PyObject *obj_address;
-    PyObject *obj_nonce;
-    PyObject *obj_block;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_address, &obj_nonce, &obj_block)) {
-        return NULL;
-    }
-    PyObject *arg_address;
-    if (likely(PyUnicode_Check(obj_address)))
-        arg_address = obj_address;
-    else {
-        CPy_TypeError("str", obj_address); 
-        goto fail;
-    }
-    CPyTagged arg_nonce;
-    if (likely(PyLong_Check(obj_nonce)))
-        arg_nonce = CPyTagged_BorrowFromObject(obj_nonce);
-    else {
-        CPy_TypeError("int", obj_nonce); goto fail;
-    }
-    CPyTagged arg_block;
-    if (likely(PyLong_Check(obj_block)))
-        arg_block = CPyTagged_BorrowFromObject(obj_block);
-    else {
-        CPy_TypeError("int", obj_block); goto fail;
-    }
-    char retval = CPyDef__nonce____update_nonces(arg_address, arg_nonce, arg_block);
-    if (retval == 2) {
-        return NULL;
-    }
-    PyObject *retbox = Py_None;
-    CPy_INCREF(retbox);
-    return retbox;
+    
+    PyObject *CPyPy__nonce____update_nonces(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        static const char * const kwlist[] = {"address", "nonce", "block", 0};
+        static CPyArg_Parser parser = {"OOO:_update_nonces", kwlist, 0};
+        PyObject *obj_address;
+        PyObject *obj_nonce;
+        PyObject *obj_block;
+        if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_address, &obj_nonce, &obj_block)) {
+            return NULL;
+        }
+        PyObject *arg_address;
+        if (likely(PyUnicode_Check(obj_address)))
+            arg_address = obj_address;
+        else {
+            CPy_TypeError("str", obj_address); 
+            goto fail;
+        }
+        CPyTagged arg_nonce;
+        if (likely(PyLong_Check(obj_nonce)))
+            arg_nonce = CPyTagged_BorrowFromObject(obj_nonce);
+        else {
+            CPy_TypeError("int", obj_nonce); goto fail;
+        }
+        CPyTagged arg_block;
+        if (likely(PyLong_Check(obj_block)))
+            arg_block = CPyTagged_BorrowFromObject(obj_block);
+        else {
+            CPy_TypeError("int", obj_block); goto fail;
+        }
+        char retval = CPyDef__nonce____update_nonces(arg_address, arg_nonce, arg_block);
+        if (retval == 2) {
+            return NULL;
+        }
+        PyObject *retbox = Py_None;
+        CPy_INCREF(retbox);
+        return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_update_nonces", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_update_nonces", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
+        return NULL;
+    }
+    
 CPyTagged CPyDef__nonce____get_num_chunks(CPyTagged cpy_r_range_size) {
     int64_t cpy_r_r0;
     char cpy_r_r1;
@@ -8737,31 +8728,31 @@ CPyL49: ;
 CPyL50: ;
     return 4;
 }
-
-PyObject *CPyPy__nonce____get_num_chunks(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"range_size", 0};
-    static CPyArg_Parser parser = {"O:_get_num_chunks", kwlist, 0};
-    PyObject *obj_range_size;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_range_size)) {
-        return NULL;
-    }
-    CPyTagged arg_range_size;
-    if (likely(PyLong_Check(obj_range_size)))
-        arg_range_size = CPyTagged_BorrowFromObject(obj_range_size);
-    else {
-        CPy_TypeError("int", obj_range_size); goto fail;
-    }
-    CPyTagged retval = CPyDef__nonce____get_num_chunks(arg_range_size);
-    if (retval == CPY_INT_TAG) {
-        return NULL;
-    }
-    PyObject *retbox = CPyTagged_StealAsObject(retval);
-    return retbox;
+    
+    PyObject *CPyPy__nonce____get_num_chunks(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        static const char * const kwlist[] = {"range_size", 0};
+        static CPyArg_Parser parser = {"O:_get_num_chunks", kwlist, 0};
+        PyObject *obj_range_size;
+        if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_range_size)) {
+            return NULL;
+        }
+        CPyTagged arg_range_size;
+        if (likely(PyLong_Check(obj_range_size)))
+            arg_range_size = CPyTagged_BorrowFromObject(obj_range_size);
+        else {
+            CPy_TypeError("int", obj_range_size); goto fail;
+        }
+        CPyTagged retval = CPyDef__nonce____get_num_chunks(arg_range_size);
+        if (retval == CPY_INT_TAG) {
+            return NULL;
+        }
+        PyObject *retbox = CPyTagged_StealAsObject(retval);
+        return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_num_chunks", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "_get_num_chunks", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
+        return NULL;
+    }
+    
 char CPyDef__nonce___BlockCache_____mypyc_defaults_setup(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -8782,33 +8773,33 @@ CPyL3: ;
     cpy_r_r4 = 2;
     return cpy_r_r4;
 }
-
-PyObject *CPyPy__nonce___BlockCache_____mypyc_defaults_setup(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__mypyc_defaults_setup", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___BlockCache))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.BlockCache", obj___mypyc_self__); 
-        goto fail;
-    }
-    char retval = CPyDef__nonce___BlockCache_____mypyc_defaults_setup(arg___mypyc_self__);
-    if (retval == 2) {
-        return NULL;
-    }
-    PyObject *retbox = retval ? Py_True : Py_False;
-    CPy_INCREF(retbox);
-    return retbox;
+    
+    PyObject *CPyPy__nonce___BlockCache_____mypyc_defaults_setup(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":__mypyc_defaults_setup", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___BlockCache))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.BlockCache", obj___mypyc_self__); 
+            goto fail;
+        }
+        char retval = CPyDef__nonce___BlockCache_____mypyc_defaults_setup(arg___mypyc_self__);
+        if (retval == 2) {
+            return NULL;
+        }
+        PyObject *retbox = retval ? Py_True : Py_False;
+        CPy_INCREF(retbox);
+        return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__mypyc_defaults_setup", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__mypyc_defaults_setup", -1, CPyStatic__nonce___globals);
+        return NULL;
+    }
+    
 PyObject *CPyDef__nonce___get_block_number_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -9174,10 +9165,7 @@ CPyL24: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__36 = cpy_r_r37;
     cpy_r_r38 = 1;
-    if (unlikely(!cpy_r_r38)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", -1, CPyStatic__nonce___globals);
-        goto CPyL220;
-    }
+    if (!cpy_r_r38) goto CPyL220;
     cpy_r_r39 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '__aenter__' */
     cpy_r_r40 = CPyObject_GetAttr(cpy_r_r35, cpy_r_r39);
     CPy_DECREF(cpy_r_r35);
@@ -9199,16 +9187,10 @@ CPyL24: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__37 = cpy_r_r33;
     cpy_r_r44 = 1;
-    if (unlikely(!cpy_r_r44)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", -1, CPyStatic__nonce___globals);
-        goto CPyL221;
-    }
+    if (!cpy_r_r44) goto CPyL221;
     ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__38 = 1;
     cpy_r_r45 = 1;
-    if (unlikely(!cpy_r_r45)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", -1, CPyStatic__nonce___globals);
-        goto CPyL221;
-    }
+    if (!cpy_r_r45) goto CPyL221;
     cpy_r_r46 = CPy_GetCoro(cpy_r_r43);
     CPy_DECREF(cpy_r_r43);
     if (unlikely(cpy_r_r46 == NULL)) {
@@ -9220,13 +9202,10 @@ CPyL24: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__39 = cpy_r_r46;
     cpy_r_r47 = 1;
-    if (unlikely(!cpy_r_r47)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", -1, CPyStatic__nonce___globals);
-        goto CPyL219;
-    }
+    if (!cpy_r_r47) goto CPyL219;
     cpy_r_r48 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__39;
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__39", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__39", 187, CPyStatic__nonce___globals);
         goto CPyL219;
     }
     CPy_INCREF(cpy_r_r48);
@@ -9281,14 +9260,11 @@ CPyL42: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__40 = cpy_r_r58;
     cpy_r_r59 = 1;
-    if (unlikely(!cpy_r_r59)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", -1, CPyStatic__nonce___globals);
-        goto CPyL224;
-    }
+    if (!cpy_r_r59) goto CPyL224;
     cpy_r_r60 = (PyObject **)&cpy_r_r1;
     cpy_r_r61 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__39;
     if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__39", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__39", 187, CPyStatic__nonce___globals);
         goto CPyL224;
     }
     CPy_INCREF(cpy_r_r61);
@@ -9303,7 +9279,7 @@ CPyL44: ;
     cpy_r_r54 = cpy_r_r1;
     cpy_r_r63 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__40;
     if (unlikely(cpy_r_r63.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__40", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__40", 187, CPyStatic__nonce___globals);
         goto CPyL225;
     }
     CPy_INCREF(cpy_r_r63.f0);
@@ -9320,7 +9296,7 @@ CPyL48: ;
     CPy_DecRef(cpy_r_r51);
     cpy_r_r64 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__40;
     if (unlikely(cpy_r_r64.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__40", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__40", 187, CPyStatic__nonce___globals);
         goto CPyL50;
     }
     CPy_INCREF(cpy_r_r64.f0);
@@ -9335,7 +9311,7 @@ CPyL49: ;
 CPyL50: ;
     cpy_r_r65 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__40;
     if (unlikely(cpy_r_r65.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__40", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__40", 187, CPyStatic__nonce___globals);
         goto CPyL219;
     }
     CPy_INCREF(cpy_r_r65.f0);
@@ -9352,7 +9328,7 @@ CPyL51: ;
 CPyL53: ;
     cpy_r_r67 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__39;
     if (unlikely(cpy_r_r67 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__39", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__39", 187, CPyStatic__nonce___globals);
         goto CPyL226;
     }
     CPy_INCREF(cpy_r_r67);
@@ -9528,13 +9504,10 @@ CPyL78: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__42 = cpy_r_r102;
     cpy_r_r103 = 1;
-    if (unlikely(!cpy_r_r103)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", -1, CPyStatic__nonce___globals);
-        goto CPyL115;
-    }
+    if (!cpy_r_r103) goto CPyL115;
     cpy_r_r104 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__42;
     if (unlikely(cpy_r_r104 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__42", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__42", 191, CPyStatic__nonce___globals);
         goto CPyL115;
     }
     CPy_INCREF(cpy_r_r104);
@@ -9588,14 +9561,11 @@ CPyL92: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__43 = cpy_r_r114;
     cpy_r_r115 = 1;
-    if (unlikely(!cpy_r_r115)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", -1, CPyStatic__nonce___globals);
-        goto CPyL230;
-    }
+    if (!cpy_r_r115) goto CPyL230;
     cpy_r_r116 = (PyObject **)&cpy_r_r3;
     cpy_r_r117 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__42;
     if (unlikely(cpy_r_r117 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__42", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__42", 191, CPyStatic__nonce___globals);
         goto CPyL230;
     }
     CPy_INCREF(cpy_r_r117);
@@ -9610,7 +9580,7 @@ CPyL94: ;
     cpy_r_r110 = cpy_r_r3;
     cpy_r_r119 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__43;
     if (unlikely(cpy_r_r119.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__43", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__43", 191, CPyStatic__nonce___globals);
         goto CPyL231;
     }
     CPy_INCREF(cpy_r_r119.f0);
@@ -9626,7 +9596,7 @@ CPyL98: ;
     cpy_r_r107 = cpy_r_r3;
     cpy_r_r120 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__43;
     if (unlikely(cpy_r_r120.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__43", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__43", 191, CPyStatic__nonce___globals);
         goto CPyL232;
     }
     CPy_INCREF(cpy_r_r120.f0);
@@ -9641,7 +9611,7 @@ CPyL99: ;
 CPyL100: ;
     cpy_r_r121 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__43;
     if (unlikely(cpy_r_r121.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__43", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__43", 191, CPyStatic__nonce___globals);
         goto CPyL115;
     }
     CPy_INCREF(cpy_r_r121.f0);
@@ -9658,7 +9628,7 @@ CPyL101: ;
 CPyL103: ;
     cpy_r_r123 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__42;
     if (unlikely(cpy_r_r123 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__42", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__42", 191, CPyStatic__nonce___globals);
         goto CPyL233;
     }
     CPy_INCREF(cpy_r_r123);
@@ -9747,10 +9717,7 @@ CPyL115: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__44 = cpy_r_r141;
     cpy_r_r142 = 1;
-    if (unlikely(!cpy_r_r142)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", -1, CPyStatic__nonce___globals);
-        goto CPyL154;
-    }
+    if (!cpy_r_r142) goto CPyL154;
     ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__38 = 0;
     cpy_r_r143 = 1;
     if (unlikely(!cpy_r_r143)) {
@@ -9764,19 +9731,19 @@ CPyL115: ;
     CPy_INCREF(cpy_r_r146);
     cpy_r_r147 = cpy_r_r144.f2;
     CPy_INCREF(cpy_r_r147);
-    CPy_DecRef(cpy_r_r144.f0);
-    CPy_DecRef(cpy_r_r144.f1);
-    CPy_DecRef(cpy_r_r144.f2);
+    CPy_DECREF(cpy_r_r144.f0);
+    CPy_DECREF(cpy_r_r144.f1);
+    CPy_DECREF(cpy_r_r144.f2);
     cpy_r_r148 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__36;
     if (unlikely(cpy_r_r148 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__36", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__36", 187, CPyStatic__nonce___globals);
         goto CPyL234;
     }
     CPy_INCREF(cpy_r_r148);
 CPyL118: ;
     cpy_r_r149 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__37;
     if (unlikely(cpy_r_r149 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__37", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__37", 187, CPyStatic__nonce___globals);
         goto CPyL235;
     }
     CPy_INCREF(cpy_r_r149);
@@ -9784,17 +9751,17 @@ CPyL119: ;
     PyObject *cpy_r_r150[4] = {cpy_r_r149, cpy_r_r145, cpy_r_r146, cpy_r_r147};
     cpy_r_r151 = (PyObject **)&cpy_r_r150;
     cpy_r_r152 = PyObject_Vectorcall(cpy_r_r148, cpy_r_r151, 4, 0);
-    CPy_DecRef(cpy_r_r148);
+    CPy_DECREF(cpy_r_r148);
     if (unlikely(cpy_r_r152 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL236;
     }
-    CPy_DecRef(cpy_r_r149);
-    CPy_DecRef(cpy_r_r145);
-    CPy_DecRef(cpy_r_r146);
-    CPy_DecRef(cpy_r_r147);
+    CPy_DECREF(cpy_r_r149);
+    CPy_DECREF(cpy_r_r145);
+    CPy_DECREF(cpy_r_r146);
+    CPy_DECREF(cpy_r_r147);
     cpy_r_r153 = CPy_GetCoro(cpy_r_r152);
-    CPy_DecRef(cpy_r_r152);
+    CPy_DECREF(cpy_r_r152);
     if (unlikely(cpy_r_r153 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL154;
@@ -9804,19 +9771,16 @@ CPyL119: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__45 = cpy_r_r153;
     cpy_r_r154 = 1;
-    if (unlikely(!cpy_r_r154)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", -1, CPyStatic__nonce___globals);
-        goto CPyL154;
-    }
+    if (!cpy_r_r154) goto CPyL154;
     cpy_r_r155 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__45;
     if (unlikely(cpy_r_r155 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__45", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__45", 187, CPyStatic__nonce___globals);
         goto CPyL154;
     }
     CPy_INCREF(cpy_r_r155);
 CPyL123: ;
     cpy_r_r156 = CPyIter_Next(cpy_r_r155);
-    CPy_DecRef(cpy_r_r155);
+    CPy_DECREF(cpy_r_r155);
     if (cpy_r_r156 != NULL) goto CPyL126;
     cpy_r_r157 = CPy_FetchStopIterationValue();
     if (unlikely(cpy_r_r157 == NULL)) {
@@ -9864,14 +9828,11 @@ CPyL132: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__46 = cpy_r_r165;
     cpy_r_r166 = 1;
-    if (unlikely(!cpy_r_r166)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", -1, CPyStatic__nonce___globals);
-        goto CPyL240;
-    }
+    if (!cpy_r_r166) goto CPyL240;
     cpy_r_r167 = (PyObject **)&cpy_r_r5;
     cpy_r_r168 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__45;
     if (unlikely(cpy_r_r168 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__45", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__45", 187, CPyStatic__nonce___globals);
         goto CPyL240;
     }
     CPy_INCREF(cpy_r_r168);
@@ -9886,7 +9847,7 @@ CPyL134: ;
     cpy_r_r161 = cpy_r_r5;
     cpy_r_r170 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__46;
     if (unlikely(cpy_r_r170.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__46", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__46", 187, CPyStatic__nonce___globals);
         goto CPyL241;
     }
     CPy_INCREF(cpy_r_r170.f0);
@@ -9902,7 +9863,7 @@ CPyL138: ;
     cpy_r_r158 = cpy_r_r5;
     cpy_r_r171 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__46;
     if (unlikely(cpy_r_r171.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__46", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__46", 187, CPyStatic__nonce___globals);
         goto CPyL242;
     }
     CPy_INCREF(cpy_r_r171.f0);
@@ -9917,7 +9878,7 @@ CPyL139: ;
 CPyL140: ;
     cpy_r_r172 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__46;
     if (unlikely(cpy_r_r172.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__46", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__46", 187, CPyStatic__nonce___globals);
         goto CPyL154;
     }
     CPy_INCREF(cpy_r_r172.f0);
@@ -9934,7 +9895,7 @@ CPyL141: ;
 CPyL143: ;
     cpy_r_r174 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__45;
     if (unlikely(cpy_r_r174 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__45", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__45", 187, CPyStatic__nonce___globals);
         goto CPyL243;
     }
     CPy_INCREF(cpy_r_r174);
@@ -9957,7 +9918,7 @@ CPyL148: ;
     CPy_DECREF(cpy_r_r158);
     cpy_r_r178 = cpy_r_r177 >= 0;
     if (unlikely(!cpy_r_r178)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", -1, CPyStatic__nonce___globals);
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL154;
     }
     cpy_r_r179 = cpy_r_r177;
@@ -9968,7 +9929,7 @@ CPyL148: ;
 CPyL152: ;
     cpy_r_r180 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__44;
     if (unlikely(cpy_r_r180.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__44", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__44", 187, CPyStatic__nonce___globals);
         goto CPyL159;
     }
     CPy_INCREF(cpy_r_r180.f0);
@@ -9983,7 +9944,7 @@ CPyL153: ;
 CPyL154: ;
     cpy_r_r181 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__44;
     if (unlikely(cpy_r_r181.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__44", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__44", 187, CPyStatic__nonce___globals);
         goto CPyL159;
     }
     CPy_INCREF(cpy_r_r181.f0);
@@ -10005,7 +9966,7 @@ CPyL157: ;
     ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__41 = cpy_r_r183;
     cpy_r_r184 = 1;
     if (unlikely(!cpy_r_r184)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", -1, CPyStatic__nonce___globals);
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL219;
     }
 CPyL158: ;
@@ -10021,7 +9982,7 @@ CPyL159: ;
     ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__41 = cpy_r_r186;
     cpy_r_r187 = 1;
     if (unlikely(!cpy_r_r187)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", -1, CPyStatic__nonce___globals);
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         goto CPyL219;
     }
     cpy_r_r188 = CPy_CatchError();
@@ -10029,7 +9990,7 @@ CPyL159: ;
 CPyL161: ;
     cpy_r_r189 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__38;
     if (unlikely(cpy_r_r189 == 2)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__38", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__38", 187, CPyStatic__nonce___globals);
         goto CPyL203;
     }
 CPyL162: ;
@@ -10038,14 +9999,14 @@ CPyL163: ;
     cpy_r_r190 = (PyObject *)&_Py_NoneStruct;
     cpy_r_r191 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__36;
     if (unlikely(cpy_r_r191 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__36", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__36", 187, CPyStatic__nonce___globals);
         goto CPyL203;
     }
     CPy_INCREF(cpy_r_r191);
 CPyL164: ;
     cpy_r_r192 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__37;
     if (unlikely(cpy_r_r192 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__37", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__37", 187, CPyStatic__nonce___globals);
         goto CPyL244;
     }
     CPy_INCREF(cpy_r_r192);
@@ -10070,13 +10031,10 @@ CPyL165: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__47 = cpy_r_r196;
     cpy_r_r197 = 1;
-    if (unlikely(!cpy_r_r197)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", -1, CPyStatic__nonce___globals);
-        goto CPyL203;
-    }
+    if (!cpy_r_r197) goto CPyL203;
     cpy_r_r198 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__47;
     if (unlikely(cpy_r_r198 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__47", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__47", 187, CPyStatic__nonce___globals);
         goto CPyL203;
     }
     CPy_INCREF(cpy_r_r198);
@@ -10131,14 +10089,11 @@ CPyL178: ;
     }
     ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__48 = cpy_r_r208;
     cpy_r_r209 = 1;
-    if (unlikely(!cpy_r_r209)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", -1, CPyStatic__nonce___globals);
-        goto CPyL249;
-    }
+    if (!cpy_r_r209) goto CPyL249;
     cpy_r_r210 = (PyObject **)&cpy_r_r7;
     cpy_r_r211 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__47;
     if (unlikely(cpy_r_r211 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__47", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__47", 187, CPyStatic__nonce___globals);
         goto CPyL249;
     }
     CPy_INCREF(cpy_r_r211);
@@ -10153,7 +10108,7 @@ CPyL180: ;
     cpy_r_r204 = cpy_r_r7;
     cpy_r_r213 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__48;
     if (unlikely(cpy_r_r213.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__48", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__48", 187, CPyStatic__nonce___globals);
         goto CPyL250;
     }
     CPy_INCREF(cpy_r_r213.f0);
@@ -10171,7 +10126,7 @@ CPyL184: ;
     CPy_DecRef(cpy_r_r201);
     cpy_r_r214 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__48;
     if (unlikely(cpy_r_r214.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__48", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__48", 187, CPyStatic__nonce___globals);
         goto CPyL186;
     }
     CPy_INCREF(cpy_r_r214.f0);
@@ -10186,7 +10141,7 @@ CPyL185: ;
 CPyL186: ;
     cpy_r_r215 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__48;
     if (unlikely(cpy_r_r215.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__48", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__48", 187, CPyStatic__nonce___globals);
         goto CPyL203;
     }
     CPy_INCREF(cpy_r_r215.f0);
@@ -10207,7 +10162,7 @@ CPyL188: ;
 CPyL189: ;
     cpy_r_r217 = ((eth_portfolio____loaders____nonce___get_block_number_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__47;
     if (unlikely(cpy_r_r217 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__47", -1, CPyStatic__nonce___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/_nonce.py", "get_block_number", "get_block_number_gen", "__mypyc_temp__47", 187, CPyStatic__nonce___globals);
         goto CPyL253;
     }
     CPy_INCREF(cpy_r_r217);
@@ -10313,10 +10268,10 @@ CPyL219: ;
     cpy_r_r231 = NULL;
     return cpy_r_r231;
 CPyL220: ;
-    CPy_DecRef(cpy_r_r35);
+    CPy_DECREF(cpy_r_r35);
     goto CPyL219;
 CPyL221: ;
-    CPy_DecRef(cpy_r_r43);
+    CPy_DECREF(cpy_r_r43);
     goto CPyL219;
 CPyL222: ;
     CPy_XDECREF(cpy_r_r1);
@@ -10487,7 +10442,7 @@ CPyL263: ;
     CPy_XDECREF(cpy_r_r9.f2);
     goto CPyL217;
 }
-
+    
 PyObject *CPyDef__nonce___get_block_number_gen_____next__(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -10500,28 +10455,28 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy__nonce___get_block_number_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__next__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce___get_block_number_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":__next__", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_number_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_block_number_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce___get_block_number_gen_____next__(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__next__", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_number_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_block_number_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce___get_block_number_gen_____next__(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__next__", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_block_number_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -10534,56 +10489,56 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy__nonce___get_block_number_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"arg", 0};
-    static CPyArg_Parser parser = {"O:send", kwlist, 0};
-    PyObject *obj_arg;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
+    
+    PyObject *CPyPy__nonce___get_block_number_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {"arg", 0};
+        static CPyArg_Parser parser = {"O:send", kwlist, 0};
+        PyObject *obj_arg;
+        if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_number_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_block_number_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *arg_arg = obj_arg;
+        PyObject *retval = CPyDef__nonce___get_block_number_gen___send(arg___mypyc_self__, arg_arg);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "send", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_number_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_block_number_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_arg = obj_arg;
-    PyObject *retval = CPyDef__nonce___get_block_number_gen___send(arg___mypyc_self__, arg_arg);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "send", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_block_number_gen_____iter__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy__nonce___get_block_number_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__iter__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce___get_block_number_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":__iter__", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_number_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_block_number_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce___get_block_number_gen_____iter__(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__iter__", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_number_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_block_number_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce___get_block_number_gen_____iter__(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__iter__", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_block_number_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -10612,44 +10567,44 @@ CPyL8: ;
     CPy_INCREF(cpy_r_traceback);
     goto CPyL4;
 }
-
-PyObject *CPyPy__nonce___get_block_number_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"type", "value", "traceback", 0};
-    static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
-    PyObject *obj_type;
-    PyObject *obj_value = NULL;
-    PyObject *obj_traceback = NULL;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
+    
+    PyObject *CPyPy__nonce___get_block_number_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {"type", "value", "traceback", 0};
+        static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
+        PyObject *obj_type;
+        PyObject *obj_value = NULL;
+        PyObject *obj_traceback = NULL;
+        if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_number_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_block_number_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *arg_type = obj_type;
+        PyObject *arg_value;
+        if (obj_value == NULL) {
+            arg_value = NULL;
+        } else {
+            arg_value = obj_value; 
+        }
+        PyObject *arg_traceback;
+        if (obj_traceback == NULL) {
+            arg_traceback = NULL;
+        } else {
+            arg_traceback = obj_traceback; 
+        }
+        PyObject *retval = CPyDef__nonce___get_block_number_gen___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "throw", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_number_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_block_number_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_type = obj_type;
-    PyObject *arg_value;
-    if (obj_value == NULL) {
-        arg_value = NULL;
-    } else {
-        arg_value = obj_value; 
-    }
-    PyObject *arg_traceback;
-    if (obj_traceback == NULL) {
-        arg_traceback = NULL;
-    } else {
-        arg_traceback = obj_traceback; 
-    }
-    PyObject *retval = CPyDef__nonce___get_block_number_gen___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "throw", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_block_number_gen___close(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -10728,54 +10683,54 @@ CPyL13: ;
     CPy_DECREF(cpy_r_r6.f2);
     goto CPyL6;
 }
-
-PyObject *CPyPy__nonce___get_block_number_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":close", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce___get_block_number_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":close", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_number_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_block_number_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce___get_block_number_gen___close(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "close", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_number_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_block_number_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce___get_block_number_gen___close(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "close", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_block_number_gen_____await__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy__nonce___get_block_number_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__await__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce___get_block_number_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        PyObject *obj___mypyc_self__ = self;
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":__await__", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *arg___mypyc_self__;
+        if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_number_gen))
+            arg___mypyc_self__ = obj___mypyc_self__;
+        else {
+            CPy_TypeError("eth_portfolio._loaders._nonce.get_block_number_gen", obj___mypyc_self__); 
+            goto fail;
+        }
+        PyObject *retval = CPyDef__nonce___get_block_number_gen_____await__(arg___mypyc_self__);
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__await__", -1, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__nonce___get_block_number_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders._nonce.get_block_number_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__nonce___get_block_number_gen_____await__(arg___mypyc_self__);
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "__await__", -1, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 PyObject *CPyDef__nonce___get_block_number(void) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
@@ -10791,20 +10746,20 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy__nonce___get_block_number(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":get_block_number", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+    
+    PyObject *CPyPy__nonce___get_block_number(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+        static const char * const kwlist[] = {0};
+        static CPyArg_Parser parser = {":get_block_number", kwlist, 0};
+        if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+            return NULL;
+        }
+        PyObject *retval = CPyDef__nonce___get_block_number();
+        return retval;
+fail: ;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
         return NULL;
     }
-    PyObject *retval = CPyDef__nonce___get_block_number();
-    return retval;
-fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "get_block_number", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-    return NULL;
-}
-
+    
 char CPyDef__nonce_____top_level__(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -10965,40 +10920,42 @@ char CPyDef__nonce_____top_level__(void) {
     PyObject *cpy_r_r163;
     PyObject *cpy_r_r164;
     char cpy_r_r165;
-    PyObject *cpy_r_r166;
+    char cpy_r_r166;
     PyObject *cpy_r_r167;
     PyObject *cpy_r_r168;
     PyObject *cpy_r_r169;
-    int32_t cpy_r_r170;
-    char cpy_r_r171;
-    PyObject *cpy_r_r172;
+    PyObject *cpy_r_r170;
+    int32_t cpy_r_r171;
+    char cpy_r_r172;
     PyObject *cpy_r_r173;
-    int32_t cpy_r_r174;
-    char cpy_r_r175;
-    PyObject *cpy_r_r176;
+    PyObject *cpy_r_r174;
+    int32_t cpy_r_r175;
+    char cpy_r_r176;
     PyObject *cpy_r_r177;
     PyObject *cpy_r_r178;
-    int32_t cpy_r_r179;
-    char cpy_r_r180;
-    PyObject *cpy_r_r181;
+    PyObject *cpy_r_r179;
+    int32_t cpy_r_r180;
+    char cpy_r_r181;
     PyObject *cpy_r_r182;
     PyObject *cpy_r_r183;
-    int32_t cpy_r_r184;
-    char cpy_r_r185;
-    PyObject *cpy_r_r186;
+    PyObject *cpy_r_r184;
+    int32_t cpy_r_r185;
+    char cpy_r_r186;
     PyObject *cpy_r_r187;
     PyObject *cpy_r_r188;
     PyObject *cpy_r_r189;
     PyObject *cpy_r_r190;
     PyObject *cpy_r_r191;
-    int32_t cpy_r_r192;
-    char cpy_r_r193;
-    PyObject *cpy_r_r194;
+    PyObject *cpy_r_r192;
+    int32_t cpy_r_r193;
+    char cpy_r_r194;
     PyObject *cpy_r_r195;
     PyObject *cpy_r_r196;
-    int32_t cpy_r_r197;
-    char cpy_r_r198;
+    PyObject *cpy_r_r197;
+    int32_t cpy_r_r198;
     char cpy_r_r199;
+    char cpy_r_r200;
+    char cpy_r_r201;
     cpy_r_r0 = CPyModule_builtins;
     cpy_r_r1 = (PyObject *)&_Py_NoneStruct;
     cpy_r_r2 = cpy_r_r0 != cpy_r_r1;
@@ -11006,8 +10963,8 @@ char CPyDef__nonce_____top_level__(void) {
     cpy_r_r3 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'builtins' */
     cpy_r_r4 = PyImport_Import(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", -1, CPyStatic__nonce___globals);
-        goto CPyL63;
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
+        goto CPyL65;
     }
     CPyModule_builtins = cpy_r_r4;
     CPy_INCREF(CPyModule_builtins);
@@ -11025,14 +10982,14 @@ CPyL3: ;
     cpy_r_r13 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio/_loaders/_nonce.py' */
     cpy_r_r14 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '<module>' */
     cpy_r_r15 = CPyImport_ImportMany(cpy_r_r11, cpy_r_r8, cpy_r_r12, cpy_r_r13, cpy_r_r14, cpy_r_r10);
-    if (!cpy_r_r15) goto CPyL63;
+    if (!cpy_r_r15) goto CPyL65;
     cpy_r_r16 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('defaultdict',) */
     cpy_r_r17 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'collections' */
     cpy_r_r18 = CPyStatic__nonce___globals;
     cpy_r_r19 = CPyImport_ImportFromMany(cpy_r_r17, cpy_r_r16, cpy_r_r16, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     CPyModule_collections = cpy_r_r19;
     CPy_INCREF(CPyModule_collections);
@@ -11043,7 +11000,7 @@ CPyL3: ;
     cpy_r_r23 = CPyImport_ImportFromMany(cpy_r_r21, cpy_r_r20, cpy_r_r20, cpy_r_r22);
     if (unlikely(cpy_r_r23 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     CPyModule_time = cpy_r_r23;
     CPy_INCREF(CPyModule_time);
@@ -11054,7 +11011,7 @@ CPyL3: ;
     cpy_r_r27 = CPyImport_ImportFromMany(cpy_r_r25, cpy_r_r24, cpy_r_r24, cpy_r_r26);
     if (unlikely(cpy_r_r27 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     CPyModule_typing = cpy_r_r27;
     CPy_INCREF(CPyModule_typing);
@@ -11071,14 +11028,14 @@ CPyL3: ;
     cpy_r_r36 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio/_loaders/_nonce.py' */
     cpy_r_r37 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '<module>' */
     cpy_r_r38 = CPyImport_ImportMany(cpy_r_r34, cpy_r_r31, cpy_r_r35, cpy_r_r36, cpy_r_r37, cpy_r_r33);
-    if (!cpy_r_r38) goto CPyL63;
+    if (!cpy_r_r38) goto CPyL65;
     cpy_r_r39 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('BlockNumber', 'ChecksumAddress') */
     cpy_r_r40 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_typing' */
     cpy_r_r41 = CPyStatic__nonce___globals;
     cpy_r_r42 = CPyImport_ImportFromMany(cpy_r_r40, cpy_r_r39, cpy_r_r39, cpy_r_r41);
     if (unlikely(cpy_r_r42 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     CPyModule_eth_typing = cpy_r_r42;
     CPy_INCREF(CPyModule_eth_typing);
@@ -11089,7 +11046,7 @@ CPyL3: ;
     cpy_r_r46 = CPyObject_GetAttr(cpy_r_r44, cpy_r_r45);
     if (unlikely(cpy_r_r46 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     PyObject *cpy_r_r47[1] = {cpy_r_r43};
     cpy_r_r48 = (PyObject **)&cpy_r_r47;
@@ -11097,7 +11054,7 @@ CPyL3: ;
     CPy_DECREF(cpy_r_r46);
     if (unlikely(cpy_r_r49 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     CPyStatic__nonce___logger = cpy_r_r49;
     CPy_INCREF(CPyStatic__nonce___logger);
@@ -11108,7 +11065,7 @@ CPyL3: ;
     cpy_r_r53 = cpy_r_r52 >= 0;
     if (unlikely(!cpy_r_r53)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r54 = CPyStatic__nonce___logger;
     if (likely(cpy_r_r54 != NULL)) goto CPyL15;
@@ -11116,7 +11073,7 @@ CPyL3: ;
     cpy_r_r55 = 0;
     if (unlikely(!cpy_r_r55)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     CPy_Unreachable();
 CPyL15: ;
@@ -11124,7 +11081,7 @@ CPyL15: ;
     cpy_r_r57 = CPyObject_GetAttr(cpy_r_r54, cpy_r_r56);
     if (unlikely(cpy_r_r57 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     CPyStatic__nonce___logger_is_enabled = cpy_r_r57;
     CPy_INCREF(CPyStatic__nonce___logger_is_enabled);
@@ -11135,7 +11092,7 @@ CPyL15: ;
     cpy_r_r61 = cpy_r_r60 >= 0;
     if (unlikely(!cpy_r_r61)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r62 = CPyStatic__nonce___logger;
     if (likely(cpy_r_r62 != NULL)) goto CPyL20;
@@ -11143,7 +11100,7 @@ CPyL15: ;
     cpy_r_r63 = 0;
     if (unlikely(!cpy_r_r63)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     CPy_Unreachable();
 CPyL20: ;
@@ -11151,7 +11108,7 @@ CPyL20: ;
     cpy_r_r65 = CPyObject_GetAttr(cpy_r_r62, cpy_r_r64);
     if (unlikely(cpy_r_r65 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     CPyStatic__nonce_____log = cpy_r_r65;
     CPy_INCREF(CPyStatic__nonce_____log);
@@ -11162,7 +11119,7 @@ CPyL20: ;
     cpy_r_r69 = cpy_r_r68 >= 0;
     if (unlikely(!cpy_r_r69)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     CPyStatic__nonce___DEBUG = 20;
     cpy_r_r70 = CPyStatic__nonce___globals;
@@ -11172,7 +11129,7 @@ CPyL20: ;
     cpy_r_r74 = cpy_r_r73 >= 0;
     if (unlikely(!cpy_r_r74)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r75 = (PyObject *)&PyLong_Type;
     cpy_r_r76 = CPyStatic__nonce___globals;
@@ -11181,28 +11138,28 @@ CPyL20: ;
     cpy_r_r79 = cpy_r_r78 >= 0;
     if (unlikely(!cpy_r_r79)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r80 = CPyStatic__nonce___globals;
     cpy_r_r81 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'DefaultDict' */
     cpy_r_r82 = CPyDict_GetItem(cpy_r_r80, cpy_r_r81);
     if (unlikely(cpy_r_r82 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r83 = CPyStatic__nonce___globals;
     cpy_r_r84 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Nonce' */
     cpy_r_r85 = CPyDict_GetItem(cpy_r_r83, cpy_r_r84);
     if (unlikely(cpy_r_r85 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL64;
+        goto CPyL66;
     }
     cpy_r_r86 = CPyStatic__nonce___globals;
     cpy_r_r87 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'BlockNumber' */
     cpy_r_r88 = CPyDict_GetItem(cpy_r_r86, cpy_r_r87);
     if (unlikely(cpy_r_r88 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL65;
+        goto CPyL67;
     }
     cpy_r_r89.f0 = cpy_r_r85;
     cpy_r_r89.f1 = cpy_r_r88;
@@ -11218,7 +11175,7 @@ CPyL20: ;
     CPy_DECREF(cpy_r_r90);
     if (unlikely(cpy_r_r91 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r92 = CPyStatic__nonce___globals;
     cpy_r_r93 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'AccountNonces' */
@@ -11227,28 +11184,28 @@ CPyL20: ;
     cpy_r_r95 = cpy_r_r94 >= 0;
     if (unlikely(!cpy_r_r95)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r96 = CPyStatic__nonce___globals;
     cpy_r_r97 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'DefaultDict' */
     cpy_r_r98 = CPyDict_GetItem(cpy_r_r96, cpy_r_r97);
     if (unlikely(cpy_r_r98 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r99 = CPyStatic__nonce___globals;
     cpy_r_r100 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ChecksumAddress' */
     cpy_r_r101 = CPyDict_GetItem(cpy_r_r99, cpy_r_r100);
     if (unlikely(cpy_r_r101 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL66;
+        goto CPyL68;
     }
     cpy_r_r102 = CPyStatic__nonce___globals;
     cpy_r_r103 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'AccountNonces' */
     cpy_r_r104 = CPyDict_GetItem(cpy_r_r102, cpy_r_r103);
     if (unlikely(cpy_r_r104 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL67;
+        goto CPyL69;
     }
     cpy_r_r105.f0 = cpy_r_r101;
     cpy_r_r105.f1 = cpy_r_r104;
@@ -11264,7 +11221,7 @@ CPyL20: ;
     CPy_DECREF(cpy_r_r106);
     if (unlikely(cpy_r_r107 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r108 = CPyStatic__nonce___globals;
     cpy_r_r109 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'GlobalNonces' */
@@ -11273,19 +11230,19 @@ CPyL20: ;
     cpy_r_r111 = cpy_r_r110 >= 0;
     if (unlikely(!cpy_r_r111)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r112 = CPyDef__nonce_____mypyc_lambda__0_obj();
     if (unlikely(cpy_r_r112 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r113 = CPyStatic__nonce___globals;
     cpy_r_r114 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'defaultdict' */
     cpy_r_r115 = CPyDict_GetItem(cpy_r_r113, cpy_r_r114);
     if (unlikely(cpy_r_r115 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL68;
+        goto CPyL70;
     }
     PyObject *cpy_r_r116[1] = {cpy_r_r112};
     cpy_r_r117 = (PyObject **)&cpy_r_r116;
@@ -11293,14 +11250,14 @@ CPyL20: ;
     CPy_DECREF(cpy_r_r115);
     if (unlikely(cpy_r_r118 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL68;
+        goto CPyL70;
     }
     CPy_DECREF_NO_IMM(cpy_r_r112);
     if (likely(PyDict_Check(cpy_r_r118)))
         cpy_r_r119 = cpy_r_r118;
     else {
         CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", 21, CPyStatic__nonce___globals, "dict", cpy_r_r118);
-        goto CPyL63;
+        goto CPyL65;
     }
     CPyStatic__nonce___nonces = cpy_r_r119;
     CPy_INCREF(CPyStatic__nonce___nonces);
@@ -11311,21 +11268,21 @@ CPyL20: ;
     cpy_r_r123 = cpy_r_r122 >= 0;
     if (unlikely(!cpy_r_r123)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r124 = CPyModule_asyncio;
     cpy_r_r125 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Lock' */
     cpy_r_r126 = CPyObject_GetAttr(cpy_r_r124, cpy_r_r125);
     if (unlikely(cpy_r_r126 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r127 = CPyStatic__nonce___globals;
     cpy_r_r128 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'defaultdict' */
     cpy_r_r129 = CPyDict_GetItem(cpy_r_r127, cpy_r_r128);
     if (unlikely(cpy_r_r129 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL69;
+        goto CPyL71;
     }
     PyObject *cpy_r_r130[1] = {cpy_r_r126};
     cpy_r_r131 = (PyObject **)&cpy_r_r130;
@@ -11333,14 +11290,14 @@ CPyL20: ;
     CPy_DECREF(cpy_r_r129);
     if (unlikely(cpy_r_r132 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL69;
+        goto CPyL71;
     }
     CPy_DECREF(cpy_r_r126);
     if (likely(PyDict_Check(cpy_r_r132)))
         cpy_r_r133 = cpy_r_r132;
     else {
         CPy_TypeErrorTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", 22, CPyStatic__nonce___globals, "dict", cpy_r_r132);
-        goto CPyL63;
+        goto CPyL65;
     }
     CPyStatic__nonce___locks = cpy_r_r133;
     CPy_INCREF(CPyStatic__nonce___locks);
@@ -11351,21 +11308,21 @@ CPyL20: ;
     cpy_r_r137 = cpy_r_r136 >= 0;
     if (unlikely(!cpy_r_r137)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r138 = CPyModule_dank_mids;
     cpy_r_r139 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth' */
     cpy_r_r140 = CPyObject_GetAttr(cpy_r_r138, cpy_r_r139);
     if (unlikely(cpy_r_r140 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r141 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'get_transaction_count' */
     cpy_r_r142 = CPyObject_GetAttr(cpy_r_r140, cpy_r_r141);
     CPy_DECREF(cpy_r_r140);
     if (unlikely(cpy_r_r142 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     CPyStatic__nonce___get_transaction_count = cpy_r_r142;
     CPy_INCREF(CPyStatic__nonce___get_transaction_count);
@@ -11376,14 +11333,14 @@ CPyL20: ;
     cpy_r_r146 = cpy_r_r145 >= 0;
     if (unlikely(!cpy_r_r146)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r147 = CPyModule_a_sync;
     cpy_r_r148 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'igather' */
     cpy_r_r149 = CPyObject_GetAttr(cpy_r_r147, cpy_r_r148);
     if (unlikely(cpy_r_r149 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     CPyStatic__nonce___igather = cpy_r_r149;
     CPy_INCREF(CPyStatic__nonce___igather);
@@ -11394,14 +11351,14 @@ CPyL20: ;
     cpy_r_r153 = cpy_r_r152 >= 0;
     if (unlikely(!cpy_r_r153)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r154 = CPyStatic__nonce___globals;
     cpy_r_r155 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'time' */
     cpy_r_r156 = CPyDict_GetItem(cpy_r_r154, cpy_r_r155);
     if (unlikely(cpy_r_r156 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     CPyStatic__nonce___now = cpy_r_r156;
     CPy_INCREF(CPyStatic__nonce___now);
@@ -11412,7 +11369,7 @@ CPyL20: ;
     cpy_r_r160 = cpy_r_r159 >= 0;
     if (unlikely(!cpy_r_r160)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r161 = NULL;
     cpy_r_r162 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio._loaders._nonce' */
@@ -11420,199 +11377,183 @@ CPyL20: ;
     cpy_r_r164 = CPyType_FromTemplate(cpy_r_r163, cpy_r_r161, cpy_r_r162);
     if (unlikely(cpy_r_r164 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL65;
     }
     cpy_r_r165 = CPyDef__nonce___BlockCache_trait_vtable_setup();
     if (unlikely(cpy_r_r165 == 2)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", -1, CPyStatic__nonce___globals);
-        goto CPyL70;
-    }
-    cpy_r_r166 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '__mypyc_attrs__' */
-    cpy_r_r167 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'lock' */
-    cpy_r_r168 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ttl' */
-    cpy_r_r169 = PyTuple_Pack(2, cpy_r_r167, cpy_r_r168);
-    if (unlikely(cpy_r_r169 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL70;
+        goto CPyL72;
     }
-    cpy_r_r170 = PyObject_SetAttr(cpy_r_r164, cpy_r_r166, cpy_r_r169);
-    CPy_DECREF(cpy_r_r169);
-    cpy_r_r171 = cpy_r_r170 >= 0;
-    if (unlikely(!cpy_r_r171)) {
+    cpy_r_r166 = CPyDef__nonce___BlockCache_coroutine_setup(cpy_r_r164);
+    if (unlikely(cpy_r_r166 == 2)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL70;
+        goto CPyL72;
+    }
+    cpy_r_r167 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '__mypyc_attrs__' */
+    cpy_r_r168 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'lock' */
+    cpy_r_r169 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ttl' */
+    cpy_r_r170 = PyTuple_Pack(2, cpy_r_r168, cpy_r_r169);
+    if (unlikely(cpy_r_r170 == NULL)) {
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
+        goto CPyL72;
+    }
+    cpy_r_r171 = PyObject_SetAttr(cpy_r_r164, cpy_r_r167, cpy_r_r170);
+    CPy_DECREF(cpy_r_r170);
+    cpy_r_r172 = cpy_r_r171 >= 0;
+    if (unlikely(!cpy_r_r172)) {
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
+        goto CPyL72;
     }
     CPyType__nonce___BlockCache = (PyTypeObject *)cpy_r_r164;
     CPy_INCREF(CPyType__nonce___BlockCache);
-    cpy_r_r172 = CPyStatic__nonce___globals;
-    cpy_r_r173 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'BlockCache' */
-    cpy_r_r174 = PyDict_SetItem(cpy_r_r172, cpy_r_r173, cpy_r_r164);
-    CPy_DECREF(cpy_r_r164);
-    cpy_r_r175 = cpy_r_r174 >= 0;
-    if (unlikely(!cpy_r_r175)) {
+    cpy_r_r173 = CPyStatic__nonce___globals;
+    cpy_r_r174 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'BlockCache' */
+    cpy_r_r175 = PyDict_SetItem(cpy_r_r173, cpy_r_r174, cpy_r_r164);
+    cpy_r_r176 = cpy_r_r175 >= 0;
+    if (unlikely(!cpy_r_r176)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL72;
     }
-    cpy_r_r176 = (PyObject *)CPyType__nonce___BlockCache;
-    cpy_r_r177 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'block' */
-    cpy_r_r178 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 0 */
-    cpy_r_r179 = PyObject_SetAttr(cpy_r_r176, cpy_r_r177, cpy_r_r178);
-    cpy_r_r180 = cpy_r_r179 >= 0;
-    if (unlikely(!cpy_r_r180)) {
+    cpy_r_r177 = (PyObject *)CPyType__nonce___BlockCache;
+    cpy_r_r178 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'block' */
+    cpy_r_r179 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 0 */
+    cpy_r_r180 = PyObject_SetAttr(cpy_r_r177, cpy_r_r178, cpy_r_r179);
+    cpy_r_r181 = cpy_r_r180 >= 0;
+    if (unlikely(!cpy_r_r181)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL72;
     }
-    cpy_r_r181 = (PyObject *)CPyType__nonce___BlockCache;
-    cpy_r_r182 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'updated_at' */
-    cpy_r_r183 = PyFloat_FromDouble(0.0);
-    cpy_r_r184 = PyObject_SetAttr(cpy_r_r181, cpy_r_r182, cpy_r_r183);
-    CPy_DECREF(cpy_r_r183);
-    cpy_r_r185 = cpy_r_r184 >= 0;
-    if (unlikely(!cpy_r_r185)) {
+    cpy_r_r182 = (PyObject *)CPyType__nonce___BlockCache;
+    cpy_r_r183 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'updated_at' */
+    cpy_r_r184 = PyFloat_FromDouble(0.0);
+    cpy_r_r185 = PyObject_SetAttr(cpy_r_r182, cpy_r_r183, cpy_r_r184);
+    CPy_DECREF(cpy_r_r184);
+    cpy_r_r186 = cpy_r_r185 >= 0;
+    if (unlikely(!cpy_r_r186)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL72;
     }
-    cpy_r_r186 = (PyObject *)CPyType__nonce___BlockCache;
-    cpy_r_r187 = CPyModule_asyncio;
-    cpy_r_r188 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Lock' */
-    cpy_r_r189 = CPyObject_GetAttr(cpy_r_r187, cpy_r_r188);
-    if (unlikely(cpy_r_r189 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
-    }
-    cpy_r_r190 = PyObject_Vectorcall(cpy_r_r189, 0, 0, 0);
-    CPy_DECREF(cpy_r_r189);
+    cpy_r_r187 = (PyObject *)CPyType__nonce___BlockCache;
+    cpy_r_r188 = CPyModule_asyncio;
+    cpy_r_r189 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Lock' */
+    cpy_r_r190 = CPyObject_GetAttr(cpy_r_r188, cpy_r_r189);
     if (unlikely(cpy_r_r190 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL72;
     }
-    cpy_r_r191 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'lock' */
-    cpy_r_r192 = PyObject_SetAttr(cpy_r_r186, cpy_r_r191, cpy_r_r190);
-    cpy_r_r193 = cpy_r_r192 >= 0;
-    if (unlikely(!cpy_r_r193)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL71;
-    }
-    CPyStatic__nonce___BlockCache___lock = cpy_r_r190;
-    CPy_INCREF(CPyStatic__nonce___BlockCache___lock);
+    cpy_r_r191 = PyObject_Vectorcall(cpy_r_r190, 0, 0, 0);
     CPy_DECREF(cpy_r_r190);
-    cpy_r_r194 = (PyObject *)CPyType__nonce___BlockCache;
-    cpy_r_r195 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ttl' */
-    cpy_r_r196 = PyFloat_FromDouble(5.0);
-    cpy_r_r197 = PyObject_SetAttr(cpy_r_r194, cpy_r_r195, cpy_r_r196);
-    CPy_DECREF(cpy_r_r196);
-    cpy_r_r198 = cpy_r_r197 >= 0;
-    if (unlikely(!cpy_r_r198)) {
+    if (unlikely(cpy_r_r191 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
-        goto CPyL63;
+        goto CPyL72;
+    }
+    cpy_r_r192 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'lock' */
+    cpy_r_r193 = PyObject_SetAttr(cpy_r_r187, cpy_r_r192, cpy_r_r191);
+    cpy_r_r194 = cpy_r_r193 >= 0;
+    if (unlikely(!cpy_r_r194)) {
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
+        goto CPyL73;
+    }
+    CPyStatic__nonce___BlockCache___lock = cpy_r_r191;
+    CPy_INCREF(CPyStatic__nonce___BlockCache___lock);
+    CPy_DECREF(cpy_r_r191);
+    cpy_r_r195 = (PyObject *)CPyType__nonce___BlockCache;
+    cpy_r_r196 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ttl' */
+    cpy_r_r197 = PyFloat_FromDouble(5.0);
+    cpy_r_r198 = PyObject_SetAttr(cpy_r_r195, cpy_r_r196, cpy_r_r197);
+    CPy_DECREF(cpy_r_r197);
+    cpy_r_r199 = cpy_r_r198 >= 0;
+    if (unlikely(!cpy_r_r199)) {
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
+        goto CPyL72;
+    }
+    cpy_r_r200 = CPy_InitSubclass(cpy_r_r164);
+    CPy_DECREF(cpy_r_r164);
+    if (unlikely(!cpy_r_r200)) {
+        CPy_AddTraceback("eth_portfolio/_loaders/_nonce.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__nonce___globals);
+        goto CPyL65;
     }
     return 1;
-CPyL63: ;
-    cpy_r_r199 = 2;
-    return cpy_r_r199;
-CPyL64: ;
-    CPy_DecRef(cpy_r_r82);
-    goto CPyL63;
 CPyL65: ;
+    cpy_r_r201 = 2;
+    return cpy_r_r201;
+CPyL66: ;
+    CPy_DecRef(cpy_r_r82);
+    goto CPyL65;
+CPyL67: ;
     CPy_DecRef(cpy_r_r82);
     CPy_DecRef(cpy_r_r85);
-    goto CPyL63;
-CPyL66: ;
+    goto CPyL65;
+CPyL68: ;
     CPy_DecRef(cpy_r_r98);
-    goto CPyL63;
-CPyL67: ;
+    goto CPyL65;
+CPyL69: ;
     CPy_DecRef(cpy_r_r98);
     CPy_DecRef(cpy_r_r101);
-    goto CPyL63;
-CPyL68: ;
-    CPy_DecRef(cpy_r_r112);
-    goto CPyL63;
-CPyL69: ;
-    CPy_DecRef(cpy_r_r126);
-    goto CPyL63;
+    goto CPyL65;
 CPyL70: ;
-    CPy_DecRef(cpy_r_r164);
-    goto CPyL63;
+    CPy_DecRef(cpy_r_r112);
+    goto CPyL65;
 CPyL71: ;
-    CPy_DecRef(cpy_r_r190);
-    goto CPyL63;
+    CPy_DecRef(cpy_r_r126);
+    goto CPyL65;
+CPyL72: ;
+    CPy_DecRef(cpy_r_r164);
+    goto CPyL65;
+CPyL73: ;
+    CPy_DecRef(cpy_r_r164);
+    CPy_DecRef(cpy_r_r191);
+    goto CPyL65;
 }
-
-static PyAsyncMethods _loaders___balances___load_token_balance_gen_as_async = {
-    .am_await = CPyDef__loaders___balances___load_token_balance_gen_____await__,
-};
-PyObject *CPyDef__loaders___balances_____mypyc__load_token_balance_gen_setup(PyObject *cpy_r_type);
-PyObject *CPyDef__loaders___balances___load_token_balance_gen(void);
-
-static PyObject *
-_loaders___balances___load_token_balance_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-{
-    if (type != CPyType__loaders___balances___load_token_balance_gen) {
-        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-        return NULL;
+    
+    static PyAsyncMethods _loaders___balances___load_token_balance_gen_as_async = {
+        .am_await = CPyDef__loaders___balances___load_token_balance_gen_____await__,
+    };
+    PyObject *CPyDef__loaders___balances_____mypyc__load_token_balance_gen_setup(PyObject *cpy_r_type);
+    PyObject *CPyDef__loaders___balances___load_token_balance_gen(void);
+    
+    static PyObject *
+    _loaders___balances___load_token_balance_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+    {
+        if (type != CPyType__loaders___balances___load_token_balance_gen) {
+            PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+            return NULL;
+        }
+        PyObject *self = CPyDef__loaders___balances_____mypyc__load_token_balance_gen_setup((PyObject*)type);
+        if (self == NULL)
+            return NULL;
+        return self;
     }
-    PyObject *self = CPyDef__loaders___balances_____mypyc__load_token_balance_gen_setup((PyObject*)type);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
-static int
-_loaders___balances___load_token_balance_gen_traverse(eth_portfolio____loaders___balances___load_token_balance_genObject *self, visitproc visit, void *arg)
-{
-    Py_VISIT(self->___mypyc_generator_attribute__token);
-    Py_VISIT(self->___mypyc_generator_attribute__address);
-    Py_VISIT(self->___mypyc_generator_attribute__block);
-    Py_VISIT(self->___mypyc_temp__0);
-    Py_VISIT(self->___mypyc_temp__1.f0);
-    Py_VISIT(self->___mypyc_temp__1.f1);
-    Py_VISIT(self->___mypyc_temp__1.f2);
-    Py_VISIT(self->___mypyc_generator_attribute__balance);
-    Py_VISIT(self->___mypyc_temp__2.f0);
-    Py_VISIT(self->___mypyc_temp__2.f1);
-    Py_VISIT(self->___mypyc_temp__2.f2);
-    Py_VISIT(self->___mypyc_generator_attribute__token_address);
-    Py_VISIT(self->___mypyc_temp__3);
-    Py_VISIT(self->___mypyc_temp__4.f0);
-    Py_VISIT(self->___mypyc_temp__4.f1);
-    Py_VISIT(self->___mypyc_temp__4.f2);
-    Py_VISIT(self->___mypyc_generator_attribute__price);
-    return 0;
-}
-
-static int
-_loaders___balances___load_token_balance_gen_clear(eth_portfolio____loaders___balances___load_token_balance_genObject *self)
-{
-    Py_CLEAR(self->___mypyc_generator_attribute__token);
-    Py_CLEAR(self->___mypyc_generator_attribute__address);
-    Py_CLEAR(self->___mypyc_generator_attribute__block);
-    Py_CLEAR(self->___mypyc_temp__0);
-    Py_CLEAR(self->___mypyc_temp__1.f0);
-    Py_CLEAR(self->___mypyc_temp__1.f1);
-    Py_CLEAR(self->___mypyc_temp__1.f2);
-    Py_CLEAR(self->___mypyc_generator_attribute__balance);
-    Py_CLEAR(self->___mypyc_temp__2.f0);
-    Py_CLEAR(self->___mypyc_temp__2.f1);
-    Py_CLEAR(self->___mypyc_temp__2.f2);
-    Py_CLEAR(self->___mypyc_generator_attribute__token_address);
-    Py_CLEAR(self->___mypyc_temp__3);
-    Py_CLEAR(self->___mypyc_temp__4.f0);
-    Py_CLEAR(self->___mypyc_temp__4.f1);
-    Py_CLEAR(self->___mypyc_temp__4.f2);
-    Py_CLEAR(self->___mypyc_generator_attribute__price);
-    return 0;
-}
-
-static void
-_loaders___balances___load_token_balance_gen_dealloc(eth_portfolio____loaders___balances___load_token_balance_genObject *self)
-{
-    PyObject_GC_UnTrack(self);
-    if (_loaders___balances___load_token_balance_gen_free_instance == NULL) {
-        _loaders___balances___load_token_balance_gen_free_instance = self;
+    
+    static int
+    _loaders___balances___load_token_balance_gen_traverse(eth_portfolio____loaders___balances___load_token_balance_genObject *self, visitproc visit, void *arg)
+    {
+        Py_VISIT(self->___mypyc_generator_attribute__token);
+        Py_VISIT(self->___mypyc_generator_attribute__address);
+        Py_VISIT(self->___mypyc_generator_attribute__block);
+        Py_VISIT(self->___mypyc_temp__0);
+        Py_VISIT(self->___mypyc_temp__1.f0);
+        Py_VISIT(self->___mypyc_temp__1.f1);
+        Py_VISIT(self->___mypyc_temp__1.f2);
+        Py_VISIT(self->___mypyc_generator_attribute__balance);
+        Py_VISIT(self->___mypyc_temp__2.f0);
+        Py_VISIT(self->___mypyc_temp__2.f1);
+        Py_VISIT(self->___mypyc_temp__2.f2);
+        Py_VISIT(self->___mypyc_generator_attribute__token_address);
+        Py_VISIT(self->___mypyc_temp__3);
+        Py_VISIT(self->___mypyc_temp__4.f0);
+        Py_VISIT(self->___mypyc_temp__4.f1);
+        Py_VISIT(self->___mypyc_temp__4.f2);
+        Py_VISIT(self->___mypyc_generator_attribute__price);
+        return 0;
+    }
+    
+    static int
+    _loaders___balances___load_token_balance_gen_clear(eth_portfolio____loaders___balances___load_token_balance_genObject *self)
+    {
         Py_CLEAR(self->___mypyc_generator_attribute__token);
         Py_CLEAR(self->___mypyc_generator_attribute__address);
         Py_CLEAR(self->___mypyc_generator_attribute__block);
-        self->___mypyc_next_label__ = -113;
         Py_CLEAR(self->___mypyc_temp__0);
         Py_CLEAR(self->___mypyc_temp__1.f0);
         Py_CLEAR(self->___mypyc_temp__1.f1);
@@ -11627,168 +11568,238 @@ _loaders___balances___load_token_balance_gen_dealloc(eth_portfolio____loaders___
         Py_CLEAR(self->___mypyc_temp__4.f1);
         Py_CLEAR(self->___mypyc_temp__4.f2);
         Py_CLEAR(self->___mypyc_generator_attribute__price);
-        return;
+        return 0;
     }
-    CPy_TRASHCAN_BEGIN(self, _loaders___balances___load_token_balance_gen_dealloc)
-    _loaders___balances___load_token_balance_gen_clear(self);
-    Py_TYPE(self)->tp_free((PyObject *)self);
-    CPy_TRASHCAN_END(self)
-    done: ;
-}
-
-static CPyVTableItem _loaders___balances___load_token_balance_gen_vtable[7];
-static bool
-CPyDef__loaders___balances___load_token_balance_gen_trait_vtable_setup(void)
-{
-    CPyVTableItem _loaders___balances___load_token_balance_gen_vtable_scratch[] = {
-        (CPyVTableItem)CPyDef__loaders___balances___load_token_balance_gen_____mypyc_generator_helper__,
-        (CPyVTableItem)CPyDef__loaders___balances___load_token_balance_gen_____next__,
-        (CPyVTableItem)CPyDef__loaders___balances___load_token_balance_gen___send,
-        (CPyVTableItem)CPyDef__loaders___balances___load_token_balance_gen_____iter__,
-        (CPyVTableItem)CPyDef__loaders___balances___load_token_balance_gen___throw,
-        (CPyVTableItem)CPyDef__loaders___balances___load_token_balance_gen___close,
-        (CPyVTableItem)CPyDef__loaders___balances___load_token_balance_gen_____await__,
+    
+    static void
+    _loaders___balances___load_token_balance_gen_dealloc(eth_portfolio____loaders___balances___load_token_balance_genObject *self)
+    {
+        PyObject_GC_UnTrack(self);
+        if (_loaders___balances___load_token_balance_gen_free_instance == NULL) {
+            _loaders___balances___load_token_balance_gen_free_instance = self;
+            Py_CLEAR(self->___mypyc_generator_attribute__token);
+            Py_CLEAR(self->___mypyc_generator_attribute__address);
+            Py_CLEAR(self->___mypyc_generator_attribute__block);
+            self->___mypyc_next_label__ = -113;
+            Py_CLEAR(self->___mypyc_temp__0);
+            Py_CLEAR(self->___mypyc_temp__1.f0);
+            Py_CLEAR(self->___mypyc_temp__1.f1);
+            Py_CLEAR(self->___mypyc_temp__1.f2);
+            Py_CLEAR(self->___mypyc_generator_attribute__balance);
+            Py_CLEAR(self->___mypyc_temp__2.f0);
+            Py_CLEAR(self->___mypyc_temp__2.f1);
+            Py_CLEAR(self->___mypyc_temp__2.f2);
+            Py_CLEAR(self->___mypyc_generator_attribute__token_address);
+            Py_CLEAR(self->___mypyc_temp__3);
+            Py_CLEAR(self->___mypyc_temp__4.f0);
+            Py_CLEAR(self->___mypyc_temp__4.f1);
+            Py_CLEAR(self->___mypyc_temp__4.f2);
+            Py_CLEAR(self->___mypyc_generator_attribute__price);
+            return;
+        }
+        CPy_TRASHCAN_BEGIN(self, _loaders___balances___load_token_balance_gen_dealloc)
+        _loaders___balances___load_token_balance_gen_clear(self);
+        Py_TYPE(self)->tp_free((PyObject *)self);
+        CPy_TRASHCAN_END(self)
+        done: ;
+    }
+    
+    static CPyVTableItem _loaders___balances___load_token_balance_gen_vtable[7];
+    static bool
+    CPyDef__loaders___balances___load_token_balance_gen_trait_vtable_setup(void)
+    {
+        CPyVTableItem _loaders___balances___load_token_balance_gen_vtable_scratch[] = {
+            (CPyVTableItem)CPyDef__loaders___balances___load_token_balance_gen_____mypyc_generator_helper__,
+            (CPyVTableItem)CPyDef__loaders___balances___load_token_balance_gen_____next__,
+            (CPyVTableItem)CPyDef__loaders___balances___load_token_balance_gen___send,
+            (CPyVTableItem)CPyDef__loaders___balances___load_token_balance_gen_____iter__,
+            (CPyVTableItem)CPyDef__loaders___balances___load_token_balance_gen___throw,
+            (CPyVTableItem)CPyDef__loaders___balances___load_token_balance_gen___close,
+            (CPyVTableItem)CPyDef__loaders___balances___load_token_balance_gen_____await__,
+        };
+        memcpy(_loaders___balances___load_token_balance_gen_vtable, _loaders___balances___load_token_balance_gen_vtable_scratch, sizeof(_loaders___balances___load_token_balance_gen_vtable));
+        return 1;
+    }
+    
+    static bool
+    CPyDef__loaders___balances___load_token_balance_gen_coroutine_setup(PyObject *type)
+    {
+        return 1;
+    }
+    
+    static PyMethodDef _loaders___balances___load_token_balance_gen_methods[] = {
+        {"__internal_mypyc_setup", (PyCFunction)CPyDef__loaders___balances_____mypyc__load_token_balance_gen_setup, METH_O, NULL},
+        {"__next__",
+         (PyCFunction)CPyPy__loaders___balances___load_token_balance_gen_____next__,
+         METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
+        {"send",
+         (PyCFunction)CPyPy__loaders___balances___load_token_balance_gen___send,
+         METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("send($arg)\n--\n\n")},
+        {"__iter__",
+         (PyCFunction)CPyPy__loaders___balances___load_token_balance_gen_____iter__,
+         METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__iter__()\n--\n\n")},
+        {"throw",
+         (PyCFunction)CPyPy__loaders___balances___load_token_balance_gen___throw,
+         METH_FASTCALL | METH_KEYWORDS, PyDoc_STR(NULL)},
+        {"close",
+         (PyCFunction)CPyPy__loaders___balances___load_token_balance_gen___close,
+         METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("close()\n--\n\n")},
+        {"__await__",
+         (PyCFunction)CPyPy__loaders___balances___load_token_balance_gen_____await__,
+         METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__await__()\n--\n\n")},
+        {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
+        {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
+        {NULL}  /* Sentinel */
     };
-    memcpy(_loaders___balances___load_token_balance_gen_vtable, _loaders___balances___load_token_balance_gen_vtable_scratch, sizeof(_loaders___balances___load_token_balance_gen_vtable));
-    return 1;
-}
-
-static PyMethodDef _loaders___balances___load_token_balance_gen_methods[] = {
-    {"__internal_mypyc_setup", (PyCFunction)CPyDef__loaders___balances_____mypyc__load_token_balance_gen_setup, METH_O, NULL},
-    {"__next__",
-     (PyCFunction)CPyPy__loaders___balances___load_token_balance_gen_____next__,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
-    {"send",
-     (PyCFunction)CPyPy__loaders___balances___load_token_balance_gen___send,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("send($arg)\n--\n\n")},
-    {"__iter__",
-     (PyCFunction)CPyPy__loaders___balances___load_token_balance_gen_____iter__,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__iter__()\n--\n\n")},
-    {"throw",
-     (PyCFunction)CPyPy__loaders___balances___load_token_balance_gen___throw,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR(NULL)},
-    {"close",
-     (PyCFunction)CPyPy__loaders___balances___load_token_balance_gen___close,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("close()\n--\n\n")},
-    {"__await__",
-     (PyCFunction)CPyPy__loaders___balances___load_token_balance_gen_____await__,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__await__()\n--\n\n")},
-    {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
-    {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
-    {NULL}  /* Sentinel */
-};
-
-static PyTypeObject CPyType__loaders___balances___load_token_balance_gen_template_ = {
-    PyVarObject_HEAD_INIT(NULL, 0)
-    .tp_name = "load_token_balance_gen",
-    .tp_new = _loaders___balances___load_token_balance_gen_new,
-    .tp_dealloc = (destructor)_loaders___balances___load_token_balance_gen_dealloc,
-    .tp_traverse = (traverseproc)_loaders___balances___load_token_balance_gen_traverse,
-    .tp_clear = (inquiry)_loaders___balances___load_token_balance_gen_clear,
-    .tp_methods = _loaders___balances___load_token_balance_gen_methods,
-    .tp_iter = CPyDef__loaders___balances___load_token_balance_gen_____iter__,
-    .tp_iternext = CPyDef__loaders___balances___load_token_balance_gen_____next__,
-    .tp_as_async = &_loaders___balances___load_token_balance_gen_as_async,
-    .tp_basicsize = sizeof(eth_portfolio____loaders___balances___load_token_balance_genObject),
-    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
-    .tp_doc = PyDoc_STR("load_token_balance_gen()\n--\n\n"),
-};
-static PyTypeObject *CPyType__loaders___balances___load_token_balance_gen_template = &CPyType__loaders___balances___load_token_balance_gen_template_;
-
-PyObject *CPyDef__loaders___balances_____mypyc__load_token_balance_gen_setup(PyObject *cpy_r_type)
-{
-    PyTypeObject *type = (PyTypeObject*)cpy_r_type;
-    eth_portfolio____loaders___balances___load_token_balance_genObject *self;
-    if (_loaders___balances___load_token_balance_gen_free_instance != NULL) {
-        self = _loaders___balances___load_token_balance_gen_free_instance;
-        _loaders___balances___load_token_balance_gen_free_instance = NULL;
-        Py_SET_REFCNT(self, 1);
-        PyObject_GC_Track(self);
+    
+    static PyTypeObject CPyType__loaders___balances___load_token_balance_gen_template_ = {
+        PyVarObject_HEAD_INIT(NULL, 0)
+        .tp_name = "load_token_balance_gen",
+        .tp_new = _loaders___balances___load_token_balance_gen_new,
+        .tp_dealloc = (destructor)_loaders___balances___load_token_balance_gen_dealloc,
+        .tp_traverse = (traverseproc)_loaders___balances___load_token_balance_gen_traverse,
+        .tp_clear = (inquiry)_loaders___balances___load_token_balance_gen_clear,
+        .tp_methods = _loaders___balances___load_token_balance_gen_methods,
+        .tp_iter = CPyDef__loaders___balances___load_token_balance_gen_____iter__,
+        .tp_iternext = CPyDef__loaders___balances___load_token_balance_gen_____next__,
+        .tp_as_async = &_loaders___balances___load_token_balance_gen_as_async,
+        .tp_basicsize = sizeof(eth_portfolio____loaders___balances___load_token_balance_genObject),
+        .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
+        .tp_doc = PyDoc_STR("load_token_balance_gen()\n--\n\n"),
+    };
+    static PyTypeObject *CPyType__loaders___balances___load_token_balance_gen_template = &CPyType__loaders___balances___load_token_balance_gen_template_;
+    
+    PyObject *CPyDef__loaders___balances_____mypyc__load_token_balance_gen_setup(PyObject *cpy_r_type)
+    {
+        PyTypeObject *type = (PyTypeObject*)cpy_r_type;
+        eth_portfolio____loaders___balances___load_token_balance_genObject *self;
+        if (_loaders___balances___load_token_balance_gen_free_instance != NULL) {
+            self = _loaders___balances___load_token_balance_gen_free_instance;
+            _loaders___balances___load_token_balance_gen_free_instance = NULL;
+            Py_SET_REFCNT(self, 1);
+            PyObject_GC_Track(self);
+            return (PyObject *)self;
+        }
+        self = (eth_portfolio____loaders___balances___load_token_balance_genObject *)type->tp_alloc(type, 0);
+        if (self == NULL)
+            return NULL;
+        self->vtable = _loaders___balances___load_token_balance_gen_vtable;
+        self->___mypyc_next_label__ = -113;
+        self->___mypyc_temp__1 = (tuple_T3OOO) { NULL, NULL, NULL };
+        self->___mypyc_temp__2 = (tuple_T3OOO) { NULL, NULL, NULL };
+        self->___mypyc_temp__4 = (tuple_T3OOO) { NULL, NULL, NULL };
         return (PyObject *)self;
     }
-    self = (eth_portfolio____loaders___balances___load_token_balance_genObject *)type->tp_alloc(type, 0);
-    if (self == NULL)
-        return NULL;
-    self->vtable = _loaders___balances___load_token_balance_gen_vtable;
-    self->___mypyc_next_label__ = -113;
-    self->___mypyc_temp__1 = (tuple_T3OOO) { NULL, NULL, NULL };
-    self->___mypyc_temp__2 = (tuple_T3OOO) { NULL, NULL, NULL };
-    self->___mypyc_temp__4 = (tuple_T3OOO) { NULL, NULL, NULL };
-    return (PyObject *)self;
-}
-
-PyObject *CPyDef__loaders___balances___load_token_balance_gen(void)
-{
-    PyObject *self = CPyDef__loaders___balances_____mypyc__load_token_balance_gen_setup((PyObject *)CPyType__loaders___balances___load_token_balance_gen);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
-static PyMethodDef _loaders___balancesmodule_methods[] = {
-    {"load_token_balance", (PyCFunction)CPyPy__loaders___balances___load_token_balance, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("load_token_balance(token, address, block)\n--\n\n") /* docstring */},
-    {"_calc_value", (PyCFunction)CPyPy__loaders___balances____calc_value, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("_calc_value(balance, price)\n--\n\n") /* docstring */},
-    {"round", (PyCFunction)CPyPy__loaders___balances___round, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("round(value, digits)\n--\n\n") /* docstring */},
-    {NULL, NULL, 0, NULL}
-};
-
-int CPyExec_eth_portfolio____loaders___balances(PyObject *module)
-{
-    PyObject* modname = NULL;
-    modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio____loaders___balances__internal, "__name__");
-    CPyStatic__loaders___balances___globals = PyModule_GetDict(CPyModule_eth_portfolio____loaders___balances__internal);
-    if (unlikely(CPyStatic__loaders___balances___globals == NULL))
-        goto fail;
-    CPyType__loaders___balances___load_token_balance_gen = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType__loaders___balances___load_token_balance_gen_template, NULL, modname);
-    if (unlikely(!CPyType__loaders___balances___load_token_balance_gen))
-        goto fail;
-    CPyDef__loaders___balances___load_token_balance_gen_trait_vtable_setup();
-    if (CPyGlobalsInit() < 0)
-        goto fail;
-    char result = CPyDef__loaders___balances_____top_level__();
-    if (result == 2)
-        goto fail;
-    Py_DECREF(modname);
-    return 0;
-    fail:
-    Py_CLEAR(CPyModule_eth_portfolio____loaders___balances__internal);
-    Py_CLEAR(modname);
-    CPy_XDECREF(CPyStatic__loaders___balances____ZERO);
-    CPyStatic__loaders___balances____ZERO = NULL;
-    CPy_XDECREF(CPyStatic__loaders___balances___logger);
-    CPyStatic__loaders___balances___logger = NULL;
-    CPy_XDECREF(CPyStatic__loaders___balances___rounding_logger);
-    CPyStatic__loaders___balances___rounding_logger = NULL;
-    CPy_XDECREF(CPyStatic__loaders___balances____builtin_round);
-    CPyStatic__loaders___balances____builtin_round = NULL;
-    Py_CLEAR(CPyType__loaders___balances___load_token_balance_gen);
-    return -1;
-}
-static struct PyModuleDef _loaders___balancesmodule = {
-    PyModuleDef_HEAD_INIT,
-    "eth_portfolio._loaders.balances",
-    NULL, /* docstring */
-    0,       /* size of per-interpreter state of the module */
-    _loaders___balancesmodule_methods,
-    NULL,
-};
-
-PyObject *CPyInit_eth_portfolio____loaders___balances(void)
-{
-    if (CPyModule_eth_portfolio____loaders___balances__internal) {
-        Py_INCREF(CPyModule_eth_portfolio____loaders___balances__internal);
+    
+    PyObject *CPyDef__loaders___balances___load_token_balance_gen(void)
+    {
+        PyObject *self = CPyDef__loaders___balances_____mypyc__load_token_balance_gen_setup((PyObject *)CPyType__loaders___balances___load_token_balance_gen);
+        if (self == NULL)
+            return NULL;
+        return self;
+    }
+    
+    static PyMethodDef _loaders___balancesmodule_methods[] = {
+        {"_calc_value", (PyCFunction)CPyPy__loaders___balances____calc_value, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("_calc_value(balance, price)\n--\n\n") /* docstring */},
+        {"round", (PyCFunction)CPyPy__loaders___balances___round, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("round(value, digits)\n--\n\n") /* docstring */},
+        {NULL, NULL, 0, NULL}
+    };
+    
+    int CPyExec_eth_portfolio____loaders___balances(PyObject *module)
+    {
+        intern_strings();
+        PyObject* modname = NULL;
+        modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio____loaders___balances__internal, "__name__");
+        CPyStatic__loaders___balances___globals = PyModule_GetDict(CPyModule_eth_portfolio____loaders___balances__internal);
+        if (unlikely(CPyStatic__loaders___balances___globals == NULL))
+            goto fail;
+        PyObject* CPyPy__loaders___balances___load_token_balance_wrapper = CPyFunction_New(CPyModule_eth_portfolio____loaders___balances, "eth_portfolio/_loaders/balances.py", "load_token_balance", (PyCFunction)CPyPy__loaders___balances___load_token_balance, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("load_token_balance(token, address, block)\n--\n\n"), 20, CO_COROUTINE, false);
+        if (unlikely(!CPyPy__loaders___balances___load_token_balance_wrapper))
+            goto fail;
+        PyObject *CPyPy__loaders___balances___load_token_balance_wrapper_name = PyUnicode_FromString("load_token_balance");
+        if (unlikely(!CPyPy__loaders___balances___load_token_balance_wrapper_name))
+            goto fail;
+        if (PyDict_SetItem(CPyStatic__loaders___balances___globals, CPyPy__loaders___balances___load_token_balance_wrapper_name, (PyObject *)CPyPy__loaders___balances___load_token_balance_wrapper) < 0)
+            goto fail;
+        CPyType__loaders___balances___load_token_balance_gen = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType__loaders___balances___load_token_balance_gen_template, NULL, modname);
+        if (unlikely(!CPyType__loaders___balances___load_token_balance_gen))
+            goto fail;
+        CPyDef__loaders___balances___load_token_balance_gen_trait_vtable_setup();
+        if (CPyGlobalsInit() < 0)
+            goto fail;
+        char result = CPyDef__loaders___balances_____top_level__();
+        if (result == 2)
+            goto fail;
+        Py_DECREF(modname);
+        return 0;
+        fail:
+        Py_CLEAR(CPyModule_eth_portfolio____loaders___balances__internal);
+        Py_CLEAR(modname);
+        CPy_XDECREF(CPyStatic__loaders___balances____ZERO);
+        CPyStatic__loaders___balances____ZERO = NULL;
+        CPy_XDECREF(CPyStatic__loaders___balances___logger);
+        CPyStatic__loaders___balances___logger = NULL;
+        CPy_XDECREF(CPyStatic__loaders___balances___rounding_logger);
+        CPyStatic__loaders___balances___rounding_logger = NULL;
+        CPy_XDECREF(CPyStatic__loaders___balances____builtin_round);
+        CPyStatic__loaders___balances____builtin_round = NULL;
+        Py_CLEAR(CPyType__loaders___balances___load_token_balance_gen);
+        return -1;
+    }
+    static struct PyModuleDef _loaders___balancesmodule = {
+        PyModuleDef_HEAD_INIT,
+        "eth_portfolio._loaders.balances",
+        NULL, /* docstring */
+        0,       /* size of per-interpreter state of the module */
+        _loaders___balancesmodule_methods,
+        NULL,
+    };
+    
+    PyObject *CPyInitOnly_eth_portfolio____loaders___balances(void)
+    {
+        if (CPyModule_eth_portfolio____loaders___balances__internal) {
+            Py_INCREF(CPyModule_eth_portfolio____loaders___balances__internal);
+            return CPyModule_eth_portfolio____loaders___balances__internal;
+        }
+        CPyModule_eth_portfolio____loaders___balances__internal = PyModule_Create(&_loaders___balancesmodule);
         return CPyModule_eth_portfolio____loaders___balances__internal;
     }
-    CPyModule_eth_portfolio____loaders___balances__internal = PyModule_Create(&_loaders___balancesmodule);
-    if (unlikely(CPyModule_eth_portfolio____loaders___balances__internal == NULL))
-        goto fail;
-    if (CPyExec_eth_portfolio____loaders___balances(CPyModule_eth_portfolio____loaders___balances__internal) != 0)
-        goto fail;
-    return CPyModule_eth_portfolio____loaders___balances__internal;
-    fail:
-    return NULL;
-}
-
+    
+    PyObject *CPyInit_eth_portfolio____loaders___balances(void)
+    {
+        PyObject* modname = NULL;
+        if (CPyModule_eth_portfolio____loaders___balances__internal) {
+            Py_INCREF(CPyModule_eth_portfolio____loaders___balances__internal);
+            return CPyModule_eth_portfolio____loaders___balances__internal;
+        }
+        CPyModule_eth_portfolio____loaders___balances__internal = PyModule_Create(&_loaders___balancesmodule);
+        if (unlikely(CPyModule_eth_portfolio____loaders___balances__internal == NULL))
+            goto fail;
+        modname = PyUnicode_FromString("eth_portfolio._loaders.balances");
+        if (modname == NULL) CPyError_OutOfMemory();
+        if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio____loaders___balances__internal) < 0)
+            goto fail;
+        Py_CLEAR(modname);
+        if (CPyExec_eth_portfolio____loaders___balances(CPyModule_eth_portfolio____loaders___balances__internal) != 0)
+            goto fail;
+        return CPyModule_eth_portfolio____loaders___balances__internal;
+        fail:
+        {
+                PyObject *exc_type, *exc_val, *exc_tb;
+                PyErr_Fetch(&exc_type, &exc_val, &exc_tb);
+                if (modname == NULL) {
+                        modname = PyUnicode_FromString("eth_portfolio._loaders.balances");
+                        if (modname == NULL) CPyError_OutOfMemory();
+                    }
+                    PyObject_DelItem(PyImport_GetModuleDict(), modname);
+                    PyErr_Clear();
+                    Py_DECREF(modname);
+                    Py_CLEAR(CPyModule_eth_portfolio____loaders___balances__internal);
+                    PyErr_Restore(exc_type, exc_val, exc_tb);
+            }
+            return NULL;
+        }
+        
 PyObject *CPyDef__loaders___balances___load_token_balance_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -11981,13 +11992,10 @@ CPyL7: ;
     }
     ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0 = cpy_r_r16;
     cpy_r_r17 = 1;
-    if (unlikely(!cpy_r_r17)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "load_token_balance", -1, CPyStatic__loaders___balances___globals);
-        goto CPyL37;
-    }
+    if (!cpy_r_r17) goto CPyL37;
     cpy_r_r18 = ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
     if (unlikely(cpy_r_r18 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__0", -1, CPyStatic__loaders___balances___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__0", 44, CPyStatic__loaders___balances___globals);
         goto CPyL37;
     }
     CPy_INCREF(cpy_r_r18);
@@ -12041,14 +12049,11 @@ CPyL20: ;
     }
     ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1 = cpy_r_r28;
     cpy_r_r29 = 1;
-    if (unlikely(!cpy_r_r29)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "load_token_balance", -1, CPyStatic__loaders___balances___globals);
-        goto CPyL131;
-    }
+    if (!cpy_r_r29) goto CPyL131;
     cpy_r_r30 = (PyObject **)&cpy_r_r1;
     cpy_r_r31 = ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
     if (unlikely(cpy_r_r31 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__0", -1, CPyStatic__loaders___balances___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__0", 44, CPyStatic__loaders___balances___globals);
         goto CPyL131;
     }
     CPy_INCREF(cpy_r_r31);
@@ -12063,7 +12068,7 @@ CPyL22: ;
     cpy_r_r24 = cpy_r_r1;
     cpy_r_r33 = ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
     if (unlikely(cpy_r_r33.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__1", -1, CPyStatic__loaders___balances___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__1", 44, CPyStatic__loaders___balances___globals);
         goto CPyL132;
     }
     CPy_INCREF(cpy_r_r33.f0);
@@ -12079,7 +12084,7 @@ CPyL26: ;
     cpy_r_r21 = cpy_r_r1;
     cpy_r_r34 = ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
     if (unlikely(cpy_r_r34.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__1", -1, CPyStatic__loaders___balances___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__1", 44, CPyStatic__loaders___balances___globals);
         goto CPyL133;
     }
     CPy_INCREF(cpy_r_r34.f0);
@@ -12094,7 +12099,7 @@ CPyL27: ;
 CPyL28: ;
     cpy_r_r35 = ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
     if (unlikely(cpy_r_r35.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__1", -1, CPyStatic__loaders___balances___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__1", 44, CPyStatic__loaders___balances___globals);
         goto CPyL37;
     }
     CPy_INCREF(cpy_r_r35.f0);
@@ -12111,7 +12116,7 @@ CPyL29: ;
 CPyL31: ;
     cpy_r_r37 = ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
     if (unlikely(cpy_r_r37 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__0", -1, CPyStatic__loaders___balances___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__0", 44, CPyStatic__loaders___balances___globals);
         goto CPyL134;
     }
     CPy_INCREF(cpy_r_r37);
@@ -12148,10 +12153,7 @@ CPyL37: ;
     }
     ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__2 = cpy_r_r41;
     cpy_r_r42 = 1;
-    if (unlikely(!cpy_r_r42)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "load_token_balance", -1, CPyStatic__loaders___balances___globals);
-        goto CPyL54;
-    }
+    if (!cpy_r_r42) goto CPyL54;
     cpy_r_r43 = CPyStatic__loaders___balances___globals;
     cpy_r_r44 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'y' */
     cpy_r_r45 = CPyDict_GetItem(cpy_r_r43, cpy_r_r44);
@@ -12161,13 +12163,13 @@ CPyL37: ;
     }
     cpy_r_r46 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'NonStandardERC20' */
     cpy_r_r47 = CPyObject_GetAttr(cpy_r_r45, cpy_r_r46);
-    CPy_DecRef(cpy_r_r45);
+    CPy_DECREF(cpy_r_r45);
     if (unlikely(cpy_r_r47 == NULL)) {
         CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "load_token_balance", DIFFCHECK_PLACEHOLDER, CPyStatic__loaders___balances___globals);
         goto CPyL54;
     }
     cpy_r_r48 = CPy_ExceptionMatches(cpy_r_r47);
-    CPy_DecRef(cpy_r_r47);
+    CPy_DECREF(cpy_r_r47);
     if (!cpy_r_r48) goto CPyL50;
     cpy_r_r49 = CPyStatic__loaders___balances___logger;
     if (likely(cpy_r_r49 != NULL)) goto CPyL44;
@@ -12197,7 +12199,7 @@ CPyL45: ;
     } else
         goto CPyL136;
 CPyL46: ;
-    CPy_DecRef(cpy_r_r52);
+    CPy_DECREF(cpy_r_r52);
     cpy_r_r57 = CPyStatic__loaders___balances____ZERO;
     if (likely(cpy_r_r57 != NULL)) goto CPyL49;
     PyErr_SetString(PyExc_NameError, "value for final name \"_ZERO\" was not set");
@@ -12226,7 +12228,7 @@ CPyL50: ;
 CPyL52: ;
     cpy_r_r60 = ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__2;
     if (unlikely(cpy_r_r60.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__2", -1, CPyStatic__loaders___balances___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__2", 43, CPyStatic__loaders___balances___globals);
         goto CPyL124;
     }
     CPy_INCREF(cpy_r_r60.f0);
@@ -12234,14 +12236,14 @@ CPyL52: ;
     CPy_INCREF(cpy_r_r60.f2);
 CPyL53: ;
     CPy_RestoreExcInfo(cpy_r_r60);
-    CPy_DecRef(cpy_r_r60.f0);
-    CPy_DecRef(cpy_r_r60.f1);
-    CPy_DecRef(cpy_r_r60.f2);
+    CPy_DECREF(cpy_r_r60.f0);
+    CPy_DECREF(cpy_r_r60.f1);
+    CPy_DECREF(cpy_r_r60.f2);
     goto CPyL57;
 CPyL54: ;
     cpy_r_r61 = ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__2;
     if (unlikely(cpy_r_r61.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__2", -1, CPyStatic__loaders___balances___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__2", 43, CPyStatic__loaders___balances___globals);
         goto CPyL124;
     }
     CPy_INCREF(cpy_r_r61.f0);
@@ -12249,9 +12251,9 @@ CPyL54: ;
     CPy_INCREF(cpy_r_r61.f2);
 CPyL55: ;
     CPy_RestoreExcInfo(cpy_r_r61);
-    CPy_DecRef(cpy_r_r61.f0);
-    CPy_DecRef(cpy_r_r61.f1);
-    CPy_DecRef(cpy_r_r61.f2);
+    CPy_DECREF(cpy_r_r61.f0);
+    CPy_DECREF(cpy_r_r61.f1);
+    CPy_DECREF(cpy_r_r61.f2);
     cpy_r_r62 = CPy_KeepPropagating();
     if (!cpy_r_r62) goto CPyL124;
     CPy_Unreachable();
@@ -12379,13 +12381,10 @@ CPyL74: ;
     }
     ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3 = cpy_r_r89;
     cpy_r_r90 = 1;
-    if (unlikely(!cpy_r_r90)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "load_token_balance", -1, CPyStatic__loaders___balances___globals);
-        goto CPyL124;
-    }
+    if (!cpy_r_r90) goto CPyL124;
     cpy_r_r91 = ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3;
     if (unlikely(cpy_r_r91 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__3", -1, CPyStatic__loaders___balances___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__3", 51, CPyStatic__loaders___balances___globals);
         goto CPyL124;
     }
     CPy_INCREF(cpy_r_r91);
@@ -12439,14 +12438,11 @@ CPyL88: ;
     }
     ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4 = cpy_r_r101;
     cpy_r_r102 = 1;
-    if (unlikely(!cpy_r_r102)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "load_token_balance", -1, CPyStatic__loaders___balances___globals);
-        goto CPyL144;
-    }
+    if (!cpy_r_r102) goto CPyL144;
     cpy_r_r103 = (PyObject **)&cpy_r_r3;
     cpy_r_r104 = ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3;
     if (unlikely(cpy_r_r104 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__3", -1, CPyStatic__loaders___balances___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__3", 51, CPyStatic__loaders___balances___globals);
         goto CPyL144;
     }
     CPy_INCREF(cpy_r_r104);
@@ -12461,7 +12457,7 @@ CPyL90: ;
     cpy_r_r97 = cpy_r_r3;
     cpy_r_r106 = ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4;
     if (unlikely(cpy_r_r106.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__4", -1, CPyStatic__loaders___balances___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__4", 51, CPyStatic__loaders___balances___globals);
         goto CPyL145;
     }
     CPy_INCREF(cpy_r_r106.f0);
@@ -12477,7 +12473,7 @@ CPyL94: ;
     cpy_r_r94 = cpy_r_r3;
     cpy_r_r107 = ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4;
     if (unlikely(cpy_r_r107.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__4", -1, CPyStatic__loaders___balances___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__4", 51, CPyStatic__loaders___balances___globals);
         goto CPyL146;
     }
     CPy_INCREF(cpy_r_r107.f0);
@@ -12492,7 +12488,7 @@ CPyL95: ;
 CPyL96: ;
     cpy_r_r108 = ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4;
     if (unlikely(cpy_r_r108.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__4", -1, CPyStatic__loaders___balances___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__4", 51, CPyStatic__loaders___balances___globals);
         goto CPyL124;
     }
     CPy_INCREF(cpy_r_r108.f0);
@@ -12509,7 +12505,7 @@ CPyL97: ;
 CPyL99: ;
     cpy_r_r110 = ((eth_portfolio____loaders___balances___load_token_balance_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3;
     if (unlikely(cpy_r_r110 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__3", -1, CPyStatic__loaders___balances___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/balances.py", "load_token_balance", "load_token_balance_gen", "__mypyc_temp__3", 51, CPyStatic__loaders___balances___globals);
         goto CPyL147;
     }
     CPy_INCREF(cpy_r_r110);
@@ -12676,7 +12672,7 @@ CPyL135: ;
     CPy_DecRef(cpy_r_r52);
     goto CPyL54;
 CPyL136: ;
-    CPy_DecRef(cpy_r_r56);
+    CPy_DECREF(cpy_r_r56);
     goto CPyL46;
 CPyL137: ;
     CPy_DecRef(cpy_r_r71);
@@ -12749,7 +12745,7 @@ CPyL156: ;
     CPy_XDECREF(cpy_r_r3);
     goto CPyL122;
 }
-
+        
 PyObject *CPyDef__loaders___balances___load_token_balance_gen_____next__(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -12762,28 +12758,28 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy__loaders___balances___load_token_balance_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__next__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__loaders___balances___load_token_balance_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders.balances.load_token_balance_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__loaders___balances___load_token_balance_gen_____next__(arg___mypyc_self__);
-    return retval;
+        
+        PyObject *CPyPy__loaders___balances___load_token_balance_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+            PyObject *obj___mypyc_self__ = self;
+            static const char * const kwlist[] = {0};
+            static CPyArg_Parser parser = {":__next__", kwlist, 0};
+            if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                return NULL;
+            }
+            PyObject *arg___mypyc_self__;
+            if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__loaders___balances___load_token_balance_gen))
+                arg___mypyc_self__ = obj___mypyc_self__;
+            else {
+                CPy_TypeError("eth_portfolio._loaders.balances.load_token_balance_gen", obj___mypyc_self__); 
+                goto fail;
+            }
+            PyObject *retval = CPyDef__loaders___balances___load_token_balance_gen_____next__(arg___mypyc_self__);
+            return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "__next__", -1, CPyStatic__loaders___balances___globals);
-    return NULL;
-}
-
+            CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "__next__", -1, CPyStatic__loaders___balances___globals);
+            return NULL;
+        }
+        
 PyObject *CPyDef__loaders___balances___load_token_balance_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -12796,56 +12792,56 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy__loaders___balances___load_token_balance_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"arg", 0};
-    static CPyArg_Parser parser = {"O:send", kwlist, 0};
-    PyObject *obj_arg;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__loaders___balances___load_token_balance_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders.balances.load_token_balance_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_arg = obj_arg;
-    PyObject *retval = CPyDef__loaders___balances___load_token_balance_gen___send(arg___mypyc_self__, arg_arg);
-    return retval;
+        
+        PyObject *CPyPy__loaders___balances___load_token_balance_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+            PyObject *obj___mypyc_self__ = self;
+            static const char * const kwlist[] = {"arg", 0};
+            static CPyArg_Parser parser = {"O:send", kwlist, 0};
+            PyObject *obj_arg;
+            if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
+                return NULL;
+            }
+            PyObject *arg___mypyc_self__;
+            if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__loaders___balances___load_token_balance_gen))
+                arg___mypyc_self__ = obj___mypyc_self__;
+            else {
+                CPy_TypeError("eth_portfolio._loaders.balances.load_token_balance_gen", obj___mypyc_self__); 
+                goto fail;
+            }
+            PyObject *arg_arg = obj_arg;
+            PyObject *retval = CPyDef__loaders___balances___load_token_balance_gen___send(arg___mypyc_self__, arg_arg);
+            return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "send", -1, CPyStatic__loaders___balances___globals);
-    return NULL;
-}
-
+            CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "send", -1, CPyStatic__loaders___balances___globals);
+            return NULL;
+        }
+        
 PyObject *CPyDef__loaders___balances___load_token_balance_gen_____iter__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy__loaders___balances___load_token_balance_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__iter__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__loaders___balances___load_token_balance_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders.balances.load_token_balance_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__loaders___balances___load_token_balance_gen_____iter__(arg___mypyc_self__);
-    return retval;
+        
+        PyObject *CPyPy__loaders___balances___load_token_balance_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+            PyObject *obj___mypyc_self__ = self;
+            static const char * const kwlist[] = {0};
+            static CPyArg_Parser parser = {":__iter__", kwlist, 0};
+            if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                return NULL;
+            }
+            PyObject *arg___mypyc_self__;
+            if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__loaders___balances___load_token_balance_gen))
+                arg___mypyc_self__ = obj___mypyc_self__;
+            else {
+                CPy_TypeError("eth_portfolio._loaders.balances.load_token_balance_gen", obj___mypyc_self__); 
+                goto fail;
+            }
+            PyObject *retval = CPyDef__loaders___balances___load_token_balance_gen_____iter__(arg___mypyc_self__);
+            return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "__iter__", -1, CPyStatic__loaders___balances___globals);
-    return NULL;
-}
-
+            CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "__iter__", -1, CPyStatic__loaders___balances___globals);
+            return NULL;
+        }
+        
 PyObject *CPyDef__loaders___balances___load_token_balance_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -12874,44 +12870,44 @@ CPyL8: ;
     CPy_INCREF(cpy_r_traceback);
     goto CPyL4;
 }
-
-PyObject *CPyPy__loaders___balances___load_token_balance_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"type", "value", "traceback", 0};
-    static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
-    PyObject *obj_type;
-    PyObject *obj_value = NULL;
-    PyObject *obj_traceback = NULL;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__loaders___balances___load_token_balance_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders.balances.load_token_balance_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_type = obj_type;
-    PyObject *arg_value;
-    if (obj_value == NULL) {
-        arg_value = NULL;
-    } else {
-        arg_value = obj_value; 
-    }
-    PyObject *arg_traceback;
-    if (obj_traceback == NULL) {
-        arg_traceback = NULL;
-    } else {
-        arg_traceback = obj_traceback; 
-    }
-    PyObject *retval = CPyDef__loaders___balances___load_token_balance_gen___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
-    return retval;
+        
+        PyObject *CPyPy__loaders___balances___load_token_balance_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+            PyObject *obj___mypyc_self__ = self;
+            static const char * const kwlist[] = {"type", "value", "traceback", 0};
+            static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
+            PyObject *obj_type;
+            PyObject *obj_value = NULL;
+            PyObject *obj_traceback = NULL;
+            if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
+                return NULL;
+            }
+            PyObject *arg___mypyc_self__;
+            if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__loaders___balances___load_token_balance_gen))
+                arg___mypyc_self__ = obj___mypyc_self__;
+            else {
+                CPy_TypeError("eth_portfolio._loaders.balances.load_token_balance_gen", obj___mypyc_self__); 
+                goto fail;
+            }
+            PyObject *arg_type = obj_type;
+            PyObject *arg_value;
+            if (obj_value == NULL) {
+                arg_value = NULL;
+            } else {
+                arg_value = obj_value; 
+            }
+            PyObject *arg_traceback;
+            if (obj_traceback == NULL) {
+                arg_traceback = NULL;
+            } else {
+                arg_traceback = obj_traceback; 
+            }
+            PyObject *retval = CPyDef__loaders___balances___load_token_balance_gen___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
+            return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "throw", -1, CPyStatic__loaders___balances___globals);
-    return NULL;
-}
-
+            CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "throw", -1, CPyStatic__loaders___balances___globals);
+            return NULL;
+        }
+        
 PyObject *CPyDef__loaders___balances___load_token_balance_gen___close(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -12990,54 +12986,54 @@ CPyL13: ;
     CPy_DECREF(cpy_r_r6.f2);
     goto CPyL6;
 }
-
-PyObject *CPyPy__loaders___balances___load_token_balance_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":close", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__loaders___balances___load_token_balance_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders.balances.load_token_balance_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__loaders___balances___load_token_balance_gen___close(arg___mypyc_self__);
-    return retval;
+        
+        PyObject *CPyPy__loaders___balances___load_token_balance_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+            PyObject *obj___mypyc_self__ = self;
+            static const char * const kwlist[] = {0};
+            static CPyArg_Parser parser = {":close", kwlist, 0};
+            if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                return NULL;
+            }
+            PyObject *arg___mypyc_self__;
+            if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__loaders___balances___load_token_balance_gen))
+                arg___mypyc_self__ = obj___mypyc_self__;
+            else {
+                CPy_TypeError("eth_portfolio._loaders.balances.load_token_balance_gen", obj___mypyc_self__); 
+                goto fail;
+            }
+            PyObject *retval = CPyDef__loaders___balances___load_token_balance_gen___close(arg___mypyc_self__);
+            return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "close", -1, CPyStatic__loaders___balances___globals);
-    return NULL;
-}
-
+            CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "close", -1, CPyStatic__loaders___balances___globals);
+            return NULL;
+        }
+        
 PyObject *CPyDef__loaders___balances___load_token_balance_gen_____await__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy__loaders___balances___load_token_balance_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__await__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__loaders___balances___load_token_balance_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders.balances.load_token_balance_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef__loaders___balances___load_token_balance_gen_____await__(arg___mypyc_self__);
-    return retval;
+        
+        PyObject *CPyPy__loaders___balances___load_token_balance_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+            PyObject *obj___mypyc_self__ = self;
+            static const char * const kwlist[] = {0};
+            static CPyArg_Parser parser = {":__await__", kwlist, 0};
+            if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                return NULL;
+            }
+            PyObject *arg___mypyc_self__;
+            if (likely(Py_TYPE(obj___mypyc_self__) == CPyType__loaders___balances___load_token_balance_gen))
+                arg___mypyc_self__ = obj___mypyc_self__;
+            else {
+                CPy_TypeError("eth_portfolio._loaders.balances.load_token_balance_gen", obj___mypyc_self__); 
+                goto fail;
+            }
+            PyObject *retval = CPyDef__loaders___balances___load_token_balance_gen_____await__(arg___mypyc_self__);
+            return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "__await__", -1, CPyStatic__loaders___balances___globals);
-    return NULL;
-}
-
+            CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "__await__", -1, CPyStatic__loaders___balances___globals);
+            return NULL;
+        }
+        
 PyObject *CPyDef__loaders___balances___load_token_balance(PyObject *cpy_r_token, PyObject *cpy_r_address, PyObject *cpy_r_block) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
@@ -13089,26 +13085,26 @@ CPyL6: ;
     CPy_DecRef(cpy_r_r0);
     goto CPyL5;
 }
-
-PyObject *CPyPy__loaders___balances___load_token_balance(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"token", "address", "block", 0};
-    static CPyArg_Parser parser = {"OOO:load_token_balance", kwlist, 0};
-    PyObject *obj_token;
-    PyObject *obj_address;
-    PyObject *obj_block;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_token, &obj_address, &obj_block)) {
-        return NULL;
-    }
-    PyObject *arg_token = obj_token;
-    PyObject *arg_address = obj_address;
-    PyObject *arg_block = obj_block;
-    PyObject *retval = CPyDef__loaders___balances___load_token_balance(arg_token, arg_address, arg_block);
-    return retval;
+        
+        PyObject *CPyPy__loaders___balances___load_token_balance(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+            static const char * const kwlist[] = {"token", "address", "block", 0};
+            static CPyArg_Parser parser = {"OOO:load_token_balance", kwlist, 0};
+            PyObject *obj_token;
+            PyObject *obj_address;
+            PyObject *obj_block;
+            if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_token, &obj_address, &obj_block)) {
+                return NULL;
+            }
+            PyObject *arg_token = obj_token;
+            PyObject *arg_address = obj_address;
+            PyObject *arg_block = obj_block;
+            PyObject *retval = CPyDef__loaders___balances___load_token_balance(arg_token, arg_address, arg_block);
+            return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "load_token_balance", DIFFCHECK_PLACEHOLDER, CPyStatic__loaders___balances___globals);
-    return NULL;
-}
-
+            CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "load_token_balance", DIFFCHECK_PLACEHOLDER, CPyStatic__loaders___balances___globals);
+            return NULL;
+        }
+        
 PyObject *CPyDef__loaders___balances____calc_value(PyObject *cpy_r_balance, PyObject *cpy_r_price) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
@@ -13194,64 +13190,64 @@ CPyL13: ;
     CPy_DecRef(cpy_r_r9);
     goto CPyL12;
 }
-
-PyObject *CPyPy__loaders___balances____calc_value(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"balance", "price", 0};
-    static CPyArg_Parser parser = {"OO:_calc_value", kwlist, 0};
-    PyObject *obj_balance;
-    PyObject *obj_price;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_balance, &obj_price)) {
-        return NULL;
-    }
-    PyObject *arg_balance;
-    if (PyLong_Check(obj_balance))
-        arg_balance = obj_balance;
-    else {
-        arg_balance = NULL;
-    }
-    if (arg_balance != NULL) goto __LL40;
-    if (CPyFloat_Check(obj_balance))
-        arg_balance = obj_balance;
-    else {
-        arg_balance = NULL;
-    }
-    if (arg_balance != NULL) goto __LL40;
-    arg_balance = obj_balance;
-    if (arg_balance != NULL) goto __LL40;
-    CPy_TypeError("union[int, float, object]", obj_balance); 
-    goto fail;
+        
+        PyObject *CPyPy__loaders___balances____calc_value(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+            static const char * const kwlist[] = {"balance", "price", 0};
+            static CPyArg_Parser parser = {"OO:_calc_value", kwlist, 0};
+            PyObject *obj_balance;
+            PyObject *obj_price;
+            if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_balance, &obj_price)) {
+                return NULL;
+            }
+            PyObject *arg_balance;
+            if (PyLong_Check(obj_balance))
+                arg_balance = obj_balance;
+            else {
+                arg_balance = NULL;
+            }
+            if (arg_balance != NULL) goto __LL40;
+            if (CPyFloat_Check(obj_balance))
+                arg_balance = obj_balance;
+            else {
+                arg_balance = NULL;
+            }
+            if (arg_balance != NULL) goto __LL40;
+            arg_balance = obj_balance;
+            if (arg_balance != NULL) goto __LL40;
+            CPy_TypeError("union[int, float, object]", obj_balance); 
+            goto fail;
 __LL40: ;
-    PyObject *arg_price;
-    if (PyLong_Check(obj_price))
-        arg_price = obj_price;
-    else {
-        arg_price = NULL;
-    }
-    if (arg_price != NULL) goto __LL41;
-    if (CPyFloat_Check(obj_price))
-        arg_price = obj_price;
-    else {
-        arg_price = NULL;
-    }
-    if (arg_price != NULL) goto __LL41;
-    arg_price = obj_price;
-    if (arg_price != NULL) goto __LL41;
-    if (obj_price == Py_None)
-        arg_price = obj_price;
-    else {
-        arg_price = NULL;
-    }
-    if (arg_price != NULL) goto __LL41;
-    CPy_TypeError("union[int, float, object, None]", obj_price); 
-    goto fail;
+            PyObject *arg_price;
+            if (PyLong_Check(obj_price))
+                arg_price = obj_price;
+            else {
+                arg_price = NULL;
+            }
+            if (arg_price != NULL) goto __LL41;
+            if (CPyFloat_Check(obj_price))
+                arg_price = obj_price;
+            else {
+                arg_price = NULL;
+            }
+            if (arg_price != NULL) goto __LL41;
+            arg_price = obj_price;
+            if (arg_price != NULL) goto __LL41;
+            if (obj_price == Py_None)
+                arg_price = obj_price;
+            else {
+                arg_price = NULL;
+            }
+            if (arg_price != NULL) goto __LL41;
+            CPy_TypeError("union[int, float, object, None]", obj_price); 
+            goto fail;
 __LL41: ;
-    PyObject *retval = CPyDef__loaders___balances____calc_value(arg_balance, arg_price);
-    return retval;
+            PyObject *retval = CPyDef__loaders___balances____calc_value(arg_balance, arg_price);
+            return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "_calc_value", DIFFCHECK_PLACEHOLDER, CPyStatic__loaders___balances___globals);
-    return NULL;
-}
-
+            CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "_calc_value", DIFFCHECK_PLACEHOLDER, CPyStatic__loaders___balances___globals);
+            return NULL;
+        }
+        
 PyObject *CPyDef__loaders___balances___round(PyObject *cpy_r_value, CPyTagged cpy_r_digits) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
@@ -13376,29 +13372,29 @@ CPyL22: ;
     CPy_DecRef(cpy_r_r6.f2);
     goto CPyL14;
 }
-
-PyObject *CPyPy__loaders___balances___round(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"value", "digits", 0};
-    static CPyArg_Parser parser = {"OO:round", kwlist, 0};
-    PyObject *obj_value;
-    PyObject *obj_digits;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_value, &obj_digits)) {
-        return NULL;
-    }
-    PyObject *arg_value = obj_value;
-    CPyTagged arg_digits;
-    if (likely(PyLong_Check(obj_digits)))
-        arg_digits = CPyTagged_BorrowFromObject(obj_digits);
-    else {
-        CPy_TypeError("int", obj_digits); goto fail;
-    }
-    PyObject *retval = CPyDef__loaders___balances___round(arg_value, arg_digits);
-    return retval;
+        
+        PyObject *CPyPy__loaders___balances___round(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+            static const char * const kwlist[] = {"value", "digits", 0};
+            static CPyArg_Parser parser = {"OO:round", kwlist, 0};
+            PyObject *obj_value;
+            PyObject *obj_digits;
+            if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_value, &obj_digits)) {
+                return NULL;
+            }
+            PyObject *arg_value = obj_value;
+            CPyTagged arg_digits;
+            if (likely(PyLong_Check(obj_digits)))
+                arg_digits = CPyTagged_BorrowFromObject(obj_digits);
+            else {
+                CPy_TypeError("int", obj_digits); goto fail;
+            }
+            PyObject *retval = CPyDef__loaders___balances___round(arg_value, arg_digits);
+            return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "round", DIFFCHECK_PLACEHOLDER, CPyStatic__loaders___balances___globals);
-    return NULL;
-}
-
+            CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "round", DIFFCHECK_PLACEHOLDER, CPyStatic__loaders___balances___globals);
+            return NULL;
+        }
+        
 char CPyDef__loaders___balances_____top_level__(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -13506,7 +13502,7 @@ char CPyDef__loaders___balances_____top_level__(void) {
     cpy_r_r3 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'builtins' */
     cpy_r_r4 = PyImport_Import(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "<module>", -1, CPyStatic__loaders___balances___globals);
+        CPy_AddTraceback("eth_portfolio/_loaders/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__loaders___balances___globals);
         goto CPyL28;
     }
     CPyModule_builtins = cpy_r_r4;
@@ -13751,216 +13747,259 @@ CPyL29: ;
     CPy_DecRef(cpy_r_r88);
     goto CPyL28;
 }
-
-static PyAsyncMethods utils____get_transaction_receipt_gen_as_async = {
-    .am_await = CPyDef_utils____get_transaction_receipt_gen_____await__,
-};
-PyObject *CPyDef_utils_____mypyc___3_get_transaction_receipt_gen_setup(PyObject *cpy_r_type);
-PyObject *CPyDef_utils____get_transaction_receipt_gen(void);
-
-static PyObject *
-utils____get_transaction_receipt_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-{
-    if (type != CPyType_utils____get_transaction_receipt_gen) {
-        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-        return NULL;
-    }
-    PyObject *self = CPyDef_utils_____mypyc___3_get_transaction_receipt_gen_setup((PyObject*)type);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
-static int
-utils____get_transaction_receipt_gen_traverse(eth_portfolio____loaders___utils____get_transaction_receipt_genObject *self, visitproc visit, void *arg)
-{
-    Py_VISIT(self->___mypyc_generator_attribute__txhash);
-    Py_VISIT(self->___mypyc_temp__0);
-    Py_VISIT(self->___mypyc_temp__1.f0);
-    Py_VISIT(self->___mypyc_temp__1.f1);
-    Py_VISIT(self->___mypyc_temp__1.f2);
-    return 0;
-}
-
-static int
-utils____get_transaction_receipt_gen_clear(eth_portfolio____loaders___utils____get_transaction_receipt_genObject *self)
-{
-    Py_CLEAR(self->___mypyc_generator_attribute__txhash);
-    Py_CLEAR(self->___mypyc_temp__0);
-    Py_CLEAR(self->___mypyc_temp__1.f0);
-    Py_CLEAR(self->___mypyc_temp__1.f1);
-    Py_CLEAR(self->___mypyc_temp__1.f2);
-    return 0;
-}
-
-static void
-utils____get_transaction_receipt_gen_dealloc(eth_portfolio____loaders___utils____get_transaction_receipt_genObject *self)
-{
-    PyObject_GC_UnTrack(self);
-    if (utils____get_transaction_receipt_gen_free_instance == NULL) {
-        utils____get_transaction_receipt_gen_free_instance = self;
-        Py_CLEAR(self->___mypyc_generator_attribute__txhash);
-        self->___mypyc_next_label__ = -113;
-        Py_CLEAR(self->___mypyc_temp__0);
-        Py_CLEAR(self->___mypyc_temp__1.f0);
-        Py_CLEAR(self->___mypyc_temp__1.f1);
-        Py_CLEAR(self->___mypyc_temp__1.f2);
-        return;
-    }
-    CPy_TRASHCAN_BEGIN(self, utils____get_transaction_receipt_gen_dealloc)
-    utils____get_transaction_receipt_gen_clear(self);
-    Py_TYPE(self)->tp_free((PyObject *)self);
-    CPy_TRASHCAN_END(self)
-    done: ;
-}
-
-static CPyVTableItem utils____get_transaction_receipt_gen_vtable[7];
-static bool
-CPyDef_utils____get_transaction_receipt_gen_trait_vtable_setup(void)
-{
-    CPyVTableItem utils____get_transaction_receipt_gen_vtable_scratch[] = {
-        (CPyVTableItem)CPyDef_utils____get_transaction_receipt_gen_____mypyc_generator_helper__,
-        (CPyVTableItem)CPyDef_utils____get_transaction_receipt_gen_____next__,
-        (CPyVTableItem)CPyDef_utils____get_transaction_receipt_gen___send,
-        (CPyVTableItem)CPyDef_utils____get_transaction_receipt_gen_____iter__,
-        (CPyVTableItem)CPyDef_utils____get_transaction_receipt_gen___throw,
-        (CPyVTableItem)CPyDef_utils____get_transaction_receipt_gen___close,
-        (CPyVTableItem)CPyDef_utils____get_transaction_receipt_gen_____await__,
-    };
-    memcpy(utils____get_transaction_receipt_gen_vtable, utils____get_transaction_receipt_gen_vtable_scratch, sizeof(utils____get_transaction_receipt_gen_vtable));
-    return 1;
-}
-
-static PyMethodDef utils____get_transaction_receipt_gen_methods[] = {
-    {"__internal_mypyc_setup", (PyCFunction)CPyDef_utils_____mypyc___3_get_transaction_receipt_gen_setup, METH_O, NULL},
-    {"__next__",
-     (PyCFunction)CPyPy_utils____get_transaction_receipt_gen_____next__,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
-    {"send",
-     (PyCFunction)CPyPy_utils____get_transaction_receipt_gen___send,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("send($arg)\n--\n\n")},
-    {"__iter__",
-     (PyCFunction)CPyPy_utils____get_transaction_receipt_gen_____iter__,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__iter__()\n--\n\n")},
-    {"throw",
-     (PyCFunction)CPyPy_utils____get_transaction_receipt_gen___throw,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR(NULL)},
-    {"close",
-     (PyCFunction)CPyPy_utils____get_transaction_receipt_gen___close,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("close()\n--\n\n")},
-    {"__await__",
-     (PyCFunction)CPyPy_utils____get_transaction_receipt_gen_____await__,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__await__()\n--\n\n")},
-    {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
-    {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
-    {NULL}  /* Sentinel */
-};
-
-static PyTypeObject CPyType_utils____get_transaction_receipt_gen_template_ = {
-    PyVarObject_HEAD_INIT(NULL, 0)
-    .tp_name = "_get_transaction_receipt_gen",
-    .tp_new = utils____get_transaction_receipt_gen_new,
-    .tp_dealloc = (destructor)utils____get_transaction_receipt_gen_dealloc,
-    .tp_traverse = (traverseproc)utils____get_transaction_receipt_gen_traverse,
-    .tp_clear = (inquiry)utils____get_transaction_receipt_gen_clear,
-    .tp_methods = utils____get_transaction_receipt_gen_methods,
-    .tp_iter = CPyDef_utils____get_transaction_receipt_gen_____iter__,
-    .tp_iternext = CPyDef_utils____get_transaction_receipt_gen_____next__,
-    .tp_as_async = &utils____get_transaction_receipt_gen_as_async,
-    .tp_basicsize = sizeof(eth_portfolio____loaders___utils____get_transaction_receipt_genObject),
-    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
-    .tp_doc = PyDoc_STR("_get_transaction_receipt_gen()\n--\n\n"),
-};
-static PyTypeObject *CPyType_utils____get_transaction_receipt_gen_template = &CPyType_utils____get_transaction_receipt_gen_template_;
-
-PyObject *CPyDef_utils_____mypyc___3_get_transaction_receipt_gen_setup(PyObject *cpy_r_type)
-{
-    PyTypeObject *type = (PyTypeObject*)cpy_r_type;
-    eth_portfolio____loaders___utils____get_transaction_receipt_genObject *self;
-    if (utils____get_transaction_receipt_gen_free_instance != NULL) {
-        self = utils____get_transaction_receipt_gen_free_instance;
-        utils____get_transaction_receipt_gen_free_instance = NULL;
-        Py_SET_REFCNT(self, 1);
-        PyObject_GC_Track(self);
-        return (PyObject *)self;
-    }
-    self = (eth_portfolio____loaders___utils____get_transaction_receipt_genObject *)type->tp_alloc(type, 0);
-    if (self == NULL)
-        return NULL;
-    self->vtable = utils____get_transaction_receipt_gen_vtable;
-    self->___mypyc_next_label__ = -113;
-    self->___mypyc_temp__1 = (tuple_T3OOO) { NULL, NULL, NULL };
-    return (PyObject *)self;
-}
-
-PyObject *CPyDef_utils____get_transaction_receipt_gen(void)
-{
-    PyObject *self = CPyDef_utils_____mypyc___3_get_transaction_receipt_gen_setup((PyObject *)CPyType_utils____get_transaction_receipt_gen);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
-static PyMethodDef utilsmodule_methods[] = {
-    {"_get_transaction_receipt", (PyCFunction)CPyPy_utils____get_transaction_receipt, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("_get_transaction_receipt(txhash)\n--\n\n") /* docstring */},
-    {NULL, NULL, 0, NULL}
-};
-
-int CPyExec_eth_portfolio____loaders___utils(PyObject *module)
-{
-    PyObject* modname = NULL;
-    modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio____loaders___utils__internal, "__name__");
-    CPyStatic_utils___globals = PyModule_GetDict(CPyModule_eth_portfolio____loaders___utils__internal);
-    if (unlikely(CPyStatic_utils___globals == NULL))
-        goto fail;
-    CPyType_utils____get_transaction_receipt_gen = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_utils____get_transaction_receipt_gen_template, NULL, modname);
-    if (unlikely(!CPyType_utils____get_transaction_receipt_gen))
-        goto fail;
-    CPyDef_utils____get_transaction_receipt_gen_trait_vtable_setup();
-    if (CPyGlobalsInit() < 0)
-        goto fail;
-    char result = CPyDef_utils_____top_level__();
-    if (result == 2)
-        goto fail;
-    Py_DECREF(modname);
-    return 0;
-    fail:
-    Py_CLEAR(CPyModule_eth_portfolio____loaders___utils__internal);
-    Py_CLEAR(modname);
-    CPy_XDECREF(CPyStatic_utils___Raw);
-    CPyStatic_utils___Raw = NULL;
-    CPy_XDECREF(CPyStatic_utils___get_transaction_receipt);
-    CPyStatic_utils___get_transaction_receipt = NULL;
-    CPy_XDECREF(CPyStatic_utils_____get_transaction_receipt);
-    CPyStatic_utils_____get_transaction_receipt = NULL;
-    Py_CLEAR(CPyType_utils____get_transaction_receipt_gen);
-    return -1;
-}
-static struct PyModuleDef utilsmodule = {
-    PyModuleDef_HEAD_INIT,
-    "eth_portfolio._loaders.utils",
-    NULL, /* docstring */
-    0,       /* size of per-interpreter state of the module */
-    utilsmodule_methods,
-    NULL,
-};
-
-PyObject *CPyInit_eth_portfolio____loaders___utils(void)
-{
-    if (CPyModule_eth_portfolio____loaders___utils__internal) {
-        Py_INCREF(CPyModule_eth_portfolio____loaders___utils__internal);
-        return CPyModule_eth_portfolio____loaders___utils__internal;
-    }
-    CPyModule_eth_portfolio____loaders___utils__internal = PyModule_Create(&utilsmodule);
-    if (unlikely(CPyModule_eth_portfolio____loaders___utils__internal == NULL))
-        goto fail;
-    if (CPyExec_eth_portfolio____loaders___utils(CPyModule_eth_portfolio____loaders___utils__internal) != 0)
-        goto fail;
-    return CPyModule_eth_portfolio____loaders___utils__internal;
-    fail:
-    return NULL;
-}
-
+        
+        static PyAsyncMethods utils____get_transaction_receipt_gen_as_async = {
+            .am_await = CPyDef_utils____get_transaction_receipt_gen_____await__,
+        };
+        PyObject *CPyDef_utils_____mypyc___3_get_transaction_receipt_gen_setup(PyObject *cpy_r_type);
+        PyObject *CPyDef_utils____get_transaction_receipt_gen(void);
+        
+        static PyObject *
+        utils____get_transaction_receipt_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+        {
+            if (type != CPyType_utils____get_transaction_receipt_gen) {
+                PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+                return NULL;
+            }
+            PyObject *self = CPyDef_utils_____mypyc___3_get_transaction_receipt_gen_setup((PyObject*)type);
+            if (self == NULL)
+                return NULL;
+            return self;
+        }
+        
+        static int
+        utils____get_transaction_receipt_gen_traverse(eth_portfolio____loaders___utils____get_transaction_receipt_genObject *self, visitproc visit, void *arg)
+        {
+            Py_VISIT(self->___mypyc_generator_attribute__txhash);
+            Py_VISIT(self->___mypyc_temp__0);
+            Py_VISIT(self->___mypyc_temp__1.f0);
+            Py_VISIT(self->___mypyc_temp__1.f1);
+            Py_VISIT(self->___mypyc_temp__1.f2);
+            return 0;
+        }
+        
+        static int
+        utils____get_transaction_receipt_gen_clear(eth_portfolio____loaders___utils____get_transaction_receipt_genObject *self)
+        {
+            Py_CLEAR(self->___mypyc_generator_attribute__txhash);
+            Py_CLEAR(self->___mypyc_temp__0);
+            Py_CLEAR(self->___mypyc_temp__1.f0);
+            Py_CLEAR(self->___mypyc_temp__1.f1);
+            Py_CLEAR(self->___mypyc_temp__1.f2);
+            return 0;
+        }
+        
+        static void
+        utils____get_transaction_receipt_gen_dealloc(eth_portfolio____loaders___utils____get_transaction_receipt_genObject *self)
+        {
+            PyObject_GC_UnTrack(self);
+            if (utils____get_transaction_receipt_gen_free_instance == NULL) {
+                utils____get_transaction_receipt_gen_free_instance = self;
+                Py_CLEAR(self->___mypyc_generator_attribute__txhash);
+                self->___mypyc_next_label__ = -113;
+                Py_CLEAR(self->___mypyc_temp__0);
+                Py_CLEAR(self->___mypyc_temp__1.f0);
+                Py_CLEAR(self->___mypyc_temp__1.f1);
+                Py_CLEAR(self->___mypyc_temp__1.f2);
+                return;
+            }
+            CPy_TRASHCAN_BEGIN(self, utils____get_transaction_receipt_gen_dealloc)
+            utils____get_transaction_receipt_gen_clear(self);
+            Py_TYPE(self)->tp_free((PyObject *)self);
+            CPy_TRASHCAN_END(self)
+            done: ;
+        }
+        
+        static CPyVTableItem utils____get_transaction_receipt_gen_vtable[7];
+        static bool
+        CPyDef_utils____get_transaction_receipt_gen_trait_vtable_setup(void)
+        {
+            CPyVTableItem utils____get_transaction_receipt_gen_vtable_scratch[] = {
+                (CPyVTableItem)CPyDef_utils____get_transaction_receipt_gen_____mypyc_generator_helper__,
+                (CPyVTableItem)CPyDef_utils____get_transaction_receipt_gen_____next__,
+                (CPyVTableItem)CPyDef_utils____get_transaction_receipt_gen___send,
+                (CPyVTableItem)CPyDef_utils____get_transaction_receipt_gen_____iter__,
+                (CPyVTableItem)CPyDef_utils____get_transaction_receipt_gen___throw,
+                (CPyVTableItem)CPyDef_utils____get_transaction_receipt_gen___close,
+                (CPyVTableItem)CPyDef_utils____get_transaction_receipt_gen_____await__,
+            };
+            memcpy(utils____get_transaction_receipt_gen_vtable, utils____get_transaction_receipt_gen_vtable_scratch, sizeof(utils____get_transaction_receipt_gen_vtable));
+            return 1;
+        }
+        
+        static bool
+        CPyDef_utils____get_transaction_receipt_gen_coroutine_setup(PyObject *type)
+        {
+            return 1;
+        }
+        
+        static PyMethodDef utils____get_transaction_receipt_gen_methods[] = {
+            {"__internal_mypyc_setup", (PyCFunction)CPyDef_utils_____mypyc___3_get_transaction_receipt_gen_setup, METH_O, NULL},
+            {"__next__",
+             (PyCFunction)CPyPy_utils____get_transaction_receipt_gen_____next__,
+             METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
+            {"send",
+             (PyCFunction)CPyPy_utils____get_transaction_receipt_gen___send,
+             METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("send($arg)\n--\n\n")},
+            {"__iter__",
+             (PyCFunction)CPyPy_utils____get_transaction_receipt_gen_____iter__,
+             METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__iter__()\n--\n\n")},
+            {"throw",
+             (PyCFunction)CPyPy_utils____get_transaction_receipt_gen___throw,
+             METH_FASTCALL | METH_KEYWORDS, PyDoc_STR(NULL)},
+            {"close",
+             (PyCFunction)CPyPy_utils____get_transaction_receipt_gen___close,
+             METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("close()\n--\n\n")},
+            {"__await__",
+             (PyCFunction)CPyPy_utils____get_transaction_receipt_gen_____await__,
+             METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__await__()\n--\n\n")},
+            {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
+            {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
+            {NULL}  /* Sentinel */
+        };
+        
+        static PyTypeObject CPyType_utils____get_transaction_receipt_gen_template_ = {
+            PyVarObject_HEAD_INIT(NULL, 0)
+            .tp_name = "_get_transaction_receipt_gen",
+            .tp_new = utils____get_transaction_receipt_gen_new,
+            .tp_dealloc = (destructor)utils____get_transaction_receipt_gen_dealloc,
+            .tp_traverse = (traverseproc)utils____get_transaction_receipt_gen_traverse,
+            .tp_clear = (inquiry)utils____get_transaction_receipt_gen_clear,
+            .tp_methods = utils____get_transaction_receipt_gen_methods,
+            .tp_iter = CPyDef_utils____get_transaction_receipt_gen_____iter__,
+            .tp_iternext = CPyDef_utils____get_transaction_receipt_gen_____next__,
+            .tp_as_async = &utils____get_transaction_receipt_gen_as_async,
+            .tp_basicsize = sizeof(eth_portfolio____loaders___utils____get_transaction_receipt_genObject),
+            .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
+            .tp_doc = PyDoc_STR("_get_transaction_receipt_gen()\n--\n\n"),
+        };
+        static PyTypeObject *CPyType_utils____get_transaction_receipt_gen_template = &CPyType_utils____get_transaction_receipt_gen_template_;
+        
+        PyObject *CPyDef_utils_____mypyc___3_get_transaction_receipt_gen_setup(PyObject *cpy_r_type)
+        {
+            PyTypeObject *type = (PyTypeObject*)cpy_r_type;
+            eth_portfolio____loaders___utils____get_transaction_receipt_genObject *self;
+            if (utils____get_transaction_receipt_gen_free_instance != NULL) {
+                self = utils____get_transaction_receipt_gen_free_instance;
+                utils____get_transaction_receipt_gen_free_instance = NULL;
+                Py_SET_REFCNT(self, 1);
+                PyObject_GC_Track(self);
+                return (PyObject *)self;
+            }
+            self = (eth_portfolio____loaders___utils____get_transaction_receipt_genObject *)type->tp_alloc(type, 0);
+            if (self == NULL)
+                return NULL;
+            self->vtable = utils____get_transaction_receipt_gen_vtable;
+            self->___mypyc_next_label__ = -113;
+            self->___mypyc_temp__1 = (tuple_T3OOO) { NULL, NULL, NULL };
+            return (PyObject *)self;
+        }
+        
+        PyObject *CPyDef_utils____get_transaction_receipt_gen(void)
+        {
+            PyObject *self = CPyDef_utils_____mypyc___3_get_transaction_receipt_gen_setup((PyObject *)CPyType_utils____get_transaction_receipt_gen);
+            if (self == NULL)
+                return NULL;
+            return self;
+        }
+        
+        static PyMethodDef utilsmodule_methods[] = {
+            {NULL, NULL, 0, NULL}
+        };
+        
+        int CPyExec_eth_portfolio____loaders___utils(PyObject *module)
+        {
+            intern_strings();
+            PyObject* modname = NULL;
+            modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio____loaders___utils__internal, "__name__");
+            CPyStatic_utils___globals = PyModule_GetDict(CPyModule_eth_portfolio____loaders___utils__internal);
+            if (unlikely(CPyStatic_utils___globals == NULL))
+                goto fail;
+            PyObject* CPyPy_utils____get_transaction_receipt_wrapper = CPyFunction_New(CPyModule_eth_portfolio____loaders___utils, "eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", (PyCFunction)CPyPy_utils____get_transaction_receipt, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("_get_transaction_receipt(txhash)\n--\n\n"), 18, CO_COROUTINE, false);
+            if (unlikely(!CPyPy_utils____get_transaction_receipt_wrapper))
+                goto fail;
+            PyObject *CPyPy_utils____get_transaction_receipt_wrapper_name = PyUnicode_FromString("_get_transaction_receipt");
+            if (unlikely(!CPyPy_utils____get_transaction_receipt_wrapper_name))
+                goto fail;
+            if (PyDict_SetItem(CPyStatic_utils___globals, CPyPy_utils____get_transaction_receipt_wrapper_name, (PyObject *)CPyPy_utils____get_transaction_receipt_wrapper) < 0)
+                goto fail;
+            CPyType_utils____get_transaction_receipt_gen = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_utils____get_transaction_receipt_gen_template, NULL, modname);
+            if (unlikely(!CPyType_utils____get_transaction_receipt_gen))
+                goto fail;
+            CPyDef_utils____get_transaction_receipt_gen_trait_vtable_setup();
+            if (CPyGlobalsInit() < 0)
+                goto fail;
+            char result = CPyDef_utils_____top_level__();
+            if (result == 2)
+                goto fail;
+            Py_DECREF(modname);
+            return 0;
+            fail:
+            Py_CLEAR(CPyModule_eth_portfolio____loaders___utils__internal);
+            Py_CLEAR(modname);
+            CPy_XDECREF(CPyStatic_utils___Raw);
+            CPyStatic_utils___Raw = NULL;
+            CPy_XDECREF(CPyStatic_utils___get_transaction_receipt);
+            CPyStatic_utils___get_transaction_receipt = NULL;
+            CPy_XDECREF(CPyStatic_utils_____get_transaction_receipt);
+            CPyStatic_utils_____get_transaction_receipt = NULL;
+            Py_CLEAR(CPyType_utils____get_transaction_receipt_gen);
+            return -1;
+        }
+        static struct PyModuleDef utilsmodule = {
+            PyModuleDef_HEAD_INIT,
+            "eth_portfolio._loaders.utils",
+            NULL, /* docstring */
+            0,       /* size of per-interpreter state of the module */
+            utilsmodule_methods,
+            NULL,
+        };
+        
+        PyObject *CPyInitOnly_eth_portfolio____loaders___utils(void)
+        {
+            if (CPyModule_eth_portfolio____loaders___utils__internal) {
+                Py_INCREF(CPyModule_eth_portfolio____loaders___utils__internal);
+                return CPyModule_eth_portfolio____loaders___utils__internal;
+            }
+            CPyModule_eth_portfolio____loaders___utils__internal = PyModule_Create(&utilsmodule);
+            return CPyModule_eth_portfolio____loaders___utils__internal;
+        }
+        
+        PyObject *CPyInit_eth_portfolio____loaders___utils(void)
+        {
+            PyObject* modname = NULL;
+            if (CPyModule_eth_portfolio____loaders___utils__internal) {
+                Py_INCREF(CPyModule_eth_portfolio____loaders___utils__internal);
+                return CPyModule_eth_portfolio____loaders___utils__internal;
+            }
+            CPyModule_eth_portfolio____loaders___utils__internal = PyModule_Create(&utilsmodule);
+            if (unlikely(CPyModule_eth_portfolio____loaders___utils__internal == NULL))
+                goto fail;
+            modname = PyUnicode_FromString("eth_portfolio._loaders.utils");
+            if (modname == NULL) CPyError_OutOfMemory();
+            if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio____loaders___utils__internal) < 0)
+                goto fail;
+            Py_CLEAR(modname);
+            if (CPyExec_eth_portfolio____loaders___utils(CPyModule_eth_portfolio____loaders___utils__internal) != 0)
+                goto fail;
+            return CPyModule_eth_portfolio____loaders___utils__internal;
+            fail:
+            {
+                    PyObject *exc_type, *exc_val, *exc_tb;
+                    PyErr_Fetch(&exc_type, &exc_val, &exc_tb);
+                    if (modname == NULL) {
+                            modname = PyUnicode_FromString("eth_portfolio._loaders.utils");
+                            if (modname == NULL) CPyError_OutOfMemory();
+                        }
+                        PyObject_DelItem(PyImport_GetModuleDict(), modname);
+                        PyErr_Clear();
+                        Py_DECREF(modname);
+                        Py_CLEAR(CPyModule_eth_portfolio____loaders___utils__internal);
+                        PyErr_Restore(exc_type, exc_val, exc_tb);
+                }
+                return NULL;
+            }
+            
 PyObject *CPyDef_utils____get_transaction_receipt_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -14076,13 +14115,10 @@ CPyL11: ;
     }
     ((eth_portfolio____loaders___utils____get_transaction_receipt_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0 = cpy_r_r15;
     cpy_r_r16 = 1;
-    if (unlikely(!cpy_r_r16)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", -1, CPyStatic_utils___globals);
-        goto CPyL49;
-    }
+    if (!cpy_r_r16) goto CPyL49;
     cpy_r_r17 = ((eth_portfolio____loaders___utils____get_transaction_receipt_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
     if (unlikely(cpy_r_r17 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", "_get_transaction_receipt_gen", "__mypyc_temp__0", -1, CPyStatic_utils___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", "_get_transaction_receipt_gen", "__mypyc_temp__0", 44, CPyStatic_utils___globals);
         goto CPyL49;
     }
     CPy_INCREF(cpy_r_r17);
@@ -14136,14 +14172,11 @@ CPyL24: ;
     }
     ((eth_portfolio____loaders___utils____get_transaction_receipt_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1 = cpy_r_r27;
     cpy_r_r28 = 1;
-    if (unlikely(!cpy_r_r28)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", -1, CPyStatic_utils___globals);
-        goto CPyL56;
-    }
+    if (!cpy_r_r28) goto CPyL56;
     cpy_r_r29 = (PyObject **)&cpy_r_r1;
     cpy_r_r30 = ((eth_portfolio____loaders___utils____get_transaction_receipt_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
     if (unlikely(cpy_r_r30 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", "_get_transaction_receipt_gen", "__mypyc_temp__0", -1, CPyStatic_utils___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", "_get_transaction_receipt_gen", "__mypyc_temp__0", 44, CPyStatic_utils___globals);
         goto CPyL56;
     }
     CPy_INCREF(cpy_r_r30);
@@ -14158,7 +14191,7 @@ CPyL26: ;
     cpy_r_r23 = cpy_r_r1;
     cpy_r_r32 = ((eth_portfolio____loaders___utils____get_transaction_receipt_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
     if (unlikely(cpy_r_r32.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", "_get_transaction_receipt_gen", "__mypyc_temp__1", -1, CPyStatic_utils___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", "_get_transaction_receipt_gen", "__mypyc_temp__1", 44, CPyStatic_utils___globals);
         goto CPyL57;
     }
     CPy_INCREF(cpy_r_r32.f0);
@@ -14174,7 +14207,7 @@ CPyL30: ;
     cpy_r_r20 = cpy_r_r1;
     cpy_r_r33 = ((eth_portfolio____loaders___utils____get_transaction_receipt_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
     if (unlikely(cpy_r_r33.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", "_get_transaction_receipt_gen", "__mypyc_temp__1", -1, CPyStatic_utils___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", "_get_transaction_receipt_gen", "__mypyc_temp__1", 44, CPyStatic_utils___globals);
         goto CPyL58;
     }
     CPy_INCREF(cpy_r_r33.f0);
@@ -14189,7 +14222,7 @@ CPyL31: ;
 CPyL32: ;
     cpy_r_r34 = ((eth_portfolio____loaders___utils____get_transaction_receipt_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
     if (unlikely(cpy_r_r34.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", "_get_transaction_receipt_gen", "__mypyc_temp__1", -1, CPyStatic_utils___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", "_get_transaction_receipt_gen", "__mypyc_temp__1", 44, CPyStatic_utils___globals);
         goto CPyL49;
     }
     CPy_INCREF(cpy_r_r34.f0);
@@ -14206,7 +14239,7 @@ CPyL33: ;
 CPyL35: ;
     cpy_r_r36 = ((eth_portfolio____loaders___utils____get_transaction_receipt_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
     if (unlikely(cpy_r_r36 == NULL)) {
-        CPy_AttributeError("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", "_get_transaction_receipt_gen", "__mypyc_temp__0", -1, CPyStatic_utils___globals);
+        CPy_AttributeError("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", "_get_transaction_receipt_gen", "__mypyc_temp__0", 44, CPyStatic_utils___globals);
         goto CPyL59;
     }
     CPy_INCREF(cpy_r_r36);
@@ -14290,7 +14323,7 @@ CPyL61: ;
     CPy_XDECREF(cpy_r_r1);
     goto CPyL47;
 }
-
+            
 PyObject *CPyDef_utils____get_transaction_receipt_gen_____next__(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -14303,28 +14336,28 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy_utils____get_transaction_receipt_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__next__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_utils____get_transaction_receipt_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders.utils._get_transaction_receipt_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef_utils____get_transaction_receipt_gen_____next__(arg___mypyc_self__);
-    return retval;
+            
+            PyObject *CPyPy_utils____get_transaction_receipt_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                PyObject *obj___mypyc_self__ = self;
+                static const char * const kwlist[] = {0};
+                static CPyArg_Parser parser = {":__next__", kwlist, 0};
+                if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                    return NULL;
+                }
+                PyObject *arg___mypyc_self__;
+                if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_utils____get_transaction_receipt_gen))
+                    arg___mypyc_self__ = obj___mypyc_self__;
+                else {
+                    CPy_TypeError("eth_portfolio._loaders.utils._get_transaction_receipt_gen", obj___mypyc_self__); 
+                    goto fail;
+                }
+                PyObject *retval = CPyDef_utils____get_transaction_receipt_gen_____next__(arg___mypyc_self__);
+                return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "__next__", -1, CPyStatic_utils___globals);
-    return NULL;
-}
-
+                CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "__next__", -1, CPyStatic_utils___globals);
+                return NULL;
+            }
+            
 PyObject *CPyDef_utils____get_transaction_receipt_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -14337,56 +14370,56 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy_utils____get_transaction_receipt_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"arg", 0};
-    static CPyArg_Parser parser = {"O:send", kwlist, 0};
-    PyObject *obj_arg;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_utils____get_transaction_receipt_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders.utils._get_transaction_receipt_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_arg = obj_arg;
-    PyObject *retval = CPyDef_utils____get_transaction_receipt_gen___send(arg___mypyc_self__, arg_arg);
-    return retval;
+            
+            PyObject *CPyPy_utils____get_transaction_receipt_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                PyObject *obj___mypyc_self__ = self;
+                static const char * const kwlist[] = {"arg", 0};
+                static CPyArg_Parser parser = {"O:send", kwlist, 0};
+                PyObject *obj_arg;
+                if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
+                    return NULL;
+                }
+                PyObject *arg___mypyc_self__;
+                if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_utils____get_transaction_receipt_gen))
+                    arg___mypyc_self__ = obj___mypyc_self__;
+                else {
+                    CPy_TypeError("eth_portfolio._loaders.utils._get_transaction_receipt_gen", obj___mypyc_self__); 
+                    goto fail;
+                }
+                PyObject *arg_arg = obj_arg;
+                PyObject *retval = CPyDef_utils____get_transaction_receipt_gen___send(arg___mypyc_self__, arg_arg);
+                return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "send", -1, CPyStatic_utils___globals);
-    return NULL;
-}
-
+                CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "send", -1, CPyStatic_utils___globals);
+                return NULL;
+            }
+            
 PyObject *CPyDef_utils____get_transaction_receipt_gen_____iter__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy_utils____get_transaction_receipt_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__iter__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_utils____get_transaction_receipt_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders.utils._get_transaction_receipt_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef_utils____get_transaction_receipt_gen_____iter__(arg___mypyc_self__);
-    return retval;
+            
+            PyObject *CPyPy_utils____get_transaction_receipt_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                PyObject *obj___mypyc_self__ = self;
+                static const char * const kwlist[] = {0};
+                static CPyArg_Parser parser = {":__iter__", kwlist, 0};
+                if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                    return NULL;
+                }
+                PyObject *arg___mypyc_self__;
+                if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_utils____get_transaction_receipt_gen))
+                    arg___mypyc_self__ = obj___mypyc_self__;
+                else {
+                    CPy_TypeError("eth_portfolio._loaders.utils._get_transaction_receipt_gen", obj___mypyc_self__); 
+                    goto fail;
+                }
+                PyObject *retval = CPyDef_utils____get_transaction_receipt_gen_____iter__(arg___mypyc_self__);
+                return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "__iter__", -1, CPyStatic_utils___globals);
-    return NULL;
-}
-
+                CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "__iter__", -1, CPyStatic_utils___globals);
+                return NULL;
+            }
+            
 PyObject *CPyDef_utils____get_transaction_receipt_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -14415,44 +14448,44 @@ CPyL8: ;
     CPy_INCREF(cpy_r_traceback);
     goto CPyL4;
 }
-
-PyObject *CPyPy_utils____get_transaction_receipt_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"type", "value", "traceback", 0};
-    static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
-    PyObject *obj_type;
-    PyObject *obj_value = NULL;
-    PyObject *obj_traceback = NULL;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_utils____get_transaction_receipt_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders.utils._get_transaction_receipt_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_type = obj_type;
-    PyObject *arg_value;
-    if (obj_value == NULL) {
-        arg_value = NULL;
-    } else {
-        arg_value = obj_value; 
-    }
-    PyObject *arg_traceback;
-    if (obj_traceback == NULL) {
-        arg_traceback = NULL;
-    } else {
-        arg_traceback = obj_traceback; 
-    }
-    PyObject *retval = CPyDef_utils____get_transaction_receipt_gen___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
-    return retval;
+            
+            PyObject *CPyPy_utils____get_transaction_receipt_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                PyObject *obj___mypyc_self__ = self;
+                static const char * const kwlist[] = {"type", "value", "traceback", 0};
+                static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
+                PyObject *obj_type;
+                PyObject *obj_value = NULL;
+                PyObject *obj_traceback = NULL;
+                if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
+                    return NULL;
+                }
+                PyObject *arg___mypyc_self__;
+                if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_utils____get_transaction_receipt_gen))
+                    arg___mypyc_self__ = obj___mypyc_self__;
+                else {
+                    CPy_TypeError("eth_portfolio._loaders.utils._get_transaction_receipt_gen", obj___mypyc_self__); 
+                    goto fail;
+                }
+                PyObject *arg_type = obj_type;
+                PyObject *arg_value;
+                if (obj_value == NULL) {
+                    arg_value = NULL;
+                } else {
+                    arg_value = obj_value; 
+                }
+                PyObject *arg_traceback;
+                if (obj_traceback == NULL) {
+                    arg_traceback = NULL;
+                } else {
+                    arg_traceback = obj_traceback; 
+                }
+                PyObject *retval = CPyDef_utils____get_transaction_receipt_gen___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
+                return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "throw", -1, CPyStatic_utils___globals);
-    return NULL;
-}
-
+                CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "throw", -1, CPyStatic_utils___globals);
+                return NULL;
+            }
+            
 PyObject *CPyDef_utils____get_transaction_receipt_gen___close(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -14531,54 +14564,54 @@ CPyL13: ;
     CPy_DECREF(cpy_r_r6.f2);
     goto CPyL6;
 }
-
-PyObject *CPyPy_utils____get_transaction_receipt_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":close", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_utils____get_transaction_receipt_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders.utils._get_transaction_receipt_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef_utils____get_transaction_receipt_gen___close(arg___mypyc_self__);
-    return retval;
+            
+            PyObject *CPyPy_utils____get_transaction_receipt_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                PyObject *obj___mypyc_self__ = self;
+                static const char * const kwlist[] = {0};
+                static CPyArg_Parser parser = {":close", kwlist, 0};
+                if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                    return NULL;
+                }
+                PyObject *arg___mypyc_self__;
+                if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_utils____get_transaction_receipt_gen))
+                    arg___mypyc_self__ = obj___mypyc_self__;
+                else {
+                    CPy_TypeError("eth_portfolio._loaders.utils._get_transaction_receipt_gen", obj___mypyc_self__); 
+                    goto fail;
+                }
+                PyObject *retval = CPyDef_utils____get_transaction_receipt_gen___close(arg___mypyc_self__);
+                return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "close", -1, CPyStatic_utils___globals);
-    return NULL;
-}
-
+                CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "close", -1, CPyStatic_utils___globals);
+                return NULL;
+            }
+            
 PyObject *CPyDef_utils____get_transaction_receipt_gen_____await__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy_utils____get_transaction_receipt_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__await__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_utils____get_transaction_receipt_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio._loaders.utils._get_transaction_receipt_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef_utils____get_transaction_receipt_gen_____await__(arg___mypyc_self__);
-    return retval;
+            
+            PyObject *CPyPy_utils____get_transaction_receipt_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                PyObject *obj___mypyc_self__ = self;
+                static const char * const kwlist[] = {0};
+                static CPyArg_Parser parser = {":__await__", kwlist, 0};
+                if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                    return NULL;
+                }
+                PyObject *arg___mypyc_self__;
+                if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_utils____get_transaction_receipt_gen))
+                    arg___mypyc_self__ = obj___mypyc_self__;
+                else {
+                    CPy_TypeError("eth_portfolio._loaders.utils._get_transaction_receipt_gen", obj___mypyc_self__); 
+                    goto fail;
+                }
+                PyObject *retval = CPyDef_utils____get_transaction_receipt_gen_____await__(arg___mypyc_self__);
+                return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "__await__", -1, CPyStatic_utils___globals);
-    return NULL;
-}
-
+                CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "__await__", -1, CPyStatic_utils___globals);
+                return NULL;
+            }
+            
 PyObject *CPyDef_utils____get_transaction_receipt(PyObject *cpy_r_txhash) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
@@ -14608,28 +14641,28 @@ CPyL4: ;
     CPy_DecRef(cpy_r_r0);
     goto CPyL3;
 }
-
-PyObject *CPyPy_utils____get_transaction_receipt(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"txhash", 0};
-    static CPyArg_Parser parser = {"O:_get_transaction_receipt", kwlist, 0};
-    PyObject *obj_txhash;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_txhash)) {
-        return NULL;
-    }
-    PyObject *arg_txhash;
-    if (likely(PyUnicode_Check(obj_txhash)))
-        arg_txhash = obj_txhash;
-    else {
-        CPy_TypeError("str", obj_txhash); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef_utils____get_transaction_receipt(arg_txhash);
-    return retval;
+            
+            PyObject *CPyPy_utils____get_transaction_receipt(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                static const char * const kwlist[] = {"txhash", 0};
+                static CPyArg_Parser parser = {"O:_get_transaction_receipt", kwlist, 0};
+                PyObject *obj_txhash;
+                if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_txhash)) {
+                    return NULL;
+                }
+                PyObject *arg_txhash;
+                if (likely(PyUnicode_Check(obj_txhash)))
+                    arg_txhash = obj_txhash;
+                else {
+                    CPy_TypeError("str", obj_txhash); 
+                    goto fail;
+                }
+                PyObject *retval = CPyDef_utils____get_transaction_receipt(arg_txhash);
+                return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
-    return NULL;
-}
-
+                CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "_get_transaction_receipt", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
+                return NULL;
+            }
+            
 char CPyDef_utils_____top_level__(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -14754,7 +14787,7 @@ char CPyDef_utils_____top_level__(void) {
     cpy_r_r3 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'builtins' */
     cpy_r_r4 = PyImport_Import(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", -1, CPyStatic_utils___globals);
+        CPy_AddTraceback("eth_portfolio/_loaders/utils.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_utils___globals);
         goto CPyL35;
     }
     CPyModule_builtins = cpy_r_r4;
@@ -15081,58 +15114,88 @@ CPyL42: ;
     CPy_DecRef(cpy_r_r102);
     goto CPyL35;
 }
-static PyMethodDef _argspecmodule_methods[] = {
-    {"get_args_type", (PyCFunction)CPyPy__argspec___get_args_type, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("get_args_type(sample)\n--\n\n") /* docstring */},
-    {"get_kwargs_type", (PyCFunction)CPyPy__argspec___get_kwargs_type, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("get_kwargs_type(sample)\n--\n\n") /* docstring */},
-    {"get_return_type", (PyCFunction)CPyPy__argspec___get_return_type, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("get_return_type(sample)\n--\n\n") /* docstring */},
-    {"get_types", (PyCFunction)CPyPy__argspec___get_types, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("get_types(sample)\n--\n\n") /* docstring */},
-    {NULL, NULL, 0, NULL}
-};
-
-int CPyExec_eth_portfolio____argspec(PyObject *module)
-{
-    PyObject* modname = NULL;
-    modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio____argspec__internal, "__name__");
-    CPyStatic__argspec___globals = PyModule_GetDict(CPyModule_eth_portfolio____argspec__internal);
-    if (unlikely(CPyStatic__argspec___globals == NULL))
-        goto fail;
-    if (CPyGlobalsInit() < 0)
-        goto fail;
-    char result = CPyDef__argspec_____top_level__();
-    if (result == 2)
-        goto fail;
-    Py_DECREF(modname);
-    return 0;
-    fail:
-    Py_CLEAR(CPyModule_eth_portfolio____argspec__internal);
-    Py_CLEAR(modname);
-    return -1;
-}
-static struct PyModuleDef _argspecmodule = {
-    PyModuleDef_HEAD_INIT,
-    "eth_portfolio._argspec",
-    NULL, /* docstring */
-    0,       /* size of per-interpreter state of the module */
-    _argspecmodule_methods,
-    NULL,
-};
-
-PyObject *CPyInit_eth_portfolio____argspec(void)
-{
-    if (CPyModule_eth_portfolio____argspec__internal) {
-        Py_INCREF(CPyModule_eth_portfolio____argspec__internal);
-        return CPyModule_eth_portfolio____argspec__internal;
-    }
-    CPyModule_eth_portfolio____argspec__internal = PyModule_Create(&_argspecmodule);
-    if (unlikely(CPyModule_eth_portfolio____argspec__internal == NULL))
-        goto fail;
-    if (CPyExec_eth_portfolio____argspec(CPyModule_eth_portfolio____argspec__internal) != 0)
-        goto fail;
-    return CPyModule_eth_portfolio____argspec__internal;
-    fail:
-    return NULL;
-}
-
+            static PyMethodDef _argspecmodule_methods[] = {
+                {"get_args_type", (PyCFunction)CPyPy__argspec___get_args_type, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("get_args_type(sample)\n--\n\n") /* docstring */},
+                {"get_kwargs_type", (PyCFunction)CPyPy__argspec___get_kwargs_type, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("get_kwargs_type(sample)\n--\n\n") /* docstring */},
+                {"get_return_type", (PyCFunction)CPyPy__argspec___get_return_type, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("get_return_type(sample)\n--\n\n") /* docstring */},
+                {"get_types", (PyCFunction)CPyPy__argspec___get_types, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("get_types(sample)\n--\n\n") /* docstring */},
+                {NULL, NULL, 0, NULL}
+            };
+            
+            int CPyExec_eth_portfolio____argspec(PyObject *module)
+            {
+                intern_strings();
+                PyObject* modname = NULL;
+                modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio____argspec__internal, "__name__");
+                CPyStatic__argspec___globals = PyModule_GetDict(CPyModule_eth_portfolio____argspec__internal);
+                if (unlikely(CPyStatic__argspec___globals == NULL))
+                    goto fail;
+                if (CPyGlobalsInit() < 0)
+                    goto fail;
+                char result = CPyDef__argspec_____top_level__();
+                if (result == 2)
+                    goto fail;
+                Py_DECREF(modname);
+                return 0;
+                fail:
+                Py_CLEAR(CPyModule_eth_portfolio____argspec__internal);
+                Py_CLEAR(modname);
+                return -1;
+            }
+            static struct PyModuleDef _argspecmodule = {
+                PyModuleDef_HEAD_INIT,
+                "eth_portfolio._argspec",
+                NULL, /* docstring */
+                0,       /* size of per-interpreter state of the module */
+                _argspecmodule_methods,
+                NULL,
+            };
+            
+            PyObject *CPyInitOnly_eth_portfolio____argspec(void)
+            {
+                if (CPyModule_eth_portfolio____argspec__internal) {
+                    Py_INCREF(CPyModule_eth_portfolio____argspec__internal);
+                    return CPyModule_eth_portfolio____argspec__internal;
+                }
+                CPyModule_eth_portfolio____argspec__internal = PyModule_Create(&_argspecmodule);
+                return CPyModule_eth_portfolio____argspec__internal;
+            }
+            
+            PyObject *CPyInit_eth_portfolio____argspec(void)
+            {
+                PyObject* modname = NULL;
+                if (CPyModule_eth_portfolio____argspec__internal) {
+                    Py_INCREF(CPyModule_eth_portfolio____argspec__internal);
+                    return CPyModule_eth_portfolio____argspec__internal;
+                }
+                CPyModule_eth_portfolio____argspec__internal = PyModule_Create(&_argspecmodule);
+                if (unlikely(CPyModule_eth_portfolio____argspec__internal == NULL))
+                    goto fail;
+                modname = PyUnicode_FromString("eth_portfolio._argspec");
+                if (modname == NULL) CPyError_OutOfMemory();
+                if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio____argspec__internal) < 0)
+                    goto fail;
+                Py_CLEAR(modname);
+                if (CPyExec_eth_portfolio____argspec(CPyModule_eth_portfolio____argspec__internal) != 0)
+                    goto fail;
+                return CPyModule_eth_portfolio____argspec__internal;
+                fail:
+                {
+                        PyObject *exc_type, *exc_val, *exc_tb;
+                        PyErr_Fetch(&exc_type, &exc_val, &exc_tb);
+                        if (modname == NULL) {
+                                modname = PyUnicode_FromString("eth_portfolio._argspec");
+                                if (modname == NULL) CPyError_OutOfMemory();
+                            }
+                            PyObject_DelItem(PyImport_GetModuleDict(), modname);
+                            PyErr_Clear();
+                            Py_DECREF(modname);
+                            Py_CLEAR(CPyModule_eth_portfolio____argspec__internal);
+                            PyErr_Restore(exc_type, exc_val, exc_tb);
+                    }
+                    return NULL;
+                }
+                
 PyObject *CPyDef__argspec___get_args_type(PyObject *cpy_r_sample) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -15216,11 +15279,11 @@ PyObject *CPyDef__argspec___get_args_type(PyObject *cpy_r_sample) {
     }
     cpy_r_r10 = 0;
 CPyL7: ;
-    cpy_r_r11 = (CPyPtr)&((PyVarObject *)cpy_r_r9)->ob_size;
+    cpy_r_r11 = (CPyPtr)((CPyPtr)cpy_r_r9 + offsetof(PyVarObject, ob_size));
     cpy_r_r12 = *(int64_t *)cpy_r_r11;
     cpy_r_r13 = cpy_r_r10 < cpy_r_r12;
     if (!cpy_r_r13) goto CPyL30;
-    cpy_r_r14 = (CPyPtr)&((PyListObject *)cpy_r_r9)->ob_item;
+    cpy_r_r14 = (CPyPtr)((CPyPtr)cpy_r_r9 + offsetof(PyListObject, ob_item));
     cpy_r_r15 = *(CPyPtr *)cpy_r_r14;
     cpy_r_r16 = cpy_r_r10 * 8;
     cpy_r_r17 = cpy_r_r15 + cpy_r_r16;
@@ -15353,22 +15416,22 @@ CPyL33: ;
     CPy_DecRef(cpy_r_r19);
     goto CPyL27;
 }
-
-PyObject *CPyPy__argspec___get_args_type(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"sample", 0};
-    static CPyArg_Parser parser = {"O:get_args_type", kwlist, 0};
-    PyObject *obj_sample;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_sample)) {
-        return NULL;
-    }
-    PyObject *arg_sample = obj_sample;
-    PyObject *retval = CPyDef__argspec___get_args_type(arg_sample);
-    return retval;
+                
+                PyObject *CPyPy__argspec___get_args_type(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                    static const char * const kwlist[] = {"sample", 0};
+                    static CPyArg_Parser parser = {"O:get_args_type", kwlist, 0};
+                    PyObject *obj_sample;
+                    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_sample)) {
+                        return NULL;
+                    }
+                    PyObject *arg_sample = obj_sample;
+                    PyObject *retval = CPyDef__argspec___get_args_type(arg_sample);
+                    return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_argspec.py", "get_args_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-    return NULL;
-}
-
+                    CPy_AddTraceback("eth_portfolio/_argspec.py", "get_args_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+                    return NULL;
+                }
+                
 PyObject *CPyDef__argspec___get_kwargs_type(PyObject *cpy_r_sample) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -15489,7 +15552,7 @@ PyObject *CPyDef__argspec___get_kwargs_type(PyObject *cpy_r_sample) {
         CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 20, CPyStatic__argspec___globals, "list", cpy_r_r7);
         goto CPyL61;
     }
-    cpy_r_r9 = (CPyPtr)&((PyVarObject *)cpy_r_r8)->ob_size;
+    cpy_r_r9 = (CPyPtr)((CPyPtr)cpy_r_r8 + offsetof(PyVarObject, ob_size));
     cpy_r_r10 = *(int64_t *)cpy_r_r9;
     CPy_DECREF_NO_IMM(cpy_r_r8);
     cpy_r_r11 = cpy_r_r10 << 1;
@@ -15523,7 +15586,7 @@ __LL47: ;
         CPy_TypeErrorTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", 20, CPyStatic__argspec___globals, "tuple", cpy_r_r13);
         goto CPyL63;
     }
-    cpy_r_r17 = (CPyPtr)&((PyVarObject *)cpy_r_r16)->ob_size;
+    cpy_r_r17 = (CPyPtr)((CPyPtr)cpy_r_r16 + offsetof(PyVarObject, ob_size));
     cpy_r_r18 = *(int64_t *)cpy_r_r17;
     CPy_DECREF(cpy_r_r16);
     cpy_r_r19 = cpy_r_r18 << 1;
@@ -15592,11 +15655,11 @@ CPyL14: ;
     }
     cpy_r_r31 = 0;
 CPyL21: ;
-    cpy_r_r32 = (CPyPtr)&((PyVarObject *)cpy_r_r29)->ob_size;
+    cpy_r_r32 = (CPyPtr)((CPyPtr)cpy_r_r29 + offsetof(PyVarObject, ob_size));
     cpy_r_r33 = *(int64_t *)cpy_r_r32;
     cpy_r_r34 = cpy_r_r31 < cpy_r_r33;
     if (!cpy_r_r34) goto CPyL66;
-    cpy_r_r35 = (CPyPtr)&((PyListObject *)cpy_r_r29)->ob_item;
+    cpy_r_r35 = (CPyPtr)((CPyPtr)cpy_r_r29 + offsetof(PyListObject, ob_item));
     cpy_r_r36 = *(CPyPtr *)cpy_r_r35;
     cpy_r_r37 = cpy_r_r31 * 8;
     cpy_r_r38 = cpy_r_r36 + cpy_r_r37;
@@ -15888,22 +15951,22 @@ CPyL76: ;
     CPy_DecRef(cpy_r_r77);
     goto CPyL60;
 }
-
-PyObject *CPyPy__argspec___get_kwargs_type(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"sample", 0};
-    static CPyArg_Parser parser = {"O:get_kwargs_type", kwlist, 0};
-    PyObject *obj_sample;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_sample)) {
-        return NULL;
-    }
-    PyObject *arg_sample = obj_sample;
-    PyObject *retval = CPyDef__argspec___get_kwargs_type(arg_sample);
-    return retval;
+                
+                PyObject *CPyPy__argspec___get_kwargs_type(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                    static const char * const kwlist[] = {"sample", 0};
+                    static CPyArg_Parser parser = {"O:get_kwargs_type", kwlist, 0};
+                    PyObject *obj_sample;
+                    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_sample)) {
+                        return NULL;
+                    }
+                    PyObject *arg_sample = obj_sample;
+                    PyObject *retval = CPyDef__argspec___get_kwargs_type(arg_sample);
+                    return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-    return NULL;
-}
-
+                    CPy_AddTraceback("eth_portfolio/_argspec.py", "get_kwargs_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+                    return NULL;
+                }
+                
 PyObject *CPyDef__argspec___get_return_type(PyObject *cpy_r_sample) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -16010,22 +16073,22 @@ CPyL16: ;
     CPy_DECREF(cpy_r_r6);
     goto CPyL11;
 }
-
-PyObject *CPyPy__argspec___get_return_type(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"sample", 0};
-    static CPyArg_Parser parser = {"O:get_return_type", kwlist, 0};
-    PyObject *obj_sample;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_sample)) {
-        return NULL;
-    }
-    PyObject *arg_sample = obj_sample;
-    PyObject *retval = CPyDef__argspec___get_return_type(arg_sample);
-    return retval;
+                
+                PyObject *CPyPy__argspec___get_return_type(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                    static const char * const kwlist[] = {"sample", 0};
+                    static CPyArg_Parser parser = {"O:get_return_type", kwlist, 0};
+                    PyObject *obj_sample;
+                    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_sample)) {
+                        return NULL;
+                    }
+                    PyObject *arg_sample = obj_sample;
+                    PyObject *retval = CPyDef__argspec___get_return_type(arg_sample);
+                    return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_argspec.py", "get_return_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-    return NULL;
-}
-
+                    CPy_AddTraceback("eth_portfolio/_argspec.py", "get_return_type", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+                    return NULL;
+                }
+                
 tuple_T3OOO CPyDef__argspec___get_types(PyObject *cpy_r_sample) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -16073,34 +16136,34 @@ CPyL6: ;
     CPy_DecRef(cpy_r_r1);
     goto CPyL4;
 }
-
-PyObject *CPyPy__argspec___get_types(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"sample", 0};
-    static CPyArg_Parser parser = {"O:get_types", kwlist, 0};
-    PyObject *obj_sample;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_sample)) {
-        return NULL;
-    }
-    PyObject *arg_sample = obj_sample;
-    tuple_T3OOO retval = CPyDef__argspec___get_types(arg_sample);
-    if (retval.f0 == NULL) {
-        return NULL;
-    }
-    PyObject *retbox = PyTuple_New(3);
-    if (unlikely(retbox == NULL))
-        CPyError_OutOfMemory();
-    PyObject *__tmp55 = retval.f0;
-    PyTuple_SET_ITEM(retbox, 0, __tmp55);
-    PyObject *__tmp56 = retval.f1;
-    PyTuple_SET_ITEM(retbox, 1, __tmp56);
-    PyObject *__tmp57 = retval.f2;
-    PyTuple_SET_ITEM(retbox, 2, __tmp57);
-    return retbox;
+                
+                PyObject *CPyPy__argspec___get_types(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                    static const char * const kwlist[] = {"sample", 0};
+                    static CPyArg_Parser parser = {"O:get_types", kwlist, 0};
+                    PyObject *obj_sample;
+                    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_sample)) {
+                        return NULL;
+                    }
+                    PyObject *arg_sample = obj_sample;
+                    tuple_T3OOO retval = CPyDef__argspec___get_types(arg_sample);
+                    if (retval.f0 == NULL) {
+                        return NULL;
+                    }
+                    PyObject *retbox = PyTuple_New(3);
+                    if (unlikely(retbox == NULL))
+                        CPyError_OutOfMemory();
+                    PyObject *__tmp55 = retval.f0;
+                    PyTuple_SET_ITEM(retbox, 0, __tmp55);
+                    PyObject *__tmp56 = retval.f1;
+                    PyTuple_SET_ITEM(retbox, 1, __tmp56);
+                    PyObject *__tmp57 = retval.f2;
+                    PyTuple_SET_ITEM(retbox, 2, __tmp57);
+                    return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio/_argspec.py", "get_types", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
-    return NULL;
-}
-
+                    CPy_AddTraceback("eth_portfolio/_argspec.py", "get_types", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
+                    return NULL;
+                }
+                
 char CPyDef__argspec_____top_level__(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -16127,7 +16190,7 @@ char CPyDef__argspec_____top_level__(void) {
     cpy_r_r3 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'builtins' */
     cpy_r_r4 = PyImport_Import(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_argspec.py", "<module>", -1, CPyStatic__argspec___globals);
+        CPy_AddTraceback("eth_portfolio/_argspec.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__argspec___globals);
         goto CPyL7;
     }
     CPyModule_builtins = cpy_r_r4;
@@ -16172,56 +16235,86 @@ CPyL7: ;
     cpy_r_r17 = 2;
     return cpy_r_r17;
 }
-static PyMethodDef _configmodule_methods[] = {
-    {NULL, NULL, 0, NULL}
-};
-
-int CPyExec_eth_portfolio____config(PyObject *module)
-{
-    PyObject* modname = NULL;
-    modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio____config__internal, "__name__");
-    CPyStatic__config___globals = PyModule_GetDict(CPyModule_eth_portfolio____config__internal);
-    if (unlikely(CPyStatic__config___globals == NULL))
-        goto fail;
-    if (CPyGlobalsInit() < 0)
-        goto fail;
-    char result = CPyDef__config_____top_level__();
-    if (result == 2)
-        goto fail;
-    Py_DECREF(modname);
-    return 0;
-    fail:
-    Py_CLEAR(CPyModule_eth_portfolio____config__internal);
-    Py_CLEAR(modname);
-    CPyTagged_XDECREF(CPyStatic__config___REORG_BUFFER);
-    CPyStatic__config___REORG_BUFFER = CPY_INT_TAG;
-    return -1;
-}
-static struct PyModuleDef _configmodule = {
-    PyModuleDef_HEAD_INIT,
-    "eth_portfolio._config",
-    NULL, /* docstring */
-    0,       /* size of per-interpreter state of the module */
-    _configmodule_methods,
-    NULL,
-};
-
-PyObject *CPyInit_eth_portfolio____config(void)
-{
-    if (CPyModule_eth_portfolio____config__internal) {
-        Py_INCREF(CPyModule_eth_portfolio____config__internal);
-        return CPyModule_eth_portfolio____config__internal;
-    }
-    CPyModule_eth_portfolio____config__internal = PyModule_Create(&_configmodule);
-    if (unlikely(CPyModule_eth_portfolio____config__internal == NULL))
-        goto fail;
-    if (CPyExec_eth_portfolio____config(CPyModule_eth_portfolio____config__internal) != 0)
-        goto fail;
-    return CPyModule_eth_portfolio____config__internal;
-    fail:
-    return NULL;
-}
-
+                static PyMethodDef _configmodule_methods[] = {
+                    {NULL, NULL, 0, NULL}
+                };
+                
+                int CPyExec_eth_portfolio____config(PyObject *module)
+                {
+                    intern_strings();
+                    PyObject* modname = NULL;
+                    modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio____config__internal, "__name__");
+                    CPyStatic__config___globals = PyModule_GetDict(CPyModule_eth_portfolio____config__internal);
+                    if (unlikely(CPyStatic__config___globals == NULL))
+                        goto fail;
+                    if (CPyGlobalsInit() < 0)
+                        goto fail;
+                    char result = CPyDef__config_____top_level__();
+                    if (result == 2)
+                        goto fail;
+                    Py_DECREF(modname);
+                    return 0;
+                    fail:
+                    Py_CLEAR(CPyModule_eth_portfolio____config__internal);
+                    Py_CLEAR(modname);
+                    CPyTagged_XDECREF(CPyStatic__config___REORG_BUFFER);
+                    CPyStatic__config___REORG_BUFFER = CPY_INT_TAG;
+                    return -1;
+                }
+                static struct PyModuleDef _configmodule = {
+                    PyModuleDef_HEAD_INIT,
+                    "eth_portfolio._config",
+                    NULL, /* docstring */
+                    0,       /* size of per-interpreter state of the module */
+                    _configmodule_methods,
+                    NULL,
+                };
+                
+                PyObject *CPyInitOnly_eth_portfolio____config(void)
+                {
+                    if (CPyModule_eth_portfolio____config__internal) {
+                        Py_INCREF(CPyModule_eth_portfolio____config__internal);
+                        return CPyModule_eth_portfolio____config__internal;
+                    }
+                    CPyModule_eth_portfolio____config__internal = PyModule_Create(&_configmodule);
+                    return CPyModule_eth_portfolio____config__internal;
+                }
+                
+                PyObject *CPyInit_eth_portfolio____config(void)
+                {
+                    PyObject* modname = NULL;
+                    if (CPyModule_eth_portfolio____config__internal) {
+                        Py_INCREF(CPyModule_eth_portfolio____config__internal);
+                        return CPyModule_eth_portfolio____config__internal;
+                    }
+                    CPyModule_eth_portfolio____config__internal = PyModule_Create(&_configmodule);
+                    if (unlikely(CPyModule_eth_portfolio____config__internal == NULL))
+                        goto fail;
+                    modname = PyUnicode_FromString("eth_portfolio._config");
+                    if (modname == NULL) CPyError_OutOfMemory();
+                    if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio____config__internal) < 0)
+                        goto fail;
+                    Py_CLEAR(modname);
+                    if (CPyExec_eth_portfolio____config(CPyModule_eth_portfolio____config__internal) != 0)
+                        goto fail;
+                    return CPyModule_eth_portfolio____config__internal;
+                    fail:
+                    {
+                            PyObject *exc_type, *exc_val, *exc_tb;
+                            PyErr_Fetch(&exc_type, &exc_val, &exc_tb);
+                            if (modname == NULL) {
+                                    modname = PyUnicode_FromString("eth_portfolio._config");
+                                    if (modname == NULL) CPyError_OutOfMemory();
+                                }
+                                PyObject_DelItem(PyImport_GetModuleDict(), modname);
+                                PyErr_Clear();
+                                Py_DECREF(modname);
+                                Py_CLEAR(CPyModule_eth_portfolio____config__internal);
+                                PyErr_Restore(exc_type, exc_val, exc_tb);
+                        }
+                        return NULL;
+                    }
+                    
 char CPyDef__config_____top_level__(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -16265,7 +16358,7 @@ char CPyDef__config_____top_level__(void) {
     cpy_r_r3 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'builtins' */
     cpy_r_r4 = PyImport_Import(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_config.py", "<module>", -1, CPyStatic__config___globals);
+        CPy_AddTraceback("eth_portfolio/_config.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__config___globals);
         goto CPyL11;
     }
     CPyModule_builtins = cpy_r_r4;
@@ -16354,56 +16447,86 @@ CPyL13: ;
     CPy_DecRef(cpy_r_r27);
     goto CPyL11;
 }
-static PyMethodDef _shitcoinsmodule_methods[] = {
-    {NULL, NULL, 0, NULL}
-};
-
-int CPyExec_eth_portfolio____shitcoins(PyObject *module)
-{
-    PyObject* modname = NULL;
-    modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio____shitcoins__internal, "__name__");
-    CPyStatic__shitcoins___globals = PyModule_GetDict(CPyModule_eth_portfolio____shitcoins__internal);
-    if (unlikely(CPyStatic__shitcoins___globals == NULL))
-        goto fail;
-    if (CPyGlobalsInit() < 0)
-        goto fail;
-    char result = CPyDef__shitcoins_____top_level__();
-    if (result == 2)
-        goto fail;
-    Py_DECREF(modname);
-    return 0;
-    fail:
-    Py_CLEAR(CPyModule_eth_portfolio____shitcoins__internal);
-    Py_CLEAR(modname);
-    CPy_XDECREF(CPyStatic__shitcoins___shitcoins);
-    CPyStatic__shitcoins___shitcoins = NULL;
-    return -1;
-}
-static struct PyModuleDef _shitcoinsmodule = {
-    PyModuleDef_HEAD_INIT,
-    "eth_portfolio._shitcoins",
-    NULL, /* docstring */
-    0,       /* size of per-interpreter state of the module */
-    _shitcoinsmodule_methods,
-    NULL,
-};
-
-PyObject *CPyInit_eth_portfolio____shitcoins(void)
-{
-    if (CPyModule_eth_portfolio____shitcoins__internal) {
-        Py_INCREF(CPyModule_eth_portfolio____shitcoins__internal);
-        return CPyModule_eth_portfolio____shitcoins__internal;
-    }
-    CPyModule_eth_portfolio____shitcoins__internal = PyModule_Create(&_shitcoinsmodule);
-    if (unlikely(CPyModule_eth_portfolio____shitcoins__internal == NULL))
-        goto fail;
-    if (CPyExec_eth_portfolio____shitcoins(CPyModule_eth_portfolio____shitcoins__internal) != 0)
-        goto fail;
-    return CPyModule_eth_portfolio____shitcoins__internal;
-    fail:
-    return NULL;
-}
-
+                    static PyMethodDef _shitcoinsmodule_methods[] = {
+                        {NULL, NULL, 0, NULL}
+                    };
+                    
+                    int CPyExec_eth_portfolio____shitcoins(PyObject *module)
+                    {
+                        intern_strings();
+                        PyObject* modname = NULL;
+                        modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio____shitcoins__internal, "__name__");
+                        CPyStatic__shitcoins___globals = PyModule_GetDict(CPyModule_eth_portfolio____shitcoins__internal);
+                        if (unlikely(CPyStatic__shitcoins___globals == NULL))
+                            goto fail;
+                        if (CPyGlobalsInit() < 0)
+                            goto fail;
+                        char result = CPyDef__shitcoins_____top_level__();
+                        if (result == 2)
+                            goto fail;
+                        Py_DECREF(modname);
+                        return 0;
+                        fail:
+                        Py_CLEAR(CPyModule_eth_portfolio____shitcoins__internal);
+                        Py_CLEAR(modname);
+                        CPy_XDECREF(CPyStatic__shitcoins___shitcoins);
+                        CPyStatic__shitcoins___shitcoins = NULL;
+                        return -1;
+                    }
+                    static struct PyModuleDef _shitcoinsmodule = {
+                        PyModuleDef_HEAD_INIT,
+                        "eth_portfolio._shitcoins",
+                        NULL, /* docstring */
+                        0,       /* size of per-interpreter state of the module */
+                        _shitcoinsmodule_methods,
+                        NULL,
+                    };
+                    
+                    PyObject *CPyInitOnly_eth_portfolio____shitcoins(void)
+                    {
+                        if (CPyModule_eth_portfolio____shitcoins__internal) {
+                            Py_INCREF(CPyModule_eth_portfolio____shitcoins__internal);
+                            return CPyModule_eth_portfolio____shitcoins__internal;
+                        }
+                        CPyModule_eth_portfolio____shitcoins__internal = PyModule_Create(&_shitcoinsmodule);
+                        return CPyModule_eth_portfolio____shitcoins__internal;
+                    }
+                    
+                    PyObject *CPyInit_eth_portfolio____shitcoins(void)
+                    {
+                        PyObject* modname = NULL;
+                        if (CPyModule_eth_portfolio____shitcoins__internal) {
+                            Py_INCREF(CPyModule_eth_portfolio____shitcoins__internal);
+                            return CPyModule_eth_portfolio____shitcoins__internal;
+                        }
+                        CPyModule_eth_portfolio____shitcoins__internal = PyModule_Create(&_shitcoinsmodule);
+                        if (unlikely(CPyModule_eth_portfolio____shitcoins__internal == NULL))
+                            goto fail;
+                        modname = PyUnicode_FromString("eth_portfolio._shitcoins");
+                        if (modname == NULL) CPyError_OutOfMemory();
+                        if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio____shitcoins__internal) < 0)
+                            goto fail;
+                        Py_CLEAR(modname);
+                        if (CPyExec_eth_portfolio____shitcoins(CPyModule_eth_portfolio____shitcoins__internal) != 0)
+                            goto fail;
+                        return CPyModule_eth_portfolio____shitcoins__internal;
+                        fail:
+                        {
+                                PyObject *exc_type, *exc_val, *exc_tb;
+                                PyErr_Fetch(&exc_type, &exc_val, &exc_tb);
+                                if (modname == NULL) {
+                                        modname = PyUnicode_FromString("eth_portfolio._shitcoins");
+                                        if (modname == NULL) CPyError_OutOfMemory();
+                                    }
+                                    PyObject_DelItem(PyImport_GetModuleDict(), modname);
+                                    PyErr_Clear();
+                                    Py_DECREF(modname);
+                                    Py_CLEAR(CPyModule_eth_portfolio____shitcoins__internal);
+                                    PyErr_Restore(exc_type, exc_val, exc_tb);
+                            }
+                            return NULL;
+                        }
+                        
 char CPyDef__shitcoins_____top_level__(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -16847,7 +16970,7 @@ char CPyDef__shitcoins_____top_level__(void) {
     cpy_r_r3 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'builtins' */
     cpy_r_r4 = PyImport_Import(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_shitcoins.py", "<module>", -1, CPyStatic__shitcoins___globals);
+        CPy_AddTraceback("eth_portfolio/_shitcoins.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__shitcoins___globals);
         goto CPyL52;
     }
     CPyModule_builtins = cpy_r_r4;
@@ -17501,7 +17624,7 @@ CPyL3: ;
         CPy_AddTraceback("eth_portfolio/_shitcoins.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__shitcoins___globals);
         goto CPyL55;
     }
-    cpy_r_r316 = (CPyPtr)&((PyListObject *)cpy_r_r315)->ob_item;
+    cpy_r_r316 = (CPyPtr)((CPyPtr)cpy_r_r315 + offsetof(PyListObject, ob_item));
     cpy_r_r317 = *(CPyPtr *)cpy_r_r316;
     CPy_INCREF(cpy_r_r314);
     *(PyObject * *)cpy_r_r317 = cpy_r_r314;
@@ -17531,7 +17654,7 @@ CPyL3: ;
         CPy_AddTraceback("eth_portfolio/_shitcoins.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__shitcoins___globals);
         goto CPyL57;
     }
-    cpy_r_r331 = (CPyPtr)&((PyListObject *)cpy_r_r330)->ob_item;
+    cpy_r_r331 = (CPyPtr)((CPyPtr)cpy_r_r330 + offsetof(PyListObject, ob_item));
     cpy_r_r332 = *(CPyPtr *)cpy_r_r331;
     CPy_INCREF(cpy_r_r323);
     *(PyObject * *)cpy_r_r332 = cpy_r_r323;
@@ -17760,7 +17883,7 @@ CPyL29: ;
         CPy_TypeErrorTraceback("eth_portfolio/_shitcoins.py", "<module>", 342, CPyStatic__shitcoins___globals, "list", cpy_r_r409);
         goto CPyL65;
     }
-    cpy_r_r411 = (CPyPtr)&((PyVarObject *)cpy_r_r410)->ob_size;
+    cpy_r_r411 = (CPyPtr)((CPyPtr)cpy_r_r410 + offsetof(PyVarObject, ob_size));
     cpy_r_r412 = *(int64_t *)cpy_r_r411;
     cpy_r_r413 = PyList_New(cpy_r_r412);
     if (unlikely(cpy_r_r413 == NULL)) {
@@ -17769,11 +17892,11 @@ CPyL29: ;
     }
     cpy_r_r414 = 0;
 CPyL42: ;
-    cpy_r_r415 = (CPyPtr)&((PyVarObject *)cpy_r_r410)->ob_size;
+    cpy_r_r415 = (CPyPtr)((CPyPtr)cpy_r_r410 + offsetof(PyVarObject, ob_size));
     cpy_r_r416 = *(int64_t *)cpy_r_r415;
     cpy_r_r417 = cpy_r_r414 < cpy_r_r416;
     if (!cpy_r_r417) goto CPyL67;
-    cpy_r_r418 = (CPyPtr)&((PyListObject *)cpy_r_r410)->ob_item;
+    cpy_r_r418 = (CPyPtr)((CPyPtr)cpy_r_r410 + offsetof(PyListObject, ob_item));
     cpy_r_r419 = *(CPyPtr *)cpy_r_r418;
     cpy_r_r420 = cpy_r_r414 * 8;
     cpy_r_r421 = cpy_r_r419 + cpy_r_r420;
@@ -17927,56 +18050,86 @@ CPyL70: ;
     CPy_DecRef(cpy_r_r426);
     goto CPyL52;
 }
-static PyMethodDef _stableishmodule_methods[] = {
-    {NULL, NULL, 0, NULL}
-};
-
-int CPyExec_eth_portfolio____stableish(PyObject *module)
-{
-    PyObject* modname = NULL;
-    modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio____stableish__internal, "__name__");
-    CPyStatic__stableish___globals = PyModule_GetDict(CPyModule_eth_portfolio____stableish__internal);
-    if (unlikely(CPyStatic__stableish___globals == NULL))
-        goto fail;
-    if (CPyGlobalsInit() < 0)
-        goto fail;
-    char result = CPyDef__stableish_____top_level__();
-    if (result == 2)
-        goto fail;
-    Py_DECREF(modname);
-    return 0;
-    fail:
-    Py_CLEAR(CPyModule_eth_portfolio____stableish__internal);
-    Py_CLEAR(modname);
-    CPy_XDECREF(CPyStatic__stableish___stableish);
-    CPyStatic__stableish___stableish = NULL;
-    return -1;
-}
-static struct PyModuleDef _stableishmodule = {
-    PyModuleDef_HEAD_INIT,
-    "eth_portfolio._stableish",
-    NULL, /* docstring */
-    0,       /* size of per-interpreter state of the module */
-    _stableishmodule_methods,
-    NULL,
-};
-
-PyObject *CPyInit_eth_portfolio____stableish(void)
-{
-    if (CPyModule_eth_portfolio____stableish__internal) {
-        Py_INCREF(CPyModule_eth_portfolio____stableish__internal);
-        return CPyModule_eth_portfolio____stableish__internal;
-    }
-    CPyModule_eth_portfolio____stableish__internal = PyModule_Create(&_stableishmodule);
-    if (unlikely(CPyModule_eth_portfolio____stableish__internal == NULL))
-        goto fail;
-    if (CPyExec_eth_portfolio____stableish(CPyModule_eth_portfolio____stableish__internal) != 0)
-        goto fail;
-    return CPyModule_eth_portfolio____stableish__internal;
-    fail:
-    return NULL;
-}
-
+                        static PyMethodDef _stableishmodule_methods[] = {
+                            {NULL, NULL, 0, NULL}
+                        };
+                        
+                        int CPyExec_eth_portfolio____stableish(PyObject *module)
+                        {
+                            intern_strings();
+                            PyObject* modname = NULL;
+                            modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio____stableish__internal, "__name__");
+                            CPyStatic__stableish___globals = PyModule_GetDict(CPyModule_eth_portfolio____stableish__internal);
+                            if (unlikely(CPyStatic__stableish___globals == NULL))
+                                goto fail;
+                            if (CPyGlobalsInit() < 0)
+                                goto fail;
+                            char result = CPyDef__stableish_____top_level__();
+                            if (result == 2)
+                                goto fail;
+                            Py_DECREF(modname);
+                            return 0;
+                            fail:
+                            Py_CLEAR(CPyModule_eth_portfolio____stableish__internal);
+                            Py_CLEAR(modname);
+                            CPy_XDECREF(CPyStatic__stableish___stableish);
+                            CPyStatic__stableish___stableish = NULL;
+                            return -1;
+                        }
+                        static struct PyModuleDef _stableishmodule = {
+                            PyModuleDef_HEAD_INIT,
+                            "eth_portfolio._stableish",
+                            NULL, /* docstring */
+                            0,       /* size of per-interpreter state of the module */
+                            _stableishmodule_methods,
+                            NULL,
+                        };
+                        
+                        PyObject *CPyInitOnly_eth_portfolio____stableish(void)
+                        {
+                            if (CPyModule_eth_portfolio____stableish__internal) {
+                                Py_INCREF(CPyModule_eth_portfolio____stableish__internal);
+                                return CPyModule_eth_portfolio____stableish__internal;
+                            }
+                            CPyModule_eth_portfolio____stableish__internal = PyModule_Create(&_stableishmodule);
+                            return CPyModule_eth_portfolio____stableish__internal;
+                        }
+                        
+                        PyObject *CPyInit_eth_portfolio____stableish(void)
+                        {
+                            PyObject* modname = NULL;
+                            if (CPyModule_eth_portfolio____stableish__internal) {
+                                Py_INCREF(CPyModule_eth_portfolio____stableish__internal);
+                                return CPyModule_eth_portfolio____stableish__internal;
+                            }
+                            CPyModule_eth_portfolio____stableish__internal = PyModule_Create(&_stableishmodule);
+                            if (unlikely(CPyModule_eth_portfolio____stableish__internal == NULL))
+                                goto fail;
+                            modname = PyUnicode_FromString("eth_portfolio._stableish");
+                            if (modname == NULL) CPyError_OutOfMemory();
+                            if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio____stableish__internal) < 0)
+                                goto fail;
+                            Py_CLEAR(modname);
+                            if (CPyExec_eth_portfolio____stableish(CPyModule_eth_portfolio____stableish__internal) != 0)
+                                goto fail;
+                            return CPyModule_eth_portfolio____stableish__internal;
+                            fail:
+                            {
+                                    PyObject *exc_type, *exc_val, *exc_tb;
+                                    PyErr_Fetch(&exc_type, &exc_val, &exc_tb);
+                                    if (modname == NULL) {
+                                            modname = PyUnicode_FromString("eth_portfolio._stableish");
+                                            if (modname == NULL) CPyError_OutOfMemory();
+                                        }
+                                        PyObject_DelItem(PyImport_GetModuleDict(), modname);
+                                        PyErr_Clear();
+                                        Py_DECREF(modname);
+                                        Py_CLEAR(CPyModule_eth_portfolio____stableish__internal);
+                                        PyErr_Restore(exc_type, exc_val, exc_tb);
+                                }
+                                return NULL;
+                            }
+                            
 char CPyDef__stableish_____top_level__(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -18107,7 +18260,7 @@ char CPyDef__stableish_____top_level__(void) {
     cpy_r_r3 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'builtins' */
     cpy_r_r4 = PyImport_Import(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/_stableish.py", "<module>", -1, CPyStatic__stableish___globals);
+        CPy_AddTraceback("eth_portfolio/_stableish.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic__stableish___globals);
         goto CPyL43;
     }
     CPyModule_builtins = cpy_r_r4;
@@ -18369,7 +18522,7 @@ CPyL20: ;
         CPy_TypeErrorTraceback("eth_portfolio/_stableish.py", "<module>", 42, CPyStatic__stableish___globals, "list", cpy_r_r96);
         goto CPyL50;
     }
-    cpy_r_r98 = (CPyPtr)&((PyVarObject *)cpy_r_r97)->ob_size;
+    cpy_r_r98 = (CPyPtr)((CPyPtr)cpy_r_r97 + offsetof(PyVarObject, ob_size));
     cpy_r_r99 = *(int64_t *)cpy_r_r98;
     cpy_r_r100 = PyList_New(cpy_r_r99);
     if (unlikely(cpy_r_r100 == NULL)) {
@@ -18378,11 +18531,11 @@ CPyL20: ;
     }
     cpy_r_r101 = 0;
 CPyL33: ;
-    cpy_r_r102 = (CPyPtr)&((PyVarObject *)cpy_r_r97)->ob_size;
+    cpy_r_r102 = (CPyPtr)((CPyPtr)cpy_r_r97 + offsetof(PyVarObject, ob_size));
     cpy_r_r103 = *(int64_t *)cpy_r_r102;
     cpy_r_r104 = cpy_r_r101 < cpy_r_r103;
     if (!cpy_r_r104) goto CPyL52;
-    cpy_r_r105 = (CPyPtr)&((PyListObject *)cpy_r_r97)->ob_item;
+    cpy_r_r105 = (CPyPtr)((CPyPtr)cpy_r_r97 + offsetof(PyListObject, ob_item));
     cpy_r_r106 = *(CPyPtr *)cpy_r_r105;
     cpy_r_r107 = cpy_r_r101 * 8;
     cpy_r_r108 = cpy_r_r106 + cpy_r_r107;
@@ -18497,66 +18650,96 @@ CPyL55: ;
     CPy_DecRef(cpy_r_r113);
     goto CPyL43;
 }
-static PyMethodDef constantsmodule_methods[] = {
-    {NULL, NULL, 0, NULL}
-};
-
-int CPyExec_eth_portfolio___constants(PyObject *module)
-{
-    PyObject* modname = NULL;
-    modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio___constants__internal, "__name__");
-    CPyStatic_constants___globals = PyModule_GetDict(CPyModule_eth_portfolio___constants__internal);
-    if (unlikely(CPyStatic_constants___globals == NULL))
-        goto fail;
-    if (CPyGlobalsInit() < 0)
-        goto fail;
-    char result = CPyDef_constants_____top_level__();
-    if (result == 2)
-        goto fail;
-    Py_DECREF(modname);
-    return 0;
-    fail:
-    Py_CLEAR(CPyModule_eth_portfolio___constants__internal);
-    Py_CLEAR(modname);
-    CPyTagged_XDECREF(CPyStatic_constants___NUM_WALLETS);
-    CPyStatic_constants___NUM_WALLETS = CPY_INT_TAG;
-    CPy_XDECREF_NO_IMM(CPyStatic_constants___ADDRESSES);
-    CPyStatic_constants___ADDRESSES = NULL;
-    CPy_XDECREF_NO_IMM(CPyStatic_constants___TRANSFER_SIGS);
-    CPyStatic_constants___TRANSFER_SIGS = NULL;
-    CPy_XDECREF(CPyStatic_constants___ETH_LIKE);
-    CPyStatic_constants___ETH_LIKE = NULL;
-    CPy_XDECREF(CPyStatic_constants___BTC_LIKE);
-    CPyStatic_constants___BTC_LIKE = NULL;
-    CPy_XDECREF(CPyStatic_constants___INTL_STABLECOINS);
-    CPyStatic_constants___INTL_STABLECOINS = NULL;
-    return -1;
-}
-static struct PyModuleDef constantsmodule = {
-    PyModuleDef_HEAD_INIT,
-    "eth_portfolio.constants",
-    NULL, /* docstring */
-    0,       /* size of per-interpreter state of the module */
-    constantsmodule_methods,
-    NULL,
-};
-
-PyObject *CPyInit_eth_portfolio___constants(void)
-{
-    if (CPyModule_eth_portfolio___constants__internal) {
-        Py_INCREF(CPyModule_eth_portfolio___constants__internal);
-        return CPyModule_eth_portfolio___constants__internal;
-    }
-    CPyModule_eth_portfolio___constants__internal = PyModule_Create(&constantsmodule);
-    if (unlikely(CPyModule_eth_portfolio___constants__internal == NULL))
-        goto fail;
-    if (CPyExec_eth_portfolio___constants(CPyModule_eth_portfolio___constants__internal) != 0)
-        goto fail;
-    return CPyModule_eth_portfolio___constants__internal;
-    fail:
-    return NULL;
-}
-
+                            static PyMethodDef constantsmodule_methods[] = {
+                                {NULL, NULL, 0, NULL}
+                            };
+                            
+                            int CPyExec_eth_portfolio___constants(PyObject *module)
+                            {
+                                intern_strings();
+                                PyObject* modname = NULL;
+                                modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio___constants__internal, "__name__");
+                                CPyStatic_constants___globals = PyModule_GetDict(CPyModule_eth_portfolio___constants__internal);
+                                if (unlikely(CPyStatic_constants___globals == NULL))
+                                    goto fail;
+                                if (CPyGlobalsInit() < 0)
+                                    goto fail;
+                                char result = CPyDef_constants_____top_level__();
+                                if (result == 2)
+                                    goto fail;
+                                Py_DECREF(modname);
+                                return 0;
+                                fail:
+                                Py_CLEAR(CPyModule_eth_portfolio___constants__internal);
+                                Py_CLEAR(modname);
+                                CPyTagged_XDECREF(CPyStatic_constants___NUM_WALLETS);
+                                CPyStatic_constants___NUM_WALLETS = CPY_INT_TAG;
+                                CPy_XDECREF_NO_IMM(CPyStatic_constants___ADDRESSES);
+                                CPyStatic_constants___ADDRESSES = NULL;
+                                CPy_XDECREF_NO_IMM(CPyStatic_constants___TRANSFER_SIGS);
+                                CPyStatic_constants___TRANSFER_SIGS = NULL;
+                                CPy_XDECREF(CPyStatic_constants___ETH_LIKE);
+                                CPyStatic_constants___ETH_LIKE = NULL;
+                                CPy_XDECREF(CPyStatic_constants___BTC_LIKE);
+                                CPyStatic_constants___BTC_LIKE = NULL;
+                                CPy_XDECREF(CPyStatic_constants___INTL_STABLECOINS);
+                                CPyStatic_constants___INTL_STABLECOINS = NULL;
+                                return -1;
+                            }
+                            static struct PyModuleDef constantsmodule = {
+                                PyModuleDef_HEAD_INIT,
+                                "eth_portfolio.constants",
+                                NULL, /* docstring */
+                                0,       /* size of per-interpreter state of the module */
+                                constantsmodule_methods,
+                                NULL,
+                            };
+                            
+                            PyObject *CPyInitOnly_eth_portfolio___constants(void)
+                            {
+                                if (CPyModule_eth_portfolio___constants__internal) {
+                                    Py_INCREF(CPyModule_eth_portfolio___constants__internal);
+                                    return CPyModule_eth_portfolio___constants__internal;
+                                }
+                                CPyModule_eth_portfolio___constants__internal = PyModule_Create(&constantsmodule);
+                                return CPyModule_eth_portfolio___constants__internal;
+                            }
+                            
+                            PyObject *CPyInit_eth_portfolio___constants(void)
+                            {
+                                PyObject* modname = NULL;
+                                if (CPyModule_eth_portfolio___constants__internal) {
+                                    Py_INCREF(CPyModule_eth_portfolio___constants__internal);
+                                    return CPyModule_eth_portfolio___constants__internal;
+                                }
+                                CPyModule_eth_portfolio___constants__internal = PyModule_Create(&constantsmodule);
+                                if (unlikely(CPyModule_eth_portfolio___constants__internal == NULL))
+                                    goto fail;
+                                modname = PyUnicode_FromString("eth_portfolio.constants");
+                                if (modname == NULL) CPyError_OutOfMemory();
+                                if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio___constants__internal) < 0)
+                                    goto fail;
+                                Py_CLEAR(modname);
+                                if (CPyExec_eth_portfolio___constants(CPyModule_eth_portfolio___constants__internal) != 0)
+                                    goto fail;
+                                return CPyModule_eth_portfolio___constants__internal;
+                                fail:
+                                {
+                                        PyObject *exc_type, *exc_val, *exc_tb;
+                                        PyErr_Fetch(&exc_type, &exc_val, &exc_tb);
+                                        if (modname == NULL) {
+                                                modname = PyUnicode_FromString("eth_portfolio.constants");
+                                                if (modname == NULL) CPyError_OutOfMemory();
+                                            }
+                                            PyObject_DelItem(PyImport_GetModuleDict(), modname);
+                                            PyErr_Clear();
+                                            Py_DECREF(modname);
+                                            Py_CLEAR(CPyModule_eth_portfolio___constants__internal);
+                                            PyErr_Restore(exc_type, exc_val, exc_tb);
+                                    }
+                                    return NULL;
+                                }
+                                
 char CPyDef_constants_____top_level__(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -18892,7 +19075,7 @@ char CPyDef_constants_____top_level__(void) {
     cpy_r_r3 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'builtins' */
     cpy_r_r4 = PyImport_Import(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio/constants.py", "<module>", -1, CPyStatic_constants___globals);
+        CPy_AddTraceback("eth_portfolio/constants.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_constants___globals);
         goto CPyL131;
     }
     CPyModule_builtins = cpy_r_r4;
@@ -19040,6 +19223,7 @@ CPyL20: ;
     cpy_r_r58 = 0;
     CPyTagged_INCREF(cpy_r_r58);
     cpy_r_i = cpy_r_r58;
+    CPyTagged_DECREF(cpy_r_i);
 CPyL21: ;
     cpy_r_r59 = cpy_r_r58 & 1;
     cpy_r_r60 = cpy_r_r59 != 0;
@@ -19057,6 +19241,8 @@ CPyL24: ;
     cpy_r_r64 = (Py_ssize_t)cpy_r_r58 < (Py_ssize_t)cpy_r_r56;
     if (!cpy_r_r64) goto CPyL135;
 CPyL25: ;
+    CPyTagged_INCREF(cpy_r_r58);
+    cpy_r_i = cpy_r_r58;
     cpy_r_r65 = CPyModule_os;
     cpy_r_r66 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'environ' */
     cpy_r_r67 = CPyObject_GetAttr(cpy_r_r65, cpy_r_r66);
@@ -19112,9 +19298,7 @@ __LL58: ;
     }
     cpy_r_r79 = CPyTagged_Add(cpy_r_r58, 2);
     CPyTagged_DECREF(cpy_r_r58);
-    CPyTagged_INCREF(cpy_r_r79);
     cpy_r_r58 = cpy_r_r79;
-    cpy_r_i = cpy_r_r79;
     goto CPyL21;
 CPyL32: ;
     cpy_r_r80 = PyObject_GetIter(cpy_r_r55);
@@ -19199,7 +19383,7 @@ CPyL40: ;
         CPy_AddTraceback("eth_portfolio/constants.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_constants___globals);
         goto CPyL131;
     }
-    cpy_r_r103 = (CPyPtr)&((PyListObject *)cpy_r_r102)->ob_item;
+    cpy_r_r103 = (CPyPtr)((CPyPtr)cpy_r_r102 + offsetof(PyListObject, ob_item));
     cpy_r_r104 = *(CPyPtr *)cpy_r_r103;
     CPy_INCREF(cpy_r_r100);
     *(PyObject * *)cpy_r_r104 = cpy_r_r100;
@@ -19847,7 +20031,6 @@ CPyL134: ;
     goto CPyL18;
 CPyL135: ;
     CPyTagged_DECREF(cpy_r_r58);
-    CPyTagged_DECREF(cpy_r_i);
     goto CPyL32;
 CPyL136: ;
     CPy_DecRef(cpy_r_r54);
@@ -19951,54 +20134,84 @@ CPyL159: ;
     CPyTagged_DecRef(cpy_r_r321);
     goto CPyL131;
 }
-static PyMethodDef dockermodule_methods[] = {
-    {NULL, NULL, 0, NULL}
-};
-
-int CPyExec_eth_portfolio_scripts___docker(PyObject *module)
-{
-    PyObject* modname = NULL;
-    modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio_scripts___docker__internal, "__name__");
-    CPyStatic_docker___globals = PyModule_GetDict(CPyModule_eth_portfolio_scripts___docker__internal);
-    if (unlikely(CPyStatic_docker___globals == NULL))
-        goto fail;
-    if (CPyGlobalsInit() < 0)
-        goto fail;
-    char result = CPyDef_docker_____top_level__();
-    if (result == 2)
-        goto fail;
-    Py_DECREF(modname);
-    return 0;
-    fail:
-    Py_CLEAR(CPyModule_eth_portfolio_scripts___docker__internal);
-    Py_CLEAR(modname);
-    return -1;
-}
-static struct PyModuleDef dockermodule = {
-    PyModuleDef_HEAD_INIT,
-    "eth_portfolio_scripts.docker",
-    NULL, /* docstring */
-    0,       /* size of per-interpreter state of the module */
-    dockermodule_methods,
-    NULL,
-};
-
-PyObject *CPyInit_eth_portfolio_scripts___docker(void)
-{
-    if (CPyModule_eth_portfolio_scripts___docker__internal) {
-        Py_INCREF(CPyModule_eth_portfolio_scripts___docker__internal);
-        return CPyModule_eth_portfolio_scripts___docker__internal;
-    }
-    CPyModule_eth_portfolio_scripts___docker__internal = PyModule_Create(&dockermodule);
-    if (unlikely(CPyModule_eth_portfolio_scripts___docker__internal == NULL))
-        goto fail;
-    if (CPyExec_eth_portfolio_scripts___docker(CPyModule_eth_portfolio_scripts___docker__internal) != 0)
-        goto fail;
-    return CPyModule_eth_portfolio_scripts___docker__internal;
-    fail:
-    return NULL;
-}
-
+                                static PyMethodDef dockermodule_methods[] = {
+                                    {NULL, NULL, 0, NULL}
+                                };
+                                
+                                int CPyExec_eth_portfolio_scripts___docker(PyObject *module)
+                                {
+                                    intern_strings();
+                                    PyObject* modname = NULL;
+                                    modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio_scripts___docker__internal, "__name__");
+                                    CPyStatic_docker___globals = PyModule_GetDict(CPyModule_eth_portfolio_scripts___docker__internal);
+                                    if (unlikely(CPyStatic_docker___globals == NULL))
+                                        goto fail;
+                                    if (CPyGlobalsInit() < 0)
+                                        goto fail;
+                                    char result = CPyDef_docker_____top_level__();
+                                    if (result == 2)
+                                        goto fail;
+                                    Py_DECREF(modname);
+                                    return 0;
+                                    fail:
+                                    Py_CLEAR(CPyModule_eth_portfolio_scripts___docker__internal);
+                                    Py_CLEAR(modname);
+                                    return -1;
+                                }
+                                static struct PyModuleDef dockermodule = {
+                                    PyModuleDef_HEAD_INIT,
+                                    "eth_portfolio_scripts.docker",
+                                    NULL, /* docstring */
+                                    0,       /* size of per-interpreter state of the module */
+                                    dockermodule_methods,
+                                    NULL,
+                                };
+                                
+                                PyObject *CPyInitOnly_eth_portfolio_scripts___docker(void)
+                                {
+                                    if (CPyModule_eth_portfolio_scripts___docker__internal) {
+                                        Py_INCREF(CPyModule_eth_portfolio_scripts___docker__internal);
+                                        return CPyModule_eth_portfolio_scripts___docker__internal;
+                                    }
+                                    CPyModule_eth_portfolio_scripts___docker__internal = PyModule_Create(&dockermodule);
+                                    return CPyModule_eth_portfolio_scripts___docker__internal;
+                                }
+                                
+                                PyObject *CPyInit_eth_portfolio_scripts___docker(void)
+                                {
+                                    PyObject* modname = NULL;
+                                    if (CPyModule_eth_portfolio_scripts___docker__internal) {
+                                        Py_INCREF(CPyModule_eth_portfolio_scripts___docker__internal);
+                                        return CPyModule_eth_portfolio_scripts___docker__internal;
+                                    }
+                                    CPyModule_eth_portfolio_scripts___docker__internal = PyModule_Create(&dockermodule);
+                                    if (unlikely(CPyModule_eth_portfolio_scripts___docker__internal == NULL))
+                                        goto fail;
+                                    modname = PyUnicode_FromString("eth_portfolio_scripts.docker");
+                                    if (modname == NULL) CPyError_OutOfMemory();
+                                    if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio_scripts___docker__internal) < 0)
+                                        goto fail;
+                                    Py_CLEAR(modname);
+                                    if (CPyExec_eth_portfolio_scripts___docker(CPyModule_eth_portfolio_scripts___docker__internal) != 0)
+                                        goto fail;
+                                    return CPyModule_eth_portfolio_scripts___docker__internal;
+                                    fail:
+                                    {
+                                            PyObject *exc_type, *exc_val, *exc_tb;
+                                            PyErr_Fetch(&exc_type, &exc_val, &exc_tb);
+                                            if (modname == NULL) {
+                                                    modname = PyUnicode_FromString("eth_portfolio_scripts.docker");
+                                                    if (modname == NULL) CPyError_OutOfMemory();
+                                                }
+                                                PyObject_DelItem(PyImport_GetModuleDict(), modname);
+                                                PyErr_Clear();
+                                                Py_DECREF(modname);
+                                                Py_CLEAR(CPyModule_eth_portfolio_scripts___docker__internal);
+                                                PyErr_Restore(exc_type, exc_val, exc_tb);
+                                        }
+                                        return NULL;
+                                    }
+                                    
 char CPyDef_docker_____top_level__(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -20007,10 +20220,10 @@ char CPyDef_docker_____top_level__(void) {
     PyObject *cpy_r_r4;
     PyObject *cpy_r_r5;
     PyObject *cpy_r_r6;
-    PyObject *cpy_r_r7;
-    PyObject *cpy_r_r8;
-    PyObject *cpy_r_r9;
-    PyObject *cpy_r_r10;
+    char cpy_r_r7;
+    void *cpy_r_r8;
+    void *cpy_r_r9;
+    PyObject **cpy_r_r10;
     PyObject *cpy_r_r11;
     PyObject *cpy_r_r12;
     PyObject *cpy_r_r13;
@@ -20022,20 +20235,48 @@ char CPyDef_docker_____top_level__(void) {
     PyObject *cpy_r_r19;
     PyObject *cpy_r_r20;
     PyObject *cpy_r_r21;
-    CPyPtr cpy_r_r22;
-    CPyPtr cpy_r_r23;
-    CPyPtr cpy_r_r24;
-    CPyPtr cpy_r_r25;
-    CPyPtr cpy_r_r26;
-    CPyPtr cpy_r_r27;
-    CPyPtr cpy_r_r28;
-    CPyPtr cpy_r_r29;
-    CPyPtr cpy_r_r30;
+    PyObject *cpy_r_r22;
+    PyObject *cpy_r_r23;
+    PyObject *cpy_r_r24;
+    char cpy_r_r25;
+    void *cpy_r_r26;
+    void *cpy_r_r27;
+    PyObject **cpy_r_r28;
+    PyObject *cpy_r_r29;
+    PyObject *cpy_r_r30;
     PyObject *cpy_r_r31;
     PyObject *cpy_r_r32;
-    int32_t cpy_r_r33;
-    char cpy_r_r34;
-    char cpy_r_r35;
+    PyObject *cpy_r_r33;
+    PyObject *cpy_r_r34;
+    PyObject *cpy_r_r35;
+    PyObject *cpy_r_r36;
+    PyObject *cpy_r_r37;
+    PyObject *cpy_r_r38;
+    PyObject *cpy_r_r39;
+    PyObject *cpy_r_r40;
+    PyObject *cpy_r_r41;
+    PyObject *cpy_r_r42;
+    PyObject *cpy_r_r43;
+    PyObject *cpy_r_r44;
+    PyObject *cpy_r_r45;
+    PyObject *cpy_r_r46;
+    PyObject *cpy_r_r47;
+    PyObject *cpy_r_r48;
+    PyObject *cpy_r_r49;
+    CPyPtr cpy_r_r50;
+    CPyPtr cpy_r_r51;
+    CPyPtr cpy_r_r52;
+    CPyPtr cpy_r_r53;
+    CPyPtr cpy_r_r54;
+    CPyPtr cpy_r_r55;
+    CPyPtr cpy_r_r56;
+    CPyPtr cpy_r_r57;
+    CPyPtr cpy_r_r58;
+    PyObject *cpy_r_r59;
+    PyObject *cpy_r_r60;
+    int32_t cpy_r_r61;
+    char cpy_r_r62;
+    char cpy_r_r63;
     cpy_r_r0 = CPyModule_builtins;
     cpy_r_r1 = (PyObject *)&_Py_NoneStruct;
     cpy_r_r2 = cpy_r_r0 != cpy_r_r1;
@@ -20043,138 +20284,238 @@ char CPyDef_docker_____top_level__(void) {
     cpy_r_r3 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'builtins' */
     cpy_r_r4 = PyImport_Import(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/docker/__init__.py", "<module>", -1, CPyStatic_docker___globals);
-        goto CPyL8;
+        CPy_AddTraceback("eth_portfolio_scripts/docker/__init__.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker___globals);
+        goto CPyL18;
     }
     CPyModule_builtins = cpy_r_r4;
     CPy_INCREF(CPyModule_builtins);
     CPy_DECREF(cpy_r_r4);
 CPyL3: ;
-    cpy_r_r5 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('check_docker', 'check_docker_compose', 'check_system') */
-    cpy_r_r6 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts.docker.check' */
-    cpy_r_r7 = CPyStatic_docker___globals;
-    cpy_r_r8 = CPyImport_ImportFromMany(cpy_r_r6, cpy_r_r5, cpy_r_r5, cpy_r_r7);
-    if (unlikely(cpy_r_r8 == NULL)) {
+    cpy_r_r5 = CPyModule_eth_portfolio_scripts___docker___check;
+    cpy_r_r6 = (PyObject *)&_Py_NoneStruct;
+    cpy_r_r7 = cpy_r_r5 != cpy_r_r6;
+    if (cpy_r_r7) goto CPyL8;
+    cpy_r_r8 = CPyInitOnly_eth_portfolio_scripts___docker___check;
+    cpy_r_r9 = CPyExec_eth_portfolio_scripts___docker___check;
+    cpy_r_r10 = (PyObject **)&CPyModule_eth_portfolio_scripts___docker___check__internal;
+    cpy_r_r11 = PyImport_GetModuleDict();
+    cpy_r_r12 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio__mypyc' */
+    cpy_r_r13 = CPyDict_GetItem(cpy_r_r11, cpy_r_r12);
+    if (unlikely(cpy_r_r13 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/__init__.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker___globals);
-        goto CPyL8;
+        goto CPyL18;
     }
-    CPyModule_eth_portfolio_scripts___docker___check = cpy_r_r8;
+    cpy_r_r14 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '__file__' */
+    cpy_r_r15 = CPyObject_GetAttr(cpy_r_r13, cpy_r_r14);
+    CPy_DECREF(cpy_r_r13);
+    if (unlikely(cpy_r_r15 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/__init__.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker___globals);
+        goto CPyL18;
+    }
+    cpy_r_r16 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '.cpython-313-x86_64-linux-gnu.so' */
+    cpy_r_r17 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts.docker.check' */
+    cpy_r_r18 = CPyImport_ImportNative(cpy_r_r17, cpy_r_r8, cpy_r_r9, cpy_r_r10, cpy_r_r15, cpy_r_r16, 0);
+    CPy_DECREF(cpy_r_r15);
+    if (unlikely(cpy_r_r18 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/__init__.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker___globals);
+        goto CPyL18;
+    }
+    CPyModule_eth_portfolio_scripts___docker___check = cpy_r_r18;
     CPy_INCREF(CPyModule_eth_portfolio_scripts___docker___check);
-    CPy_DECREF(cpy_r_r8);
-    cpy_r_r9 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('build', 'down', 'ensure_containers', 'stop', 'up') */
-    cpy_r_r10 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts.docker.docker_compose' */
-    cpy_r_r11 = CPyStatic_docker___globals;
-    cpy_r_r12 = CPyImport_ImportFromMany(cpy_r_r10, cpy_r_r9, cpy_r_r9, cpy_r_r11);
-    if (unlikely(cpy_r_r12 == NULL)) {
+    CPy_DECREF(cpy_r_r18);
+CPyL8: ;
+    cpy_r_r19 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('check_docker', 'check_docker_compose', 'check_system') */
+    cpy_r_r20 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts.docker.check' */
+    cpy_r_r21 = CPyStatic_docker___globals;
+    cpy_r_r22 = CPyImport_GetNativeAttrs(cpy_r_r20, cpy_r_r19, cpy_r_r19, cpy_r_r21);
+    if (unlikely(cpy_r_r22 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/__init__.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker___globals);
-        goto CPyL8;
+        goto CPyL18;
+    } else
+        goto CPyL19;
+CPyL9: ;
+    cpy_r_r23 = CPyModule_eth_portfolio_scripts___docker___docker_compose;
+    cpy_r_r24 = (PyObject *)&_Py_NoneStruct;
+    cpy_r_r25 = cpy_r_r23 != cpy_r_r24;
+    if (cpy_r_r25) goto CPyL14;
+    cpy_r_r26 = CPyInitOnly_eth_portfolio_scripts___docker___docker_compose;
+    cpy_r_r27 = CPyExec_eth_portfolio_scripts___docker___docker_compose;
+    cpy_r_r28 = (PyObject **)&CPyModule_eth_portfolio_scripts___docker___docker_compose__internal;
+    cpy_r_r29 = PyImport_GetModuleDict();
+    cpy_r_r30 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio__mypyc' */
+    cpy_r_r31 = CPyDict_GetItem(cpy_r_r29, cpy_r_r30);
+    if (unlikely(cpy_r_r31 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/__init__.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker___globals);
+        goto CPyL18;
     }
-    CPyModule_eth_portfolio_scripts___docker___docker_compose = cpy_r_r12;
+    cpy_r_r32 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '__file__' */
+    cpy_r_r33 = CPyObject_GetAttr(cpy_r_r31, cpy_r_r32);
+    CPy_DECREF(cpy_r_r31);
+    if (unlikely(cpy_r_r33 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/__init__.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker___globals);
+        goto CPyL18;
+    }
+    cpy_r_r34 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '.cpython-313-x86_64-linux-gnu.so' */
+    cpy_r_r35 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts.docker.docker_compose' */
+    cpy_r_r36 = CPyImport_ImportNative(cpy_r_r35, cpy_r_r26, cpy_r_r27, cpy_r_r28, cpy_r_r33, cpy_r_r34, 0);
+    CPy_DECREF(cpy_r_r33);
+    if (unlikely(cpy_r_r36 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/__init__.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker___globals);
+        goto CPyL18;
+    }
+    CPyModule_eth_portfolio_scripts___docker___docker_compose = cpy_r_r36;
     CPy_INCREF(CPyModule_eth_portfolio_scripts___docker___docker_compose);
-    CPy_DECREF(cpy_r_r12);
-    cpy_r_r13 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'build' */
-    cpy_r_r14 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'up' */
-    cpy_r_r15 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'down' */
-    cpy_r_r16 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'stop' */
-    cpy_r_r17 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ensure_containers' */
-    cpy_r_r18 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'check_docker' */
-    cpy_r_r19 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'check_docker_compose' */
-    cpy_r_r20 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'check_system' */
-    cpy_r_r21 = PyList_New(8);
-    if (unlikely(cpy_r_r21 == NULL)) {
+    CPy_DECREF(cpy_r_r36);
+CPyL14: ;
+    cpy_r_r37 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('build', 'down', 'ensure_containers', 'stop', 'up') */
+    cpy_r_r38 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts.docker.docker_compose' */
+    cpy_r_r39 = CPyStatic_docker___globals;
+    cpy_r_r40 = CPyImport_GetNativeAttrs(cpy_r_r38, cpy_r_r37, cpy_r_r37, cpy_r_r39);
+    if (unlikely(cpy_r_r40 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/__init__.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker___globals);
-        goto CPyL8;
+        goto CPyL18;
+    } else
+        goto CPyL20;
+CPyL15: ;
+    cpy_r_r41 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'build' */
+    cpy_r_r42 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'up' */
+    cpy_r_r43 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'down' */
+    cpy_r_r44 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'stop' */
+    cpy_r_r45 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ensure_containers' */
+    cpy_r_r46 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'check_docker' */
+    cpy_r_r47 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'check_docker_compose' */
+    cpy_r_r48 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'check_system' */
+    cpy_r_r49 = PyList_New(8);
+    if (unlikely(cpy_r_r49 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/__init__.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker___globals);
+        goto CPyL18;
     }
-    cpy_r_r22 = (CPyPtr)&((PyListObject *)cpy_r_r21)->ob_item;
-    cpy_r_r23 = *(CPyPtr *)cpy_r_r22;
-    CPy_INCREF(cpy_r_r13);
-    *(PyObject * *)cpy_r_r23 = cpy_r_r13;
-    CPy_INCREF(cpy_r_r14);
-    cpy_r_r24 = cpy_r_r23 + 8;
-    *(PyObject * *)cpy_r_r24 = cpy_r_r14;
-    CPy_INCREF(cpy_r_r15);
-    cpy_r_r25 = cpy_r_r23 + 16;
-    *(PyObject * *)cpy_r_r25 = cpy_r_r15;
-    CPy_INCREF(cpy_r_r16);
-    cpy_r_r26 = cpy_r_r23 + 24;
-    *(PyObject * *)cpy_r_r26 = cpy_r_r16;
-    CPy_INCREF(cpy_r_r17);
-    cpy_r_r27 = cpy_r_r23 + 32;
-    *(PyObject * *)cpy_r_r27 = cpy_r_r17;
-    CPy_INCREF(cpy_r_r18);
-    cpy_r_r28 = cpy_r_r23 + 40;
-    *(PyObject * *)cpy_r_r28 = cpy_r_r18;
-    CPy_INCREF(cpy_r_r19);
-    cpy_r_r29 = cpy_r_r23 + 48;
-    *(PyObject * *)cpy_r_r29 = cpy_r_r19;
-    CPy_INCREF(cpy_r_r20);
-    cpy_r_r30 = cpy_r_r23 + 56;
-    *(PyObject * *)cpy_r_r30 = cpy_r_r20;
-    cpy_r_r31 = CPyStatic_docker___globals;
-    cpy_r_r32 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '__all__' */
-    cpy_r_r33 = CPyDict_SetItem(cpy_r_r31, cpy_r_r32, cpy_r_r21);
-    CPy_DECREF_NO_IMM(cpy_r_r21);
-    cpy_r_r34 = cpy_r_r33 >= 0;
-    if (unlikely(!cpy_r_r34)) {
+    cpy_r_r50 = (CPyPtr)((CPyPtr)cpy_r_r49 + offsetof(PyListObject, ob_item));
+    cpy_r_r51 = *(CPyPtr *)cpy_r_r50;
+    CPy_INCREF(cpy_r_r41);
+    *(PyObject * *)cpy_r_r51 = cpy_r_r41;
+    CPy_INCREF(cpy_r_r42);
+    cpy_r_r52 = cpy_r_r51 + 8;
+    *(PyObject * *)cpy_r_r52 = cpy_r_r42;
+    CPy_INCREF(cpy_r_r43);
+    cpy_r_r53 = cpy_r_r51 + 16;
+    *(PyObject * *)cpy_r_r53 = cpy_r_r43;
+    CPy_INCREF(cpy_r_r44);
+    cpy_r_r54 = cpy_r_r51 + 24;
+    *(PyObject * *)cpy_r_r54 = cpy_r_r44;
+    CPy_INCREF(cpy_r_r45);
+    cpy_r_r55 = cpy_r_r51 + 32;
+    *(PyObject * *)cpy_r_r55 = cpy_r_r45;
+    CPy_INCREF(cpy_r_r46);
+    cpy_r_r56 = cpy_r_r51 + 40;
+    *(PyObject * *)cpy_r_r56 = cpy_r_r46;
+    CPy_INCREF(cpy_r_r47);
+    cpy_r_r57 = cpy_r_r51 + 48;
+    *(PyObject * *)cpy_r_r57 = cpy_r_r47;
+    CPy_INCREF(cpy_r_r48);
+    cpy_r_r58 = cpy_r_r51 + 56;
+    *(PyObject * *)cpy_r_r58 = cpy_r_r48;
+    cpy_r_r59 = CPyStatic_docker___globals;
+    cpy_r_r60 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '__all__' */
+    cpy_r_r61 = CPyDict_SetItem(cpy_r_r59, cpy_r_r60, cpy_r_r49);
+    CPy_DECREF_NO_IMM(cpy_r_r49);
+    cpy_r_r62 = cpy_r_r61 >= 0;
+    if (unlikely(!cpy_r_r62)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/__init__.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker___globals);
-        goto CPyL8;
+        goto CPyL18;
     }
     return 1;
-CPyL8: ;
-    cpy_r_r35 = 2;
-    return cpy_r_r35;
+CPyL18: ;
+    cpy_r_r63 = 2;
+    return cpy_r_r63;
+CPyL19: ;
+    CPy_DECREF(cpy_r_r22);
+    goto CPyL9;
+CPyL20: ;
+    CPy_DECREF(cpy_r_r40);
+    goto CPyL15;
 }
-static PyMethodDef checkmodule_methods[] = {
-    {"check_docker", (PyCFunction)CPyPy_check___check_docker, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("check_docker()\n--\n\n") /* docstring */},
-    {"check_docker_compose", (PyCFunction)CPyPy_check___check_docker_compose, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("check_docker_compose()\n--\n\n") /* docstring */},
-    {"check_system", (PyCFunction)CPyPy_check___check_system, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("check_system()\n--\n\n") /* docstring */},
-    {NULL, NULL, 0, NULL}
-};
-
-int CPyExec_eth_portfolio_scripts___docker___check(PyObject *module)
-{
-    PyObject* modname = NULL;
-    modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio_scripts___docker___check__internal, "__name__");
-    CPyStatic_check___globals = PyModule_GetDict(CPyModule_eth_portfolio_scripts___docker___check__internal);
-    if (unlikely(CPyStatic_check___globals == NULL))
-        goto fail;
-    if (CPyGlobalsInit() < 0)
-        goto fail;
-    char result = CPyDef_check_____top_level__();
-    if (result == 2)
-        goto fail;
-    Py_DECREF(modname);
-    return 0;
-    fail:
-    Py_CLEAR(CPyModule_eth_portfolio_scripts___docker___check__internal);
-    Py_CLEAR(modname);
-    return -1;
-}
-static struct PyModuleDef checkmodule = {
-    PyModuleDef_HEAD_INIT,
-    "eth_portfolio_scripts.docker.check",
-    NULL, /* docstring */
-    0,       /* size of per-interpreter state of the module */
-    checkmodule_methods,
-    NULL,
-};
-
-PyObject *CPyInit_eth_portfolio_scripts___docker___check(void)
-{
-    if (CPyModule_eth_portfolio_scripts___docker___check__internal) {
-        Py_INCREF(CPyModule_eth_portfolio_scripts___docker___check__internal);
-        return CPyModule_eth_portfolio_scripts___docker___check__internal;
-    }
-    CPyModule_eth_portfolio_scripts___docker___check__internal = PyModule_Create(&checkmodule);
-    if (unlikely(CPyModule_eth_portfolio_scripts___docker___check__internal == NULL))
-        goto fail;
-    if (CPyExec_eth_portfolio_scripts___docker___check(CPyModule_eth_portfolio_scripts___docker___check__internal) != 0)
-        goto fail;
-    return CPyModule_eth_portfolio_scripts___docker___check__internal;
-    fail:
-    return NULL;
-}
-
+                                    static PyMethodDef checkmodule_methods[] = {
+                                        {"check_docker", (PyCFunction)CPyPy_check___check_docker, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("check_docker()\n--\n\n") /* docstring */},
+                                        {"check_docker_compose", (PyCFunction)CPyPy_check___check_docker_compose, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("check_docker_compose()\n--\n\n") /* docstring */},
+                                        {"check_system", (PyCFunction)CPyPy_check___check_system, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("check_system()\n--\n\n") /* docstring */},
+                                        {NULL, NULL, 0, NULL}
+                                    };
+                                    
+                                    int CPyExec_eth_portfolio_scripts___docker___check(PyObject *module)
+                                    {
+                                        intern_strings();
+                                        PyObject* modname = NULL;
+                                        modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio_scripts___docker___check__internal, "__name__");
+                                        CPyStatic_check___globals = PyModule_GetDict(CPyModule_eth_portfolio_scripts___docker___check__internal);
+                                        if (unlikely(CPyStatic_check___globals == NULL))
+                                            goto fail;
+                                        if (CPyGlobalsInit() < 0)
+                                            goto fail;
+                                        char result = CPyDef_check_____top_level__();
+                                        if (result == 2)
+                                            goto fail;
+                                        Py_DECREF(modname);
+                                        return 0;
+                                        fail:
+                                        Py_CLEAR(CPyModule_eth_portfolio_scripts___docker___check__internal);
+                                        Py_CLEAR(modname);
+                                        return -1;
+                                    }
+                                    static struct PyModuleDef checkmodule = {
+                                        PyModuleDef_HEAD_INIT,
+                                        "eth_portfolio_scripts.docker.check",
+                                        NULL, /* docstring */
+                                        0,       /* size of per-interpreter state of the module */
+                                        checkmodule_methods,
+                                        NULL,
+                                    };
+                                    
+                                    PyObject *CPyInitOnly_eth_portfolio_scripts___docker___check(void)
+                                    {
+                                        if (CPyModule_eth_portfolio_scripts___docker___check__internal) {
+                                            Py_INCREF(CPyModule_eth_portfolio_scripts___docker___check__internal);
+                                            return CPyModule_eth_portfolio_scripts___docker___check__internal;
+                                        }
+                                        CPyModule_eth_portfolio_scripts___docker___check__internal = PyModule_Create(&checkmodule);
+                                        return CPyModule_eth_portfolio_scripts___docker___check__internal;
+                                    }
+                                    
+                                    PyObject *CPyInit_eth_portfolio_scripts___docker___check(void)
+                                    {
+                                        PyObject* modname = NULL;
+                                        if (CPyModule_eth_portfolio_scripts___docker___check__internal) {
+                                            Py_INCREF(CPyModule_eth_portfolio_scripts___docker___check__internal);
+                                            return CPyModule_eth_portfolio_scripts___docker___check__internal;
+                                        }
+                                        CPyModule_eth_portfolio_scripts___docker___check__internal = PyModule_Create(&checkmodule);
+                                        if (unlikely(CPyModule_eth_portfolio_scripts___docker___check__internal == NULL))
+                                            goto fail;
+                                        modname = PyUnicode_FromString("eth_portfolio_scripts.docker.check");
+                                        if (modname == NULL) CPyError_OutOfMemory();
+                                        if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio_scripts___docker___check__internal) < 0)
+                                            goto fail;
+                                        Py_CLEAR(modname);
+                                        if (CPyExec_eth_portfolio_scripts___docker___check(CPyModule_eth_portfolio_scripts___docker___check__internal) != 0)
+                                            goto fail;
+                                        return CPyModule_eth_portfolio_scripts___docker___check__internal;
+                                        fail:
+                                        {
+                                                PyObject *exc_type, *exc_val, *exc_tb;
+                                                PyErr_Fetch(&exc_type, &exc_val, &exc_tb);
+                                                if (modname == NULL) {
+                                                        modname = PyUnicode_FromString("eth_portfolio_scripts.docker.check");
+                                                        if (modname == NULL) CPyError_OutOfMemory();
+                                                    }
+                                                    PyObject_DelItem(PyImport_GetModuleDict(), modname);
+                                                    PyErr_Clear();
+                                                    Py_DECREF(modname);
+                                                    Py_CLEAR(CPyModule_eth_portfolio_scripts___docker___check__internal);
+                                                    PyErr_Restore(exc_type, exc_val, exc_tb);
+                                            }
+                                            return NULL;
+                                        }
+                                        
 char CPyDef_check___check_docker(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -20242,7 +20583,7 @@ CPyL2: ;
         CPy_AddTraceback("eth_portfolio_scripts/docker/check.py", "check_docker", DIFFCHECK_PLACEHOLDER, CPyStatic_check___globals);
         goto CPyL6;
     }
-    cpy_r_r10 = (CPyPtr)&((PyListObject *)cpy_r_r9)->ob_item;
+    cpy_r_r10 = (CPyPtr)((CPyPtr)cpy_r_r9 + offsetof(PyListObject, ob_item));
     cpy_r_r11 = *(CPyPtr *)cpy_r_r10;
     CPy_INCREF(cpy_r_r7);
     *(PyObject * *)cpy_r_r11 = cpy_r_r7;
@@ -20387,25 +20728,25 @@ CPyL27: ;
     CPy_DECREF(cpy_r_r43);
     goto CPyL19;
 }
-
-PyObject *CPyPy_check___check_docker(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":check_docker", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    char retval = CPyDef_check___check_docker();
-    if (retval == 2) {
-        return NULL;
-    }
-    PyObject *retbox = Py_None;
-    CPy_INCREF(retbox);
-    return retbox;
+                                        
+                                        PyObject *CPyPy_check___check_docker(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                            static const char * const kwlist[] = {0};
+                                            static CPyArg_Parser parser = {":check_docker", kwlist, 0};
+                                            if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                                                return NULL;
+                                            }
+                                            char retval = CPyDef_check___check_docker();
+                                            if (retval == 2) {
+                                                return NULL;
+                                            }
+                                            PyObject *retbox = Py_None;
+                                            CPy_INCREF(retbox);
+                                            return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/docker/check.py", "check_docker", DIFFCHECK_PLACEHOLDER, CPyStatic_check___globals);
-    return NULL;
-}
-
+                                            CPy_AddTraceback("eth_portfolio_scripts/docker/check.py", "check_docker", DIFFCHECK_PLACEHOLDER, CPyStatic_check___globals);
+                                            return NULL;
+                                        }
+                                        
 PyObject *CPyDef_check___check_docker_compose(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -20486,7 +20827,7 @@ PyObject *CPyDef_check___check_docker_compose(void) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/check.py", "check_docker_compose", DIFFCHECK_PLACEHOLDER, CPyStatic_check___globals);
         goto CPyL36;
     }
-    cpy_r_r3 = (CPyPtr)&((PyListObject *)cpy_r_r2)->ob_item;
+    cpy_r_r3 = (CPyPtr)((CPyPtr)cpy_r_r2 + offsetof(PyListObject, ob_item));
     cpy_r_r4 = *(CPyPtr *)cpy_r_r3;
     CPy_INCREF(cpy_r_r0);
     *(PyObject * *)cpy_r_r4 = cpy_r_r0;
@@ -20495,11 +20836,11 @@ PyObject *CPyDef_check___check_docker_compose(void) {
     *(PyObject * *)cpy_r_r5 = cpy_r_r1;
     cpy_r_r6 = 0;
 CPyL2: ;
-    cpy_r_r7 = (CPyPtr)&((PyVarObject *)cpy_r_r2)->ob_size;
+    cpy_r_r7 = (CPyPtr)((CPyPtr)cpy_r_r2 + offsetof(PyVarObject, ob_size));
     cpy_r_r8 = *(int64_t *)cpy_r_r7;
     cpy_r_r9 = cpy_r_r6 < cpy_r_r8;
     if (!cpy_r_r9) goto CPyL37;
-    cpy_r_r10 = (CPyPtr)&((PyListObject *)cpy_r_r2)->ob_item;
+    cpy_r_r10 = (CPyPtr)((CPyPtr)cpy_r_r2 + offsetof(PyListObject, ob_item));
     cpy_r_r11 = *(CPyPtr *)cpy_r_r10;
     cpy_r_r12 = cpy_r_r6 * 8;
     cpy_r_r13 = cpy_r_r11 + cpy_r_r12;
@@ -20791,20 +21132,20 @@ CPyL55: ;
     CPy_DECREF(cpy_r_r65);
     goto CPyL29;
 }
-
-PyObject *CPyPy_check___check_docker_compose(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":check_docker_compose", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *retval = CPyDef_check___check_docker_compose();
-    return retval;
+                                        
+                                        PyObject *CPyPy_check___check_docker_compose(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                            static const char * const kwlist[] = {0};
+                                            static CPyArg_Parser parser = {":check_docker_compose", kwlist, 0};
+                                            if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                                                return NULL;
+                                            }
+                                            PyObject *retval = CPyDef_check___check_docker_compose();
+                                            return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/docker/check.py", "check_docker_compose", DIFFCHECK_PLACEHOLDER, CPyStatic_check___globals);
-    return NULL;
-}
-
+                                            CPy_AddTraceback("eth_portfolio_scripts/docker/check.py", "check_docker_compose", DIFFCHECK_PLACEHOLDER, CPyStatic_check___globals);
+                                            return NULL;
+                                        }
+                                        
 PyObject *CPyDef_check___check_system(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -20852,20 +21193,20 @@ CPyL6: ;
     CPy_DECREF(cpy_r_r6);
     goto CPyL2;
 }
-
-PyObject *CPyPy_check___check_system(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":check_system", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *retval = CPyDef_check___check_system();
-    return retval;
+                                        
+                                        PyObject *CPyPy_check___check_system(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                            static const char * const kwlist[] = {0};
+                                            static CPyArg_Parser parser = {":check_system", kwlist, 0};
+                                            if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                                                return NULL;
+                                            }
+                                            PyObject *retval = CPyDef_check___check_system();
+                                            return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/docker/check.py", "check_system", DIFFCHECK_PLACEHOLDER, CPyStatic_check___globals);
-    return NULL;
-}
-
+                                            CPy_AddTraceback("eth_portfolio_scripts/docker/check.py", "check_system", DIFFCHECK_PLACEHOLDER, CPyStatic_check___globals);
+                                            return NULL;
+                                        }
+                                        
 char CPyDef_check_____top_level__(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -20916,7 +21257,7 @@ char CPyDef_check_____top_level__(void) {
     cpy_r_r3 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'builtins' */
     cpy_r_r4 = PyImport_Import(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/docker/check.py", "<module>", -1, CPyStatic_check___globals);
+        CPy_AddTraceback("eth_portfolio_scripts/docker/check.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_check___globals);
         goto CPyL13;
     }
     CPyModule_builtins = cpy_r_r4;
@@ -20995,7 +21336,7 @@ CPyL3: ;
         CPy_AddTraceback("eth_portfolio_scripts/docker/check.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_check___globals);
         goto CPyL13;
     }
-    cpy_r_r35 = (CPyPtr)&((PyListObject *)cpy_r_r34)->ob_item;
+    cpy_r_r35 = (CPyPtr)((CPyPtr)cpy_r_r34 + offsetof(PyListObject, ob_item));
     cpy_r_r36 = *(CPyPtr *)cpy_r_r35;
     CPy_INCREF(cpy_r_r31);
     *(PyObject * *)cpy_r_r36 = cpy_r_r31;
@@ -21022,649 +21363,830 @@ CPyL14: ;
     CPy_DecRef(cpy_r_r15);
     goto CPyL13;
 }
-
-PyObject *CPyDef_docker_compose_____mypyc__ensure_containers_env_setup(PyObject *cpy_r_type);
-PyObject *CPyDef_docker_compose___ensure_containers_env(void);
-
-static PyObject *
-docker_compose___ensure_containers_env_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-{
-    if (type != CPyType_docker_compose___ensure_containers_env) {
-        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-        return NULL;
-    }
-    PyObject *self = CPyDef_docker_compose_____mypyc__ensure_containers_env_setup((PyObject*)type);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
-static int
-docker_compose___ensure_containers_env_traverse(eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *self, visitproc visit, void *arg)
-{
-    Py_VISIT(self->___mypyc_self__);
-    Py_VISIT(self->_fn);
-    Py_VISIT(self->_compose_wrap);
-    return 0;
-}
-
-static int
-docker_compose___ensure_containers_env_clear(eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *self)
-{
-    Py_CLEAR(self->___mypyc_self__);
-    Py_CLEAR(self->_fn);
-    Py_CLEAR(self->_compose_wrap);
-    return 0;
-}
-
-static void
-docker_compose___ensure_containers_env_dealloc(eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *self)
-{
-    PyObject_GC_UnTrack(self);
-    if (docker_compose___ensure_containers_env_free_instance == NULL) {
-        docker_compose___ensure_containers_env_free_instance = self;
-        Py_CLEAR(self->___mypyc_self__);
-        Py_CLEAR(self->_fn);
-        Py_CLEAR(self->_compose_wrap);
-        return;
-    }
-    CPy_TRASHCAN_BEGIN(self, docker_compose___ensure_containers_env_dealloc)
-    docker_compose___ensure_containers_env_clear(self);
-    Py_TYPE(self)->tp_free((PyObject *)self);
-    CPy_TRASHCAN_END(self)
-    done: ;
-}
-
-static CPyVTableItem docker_compose___ensure_containers_env_vtable[1];
-static bool
-CPyDef_docker_compose___ensure_containers_env_trait_vtable_setup(void)
-{
-    CPyVTableItem docker_compose___ensure_containers_env_vtable_scratch[] = {
-        NULL
-    };
-    memcpy(docker_compose___ensure_containers_env_vtable, docker_compose___ensure_containers_env_vtable_scratch, sizeof(docker_compose___ensure_containers_env_vtable));
-    return 1;
-}
-
-static PyMethodDef docker_compose___ensure_containers_env_methods[] = {
-    {"__internal_mypyc_setup", (PyCFunction)CPyDef_docker_compose_____mypyc__ensure_containers_env_setup, METH_O, NULL},
-    {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
-    {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
-    {NULL}  /* Sentinel */
-};
-
-static PyTypeObject CPyType_docker_compose___ensure_containers_env_template_ = {
-    PyVarObject_HEAD_INIT(NULL, 0)
-    .tp_name = "ensure_containers_env",
-    .tp_new = docker_compose___ensure_containers_env_new,
-    .tp_dealloc = (destructor)docker_compose___ensure_containers_env_dealloc,
-    .tp_traverse = (traverseproc)docker_compose___ensure_containers_env_traverse,
-    .tp_clear = (inquiry)docker_compose___ensure_containers_env_clear,
-    .tp_methods = docker_compose___ensure_containers_env_methods,
-    .tp_basicsize = sizeof(eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject),
-    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
-    .tp_doc = PyDoc_STR("ensure_containers_env()\n--\n\n"),
-};
-static PyTypeObject *CPyType_docker_compose___ensure_containers_env_template = &CPyType_docker_compose___ensure_containers_env_template_;
-
-PyObject *CPyDef_docker_compose_____mypyc__ensure_containers_env_setup(PyObject *cpy_r_type)
-{
-    PyTypeObject *type = (PyTypeObject*)cpy_r_type;
-    eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *self;
-    if (docker_compose___ensure_containers_env_free_instance != NULL) {
-        self = docker_compose___ensure_containers_env_free_instance;
-        docker_compose___ensure_containers_env_free_instance = NULL;
-        Py_SET_REFCNT(self, 1);
-        PyObject_GC_Track(self);
-        return (PyObject *)self;
-    }
-    self = (eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *)type->tp_alloc(type, 0);
-    if (self == NULL)
-        return NULL;
-    self->vtable = docker_compose___ensure_containers_env_vtable;
-    return (PyObject *)self;
-}
-
-PyObject *CPyDef_docker_compose___ensure_containers_env(void)
-{
-    PyObject *self = CPyDef_docker_compose_____mypyc__ensure_containers_env_setup((PyObject *)CPyType_docker_compose___ensure_containers_env);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
-
-PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_env_setup(PyObject *cpy_r_type);
-PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_env(void);
-
-static PyObject *
-docker_compose___compose_wrap_ensure_containers_env_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-{
-    if (type != CPyType_docker_compose___compose_wrap_ensure_containers_env) {
-        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-        return NULL;
-    }
-    PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_env_setup((PyObject*)type);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
-static int
-docker_compose___compose_wrap_ensure_containers_env_traverse(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *self, visitproc visit, void *arg)
-{
-    Py_VISIT(self->___mypyc_self__);
-    Py_VISIT(self->___mypyc_env__);
-    Py_VISIT(self->___mypyc_generator_attribute__args);
-    Py_VISIT(self->___mypyc_generator_attribute__kwargs);
-    Py_VISIT(self->_type);
-    Py_VISIT(self->_value);
-    Py_VISIT(self->_traceback);
-    Py_VISIT(self->_arg);
-    Py_VISIT(self->___mypyc_temp__0);
-    Py_VISIT(self->___mypyc_temp__1.f0);
-    Py_VISIT(self->___mypyc_temp__1.f1);
-    Py_VISIT(self->___mypyc_temp__1.f2);
-    Py_VISIT(self->___mypyc_temp__2);
-    return 0;
-}
-
-static int
-docker_compose___compose_wrap_ensure_containers_env_clear(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *self)
-{
-    Py_CLEAR(self->___mypyc_self__);
-    Py_CLEAR(self->___mypyc_env__);
-    Py_CLEAR(self->___mypyc_generator_attribute__args);
-    Py_CLEAR(self->___mypyc_generator_attribute__kwargs);
-    Py_CLEAR(self->_type);
-    Py_CLEAR(self->_value);
-    Py_CLEAR(self->_traceback);
-    Py_CLEAR(self->_arg);
-    Py_CLEAR(self->___mypyc_temp__0);
-    Py_CLEAR(self->___mypyc_temp__1.f0);
-    Py_CLEAR(self->___mypyc_temp__1.f1);
-    Py_CLEAR(self->___mypyc_temp__1.f2);
-    Py_CLEAR(self->___mypyc_temp__2);
-    return 0;
-}
-
-static void
-docker_compose___compose_wrap_ensure_containers_env_dealloc(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *self)
-{
-    PyObject_GC_UnTrack(self);
-    if (docker_compose___compose_wrap_ensure_containers_env_free_instance == NULL) {
-        docker_compose___compose_wrap_ensure_containers_env_free_instance = self;
-        Py_CLEAR(self->___mypyc_self__);
-        Py_CLEAR(self->___mypyc_env__);
-        Py_CLEAR(self->___mypyc_generator_attribute__args);
-        Py_CLEAR(self->___mypyc_generator_attribute__kwargs);
-        Py_CLEAR(self->_type);
-        Py_CLEAR(self->_value);
-        Py_CLEAR(self->_traceback);
-        Py_CLEAR(self->_arg);
-        self->_stop_iter_ptr = NULL;
-        self->___mypyc_next_label__ = -113;
-        Py_CLEAR(self->___mypyc_temp__0);
-        Py_CLEAR(self->___mypyc_temp__1.f0);
-        Py_CLEAR(self->___mypyc_temp__1.f1);
-        Py_CLEAR(self->___mypyc_temp__1.f2);
-        Py_CLEAR(self->___mypyc_temp__2);
-        return;
-    }
-    CPy_TRASHCAN_BEGIN(self, docker_compose___compose_wrap_ensure_containers_env_dealloc)
-    docker_compose___compose_wrap_ensure_containers_env_clear(self);
-    Py_TYPE(self)->tp_free((PyObject *)self);
-    CPy_TRASHCAN_END(self)
-    done: ;
-}
-
-static CPyVTableItem docker_compose___compose_wrap_ensure_containers_env_vtable[1];
-static bool
-CPyDef_docker_compose___compose_wrap_ensure_containers_env_trait_vtable_setup(void)
-{
-    CPyVTableItem docker_compose___compose_wrap_ensure_containers_env_vtable_scratch[] = {
-        NULL
-    };
-    memcpy(docker_compose___compose_wrap_ensure_containers_env_vtable, docker_compose___compose_wrap_ensure_containers_env_vtable_scratch, sizeof(docker_compose___compose_wrap_ensure_containers_env_vtable));
-    return 1;
-}
-
-static PyMethodDef docker_compose___compose_wrap_ensure_containers_env_methods[] = {
-    {"__internal_mypyc_setup", (PyCFunction)CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_env_setup, METH_O, NULL},
-    {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
-    {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
-    {NULL}  /* Sentinel */
-};
-
-static PyTypeObject CPyType_docker_compose___compose_wrap_ensure_containers_env_template_ = {
-    PyVarObject_HEAD_INIT(NULL, 0)
-    .tp_name = "compose_wrap_ensure_containers_env",
-    .tp_new = docker_compose___compose_wrap_ensure_containers_env_new,
-    .tp_dealloc = (destructor)docker_compose___compose_wrap_ensure_containers_env_dealloc,
-    .tp_traverse = (traverseproc)docker_compose___compose_wrap_ensure_containers_env_traverse,
-    .tp_clear = (inquiry)docker_compose___compose_wrap_ensure_containers_env_clear,
-    .tp_methods = docker_compose___compose_wrap_ensure_containers_env_methods,
-    .tp_basicsize = sizeof(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject),
-    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
-    .tp_doc = PyDoc_STR("compose_wrap_ensure_containers_env()\n--\n\n"),
-};
-static PyTypeObject *CPyType_docker_compose___compose_wrap_ensure_containers_env_template = &CPyType_docker_compose___compose_wrap_ensure_containers_env_template_;
-
-PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_env_setup(PyObject *cpy_r_type)
-{
-    PyTypeObject *type = (PyTypeObject*)cpy_r_type;
-    eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *self;
-    if (docker_compose___compose_wrap_ensure_containers_env_free_instance != NULL) {
-        self = docker_compose___compose_wrap_ensure_containers_env_free_instance;
-        docker_compose___compose_wrap_ensure_containers_env_free_instance = NULL;
-        Py_SET_REFCNT(self, 1);
-        PyObject_GC_Track(self);
-        return (PyObject *)self;
-    }
-    self = (eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *)type->tp_alloc(type, 0);
-    if (self == NULL)
-        return NULL;
-    self->vtable = docker_compose___compose_wrap_ensure_containers_env_vtable;
-    self->___mypyc_next_label__ = -113;
-    self->___mypyc_temp__1 = (tuple_T3OOO) { NULL, NULL, NULL };
-    return (PyObject *)self;
-}
-
-PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_env(void)
-{
-    PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_env_setup((PyObject *)CPyType_docker_compose___compose_wrap_ensure_containers_env);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
-
-static PyObject *CPyDunder___get__docker_compose___compose_wrap_ensure_containers_obj(PyObject *self, PyObject *instance, PyObject *owner) {
-    instance = instance ? instance : Py_None;
-    return CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____get__(self, instance, owner);
-}
-PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_obj_setup(PyObject *cpy_r_type);
-PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj(void);
-
-static PyObject *
-docker_compose___compose_wrap_ensure_containers_obj_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-{
-    if (type != CPyType_docker_compose___compose_wrap_ensure_containers_obj) {
-        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-        return NULL;
-    }
-    PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_obj_setup((PyObject*)type);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
-static int
-docker_compose___compose_wrap_ensure_containers_obj_traverse(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, visitproc visit, void *arg)
-{
-    Py_VISIT(self->___mypyc_env__);
-    PyObject_VisitManagedDict((PyObject *)self, visit, arg);
-    return 0;
-}
-
-static int
-docker_compose___compose_wrap_ensure_containers_obj_clear(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self)
-{
-    Py_CLEAR(self->___mypyc_env__);
-    PyObject_ClearManagedDict((PyObject *)self);
-    return 0;
-}
-
-static void
-docker_compose___compose_wrap_ensure_containers_obj_dealloc(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self)
-{
-    PyObject_GC_UnTrack(self);
-    if (docker_compose___compose_wrap_ensure_containers_obj_free_instance == NULL) {
-        docker_compose___compose_wrap_ensure_containers_obj_free_instance = self;
-        Py_CLEAR(self->___mypyc_env__);
-        return;
-    }
-    CPy_TRASHCAN_BEGIN(self, docker_compose___compose_wrap_ensure_containers_obj_dealloc)
-    docker_compose___compose_wrap_ensure_containers_obj_clear(self);
-    Py_TYPE(self)->tp_free((PyObject *)self);
-    CPy_TRASHCAN_END(self)
-    done: ;
-}
-
-static CPyVTableItem docker_compose___compose_wrap_ensure_containers_obj_vtable[2];
-static bool
-CPyDef_docker_compose___compose_wrap_ensure_containers_obj_trait_vtable_setup(void)
-{
-    CPyVTableItem docker_compose___compose_wrap_ensure_containers_obj_vtable_scratch[] = {
-        (CPyVTableItem)CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____call__,
-        (CPyVTableItem)CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____get__,
-    };
-    memcpy(docker_compose___compose_wrap_ensure_containers_obj_vtable, docker_compose___compose_wrap_ensure_containers_obj_vtable_scratch, sizeof(docker_compose___compose_wrap_ensure_containers_obj_vtable));
-    return 1;
-}
-
-static PyObject *
-docker_compose___compose_wrap_ensure_containers_obj_get___3_mypyc_env__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure);
-static int
-docker_compose___compose_wrap_ensure_containers_obj_set___3_mypyc_env__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, PyObject *value, void *closure);
-
-static PyGetSetDef docker_compose___compose_wrap_ensure_containers_obj_getseters[] = {
-    {"__mypyc_env__",
-     (getter)docker_compose___compose_wrap_ensure_containers_obj_get___3_mypyc_env__, (setter)docker_compose___compose_wrap_ensure_containers_obj_set___3_mypyc_env__,
-     NULL, NULL},
-    {"__dict__", PyObject_GenericGetDict, PyObject_GenericSetDict},
-    {NULL}  /* Sentinel */
-};
-
-static PyMethodDef docker_compose___compose_wrap_ensure_containers_obj_methods[] = {
-    {"__internal_mypyc_setup", (PyCFunction)CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_obj_setup, METH_O, NULL},
-    {"__call__",
-     (PyCFunction)CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____call__,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__call__(*$args, **kwargs)\n--\n\n")},
-    {"__get__",
-     (PyCFunction)CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____get__,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__get__($instance, owner)\n--\n\n")},
-    {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
-    {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
-    {NULL}  /* Sentinel */
-};
-
-static PyTypeObject CPyType_docker_compose___compose_wrap_ensure_containers_obj_template_ = {
-    PyVarObject_HEAD_INIT(NULL, 0)
-    .tp_name = "compose_wrap_ensure_containers_obj",
-    .tp_new = docker_compose___compose_wrap_ensure_containers_obj_new,
-    .tp_dealloc = (destructor)docker_compose___compose_wrap_ensure_containers_obj_dealloc,
-    .tp_traverse = (traverseproc)docker_compose___compose_wrap_ensure_containers_obj_traverse,
-    .tp_clear = (inquiry)docker_compose___compose_wrap_ensure_containers_obj_clear,
-    .tp_getset = docker_compose___compose_wrap_ensure_containers_obj_getseters,
-    .tp_methods = docker_compose___compose_wrap_ensure_containers_obj_methods,
-    .tp_call = PyVectorcall_Call,
-    .tp_descr_get = CPyDunder___get__docker_compose___compose_wrap_ensure_containers_obj,
-    .tp_basicsize = sizeof(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject),
-    .tp_vectorcall_offset = offsetof(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject, vectorcall),
-    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC | _Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_MANAGED_DICT,
-    .tp_doc = PyDoc_STR("compose_wrap_ensure_containers_obj()\n--\n\n"),
-};
-static PyTypeObject *CPyType_docker_compose___compose_wrap_ensure_containers_obj_template = &CPyType_docker_compose___compose_wrap_ensure_containers_obj_template_;
-
-PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_obj_setup(PyObject *cpy_r_type)
-{
-    PyTypeObject *type = (PyTypeObject*)cpy_r_type;
-    eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self;
-    if (docker_compose___compose_wrap_ensure_containers_obj_free_instance != NULL) {
-        self = docker_compose___compose_wrap_ensure_containers_obj_free_instance;
-        docker_compose___compose_wrap_ensure_containers_obj_free_instance = NULL;
-        Py_SET_REFCNT(self, 1);
-        PyObject_GC_Track(self);
-        return (PyObject *)self;
-    }
-    self = (eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *)type->tp_alloc(type, 0);
-    if (self == NULL)
-        return NULL;
-    self->vtable = docker_compose___compose_wrap_ensure_containers_obj_vtable;
-    self->vectorcall = CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____call__;
-    return (PyObject *)self;
-}
-
-PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj(void)
-{
-    PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_obj_setup((PyObject *)CPyType_docker_compose___compose_wrap_ensure_containers_obj);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
-static PyObject *
-docker_compose___compose_wrap_ensure_containers_obj_get___3_mypyc_env__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure)
-{
-    if (unlikely(self->___mypyc_env__ == NULL)) {
-        PyErr_SetString(PyExc_AttributeError,
-            "attribute '__mypyc_env__' of 'compose_wrap_ensure_containers_obj' undefined");
-        return NULL;
-    }
-    CPy_INCREF_NO_IMM(self->___mypyc_env__);
-    PyObject *retval = self->___mypyc_env__;
-    return retval;
-}
-
-static int
-docker_compose___compose_wrap_ensure_containers_obj_set___3_mypyc_env__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, PyObject *value, void *closure)
-{
-    if (value == NULL) {
-        PyErr_SetString(PyExc_AttributeError,
-            "'compose_wrap_ensure_containers_obj' object attribute '__mypyc_env__' cannot be deleted");
-        return -1;
-    }
-    if (self->___mypyc_env__ != NULL) {
-        CPy_DECREF_NO_IMM(self->___mypyc_env__);
-    }
-    PyObject *tmp;
-    if (likely(Py_TYPE(value) == CPyType_docker_compose___ensure_containers_env))
-        tmp = value;
-    else {
-        CPy_TypeError("eth_portfolio_scripts.docker.docker_compose.ensure_containers_env", value); 
-        tmp = NULL;
-    }
-    if (!tmp)
-        return -1;
-    CPy_INCREF_NO_IMM(tmp);
-    self->___mypyc_env__ = tmp;
-    return 0;
-}
-
-static PyAsyncMethods docker_compose___compose_wrap_gen___3_49_as_async = {
-    .am_await = CPyDef_docker_compose___compose_wrap_gen___3_49_____await__,
-};
-PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_gen___3_49_setup(PyObject *cpy_r_type);
-PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49(void);
-
-static PyObject *
-docker_compose___compose_wrap_gen___3_49_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-{
-    if (type != CPyType_docker_compose___compose_wrap_gen___3_49) {
-        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-        return NULL;
-    }
-    PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_gen___3_49_setup((PyObject*)type);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
-static int
-docker_compose___compose_wrap_gen___3_49_traverse(eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object *self, visitproc visit, void *arg)
-{
-    Py_VISIT(self->___mypyc_env__);
-    return 0;
-}
-
-static int
-docker_compose___compose_wrap_gen___3_49_clear(eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object *self)
-{
-    Py_CLEAR(self->___mypyc_env__);
-    return 0;
-}
-
-static void
-docker_compose___compose_wrap_gen___3_49_dealloc(eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object *self)
-{
-    PyObject_GC_UnTrack(self);
-    if (docker_compose___compose_wrap_gen___3_49_free_instance == NULL) {
-        docker_compose___compose_wrap_gen___3_49_free_instance = self;
-        Py_CLEAR(self->___mypyc_env__);
-        return;
-    }
-    CPy_TRASHCAN_BEGIN(self, docker_compose___compose_wrap_gen___3_49_dealloc)
-    docker_compose___compose_wrap_gen___3_49_clear(self);
-    Py_TYPE(self)->tp_free((PyObject *)self);
-    CPy_TRASHCAN_END(self)
-    done: ;
-}
-
-static CPyVTableItem docker_compose___compose_wrap_gen___3_49_vtable[7];
-static bool
-CPyDef_docker_compose___compose_wrap_gen___3_49_trait_vtable_setup(void)
-{
-    CPyVTableItem docker_compose___compose_wrap_gen___3_49_vtable_scratch[] = {
-        (CPyVTableItem)CPyDef_docker_compose___compose_wrap_gen___3_49_____mypyc_generator_helper__,
-        (CPyVTableItem)CPyDef_docker_compose___compose_wrap_gen___3_49_____next__,
-        (CPyVTableItem)CPyDef_docker_compose___compose_wrap_gen___3_49___send,
-        (CPyVTableItem)CPyDef_docker_compose___compose_wrap_gen___3_49_____iter__,
-        (CPyVTableItem)CPyDef_docker_compose___compose_wrap_gen___3_49___throw,
-        (CPyVTableItem)CPyDef_docker_compose___compose_wrap_gen___3_49___close,
-        (CPyVTableItem)CPyDef_docker_compose___compose_wrap_gen___3_49_____await__,
-    };
-    memcpy(docker_compose___compose_wrap_gen___3_49_vtable, docker_compose___compose_wrap_gen___3_49_vtable_scratch, sizeof(docker_compose___compose_wrap_gen___3_49_vtable));
-    return 1;
-}
-
-static PyMethodDef docker_compose___compose_wrap_gen___3_49_methods[] = {
-    {"__internal_mypyc_setup", (PyCFunction)CPyDef_docker_compose_____mypyc__compose_wrap_gen___3_49_setup, METH_O, NULL},
-    {"__next__",
-     (PyCFunction)CPyPy_docker_compose___compose_wrap_gen___3_49_____next__,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
-    {"send",
-     (PyCFunction)CPyPy_docker_compose___compose_wrap_gen___3_49___send,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("send($arg)\n--\n\n")},
-    {"__iter__",
-     (PyCFunction)CPyPy_docker_compose___compose_wrap_gen___3_49_____iter__,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__iter__()\n--\n\n")},
-    {"throw",
-     (PyCFunction)CPyPy_docker_compose___compose_wrap_gen___3_49___throw,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR(NULL)},
-    {"close",
-     (PyCFunction)CPyPy_docker_compose___compose_wrap_gen___3_49___close,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("close()\n--\n\n")},
-    {"__await__",
-     (PyCFunction)CPyPy_docker_compose___compose_wrap_gen___3_49_____await__,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__await__()\n--\n\n")},
-    {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
-    {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
-    {NULL}  /* Sentinel */
-};
-
-static PyTypeObject CPyType_docker_compose___compose_wrap_gen___3_49_template_ = {
-    PyVarObject_HEAD_INIT(NULL, 0)
-    .tp_name = "compose_wrap_gen___49",
-    .tp_new = docker_compose___compose_wrap_gen___3_49_new,
-    .tp_dealloc = (destructor)docker_compose___compose_wrap_gen___3_49_dealloc,
-    .tp_traverse = (traverseproc)docker_compose___compose_wrap_gen___3_49_traverse,
-    .tp_clear = (inquiry)docker_compose___compose_wrap_gen___3_49_clear,
-    .tp_methods = docker_compose___compose_wrap_gen___3_49_methods,
-    .tp_iter = CPyDef_docker_compose___compose_wrap_gen___3_49_____iter__,
-    .tp_iternext = CPyDef_docker_compose___compose_wrap_gen___3_49_____next__,
-    .tp_as_async = &docker_compose___compose_wrap_gen___3_49_as_async,
-    .tp_basicsize = sizeof(eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object),
-    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
-    .tp_doc = PyDoc_STR("compose_wrap_gen___49()\n--\n\n"),
-};
-static PyTypeObject *CPyType_docker_compose___compose_wrap_gen___3_49_template = &CPyType_docker_compose___compose_wrap_gen___3_49_template_;
-
-PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_gen___3_49_setup(PyObject *cpy_r_type)
-{
-    PyTypeObject *type = (PyTypeObject*)cpy_r_type;
-    eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object *self;
-    if (docker_compose___compose_wrap_gen___3_49_free_instance != NULL) {
-        self = docker_compose___compose_wrap_gen___3_49_free_instance;
-        docker_compose___compose_wrap_gen___3_49_free_instance = NULL;
-        Py_SET_REFCNT(self, 1);
-        PyObject_GC_Track(self);
-        return (PyObject *)self;
-    }
-    self = (eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object *)type->tp_alloc(type, 0);
-    if (self == NULL)
-        return NULL;
-    self->vtable = docker_compose___compose_wrap_gen___3_49_vtable;
-    return (PyObject *)self;
-}
-
-PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49(void)
-{
-    PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_gen___3_49_setup((PyObject *)CPyType_docker_compose___compose_wrap_gen___3_49);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
-static PyMethodDef docker_composemodule_methods[] = {
-    {"up", (PyCFunction)CPyPy_docker_compose___up, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("up(*services)\n--\n\n") /* docstring */},
-    {"down", (PyCFunction)CPyPy_docker_compose___down, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("down()\n--\n\n") /* docstring */},
-    {"build", (PyCFunction)CPyPy_docker_compose___build, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("build(*services)\n--\n\n") /* docstring */},
-    {"stop", (PyCFunction)CPyPy_docker_compose___stop, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("stop(*services)\n--\n\n") /* docstring */},
-    {"ensure_containers", (PyCFunction)CPyPy_docker_compose___ensure_containers, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("ensure_containers(fn)\n--\n\n") /* docstring */},
-    {"_print_notice", (PyCFunction)CPyPy_docker_compose____print_notice, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("_print_notice(doing, services)\n--\n\n") /* docstring */},
-    {"_exec_command", (PyCFunction)CPyPy_docker_compose____exec_command, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR(NULL) /* docstring */},
-    {NULL, NULL, 0, NULL}
-};
-
-int CPyExec_eth_portfolio_scripts___docker___docker_compose(PyObject *module)
-{
-    PyObject* modname = NULL;
-    modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio_scripts___docker___docker_compose__internal, "__name__");
-    CPyStatic_docker_compose___globals = PyModule_GetDict(CPyModule_eth_portfolio_scripts___docker___docker_compose__internal);
-    if (unlikely(CPyStatic_docker_compose___globals == NULL))
-        goto fail;
-    CPyType_docker_compose___ensure_containers_env = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_docker_compose___ensure_containers_env_template, NULL, modname);
-    if (unlikely(!CPyType_docker_compose___ensure_containers_env))
-        goto fail;
-    CPyDef_docker_compose___ensure_containers_env_trait_vtable_setup();
-    CPyType_docker_compose___compose_wrap_ensure_containers_env = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_docker_compose___compose_wrap_ensure_containers_env_template, NULL, modname);
-    if (unlikely(!CPyType_docker_compose___compose_wrap_ensure_containers_env))
-        goto fail;
-    CPyDef_docker_compose___compose_wrap_ensure_containers_env_trait_vtable_setup();
-    CPyType_docker_compose___compose_wrap_ensure_containers_obj = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_docker_compose___compose_wrap_ensure_containers_obj_template, NULL, modname);
-    if (unlikely(!CPyType_docker_compose___compose_wrap_ensure_containers_obj))
-        goto fail;
-    CPyDef_docker_compose___compose_wrap_ensure_containers_obj_trait_vtable_setup();
-    CPyType_docker_compose___compose_wrap_gen___3_49 = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_docker_compose___compose_wrap_gen___3_49_template, NULL, modname);
-    if (unlikely(!CPyType_docker_compose___compose_wrap_gen___3_49))
-        goto fail;
-    CPyDef_docker_compose___compose_wrap_gen___3_49_trait_vtable_setup();
-    if (CPyGlobalsInit() < 0)
-        goto fail;
-    char result = CPyDef_docker_compose_____top_level__();
-    if (result == 2)
-        goto fail;
-    Py_DECREF(modname);
-    return 0;
-    fail:
-    Py_CLEAR(CPyModule_eth_portfolio_scripts___docker___docker_compose__internal);
-    Py_CLEAR(modname);
-    CPy_XDECREF(CPyStatic_docker_compose___logger);
-    CPyStatic_docker_compose___logger = NULL;
-    CPy_XDECREF(CPyStatic_docker_compose___COMPOSE_FILE);
-    CPyStatic_docker_compose___COMPOSE_FILE = NULL;
-    Py_CLEAR(CPyType_docker_compose___ensure_containers_env);
-    Py_CLEAR(CPyType_docker_compose___compose_wrap_ensure_containers_env);
-    Py_CLEAR(CPyType_docker_compose___compose_wrap_ensure_containers_obj);
-    Py_CLEAR(CPyType_docker_compose___compose_wrap_gen___3_49);
-    return -1;
-}
-static struct PyModuleDef docker_composemodule = {
-    PyModuleDef_HEAD_INIT,
-    "eth_portfolio_scripts.docker.docker_compose",
-    NULL, /* docstring */
-    0,       /* size of per-interpreter state of the module */
-    docker_composemodule_methods,
-    NULL,
-};
-
-PyObject *CPyInit_eth_portfolio_scripts___docker___docker_compose(void)
-{
-    if (CPyModule_eth_portfolio_scripts___docker___docker_compose__internal) {
-        Py_INCREF(CPyModule_eth_portfolio_scripts___docker___docker_compose__internal);
-        return CPyModule_eth_portfolio_scripts___docker___docker_compose__internal;
-    }
-    CPyModule_eth_portfolio_scripts___docker___docker_compose__internal = PyModule_Create(&docker_composemodule);
-    if (unlikely(CPyModule_eth_portfolio_scripts___docker___docker_compose__internal == NULL))
-        goto fail;
-    if (CPyExec_eth_portfolio_scripts___docker___docker_compose(CPyModule_eth_portfolio_scripts___docker___docker_compose__internal) != 0)
-        goto fail;
-    return CPyModule_eth_portfolio_scripts___docker___docker_compose__internal;
-    fail:
-    return NULL;
-}
-
+                                        
+                                        PyObject *CPyDef_docker_compose_____mypyc__ensure_containers_env_setup(PyObject *cpy_r_type);
+                                        PyObject *CPyDef_docker_compose___ensure_containers_env(void);
+                                        
+                                        static PyObject *
+                                        docker_compose___ensure_containers_env_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+                                        {
+                                            if (type != CPyType_docker_compose___ensure_containers_env) {
+                                                PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+                                                return NULL;
+                                            }
+                                            PyObject *self = CPyDef_docker_compose_____mypyc__ensure_containers_env_setup((PyObject*)type);
+                                            if (self == NULL)
+                                                return NULL;
+                                            return self;
+                                        }
+                                        
+                                        static int
+                                        docker_compose___ensure_containers_env_traverse(eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *self, visitproc visit, void *arg)
+                                        {
+                                            Py_VISIT(self->___mypyc_self__);
+                                            Py_VISIT(self->_fn);
+                                            Py_VISIT(self->___mypyc_generator_attribute__compose_wrap);
+                                            return 0;
+                                        }
+                                        
+                                        static int
+                                        docker_compose___ensure_containers_env_clear(eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *self)
+                                        {
+                                            Py_CLEAR(self->___mypyc_self__);
+                                            Py_CLEAR(self->_fn);
+                                            Py_CLEAR(self->___mypyc_generator_attribute__compose_wrap);
+                                            return 0;
+                                        }
+                                        
+                                        static void
+                                        docker_compose___ensure_containers_env_dealloc(eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *self)
+                                        {
+                                            PyObject_GC_UnTrack(self);
+                                            if (docker_compose___ensure_containers_env_free_instance == NULL) {
+                                                docker_compose___ensure_containers_env_free_instance = self;
+                                                Py_CLEAR(self->___mypyc_self__);
+                                                Py_CLEAR(self->_fn);
+                                                Py_CLEAR(self->___mypyc_generator_attribute__compose_wrap);
+                                                return;
+                                            }
+                                            CPy_TRASHCAN_BEGIN(self, docker_compose___ensure_containers_env_dealloc)
+                                            docker_compose___ensure_containers_env_clear(self);
+                                            Py_TYPE(self)->tp_free((PyObject *)self);
+                                            CPy_TRASHCAN_END(self)
+                                            done: ;
+                                        }
+                                        
+                                        static CPyVTableItem docker_compose___ensure_containers_env_vtable[1];
+                                        static bool
+                                        CPyDef_docker_compose___ensure_containers_env_trait_vtable_setup(void)
+                                        {
+                                            CPyVTableItem docker_compose___ensure_containers_env_vtable_scratch[] = {
+                                                NULL
+                                            };
+                                            memcpy(docker_compose___ensure_containers_env_vtable, docker_compose___ensure_containers_env_vtable_scratch, sizeof(docker_compose___ensure_containers_env_vtable));
+                                            return 1;
+                                        }
+                                        
+                                        static bool
+                                        CPyDef_docker_compose___ensure_containers_env_coroutine_setup(PyObject *type)
+                                        {
+                                            return 1;
+                                        }
+                                        
+                                        static PyMethodDef docker_compose___ensure_containers_env_methods[] = {
+                                            {"__internal_mypyc_setup", (PyCFunction)CPyDef_docker_compose_____mypyc__ensure_containers_env_setup, METH_O, NULL},
+                                            {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
+                                            {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
+                                            {NULL}  /* Sentinel */
+                                        };
+                                        
+                                        static PyTypeObject CPyType_docker_compose___ensure_containers_env_template_ = {
+                                            PyVarObject_HEAD_INIT(NULL, 0)
+                                            .tp_name = "ensure_containers_env",
+                                            .tp_new = docker_compose___ensure_containers_env_new,
+                                            .tp_dealloc = (destructor)docker_compose___ensure_containers_env_dealloc,
+                                            .tp_traverse = (traverseproc)docker_compose___ensure_containers_env_traverse,
+                                            .tp_clear = (inquiry)docker_compose___ensure_containers_env_clear,
+                                            .tp_methods = docker_compose___ensure_containers_env_methods,
+                                            .tp_basicsize = sizeof(eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject),
+                                            .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
+                                            .tp_doc = PyDoc_STR("ensure_containers_env()\n--\n\n"),
+                                        };
+                                        static PyTypeObject *CPyType_docker_compose___ensure_containers_env_template = &CPyType_docker_compose___ensure_containers_env_template_;
+                                        
+                                        PyObject *CPyDef_docker_compose_____mypyc__ensure_containers_env_setup(PyObject *cpy_r_type)
+                                        {
+                                            PyTypeObject *type = (PyTypeObject*)cpy_r_type;
+                                            eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *self;
+                                            if (docker_compose___ensure_containers_env_free_instance != NULL) {
+                                                self = docker_compose___ensure_containers_env_free_instance;
+                                                docker_compose___ensure_containers_env_free_instance = NULL;
+                                                Py_SET_REFCNT(self, 1);
+                                                PyObject_GC_Track(self);
+                                                return (PyObject *)self;
+                                            }
+                                            self = (eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *)type->tp_alloc(type, 0);
+                                            if (self == NULL)
+                                                return NULL;
+                                            self->vtable = docker_compose___ensure_containers_env_vtable;
+                                            return (PyObject *)self;
+                                        }
+                                        
+                                        PyObject *CPyDef_docker_compose___ensure_containers_env(void)
+                                        {
+                                            PyObject *self = CPyDef_docker_compose_____mypyc__ensure_containers_env_setup((PyObject *)CPyType_docker_compose___ensure_containers_env);
+                                            if (self == NULL)
+                                                return NULL;
+                                            return self;
+                                        }
+                                        
+                                        
+                                        PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_env_setup(PyObject *cpy_r_type);
+                                        PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_env(void);
+                                        
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_env_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+                                        {
+                                            if (type != CPyType_docker_compose___compose_wrap_ensure_containers_env) {
+                                                PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+                                                return NULL;
+                                            }
+                                            PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_env_setup((PyObject*)type);
+                                            if (self == NULL)
+                                                return NULL;
+                                            return self;
+                                        }
+                                        
+                                        static int
+                                        docker_compose___compose_wrap_ensure_containers_env_traverse(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *self, visitproc visit, void *arg)
+                                        {
+                                            Py_VISIT(self->___mypyc_self__);
+                                            Py_VISIT(self->___mypyc_env__);
+                                            Py_VISIT(self->___mypyc_generator_attribute__args);
+                                            Py_VISIT(self->___mypyc_generator_attribute__kwargs);
+                                            Py_VISIT(self->_type);
+                                            Py_VISIT(self->_value);
+                                            Py_VISIT(self->_traceback);
+                                            Py_VISIT(self->_arg);
+                                            Py_VISIT(self->___mypyc_temp__0);
+                                            Py_VISIT(self->___mypyc_temp__1.f0);
+                                            Py_VISIT(self->___mypyc_temp__1.f1);
+                                            Py_VISIT(self->___mypyc_temp__1.f2);
+                                            Py_VISIT(self->___mypyc_temp__2);
+                                            return 0;
+                                        }
+                                        
+                                        static int
+                                        docker_compose___compose_wrap_ensure_containers_env_clear(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *self)
+                                        {
+                                            Py_CLEAR(self->___mypyc_self__);
+                                            Py_CLEAR(self->___mypyc_env__);
+                                            Py_CLEAR(self->___mypyc_generator_attribute__args);
+                                            Py_CLEAR(self->___mypyc_generator_attribute__kwargs);
+                                            Py_CLEAR(self->_type);
+                                            Py_CLEAR(self->_value);
+                                            Py_CLEAR(self->_traceback);
+                                            Py_CLEAR(self->_arg);
+                                            Py_CLEAR(self->___mypyc_temp__0);
+                                            Py_CLEAR(self->___mypyc_temp__1.f0);
+                                            Py_CLEAR(self->___mypyc_temp__1.f1);
+                                            Py_CLEAR(self->___mypyc_temp__1.f2);
+                                            Py_CLEAR(self->___mypyc_temp__2);
+                                            return 0;
+                                        }
+                                        
+                                        static void
+                                        docker_compose___compose_wrap_ensure_containers_env_dealloc(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *self)
+                                        {
+                                            PyObject_GC_UnTrack(self);
+                                            if (docker_compose___compose_wrap_ensure_containers_env_free_instance == NULL) {
+                                                docker_compose___compose_wrap_ensure_containers_env_free_instance = self;
+                                                Py_CLEAR(self->___mypyc_self__);
+                                                Py_CLEAR(self->___mypyc_env__);
+                                                Py_CLEAR(self->___mypyc_generator_attribute__args);
+                                                Py_CLEAR(self->___mypyc_generator_attribute__kwargs);
+                                                Py_CLEAR(self->_type);
+                                                Py_CLEAR(self->_value);
+                                                Py_CLEAR(self->_traceback);
+                                                Py_CLEAR(self->_arg);
+                                                self->_stop_iter_ptr = NULL;
+                                                self->___mypyc_next_label__ = -113;
+                                                Py_CLEAR(self->___mypyc_temp__0);
+                                                Py_CLEAR(self->___mypyc_temp__1.f0);
+                                                Py_CLEAR(self->___mypyc_temp__1.f1);
+                                                Py_CLEAR(self->___mypyc_temp__1.f2);
+                                                Py_CLEAR(self->___mypyc_temp__2);
+                                                return;
+                                            }
+                                            CPy_TRASHCAN_BEGIN(self, docker_compose___compose_wrap_ensure_containers_env_dealloc)
+                                            docker_compose___compose_wrap_ensure_containers_env_clear(self);
+                                            Py_TYPE(self)->tp_free((PyObject *)self);
+                                            CPy_TRASHCAN_END(self)
+                                            done: ;
+                                        }
+                                        
+                                        static CPyVTableItem docker_compose___compose_wrap_ensure_containers_env_vtable[1];
+                                        static bool
+                                        CPyDef_docker_compose___compose_wrap_ensure_containers_env_trait_vtable_setup(void)
+                                        {
+                                            CPyVTableItem docker_compose___compose_wrap_ensure_containers_env_vtable_scratch[] = {
+                                                NULL
+                                            };
+                                            memcpy(docker_compose___compose_wrap_ensure_containers_env_vtable, docker_compose___compose_wrap_ensure_containers_env_vtable_scratch, sizeof(docker_compose___compose_wrap_ensure_containers_env_vtable));
+                                            return 1;
+                                        }
+                                        
+                                        static bool
+                                        CPyDef_docker_compose___compose_wrap_ensure_containers_env_coroutine_setup(PyObject *type)
+                                        {
+                                            return 1;
+                                        }
+                                        
+                                        static PyMethodDef docker_compose___compose_wrap_ensure_containers_env_methods[] = {
+                                            {"__internal_mypyc_setup", (PyCFunction)CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_env_setup, METH_O, NULL},
+                                            {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
+                                            {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
+                                            {NULL}  /* Sentinel */
+                                        };
+                                        
+                                        static PyTypeObject CPyType_docker_compose___compose_wrap_ensure_containers_env_template_ = {
+                                            PyVarObject_HEAD_INIT(NULL, 0)
+                                            .tp_name = "compose_wrap_ensure_containers_env",
+                                            .tp_new = docker_compose___compose_wrap_ensure_containers_env_new,
+                                            .tp_dealloc = (destructor)docker_compose___compose_wrap_ensure_containers_env_dealloc,
+                                            .tp_traverse = (traverseproc)docker_compose___compose_wrap_ensure_containers_env_traverse,
+                                            .tp_clear = (inquiry)docker_compose___compose_wrap_ensure_containers_env_clear,
+                                            .tp_methods = docker_compose___compose_wrap_ensure_containers_env_methods,
+                                            .tp_basicsize = sizeof(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject),
+                                            .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
+                                            .tp_doc = PyDoc_STR("compose_wrap_ensure_containers_env()\n--\n\n"),
+                                        };
+                                        static PyTypeObject *CPyType_docker_compose___compose_wrap_ensure_containers_env_template = &CPyType_docker_compose___compose_wrap_ensure_containers_env_template_;
+                                        
+                                        PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_env_setup(PyObject *cpy_r_type)
+                                        {
+                                            PyTypeObject *type = (PyTypeObject*)cpy_r_type;
+                                            eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *self;
+                                            if (docker_compose___compose_wrap_ensure_containers_env_free_instance != NULL) {
+                                                self = docker_compose___compose_wrap_ensure_containers_env_free_instance;
+                                                docker_compose___compose_wrap_ensure_containers_env_free_instance = NULL;
+                                                Py_SET_REFCNT(self, 1);
+                                                PyObject_GC_Track(self);
+                                                return (PyObject *)self;
+                                            }
+                                            self = (eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *)type->tp_alloc(type, 0);
+                                            if (self == NULL)
+                                                return NULL;
+                                            self->vtable = docker_compose___compose_wrap_ensure_containers_env_vtable;
+                                            self->___mypyc_next_label__ = -113;
+                                            self->___mypyc_temp__1 = (tuple_T3OOO) { NULL, NULL, NULL };
+                                            return (PyObject *)self;
+                                        }
+                                        
+                                        PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_env(void)
+                                        {
+                                            PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_env_setup((PyObject *)CPyType_docker_compose___compose_wrap_ensure_containers_env);
+                                            if (self == NULL)
+                                                return NULL;
+                                            return self;
+                                        }
+                                        
+                                        
+                                        static PyObject *CPyDunder___get__docker_compose___compose_wrap_ensure_containers_obj(PyObject *self, PyObject *instance, PyObject *owner) {
+                                            instance = instance ? instance : Py_None;
+                                            return CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____get__(self, instance, owner);
+                                        }
+                                        PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_obj_setup(PyObject *cpy_r_type);
+                                        PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj(void);
+                                        
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+                                        {
+                                            if (type != CPyType_docker_compose___compose_wrap_ensure_containers_obj) {
+                                                PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+                                                return NULL;
+                                            }
+                                            PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_obj_setup((PyObject*)type);
+                                            if (self == NULL)
+                                                return NULL;
+                                            return self;
+                                        }
+                                        
+                                        static int
+                                        docker_compose___compose_wrap_ensure_containers_obj_traverse(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, visitproc visit, void *arg)
+                                        {
+                                            Py_VISIT(self->___mypyc_env__);
+                                            Py_VISIT(self->___cpyfunction__);
+                                            PyObject_VisitManagedDict((PyObject *)self, visit, arg);
+                                            return 0;
+                                        }
+                                        
+                                        static int
+                                        docker_compose___compose_wrap_ensure_containers_obj_clear(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self)
+                                        {
+                                            Py_CLEAR(self->___mypyc_env__);
+                                            Py_CLEAR(self->___cpyfunction__);
+                                            PyObject_ClearManagedDict((PyObject *)self);
+                                            return 0;
+                                        }
+                                        
+                                        static void
+                                        docker_compose___compose_wrap_ensure_containers_obj_dealloc(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self)
+                                        {
+                                            PyObject_GC_UnTrack(self);
+                                            if (docker_compose___compose_wrap_ensure_containers_obj_free_instance == NULL) {
+                                                docker_compose___compose_wrap_ensure_containers_obj_free_instance = self;
+                                                Py_CLEAR(self->___mypyc_env__);
+                                                Py_CLEAR(self->___cpyfunction__);
+                                                return;
+                                            }
+                                            CPy_TRASHCAN_BEGIN(self, docker_compose___compose_wrap_ensure_containers_obj_dealloc)
+                                            docker_compose___compose_wrap_ensure_containers_obj_clear(self);
+                                            Py_TYPE(self)->tp_free((PyObject *)self);
+                                            CPy_TRASHCAN_END(self)
+                                            done: ;
+                                        }
+                                        
+                                        static CPyVTableItem docker_compose___compose_wrap_ensure_containers_obj_vtable[9];
+                                        static bool
+                                        CPyDef_docker_compose___compose_wrap_ensure_containers_obj_trait_vtable_setup(void)
+                                        {
+                                            CPyVTableItem docker_compose___compose_wrap_ensure_containers_obj_vtable_scratch[] = {
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____name__,
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____code__,
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____annotations__,
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____defaults__,
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____kwdefaults__,
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____mypyc_setter___3__name__,
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____mypyc_setter___3__annotations__,
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____call__,
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____get__,
+                                            };
+                                            memcpy(docker_compose___compose_wrap_ensure_containers_obj_vtable, docker_compose___compose_wrap_ensure_containers_obj_vtable_scratch, sizeof(docker_compose___compose_wrap_ensure_containers_obj_vtable));
+                                            return 1;
+                                        }
+                                        
+                                        static bool
+                                        CPyDef_docker_compose___compose_wrap_ensure_containers_obj_coroutine_setup(PyObject *type)
+                                        {
+                                            PyObject* CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____call___wrapper = CPyFunction_New(CPyModule_eth_portfolio_scripts___docker___docker_compose, "", "compose_wrap", (PyCFunction)CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____call__, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__call__(*$args, **kwargs)\n--\n\n"), 49, CO_COROUTINE, true);
+                                            if (unlikely(!CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____call___wrapper))
+                                                return 2;
+                                            ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *)type)->___cpyfunction__ = CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____call___wrapper;
+                                            return 1;
+                                        }
+                                        
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_get___3_mypyc_env__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure);
+                                        static int
+                                        docker_compose___compose_wrap_ensure_containers_obj_set___3_mypyc_env__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, PyObject *value, void *closure);
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_get___3_cpyfunction__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure);
+                                        static int
+                                        docker_compose___compose_wrap_ensure_containers_obj_set___3_cpyfunction__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, PyObject *value, void *closure);
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_get___3_name__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure);
+                                        static int
+                                        docker_compose___compose_wrap_ensure_containers_obj_set___3_name__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, PyObject *value, void *closure);
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_get___3_code__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure);
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_get___3_annotations__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure);
+                                        static int
+                                        docker_compose___compose_wrap_ensure_containers_obj_set___3_annotations__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, PyObject *value, void *closure);
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_get___3_defaults__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure);
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_get___3_kwdefaults__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure);
+                                        
+                                        static PyGetSetDef docker_compose___compose_wrap_ensure_containers_obj_getseters[] = {
+                                            {"__mypyc_env__",
+                                             (getter)docker_compose___compose_wrap_ensure_containers_obj_get___3_mypyc_env__, (setter)docker_compose___compose_wrap_ensure_containers_obj_set___3_mypyc_env__,
+                                             NULL, NULL},
+                                            {"__cpyfunction__",
+                                             (getter)docker_compose___compose_wrap_ensure_containers_obj_get___3_cpyfunction__, (setter)docker_compose___compose_wrap_ensure_containers_obj_set___3_cpyfunction__,
+                                             NULL, NULL},
+                                            {"__name__",
+                                             (getter)docker_compose___compose_wrap_ensure_containers_obj_get___3_name__,
+                                             (setter)docker_compose___compose_wrap_ensure_containers_obj_set___3_name__,
+                                            NULL, NULL},
+                                            {"__code__",
+                                             (getter)docker_compose___compose_wrap_ensure_containers_obj_get___3_code__,
+                                            NULL, NULL, NULL},
+                                            {"__annotations__",
+                                             (getter)docker_compose___compose_wrap_ensure_containers_obj_get___3_annotations__,
+                                             (setter)docker_compose___compose_wrap_ensure_containers_obj_set___3_annotations__,
+                                            NULL, NULL},
+                                            {"__defaults__",
+                                             (getter)docker_compose___compose_wrap_ensure_containers_obj_get___3_defaults__,
+                                            NULL, NULL, NULL},
+                                            {"__kwdefaults__",
+                                             (getter)docker_compose___compose_wrap_ensure_containers_obj_get___3_kwdefaults__,
+                                            NULL, NULL, NULL},
+                                            {"__dict__", PyObject_GenericGetDict, PyObject_GenericSetDict},
+                                            {NULL}  /* Sentinel */
+                                        };
+                                        
+                                        static PyMethodDef docker_compose___compose_wrap_ensure_containers_obj_methods[] = {
+                                            {"__internal_mypyc_setup", (PyCFunction)CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_obj_setup, METH_O, NULL},
+                                            {"__call__",
+                                             (PyCFunction)CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____call__,
+                                             METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__call__(*$args, **kwargs)\n--\n\n")},
+                                            {"__get__",
+                                             (PyCFunction)CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____get__,
+                                             METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__get__($instance, owner)\n--\n\n")},
+                                            {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
+                                            {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
+                                            {NULL}  /* Sentinel */
+                                        };
+                                        
+                                        static PyTypeObject CPyType_docker_compose___compose_wrap_ensure_containers_obj_template_ = {
+                                            PyVarObject_HEAD_INIT(NULL, 0)
+                                            .tp_name = "compose_wrap_ensure_containers_obj",
+                                            .tp_new = docker_compose___compose_wrap_ensure_containers_obj_new,
+                                            .tp_dealloc = (destructor)docker_compose___compose_wrap_ensure_containers_obj_dealloc,
+                                            .tp_traverse = (traverseproc)docker_compose___compose_wrap_ensure_containers_obj_traverse,
+                                            .tp_clear = (inquiry)docker_compose___compose_wrap_ensure_containers_obj_clear,
+                                            .tp_getset = docker_compose___compose_wrap_ensure_containers_obj_getseters,
+                                            .tp_methods = docker_compose___compose_wrap_ensure_containers_obj_methods,
+                                            .tp_call = PyVectorcall_Call,
+                                            .tp_descr_get = CPyDunder___get__docker_compose___compose_wrap_ensure_containers_obj,
+                                            .tp_basicsize = sizeof(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject),
+                                            .tp_vectorcall_offset = offsetof(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject, vectorcall),
+                                            .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC | _Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_MANAGED_DICT,
+                                            .tp_doc = PyDoc_STR("compose_wrap_ensure_containers_obj()\n--\n\n"),
+                                        };
+                                        static PyTypeObject *CPyType_docker_compose___compose_wrap_ensure_containers_obj_template = &CPyType_docker_compose___compose_wrap_ensure_containers_obj_template_;
+                                        static PyObject *CPyStatic_docker_compose___compose_wrap_ensure_containers_obj_cpyfunction = NULL;
+                                        
+                                        PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_obj_setup(PyObject *cpy_r_type)
+                                        {
+                                            PyTypeObject *type = (PyTypeObject*)cpy_r_type;
+                                            eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self;
+                                            if (docker_compose___compose_wrap_ensure_containers_obj_free_instance != NULL) {
+                                                self = docker_compose___compose_wrap_ensure_containers_obj_free_instance;
+                                                docker_compose___compose_wrap_ensure_containers_obj_free_instance = NULL;
+                                                Py_SET_REFCNT(self, 1);
+                                                PyObject_GC_Track(self);
+                                                return (PyObject *)self;
+                                            }
+                                            self = (eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *)type->tp_alloc(type, 0);
+                                            if (self == NULL)
+                                                return NULL;
+                                            self->vtable = docker_compose___compose_wrap_ensure_containers_obj_vtable;
+                                            self->vectorcall = CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____call__;
+                                            return (PyObject *)self;
+                                        }
+                                        
+                                        PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj(void)
+                                        {
+                                            PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_obj_setup((PyObject *)CPyType_docker_compose___compose_wrap_ensure_containers_obj);
+                                            if (self == NULL)
+                                                return NULL;
+                                            return self;
+                                        }
+                                        
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_get___3_mypyc_env__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure)
+                                        {
+                                            if (unlikely(self->___mypyc_env__ == NULL)) {
+                                                PyErr_SetString(PyExc_AttributeError,
+                                                    "attribute '__mypyc_env__' of 'compose_wrap_ensure_containers_obj' undefined");
+                                                return NULL;
+                                            }
+                                            CPy_INCREF_NO_IMM(self->___mypyc_env__);
+                                            PyObject *retval = self->___mypyc_env__;
+                                            return retval;
+                                        }
+                                        
+                                        static int
+                                        docker_compose___compose_wrap_ensure_containers_obj_set___3_mypyc_env__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, PyObject *value, void *closure)
+                                        {
+                                            if (value == NULL) {
+                                                PyErr_SetString(PyExc_AttributeError,
+                                                    "'compose_wrap_ensure_containers_obj' object attribute '__mypyc_env__' cannot be deleted");
+                                                return -1;
+                                            }
+                                            if (self->___mypyc_env__ != NULL) {
+                                                CPy_DECREF_NO_IMM(self->___mypyc_env__);
+                                            }
+                                            PyObject *tmp;
+                                            if (likely(Py_TYPE(value) == CPyType_docker_compose___ensure_containers_env))
+                                                tmp = value;
+                                            else {
+                                                CPy_TypeError("eth_portfolio_scripts.docker.docker_compose.ensure_containers_env", value); 
+                                                tmp = NULL;
+                                            }
+                                            if (!tmp)
+                                                return -1;
+                                            CPy_INCREF_NO_IMM(tmp);
+                                            self->___mypyc_env__ = tmp;
+                                            return 0;
+                                        }
+                                        
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_get___3_cpyfunction__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure)
+                                        {
+                                            if (unlikely(self->___cpyfunction__ == NULL)) {
+                                                PyErr_SetString(PyExc_AttributeError,
+                                                    "attribute '__cpyfunction__' of 'compose_wrap_ensure_containers_obj' undefined");
+                                                return NULL;
+                                            }
+                                            CPy_INCREF(self->___cpyfunction__);
+                                            PyObject *retval = self->___cpyfunction__;
+                                            return retval;
+                                        }
+                                        
+                                        static int
+                                        docker_compose___compose_wrap_ensure_containers_obj_set___3_cpyfunction__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, PyObject *value, void *closure)
+                                        {
+                                            if (value == NULL) {
+                                                PyErr_SetString(PyExc_AttributeError,
+                                                    "'compose_wrap_ensure_containers_obj' object attribute '__cpyfunction__' cannot be deleted");
+                                                return -1;
+                                            }
+                                            if (self->___cpyfunction__ != NULL) {
+                                                CPy_DECREF(self->___cpyfunction__);
+                                            }
+                                            PyObject *tmp = value;
+                                            CPy_INCREF(tmp);
+                                            self->___cpyfunction__ = tmp;
+                                            return 0;
+                                        }
+                                        
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_get___3_name__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure)
+                                        {
+                                            return CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____name__((PyObject *) self);
+                                        }
+                                        
+                                        static int
+                                        docker_compose___compose_wrap_ensure_containers_obj_set___3_name__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, PyObject *value, void *closure)
+                                        {
+                                            CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____mypyc_setter___3__name__((PyObject *) self, value);
+                                            return 0;
+                                        }
+                                        
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_get___3_code__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure)
+                                        {
+                                            return CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____code__((PyObject *) self);
+                                        }
+                                        
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_get___3_annotations__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure)
+                                        {
+                                            return CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____annotations__((PyObject *) self);
+                                        }
+                                        
+                                        static int
+                                        docker_compose___compose_wrap_ensure_containers_obj_set___3_annotations__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, PyObject *value, void *closure)
+                                        {
+                                            CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____mypyc_setter___3__annotations__((PyObject *) self, value);
+                                            return 0;
+                                        }
+                                        
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_get___3_defaults__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure)
+                                        {
+                                            return CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____defaults__((PyObject *) self);
+                                        }
+                                        
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_get___3_kwdefaults__(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, void *closure)
+                                        {
+                                            return CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____kwdefaults__((PyObject *) self);
+                                        }
+                                        
+                                        static PyAsyncMethods docker_compose___compose_wrap_gen___3_49_as_async = {
+                                            .am_await = CPyDef_docker_compose___compose_wrap_gen___3_49_____await__,
+                                        };
+                                        PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_gen___3_49_setup(PyObject *cpy_r_type);
+                                        PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49(void);
+                                        
+                                        static PyObject *
+                                        docker_compose___compose_wrap_gen___3_49_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+                                        {
+                                            if (type != CPyType_docker_compose___compose_wrap_gen___3_49) {
+                                                PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+                                                return NULL;
+                                            }
+                                            PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_gen___3_49_setup((PyObject*)type);
+                                            if (self == NULL)
+                                                return NULL;
+                                            return self;
+                                        }
+                                        
+                                        static int
+                                        docker_compose___compose_wrap_gen___3_49_traverse(eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object *self, visitproc visit, void *arg)
+                                        {
+                                            Py_VISIT(self->___mypyc_env__);
+                                            return 0;
+                                        }
+                                        
+                                        static int
+                                        docker_compose___compose_wrap_gen___3_49_clear(eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object *self)
+                                        {
+                                            Py_CLEAR(self->___mypyc_env__);
+                                            return 0;
+                                        }
+                                        
+                                        static void
+                                        docker_compose___compose_wrap_gen___3_49_dealloc(eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object *self)
+                                        {
+                                            PyObject_GC_UnTrack(self);
+                                            if (docker_compose___compose_wrap_gen___3_49_free_instance == NULL) {
+                                                docker_compose___compose_wrap_gen___3_49_free_instance = self;
+                                                Py_CLEAR(self->___mypyc_env__);
+                                                return;
+                                            }
+                                            CPy_TRASHCAN_BEGIN(self, docker_compose___compose_wrap_gen___3_49_dealloc)
+                                            docker_compose___compose_wrap_gen___3_49_clear(self);
+                                            Py_TYPE(self)->tp_free((PyObject *)self);
+                                            CPy_TRASHCAN_END(self)
+                                            done: ;
+                                        }
+                                        
+                                        static CPyVTableItem docker_compose___compose_wrap_gen___3_49_vtable[7];
+                                        static bool
+                                        CPyDef_docker_compose___compose_wrap_gen___3_49_trait_vtable_setup(void)
+                                        {
+                                            CPyVTableItem docker_compose___compose_wrap_gen___3_49_vtable_scratch[] = {
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_gen___3_49_____mypyc_generator_helper__,
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_gen___3_49_____next__,
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_gen___3_49___send,
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_gen___3_49_____iter__,
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_gen___3_49___throw,
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_gen___3_49___close,
+                                                (CPyVTableItem)CPyDef_docker_compose___compose_wrap_gen___3_49_____await__,
+                                            };
+                                            memcpy(docker_compose___compose_wrap_gen___3_49_vtable, docker_compose___compose_wrap_gen___3_49_vtable_scratch, sizeof(docker_compose___compose_wrap_gen___3_49_vtable));
+                                            return 1;
+                                        }
+                                        
+                                        static bool
+                                        CPyDef_docker_compose___compose_wrap_gen___3_49_coroutine_setup(PyObject *type)
+                                        {
+                                            return 1;
+                                        }
+                                        
+                                        static PyMethodDef docker_compose___compose_wrap_gen___3_49_methods[] = {
+                                            {"__internal_mypyc_setup", (PyCFunction)CPyDef_docker_compose_____mypyc__compose_wrap_gen___3_49_setup, METH_O, NULL},
+                                            {"__next__",
+                                             (PyCFunction)CPyPy_docker_compose___compose_wrap_gen___3_49_____next__,
+                                             METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
+                                            {"send",
+                                             (PyCFunction)CPyPy_docker_compose___compose_wrap_gen___3_49___send,
+                                             METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("send($arg)\n--\n\n")},
+                                            {"__iter__",
+                                             (PyCFunction)CPyPy_docker_compose___compose_wrap_gen___3_49_____iter__,
+                                             METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__iter__()\n--\n\n")},
+                                            {"throw",
+                                             (PyCFunction)CPyPy_docker_compose___compose_wrap_gen___3_49___throw,
+                                             METH_FASTCALL | METH_KEYWORDS, PyDoc_STR(NULL)},
+                                            {"close",
+                                             (PyCFunction)CPyPy_docker_compose___compose_wrap_gen___3_49___close,
+                                             METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("close()\n--\n\n")},
+                                            {"__await__",
+                                             (PyCFunction)CPyPy_docker_compose___compose_wrap_gen___3_49_____await__,
+                                             METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__await__()\n--\n\n")},
+                                            {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
+                                            {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
+                                            {NULL}  /* Sentinel */
+                                        };
+                                        
+                                        static PyTypeObject CPyType_docker_compose___compose_wrap_gen___3_49_template_ = {
+                                            PyVarObject_HEAD_INIT(NULL, 0)
+                                            .tp_name = "compose_wrap_gen___49",
+                                            .tp_new = docker_compose___compose_wrap_gen___3_49_new,
+                                            .tp_dealloc = (destructor)docker_compose___compose_wrap_gen___3_49_dealloc,
+                                            .tp_traverse = (traverseproc)docker_compose___compose_wrap_gen___3_49_traverse,
+                                            .tp_clear = (inquiry)docker_compose___compose_wrap_gen___3_49_clear,
+                                            .tp_methods = docker_compose___compose_wrap_gen___3_49_methods,
+                                            .tp_iter = CPyDef_docker_compose___compose_wrap_gen___3_49_____iter__,
+                                            .tp_iternext = CPyDef_docker_compose___compose_wrap_gen___3_49_____next__,
+                                            .tp_as_async = &docker_compose___compose_wrap_gen___3_49_as_async,
+                                            .tp_basicsize = sizeof(eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object),
+                                            .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
+                                            .tp_doc = PyDoc_STR("compose_wrap_gen___49()\n--\n\n"),
+                                        };
+                                        static PyTypeObject *CPyType_docker_compose___compose_wrap_gen___3_49_template = &CPyType_docker_compose___compose_wrap_gen___3_49_template_;
+                                        
+                                        PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_gen___3_49_setup(PyObject *cpy_r_type)
+                                        {
+                                            PyTypeObject *type = (PyTypeObject*)cpy_r_type;
+                                            eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object *self;
+                                            if (docker_compose___compose_wrap_gen___3_49_free_instance != NULL) {
+                                                self = docker_compose___compose_wrap_gen___3_49_free_instance;
+                                                docker_compose___compose_wrap_gen___3_49_free_instance = NULL;
+                                                Py_SET_REFCNT(self, 1);
+                                                PyObject_GC_Track(self);
+                                                return (PyObject *)self;
+                                            }
+                                            self = (eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object *)type->tp_alloc(type, 0);
+                                            if (self == NULL)
+                                                return NULL;
+                                            self->vtable = docker_compose___compose_wrap_gen___3_49_vtable;
+                                            return (PyObject *)self;
+                                        }
+                                        
+                                        PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49(void)
+                                        {
+                                            PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_gen___3_49_setup((PyObject *)CPyType_docker_compose___compose_wrap_gen___3_49);
+                                            if (self == NULL)
+                                                return NULL;
+                                            return self;
+                                        }
+                                        
+                                        static PyMethodDef docker_composemodule_methods[] = {
+                                            {"up", (PyCFunction)CPyPy_docker_compose___up, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("up(*services)\n--\n\n") /* docstring */},
+                                            {"down", (PyCFunction)CPyPy_docker_compose___down, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("down()\n--\n\n") /* docstring */},
+                                            {"build", (PyCFunction)CPyPy_docker_compose___build, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("build(*services)\n--\n\n") /* docstring */},
+                                            {"stop", (PyCFunction)CPyPy_docker_compose___stop, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("stop(*services)\n--\n\n") /* docstring */},
+                                            {"ensure_containers", (PyCFunction)CPyPy_docker_compose___ensure_containers, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("ensure_containers(fn)\n--\n\n") /* docstring */},
+                                            {"_print_notice", (PyCFunction)CPyPy_docker_compose____print_notice, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("_print_notice(doing, services)\n--\n\n") /* docstring */},
+                                            {"_exec_command", (PyCFunction)CPyPy_docker_compose____exec_command, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR(NULL) /* docstring */},
+                                            {NULL, NULL, 0, NULL}
+                                        };
+                                        
+                                        int CPyExec_eth_portfolio_scripts___docker___docker_compose(PyObject *module)
+                                        {
+                                            intern_strings();
+                                            PyObject* modname = NULL;
+                                            modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio_scripts___docker___docker_compose__internal, "__name__");
+                                            CPyStatic_docker_compose___globals = PyModule_GetDict(CPyModule_eth_portfolio_scripts___docker___docker_compose__internal);
+                                            if (unlikely(CPyStatic_docker_compose___globals == NULL))
+                                                goto fail;
+                                            CPyType_docker_compose___ensure_containers_env = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_docker_compose___ensure_containers_env_template, NULL, modname);
+                                            if (unlikely(!CPyType_docker_compose___ensure_containers_env))
+                                                goto fail;
+                                            CPyDef_docker_compose___ensure_containers_env_trait_vtable_setup();
+                                            CPyType_docker_compose___compose_wrap_ensure_containers_env = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_docker_compose___compose_wrap_ensure_containers_env_template, NULL, modname);
+                                            if (unlikely(!CPyType_docker_compose___compose_wrap_ensure_containers_env))
+                                                goto fail;
+                                            CPyDef_docker_compose___compose_wrap_ensure_containers_env_trait_vtable_setup();
+                                            CPyType_docker_compose___compose_wrap_ensure_containers_obj = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_docker_compose___compose_wrap_ensure_containers_obj_template, NULL, modname);
+                                            if (unlikely(!CPyType_docker_compose___compose_wrap_ensure_containers_obj))
+                                                goto fail;
+                                            CPyDef_docker_compose___compose_wrap_ensure_containers_obj_trait_vtable_setup();
+                                            CPyType_docker_compose___compose_wrap_gen___3_49 = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_docker_compose___compose_wrap_gen___3_49_template, NULL, modname);
+                                            if (unlikely(!CPyType_docker_compose___compose_wrap_gen___3_49))
+                                                goto fail;
+                                            CPyDef_docker_compose___compose_wrap_gen___3_49_trait_vtable_setup();
+                                            if (CPyGlobalsInit() < 0)
+                                                goto fail;
+                                            char result = CPyDef_docker_compose_____top_level__();
+                                            if (result == 2)
+                                                goto fail;
+                                            Py_DECREF(modname);
+                                            return 0;
+                                            fail:
+                                            Py_CLEAR(CPyModule_eth_portfolio_scripts___docker___docker_compose__internal);
+                                            Py_CLEAR(modname);
+                                            CPy_XDECREF(CPyStatic_docker_compose___logger);
+                                            CPyStatic_docker_compose___logger = NULL;
+                                            CPy_XDECREF(CPyStatic_docker_compose___COMPOSE_FILE);
+                                            CPyStatic_docker_compose___COMPOSE_FILE = NULL;
+                                            Py_CLEAR(CPyType_docker_compose___ensure_containers_env);
+                                            Py_CLEAR(CPyType_docker_compose___compose_wrap_ensure_containers_env);
+                                            Py_CLEAR(CPyType_docker_compose___compose_wrap_ensure_containers_obj);
+                                            Py_CLEAR(CPyType_docker_compose___compose_wrap_gen___3_49);
+                                            return -1;
+                                        }
+                                        static struct PyModuleDef docker_composemodule = {
+                                            PyModuleDef_HEAD_INIT,
+                                            "eth_portfolio_scripts.docker.docker_compose",
+                                            NULL, /* docstring */
+                                            0,       /* size of per-interpreter state of the module */
+                                            docker_composemodule_methods,
+                                            NULL,
+                                        };
+                                        
+                                        PyObject *CPyInitOnly_eth_portfolio_scripts___docker___docker_compose(void)
+                                        {
+                                            if (CPyModule_eth_portfolio_scripts___docker___docker_compose__internal) {
+                                                Py_INCREF(CPyModule_eth_portfolio_scripts___docker___docker_compose__internal);
+                                                return CPyModule_eth_portfolio_scripts___docker___docker_compose__internal;
+                                            }
+                                            CPyModule_eth_portfolio_scripts___docker___docker_compose__internal = PyModule_Create(&docker_composemodule);
+                                            return CPyModule_eth_portfolio_scripts___docker___docker_compose__internal;
+                                        }
+                                        
+                                        PyObject *CPyInit_eth_portfolio_scripts___docker___docker_compose(void)
+                                        {
+                                            PyObject* modname = NULL;
+                                            if (CPyModule_eth_portfolio_scripts___docker___docker_compose__internal) {
+                                                Py_INCREF(CPyModule_eth_portfolio_scripts___docker___docker_compose__internal);
+                                                return CPyModule_eth_portfolio_scripts___docker___docker_compose__internal;
+                                            }
+                                            CPyModule_eth_portfolio_scripts___docker___docker_compose__internal = PyModule_Create(&docker_composemodule);
+                                            if (unlikely(CPyModule_eth_portfolio_scripts___docker___docker_compose__internal == NULL))
+                                                goto fail;
+                                            modname = PyUnicode_FromString("eth_portfolio_scripts.docker.docker_compose");
+                                            if (modname == NULL) CPyError_OutOfMemory();
+                                            if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio_scripts___docker___docker_compose__internal) < 0)
+                                                goto fail;
+                                            Py_CLEAR(modname);
+                                            if (CPyExec_eth_portfolio_scripts___docker___docker_compose(CPyModule_eth_portfolio_scripts___docker___docker_compose__internal) != 0)
+                                                goto fail;
+                                            return CPyModule_eth_portfolio_scripts___docker___docker_compose__internal;
+                                            fail:
+                                            {
+                                                    PyObject *exc_type, *exc_val, *exc_tb;
+                                                    PyErr_Fetch(&exc_type, &exc_val, &exc_tb);
+                                                    if (modname == NULL) {
+                                                            modname = PyUnicode_FromString("eth_portfolio_scripts.docker.docker_compose");
+                                                            if (modname == NULL) CPyError_OutOfMemory();
+                                                        }
+                                                        PyObject_DelItem(PyImport_GetModuleDict(), modname);
+                                                        PyErr_Clear();
+                                                        Py_DECREF(modname);
+                                                        Py_CLEAR(CPyModule_eth_portfolio_scripts___docker___docker_compose__internal);
+                                                        PyErr_Restore(exc_type, exc_val, exc_tb);
+                                                }
+                                                return NULL;
+                                            }
+                                            
 char CPyDef_docker_compose___up(PyObject *cpy_r_services) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -21711,7 +22233,7 @@ CPyL2: ;
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "up", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
         goto CPyL7;
     }
-    cpy_r_r9 = (CPyPtr)&((PyListObject *)cpy_r_r8)->ob_item;
+    cpy_r_r9 = (CPyPtr)((CPyPtr)cpy_r_r8 + offsetof(PyListObject, ob_item));
     cpy_r_r10 = *(CPyPtr *)cpy_r_r9;
     CPy_INCREF(cpy_r_r6);
     *(PyObject * *)cpy_r_r10 = cpy_r_r6;
@@ -21747,29 +22269,29 @@ CPyL10: ;
     CPy_DECREF(cpy_r_r12);
     goto CPyL5;
 }
-
-PyObject *CPyPy_docker_compose___up(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {"%:up", kwlist, 0};
-    PyObject *obj_services;
-    if (!CPyArg_ParseStackAndKeywords(args, nargs, kwnames, &parser, &obj_services, NULL)) {
-        return NULL;
-    }
-    PyObject *arg_services = obj_services;
-    char retval = CPyDef_docker_compose___up(arg_services);
-    CPy_DECREF(obj_services);
-    if (retval == 2) {
-        return NULL;
-    }
-    PyObject *retbox = Py_None;
-    CPy_INCREF(retbox);
-    return retbox;
+                                            
+                                            PyObject *CPyPy_docker_compose___up(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                static const char * const kwlist[] = {0};
+                                                static CPyArg_Parser parser = {"%:up", kwlist, 0};
+                                                PyObject *obj_services;
+                                                if (!CPyArg_ParseStackAndKeywords(args, nargs, kwnames, &parser, &obj_services, NULL)) {
+                                                    return NULL;
+                                                }
+                                                PyObject *arg_services = obj_services;
+                                                char retval = CPyDef_docker_compose___up(arg_services);
+                                                CPy_DECREF(obj_services);
+                                                if (retval == 2) {
+                                                    return NULL;
+                                                }
+                                                PyObject *retbox = Py_None;
+                                                CPy_INCREF(retbox);
+                                                return retbox;
 fail: ;
-    CPy_DECREF(obj_services);
-    CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "up", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-    return NULL;
-}
-
+                                                CPy_DECREF(obj_services);
+                                                CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "up", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+                                                return NULL;
+                                            }
+                                            
 char CPyDef_docker_compose___down(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -21785,7 +22307,7 @@ char CPyDef_docker_compose___down(void) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "down", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
         goto CPyL3;
     }
-    cpy_r_r2 = (CPyPtr)&((PyListObject *)cpy_r_r1)->ob_item;
+    cpy_r_r2 = (CPyPtr)((CPyPtr)cpy_r_r1 + offsetof(PyListObject, ob_item));
     cpy_r_r3 = *(CPyPtr *)cpy_r_r2;
     CPy_INCREF(cpy_r_r0);
     *(PyObject * *)cpy_r_r3 = cpy_r_r0;
@@ -21802,25 +22324,25 @@ CPyL3: ;
     cpy_r_r7 = 2;
     return cpy_r_r7;
 }
-
-PyObject *CPyPy_docker_compose___down(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":down", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    char retval = CPyDef_docker_compose___down();
-    if (retval == 2) {
-        return NULL;
-    }
-    PyObject *retbox = Py_None;
-    CPy_INCREF(retbox);
-    return retbox;
+                                            
+                                            PyObject *CPyPy_docker_compose___down(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                static const char * const kwlist[] = {0};
+                                                static CPyArg_Parser parser = {":down", kwlist, 0};
+                                                if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                                                    return NULL;
+                                                }
+                                                char retval = CPyDef_docker_compose___down();
+                                                if (retval == 2) {
+                                                    return NULL;
+                                                }
+                                                PyObject *retbox = Py_None;
+                                                CPy_INCREF(retbox);
+                                                return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "down", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-    return NULL;
-}
-
+                                                CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "down", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+                                                return NULL;
+                                            }
+                                            
 char CPyDef_docker_compose___build(PyObject *cpy_r_services) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
@@ -21845,7 +22367,7 @@ char CPyDef_docker_compose___build(PyObject *cpy_r_services) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "build", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
         goto CPyL5;
     }
-    cpy_r_r4 = (CPyPtr)&((PyListObject *)cpy_r_r3)->ob_item;
+    cpy_r_r4 = (CPyPtr)((CPyPtr)cpy_r_r3 + offsetof(PyListObject, ob_item));
     cpy_r_r5 = *(CPyPtr *)cpy_r_r4;
     CPy_INCREF(cpy_r_r2);
     *(PyObject * *)cpy_r_r5 = cpy_r_r2;
@@ -21875,29 +22397,29 @@ CPyL7: ;
     CPy_DECREF(cpy_r_r6);
     goto CPyL3;
 }
-
-PyObject *CPyPy_docker_compose___build(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {"%:build", kwlist, 0};
-    PyObject *obj_services;
-    if (!CPyArg_ParseStackAndKeywords(args, nargs, kwnames, &parser, &obj_services, NULL)) {
-        return NULL;
-    }
-    PyObject *arg_services = obj_services;
-    char retval = CPyDef_docker_compose___build(arg_services);
-    CPy_DECREF(obj_services);
-    if (retval == 2) {
-        return NULL;
-    }
-    PyObject *retbox = Py_None;
-    CPy_INCREF(retbox);
-    return retbox;
+                                            
+                                            PyObject *CPyPy_docker_compose___build(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                static const char * const kwlist[] = {0};
+                                                static CPyArg_Parser parser = {"%:build", kwlist, 0};
+                                                PyObject *obj_services;
+                                                if (!CPyArg_ParseStackAndKeywords(args, nargs, kwnames, &parser, &obj_services, NULL)) {
+                                                    return NULL;
+                                                }
+                                                PyObject *arg_services = obj_services;
+                                                char retval = CPyDef_docker_compose___build(arg_services);
+                                                CPy_DECREF(obj_services);
+                                                if (retval == 2) {
+                                                    return NULL;
+                                                }
+                                                PyObject *retbox = Py_None;
+                                                CPy_INCREF(retbox);
+                                                return retbox;
 fail: ;
-    CPy_DECREF(obj_services);
-    CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "build", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-    return NULL;
-}
-
+                                                CPy_DECREF(obj_services);
+                                                CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "build", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+                                                return NULL;
+                                            }
+                                            
 char CPyDef_docker_compose___stop(PyObject *cpy_r_services) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
@@ -21922,7 +22444,7 @@ char CPyDef_docker_compose___stop(PyObject *cpy_r_services) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "stop", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
         goto CPyL5;
     }
-    cpy_r_r4 = (CPyPtr)&((PyListObject *)cpy_r_r3)->ob_item;
+    cpy_r_r4 = (CPyPtr)((CPyPtr)cpy_r_r3 + offsetof(PyListObject, ob_item));
     cpy_r_r5 = *(CPyPtr *)cpy_r_r4;
     CPy_INCREF(cpy_r_r2);
     *(PyObject * *)cpy_r_r5 = cpy_r_r2;
@@ -21952,29 +22474,180 @@ CPyL7: ;
     CPy_DECREF(cpy_r_r6);
     goto CPyL3;
 }
-
-PyObject *CPyPy_docker_compose___stop(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {"%:stop", kwlist, 0};
-    PyObject *obj_services;
-    if (!CPyArg_ParseStackAndKeywords(args, nargs, kwnames, &parser, &obj_services, NULL)) {
-        return NULL;
-    }
-    PyObject *arg_services = obj_services;
-    char retval = CPyDef_docker_compose___stop(arg_services);
-    CPy_DECREF(obj_services);
-    if (retval == 2) {
-        return NULL;
-    }
-    PyObject *retbox = Py_None;
-    CPy_INCREF(retbox);
-    return retbox;
+                                            
+                                            PyObject *CPyPy_docker_compose___stop(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                static const char * const kwlist[] = {0};
+                                                static CPyArg_Parser parser = {"%:stop", kwlist, 0};
+                                                PyObject *obj_services;
+                                                if (!CPyArg_ParseStackAndKeywords(args, nargs, kwnames, &parser, &obj_services, NULL)) {
+                                                    return NULL;
+                                                }
+                                                PyObject *arg_services = obj_services;
+                                                char retval = CPyDef_docker_compose___stop(arg_services);
+                                                CPy_DECREF(obj_services);
+                                                if (retval == 2) {
+                                                    return NULL;
+                                                }
+                                                PyObject *retbox = Py_None;
+                                                CPy_INCREF(retbox);
+                                                return retbox;
 fail: ;
-    CPy_DECREF(obj_services);
-    CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "stop", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-    return NULL;
+                                                CPy_DECREF(obj_services);
+                                                CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "stop", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+                                                return NULL;
+                                            }
+                                            
+PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____name__(PyObject *cpy_r___mypyc_self__) {
+    PyObject *cpy_r_r0;
+    PyObject *cpy_r_r1;
+    PyObject *cpy_r_r2;
+    cpy_r_r0 = ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *)cpy_r___mypyc_self__)->___cpyfunction__;
+    if (unlikely(cpy_r_r0 == NULL)) {
+        PyErr_SetString(PyExc_AttributeError, "attribute '__cpyfunction__' of 'compose_wrap_ensure_containers_obj' undefined");
+    } else {
+        CPy_INCREF(cpy_r_r0);
+    }
+    if (cpy_r_r0 == NULL) goto CPyL3;
+CPyL1: ;
+    cpy_r_r1 = CPyFunction_get_name(cpy_r_r0, 0);
+    CPy_DECREF(cpy_r_r0);
+    if (cpy_r_r1 == NULL) goto CPyL3;
+    return cpy_r_r1;
+CPyL3: ;
+    cpy_r_r2 = NULL;
+    return cpy_r_r2;
 }
-
+                                            
+PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____code__(PyObject *cpy_r___mypyc_self__) {
+    PyObject *cpy_r_r0;
+    PyObject *cpy_r_r1;
+    PyObject *cpy_r_r2;
+    cpy_r_r0 = ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *)cpy_r___mypyc_self__)->___cpyfunction__;
+    if (unlikely(cpy_r_r0 == NULL)) {
+        PyErr_SetString(PyExc_AttributeError, "attribute '__cpyfunction__' of 'compose_wrap_ensure_containers_obj' undefined");
+    } else {
+        CPy_INCREF(cpy_r_r0);
+    }
+    if (cpy_r_r0 == NULL) goto CPyL3;
+CPyL1: ;
+    cpy_r_r1 = CPyFunction_get_code(cpy_r_r0, 0);
+    CPy_DECREF(cpy_r_r0);
+    if (cpy_r_r1 == NULL) goto CPyL3;
+    return cpy_r_r1;
+CPyL3: ;
+    cpy_r_r2 = NULL;
+    return cpy_r_r2;
+}
+                                            
+PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____annotations__(PyObject *cpy_r___mypyc_self__) {
+    PyObject *cpy_r_r0;
+    PyObject *cpy_r_r1;
+    PyObject *cpy_r_r2;
+    cpy_r_r0 = ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *)cpy_r___mypyc_self__)->___cpyfunction__;
+    if (unlikely(cpy_r_r0 == NULL)) {
+        PyErr_SetString(PyExc_AttributeError, "attribute '__cpyfunction__' of 'compose_wrap_ensure_containers_obj' undefined");
+    } else {
+        CPy_INCREF(cpy_r_r0);
+    }
+    if (cpy_r_r0 == NULL) goto CPyL3;
+CPyL1: ;
+    cpy_r_r1 = CPyFunction_get_annotations(cpy_r_r0, 0);
+    CPy_DECREF(cpy_r_r0);
+    if (cpy_r_r1 == NULL) goto CPyL3;
+    return cpy_r_r1;
+CPyL3: ;
+    cpy_r_r2 = NULL;
+    return cpy_r_r2;
+}
+                                            
+PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____defaults__(PyObject *cpy_r___mypyc_self__) {
+    PyObject *cpy_r_r0;
+    PyObject *cpy_r_r1;
+    PyObject *cpy_r_r2;
+    cpy_r_r0 = ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *)cpy_r___mypyc_self__)->___cpyfunction__;
+    if (unlikely(cpy_r_r0 == NULL)) {
+        PyErr_SetString(PyExc_AttributeError, "attribute '__cpyfunction__' of 'compose_wrap_ensure_containers_obj' undefined");
+    } else {
+        CPy_INCREF(cpy_r_r0);
+    }
+    if (cpy_r_r0 == NULL) goto CPyL3;
+CPyL1: ;
+    cpy_r_r1 = CPyFunction_get_defaults(cpy_r_r0, 0);
+    CPy_DECREF(cpy_r_r0);
+    if (cpy_r_r1 == NULL) goto CPyL3;
+    return cpy_r_r1;
+CPyL3: ;
+    cpy_r_r2 = NULL;
+    return cpy_r_r2;
+}
+                                            
+PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____kwdefaults__(PyObject *cpy_r___mypyc_self__) {
+    PyObject *cpy_r_r0;
+    PyObject *cpy_r_r1;
+    PyObject *cpy_r_r2;
+    cpy_r_r0 = ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *)cpy_r___mypyc_self__)->___cpyfunction__;
+    if (unlikely(cpy_r_r0 == NULL)) {
+        PyErr_SetString(PyExc_AttributeError, "attribute '__cpyfunction__' of 'compose_wrap_ensure_containers_obj' undefined");
+    } else {
+        CPy_INCREF(cpy_r_r0);
+    }
+    if (cpy_r_r0 == NULL) goto CPyL3;
+CPyL1: ;
+    cpy_r_r1 = CPyFunction_get_kwdefaults(cpy_r_r0, 0);
+    CPy_DECREF(cpy_r_r0);
+    if (cpy_r_r1 == NULL) goto CPyL3;
+    return cpy_r_r1;
+CPyL3: ;
+    cpy_r_r2 = NULL;
+    return cpy_r_r2;
+}
+                                            
+CPyTagged CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____mypyc_setter___3__name__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_value) {
+    PyObject *cpy_r_r0;
+    int32_t cpy_r_r1;
+    char cpy_r_r2;
+    CPyTagged cpy_r_r3;
+    cpy_r_r0 = ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *)cpy_r___mypyc_self__)->___cpyfunction__;
+    if (unlikely(cpy_r_r0 == NULL)) {
+        PyErr_SetString(PyExc_AttributeError, "attribute '__cpyfunction__' of 'compose_wrap_ensure_containers_obj' undefined");
+    } else {
+        CPy_INCREF(cpy_r_r0);
+    }
+    if (cpy_r_r0 == NULL) goto CPyL3;
+CPyL1: ;
+    cpy_r_r1 = CPyFunction_set_name(cpy_r_r0, cpy_r_value, 0);
+    CPy_DECREF(cpy_r_r0);
+    cpy_r_r2 = cpy_r_r1 >= 0;
+    if (!cpy_r_r2) goto CPyL3;
+    return cpy_r_r1;
+CPyL3: ;
+    cpy_r_r3 = CPY_INT_TAG;
+    return cpy_r_r3;
+}
+                                            
+CPyTagged CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____mypyc_setter___3__annotations__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_value) {
+    PyObject *cpy_r_r0;
+    int32_t cpy_r_r1;
+    char cpy_r_r2;
+    CPyTagged cpy_r_r3;
+    cpy_r_r0 = ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *)cpy_r___mypyc_self__)->___cpyfunction__;
+    if (unlikely(cpy_r_r0 == NULL)) {
+        PyErr_SetString(PyExc_AttributeError, "attribute '__cpyfunction__' of 'compose_wrap_ensure_containers_obj' undefined");
+    } else {
+        CPy_INCREF(cpy_r_r0);
+    }
+    if (cpy_r_r0 == NULL) goto CPyL3;
+CPyL1: ;
+    cpy_r_r1 = CPyFunction_set_annotations(cpy_r_r0, cpy_r_value, 0);
+    CPy_DECREF(cpy_r_r0);
+    cpy_r_r2 = cpy_r_r1 >= 0;
+    if (!cpy_r_r2) goto CPyL3;
+    return cpy_r_r1;
+CPyL3: ;
+    cpy_r_r3 = CPY_INT_TAG;
+    return cpy_r_r3;
+}
+                                            
 PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____get__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
@@ -21993,26 +22666,26 @@ CPyL4: ;
     cpy_r_r3 = NULL;
     return cpy_r_r3;
 }
-
-PyObject *CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____get__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"instance", "owner", 0};
-    static CPyArg_Parser parser = {"OO:__get__", kwlist, 0};
-    PyObject *obj_instance;
-    PyObject *obj_owner;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_instance, &obj_owner)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__ = obj___mypyc_self__;
-    PyObject *arg_instance = obj_instance;
-    PyObject *arg_owner = obj_owner;
-    PyObject *retval = CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____get__(arg___mypyc_self__, arg_instance, arg_owner);
-    return retval;
+                                            
+                                            PyObject *CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____get__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                PyObject *obj___mypyc_self__ = self;
+                                                static const char * const kwlist[] = {"instance", "owner", 0};
+                                                static CPyArg_Parser parser = {"OO:__get__", kwlist, 0};
+                                                PyObject *obj_instance;
+                                                PyObject *obj_owner;
+                                                if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_instance, &obj_owner)) {
+                                                    return NULL;
+                                                }
+                                                PyObject *arg___mypyc_self__ = obj___mypyc_self__;
+                                                PyObject *arg_instance = obj_instance;
+                                                PyObject *arg_owner = obj_owner;
+                                                PyObject *retval = CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____get__(arg___mypyc_self__, arg_instance, arg_owner);
+                                                return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "__get__", -1, CPyStatic_docker_compose___globals);
-    return NULL;
-}
-
+                                                CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "__get__", -1, CPyStatic_docker_compose___globals);
+                                                return NULL;
+                                            }
+                                            
 PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -22157,13 +22830,10 @@ CPyL9: ;
     }
     ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *)cpy_r_r2)->___mypyc_temp__0 = cpy_r_r14;
     cpy_r_r15 = 1;
-    if (unlikely(!cpy_r_r15)) {
-        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", -1, CPyStatic_docker_compose___globals);
-        goto CPyL41;
-    }
+    if (!cpy_r_r15) goto CPyL41;
     cpy_r_r16 = ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *)cpy_r_r2)->___mypyc_temp__0;
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", "compose_wrap_ensure_containers_env", "__mypyc_temp__0", -1, CPyStatic_docker_compose___globals);
+        CPy_AttributeError("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", "compose_wrap_ensure_containers_env", "__mypyc_temp__0", 60, CPyStatic_docker_compose___globals);
         goto CPyL41;
     }
     CPy_INCREF(cpy_r_r16);
@@ -22218,14 +22888,11 @@ CPyL23: ;
     }
     ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *)cpy_r_r2)->___mypyc_temp__1 = cpy_r_r26;
     cpy_r_r27 = 1;
-    if (unlikely(!cpy_r_r27)) {
-        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", -1, CPyStatic_docker_compose___globals);
-        goto CPyL77;
-    }
+    if (!cpy_r_r27) goto CPyL77;
     cpy_r_r28 = (PyObject **)&cpy_r_r1;
     cpy_r_r29 = ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *)cpy_r_r2)->___mypyc_temp__0;
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", "compose_wrap_ensure_containers_env", "__mypyc_temp__0", -1, CPyStatic_docker_compose___globals);
+        CPy_AttributeError("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", "compose_wrap_ensure_containers_env", "__mypyc_temp__0", 60, CPyStatic_docker_compose___globals);
         goto CPyL77;
     }
     CPy_INCREF(cpy_r_r29);
@@ -22240,7 +22907,7 @@ CPyL25: ;
     cpy_r_r22 = cpy_r_r1;
     cpy_r_r31 = ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *)cpy_r_r2)->___mypyc_temp__1;
     if (unlikely(cpy_r_r31.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", "compose_wrap_ensure_containers_env", "__mypyc_temp__1", -1, CPyStatic_docker_compose___globals);
+        CPy_AttributeError("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", "compose_wrap_ensure_containers_env", "__mypyc_temp__1", 60, CPyStatic_docker_compose___globals);
         goto CPyL78;
     }
     CPy_INCREF(cpy_r_r31.f0);
@@ -22256,7 +22923,7 @@ CPyL29: ;
     cpy_r_r19 = cpy_r_r1;
     cpy_r_r32 = ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *)cpy_r_r2)->___mypyc_temp__1;
     if (unlikely(cpy_r_r32.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", "compose_wrap_ensure_containers_env", "__mypyc_temp__1", -1, CPyStatic_docker_compose___globals);
+        CPy_AttributeError("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", "compose_wrap_ensure_containers_env", "__mypyc_temp__1", 60, CPyStatic_docker_compose___globals);
         goto CPyL79;
     }
     CPy_INCREF(cpy_r_r32.f0);
@@ -22271,7 +22938,7 @@ CPyL30: ;
 CPyL31: ;
     cpy_r_r33 = ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *)cpy_r_r2)->___mypyc_temp__1;
     if (unlikely(cpy_r_r33.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", "compose_wrap_ensure_containers_env", "__mypyc_temp__1", -1, CPyStatic_docker_compose___globals);
+        CPy_AttributeError("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", "compose_wrap_ensure_containers_env", "__mypyc_temp__1", 60, CPyStatic_docker_compose___globals);
         goto CPyL41;
     }
     CPy_INCREF(cpy_r_r33.f0);
@@ -22292,7 +22959,7 @@ CPyL33: ;
 CPyL34: ;
     cpy_r_r35 = ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *)cpy_r_r2)->___mypyc_temp__0;
     if (unlikely(cpy_r_r35 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", "compose_wrap_ensure_containers_env", "__mypyc_temp__0", -1, CPyStatic_docker_compose___globals);
+        CPy_AttributeError("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", "compose_wrap_ensure_containers_env", "__mypyc_temp__0", 60, CPyStatic_docker_compose___globals);
         goto CPyL81;
     }
     CPy_INCREF(cpy_r_r35);
@@ -22332,7 +22999,7 @@ CPyL41: ;
     ((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *)cpy_r_r2)->___mypyc_temp__2 = cpy_r_r41;
     cpy_r_r42 = 1;
     if (unlikely(!cpy_r_r42)) {
-        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", -1, CPyStatic_docker_compose___globals);
+        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
         goto CPyL82;
     }
     cpy_r_r43 = CPy_CatchError();
@@ -22488,7 +23155,7 @@ CPyL87: ;
     CPy_DECREF_NO_IMM(cpy_r_r2);
     goto CPyL63;
 }
-
+                                            
 PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49_____next__(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -22501,28 +23168,28 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__next__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_docker_compose___compose_wrap_gen___3_49))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio_scripts.docker.docker_compose.compose_wrap_gen___49", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef_docker_compose___compose_wrap_gen___3_49_____next__(arg___mypyc_self__);
-    return retval;
+                                            
+                                            PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                PyObject *obj___mypyc_self__ = self;
+                                                static const char * const kwlist[] = {0};
+                                                static CPyArg_Parser parser = {":__next__", kwlist, 0};
+                                                if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                                                    return NULL;
+                                                }
+                                                PyObject *arg___mypyc_self__;
+                                                if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_docker_compose___compose_wrap_gen___3_49))
+                                                    arg___mypyc_self__ = obj___mypyc_self__;
+                                                else {
+                                                    CPy_TypeError("eth_portfolio_scripts.docker.docker_compose.compose_wrap_gen___49", obj___mypyc_self__); 
+                                                    goto fail;
+                                                }
+                                                PyObject *retval = CPyDef_docker_compose___compose_wrap_gen___3_49_____next__(arg___mypyc_self__);
+                                                return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "__next__", -1, CPyStatic_docker_compose___globals);
-    return NULL;
-}
-
+                                                CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "__next__", -1, CPyStatic_docker_compose___globals);
+                                                return NULL;
+                                            }
+                                            
 PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -22535,56 +23202,56 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"arg", 0};
-    static CPyArg_Parser parser = {"O:send", kwlist, 0};
-    PyObject *obj_arg;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_docker_compose___compose_wrap_gen___3_49))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio_scripts.docker.docker_compose.compose_wrap_gen___49", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_arg = obj_arg;
-    PyObject *retval = CPyDef_docker_compose___compose_wrap_gen___3_49___send(arg___mypyc_self__, arg_arg);
-    return retval;
+                                            
+                                            PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                PyObject *obj___mypyc_self__ = self;
+                                                static const char * const kwlist[] = {"arg", 0};
+                                                static CPyArg_Parser parser = {"O:send", kwlist, 0};
+                                                PyObject *obj_arg;
+                                                if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
+                                                    return NULL;
+                                                }
+                                                PyObject *arg___mypyc_self__;
+                                                if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_docker_compose___compose_wrap_gen___3_49))
+                                                    arg___mypyc_self__ = obj___mypyc_self__;
+                                                else {
+                                                    CPy_TypeError("eth_portfolio_scripts.docker.docker_compose.compose_wrap_gen___49", obj___mypyc_self__); 
+                                                    goto fail;
+                                                }
+                                                PyObject *arg_arg = obj_arg;
+                                                PyObject *retval = CPyDef_docker_compose___compose_wrap_gen___3_49___send(arg___mypyc_self__, arg_arg);
+                                                return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "send", -1, CPyStatic_docker_compose___globals);
-    return NULL;
-}
-
+                                                CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "send", -1, CPyStatic_docker_compose___globals);
+                                                return NULL;
+                                            }
+                                            
 PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49_____iter__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__iter__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_docker_compose___compose_wrap_gen___3_49))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio_scripts.docker.docker_compose.compose_wrap_gen___49", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef_docker_compose___compose_wrap_gen___3_49_____iter__(arg___mypyc_self__);
-    return retval;
+                                            
+                                            PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                PyObject *obj___mypyc_self__ = self;
+                                                static const char * const kwlist[] = {0};
+                                                static CPyArg_Parser parser = {":__iter__", kwlist, 0};
+                                                if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                                                    return NULL;
+                                                }
+                                                PyObject *arg___mypyc_self__;
+                                                if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_docker_compose___compose_wrap_gen___3_49))
+                                                    arg___mypyc_self__ = obj___mypyc_self__;
+                                                else {
+                                                    CPy_TypeError("eth_portfolio_scripts.docker.docker_compose.compose_wrap_gen___49", obj___mypyc_self__); 
+                                                    goto fail;
+                                                }
+                                                PyObject *retval = CPyDef_docker_compose___compose_wrap_gen___3_49_____iter__(arg___mypyc_self__);
+                                                return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "__iter__", -1, CPyStatic_docker_compose___globals);
-    return NULL;
-}
-
+                                                CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "__iter__", -1, CPyStatic_docker_compose___globals);
+                                                return NULL;
+                                            }
+                                            
 PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -22613,44 +23280,44 @@ CPyL8: ;
     CPy_INCREF(cpy_r_traceback);
     goto CPyL4;
 }
-
-PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"type", "value", "traceback", 0};
-    static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
-    PyObject *obj_type;
-    PyObject *obj_value = NULL;
-    PyObject *obj_traceback = NULL;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_docker_compose___compose_wrap_gen___3_49))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio_scripts.docker.docker_compose.compose_wrap_gen___49", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_type = obj_type;
-    PyObject *arg_value;
-    if (obj_value == NULL) {
-        arg_value = NULL;
-    } else {
-        arg_value = obj_value; 
-    }
-    PyObject *arg_traceback;
-    if (obj_traceback == NULL) {
-        arg_traceback = NULL;
-    } else {
-        arg_traceback = obj_traceback; 
-    }
-    PyObject *retval = CPyDef_docker_compose___compose_wrap_gen___3_49___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
-    return retval;
+                                            
+                                            PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                PyObject *obj___mypyc_self__ = self;
+                                                static const char * const kwlist[] = {"type", "value", "traceback", 0};
+                                                static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
+                                                PyObject *obj_type;
+                                                PyObject *obj_value = NULL;
+                                                PyObject *obj_traceback = NULL;
+                                                if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
+                                                    return NULL;
+                                                }
+                                                PyObject *arg___mypyc_self__;
+                                                if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_docker_compose___compose_wrap_gen___3_49))
+                                                    arg___mypyc_self__ = obj___mypyc_self__;
+                                                else {
+                                                    CPy_TypeError("eth_portfolio_scripts.docker.docker_compose.compose_wrap_gen___49", obj___mypyc_self__); 
+                                                    goto fail;
+                                                }
+                                                PyObject *arg_type = obj_type;
+                                                PyObject *arg_value;
+                                                if (obj_value == NULL) {
+                                                    arg_value = NULL;
+                                                } else {
+                                                    arg_value = obj_value; 
+                                                }
+                                                PyObject *arg_traceback;
+                                                if (obj_traceback == NULL) {
+                                                    arg_traceback = NULL;
+                                                } else {
+                                                    arg_traceback = obj_traceback; 
+                                                }
+                                                PyObject *retval = CPyDef_docker_compose___compose_wrap_gen___3_49___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
+                                                return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "throw", -1, CPyStatic_docker_compose___globals);
-    return NULL;
-}
-
+                                                CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "throw", -1, CPyStatic_docker_compose___globals);
+                                                return NULL;
+                                            }
+                                            
 PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49___close(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -22729,54 +23396,54 @@ CPyL13: ;
     CPy_DECREF(cpy_r_r6.f2);
     goto CPyL6;
 }
-
-PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":close", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_docker_compose___compose_wrap_gen___3_49))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio_scripts.docker.docker_compose.compose_wrap_gen___49", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef_docker_compose___compose_wrap_gen___3_49___close(arg___mypyc_self__);
-    return retval;
+                                            
+                                            PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                PyObject *obj___mypyc_self__ = self;
+                                                static const char * const kwlist[] = {0};
+                                                static CPyArg_Parser parser = {":close", kwlist, 0};
+                                                if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                                                    return NULL;
+                                                }
+                                                PyObject *arg___mypyc_self__;
+                                                if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_docker_compose___compose_wrap_gen___3_49))
+                                                    arg___mypyc_self__ = obj___mypyc_self__;
+                                                else {
+                                                    CPy_TypeError("eth_portfolio_scripts.docker.docker_compose.compose_wrap_gen___49", obj___mypyc_self__); 
+                                                    goto fail;
+                                                }
+                                                PyObject *retval = CPyDef_docker_compose___compose_wrap_gen___3_49___close(arg___mypyc_self__);
+                                                return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "close", -1, CPyStatic_docker_compose___globals);
-    return NULL;
-}
-
+                                                CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "close", -1, CPyStatic_docker_compose___globals);
+                                                return NULL;
+                                            }
+                                            
 PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49_____await__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__await__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_docker_compose___compose_wrap_gen___3_49))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio_scripts.docker.docker_compose.compose_wrap_gen___49", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef_docker_compose___compose_wrap_gen___3_49_____await__(arg___mypyc_self__);
-    return retval;
+                                            
+                                            PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                PyObject *obj___mypyc_self__ = self;
+                                                static const char * const kwlist[] = {0};
+                                                static CPyArg_Parser parser = {":__await__", kwlist, 0};
+                                                if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                                                    return NULL;
+                                                }
+                                                PyObject *arg___mypyc_self__;
+                                                if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_docker_compose___compose_wrap_gen___3_49))
+                                                    arg___mypyc_self__ = obj___mypyc_self__;
+                                                else {
+                                                    CPy_TypeError("eth_portfolio_scripts.docker.docker_compose.compose_wrap_gen___49", obj___mypyc_self__); 
+                                                    goto fail;
+                                                }
+                                                PyObject *retval = CPyDef_docker_compose___compose_wrap_gen___3_49_____await__(arg___mypyc_self__);
+                                                return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "__await__", -1, CPyStatic_docker_compose___globals);
-    return NULL;
-}
-
+                                                CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "__await__", -1, CPyStatic_docker_compose___globals);
+                                                return NULL;
+                                            }
+                                            
 PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____call__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_args, PyObject *cpy_r_kwargs) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -22860,52 +23527,53 @@ CPyL11: ;
     CPy_DecRef(cpy_r_r5);
     goto CPyL8;
 }
-
-PyObject *CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____call__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {"%:__call__", kwlist, 0};
-    PyObject *obj_args;
-    PyObject *obj_kwargs;
-    if (!CPyArg_ParseStackAndKeywords(args, PyVectorcall_NARGS(nargs), kwnames, &parser, &obj_args, &obj_kwargs)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__ = obj___mypyc_self__;
-    PyObject *arg_args = obj_args;
-    PyObject *arg_kwargs = obj_kwargs;
-    PyObject *retval = CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____call__(arg___mypyc_self__, arg_args, arg_kwargs);
-    CPy_DECREF(obj_args);
-    CPy_DECREF(obj_kwargs);
-    return retval;
+                                            
+                                            PyObject *CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____call__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                PyObject *obj___mypyc_self__ = self;
+                                                static const char * const kwlist[] = {0};
+                                                static CPyArg_Parser parser = {"%:__call__", kwlist, 0};
+                                                PyObject *obj_args;
+                                                PyObject *obj_kwargs;
+                                                if (!CPyArg_ParseStackAndKeywords(args, PyVectorcall_NARGS(nargs), kwnames, &parser, &obj_args, &obj_kwargs)) {
+                                                    return NULL;
+                                                }
+                                                PyObject *arg___mypyc_self__ = obj___mypyc_self__;
+                                                PyObject *arg_args = obj_args;
+                                                PyObject *arg_kwargs = obj_kwargs;
+                                                PyObject *retval = CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____call__(arg___mypyc_self__, arg_args, arg_kwargs);
+                                                CPy_DECREF(obj_args);
+                                                CPy_DECREF(obj_kwargs);
+                                                return retval;
 fail: ;
-    CPy_DECREF(obj_args);
-    CPy_DECREF(obj_kwargs);
-    CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-    return NULL;
-}
-
+                                                CPy_DECREF(obj_args);
+                                                CPy_DECREF(obj_kwargs);
+                                                CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "compose_wrap", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+                                                return NULL;
+                                            }
+                                            
 PyObject *CPyDef_docker_compose___ensure_containers(PyObject *cpy_r_fn) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
     PyObject *cpy_r_r2;
     char cpy_r_r3;
-    PyObject *cpy_r_r4;
+    char cpy_r_r4;
     PyObject *cpy_r_r5;
     PyObject *cpy_r_r6;
     PyObject *cpy_r_r7;
-    PyObject **cpy_r_r9;
-    PyObject *cpy_r_r10;
-    PyObject **cpy_r_r12;
-    PyObject *cpy_r_r13;
+    PyObject *cpy_r_r8;
+    PyObject **cpy_r_r10;
+    PyObject *cpy_r_r11;
+    PyObject **cpy_r_r13;
     PyObject *cpy_r_r14;
     PyObject *cpy_r_r15;
-    int32_t cpy_r_r16;
-    char cpy_r_r17;
-    PyObject *cpy_r_r18;
+    PyObject *cpy_r_r16;
+    int32_t cpy_r_r17;
+    char cpy_r_r18;
+    PyObject *cpy_r_r19;
     cpy_r_r0 = CPyDef_docker_compose___ensure_containers_env();
     if (unlikely(cpy_r_r0 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "ensure_containers", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL10;
+        goto CPyL11;
     }
     CPy_INCREF(cpy_r_fn);
     if (((eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *)cpy_r_r0)->_fn != NULL) {
@@ -22915,12 +23583,12 @@ PyObject *CPyDef_docker_compose___ensure_containers(PyObject *cpy_r_fn) {
     cpy_r_r1 = 1;
     if (unlikely(!cpy_r_r1)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "ensure_containers", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL11;
+        goto CPyL12;
     }
     cpy_r_r2 = CPyDef_docker_compose___compose_wrap_ensure_containers_obj();
     if (unlikely(cpy_r_r2 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "ensure_containers", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL11;
+        goto CPyL12;
     }
     CPy_INCREF_NO_IMM(cpy_r_r0);
     if (((eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *)cpy_r_r2)->___mypyc_env__ != NULL) {
@@ -22930,93 +23598,98 @@ PyObject *CPyDef_docker_compose___ensure_containers(PyObject *cpy_r_fn) {
     cpy_r_r3 = 1;
     if (unlikely(!cpy_r_r3)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "ensure_containers", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL12;
+        goto CPyL13;
     }
-    cpy_r_r4 = ((eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *)cpy_r_r0)->_fn;
-    if (unlikely(cpy_r_r4 == NULL)) {
+    cpy_r_r4 = CPyDef_docker_compose___compose_wrap_ensure_containers_obj_coroutine_setup(cpy_r_r2);
+    if (unlikely(cpy_r_r4 == 2)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "ensure_containers", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+        goto CPyL13;
+    }
+    cpy_r_r5 = ((eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *)cpy_r_r0)->_fn;
+    if (unlikely(cpy_r_r5 == NULL)) {
         PyErr_SetString(PyExc_AttributeError, "attribute 'fn' of 'ensure_containers_env' undefined");
     } else {
-        CPy_INCREF(cpy_r_r4);
+        CPy_INCREF(cpy_r_r5);
     }
     CPy_DECREF_NO_IMM(cpy_r_r0);
-    if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "ensure_containers", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL13;
-    }
-CPyL5: ;
-    cpy_r_r5 = CPyStatic_docker_compose___globals;
-    cpy_r_r6 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'wraps' */
-    cpy_r_r7 = CPyDict_GetItem(cpy_r_r5, cpy_r_r6);
-    if (unlikely(cpy_r_r7 == NULL)) {
+    if (unlikely(cpy_r_r5 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "ensure_containers", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
         goto CPyL14;
     }
-    PyObject *cpy_r_r8[1] = {cpy_r_r4};
-    cpy_r_r9 = (PyObject **)&cpy_r_r8;
-    cpy_r_r10 = PyObject_Vectorcall(cpy_r_r7, cpy_r_r9, 1, 0);
-    CPy_DECREF(cpy_r_r7);
-    if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "ensure_containers", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL14;
-    }
-    CPy_DECREF(cpy_r_r4);
-    PyObject *cpy_r_r11[1] = {cpy_r_r2};
-    cpy_r_r12 = (PyObject **)&cpy_r_r11;
-    cpy_r_r13 = PyObject_Vectorcall(cpy_r_r10, cpy_r_r12, 1, 0);
-    CPy_DECREF(cpy_r_r10);
-    if (unlikely(cpy_r_r13 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "ensure_containers", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL13;
-    }
-    CPy_DECREF_NO_IMM(cpy_r_r2);
-    CPy_INCREF(cpy_r_r13);
-    cpy_r_r14 = CPyStatic_docker_compose___globals;
-    cpy_r_r15 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'compose_wrap' */
-    cpy_r_r16 = PyDict_SetItem(cpy_r_r14, cpy_r_r15, cpy_r_r13);
-    CPy_DECREF(cpy_r_r13);
-    cpy_r_r17 = cpy_r_r16 >= 0;
-    if (unlikely(!cpy_r_r17)) {
+CPyL6: ;
+    cpy_r_r6 = CPyStatic_docker_compose___globals;
+    cpy_r_r7 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'wraps' */
+    cpy_r_r8 = CPyDict_GetItem(cpy_r_r6, cpy_r_r7);
+    if (unlikely(cpy_r_r8 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "ensure_containers", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
         goto CPyL15;
     }
-    return cpy_r_r13;
-CPyL10: ;
-    cpy_r_r18 = NULL;
-    return cpy_r_r18;
+    PyObject *cpy_r_r9[1] = {cpy_r_r5};
+    cpy_r_r10 = (PyObject **)&cpy_r_r9;
+    cpy_r_r11 = PyObject_Vectorcall(cpy_r_r8, cpy_r_r10, 1, 0);
+    CPy_DECREF(cpy_r_r8);
+    if (unlikely(cpy_r_r11 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "ensure_containers", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+        goto CPyL15;
+    }
+    CPy_DECREF(cpy_r_r5);
+    PyObject *cpy_r_r12[1] = {cpy_r_r2};
+    cpy_r_r13 = (PyObject **)&cpy_r_r12;
+    cpy_r_r14 = PyObject_Vectorcall(cpy_r_r11, cpy_r_r13, 1, 0);
+    CPy_DECREF(cpy_r_r11);
+    if (unlikely(cpy_r_r14 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "ensure_containers", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+        goto CPyL14;
+    }
+    CPy_DECREF_NO_IMM(cpy_r_r2);
+    CPy_INCREF(cpy_r_r14);
+    cpy_r_r15 = CPyStatic_docker_compose___globals;
+    cpy_r_r16 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'compose_wrap' */
+    cpy_r_r17 = PyDict_SetItem(cpy_r_r15, cpy_r_r16, cpy_r_r14);
+    CPy_DECREF(cpy_r_r14);
+    cpy_r_r18 = cpy_r_r17 >= 0;
+    if (unlikely(!cpy_r_r18)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "ensure_containers", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+        goto CPyL16;
+    }
+    return cpy_r_r14;
 CPyL11: ;
-    CPy_DecRef(cpy_r_r0);
-    goto CPyL10;
+    cpy_r_r19 = NULL;
+    return cpy_r_r19;
 CPyL12: ;
     CPy_DecRef(cpy_r_r0);
-    CPy_DecRef(cpy_r_r2);
-    goto CPyL10;
+    goto CPyL11;
 CPyL13: ;
+    CPy_DecRef(cpy_r_r0);
     CPy_DecRef(cpy_r_r2);
-    goto CPyL10;
+    goto CPyL11;
 CPyL14: ;
     CPy_DecRef(cpy_r_r2);
-    CPy_DecRef(cpy_r_r4);
-    goto CPyL10;
+    goto CPyL11;
 CPyL15: ;
-    CPy_DecRef(cpy_r_r13);
-    goto CPyL10;
+    CPy_DecRef(cpy_r_r2);
+    CPy_DecRef(cpy_r_r5);
+    goto CPyL11;
+CPyL16: ;
+    CPy_DecRef(cpy_r_r14);
+    goto CPyL11;
 }
-
-PyObject *CPyPy_docker_compose___ensure_containers(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"fn", 0};
-    static CPyArg_Parser parser = {"O:ensure_containers", kwlist, 0};
-    PyObject *obj_fn;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_fn)) {
-        return NULL;
-    }
-    PyObject *arg_fn = obj_fn;
-    PyObject *retval = CPyDef_docker_compose___ensure_containers(arg_fn);
-    return retval;
+                                            
+                                            PyObject *CPyPy_docker_compose___ensure_containers(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                static const char * const kwlist[] = {"fn", 0};
+                                                static CPyArg_Parser parser = {"O:ensure_containers", kwlist, 0};
+                                                PyObject *obj_fn;
+                                                if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_fn)) {
+                                                    return NULL;
+                                                }
+                                                PyObject *arg_fn = obj_fn;
+                                                PyObject *retval = CPyDef_docker_compose___ensure_containers(arg_fn);
+                                                return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "ensure_containers", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-    return NULL;
-}
-
+                                                CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "ensure_containers", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+                                                return NULL;
+                                            }
+                                            
 char CPyDef_docker_compose____print_notice(PyObject *cpy_r_doing, PyObject *cpy_r_services) {
     CPyPtr cpy_r_r0;
     int64_t cpy_r_r1;
@@ -23082,7 +23755,7 @@ char CPyDef_docker_compose____print_notice(PyObject *cpy_r_doing, PyObject *cpy_
     PyObject **cpy_r_r65;
     PyObject *cpy_r_r66;
     char cpy_r_r67;
-    cpy_r_r0 = (CPyPtr)&((PyVarObject *)cpy_r_services)->ob_size;
+    cpy_r_r0 = (CPyPtr)((CPyPtr)cpy_r_services + offsetof(PyVarObject, ob_size));
     cpy_r_r1 = *(int64_t *)cpy_r_r0;
     cpy_r_r2 = cpy_r_r1 << 1;
     cpy_r_r3 = cpy_r_r2 == 0;
@@ -23113,7 +23786,7 @@ CPyL4: ;
     CPy_DECREF(cpy_r_r5);
     goto CPyL29;
 CPyL5: ;
-    cpy_r_r12 = (CPyPtr)&((PyVarObject *)cpy_r_services)->ob_size;
+    cpy_r_r12 = (CPyPtr)((CPyPtr)cpy_r_services + offsetof(PyVarObject, ob_size));
     cpy_r_r13 = *(int64_t *)cpy_r_r12;
     cpy_r_r14 = cpy_r_r13 << 1;
     cpy_r_r15 = cpy_r_r14 == 2;
@@ -23180,7 +23853,7 @@ CPyL10: ;
     CPy_DECREF(cpy_r_r20);
     goto CPyL29;
 CPyL11: ;
-    cpy_r_r27 = (CPyPtr)&((PyVarObject *)cpy_r_services)->ob_size;
+    cpy_r_r27 = (CPyPtr)((CPyPtr)cpy_r_services + offsetof(PyVarObject, ob_size));
     cpy_r_r28 = *(int64_t *)cpy_r_r27;
     cpy_r_r29 = cpy_r_r28 << 1;
     cpy_r_r30 = cpy_r_r29 == 4;
@@ -23277,7 +23950,7 @@ CPyL17: ;
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "_print_notice", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
         goto CPyL30;
     }
-    cpy_r_r48 = (CPyPtr)&((PyVarObject *)cpy_r_r47)->ob_size;
+    cpy_r_r48 = (CPyPtr)((CPyPtr)cpy_r_r47 + offsetof(PyVarObject, ob_size));
     cpy_r_r49 = *(int64_t *)cpy_r_r48;
     cpy_r_r50 = cpy_r_r49 << 1;
     cpy_r_r51 = (Py_ssize_t)2 <= (Py_ssize_t)cpy_r_r50;
@@ -23379,41 +24052,41 @@ CPyL41: ;
     CPy_DECREF(cpy_r_r66);
     goto CPyL28;
 }
-
-PyObject *CPyPy_docker_compose____print_notice(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"doing", "services", 0};
-    static CPyArg_Parser parser = {"OO:_print_notice", kwlist, 0};
-    PyObject *obj_doing;
-    PyObject *obj_services;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_doing, &obj_services)) {
-        return NULL;
-    }
-    PyObject *arg_doing;
-    if (likely(PyUnicode_Check(obj_doing)))
-        arg_doing = obj_doing;
-    else {
-        CPy_TypeError("str", obj_doing); 
-        goto fail;
-    }
-    PyObject * arg_services;
-    if (likely(PyTuple_Check(obj_services)))
-        arg_services = obj_services;
-    else {
-        CPy_TypeError("tuple", obj_services); 
-        goto fail;
-    }
-    char retval = CPyDef_docker_compose____print_notice(arg_doing, arg_services);
-    if (retval == 2) {
-        return NULL;
-    }
-    PyObject *retbox = Py_None;
-    CPy_INCREF(retbox);
-    return retbox;
+                                            
+                                            PyObject *CPyPy_docker_compose____print_notice(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                static const char * const kwlist[] = {"doing", "services", 0};
+                                                static CPyArg_Parser parser = {"OO:_print_notice", kwlist, 0};
+                                                PyObject *obj_doing;
+                                                PyObject *obj_services;
+                                                if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_doing, &obj_services)) {
+                                                    return NULL;
+                                                }
+                                                PyObject *arg_doing;
+                                                if (likely(PyUnicode_Check(obj_doing)))
+                                                    arg_doing = obj_doing;
+                                                else {
+                                                    CPy_TypeError("str", obj_doing); 
+                                                    goto fail;
+                                                }
+                                                PyObject * arg_services;
+                                                if (likely(PyTuple_Check(obj_services)))
+                                                    arg_services = obj_services;
+                                                else {
+                                                    CPy_TypeError("tuple", obj_services); 
+                                                    goto fail;
+                                                }
+                                                char retval = CPyDef_docker_compose____print_notice(arg_doing, arg_services);
+                                                if (retval == 2) {
+                                                    return NULL;
+                                                }
+                                                PyObject *retbox = Py_None;
+                                                CPy_INCREF(retbox);
+                                                return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "_print_notice", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-    return NULL;
-}
-
+                                                CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "_print_notice", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+                                                return NULL;
+                                            }
+                                            
 char CPyDef_docker_compose____exec_command(PyObject *cpy_r_command, PyObject *cpy_r_compose_file, PyObject *cpy_r_compose_options) {
     PyObject *cpy_r_r0;
     char cpy_r_r1;
@@ -23727,53 +24400,53 @@ CPyL54: ;
     CPy_DecRef(cpy_r_r24.f2);
     goto CPyL31;
 }
-
-PyObject *CPyPy_docker_compose____exec_command(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"command", "compose_file", "compose_options", 0};
-    static CPyArg_Parser parser = {"O|$OO:_exec_command", kwlist, 0};
-    PyObject *obj_command;
-    PyObject *obj_compose_file = NULL;
-    PyObject *obj_compose_options = NULL;
-    if (!CPyArg_ParseStackAndKeywords(args, nargs, kwnames, &parser, &obj_command, &obj_compose_file, &obj_compose_options)) {
-        return NULL;
-    }
-    PyObject *arg_command;
-    if (likely(PyList_Check(obj_command)))
-        arg_command = obj_command;
-    else {
-        CPy_TypeError("list", obj_command); 
-        goto fail;
-    }
-    PyObject *arg_compose_file;
-    if (obj_compose_file == NULL) {
-        arg_compose_file = NULL;
-    } else if (likely(PyUnicode_Check(obj_compose_file)))
-        arg_compose_file = obj_compose_file;
-    else {
-        CPy_TypeError("str", obj_compose_file); 
-        goto fail;
-    }
-    PyObject * arg_compose_options;
-    if (obj_compose_options == NULL) {
-        arg_compose_options = NULL;
-    } else if (likely(PyTuple_Check(obj_compose_options)))
-        arg_compose_options = obj_compose_options;
-    else {
-        CPy_TypeError("tuple", obj_compose_options); 
-        goto fail;
-    }
-    char retval = CPyDef_docker_compose____exec_command(arg_command, arg_compose_file, arg_compose_options);
-    if (retval == 2) {
-        return NULL;
-    }
-    PyObject *retbox = Py_None;
-    CPy_INCREF(retbox);
-    return retbox;
+                                            
+                                            PyObject *CPyPy_docker_compose____exec_command(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                static const char * const kwlist[] = {"command", "compose_file", "compose_options", 0};
+                                                static CPyArg_Parser parser = {"O|$OO:_exec_command", kwlist, 0};
+                                                PyObject *obj_command;
+                                                PyObject *obj_compose_file = NULL;
+                                                PyObject *obj_compose_options = NULL;
+                                                if (!CPyArg_ParseStackAndKeywords(args, nargs, kwnames, &parser, &obj_command, &obj_compose_file, &obj_compose_options)) {
+                                                    return NULL;
+                                                }
+                                                PyObject *arg_command;
+                                                if (likely(PyList_Check(obj_command)))
+                                                    arg_command = obj_command;
+                                                else {
+                                                    CPy_TypeError("list", obj_command); 
+                                                    goto fail;
+                                                }
+                                                PyObject *arg_compose_file;
+                                                if (obj_compose_file == NULL) {
+                                                    arg_compose_file = NULL;
+                                                } else if (likely(PyUnicode_Check(obj_compose_file)))
+                                                    arg_compose_file = obj_compose_file;
+                                                else {
+                                                    CPy_TypeError("str", obj_compose_file); 
+                                                    goto fail;
+                                                }
+                                                PyObject * arg_compose_options;
+                                                if (obj_compose_options == NULL) {
+                                                    arg_compose_options = NULL;
+                                                } else if (likely(PyTuple_Check(obj_compose_options)))
+                                                    arg_compose_options = obj_compose_options;
+                                                else {
+                                                    CPy_TypeError("tuple", obj_compose_options); 
+                                                    goto fail;
+                                                }
+                                                char retval = CPyDef_docker_compose____exec_command(arg_command, arg_compose_file, arg_compose_options);
+                                                if (retval == 2) {
+                                                    return NULL;
+                                                }
+                                                PyObject *retbox = Py_None;
+                                                CPy_INCREF(retbox);
+                                                return retbox;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "_exec_command", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-    return NULL;
-}
-
+                                                CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "_exec_command", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+                                                return NULL;
+                                            }
+                                            
 char CPyDef_docker_compose_____top_level__(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -23814,59 +24487,73 @@ char CPyDef_docker_compose_____top_level__(void) {
     PyObject *cpy_r_r38;
     PyObject *cpy_r_r39;
     PyObject *cpy_r_r40;
-    PyObject *cpy_r_r41;
-    PyObject *cpy_r_r42;
-    PyObject *cpy_r_r43;
-    PyObject *cpy_r_r44;
+    char cpy_r_r41;
+    void *cpy_r_r42;
+    void *cpy_r_r43;
+    PyObject **cpy_r_r44;
     PyObject *cpy_r_r45;
     PyObject *cpy_r_r46;
     PyObject *cpy_r_r47;
     PyObject *cpy_r_r48;
     PyObject *cpy_r_r49;
-    PyObject **cpy_r_r51;
+    PyObject *cpy_r_r50;
+    PyObject *cpy_r_r51;
     PyObject *cpy_r_r52;
     PyObject *cpy_r_r53;
     PyObject *cpy_r_r54;
-    int32_t cpy_r_r55;
-    char cpy_r_r56;
+    PyObject *cpy_r_r55;
+    PyObject *cpy_r_r56;
     PyObject *cpy_r_r57;
     PyObject *cpy_r_r58;
     PyObject *cpy_r_r59;
     PyObject *cpy_r_r60;
     PyObject *cpy_r_r61;
     PyObject *cpy_r_r62;
-    PyObject **cpy_r_r64;
-    PyObject *cpy_r_r65;
+    PyObject *cpy_r_r63;
+    PyObject **cpy_r_r65;
     PyObject *cpy_r_r66;
     PyObject *cpy_r_r67;
-    PyObject **cpy_r_r69;
-    PyObject *cpy_r_r70;
+    PyObject *cpy_r_r68;
+    int32_t cpy_r_r69;
+    char cpy_r_r70;
     PyObject *cpy_r_r71;
     PyObject *cpy_r_r72;
     PyObject *cpy_r_r73;
-    int32_t cpy_r_r74;
-    char cpy_r_r75;
+    PyObject *cpy_r_r74;
+    PyObject *cpy_r_r75;
     PyObject *cpy_r_r76;
-    PyObject *cpy_r_r77;
-    PyObject *cpy_r_r78;
+    PyObject **cpy_r_r78;
     PyObject *cpy_r_r79;
-    PyObject **cpy_r_r81;
-    PyObject *cpy_r_r82;
-    PyObject *cpy_r_r83;
+    PyObject *cpy_r_r80;
+    PyObject *cpy_r_r81;
+    PyObject **cpy_r_r83;
     PyObject *cpy_r_r84;
-    int32_t cpy_r_r85;
-    char cpy_r_r86;
+    PyObject *cpy_r_r85;
+    PyObject *cpy_r_r86;
     PyObject *cpy_r_r87;
-    PyObject *cpy_r_r88;
-    PyObject *cpy_r_r89;
+    int32_t cpy_r_r88;
+    char cpy_r_r89;
     PyObject *cpy_r_r90;
-    PyObject **cpy_r_r92;
+    PyObject *cpy_r_r91;
+    PyObject *cpy_r_r92;
     PyObject *cpy_r_r93;
-    PyObject *cpy_r_r94;
-    PyObject *cpy_r_r95;
-    int32_t cpy_r_r96;
-    char cpy_r_r97;
-    char cpy_r_r98;
+    PyObject **cpy_r_r95;
+    PyObject *cpy_r_r96;
+    PyObject *cpy_r_r97;
+    PyObject *cpy_r_r98;
+    int32_t cpy_r_r99;
+    char cpy_r_r100;
+    PyObject *cpy_r_r101;
+    PyObject *cpy_r_r102;
+    PyObject *cpy_r_r103;
+    PyObject *cpy_r_r104;
+    PyObject **cpy_r_r106;
+    PyObject *cpy_r_r107;
+    PyObject *cpy_r_r108;
+    PyObject *cpy_r_r109;
+    int32_t cpy_r_r110;
+    char cpy_r_r111;
+    char cpy_r_r112;
     cpy_r_r0 = CPyModule_builtins;
     cpy_r_r1 = (PyObject *)&_Py_NoneStruct;
     cpy_r_r2 = cpy_r_r0 != cpy_r_r1;
@@ -23874,8 +24561,8 @@ char CPyDef_docker_compose_____top_level__(void) {
     cpy_r_r3 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'builtins' */
     cpy_r_r4 = PyImport_Import(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", -1, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+        goto CPyL34;
     }
     CPyModule_builtins = cpy_r_r4;
     CPy_INCREF(CPyModule_builtins);
@@ -23891,14 +24578,14 @@ CPyL3: ;
     cpy_r_r12 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts/docker/docker_compose.py' */
     cpy_r_r13 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '<module>' */
     cpy_r_r14 = CPyImport_ImportMany(cpy_r_r10, cpy_r_r7, cpy_r_r11, cpy_r_r12, cpy_r_r13, cpy_r_r9);
-    if (!cpy_r_r14) goto CPyL29;
+    if (!cpy_r_r14) goto CPyL34;
     cpy_r_r15 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('Callable',) */
     cpy_r_r16 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'collections.abc' */
     cpy_r_r17 = CPyStatic_docker_compose___globals;
     cpy_r_r18 = CPyImport_ImportFromMany(cpy_r_r16, cpy_r_r15, cpy_r_r15, cpy_r_r17);
     if (unlikely(cpy_r_r18 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        goto CPyL34;
     }
     CPyModule_collections___abc = cpy_r_r18;
     CPy_INCREF(CPyModule_collections___abc);
@@ -23909,7 +24596,7 @@ CPyL3: ;
     cpy_r_r22 = CPyImport_ImportFromMany(cpy_r_r20, cpy_r_r19, cpy_r_r19, cpy_r_r21);
     if (unlikely(cpy_r_r22 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        goto CPyL34;
     }
     CPyModule_functools = cpy_r_r22;
     CPy_INCREF(CPyModule_functools);
@@ -23920,7 +24607,7 @@ CPyL3: ;
     cpy_r_r26 = CPyImport_ImportFromMany(cpy_r_r24, cpy_r_r23, cpy_r_r23, cpy_r_r25);
     if (unlikely(cpy_r_r26 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        goto CPyL34;
     }
     CPyModule_importlib = cpy_r_r26;
     CPy_INCREF(CPyModule_importlib);
@@ -23931,7 +24618,7 @@ CPyL3: ;
     cpy_r_r30 = CPyImport_ImportFromMany(cpy_r_r28, cpy_r_r27, cpy_r_r27, cpy_r_r29);
     if (unlikely(cpy_r_r30 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        goto CPyL34;
     }
     CPyModule_subprocess = cpy_r_r30;
     CPy_INCREF(CPyModule_subprocess);
@@ -23942,7 +24629,7 @@ CPyL3: ;
     cpy_r_r34 = CPyImport_ImportFromMany(cpy_r_r32, cpy_r_r31, cpy_r_r31, cpy_r_r33);
     if (unlikely(cpy_r_r34 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        goto CPyL34;
     }
     CPyModule_typing = cpy_r_r34;
     CPy_INCREF(CPyModule_typing);
@@ -23953,472 +24640,550 @@ CPyL3: ;
     cpy_r_r38 = CPyImport_ImportFromMany(cpy_r_r36, cpy_r_r35, cpy_r_r35, cpy_r_r37);
     if (unlikely(cpy_r_r38 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        goto CPyL34;
     }
     CPyModule_typing_extensions = cpy_r_r38;
     CPy_INCREF(CPyModule_typing_extensions);
     CPy_DECREF(cpy_r_r38);
-    cpy_r_r39 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('check_system',) */
-    cpy_r_r40 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts.docker.check' */
-    cpy_r_r41 = CPyStatic_docker_compose___globals;
-    cpy_r_r42 = CPyImport_ImportFromMany(cpy_r_r40, cpy_r_r39, cpy_r_r39, cpy_r_r41);
-    if (unlikely(cpy_r_r42 == NULL)) {
+    cpy_r_r39 = CPyModule_eth_portfolio_scripts___docker___check;
+    cpy_r_r40 = (PyObject *)&_Py_NoneStruct;
+    cpy_r_r41 = cpy_r_r39 != cpy_r_r40;
+    if (cpy_r_r41) goto CPyL15;
+    cpy_r_r42 = CPyInitOnly_eth_portfolio_scripts___docker___check;
+    cpy_r_r43 = CPyExec_eth_portfolio_scripts___docker___check;
+    cpy_r_r44 = (PyObject **)&CPyModule_eth_portfolio_scripts___docker___check__internal;
+    cpy_r_r45 = PyImport_GetModuleDict();
+    cpy_r_r46 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio__mypyc' */
+    cpy_r_r47 = CPyDict_GetItem(cpy_r_r45, cpy_r_r46);
+    if (unlikely(cpy_r_r47 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        goto CPyL34;
     }
-    CPyModule_eth_portfolio_scripts___docker___check = cpy_r_r42;
-    CPy_INCREF(CPyModule_eth_portfolio_scripts___docker___check);
-    CPy_DECREF(cpy_r_r42);
-    cpy_r_r43 = CPyStatic_docker_compose___globals;
-    cpy_r_r44 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '__name__' */
-    cpy_r_r45 = CPyDict_GetItem(cpy_r_r43, cpy_r_r44);
-    if (unlikely(cpy_r_r45 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
-    }
-    if (likely(PyUnicode_Check(cpy_r_r45)))
-        cpy_r_r46 = cpy_r_r45;
-    else {
-        CPy_TypeErrorTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", 12, CPyStatic_docker_compose___globals, "str", cpy_r_r45);
-        goto CPyL29;
-    }
-    cpy_r_r47 = CPyModule_logging;
-    cpy_r_r48 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'getLogger' */
+    cpy_r_r48 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '__file__' */
     cpy_r_r49 = CPyObject_GetAttr(cpy_r_r47, cpy_r_r48);
+    CPy_DECREF(cpy_r_r47);
     if (unlikely(cpy_r_r49 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL30;
+        goto CPyL34;
     }
-    PyObject *cpy_r_r50[1] = {cpy_r_r46};
-    cpy_r_r51 = (PyObject **)&cpy_r_r50;
-    cpy_r_r52 = PyObject_Vectorcall(cpy_r_r49, cpy_r_r51, 1, 0);
+    cpy_r_r50 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '.cpython-313-x86_64-linux-gnu.so' */
+    cpy_r_r51 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts.docker.check' */
+    cpy_r_r52 = CPyImport_ImportNative(cpy_r_r51, cpy_r_r42, cpy_r_r43, cpy_r_r44, cpy_r_r49, cpy_r_r50, 0);
     CPy_DECREF(cpy_r_r49);
     if (unlikely(cpy_r_r52 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL30;
+        goto CPyL34;
     }
-    CPy_DECREF(cpy_r_r46);
-    CPyStatic_docker_compose___logger = cpy_r_r52;
-    CPy_INCREF(CPyStatic_docker_compose___logger);
-    cpy_r_r53 = CPyStatic_docker_compose___globals;
-    cpy_r_r54 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'logger' */
-    cpy_r_r55 = CPyDict_SetItem(cpy_r_r53, cpy_r_r54, cpy_r_r52);
+    CPyModule_eth_portfolio_scripts___docker___check = cpy_r_r52;
+    CPy_INCREF(CPyModule_eth_portfolio_scripts___docker___check);
     CPy_DECREF(cpy_r_r52);
-    cpy_r_r56 = cpy_r_r55 >= 0;
-    if (unlikely(!cpy_r_r56)) {
+CPyL15: ;
+    cpy_r_r53 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('check_system',) */
+    cpy_r_r54 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts.docker.check' */
+    cpy_r_r55 = CPyStatic_docker_compose___globals;
+    cpy_r_r56 = CPyImport_GetNativeAttrs(cpy_r_r54, cpy_r_r53, cpy_r_r53, cpy_r_r55);
+    if (unlikely(cpy_r_r56 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
-    }
-    cpy_r_r57 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts' */
-    cpy_r_r58 = CPyStatic_docker_compose___globals;
-    cpy_r_r59 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'resources' */
-    cpy_r_r60 = CPyDict_GetItem(cpy_r_r58, cpy_r_r59);
-    if (unlikely(cpy_r_r60 == NULL)) {
+        goto CPyL34;
+    } else
+        goto CPyL35;
+CPyL16: ;
+    cpy_r_r57 = CPyStatic_docker_compose___globals;
+    cpy_r_r58 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '__name__' */
+    cpy_r_r59 = CPyDict_GetItem(cpy_r_r57, cpy_r_r58);
+    if (unlikely(cpy_r_r59 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        goto CPyL34;
     }
-    cpy_r_r61 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'files' */
-    cpy_r_r62 = CPyObject_GetAttr(cpy_r_r60, cpy_r_r61);
+    if (likely(PyUnicode_Check(cpy_r_r59)))
+        cpy_r_r60 = cpy_r_r59;
+    else {
+        CPy_TypeErrorTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", 12, CPyStatic_docker_compose___globals, "str", cpy_r_r59);
+        goto CPyL34;
+    }
+    cpy_r_r61 = CPyModule_logging;
+    cpy_r_r62 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'getLogger' */
+    cpy_r_r63 = CPyObject_GetAttr(cpy_r_r61, cpy_r_r62);
+    if (unlikely(cpy_r_r63 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+        goto CPyL36;
+    }
+    PyObject *cpy_r_r64[1] = {cpy_r_r60};
+    cpy_r_r65 = (PyObject **)&cpy_r_r64;
+    cpy_r_r66 = PyObject_Vectorcall(cpy_r_r63, cpy_r_r65, 1, 0);
+    CPy_DECREF(cpy_r_r63);
+    if (unlikely(cpy_r_r66 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+        goto CPyL36;
+    }
     CPy_DECREF(cpy_r_r60);
-    if (unlikely(cpy_r_r62 == NULL)) {
+    CPyStatic_docker_compose___logger = cpy_r_r66;
+    CPy_INCREF(CPyStatic_docker_compose___logger);
+    cpy_r_r67 = CPyStatic_docker_compose___globals;
+    cpy_r_r68 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'logger' */
+    cpy_r_r69 = CPyDict_SetItem(cpy_r_r67, cpy_r_r68, cpy_r_r66);
+    CPy_DECREF(cpy_r_r66);
+    cpy_r_r70 = cpy_r_r69 >= 0;
+    if (unlikely(!cpy_r_r70)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        goto CPyL34;
     }
-    PyObject *cpy_r_r63[1] = {cpy_r_r57};
-    cpy_r_r64 = (PyObject **)&cpy_r_r63;
-    cpy_r_r65 = PyObject_Vectorcall(cpy_r_r62, cpy_r_r64, 1, 0);
-    CPy_DECREF(cpy_r_r62);
-    if (unlikely(cpy_r_r65 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
-    }
-    cpy_r_r66 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'docker/docker-compose.yaml' */
-    cpy_r_r67 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'joinpath' */
-    PyObject *cpy_r_r68[2] = {cpy_r_r65, cpy_r_r66};
-    cpy_r_r69 = (PyObject **)&cpy_r_r68;
-    cpy_r_r70 = PyObject_VectorcallMethod(cpy_r_r67, cpy_r_r69, 9223372036854775810ULL, 0);
-    if (unlikely(cpy_r_r70 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL31;
-    }
-    CPy_DECREF(cpy_r_r65);
-    cpy_r_r71 = PyObject_Str(cpy_r_r70);
-    CPy_DECREF(cpy_r_r70);
-    if (unlikely(cpy_r_r71 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
-    }
-    CPyStatic_docker_compose___COMPOSE_FILE = cpy_r_r71;
-    CPy_INCREF(CPyStatic_docker_compose___COMPOSE_FILE);
+    cpy_r_r71 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts' */
     cpy_r_r72 = CPyStatic_docker_compose___globals;
-    cpy_r_r73 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'COMPOSE_FILE' */
-    cpy_r_r74 = CPyDict_SetItem(cpy_r_r72, cpy_r_r73, cpy_r_r71);
-    CPy_DECREF(cpy_r_r71);
-    cpy_r_r75 = cpy_r_r74 >= 0;
-    if (unlikely(!cpy_r_r75)) {
+    cpy_r_r73 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'resources' */
+    cpy_r_r74 = CPyDict_GetItem(cpy_r_r72, cpy_r_r73);
+    if (unlikely(cpy_r_r74 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        goto CPyL34;
     }
-    cpy_r_r76 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_P' */
-    cpy_r_r77 = CPyStatic_docker_compose___globals;
-    cpy_r_r78 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ParamSpec' */
-    cpy_r_r79 = CPyDict_GetItem(cpy_r_r77, cpy_r_r78);
+    cpy_r_r75 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'files' */
+    cpy_r_r76 = CPyObject_GetAttr(cpy_r_r74, cpy_r_r75);
+    CPy_DECREF(cpy_r_r74);
+    if (unlikely(cpy_r_r76 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+        goto CPyL34;
+    }
+    PyObject *cpy_r_r77[1] = {cpy_r_r71};
+    cpy_r_r78 = (PyObject **)&cpy_r_r77;
+    cpy_r_r79 = PyObject_Vectorcall(cpy_r_r76, cpy_r_r78, 1, 0);
+    CPy_DECREF(cpy_r_r76);
     if (unlikely(cpy_r_r79 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        goto CPyL34;
     }
-    PyObject *cpy_r_r80[1] = {cpy_r_r76};
-    cpy_r_r81 = (PyObject **)&cpy_r_r80;
-    cpy_r_r82 = PyObject_Vectorcall(cpy_r_r79, cpy_r_r81, 1, 0);
+    cpy_r_r80 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'docker/docker-compose.yaml' */
+    cpy_r_r81 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'joinpath' */
+    PyObject *cpy_r_r82[2] = {cpy_r_r79, cpy_r_r80};
+    cpy_r_r83 = (PyObject **)&cpy_r_r82;
+    cpy_r_r84 = PyObject_VectorcallMethod(cpy_r_r81, cpy_r_r83, 9223372036854775810ULL, 0);
+    if (unlikely(cpy_r_r84 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+        goto CPyL37;
+    }
     CPy_DECREF(cpy_r_r79);
-    if (unlikely(cpy_r_r82 == NULL)) {
+    cpy_r_r85 = PyObject_Str(cpy_r_r84);
+    CPy_DECREF(cpy_r_r84);
+    if (unlikely(cpy_r_r85 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        goto CPyL34;
     }
-    cpy_r_r83 = CPyStatic_docker_compose___globals;
-    cpy_r_r84 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_P' */
-    cpy_r_r85 = CPyDict_SetItem(cpy_r_r83, cpy_r_r84, cpy_r_r82);
-    CPy_DECREF(cpy_r_r82);
-    cpy_r_r86 = cpy_r_r85 >= 0;
-    if (unlikely(!cpy_r_r86)) {
+    CPyStatic_docker_compose___COMPOSE_FILE = cpy_r_r85;
+    CPy_INCREF(CPyStatic_docker_compose___COMPOSE_FILE);
+    cpy_r_r86 = CPyStatic_docker_compose___globals;
+    cpy_r_r87 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'COMPOSE_FILE' */
+    cpy_r_r88 = CPyDict_SetItem(cpy_r_r86, cpy_r_r87, cpy_r_r85);
+    CPy_DECREF(cpy_r_r85);
+    cpy_r_r89 = cpy_r_r88 >= 0;
+    if (unlikely(!cpy_r_r89)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        goto CPyL34;
     }
-    cpy_r_r87 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_T' */
-    cpy_r_r88 = CPyStatic_docker_compose___globals;
-    cpy_r_r89 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'TypeVar' */
-    cpy_r_r90 = CPyDict_GetItem(cpy_r_r88, cpy_r_r89);
-    if (unlikely(cpy_r_r90 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
-    }
-    PyObject *cpy_r_r91[1] = {cpy_r_r87};
-    cpy_r_r92 = (PyObject **)&cpy_r_r91;
-    cpy_r_r93 = PyObject_Vectorcall(cpy_r_r90, cpy_r_r92, 1, 0);
-    CPy_DECREF(cpy_r_r90);
+    cpy_r_r90 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_P' */
+    cpy_r_r91 = CPyStatic_docker_compose___globals;
+    cpy_r_r92 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ParamSpec' */
+    cpy_r_r93 = CPyDict_GetItem(cpy_r_r91, cpy_r_r92);
     if (unlikely(cpy_r_r93 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        goto CPyL34;
     }
-    cpy_r_r94 = CPyStatic_docker_compose___globals;
-    cpy_r_r95 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_T' */
-    cpy_r_r96 = CPyDict_SetItem(cpy_r_r94, cpy_r_r95, cpy_r_r93);
+    PyObject *cpy_r_r94[1] = {cpy_r_r90};
+    cpy_r_r95 = (PyObject **)&cpy_r_r94;
+    cpy_r_r96 = PyObject_Vectorcall(cpy_r_r93, cpy_r_r95, 1, 0);
     CPy_DECREF(cpy_r_r93);
-    cpy_r_r97 = cpy_r_r96 >= 0;
-    if (unlikely(!cpy_r_r97)) {
+    if (unlikely(cpy_r_r96 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
-        goto CPyL29;
+        goto CPyL34;
+    }
+    cpy_r_r97 = CPyStatic_docker_compose___globals;
+    cpy_r_r98 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_P' */
+    cpy_r_r99 = CPyDict_SetItem(cpy_r_r97, cpy_r_r98, cpy_r_r96);
+    CPy_DECREF(cpy_r_r96);
+    cpy_r_r100 = cpy_r_r99 >= 0;
+    if (unlikely(!cpy_r_r100)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+        goto CPyL34;
+    }
+    cpy_r_r101 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_T' */
+    cpy_r_r102 = CPyStatic_docker_compose___globals;
+    cpy_r_r103 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'TypeVar' */
+    cpy_r_r104 = CPyDict_GetItem(cpy_r_r102, cpy_r_r103);
+    if (unlikely(cpy_r_r104 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+        goto CPyL34;
+    }
+    PyObject *cpy_r_r105[1] = {cpy_r_r101};
+    cpy_r_r106 = (PyObject **)&cpy_r_r105;
+    cpy_r_r107 = PyObject_Vectorcall(cpy_r_r104, cpy_r_r106, 1, 0);
+    CPy_DECREF(cpy_r_r104);
+    if (unlikely(cpy_r_r107 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+        goto CPyL34;
+    }
+    cpy_r_r108 = CPyStatic_docker_compose___globals;
+    cpy_r_r109 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_T' */
+    cpy_r_r110 = CPyDict_SetItem(cpy_r_r108, cpy_r_r109, cpy_r_r107);
+    CPy_DECREF(cpy_r_r107);
+    cpy_r_r111 = cpy_r_r110 >= 0;
+    if (unlikely(!cpy_r_r111)) {
+        CPy_AddTraceback("eth_portfolio_scripts/docker/docker_compose.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_docker_compose___globals);
+        goto CPyL34;
     }
     return 1;
-CPyL29: ;
-    cpy_r_r98 = 2;
-    return cpy_r_r98;
-CPyL30: ;
-    CPy_DecRef(cpy_r_r46);
-    goto CPyL29;
-CPyL31: ;
-    CPy_DecRef(cpy_r_r65);
-    goto CPyL29;
+CPyL34: ;
+    cpy_r_r112 = 2;
+    return cpy_r_r112;
+CPyL35: ;
+    CPy_DECREF(cpy_r_r56);
+    goto CPyL16;
+CPyL36: ;
+    CPy_DecRef(cpy_r_r60);
+    goto CPyL34;
+CPyL37: ;
+    CPy_DecRef(cpy_r_r79);
+    goto CPyL34;
 }
-
-static PyAsyncMethods eth_portfolio_scripts___balances___export_balances_gen_as_async = {
-    .am_await = CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____await__,
-};
-PyObject *CPyDef_eth_portfolio_scripts___balances_____mypyc__export_balances_gen_setup(PyObject *cpy_r_type);
-PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen(void);
-
-static PyObject *
-eth_portfolio_scripts___balances___export_balances_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-{
-    if (type != CPyType_eth_portfolio_scripts___balances___export_balances_gen) {
-        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-        return NULL;
-    }
-    PyObject *self = CPyDef_eth_portfolio_scripts___balances_____mypyc__export_balances_gen_setup((PyObject*)type);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
-static int
-eth_portfolio_scripts___balances___export_balances_gen_traverse(eth_portfolio_scripts___balances___export_balances_genObject *self, visitproc visit, void *arg)
-{
-    Py_VISIT(self->___mypyc_generator_attribute__args);
-    Py_VISIT(self->___mypyc_generator_attribute__custom_buckets);
-    Py_VISIT(self->___mypyc_generator_attribute__interval);
-    Py_VISIT(self->___mypyc_generator_attribute__portfolio);
-    Py_VISIT(self->___mypyc_generator_attribute__export_start_block);
-    Py_VISIT(self->___mypyc_temp__0);
-    Py_VISIT(self->___mypyc_temp__1.f0);
-    Py_VISIT(self->___mypyc_temp__1.f1);
-    Py_VISIT(self->___mypyc_temp__1.f2);
-    Py_VISIT(self->___mypyc_generator_attribute__start_ts);
-    Py_VISIT(self->___mypyc_generator_attribute__start);
-    Py_VISIT(self->___mypyc_temp__2);
-    Py_VISIT(self->___mypyc_temp__3);
-    Py_VISIT(self->___mypyc_temp__4);
-    Py_VISIT(self->___mypyc_temp__5.f0);
-    Py_VISIT(self->___mypyc_temp__5.f1);
-    Py_VISIT(self->___mypyc_temp__5.f2);
-    Py_VISIT(self->___mypyc_temp__6.f0);
-    Py_VISIT(self->___mypyc_temp__6.f1);
-    Py_VISIT(self->___mypyc_temp__6.f2);
-    Py_VISIT(self->___mypyc_generator_attribute__ts);
-    Py_VISIT(self->___mypyc_temp__7);
-    Py_VISIT(self->___mypyc_temp__8.f0);
-    Py_VISIT(self->___mypyc_temp__8.f1);
-    Py_VISIT(self->___mypyc_temp__8.f2);
-    Py_VISIT(self->___mypyc_temp__9);
-    Py_VISIT(self->___mypyc_temp__10.f0);
-    Py_VISIT(self->___mypyc_temp__10.f1);
-    Py_VISIT(self->___mypyc_temp__10.f2);
-    Py_VISIT(self->___mypyc_temp__11);
-    Py_VISIT(self->___mypyc_temp__12.f0);
-    Py_VISIT(self->___mypyc_temp__12.f1);
-    Py_VISIT(self->___mypyc_temp__12.f2);
-    return 0;
-}
-
-static int
-eth_portfolio_scripts___balances___export_balances_gen_clear(eth_portfolio_scripts___balances___export_balances_genObject *self)
-{
-    Py_CLEAR(self->___mypyc_generator_attribute__args);
-    Py_CLEAR(self->___mypyc_generator_attribute__custom_buckets);
-    Py_CLEAR(self->___mypyc_generator_attribute__interval);
-    Py_CLEAR(self->___mypyc_generator_attribute__portfolio);
-    Py_CLEAR(self->___mypyc_generator_attribute__export_start_block);
-    Py_CLEAR(self->___mypyc_temp__0);
-    Py_CLEAR(self->___mypyc_temp__1.f0);
-    Py_CLEAR(self->___mypyc_temp__1.f1);
-    Py_CLEAR(self->___mypyc_temp__1.f2);
-    Py_CLEAR(self->___mypyc_generator_attribute__start_ts);
-    Py_CLEAR(self->___mypyc_generator_attribute__start);
-    Py_CLEAR(self->___mypyc_temp__2);
-    Py_CLEAR(self->___mypyc_temp__3);
-    Py_CLEAR(self->___mypyc_temp__4);
-    Py_CLEAR(self->___mypyc_temp__5.f0);
-    Py_CLEAR(self->___mypyc_temp__5.f1);
-    Py_CLEAR(self->___mypyc_temp__5.f2);
-    Py_CLEAR(self->___mypyc_temp__6.f0);
-    Py_CLEAR(self->___mypyc_temp__6.f1);
-    Py_CLEAR(self->___mypyc_temp__6.f2);
-    Py_CLEAR(self->___mypyc_generator_attribute__ts);
-    Py_CLEAR(self->___mypyc_temp__7);
-    Py_CLEAR(self->___mypyc_temp__8.f0);
-    Py_CLEAR(self->___mypyc_temp__8.f1);
-    Py_CLEAR(self->___mypyc_temp__8.f2);
-    Py_CLEAR(self->___mypyc_temp__9);
-    Py_CLEAR(self->___mypyc_temp__10.f0);
-    Py_CLEAR(self->___mypyc_temp__10.f1);
-    Py_CLEAR(self->___mypyc_temp__10.f2);
-    Py_CLEAR(self->___mypyc_temp__11);
-    Py_CLEAR(self->___mypyc_temp__12.f0);
-    Py_CLEAR(self->___mypyc_temp__12.f1);
-    Py_CLEAR(self->___mypyc_temp__12.f2);
-    return 0;
-}
-
-static void
-eth_portfolio_scripts___balances___export_balances_gen_dealloc(eth_portfolio_scripts___balances___export_balances_genObject *self)
-{
-    PyObject_GC_UnTrack(self);
-    if (eth_portfolio_scripts___balances___export_balances_gen_free_instance == NULL) {
-        eth_portfolio_scripts___balances___export_balances_gen_free_instance = self;
-        Py_CLEAR(self->___mypyc_generator_attribute__args);
-        Py_CLEAR(self->___mypyc_generator_attribute__custom_buckets);
-        self->___mypyc_next_label__ = -113;
-        Py_CLEAR(self->___mypyc_generator_attribute__interval);
-        Py_CLEAR(self->___mypyc_generator_attribute__portfolio);
-        Py_CLEAR(self->___mypyc_generator_attribute__export_start_block);
-        Py_CLEAR(self->___mypyc_temp__0);
-        Py_CLEAR(self->___mypyc_temp__1.f0);
-        Py_CLEAR(self->___mypyc_temp__1.f1);
-        Py_CLEAR(self->___mypyc_temp__1.f2);
-        Py_CLEAR(self->___mypyc_generator_attribute__start_ts);
-        Py_CLEAR(self->___mypyc_generator_attribute__start);
-        Py_CLEAR(self->___mypyc_temp__2);
-        Py_CLEAR(self->___mypyc_temp__3);
-        Py_CLEAR(self->___mypyc_temp__4);
-        Py_CLEAR(self->___mypyc_temp__5.f0);
-        Py_CLEAR(self->___mypyc_temp__5.f1);
-        Py_CLEAR(self->___mypyc_temp__5.f2);
-        Py_CLEAR(self->___mypyc_temp__6.f0);
-        Py_CLEAR(self->___mypyc_temp__6.f1);
-        Py_CLEAR(self->___mypyc_temp__6.f2);
-        Py_CLEAR(self->___mypyc_generator_attribute__ts);
-        Py_CLEAR(self->___mypyc_temp__7);
-        Py_CLEAR(self->___mypyc_temp__8.f0);
-        Py_CLEAR(self->___mypyc_temp__8.f1);
-        Py_CLEAR(self->___mypyc_temp__8.f2);
-        Py_CLEAR(self->___mypyc_temp__9);
-        Py_CLEAR(self->___mypyc_temp__10.f0);
-        Py_CLEAR(self->___mypyc_temp__10.f1);
-        Py_CLEAR(self->___mypyc_temp__10.f2);
-        Py_CLEAR(self->___mypyc_temp__11);
-        Py_CLEAR(self->___mypyc_temp__12.f0);
-        Py_CLEAR(self->___mypyc_temp__12.f1);
-        Py_CLEAR(self->___mypyc_temp__12.f2);
-        return;
-    }
-    CPy_TRASHCAN_BEGIN(self, eth_portfolio_scripts___balances___export_balances_gen_dealloc)
-    eth_portfolio_scripts___balances___export_balances_gen_clear(self);
-    Py_TYPE(self)->tp_free((PyObject *)self);
-    CPy_TRASHCAN_END(self)
-    done: ;
-}
-
-static CPyVTableItem eth_portfolio_scripts___balances___export_balances_gen_vtable[7];
-static bool
-CPyDef_eth_portfolio_scripts___balances___export_balances_gen_trait_vtable_setup(void)
-{
-    CPyVTableItem eth_portfolio_scripts___balances___export_balances_gen_vtable_scratch[] = {
-        (CPyVTableItem)CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____mypyc_generator_helper__,
-        (CPyVTableItem)CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____next__,
-        (CPyVTableItem)CPyDef_eth_portfolio_scripts___balances___export_balances_gen___send,
-        (CPyVTableItem)CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____iter__,
-        (CPyVTableItem)CPyDef_eth_portfolio_scripts___balances___export_balances_gen___throw,
-        (CPyVTableItem)CPyDef_eth_portfolio_scripts___balances___export_balances_gen___close,
-        (CPyVTableItem)CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____await__,
-    };
-    memcpy(eth_portfolio_scripts___balances___export_balances_gen_vtable, eth_portfolio_scripts___balances___export_balances_gen_vtable_scratch, sizeof(eth_portfolio_scripts___balances___export_balances_gen_vtable));
-    return 1;
-}
-
-static PyMethodDef eth_portfolio_scripts___balances___export_balances_gen_methods[] = {
-    {"__internal_mypyc_setup", (PyCFunction)CPyDef_eth_portfolio_scripts___balances_____mypyc__export_balances_gen_setup, METH_O, NULL},
-    {"__next__",
-     (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____next__,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
-    {"send",
-     (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances_gen___send,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("send($arg)\n--\n\n")},
-    {"__iter__",
-     (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____iter__,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__iter__()\n--\n\n")},
-    {"throw",
-     (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances_gen___throw,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR(NULL)},
-    {"close",
-     (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances_gen___close,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("close()\n--\n\n")},
-    {"__await__",
-     (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____await__,
-     METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__await__()\n--\n\n")},
-    {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
-    {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
-    {NULL}  /* Sentinel */
-};
-
-static PyTypeObject CPyType_eth_portfolio_scripts___balances___export_balances_gen_template_ = {
-    PyVarObject_HEAD_INIT(NULL, 0)
-    .tp_name = "export_balances_gen",
-    .tp_new = eth_portfolio_scripts___balances___export_balances_gen_new,
-    .tp_dealloc = (destructor)eth_portfolio_scripts___balances___export_balances_gen_dealloc,
-    .tp_traverse = (traverseproc)eth_portfolio_scripts___balances___export_balances_gen_traverse,
-    .tp_clear = (inquiry)eth_portfolio_scripts___balances___export_balances_gen_clear,
-    .tp_methods = eth_portfolio_scripts___balances___export_balances_gen_methods,
-    .tp_iter = CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____iter__,
-    .tp_iternext = CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____next__,
-    .tp_as_async = &eth_portfolio_scripts___balances___export_balances_gen_as_async,
-    .tp_basicsize = sizeof(eth_portfolio_scripts___balances___export_balances_genObject),
-    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
-    .tp_doc = PyDoc_STR("export_balances_gen()\n--\n\n"),
-};
-static PyTypeObject *CPyType_eth_portfolio_scripts___balances___export_balances_gen_template = &CPyType_eth_portfolio_scripts___balances___export_balances_gen_template_;
-
-PyObject *CPyDef_eth_portfolio_scripts___balances_____mypyc__export_balances_gen_setup(PyObject *cpy_r_type)
-{
-    PyTypeObject *type = (PyTypeObject*)cpy_r_type;
-    eth_portfolio_scripts___balances___export_balances_genObject *self;
-    if (eth_portfolio_scripts___balances___export_balances_gen_free_instance != NULL) {
-        self = eth_portfolio_scripts___balances___export_balances_gen_free_instance;
-        eth_portfolio_scripts___balances___export_balances_gen_free_instance = NULL;
-        Py_SET_REFCNT(self, 1);
-        PyObject_GC_Track(self);
-        return (PyObject *)self;
-    }
-    self = (eth_portfolio_scripts___balances___export_balances_genObject *)type->tp_alloc(type, 0);
-    if (self == NULL)
-        return NULL;
-    self->vtable = eth_portfolio_scripts___balances___export_balances_gen_vtable;
-    self->___mypyc_next_label__ = -113;
-    self->___mypyc_temp__1 = (tuple_T3OOO) { NULL, NULL, NULL };
-    self->___mypyc_temp__5 = (tuple_T3OOO) { NULL, NULL, NULL };
-    self->___mypyc_temp__6 = (tuple_T3OOO) { NULL, NULL, NULL };
-    self->___mypyc_temp__8 = (tuple_T3OOO) { NULL, NULL, NULL };
-    self->___mypyc_temp__10 = (tuple_T3OOO) { NULL, NULL, NULL };
-    self->___mypyc_temp__12 = (tuple_T3OOO) { NULL, NULL, NULL };
-    return (PyObject *)self;
-}
-
-PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen(void)
-{
-    PyObject *self = CPyDef_eth_portfolio_scripts___balances_____mypyc__export_balances_gen_setup((PyObject *)CPyType_eth_portfolio_scripts___balances___export_balances_gen);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
-static PyMethodDef eth_portfolio_scripts___balancesmodule_methods[] = {
-    {"export_balances", (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("export_balances(args, custom_buckets=None)\n--\n\n") /* docstring */},
-    {NULL, NULL, 0, NULL}
-};
-
-int CPyExec_eth_portfolio_scripts___balances(PyObject *module)
-{
-    PyObject* modname = NULL;
-    modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio_scripts___balances__internal, "__name__");
-    CPyStatic_eth_portfolio_scripts___balances___globals = PyModule_GetDict(CPyModule_eth_portfolio_scripts___balances__internal);
-    if (unlikely(CPyStatic_eth_portfolio_scripts___balances___globals == NULL))
-        goto fail;
-    CPyType_eth_portfolio_scripts___balances___export_balances_gen = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_eth_portfolio_scripts___balances___export_balances_gen_template, NULL, modname);
-    if (unlikely(!CPyType_eth_portfolio_scripts___balances___export_balances_gen))
-        goto fail;
-    CPyDef_eth_portfolio_scripts___balances___export_balances_gen_trait_vtable_setup();
-    if (CPyGlobalsInit() < 0)
-        goto fail;
-    char result = CPyDef_eth_portfolio_scripts___balances_____top_level__();
-    if (result == 2)
-        goto fail;
-    Py_DECREF(modname);
-    return 0;
-    fail:
-    Py_CLEAR(CPyModule_eth_portfolio_scripts___balances__internal);
-    Py_CLEAR(modname);
-    CPy_XDECREF(CPyStatic_eth_portfolio_scripts___balances____UTC);
-    CPyStatic_eth_portfolio_scripts___balances____UTC = NULL;
-    CPy_XDECREF(CPyStatic_eth_portfolio_scripts___balances___create_task);
-    CPyStatic_eth_portfolio_scripts___balances___create_task = NULL;
-    CPy_XDECREF(CPyStatic_eth_portfolio_scripts___balances___yield_to_loop);
-    CPyStatic_eth_portfolio_scripts___balances___yield_to_loop = NULL;
-    Py_CLEAR(CPyType_eth_portfolio_scripts___balances___export_balances_gen);
-    return -1;
-}
-static struct PyModuleDef eth_portfolio_scripts___balancesmodule = {
-    PyModuleDef_HEAD_INIT,
-    "eth_portfolio_scripts.balances",
-    NULL, /* docstring */
-    0,       /* size of per-interpreter state of the module */
-    eth_portfolio_scripts___balancesmodule_methods,
-    NULL,
-};
-
-PyObject *CPyInit_eth_portfolio_scripts___balances(void)
-{
-    if (CPyModule_eth_portfolio_scripts___balances__internal) {
-        Py_INCREF(CPyModule_eth_portfolio_scripts___balances__internal);
-        return CPyModule_eth_portfolio_scripts___balances__internal;
-    }
-    CPyModule_eth_portfolio_scripts___balances__internal = PyModule_Create(&eth_portfolio_scripts___balancesmodule);
-    if (unlikely(CPyModule_eth_portfolio_scripts___balances__internal == NULL))
-        goto fail;
-    if (CPyExec_eth_portfolio_scripts___balances(CPyModule_eth_portfolio_scripts___balances__internal) != 0)
-        goto fail;
-    return CPyModule_eth_portfolio_scripts___balances__internal;
-    fail:
-    return NULL;
-}
-
+                                            
+                                            static PyAsyncMethods eth_portfolio_scripts___balances___export_balances_gen_as_async = {
+                                                .am_await = CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____await__,
+                                            };
+                                            PyObject *CPyDef_eth_portfolio_scripts___balances_____mypyc__export_balances_gen_setup(PyObject *cpy_r_type);
+                                            PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen(void);
+                                            
+                                            static PyObject *
+                                            eth_portfolio_scripts___balances___export_balances_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+                                            {
+                                                if (type != CPyType_eth_portfolio_scripts___balances___export_balances_gen) {
+                                                    PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+                                                    return NULL;
+                                                }
+                                                PyObject *self = CPyDef_eth_portfolio_scripts___balances_____mypyc__export_balances_gen_setup((PyObject*)type);
+                                                if (self == NULL)
+                                                    return NULL;
+                                                return self;
+                                            }
+                                            
+                                            static int
+                                            eth_portfolio_scripts___balances___export_balances_gen_traverse(eth_portfolio_scripts___balances___export_balances_genObject *self, visitproc visit, void *arg)
+                                            {
+                                                Py_VISIT(self->___mypyc_generator_attribute__args);
+                                                Py_VISIT(self->___mypyc_generator_attribute__custom_buckets);
+                                                Py_VISIT(self->___mypyc_generator_attribute__interval);
+                                                Py_VISIT(self->___mypyc_generator_attribute__portfolio);
+                                                Py_VISIT(self->___mypyc_generator_attribute__export_start_block);
+                                                Py_VISIT(self->___mypyc_temp__0);
+                                                Py_VISIT(self->___mypyc_temp__1.f0);
+                                                Py_VISIT(self->___mypyc_temp__1.f1);
+                                                Py_VISIT(self->___mypyc_temp__1.f2);
+                                                Py_VISIT(self->___mypyc_generator_attribute__start_ts);
+                                                Py_VISIT(self->___mypyc_generator_attribute__start);
+                                                Py_VISIT(self->___mypyc_temp__2);
+                                                Py_VISIT(self->___mypyc_temp__3);
+                                                Py_VISIT(self->___mypyc_temp__4);
+                                                Py_VISIT(self->___mypyc_temp__5.f0);
+                                                Py_VISIT(self->___mypyc_temp__5.f1);
+                                                Py_VISIT(self->___mypyc_temp__5.f2);
+                                                Py_VISIT(self->___mypyc_temp__6.f0);
+                                                Py_VISIT(self->___mypyc_temp__6.f1);
+                                                Py_VISIT(self->___mypyc_temp__6.f2);
+                                                Py_VISIT(self->___mypyc_generator_attribute__ts);
+                                                Py_VISIT(self->___mypyc_temp__7);
+                                                Py_VISIT(self->___mypyc_temp__8.f0);
+                                                Py_VISIT(self->___mypyc_temp__8.f1);
+                                                Py_VISIT(self->___mypyc_temp__8.f2);
+                                                Py_VISIT(self->___mypyc_temp__9);
+                                                Py_VISIT(self->___mypyc_temp__10.f0);
+                                                Py_VISIT(self->___mypyc_temp__10.f1);
+                                                Py_VISIT(self->___mypyc_temp__10.f2);
+                                                Py_VISIT(self->___mypyc_temp__11);
+                                                Py_VISIT(self->___mypyc_temp__12.f0);
+                                                Py_VISIT(self->___mypyc_temp__12.f1);
+                                                Py_VISIT(self->___mypyc_temp__12.f2);
+                                                return 0;
+                                            }
+                                            
+                                            static int
+                                            eth_portfolio_scripts___balances___export_balances_gen_clear(eth_portfolio_scripts___balances___export_balances_genObject *self)
+                                            {
+                                                Py_CLEAR(self->___mypyc_generator_attribute__args);
+                                                Py_CLEAR(self->___mypyc_generator_attribute__custom_buckets);
+                                                Py_CLEAR(self->___mypyc_generator_attribute__interval);
+                                                Py_CLEAR(self->___mypyc_generator_attribute__portfolio);
+                                                Py_CLEAR(self->___mypyc_generator_attribute__export_start_block);
+                                                Py_CLEAR(self->___mypyc_temp__0);
+                                                Py_CLEAR(self->___mypyc_temp__1.f0);
+                                                Py_CLEAR(self->___mypyc_temp__1.f1);
+                                                Py_CLEAR(self->___mypyc_temp__1.f2);
+                                                Py_CLEAR(self->___mypyc_generator_attribute__start_ts);
+                                                Py_CLEAR(self->___mypyc_generator_attribute__start);
+                                                Py_CLEAR(self->___mypyc_temp__2);
+                                                Py_CLEAR(self->___mypyc_temp__3);
+                                                Py_CLEAR(self->___mypyc_temp__4);
+                                                Py_CLEAR(self->___mypyc_temp__5.f0);
+                                                Py_CLEAR(self->___mypyc_temp__5.f1);
+                                                Py_CLEAR(self->___mypyc_temp__5.f2);
+                                                Py_CLEAR(self->___mypyc_temp__6.f0);
+                                                Py_CLEAR(self->___mypyc_temp__6.f1);
+                                                Py_CLEAR(self->___mypyc_temp__6.f2);
+                                                Py_CLEAR(self->___mypyc_generator_attribute__ts);
+                                                Py_CLEAR(self->___mypyc_temp__7);
+                                                Py_CLEAR(self->___mypyc_temp__8.f0);
+                                                Py_CLEAR(self->___mypyc_temp__8.f1);
+                                                Py_CLEAR(self->___mypyc_temp__8.f2);
+                                                Py_CLEAR(self->___mypyc_temp__9);
+                                                Py_CLEAR(self->___mypyc_temp__10.f0);
+                                                Py_CLEAR(self->___mypyc_temp__10.f1);
+                                                Py_CLEAR(self->___mypyc_temp__10.f2);
+                                                Py_CLEAR(self->___mypyc_temp__11);
+                                                Py_CLEAR(self->___mypyc_temp__12.f0);
+                                                Py_CLEAR(self->___mypyc_temp__12.f1);
+                                                Py_CLEAR(self->___mypyc_temp__12.f2);
+                                                return 0;
+                                            }
+                                            
+                                            static void
+                                            eth_portfolio_scripts___balances___export_balances_gen_dealloc(eth_portfolio_scripts___balances___export_balances_genObject *self)
+                                            {
+                                                PyObject_GC_UnTrack(self);
+                                                if (eth_portfolio_scripts___balances___export_balances_gen_free_instance == NULL) {
+                                                    eth_portfolio_scripts___balances___export_balances_gen_free_instance = self;
+                                                    Py_CLEAR(self->___mypyc_generator_attribute__args);
+                                                    Py_CLEAR(self->___mypyc_generator_attribute__custom_buckets);
+                                                    self->___mypyc_next_label__ = -113;
+                                                    Py_CLEAR(self->___mypyc_generator_attribute__interval);
+                                                    Py_CLEAR(self->___mypyc_generator_attribute__portfolio);
+                                                    Py_CLEAR(self->___mypyc_generator_attribute__export_start_block);
+                                                    Py_CLEAR(self->___mypyc_temp__0);
+                                                    Py_CLEAR(self->___mypyc_temp__1.f0);
+                                                    Py_CLEAR(self->___mypyc_temp__1.f1);
+                                                    Py_CLEAR(self->___mypyc_temp__1.f2);
+                                                    Py_CLEAR(self->___mypyc_generator_attribute__start_ts);
+                                                    Py_CLEAR(self->___mypyc_generator_attribute__start);
+                                                    Py_CLEAR(self->___mypyc_temp__2);
+                                                    Py_CLEAR(self->___mypyc_temp__3);
+                                                    Py_CLEAR(self->___mypyc_temp__4);
+                                                    Py_CLEAR(self->___mypyc_temp__5.f0);
+                                                    Py_CLEAR(self->___mypyc_temp__5.f1);
+                                                    Py_CLEAR(self->___mypyc_temp__5.f2);
+                                                    Py_CLEAR(self->___mypyc_temp__6.f0);
+                                                    Py_CLEAR(self->___mypyc_temp__6.f1);
+                                                    Py_CLEAR(self->___mypyc_temp__6.f2);
+                                                    Py_CLEAR(self->___mypyc_generator_attribute__ts);
+                                                    Py_CLEAR(self->___mypyc_temp__7);
+                                                    Py_CLEAR(self->___mypyc_temp__8.f0);
+                                                    Py_CLEAR(self->___mypyc_temp__8.f1);
+                                                    Py_CLEAR(self->___mypyc_temp__8.f2);
+                                                    Py_CLEAR(self->___mypyc_temp__9);
+                                                    Py_CLEAR(self->___mypyc_temp__10.f0);
+                                                    Py_CLEAR(self->___mypyc_temp__10.f1);
+                                                    Py_CLEAR(self->___mypyc_temp__10.f2);
+                                                    Py_CLEAR(self->___mypyc_temp__11);
+                                                    Py_CLEAR(self->___mypyc_temp__12.f0);
+                                                    Py_CLEAR(self->___mypyc_temp__12.f1);
+                                                    Py_CLEAR(self->___mypyc_temp__12.f2);
+                                                    return;
+                                                }
+                                                CPy_TRASHCAN_BEGIN(self, eth_portfolio_scripts___balances___export_balances_gen_dealloc)
+                                                eth_portfolio_scripts___balances___export_balances_gen_clear(self);
+                                                Py_TYPE(self)->tp_free((PyObject *)self);
+                                                CPy_TRASHCAN_END(self)
+                                                done: ;
+                                            }
+                                            
+                                            static CPyVTableItem eth_portfolio_scripts___balances___export_balances_gen_vtable[7];
+                                            static bool
+                                            CPyDef_eth_portfolio_scripts___balances___export_balances_gen_trait_vtable_setup(void)
+                                            {
+                                                CPyVTableItem eth_portfolio_scripts___balances___export_balances_gen_vtable_scratch[] = {
+                                                    (CPyVTableItem)CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____mypyc_generator_helper__,
+                                                    (CPyVTableItem)CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____next__,
+                                                    (CPyVTableItem)CPyDef_eth_portfolio_scripts___balances___export_balances_gen___send,
+                                                    (CPyVTableItem)CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____iter__,
+                                                    (CPyVTableItem)CPyDef_eth_portfolio_scripts___balances___export_balances_gen___throw,
+                                                    (CPyVTableItem)CPyDef_eth_portfolio_scripts___balances___export_balances_gen___close,
+                                                    (CPyVTableItem)CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____await__,
+                                                };
+                                                memcpy(eth_portfolio_scripts___balances___export_balances_gen_vtable, eth_portfolio_scripts___balances___export_balances_gen_vtable_scratch, sizeof(eth_portfolio_scripts___balances___export_balances_gen_vtable));
+                                                return 1;
+                                            }
+                                            
+                                            static bool
+                                            CPyDef_eth_portfolio_scripts___balances___export_balances_gen_coroutine_setup(PyObject *type)
+                                            {
+                                                return 1;
+                                            }
+                                            
+                                            static PyMethodDef eth_portfolio_scripts___balances___export_balances_gen_methods[] = {
+                                                {"__internal_mypyc_setup", (PyCFunction)CPyDef_eth_portfolio_scripts___balances_____mypyc__export_balances_gen_setup, METH_O, NULL},
+                                                {"__next__",
+                                                 (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____next__,
+                                                 METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__next__()\n--\n\n")},
+                                                {"send",
+                                                 (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances_gen___send,
+                                                 METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("send($arg)\n--\n\n")},
+                                                {"__iter__",
+                                                 (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____iter__,
+                                                 METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__iter__()\n--\n\n")},
+                                                {"throw",
+                                                 (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances_gen___throw,
+                                                 METH_FASTCALL | METH_KEYWORDS, PyDoc_STR(NULL)},
+                                                {"close",
+                                                 (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances_gen___close,
+                                                 METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("close()\n--\n\n")},
+                                                {"__await__",
+                                                 (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____await__,
+                                                 METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("__await__()\n--\n\n")},
+                                                {"__setstate__", (PyCFunction)CPyPickle_SetState, METH_O, NULL},
+                                                {"__getstate__", (PyCFunction)CPyPickle_GetState, METH_NOARGS, NULL},
+                                                {NULL}  /* Sentinel */
+                                            };
+                                            
+                                            static PyTypeObject CPyType_eth_portfolio_scripts___balances___export_balances_gen_template_ = {
+                                                PyVarObject_HEAD_INIT(NULL, 0)
+                                                .tp_name = "export_balances_gen",
+                                                .tp_new = eth_portfolio_scripts___balances___export_balances_gen_new,
+                                                .tp_dealloc = (destructor)eth_portfolio_scripts___balances___export_balances_gen_dealloc,
+                                                .tp_traverse = (traverseproc)eth_portfolio_scripts___balances___export_balances_gen_traverse,
+                                                .tp_clear = (inquiry)eth_portfolio_scripts___balances___export_balances_gen_clear,
+                                                .tp_methods = eth_portfolio_scripts___balances___export_balances_gen_methods,
+                                                .tp_iter = CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____iter__,
+                                                .tp_iternext = CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____next__,
+                                                .tp_as_async = &eth_portfolio_scripts___balances___export_balances_gen_as_async,
+                                                .tp_basicsize = sizeof(eth_portfolio_scripts___balances___export_balances_genObject),
+                                                .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
+                                                .tp_doc = PyDoc_STR("export_balances_gen()\n--\n\n"),
+                                            };
+                                            static PyTypeObject *CPyType_eth_portfolio_scripts___balances___export_balances_gen_template = &CPyType_eth_portfolio_scripts___balances___export_balances_gen_template_;
+                                            
+                                            PyObject *CPyDef_eth_portfolio_scripts___balances_____mypyc__export_balances_gen_setup(PyObject *cpy_r_type)
+                                            {
+                                                PyTypeObject *type = (PyTypeObject*)cpy_r_type;
+                                                eth_portfolio_scripts___balances___export_balances_genObject *self;
+                                                if (eth_portfolio_scripts___balances___export_balances_gen_free_instance != NULL) {
+                                                    self = eth_portfolio_scripts___balances___export_balances_gen_free_instance;
+                                                    eth_portfolio_scripts___balances___export_balances_gen_free_instance = NULL;
+                                                    Py_SET_REFCNT(self, 1);
+                                                    PyObject_GC_Track(self);
+                                                    return (PyObject *)self;
+                                                }
+                                                self = (eth_portfolio_scripts___balances___export_balances_genObject *)type->tp_alloc(type, 0);
+                                                if (self == NULL)
+                                                    return NULL;
+                                                self->vtable = eth_portfolio_scripts___balances___export_balances_gen_vtable;
+                                                self->___mypyc_next_label__ = -113;
+                                                self->___mypyc_temp__1 = (tuple_T3OOO) { NULL, NULL, NULL };
+                                                self->___mypyc_temp__5 = (tuple_T3OOO) { NULL, NULL, NULL };
+                                                self->___mypyc_temp__6 = (tuple_T3OOO) { NULL, NULL, NULL };
+                                                self->___mypyc_temp__8 = (tuple_T3OOO) { NULL, NULL, NULL };
+                                                self->___mypyc_temp__10 = (tuple_T3OOO) { NULL, NULL, NULL };
+                                                self->___mypyc_temp__12 = (tuple_T3OOO) { NULL, NULL, NULL };
+                                                return (PyObject *)self;
+                                            }
+                                            
+                                            PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen(void)
+                                            {
+                                                PyObject *self = CPyDef_eth_portfolio_scripts___balances_____mypyc__export_balances_gen_setup((PyObject *)CPyType_eth_portfolio_scripts___balances___export_balances_gen);
+                                                if (self == NULL)
+                                                    return NULL;
+                                                return self;
+                                            }
+                                            
+                                            static PyMethodDef eth_portfolio_scripts___balancesmodule_methods[] = {
+                                                {NULL, NULL, 0, NULL}
+                                            };
+                                            
+                                            int CPyExec_eth_portfolio_scripts___balances(PyObject *module)
+                                            {
+                                                intern_strings();
+                                                PyObject* modname = NULL;
+                                                modname = PyObject_GetAttrString((PyObject *)CPyModule_eth_portfolio_scripts___balances__internal, "__name__");
+                                                CPyStatic_eth_portfolio_scripts___balances___globals = PyModule_GetDict(CPyModule_eth_portfolio_scripts___balances__internal);
+                                                if (unlikely(CPyStatic_eth_portfolio_scripts___balances___globals == NULL))
+                                                    goto fail;
+                                                PyObject* CPyPy_eth_portfolio_scripts___balances___export_balances_wrapper = CPyFunction_New(CPyModule_eth_portfolio_scripts___balances, "eth_portfolio_scripts/balances.py", "export_balances", (PyCFunction)CPyPy_eth_portfolio_scripts___balances___export_balances, METH_FASTCALL | METH_KEYWORDS, PyDoc_STR("export_balances(args, custom_buckets=None)\n--\n\n"), 19, CO_COROUTINE, false);
+                                                if (unlikely(!CPyPy_eth_portfolio_scripts___balances___export_balances_wrapper))
+                                                    goto fail;
+                                                PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_wrapper_name = PyUnicode_FromString("export_balances");
+                                                if (unlikely(!CPyPy_eth_portfolio_scripts___balances___export_balances_wrapper_name))
+                                                    goto fail;
+                                                if (PyDict_SetItem(CPyStatic_eth_portfolio_scripts___balances___globals, CPyPy_eth_portfolio_scripts___balances___export_balances_wrapper_name, (PyObject *)CPyPy_eth_portfolio_scripts___balances___export_balances_wrapper) < 0)
+                                                    goto fail;
+                                                CPyType_eth_portfolio_scripts___balances___export_balances_gen = (PyTypeObject *)CPyType_FromTemplate((PyObject *)CPyType_eth_portfolio_scripts___balances___export_balances_gen_template, NULL, modname);
+                                                if (unlikely(!CPyType_eth_portfolio_scripts___balances___export_balances_gen))
+                                                    goto fail;
+                                                CPyDef_eth_portfolio_scripts___balances___export_balances_gen_trait_vtable_setup();
+                                                if (CPyGlobalsInit() < 0)
+                                                    goto fail;
+                                                char result = CPyDef_eth_portfolio_scripts___balances_____top_level__();
+                                                if (result == 2)
+                                                    goto fail;
+                                                Py_DECREF(modname);
+                                                return 0;
+                                                fail:
+                                                Py_CLEAR(CPyModule_eth_portfolio_scripts___balances__internal);
+                                                Py_CLEAR(modname);
+                                                CPy_XDECREF(CPyStatic_eth_portfolio_scripts___balances____UTC);
+                                                CPyStatic_eth_portfolio_scripts___balances____UTC = NULL;
+                                                CPy_XDECREF(CPyStatic_eth_portfolio_scripts___balances___create_task);
+                                                CPyStatic_eth_portfolio_scripts___balances___create_task = NULL;
+                                                CPy_XDECREF(CPyStatic_eth_portfolio_scripts___balances___yield_to_loop);
+                                                CPyStatic_eth_portfolio_scripts___balances___yield_to_loop = NULL;
+                                                Py_CLEAR(CPyType_eth_portfolio_scripts___balances___export_balances_gen);
+                                                return -1;
+                                            }
+                                            static struct PyModuleDef eth_portfolio_scripts___balancesmodule = {
+                                                PyModuleDef_HEAD_INIT,
+                                                "eth_portfolio_scripts.balances",
+                                                NULL, /* docstring */
+                                                0,       /* size of per-interpreter state of the module */
+                                                eth_portfolio_scripts___balancesmodule_methods,
+                                                NULL,
+                                            };
+                                            
+                                            PyObject *CPyInitOnly_eth_portfolio_scripts___balances(void)
+                                            {
+                                                if (CPyModule_eth_portfolio_scripts___balances__internal) {
+                                                    Py_INCREF(CPyModule_eth_portfolio_scripts___balances__internal);
+                                                    return CPyModule_eth_portfolio_scripts___balances__internal;
+                                                }
+                                                CPyModule_eth_portfolio_scripts___balances__internal = PyModule_Create(&eth_portfolio_scripts___balancesmodule);
+                                                return CPyModule_eth_portfolio_scripts___balances__internal;
+                                            }
+                                            
+                                            PyObject *CPyInit_eth_portfolio_scripts___balances(void)
+                                            {
+                                                PyObject* modname = NULL;
+                                                if (CPyModule_eth_portfolio_scripts___balances__internal) {
+                                                    Py_INCREF(CPyModule_eth_portfolio_scripts___balances__internal);
+                                                    return CPyModule_eth_portfolio_scripts___balances__internal;
+                                                }
+                                                CPyModule_eth_portfolio_scripts___balances__internal = PyModule_Create(&eth_portfolio_scripts___balancesmodule);
+                                                if (unlikely(CPyModule_eth_portfolio_scripts___balances__internal == NULL))
+                                                    goto fail;
+                                                modname = PyUnicode_FromString("eth_portfolio_scripts.balances");
+                                                if (modname == NULL) CPyError_OutOfMemory();
+                                                if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio_scripts___balances__internal) < 0)
+                                                    goto fail;
+                                                Py_CLEAR(modname);
+                                                if (CPyExec_eth_portfolio_scripts___balances(CPyModule_eth_portfolio_scripts___balances__internal) != 0)
+                                                    goto fail;
+                                                return CPyModule_eth_portfolio_scripts___balances__internal;
+                                                fail:
+                                                {
+                                                        PyObject *exc_type, *exc_val, *exc_tb;
+                                                        PyErr_Fetch(&exc_type, &exc_val, &exc_tb);
+                                                        if (modname == NULL) {
+                                                                modname = PyUnicode_FromString("eth_portfolio_scripts.balances");
+                                                                if (modname == NULL) CPyError_OutOfMemory();
+                                                            }
+                                                            PyObject_DelItem(PyImport_GetModuleDict(), modname);
+                                                            PyErr_Clear();
+                                                            Py_DECREF(modname);
+                                                            Py_CLEAR(CPyModule_eth_portfolio_scripts___balances__internal);
+                                                            PyErr_Restore(exc_type, exc_val, exc_tb);
+                                                    }
+                                                    return NULL;
+                                                }
+                                                
 PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -25027,7 +25792,7 @@ CPyL42: ;
     CPy_DECREF(cpy_r_r81);
     cpy_r_r87 = cpy_r_r86 >= 0;
     if (unlikely(!cpy_r_r87)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL261;
     }
     cpy_r_r88 = cpy_r_r86;
@@ -25073,13 +25838,10 @@ CPyL46: ;
     }
     ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0 = cpy_r_r98;
     cpy_r_r99 = 1;
-    if (unlikely(!cpy_r_r99)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL261;
-    }
+    if (!cpy_r_r99) goto CPyL261;
     cpy_r_r100 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
     if (unlikely(cpy_r_r100 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__0", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__0", 41, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL261;
     }
     CPy_INCREF(cpy_r_r100);
@@ -25133,14 +25895,11 @@ CPyL61: ;
     }
     ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1 = cpy_r_r110;
     cpy_r_r111 = 1;
-    if (unlikely(!cpy_r_r111)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL277;
-    }
+    if (!cpy_r_r111) goto CPyL277;
     cpy_r_r112 = (PyObject **)&cpy_r_r1;
     cpy_r_r113 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
     if (unlikely(cpy_r_r113 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__0", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__0", 41, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL277;
     }
     CPy_INCREF(cpy_r_r113);
@@ -25159,7 +25918,7 @@ CPyL65: ;
     cpy_r_r106 = cpy_r_r1;
     cpy_r_r115 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
     if (unlikely(cpy_r_r115.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__1", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__1", 41, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL279;
     }
     CPy_INCREF(cpy_r_r115.f0);
@@ -25175,7 +25934,7 @@ CPyL67: ;
     cpy_r_r103 = cpy_r_r1;
     cpy_r_r116 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
     if (unlikely(cpy_r_r116.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__1", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__1", 41, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL280;
     }
     CPy_INCREF(cpy_r_r116.f0);
@@ -25190,7 +25949,7 @@ CPyL68: ;
 CPyL69: ;
     cpy_r_r117 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__1;
     if (unlikely(cpy_r_r117.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__1", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__1", 41, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL259;
     }
     CPy_INCREF(cpy_r_r117.f0);
@@ -25207,7 +25966,7 @@ CPyL70: ;
 CPyL72: ;
     cpy_r_r119 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__0;
     if (unlikely(cpy_r_r119 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__0", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__0", 41, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL281;
     }
     CPy_INCREF(cpy_r_r119);
@@ -25382,23 +26141,17 @@ CPyL92: ;
     }
     ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__2 = cpy_r_r159;
     cpy_r_r161 = 1;
-    if (unlikely(!cpy_r_r161)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL291;
-    }
+    if (!cpy_r_r161) goto CPyL291;
     if (((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3 != NULL) {
         CPy_DECREF(((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3);
     }
     ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3 = cpy_r_r160;
     cpy_r_r162 = 1;
-    if (unlikely(!cpy_r_r162)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL261;
-    }
+    if (!cpy_r_r162) goto CPyL261;
 CPyL97: ;
     cpy_r_r163 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__3;
     if (unlikely(cpy_r_r163 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__3", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__3", 47, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL128;
     }
     CPy_INCREF(cpy_r_r163);
@@ -25420,13 +26173,10 @@ CPyL98: ;
     }
     ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4 = cpy_r_r165;
     cpy_r_r166 = 1;
-    if (unlikely(!cpy_r_r166)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL128;
-    }
+    if (!cpy_r_r166) goto CPyL128;
     cpy_r_r167 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4;
     if (unlikely(cpy_r_r167 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__4", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__4", 47, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL128;
     }
     CPy_INCREF(cpy_r_r167);
@@ -25482,14 +26232,11 @@ CPyL111: ;
     }
     ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5 = cpy_r_r176;
     cpy_r_r177 = 1;
-    if (unlikely(!cpy_r_r177)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL296;
-    }
+    if (!cpy_r_r177) goto CPyL296;
     cpy_r_r178 = (PyObject **)&cpy_r_r3;
     cpy_r_r179 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4;
     if (unlikely(cpy_r_r179 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__4", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__4", 47, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL296;
     }
     CPy_INCREF(cpy_r_r179);
@@ -25504,7 +26251,7 @@ CPyL113: ;
     cpy_r_r172 = cpy_r_r3;
     cpy_r_r181 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5;
     if (unlikely(cpy_r_r181.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__5", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__5", 47, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL298;
     }
     CPy_INCREF(cpy_r_r181.f0);
@@ -25521,7 +26268,7 @@ CPyL117: ;
     cpy_r_r5 = cpy_r_r3;
     cpy_r_r182 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5;
     if (unlikely(cpy_r_r182.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__5", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__5", 47, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL119;
     }
     CPy_INCREF(cpy_r_r182.f0);
@@ -25536,7 +26283,7 @@ CPyL118: ;
 CPyL119: ;
     cpy_r_r183 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__5;
     if (unlikely(cpy_r_r183.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__5", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__5", 47, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL128;
     }
     CPy_INCREF(cpy_r_r183.f0);
@@ -25557,7 +26304,7 @@ CPyL121: ;
 CPyL122: ;
     cpy_r_r185 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__4;
     if (unlikely(cpy_r_r185 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__4", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__4", 47, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL301;
     }
     CPy_INCREF(cpy_r_r185);
@@ -25593,10 +26340,7 @@ CPyL128: ;
     }
     ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6 = cpy_r_r189;
     cpy_r_r190 = 1;
-    if (unlikely(!cpy_r_r190)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL304;
-    }
+    if (!cpy_r_r190) goto CPyL304;
     cpy_r_r191 = (CPyPtr)&PyExc_StopAsyncIteration;
     cpy_r_r192 = *(PyObject * *)cpy_r_r191;
     cpy_r_r193 = CPy_ExceptionMatches(cpy_r_r192);
@@ -25610,7 +26354,7 @@ CPyL131: ;
 CPyL133: ;
     cpy_r_r194 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6;
     if (unlikely(cpy_r_r194.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__6", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__6", 47, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL261;
     }
     CPy_INCREF(cpy_r_r194.f0);
@@ -25618,14 +26362,14 @@ CPyL133: ;
     CPy_INCREF(cpy_r_r194.f2);
 CPyL134: ;
     CPy_RestoreExcInfo(cpy_r_r194);
-    CPy_DecRef(cpy_r_r194.f0);
-    CPy_DecRef(cpy_r_r194.f1);
-    CPy_DecRef(cpy_r_r194.f2);
+    CPy_DECREF(cpy_r_r194.f0);
+    CPy_DECREF(cpy_r_r194.f1);
+    CPy_DECREF(cpy_r_r194.f2);
     goto CPyL138;
 CPyL135: ;
     cpy_r_r195 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__6;
     if (unlikely(cpy_r_r195.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__6", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__6", 47, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL259;
     }
     CPy_INCREF(cpy_r_r195.f0);
@@ -25633,9 +26377,9 @@ CPyL135: ;
     CPy_INCREF(cpy_r_r195.f2);
 CPyL136: ;
     CPy_RestoreExcInfo(cpy_r_r195);
-    CPy_DecRef(cpy_r_r195.f0);
-    CPy_DecRef(cpy_r_r195.f1);
-    CPy_DecRef(cpy_r_r195.f2);
+    CPy_DECREF(cpy_r_r195.f0);
+    CPy_DECREF(cpy_r_r195.f1);
+    CPy_DECREF(cpy_r_r195.f2);
     cpy_r_r196 = CPy_KeepPropagating();
     if (!cpy_r_r196) goto CPyL259;
     CPy_Unreachable();
@@ -25754,13 +26498,10 @@ CPyL153: ;
     }
     ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7 = cpy_r_r220;
     cpy_r_r221 = 1;
-    if (unlikely(!cpy_r_r221)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL261;
-    }
+    if (!cpy_r_r221) goto CPyL261;
     cpy_r_r222 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7;
     if (unlikely(cpy_r_r222 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__7", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__7", 54, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL261;
     }
     CPy_INCREF(cpy_r_r222);
@@ -25815,14 +26556,11 @@ CPyL166: ;
     }
     ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8 = cpy_r_r232;
     cpy_r_r233 = 1;
-    if (unlikely(!cpy_r_r233)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL317;
-    }
+    if (!cpy_r_r233) goto CPyL317;
     cpy_r_r234 = (PyObject **)&cpy_r_r7;
     cpy_r_r235 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7;
     if (unlikely(cpy_r_r235 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__7", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__7", 54, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL317;
     }
     CPy_INCREF(cpy_r_r235);
@@ -25841,7 +26579,7 @@ CPyL170: ;
     cpy_r_r228 = cpy_r_r7;
     cpy_r_r237 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8;
     if (unlikely(cpy_r_r237.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__8", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__8", 54, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL319;
     }
     CPy_INCREF(cpy_r_r237.f0);
@@ -25858,7 +26596,7 @@ CPyL172: ;
     CPy_DecRef(cpy_r_r225);
     cpy_r_r238 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8;
     if (unlikely(cpy_r_r238.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__8", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__8", 54, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL320;
     }
     CPy_INCREF(cpy_r_r238.f0);
@@ -25873,7 +26611,7 @@ CPyL173: ;
 CPyL174: ;
     cpy_r_r239 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__8;
     if (unlikely(cpy_r_r239.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__8", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__8", 54, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL259;
     }
     CPy_INCREF(cpy_r_r239.f0);
@@ -25890,7 +26628,7 @@ CPyL175: ;
 CPyL177: ;
     cpy_r_r241 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__7;
     if (unlikely(cpy_r_r241 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__7", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__7", 54, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL321;
     }
     CPy_INCREF(cpy_r_r241);
@@ -25944,13 +26682,10 @@ CPyL185: ;
     }
     ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9 = cpy_r_r247;
     cpy_r_r248 = 1;
-    if (unlikely(!cpy_r_r248)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL261;
-    }
+    if (!cpy_r_r248) goto CPyL261;
     cpy_r_r249 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9;
     if (unlikely(cpy_r_r249 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__9", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__9", 55, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL261;
     }
     CPy_INCREF(cpy_r_r249);
@@ -26005,14 +26740,11 @@ CPyL198: ;
     }
     ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10 = cpy_r_r259;
     cpy_r_r260 = 1;
-    if (unlikely(!cpy_r_r260)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL327;
-    }
+    if (!cpy_r_r260) goto CPyL327;
     cpy_r_r261 = (PyObject **)&cpy_r_r9;
     cpy_r_r262 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9;
     if (unlikely(cpy_r_r262 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__9", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__9", 55, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL327;
     }
     CPy_INCREF(cpy_r_r262);
@@ -26031,7 +26763,7 @@ CPyL202: ;
     cpy_r_r255 = cpy_r_r9;
     cpy_r_r264 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10;
     if (unlikely(cpy_r_r264.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__10", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__10", 55, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL329;
     }
     CPy_INCREF(cpy_r_r264.f0);
@@ -26048,7 +26780,7 @@ CPyL204: ;
     CPy_DecRef(cpy_r_r252);
     cpy_r_r265 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10;
     if (unlikely(cpy_r_r265.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__10", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__10", 55, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL330;
     }
     CPy_INCREF(cpy_r_r265.f0);
@@ -26063,7 +26795,7 @@ CPyL205: ;
 CPyL206: ;
     cpy_r_r266 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__10;
     if (unlikely(cpy_r_r266.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__10", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__10", 55, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL259;
     }
     CPy_INCREF(cpy_r_r266.f0);
@@ -26080,7 +26812,7 @@ CPyL207: ;
 CPyL209: ;
     cpy_r_r268 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__9;
     if (unlikely(cpy_r_r268 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__9", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__9", 55, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL331;
     }
     CPy_INCREF(cpy_r_r268);
@@ -26134,13 +26866,10 @@ CPyL217: ;
     }
     ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11 = cpy_r_r274;
     cpy_r_r275 = 1;
-    if (unlikely(!cpy_r_r275)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL261;
-    }
+    if (!cpy_r_r275) goto CPyL261;
     cpy_r_r276 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11;
     if (unlikely(cpy_r_r276 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__11", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__11", 56, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL261;
     }
     CPy_INCREF(cpy_r_r276);
@@ -26195,14 +26924,11 @@ CPyL230: ;
     }
     ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12 = cpy_r_r286;
     cpy_r_r287 = 1;
-    if (unlikely(!cpy_r_r287)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL337;
-    }
+    if (!cpy_r_r287) goto CPyL337;
     cpy_r_r288 = (PyObject **)&cpy_r_r11;
     cpy_r_r289 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11;
     if (unlikely(cpy_r_r289 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__11", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__11", 56, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL337;
     }
     CPy_INCREF(cpy_r_r289);
@@ -26221,7 +26947,7 @@ CPyL234: ;
     cpy_r_r282 = cpy_r_r11;
     cpy_r_r291 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12;
     if (unlikely(cpy_r_r291.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__12", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__12", 56, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL339;
     }
     CPy_INCREF(cpy_r_r291.f0);
@@ -26238,7 +26964,7 @@ CPyL236: ;
     CPy_DecRef(cpy_r_r279);
     cpy_r_r292 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12;
     if (unlikely(cpy_r_r292.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__12", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__12", 56, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL340;
     }
     CPy_INCREF(cpy_r_r292.f0);
@@ -26253,7 +26979,7 @@ CPyL237: ;
 CPyL238: ;
     cpy_r_r293 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__12;
     if (unlikely(cpy_r_r293.f0 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__12", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__12", 56, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL259;
     }
     CPy_INCREF(cpy_r_r293.f0);
@@ -26270,7 +26996,7 @@ CPyL239: ;
 CPyL241: ;
     cpy_r_r295 = ((eth_portfolio_scripts___balances___export_balances_genObject *)cpy_r___mypyc_self__)->___mypyc_temp__11;
     if (unlikely(cpy_r_r295 == NULL)) {
-        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__11", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+        CPy_AttributeError("eth_portfolio_scripts/balances.py", "export_balances", "export_balances_gen", "__mypyc_temp__11", 56, CPyStatic_eth_portfolio_scripts___balances___globals);
         goto CPyL341;
     }
     CPy_INCREF(cpy_r_r295);
@@ -26351,7 +27077,7 @@ CPyL260: ;
     CPy_XDECREF(cpy_r_r5);
     goto CPyL2;
 CPyL261: ;
-    CPy_XDecRef(cpy_r_r5);
+    CPy_XDECREF(cpy_r_r5);
     goto CPyL259;
 CPyL262: ;
     CPy_XDECREF(cpy_r_r5);
@@ -26476,8 +27202,8 @@ CPyL290: ;
     CPy_DecRef(cpy_r_r159);
     goto CPyL259;
 CPyL291: ;
-    CPy_XDecRef(cpy_r_r5);
-    CPy_DecRef(cpy_r_r160);
+    CPy_XDECREF(cpy_r_r5);
+    CPy_DECREF(cpy_r_r160);
     goto CPyL259;
 CPyL292: ;
     CPy_XDECREF(cpy_r_r5);
@@ -26517,10 +27243,10 @@ CPyL303: ;
     CPy_XDECREF(cpy_r_r5);
     goto CPyL126;
 CPyL304: ;
-    CPy_XDecRef(cpy_r_r5);
+    CPy_XDECREF(cpy_r_r5);
     goto CPyL135;
 CPyL305: ;
-    CPy_XDecRef(cpy_r_r5);
+    CPy_XDECREF(cpy_r_r5);
     goto CPyL131;
 CPyL306: ;
     CPy_XDECREF(cpy_r_r5);
@@ -26692,7 +27418,7 @@ CPyL352: ;
     CPy_XDECREF(cpy_r_r11);
     goto CPyL257;
 }
-
+                                                
 PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____next__(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -26705,28 +27431,28 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__next__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_eth_portfolio_scripts___balances___export_balances_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio_scripts.balances.export_balances_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____next__(arg___mypyc_self__);
-    return retval;
+                                                
+                                                PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                    PyObject *obj___mypyc_self__ = self;
+                                                    static const char * const kwlist[] = {0};
+                                                    static CPyArg_Parser parser = {":__next__", kwlist, 0};
+                                                    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                                                        return NULL;
+                                                    }
+                                                    PyObject *arg___mypyc_self__;
+                                                    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_eth_portfolio_scripts___balances___export_balances_gen))
+                                                        arg___mypyc_self__ = obj___mypyc_self__;
+                                                    else {
+                                                        CPy_TypeError("eth_portfolio_scripts.balances.export_balances_gen", obj___mypyc_self__); 
+                                                        goto fail;
+                                                    }
+                                                    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____next__(arg___mypyc_self__);
+                                                    return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/balances.py", "__next__", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-    return NULL;
-}
-
+                                                    CPy_AddTraceback("eth_portfolio_scripts/balances.py", "__next__", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+                                                    return NULL;
+                                                }
+                                                
 PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -26739,56 +27465,56 @@ CPyL2: ;
     cpy_r_r2 = NULL;
     return cpy_r_r2;
 }
-
-PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"arg", 0};
-    static CPyArg_Parser parser = {"O:send", kwlist, 0};
-    PyObject *obj_arg;
-    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_eth_portfolio_scripts___balances___export_balances_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio_scripts.balances.export_balances_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_arg = obj_arg;
-    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances_gen___send(arg___mypyc_self__, arg_arg);
-    return retval;
+                                                
+                                                PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                    PyObject *obj___mypyc_self__ = self;
+                                                    static const char * const kwlist[] = {"arg", 0};
+                                                    static CPyArg_Parser parser = {"O:send", kwlist, 0};
+                                                    PyObject *obj_arg;
+                                                    if (!CPyArg_ParseStackAndKeywordsOneArg(args, nargs, kwnames, &parser, &obj_arg)) {
+                                                        return NULL;
+                                                    }
+                                                    PyObject *arg___mypyc_self__;
+                                                    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_eth_portfolio_scripts___balances___export_balances_gen))
+                                                        arg___mypyc_self__ = obj___mypyc_self__;
+                                                    else {
+                                                        CPy_TypeError("eth_portfolio_scripts.balances.export_balances_gen", obj___mypyc_self__); 
+                                                        goto fail;
+                                                    }
+                                                    PyObject *arg_arg = obj_arg;
+                                                    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances_gen___send(arg___mypyc_self__, arg_arg);
+                                                    return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/balances.py", "send", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-    return NULL;
-}
-
+                                                    CPy_AddTraceback("eth_portfolio_scripts/balances.py", "send", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+                                                    return NULL;
+                                                }
+                                                
 PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____iter__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__iter__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_eth_portfolio_scripts___balances___export_balances_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio_scripts.balances.export_balances_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____iter__(arg___mypyc_self__);
-    return retval;
+                                                
+                                                PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                    PyObject *obj___mypyc_self__ = self;
+                                                    static const char * const kwlist[] = {0};
+                                                    static CPyArg_Parser parser = {":__iter__", kwlist, 0};
+                                                    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                                                        return NULL;
+                                                    }
+                                                    PyObject *arg___mypyc_self__;
+                                                    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_eth_portfolio_scripts___balances___export_balances_gen))
+                                                        arg___mypyc_self__ = obj___mypyc_self__;
+                                                    else {
+                                                        CPy_TypeError("eth_portfolio_scripts.balances.export_balances_gen", obj___mypyc_self__); 
+                                                        goto fail;
+                                                    }
+                                                    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____iter__(arg___mypyc_self__);
+                                                    return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/balances.py", "__iter__", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-    return NULL;
-}
-
+                                                    CPy_AddTraceback("eth_portfolio_scripts/balances.py", "__iter__", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+                                                    return NULL;
+                                                }
+                                                
 PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -26817,44 +27543,44 @@ CPyL8: ;
     CPy_INCREF(cpy_r_traceback);
     goto CPyL4;
 }
-
-PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {"type", "value", "traceback", 0};
-    static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
-    PyObject *obj_type;
-    PyObject *obj_value = NULL;
-    PyObject *obj_traceback = NULL;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_eth_portfolio_scripts___balances___export_balances_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio_scripts.balances.export_balances_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *arg_type = obj_type;
-    PyObject *arg_value;
-    if (obj_value == NULL) {
-        arg_value = NULL;
-    } else {
-        arg_value = obj_value; 
-    }
-    PyObject *arg_traceback;
-    if (obj_traceback == NULL) {
-        arg_traceback = NULL;
-    } else {
-        arg_traceback = obj_traceback; 
-    }
-    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances_gen___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
-    return retval;
+                                                
+                                                PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                    PyObject *obj___mypyc_self__ = self;
+                                                    static const char * const kwlist[] = {"type", "value", "traceback", 0};
+                                                    static CPyArg_Parser parser = {"O|OO:throw", kwlist, 0};
+                                                    PyObject *obj_type;
+                                                    PyObject *obj_value = NULL;
+                                                    PyObject *obj_traceback = NULL;
+                                                    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_type, &obj_value, &obj_traceback)) {
+                                                        return NULL;
+                                                    }
+                                                    PyObject *arg___mypyc_self__;
+                                                    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_eth_portfolio_scripts___balances___export_balances_gen))
+                                                        arg___mypyc_self__ = obj___mypyc_self__;
+                                                    else {
+                                                        CPy_TypeError("eth_portfolio_scripts.balances.export_balances_gen", obj___mypyc_self__); 
+                                                        goto fail;
+                                                    }
+                                                    PyObject *arg_type = obj_type;
+                                                    PyObject *arg_value;
+                                                    if (obj_value == NULL) {
+                                                        arg_value = NULL;
+                                                    } else {
+                                                        arg_value = obj_value; 
+                                                    }
+                                                    PyObject *arg_traceback;
+                                                    if (obj_traceback == NULL) {
+                                                        arg_traceback = NULL;
+                                                    } else {
+                                                        arg_traceback = obj_traceback; 
+                                                    }
+                                                    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances_gen___throw(arg___mypyc_self__, arg_type, arg_value, arg_traceback);
+                                                    return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/balances.py", "throw", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-    return NULL;
-}
-
+                                                    CPy_AddTraceback("eth_portfolio_scripts/balances.py", "throw", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+                                                    return NULL;
+                                                }
+                                                
 PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen___close(PyObject *cpy_r___mypyc_self__) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -26933,54 +27659,54 @@ CPyL13: ;
     CPy_DECREF(cpy_r_r6.f2);
     goto CPyL6;
 }
-
-PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":close", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_eth_portfolio_scripts___balances___export_balances_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio_scripts.balances.export_balances_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances_gen___close(arg___mypyc_self__);
-    return retval;
+                                                
+                                                PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                    PyObject *obj___mypyc_self__ = self;
+                                                    static const char * const kwlist[] = {0};
+                                                    static CPyArg_Parser parser = {":close", kwlist, 0};
+                                                    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                                                        return NULL;
+                                                    }
+                                                    PyObject *arg___mypyc_self__;
+                                                    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_eth_portfolio_scripts___balances___export_balances_gen))
+                                                        arg___mypyc_self__ = obj___mypyc_self__;
+                                                    else {
+                                                        CPy_TypeError("eth_portfolio_scripts.balances.export_balances_gen", obj___mypyc_self__); 
+                                                        goto fail;
+                                                    }
+                                                    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances_gen___close(arg___mypyc_self__);
+                                                    return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/balances.py", "close", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-    return NULL;
-}
-
+                                                    CPy_AddTraceback("eth_portfolio_scripts/balances.py", "close", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+                                                    return NULL;
+                                                }
+                                                
 PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____await__(PyObject *cpy_r___mypyc_self__) {
     CPy_INCREF_NO_IMM(cpy_r___mypyc_self__);
     return cpy_r___mypyc_self__;
 }
-
-PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    PyObject *obj___mypyc_self__ = self;
-    static const char * const kwlist[] = {0};
-    static CPyArg_Parser parser = {":__await__", kwlist, 0};
-    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
-        return NULL;
-    }
-    PyObject *arg___mypyc_self__;
-    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_eth_portfolio_scripts___balances___export_balances_gen))
-        arg___mypyc_self__ = obj___mypyc_self__;
-    else {
-        CPy_TypeError("eth_portfolio_scripts.balances.export_balances_gen", obj___mypyc_self__); 
-        goto fail;
-    }
-    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____await__(arg___mypyc_self__);
-    return retval;
+                                                
+                                                PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                    PyObject *obj___mypyc_self__ = self;
+                                                    static const char * const kwlist[] = {0};
+                                                    static CPyArg_Parser parser = {":__await__", kwlist, 0};
+                                                    if (!CPyArg_ParseStackAndKeywordsNoArgs(args, nargs, kwnames, &parser)) {
+                                                        return NULL;
+                                                    }
+                                                    PyObject *arg___mypyc_self__;
+                                                    if (likely(Py_TYPE(obj___mypyc_self__) == CPyType_eth_portfolio_scripts___balances___export_balances_gen))
+                                                        arg___mypyc_self__ = obj___mypyc_self__;
+                                                    else {
+                                                        CPy_TypeError("eth_portfolio_scripts.balances.export_balances_gen", obj___mypyc_self__); 
+                                                        goto fail;
+                                                    }
+                                                    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____await__(arg___mypyc_self__);
+                                                    return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/balances.py", "__await__", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-    return NULL;
-}
-
+                                                    CPy_AddTraceback("eth_portfolio_scripts/balances.py", "__await__", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
+                                                    return NULL;
+                                                }
+                                                
 PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances(PyObject *cpy_r_args, PyObject *cpy_r_custom_buckets) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -27035,43 +27761,43 @@ CPyL10: ;
     CPy_DecRef(cpy_r_r1);
     goto CPyL6;
 }
-
-PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
-    static const char * const kwlist[] = {"args", "custom_buckets", 0};
-    static CPyArg_Parser parser = {"O|O:export_balances", kwlist, 0};
-    PyObject *obj_args;
-    PyObject *obj_custom_buckets = NULL;
-    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_args, &obj_custom_buckets)) {
-        return NULL;
-    }
-    PyObject *arg_args = obj_args;
-    PyObject *arg_custom_buckets;
-    if (obj_custom_buckets == NULL) {
-        arg_custom_buckets = NULL;
-        goto __LL81;
-    }
-    if (PyDict_Check(obj_custom_buckets))
-        arg_custom_buckets = obj_custom_buckets;
-    else {
-        arg_custom_buckets = NULL;
-    }
-    if (arg_custom_buckets != NULL) goto __LL81;
-    if (obj_custom_buckets == Py_None)
-        arg_custom_buckets = obj_custom_buckets;
-    else {
-        arg_custom_buckets = NULL;
-    }
-    if (arg_custom_buckets != NULL) goto __LL81;
-    CPy_TypeError("dict or None", obj_custom_buckets); 
-    goto fail;
+                                                
+                                                PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
+                                                    static const char * const kwlist[] = {"args", "custom_buckets", 0};
+                                                    static CPyArg_Parser parser = {"O|O:export_balances", kwlist, 0};
+                                                    PyObject *obj_args;
+                                                    PyObject *obj_custom_buckets = NULL;
+                                                    if (!CPyArg_ParseStackAndKeywordsSimple(args, nargs, kwnames, &parser, &obj_args, &obj_custom_buckets)) {
+                                                        return NULL;
+                                                    }
+                                                    PyObject *arg_args = obj_args;
+                                                    PyObject *arg_custom_buckets;
+                                                    if (obj_custom_buckets == NULL) {
+                                                        arg_custom_buckets = NULL;
+                                                        goto __LL81;
+                                                    }
+                                                    if (PyDict_Check(obj_custom_buckets))
+                                                        arg_custom_buckets = obj_custom_buckets;
+                                                    else {
+                                                        arg_custom_buckets = NULL;
+                                                    }
+                                                    if (arg_custom_buckets != NULL) goto __LL81;
+                                                    if (obj_custom_buckets == Py_None)
+                                                        arg_custom_buckets = obj_custom_buckets;
+                                                    else {
+                                                        arg_custom_buckets = NULL;
+                                                    }
+                                                    if (arg_custom_buckets != NULL) goto __LL81;
+                                                    CPy_TypeError("dict or None", obj_custom_buckets); 
+                                                    goto fail;
 __LL81: ;
-    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances(arg_args, arg_custom_buckets);
-    return retval;
+                                                    PyObject *retval = CPyDef_eth_portfolio_scripts___balances___export_balances(arg_args, arg_custom_buckets);
+                                                    return retval;
 fail: ;
-    CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-    return NULL;
-}
-
+                                                    CPy_AddTraceback("eth_portfolio_scripts/balances.py", "export_balances", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+                                                    return NULL;
+                                                }
+                                                
 char CPyDef_eth_portfolio_scripts___balances_____top_level__(void) {
     PyObject *cpy_r_r0;
     PyObject *cpy_r_r1;
@@ -27106,10 +27832,10 @@ char CPyDef_eth_portfolio_scripts___balances_____top_level__(void) {
     PyObject *cpy_r_r32;
     PyObject *cpy_r_r33;
     PyObject *cpy_r_r34;
-    PyObject *cpy_r_r35;
-    PyObject *cpy_r_r36;
-    PyObject *cpy_r_r37;
-    PyObject *cpy_r_r38;
+    char cpy_r_r35;
+    void *cpy_r_r36;
+    void *cpy_r_r37;
+    PyObject **cpy_r_r38;
     PyObject *cpy_r_r39;
     PyObject *cpy_r_r40;
     PyObject *cpy_r_r41;
@@ -27118,37 +27844,52 @@ char CPyDef_eth_portfolio_scripts___balances_____top_level__(void) {
     PyObject *cpy_r_r44;
     PyObject *cpy_r_r45;
     PyObject *cpy_r_r46;
-    int32_t cpy_r_r47;
-    char cpy_r_r48;
+    PyObject *cpy_r_r47;
+    PyObject *cpy_r_r48;
     PyObject *cpy_r_r49;
     PyObject *cpy_r_r50;
-    PyObject *cpy_r_r51;
-    PyObject *cpy_r_r52;
+    int32_t cpy_r_r51;
+    char cpy_r_r52;
     PyObject *cpy_r_r53;
-    int32_t cpy_r_r54;
-    char cpy_r_r55;
+    PyObject *cpy_r_r54;
+    PyObject *cpy_r_r55;
     PyObject *cpy_r_r56;
     PyObject *cpy_r_r57;
     PyObject *cpy_r_r58;
     PyObject *cpy_r_r59;
     PyObject *cpy_r_r60;
-    int32_t cpy_r_r61;
-    char cpy_r_r62;
+    PyObject *cpy_r_r61;
+    PyObject *cpy_r_r62;
     PyObject *cpy_r_r63;
-    PyObject *cpy_r_r64;
-    PyObject *cpy_r_r65;
+    int32_t cpy_r_r64;
+    char cpy_r_r65;
     PyObject *cpy_r_r66;
     PyObject *cpy_r_r67;
     PyObject *cpy_r_r68;
     PyObject *cpy_r_r69;
     PyObject *cpy_r_r70;
-    PyObject **cpy_r_r72;
+    int32_t cpy_r_r71;
+    char cpy_r_r72;
     PyObject *cpy_r_r73;
     PyObject *cpy_r_r74;
     PyObject *cpy_r_r75;
-    int32_t cpy_r_r76;
-    char cpy_r_r77;
-    char cpy_r_r78;
+    PyObject *cpy_r_r76;
+    PyObject *cpy_r_r77;
+    int32_t cpy_r_r78;
+    char cpy_r_r79;
+    PyObject *cpy_r_r80;
+    PyObject *cpy_r_r81;
+    PyObject *cpy_r_r82;
+    PyObject *cpy_r_r83;
+    PyObject *cpy_r_r84;
+    PyObject *cpy_r_r85;
+    PyObject **cpy_r_r87;
+    PyObject *cpy_r_r88;
+    PyObject *cpy_r_r89;
+    PyObject *cpy_r_r90;
+    int32_t cpy_r_r91;
+    char cpy_r_r92;
+    char cpy_r_r93;
     cpy_r_r0 = CPyModule_builtins;
     cpy_r_r1 = (PyObject *)&_Py_NoneStruct;
     cpy_r_r2 = cpy_r_r0 != cpy_r_r1;
@@ -27156,8 +27897,8 @@ char CPyDef_eth_portfolio_scripts___balances_____top_level__(void) {
     cpy_r_r3 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'builtins' */
     cpy_r_r4 = PyImport_Import(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", -1, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL28;
     }
     CPyModule_builtins = cpy_r_r4;
     CPy_INCREF(CPyModule_builtins);
@@ -27169,7 +27910,7 @@ CPyL3: ;
     cpy_r_r8 = CPyImport_ImportFromMany(cpy_r_r6, cpy_r_r5, cpy_r_r5, cpy_r_r7);
     if (unlikely(cpy_r_r8 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
+        goto CPyL28;
     }
     CPyModule_argparse = cpy_r_r8;
     CPy_INCREF(CPyModule_argparse);
@@ -27180,7 +27921,7 @@ CPyL3: ;
     cpy_r_r12 = CPyImport_ImportFromMany(cpy_r_r10, cpy_r_r9, cpy_r_r9, cpy_r_r11);
     if (unlikely(cpy_r_r12 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
+        goto CPyL28;
     }
     CPyModule_datetime = cpy_r_r12;
     CPy_INCREF(CPyModule_datetime);
@@ -27191,7 +27932,7 @@ CPyL3: ;
     cpy_r_r16 = CPyImport_ImportFromMany(cpy_r_r14, cpy_r_r13, cpy_r_r13, cpy_r_r15);
     if (unlikely(cpy_r_r16 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
+        goto CPyL28;
     }
     CPyModule_typing = cpy_r_r16;
     CPy_INCREF(CPyModule_typing);
@@ -27208,252 +27949,284 @@ CPyL3: ;
     cpy_r_r25 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts/balances.py' */
     cpy_r_r26 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '<module>' */
     cpy_r_r27 = CPyImport_ImportMany(cpy_r_r23, cpy_r_r20, cpy_r_r24, cpy_r_r25, cpy_r_r26, cpy_r_r22);
-    if (!cpy_r_r27) goto CPyL23;
+    if (!cpy_r_r27) goto CPyL28;
     cpy_r_r28 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('HexAddress',) */
     cpy_r_r29 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_typing' */
     cpy_r_r30 = CPyStatic_eth_portfolio_scripts___balances___globals;
     cpy_r_r31 = CPyImport_ImportFromMany(cpy_r_r29, cpy_r_r28, cpy_r_r28, cpy_r_r30);
     if (unlikely(cpy_r_r31 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
+        goto CPyL28;
     }
     CPyModule_eth_typing = cpy_r_r31;
     CPy_INCREF(CPyModule_eth_typing);
     CPy_DECREF(cpy_r_r31);
-    cpy_r_r32 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('docker',) */
-    cpy_r_r33 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts' */
-    cpy_r_r34 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r35 = CPyImport_ImportFromMany(cpy_r_r33, cpy_r_r32, cpy_r_r32, cpy_r_r34);
-    if (unlikely(cpy_r_r35 == NULL)) {
+    cpy_r_r32 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r33 = CPyModule_eth_portfolio_scripts___docker;
+    cpy_r_r34 = (PyObject *)&_Py_NoneStruct;
+    cpy_r_r35 = cpy_r_r33 != cpy_r_r34;
+    if (cpy_r_r35) goto CPyL13;
+    cpy_r_r36 = CPyInitOnly_eth_portfolio_scripts___docker;
+    cpy_r_r37 = CPyExec_eth_portfolio_scripts___docker;
+    cpy_r_r38 = (PyObject **)&CPyModule_eth_portfolio_scripts___docker__internal;
+    cpy_r_r39 = PyImport_GetModuleDict();
+    cpy_r_r40 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio__mypyc' */
+    cpy_r_r41 = CPyDict_GetItem(cpy_r_r39, cpy_r_r40);
+    if (unlikely(cpy_r_r41 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
+        goto CPyL28;
     }
-    CPyModule_eth_portfolio_scripts = cpy_r_r35;
-    CPy_INCREF(CPyModule_eth_portfolio_scripts);
-    CPy_DECREF(cpy_r_r35);
-    cpy_r_r36 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('aiter_timestamps', 'parse_timedelta') */
-    cpy_r_r37 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts._utils' */
-    cpy_r_r38 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r39 = CPyImport_ImportFromMany(cpy_r_r37, cpy_r_r36, cpy_r_r36, cpy_r_r38);
-    if (unlikely(cpy_r_r39 == NULL)) {
+    cpy_r_r42 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '__file__' */
+    cpy_r_r43 = CPyObject_GetAttr(cpy_r_r41, cpy_r_r42);
+    CPy_DECREF(cpy_r_r41);
+    if (unlikely(cpy_r_r43 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
+        goto CPyL28;
     }
-    CPyModule_eth_portfolio_scripts____utils = cpy_r_r39;
+    cpy_r_r44 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '.cpython-313-x86_64-linux-gnu.so' */
+    cpy_r_r45 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts.docker' */
+    cpy_r_r46 = CPyImport_ImportNative(cpy_r_r45, cpy_r_r36, cpy_r_r37, cpy_r_r38, cpy_r_r43, cpy_r_r44, 1);
+    CPy_DECREF(cpy_r_r43);
+    if (unlikely(cpy_r_r46 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL28;
+    }
+    CPyModule_eth_portfolio_scripts___docker = cpy_r_r46;
+    CPy_INCREF(CPyModule_eth_portfolio_scripts___docker);
+    CPy_DECREF(cpy_r_r46);
+CPyL13: ;
+    cpy_r_r47 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'docker' */
+    cpy_r_r48 = PyImport_GetModuleDict();
+    cpy_r_r49 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts.docker' */
+    cpy_r_r50 = CPyDict_GetItem(cpy_r_r48, cpy_r_r49);
+    if (unlikely(cpy_r_r50 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL28;
+    }
+    cpy_r_r51 = CPyDict_SetItem(cpy_r_r32, cpy_r_r47, cpy_r_r50);
+    CPy_DECREF(cpy_r_r50);
+    cpy_r_r52 = cpy_r_r51 >= 0;
+    if (unlikely(!cpy_r_r52)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL28;
+    }
+    cpy_r_r53 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('aiter_timestamps', 'parse_timedelta') */
+    cpy_r_r54 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts._utils' */
+    cpy_r_r55 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r56 = CPyImport_ImportFromMany(cpy_r_r54, cpy_r_r53, cpy_r_r53, cpy_r_r55);
+    if (unlikely(cpy_r_r56 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL28;
+    }
+    CPyModule_eth_portfolio_scripts____utils = cpy_r_r56;
     CPy_INCREF(CPyModule_eth_portfolio_scripts____utils);
-    CPy_DECREF(cpy_r_r39);
-    cpy_r_r40 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r41 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'timezone' */
-    cpy_r_r42 = CPyDict_GetItem(cpy_r_r40, cpy_r_r41);
-    if (unlikely(cpy_r_r42 == NULL)) {
+    CPy_DECREF(cpy_r_r56);
+    cpy_r_r57 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r58 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'timezone' */
+    cpy_r_r59 = CPyDict_GetItem(cpy_r_r57, cpy_r_r58);
+    if (unlikely(cpy_r_r59 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
+        goto CPyL28;
     }
-    cpy_r_r43 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'utc' */
-    cpy_r_r44 = CPyObject_GetAttr(cpy_r_r42, cpy_r_r43);
-    CPy_DECREF(cpy_r_r42);
-    if (unlikely(cpy_r_r44 == NULL)) {
+    cpy_r_r60 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'utc' */
+    cpy_r_r61 = CPyObject_GetAttr(cpy_r_r59, cpy_r_r60);
+    CPy_DECREF(cpy_r_r59);
+    if (unlikely(cpy_r_r61 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
+        goto CPyL28;
     }
-    CPyStatic_eth_portfolio_scripts___balances____UTC = cpy_r_r44;
+    CPyStatic_eth_portfolio_scripts___balances____UTC = cpy_r_r61;
     CPy_INCREF(CPyStatic_eth_portfolio_scripts___balances____UTC);
-    cpy_r_r45 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r46 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_UTC' */
-    cpy_r_r47 = CPyDict_SetItem(cpy_r_r45, cpy_r_r46, cpy_r_r44);
-    CPy_DECREF(cpy_r_r44);
-    cpy_r_r48 = cpy_r_r47 >= 0;
-    if (unlikely(!cpy_r_r48)) {
+    cpy_r_r62 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r63 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '_UTC' */
+    cpy_r_r64 = CPyDict_SetItem(cpy_r_r62, cpy_r_r63, cpy_r_r61);
+    CPy_DECREF(cpy_r_r61);
+    cpy_r_r65 = cpy_r_r64 >= 0;
+    if (unlikely(!cpy_r_r65)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
+        goto CPyL28;
     }
-    cpy_r_r49 = CPyModule_a_sync;
-    cpy_r_r50 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'create_task' */
-    cpy_r_r51 = CPyObject_GetAttr(cpy_r_r49, cpy_r_r50);
-    if (unlikely(cpy_r_r51 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
-    }
-    CPyStatic_eth_portfolio_scripts___balances___create_task = cpy_r_r51;
-    CPy_INCREF(CPyStatic_eth_portfolio_scripts___balances___create_task);
-    cpy_r_r52 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r53 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'create_task' */
-    cpy_r_r54 = CPyDict_SetItem(cpy_r_r52, cpy_r_r53, cpy_r_r51);
-    CPy_DECREF(cpy_r_r51);
-    cpy_r_r55 = cpy_r_r54 >= 0;
-    if (unlikely(!cpy_r_r55)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
-    }
-    cpy_r_r56 = CPyModule_a_sync___asyncio;
-    cpy_r_r57 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'sleep0' */
-    cpy_r_r58 = CPyObject_GetAttr(cpy_r_r56, cpy_r_r57);
-    if (unlikely(cpy_r_r58 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
-    }
-    CPyStatic_eth_portfolio_scripts___balances___yield_to_loop = cpy_r_r58;
-    CPy_INCREF(CPyStatic_eth_portfolio_scripts___balances___yield_to_loop);
-    cpy_r_r59 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r60 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'yield_to_loop' */
-    cpy_r_r61 = CPyDict_SetItem(cpy_r_r59, cpy_r_r60, cpy_r_r58);
-    CPy_DECREF(cpy_r_r58);
-    cpy_r_r62 = cpy_r_r61 >= 0;
-    if (unlikely(!cpy_r_r62)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
-    }
-    cpy_r_r63 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r64 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'export_balances' */
-    cpy_r_r65 = CPyDict_GetItem(cpy_r_r63, cpy_r_r64);
-    if (unlikely(cpy_r_r65 == NULL)) {
-        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
-    }
-    cpy_r_r66 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r67 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'docker' */
-    cpy_r_r68 = CPyDict_GetItem(cpy_r_r66, cpy_r_r67);
+    cpy_r_r66 = CPyModule_a_sync;
+    cpy_r_r67 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'create_task' */
+    cpy_r_r68 = CPyObject_GetAttr(cpy_r_r66, cpy_r_r67);
     if (unlikely(cpy_r_r68 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL24;
+        goto CPyL28;
     }
-    cpy_r_r69 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ensure_containers' */
-    cpy_r_r70 = CPyObject_GetAttr(cpy_r_r68, cpy_r_r69);
+    CPyStatic_eth_portfolio_scripts___balances___create_task = cpy_r_r68;
+    CPy_INCREF(CPyStatic_eth_portfolio_scripts___balances___create_task);
+    cpy_r_r69 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r70 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'create_task' */
+    cpy_r_r71 = CPyDict_SetItem(cpy_r_r69, cpy_r_r70, cpy_r_r68);
     CPy_DECREF(cpy_r_r68);
-    if (unlikely(cpy_r_r70 == NULL)) {
+    cpy_r_r72 = cpy_r_r71 >= 0;
+    if (unlikely(!cpy_r_r72)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL24;
+        goto CPyL28;
     }
-    PyObject *cpy_r_r71[1] = {cpy_r_r65};
-    cpy_r_r72 = (PyObject **)&cpy_r_r71;
-    cpy_r_r73 = PyObject_Vectorcall(cpy_r_r70, cpy_r_r72, 1, 0);
-    CPy_DECREF(cpy_r_r70);
-    if (unlikely(cpy_r_r73 == NULL)) {
+    cpy_r_r73 = CPyModule_a_sync___asyncio;
+    cpy_r_r74 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'sleep0' */
+    cpy_r_r75 = CPyObject_GetAttr(cpy_r_r73, cpy_r_r74);
+    if (unlikely(cpy_r_r75 == NULL)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL24;
+        goto CPyL28;
     }
-    CPy_DECREF(cpy_r_r65);
-    cpy_r_r74 = CPyStatic_eth_portfolio_scripts___balances___globals;
-    cpy_r_r75 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'export_balances' */
-    cpy_r_r76 = PyDict_SetItem(cpy_r_r74, cpy_r_r75, cpy_r_r73);
-    CPy_DECREF(cpy_r_r73);
-    cpy_r_r77 = cpy_r_r76 >= 0;
-    if (unlikely(!cpy_r_r77)) {
+    CPyStatic_eth_portfolio_scripts___balances___yield_to_loop = cpy_r_r75;
+    CPy_INCREF(CPyStatic_eth_portfolio_scripts___balances___yield_to_loop);
+    cpy_r_r76 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r77 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'yield_to_loop' */
+    cpy_r_r78 = CPyDict_SetItem(cpy_r_r76, cpy_r_r77, cpy_r_r75);
+    CPy_DECREF(cpy_r_r75);
+    cpy_r_r79 = cpy_r_r78 >= 0;
+    if (unlikely(!cpy_r_r79)) {
         CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
-        goto CPyL23;
+        goto CPyL28;
+    }
+    cpy_r_r80 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r81 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'export_balances' */
+    cpy_r_r82 = CPyDict_GetItem(cpy_r_r80, cpy_r_r81);
+    if (unlikely(cpy_r_r82 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL28;
+    }
+    cpy_r_r83 = CPyModule_eth_portfolio_scripts___docker;
+    cpy_r_r84 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'ensure_containers' */
+    cpy_r_r85 = CPyObject_GetAttr(cpy_r_r83, cpy_r_r84);
+    if (unlikely(cpy_r_r85 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL29;
+    }
+    PyObject *cpy_r_r86[1] = {cpy_r_r82};
+    cpy_r_r87 = (PyObject **)&cpy_r_r86;
+    cpy_r_r88 = PyObject_Vectorcall(cpy_r_r85, cpy_r_r87, 1, 0);
+    CPy_DECREF(cpy_r_r85);
+    if (unlikely(cpy_r_r88 == NULL)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL29;
+    }
+    CPy_DECREF(cpy_r_r82);
+    cpy_r_r89 = CPyStatic_eth_portfolio_scripts___balances___globals;
+    cpy_r_r90 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'export_balances' */
+    cpy_r_r91 = PyDict_SetItem(cpy_r_r89, cpy_r_r90, cpy_r_r88);
+    CPy_DECREF(cpy_r_r88);
+    cpy_r_r92 = cpy_r_r91 >= 0;
+    if (unlikely(!cpy_r_r92)) {
+        CPy_AddTraceback("eth_portfolio_scripts/balances.py", "<module>", DIFFCHECK_PLACEHOLDER, CPyStatic_eth_portfolio_scripts___balances___globals);
+        goto CPyL28;
     }
     return 1;
-CPyL23: ;
-    cpy_r_r78 = 2;
-    return cpy_r_r78;
-CPyL24: ;
-    CPy_DecRef(cpy_r_r65);
-    goto CPyL23;
+CPyL28: ;
+    cpy_r_r93 = 2;
+    return cpy_r_r93;
+CPyL29: ;
+    CPy_DecRef(cpy_r_r82);
+    goto CPyL28;
 }
-
-int CPyGlobalsInit(void)
-{
-    static int is_initialized = 0;
-    if (is_initialized) return 0;
-    
-    CPy_Init();
-    CPyModule_eth_portfolio____loaders____nonce = Py_None;
-    CPyModule_builtins = Py_None;
-    CPyModule_asyncio = Py_None;
-    CPyModule_logging = Py_None;
-    CPyModule_collections = Py_None;
-    CPyModule_time = Py_None;
-    CPyModule_typing = Py_None;
-    CPyModule_a_sync = Py_None;
-    CPyModule_dank_mids = Py_None;
-    CPyModule_eth_typing = Py_None;
-    CPyModule_eth_portfolio____loaders___balances = Py_None;
-    CPyModule_builtins = Py_None;
-    CPyModule_logging = Py_None;
-    CPyModule_decimal = Py_None;
-    CPyModule_typing = Py_None;
-    CPyModule_y = Py_None;
-    CPyModule_y____decorators = Py_None;
-    CPyModule_y___datatypes = Py_None;
-    CPyModule_eth_portfolio____decimal = Py_None;
-    CPyModule_eth_portfolio____utils = Py_None;
-    CPyModule_eth_portfolio___typing = Py_None;
-    CPyModule_eth_portfolio____loaders___utils = Py_None;
-    CPyModule_builtins = Py_None;
-    CPyModule_typing = Py_None;
-    CPyModule_dank_mids = Py_None;
-    CPyModule_eth_retry = Py_None;
-    CPyModule_msgspec = Py_None;
-    CPyModule_a_sync = Py_None;
-    CPyModule_eth_typing = Py_None;
-    CPyModule_faster_async_lru = Py_None;
-    CPyModule_y____decorators = Py_None;
-    CPyModule_eth_portfolio____argspec = Py_None;
-    CPyModule_builtins = Py_None;
-    CPyModule_collections___abc = Py_None;
-    CPyModule_inspect = Py_None;
-    CPyModule_typing = Py_None;
-    CPyModule_eth_portfolio____config = Py_None;
-    CPyModule_builtins = Py_None;
-    CPyModule_os = Py_None;
-    CPyModule_typing = Py_None;
-    CPyModule_eth_portfolio____shitcoins = Py_None;
-    CPyModule_builtins = Py_None;
-    CPyModule_collections = Py_None;
-    CPyModule_typing = Py_None;
-    CPyModule_eth_typing = Py_None;
-    CPyModule_y = Py_None;
-    CPyModule_eth_portfolio____stableish = Py_None;
-    CPyModule_builtins = Py_None;
-    CPyModule_collections = Py_None;
-    CPyModule_typing = Py_None;
-    CPyModule_eth_typing = Py_None;
-    CPyModule_y = Py_None;
-    CPyModule_eth_portfolio___constants = Py_None;
-    CPyModule_builtins = Py_None;
-    CPyModule_os = Py_None;
-    CPyModule_typing = Py_None;
-    CPyModule_brownie = Py_None;
-    CPyModule_y = Py_None;
-    CPyModule_eth_portfolio_scripts___docker = Py_None;
-    CPyModule_builtins = Py_None;
-    CPyModule_eth_portfolio_scripts___docker___check = Py_None;
-    CPyModule_eth_portfolio_scripts___docker___docker_compose = Py_None;
-    CPyModule_eth_portfolio_scripts___docker___check = Py_None;
-    CPyModule_builtins = Py_None;
-    CPyModule_functools = Py_None;
-    CPyModule_subprocess = Py_None;
-    CPyModule_eth_portfolio_scripts___docker___docker_compose = Py_None;
-    CPyModule_builtins = Py_None;
-    CPyModule_logging = Py_None;
-    CPyModule_collections___abc = Py_None;
-    CPyModule_functools = Py_None;
-    CPyModule_importlib = Py_None;
-    CPyModule_subprocess = Py_None;
-    CPyModule_typing = Py_None;
-    CPyModule_typing_extensions = Py_None;
-    CPyModule_eth_portfolio_scripts___docker___check = Py_None;
-    CPyModule_eth_portfolio_scripts___balances = Py_None;
-    CPyModule_builtins = Py_None;
-    CPyModule_argparse = Py_None;
-    CPyModule_datetime = Py_None;
-    CPyModule_typing = Py_None;
-    CPyModule_a_sync = Py_None;
-    CPyModule_a_sync___asyncio = Py_None;
-    CPyModule_eth_typing = Py_None;
-    CPyModule_eth_portfolio_scripts = Py_None;
-    CPyModule_eth_portfolio_scripts____utils = Py_None;
-    CPyModule_dank_mids = Py_None;
-    CPyModule_eth_portfolio_scripts____portfolio = Py_None;
-    if (CPyStatics_Initialize(CPyStatics, CPyLit_Str, CPyLit_Bytes, CPyLit_Int, CPyLit_Float, CPyLit_Complex, CPyLit_Tuple, CPyLit_FrozenSet) < 0) {
-        return -1;
-    }
-    is_initialized = 1;
-    return 0;
-}
-
-PyObject *CPyStatics[DIFFCHECK_PLACEHOLDER];
-const char * const CPyLit_Str[] = {
+                                                
+                                                int CPyGlobalsInit(void)
+                                                {
+                                                    static int is_initialized = 0;
+                                                    if (is_initialized) return 0;
+                                                    
+                                                    CPy_Init();
+                                                    CPyModule_eth_portfolio____loaders____nonce = Py_None;
+                                                    CPyModule_builtins = Py_None;
+                                                    CPyModule_asyncio = Py_None;
+                                                    CPyModule_logging = Py_None;
+                                                    CPyModule_collections = Py_None;
+                                                    CPyModule_time = Py_None;
+                                                    CPyModule_typing = Py_None;
+                                                    CPyModule_a_sync = Py_None;
+                                                    CPyModule_dank_mids = Py_None;
+                                                    CPyModule_eth_typing = Py_None;
+                                                    CPyModule_eth_portfolio____loaders___balances = Py_None;
+                                                    CPyModule_builtins = Py_None;
+                                                    CPyModule_logging = Py_None;
+                                                    CPyModule_decimal = Py_None;
+                                                    CPyModule_typing = Py_None;
+                                                    CPyModule_y = Py_None;
+                                                    CPyModule_y____decorators = Py_None;
+                                                    CPyModule_y___datatypes = Py_None;
+                                                    CPyModule_eth_portfolio____decimal = Py_None;
+                                                    CPyModule_eth_portfolio____utils = Py_None;
+                                                    CPyModule_eth_portfolio___typing = Py_None;
+                                                    CPyModule_eth_portfolio____loaders___utils = Py_None;
+                                                    CPyModule_builtins = Py_None;
+                                                    CPyModule_typing = Py_None;
+                                                    CPyModule_dank_mids = Py_None;
+                                                    CPyModule_eth_retry = Py_None;
+                                                    CPyModule_msgspec = Py_None;
+                                                    CPyModule_a_sync = Py_None;
+                                                    CPyModule_eth_typing = Py_None;
+                                                    CPyModule_faster_async_lru = Py_None;
+                                                    CPyModule_y____decorators = Py_None;
+                                                    CPyModule_eth_portfolio____argspec = Py_None;
+                                                    CPyModule_builtins = Py_None;
+                                                    CPyModule_collections___abc = Py_None;
+                                                    CPyModule_inspect = Py_None;
+                                                    CPyModule_typing = Py_None;
+                                                    CPyModule_eth_portfolio____config = Py_None;
+                                                    CPyModule_builtins = Py_None;
+                                                    CPyModule_os = Py_None;
+                                                    CPyModule_typing = Py_None;
+                                                    CPyModule_eth_portfolio____shitcoins = Py_None;
+                                                    CPyModule_builtins = Py_None;
+                                                    CPyModule_collections = Py_None;
+                                                    CPyModule_typing = Py_None;
+                                                    CPyModule_eth_typing = Py_None;
+                                                    CPyModule_y = Py_None;
+                                                    CPyModule_eth_portfolio____stableish = Py_None;
+                                                    CPyModule_builtins = Py_None;
+                                                    CPyModule_collections = Py_None;
+                                                    CPyModule_typing = Py_None;
+                                                    CPyModule_eth_typing = Py_None;
+                                                    CPyModule_y = Py_None;
+                                                    CPyModule_eth_portfolio___constants = Py_None;
+                                                    CPyModule_builtins = Py_None;
+                                                    CPyModule_os = Py_None;
+                                                    CPyModule_typing = Py_None;
+                                                    CPyModule_brownie = Py_None;
+                                                    CPyModule_y = Py_None;
+                                                    CPyModule_eth_portfolio_scripts___docker = Py_None;
+                                                    CPyModule_builtins = Py_None;
+                                                    CPyModule_eth_portfolio_scripts___docker___check = Py_None;
+                                                    CPyModule_eth_portfolio_scripts___docker___docker_compose = Py_None;
+                                                    CPyModule_eth_portfolio_scripts___docker___check = Py_None;
+                                                    CPyModule_builtins = Py_None;
+                                                    CPyModule_functools = Py_None;
+                                                    CPyModule_subprocess = Py_None;
+                                                    CPyModule_eth_portfolio_scripts___docker___docker_compose = Py_None;
+                                                    CPyModule_builtins = Py_None;
+                                                    CPyModule_logging = Py_None;
+                                                    CPyModule_collections___abc = Py_None;
+                                                    CPyModule_functools = Py_None;
+                                                    CPyModule_importlib = Py_None;
+                                                    CPyModule_subprocess = Py_None;
+                                                    CPyModule_typing = Py_None;
+                                                    CPyModule_typing_extensions = Py_None;
+                                                    CPyModule_eth_portfolio_scripts___docker___check = Py_None;
+                                                    CPyModule_eth_portfolio_scripts___balances = Py_None;
+                                                    CPyModule_builtins = Py_None;
+                                                    CPyModule_argparse = Py_None;
+                                                    CPyModule_datetime = Py_None;
+                                                    CPyModule_typing = Py_None;
+                                                    CPyModule_a_sync = Py_None;
+                                                    CPyModule_a_sync___asyncio = Py_None;
+                                                    CPyModule_eth_typing = Py_None;
+                                                    CPyModule_eth_portfolio_scripts = Py_None;
+                                                    CPyModule_eth_portfolio_scripts___docker = Py_None;
+                                                    CPyModule_eth_portfolio_scripts____utils = Py_None;
+                                                    CPyModule_dank_mids = Py_None;
+                                                    CPyModule_eth_portfolio_scripts____portfolio = Py_None;
+                                                    if (CPyStatics_Initialize(CPyStatics, CPyLit_Str, CPyLit_Bytes, CPyLit_Int, CPyLit_Float, CPyLit_Complex, CPyLit_Tuple, CPyLit_FrozenSet) < 0) {
+                                                        return -1;
+                                                    }
+                                                    is_initialized = 1;
+                                                    return 0;
+                                                }
+                                                
+                                                PyObject *CPyStatics[DIFFCHECK_PLACEHOLDER];
+                                                const char * const CPyLit_Str[] = {
     "\003\vdefaultdict\020block_identifier\nValueError",
     "\005\037error creating execution cursor\004For \004 at \002: \rGeneratorExit",
     "\003\rStopIteration\t__aexit__\n__aenter__",
@@ -27863,9 +28636,10 @@ const char * const CPyLit_Str[] = {
     "\001*0x269895a3dF4D73b077Fc823dD6dA1B95f72Aaf9B",
     "\001*0x95dFDC8161832e4fF7816aC4B6367CE201538253",
     "\002*0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8\020INTL_STABLECOINS",
-    "\003\fcheck_docker\024check_docker_compose\fcheck_system",
-    "\005\"eth_portfolio_scripts.docker.check\005build\004down\021ensure_containers\004stop",
-    "\003\002up+eth_portfolio_scripts.docker.docker_compose\a__all__",
+    "\003\024eth_portfolio__mypyc\b__file__ .cpython-313-x86_64-linux-gnu.so",
+    "\003\"eth_portfolio_scripts.docker.check\fcheck_docker\024check_docker_compose",
+    "\004\fcheck_system+eth_portfolio_scripts.docker.docker_compose\005build\004down",
+    "\004\021ensure_containers\004stop\002up\a__all__",
     "\004\' \360\237\224\215 checking your computer for docker\005print\006docker\t--version",
     "\003\fcheck_output\022CalledProcessError\021FileNotFoundError",
     "\001KDocker is not installed. You must install Docker before using dao-treasury.",
@@ -27889,511 +28663,553 @@ const char * const CPyLit_Str[] = {
     "\005\005start\vrun_forever\017export_snapshot\036eth-portfolio export snapshot \004coro",
     "\005\004name\022skip_gc_until_done\tNamespace\bargparse\016a_sync.asyncio",
     "\002!eth_portfolio_scripts/balances.py\nHexAddress",
-    "\005\034eth_portfolio_scripts._utils\004_UTC\vcreate_task\006sleep0\ryield_to_loop",
-    "\001\017export_balances",
+    "\003\034eth_portfolio_scripts.docker\034eth_portfolio_scripts._utils\004_UTC",
+    "\004\vcreate_task\006sleep0\ryield_to_loop\017export_balances",
     "",
 };
-const char * const CPyLit_Bytes[] = {
+                                                const char * const CPyLit_Bytes[] = {
     "",
 };
-const char * const CPyLit_Int[] = {
+                                                const char * const CPyLit_Int[] = {
     "\t1\000-1\00010\0000\0003600\0003\00020\0005000\00030",
     "",
 };
-const double CPyLit_Float[] = {0};
-const double CPyLit_Complex[] = {0};
-const int CPyLit_Tuple[] = {
-    65, 1, 4, 3, 23, 23, 23, 3, 24, 24, 24, 2, 645, 646, 1, 3, 1, 28, 4,
-    29, 30, 31, 32, 3, 34, 34, 34, 3, 35, 35, 35, 2, 651, 652, 2, 36, 37,
-    1, 61, 2, 68, 19, 4, 70, 71, 68, 19, 1, 646, 1, 73, 1, 31, 3, 62, 62,
-    62, 1, 661, 1, 78, 2, 80, 81, 1, 72, 1, 69, 1, 67, 2, 93, 94, 3, 95,
-    95, 95, 3, 96, 96, 96, 3, 652, 669, 670, 1, 98, 1, 99, 1, 100, 2, 105,
+                                                const double CPyLit_Float[] = {0};
+                                                const double CPyLit_Complex[] = {0};
+                                                const int CPyLit_Tuple[] = {
+    64, 1, 4, 3, 23, 23, 23, 3, 24, 24, 24, 2, 649, 650, 1, 3, 1, 28, 4,
+    29, 30, 31, 32, 3, 34, 34, 34, 3, 35, 35, 35, 2, 655, 656, 2, 36, 37,
+    1, 61, 2, 68, 19, 4, 70, 71, 68, 19, 1, 650, 1, 73, 1, 31, 3, 62, 62,
+    62, 1, 665, 1, 78, 2, 80, 81, 1, 72, 1, 69, 1, 67, 2, 93, 94, 3, 95,
+    95, 95, 3, 96, 96, 96, 3, 656, 673, 674, 1, 98, 1, 99, 1, 100, 2, 105,
     58, 4, 107, 108, 109, 110, 1, 117, 1, 113, 1, 115, 3, 120, 120, 120,
-    1, 680, 2, 30, 31, 1, 37, 2, 125, 126, 1, 437, 3, 125, 126, 466, 3,
-    529, 530, 531, 5, 533, 534, 535, 536, 537, 1, 560, 2, 545, 544, 1,
-    105, 1, 567, 1, 580, 3, 31, 582, 583, 1, 584, 1, 531, 1, 594, 5, 602,
-    605, 604, 606, 607, 1, 614, 3, 617, 599, 618, 3, 621, 622, 623, 1,
-    624, 2, 610, 611, 3, 626, 34, 34, 2, 651, 704, 1, 628, 1, 542, 2, 616,
-    600
+    1, 684, 2, 30, 31, 1, 37, 2, 125, 126, 1, 437, 3, 125, 126, 466, 3,
+    533, 534, 535, 5, 537, 538, 539, 540, 541, 1, 563, 2, 548, 547, 1,
+    105, 1, 570, 1, 583, 3, 31, 585, 586, 1, 587, 1, 535, 1, 597, 5, 605,
+    608, 607, 609, 610, 1, 617, 3, 620, 602, 621, 3, 624, 625, 626, 1,
+    627, 2, 613, 614, 3, 629, 34, 34, 2, 655, 708, 1, 631, 2, 619, 603
 };
-const int CPyLit_FrozenSet[] = {0};
-CPyModule *CPyModule_eth_portfolio____loaders____nonce__internal = NULL;
-CPyModule *CPyModule_eth_portfolio____loaders____nonce;
-PyObject *CPyStatic__nonce___globals;
-CPyModule *CPyModule_builtins;
-CPyModule *CPyModule_asyncio;
-CPyModule *CPyModule_logging;
-CPyModule *CPyModule_collections;
-CPyModule *CPyModule_time;
-CPyModule *CPyModule_typing;
-CPyModule *CPyModule_a_sync;
-CPyModule *CPyModule_dank_mids;
-CPyModule *CPyModule_eth_typing;
-CPyModule *CPyModule_eth_portfolio____loaders___balances__internal = NULL;
-CPyModule *CPyModule_eth_portfolio____loaders___balances;
-PyObject *CPyStatic__loaders___balances___globals;
-CPyModule *CPyModule_decimal;
-CPyModule *CPyModule_y;
-CPyModule *CPyModule_y____decorators;
-CPyModule *CPyModule_y___datatypes;
-CPyModule *CPyModule_eth_portfolio____decimal;
-CPyModule *CPyModule_eth_portfolio____utils;
-CPyModule *CPyModule_eth_portfolio___typing;
-CPyModule *CPyModule_eth_portfolio____loaders___utils__internal = NULL;
-CPyModule *CPyModule_eth_portfolio____loaders___utils;
-PyObject *CPyStatic_utils___globals;
-CPyModule *CPyModule_eth_retry;
-CPyModule *CPyModule_msgspec;
-CPyModule *CPyModule_faster_async_lru;
-CPyModule *CPyModule_eth_portfolio____argspec__internal = NULL;
-CPyModule *CPyModule_eth_portfolio____argspec;
-PyObject *CPyStatic__argspec___globals;
-CPyModule *CPyModule_collections___abc;
-CPyModule *CPyModule_inspect;
-CPyModule *CPyModule_eth_portfolio____config__internal = NULL;
-CPyModule *CPyModule_eth_portfolio____config;
-PyObject *CPyStatic__config___globals;
-CPyModule *CPyModule_os;
-CPyModule *CPyModule_eth_portfolio____shitcoins__internal = NULL;
-CPyModule *CPyModule_eth_portfolio____shitcoins;
-PyObject *CPyStatic__shitcoins___globals;
-CPyModule *CPyModule_eth_portfolio____stableish__internal = NULL;
-CPyModule *CPyModule_eth_portfolio____stableish;
-PyObject *CPyStatic__stableish___globals;
-CPyModule *CPyModule_eth_portfolio___constants__internal = NULL;
-CPyModule *CPyModule_eth_portfolio___constants;
-PyObject *CPyStatic_constants___globals;
-CPyModule *CPyModule_brownie;
-CPyModule *CPyModule_eth_portfolio_scripts___docker__internal = NULL;
-CPyModule *CPyModule_eth_portfolio_scripts___docker;
-PyObject *CPyStatic_docker___globals;
-CPyModule *CPyModule_eth_portfolio_scripts___docker___check__internal = NULL;
-CPyModule *CPyModule_eth_portfolio_scripts___docker___check;
-CPyModule *CPyModule_eth_portfolio_scripts___docker___docker_compose__internal = NULL;
-CPyModule *CPyModule_eth_portfolio_scripts___docker___docker_compose;
-PyObject *CPyStatic_check___globals;
-CPyModule *CPyModule_functools;
-CPyModule *CPyModule_subprocess;
-PyObject *CPyStatic_docker_compose___globals;
-CPyModule *CPyModule_importlib;
-CPyModule *CPyModule_typing_extensions;
-CPyModule *CPyModule_eth_portfolio_scripts___balances__internal = NULL;
-CPyModule *CPyModule_eth_portfolio_scripts___balances;
-PyObject *CPyStatic_eth_portfolio_scripts___balances___globals;
-CPyModule *CPyModule_argparse;
-CPyModule *CPyModule_datetime;
-CPyModule *CPyModule_a_sync___asyncio;
-CPyModule *CPyModule_eth_portfolio_scripts;
-CPyModule *CPyModule_eth_portfolio_scripts____utils;
-CPyModule *CPyModule_eth_portfolio_scripts____portfolio;
-PyObject *CPyStatic__nonce___logger = NULL;
-PyObject *CPyStatic__nonce___logger_is_enabled = NULL;
-PyObject *CPyStatic__nonce_____log = NULL;
-CPyTagged CPyStatic__nonce___DEBUG = CPY_INT_TAG;
-PyObject *CPyStatic__nonce___nonces = NULL;
-PyObject *CPyStatic__nonce___locks = NULL;
-PyObject *CPyStatic__nonce___get_transaction_count = NULL;
-PyObject *CPyStatic__nonce___igather = NULL;
-PyObject *CPyStatic__nonce___now = NULL;
-PyObject *CPyStatic__nonce___BlockCache___lock = NULL;
-PyTypeObject *CPyType__nonce___BlockCache;
-PyObject *CPyDef__nonce___BlockCache(void);
-PyTypeObject *CPyType__nonce_____mypyc_lambda__0_obj;
-PyObject *CPyDef__nonce_____mypyc_lambda__0_obj(void);
-CPyThreadLocal eth_portfolio____loaders____nonce_____mypyc_lambda__0_objObject *_nonce_____mypyc_lambda__0_obj_free_instance;
-PyTypeObject *CPyType__nonce___get_nonce_at_block_gen;
-PyObject *CPyDef__nonce___get_nonce_at_block_gen(void);
-CPyThreadLocal eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *_nonce___get_nonce_at_block_gen_free_instance;
-PyTypeObject *CPyType__nonce___get_block_for_nonce_gen;
-PyObject *CPyDef__nonce___get_block_for_nonce_gen(void);
-CPyThreadLocal eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *_nonce___get_block_for_nonce_gen_free_instance;
-PyTypeObject *CPyType__nonce____get_area_gen;
-PyObject *CPyDef__nonce____get_area_gen(void);
-CPyThreadLocal eth_portfolio____loaders____nonce____get_area_genObject *_nonce____get_area_gen_free_instance;
-PyTypeObject *CPyType__nonce___get_block_number_gen;
-PyObject *CPyDef__nonce___get_block_number_gen(void);
-CPyThreadLocal eth_portfolio____loaders____nonce___get_block_number_genObject *_nonce___get_block_number_gen_free_instance;
-PyObject *CPyDef__nonce_____mypyc_lambda__0_obj_____get__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
-PyObject *CPyPy__nonce_____mypyc_lambda__0_obj_____get__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce_____mypyc_lambda__0_obj_____call__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce_____mypyc_lambda__0_obj_____call__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_nonce_at_block_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
-PyObject *CPyDef__nonce___get_nonce_at_block_gen_____next__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce___get_nonce_at_block_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_nonce_at_block_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
-PyObject *CPyPy__nonce___get_nonce_at_block_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_nonce_at_block_gen_____iter__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce___get_nonce_at_block_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_nonce_at_block_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
-PyObject *CPyPy__nonce___get_nonce_at_block_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_nonce_at_block_gen___close(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce___get_nonce_at_block_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_nonce_at_block_gen_____await__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce___get_nonce_at_block_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_nonce_at_block(PyObject *cpy_r_address, CPyTagged cpy_r_block);
-PyObject *CPyPy__nonce___get_nonce_at_block(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_block_for_nonce_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
-PyObject *CPyDef__nonce___get_block_for_nonce_gen_____next__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce___get_block_for_nonce_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_block_for_nonce_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
-PyObject *CPyPy__nonce___get_block_for_nonce_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_block_for_nonce_gen_____iter__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce___get_block_for_nonce_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_block_for_nonce_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
-PyObject *CPyPy__nonce___get_block_for_nonce_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_block_for_nonce_gen___close(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce___get_block_for_nonce_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_block_for_nonce_gen_____await__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce___get_block_for_nonce_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_block_for_nonce(PyObject *cpy_r_address, CPyTagged cpy_r_nonce);
-PyObject *CPyPy__nonce___get_block_for_nonce(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce____get_area_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
-PyObject *CPyDef__nonce____get_area_gen_____next__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce____get_area_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce____get_area_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
-PyObject *CPyPy__nonce____get_area_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce____get_area_gen_____iter__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce____get_area_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce____get_area_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
-PyObject *CPyPy__nonce____get_area_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce____get_area_gen___close(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce____get_area_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce____get_area_gen_____await__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce____get_area_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce____get_area(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, CPyTagged cpy_r_lo, CPyTagged cpy_r_hi, CPyTagged cpy_r_range_size);
-PyObject *CPyPy__nonce____get_area(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-char CPyDef__nonce____update_nonces(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, CPyTagged cpy_r_block);
-PyObject *CPyPy__nonce____update_nonces(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-CPyTagged CPyDef__nonce____get_num_chunks(CPyTagged cpy_r_range_size);
-PyObject *CPyPy__nonce____get_num_chunks(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-char CPyDef__nonce___BlockCache_____mypyc_defaults_setup(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce___BlockCache_____mypyc_defaults_setup(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_block_number_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
-PyObject *CPyDef__nonce___get_block_number_gen_____next__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce___get_block_number_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_block_number_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
-PyObject *CPyPy__nonce___get_block_number_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_block_number_gen_____iter__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce___get_block_number_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_block_number_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
-PyObject *CPyPy__nonce___get_block_number_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_block_number_gen___close(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce___get_block_number_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_block_number_gen_____await__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__nonce___get_block_number_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__nonce___get_block_number(void);
-PyObject *CPyPy__nonce___get_block_number(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-char CPyDef__nonce_____top_level__(void);
-PyObject *CPyStatic__loaders___balances____ZERO = NULL;
-PyObject *CPyStatic__loaders___balances___logger = NULL;
-PyObject *CPyStatic__loaders___balances___rounding_logger = NULL;
-PyObject *CPyStatic__loaders___balances____builtin_round = NULL;
-PyTypeObject *CPyType__loaders___balances___load_token_balance_gen;
-PyObject *CPyDef__loaders___balances___load_token_balance_gen(void);
-CPyThreadLocal eth_portfolio____loaders___balances___load_token_balance_genObject *_loaders___balances___load_token_balance_gen_free_instance;
-PyObject *CPyDef__loaders___balances___load_token_balance_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
-PyObject *CPyDef__loaders___balances___load_token_balance_gen_____next__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__loaders___balances___load_token_balance_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__loaders___balances___load_token_balance_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
-PyObject *CPyPy__loaders___balances___load_token_balance_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__loaders___balances___load_token_balance_gen_____iter__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__loaders___balances___load_token_balance_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__loaders___balances___load_token_balance_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
-PyObject *CPyPy__loaders___balances___load_token_balance_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__loaders___balances___load_token_balance_gen___close(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__loaders___balances___load_token_balance_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__loaders___balances___load_token_balance_gen_____await__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy__loaders___balances___load_token_balance_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__loaders___balances___load_token_balance(PyObject *cpy_r_token, PyObject *cpy_r_address, PyObject *cpy_r_block);
-PyObject *CPyPy__loaders___balances___load_token_balance(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__loaders___balances____calc_value(PyObject *cpy_r_balance, PyObject *cpy_r_price);
-PyObject *CPyPy__loaders___balances____calc_value(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__loaders___balances___round(PyObject *cpy_r_value, CPyTagged cpy_r_digits);
-PyObject *CPyPy__loaders___balances___round(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-char CPyDef__loaders___balances_____top_level__(void);
-PyObject *CPyStatic_utils___Raw = NULL;
-PyObject *CPyStatic_utils___get_transaction_receipt = NULL;
-PyObject *CPyStatic_utils_____get_transaction_receipt = NULL;
-PyTypeObject *CPyType_utils____get_transaction_receipt_gen;
-PyObject *CPyDef_utils____get_transaction_receipt_gen(void);
-CPyThreadLocal eth_portfolio____loaders___utils____get_transaction_receipt_genObject *utils____get_transaction_receipt_gen_free_instance;
-PyObject *CPyDef_utils____get_transaction_receipt_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
-PyObject *CPyDef_utils____get_transaction_receipt_gen_____next__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy_utils____get_transaction_receipt_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_utils____get_transaction_receipt_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
-PyObject *CPyPy_utils____get_transaction_receipt_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_utils____get_transaction_receipt_gen_____iter__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy_utils____get_transaction_receipt_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_utils____get_transaction_receipt_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
-PyObject *CPyPy_utils____get_transaction_receipt_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_utils____get_transaction_receipt_gen___close(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy_utils____get_transaction_receipt_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_utils____get_transaction_receipt_gen_____await__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy_utils____get_transaction_receipt_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_utils____get_transaction_receipt(PyObject *cpy_r_txhash);
-PyObject *CPyPy_utils____get_transaction_receipt(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-char CPyDef_utils_____top_level__(void);
-PyObject *CPyDef__argspec___get_args_type(PyObject *cpy_r_sample);
-PyObject *CPyPy__argspec___get_args_type(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__argspec___get_kwargs_type(PyObject *cpy_r_sample);
-PyObject *CPyPy__argspec___get_kwargs_type(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef__argspec___get_return_type(PyObject *cpy_r_sample);
-PyObject *CPyPy__argspec___get_return_type(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-tuple_T3OOO CPyDef__argspec___get_types(PyObject *cpy_r_sample);
-PyObject *CPyPy__argspec___get_types(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-char CPyDef__argspec_____top_level__(void);
-CPyTagged CPyStatic__config___REORG_BUFFER = CPY_INT_TAG;
-char CPyDef__config_____top_level__(void);
-PyObject *CPyStatic__shitcoins___shitcoins = NULL;
-char CPyDef__shitcoins_____top_level__(void);
-PyObject *CPyStatic__stableish___stableish = NULL;
-char CPyDef__stableish_____top_level__(void);
-CPyTagged CPyStatic_constants___NUM_WALLETS = CPY_INT_TAG;
-PyObject *CPyStatic_constants___ADDRESSES = NULL;
-PyObject *CPyStatic_constants___TRANSFER_SIGS = NULL;
-PyObject *CPyStatic_constants___ETH_LIKE = NULL;
-PyObject *CPyStatic_constants___BTC_LIKE = NULL;
-PyObject *CPyStatic_constants___INTL_STABLECOINS = NULL;
-char CPyDef_constants_____top_level__(void);
-char CPyDef_docker_____top_level__(void);
-char CPyDef_check___check_docker(void);
-PyObject *CPyPy_check___check_docker(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_check___check_docker_compose(void);
-PyObject *CPyPy_check___check_docker_compose(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_check___check_system(void);
-PyObject *CPyPy_check___check_system(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-char CPyDef_check_____top_level__(void);
-PyObject *CPyStatic_docker_compose___logger = NULL;
-PyObject *CPyStatic_docker_compose___COMPOSE_FILE = NULL;
-PyTypeObject *CPyType_docker_compose___ensure_containers_env;
-PyObject *CPyDef_docker_compose___ensure_containers_env(void);
-CPyThreadLocal eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *docker_compose___ensure_containers_env_free_instance;
-PyTypeObject *CPyType_docker_compose___compose_wrap_ensure_containers_env;
-PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_env(void);
-CPyThreadLocal eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *docker_compose___compose_wrap_ensure_containers_env_free_instance;
-PyTypeObject *CPyType_docker_compose___compose_wrap_ensure_containers_obj;
-PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj(void);
-CPyThreadLocal eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *docker_compose___compose_wrap_ensure_containers_obj_free_instance;
-PyTypeObject *CPyType_docker_compose___compose_wrap_gen___3_49;
-PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49(void);
-CPyThreadLocal eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object *docker_compose___compose_wrap_gen___3_49_free_instance;
-char CPyDef_docker_compose___up(PyObject *cpy_r_services);
-PyObject *CPyPy_docker_compose___up(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-char CPyDef_docker_compose___down(void);
-PyObject *CPyPy_docker_compose___down(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-char CPyDef_docker_compose___build(PyObject *cpy_r_services);
-PyObject *CPyPy_docker_compose___build(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-char CPyDef_docker_compose___stop(PyObject *cpy_r_services);
-PyObject *CPyPy_docker_compose___stop(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____get__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
-PyObject *CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____get__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
-PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49_____next__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
-PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49_____iter__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
-PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49___close(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49_____await__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____call__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_args, PyObject *cpy_r_kwargs);
-PyObject *CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____call__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_docker_compose___ensure_containers(PyObject *cpy_r_fn);
-PyObject *CPyPy_docker_compose___ensure_containers(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-char CPyDef_docker_compose____print_notice(PyObject *cpy_r_doing, PyObject *cpy_r_services);
-PyObject *CPyPy_docker_compose____print_notice(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-char CPyDef_docker_compose____exec_command(PyObject *cpy_r_command, PyObject *cpy_r_compose_file, PyObject *cpy_r_compose_options);
-PyObject *CPyPy_docker_compose____exec_command(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-char CPyDef_docker_compose_____top_level__(void);
-PyObject *CPyStatic_eth_portfolio_scripts___balances____UTC = NULL;
-PyObject *CPyStatic_eth_portfolio_scripts___balances___create_task = NULL;
-PyObject *CPyStatic_eth_portfolio_scripts___balances___yield_to_loop = NULL;
-PyTypeObject *CPyType_eth_portfolio_scripts___balances___export_balances_gen;
-PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen(void);
-CPyThreadLocal eth_portfolio_scripts___balances___export_balances_genObject *eth_portfolio_scripts___balances___export_balances_gen_free_instance;
-PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
-PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____next__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
-PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____iter__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
-PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen___close(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____await__(PyObject *cpy_r___mypyc_self__);
-PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances(PyObject *cpy_r_args, PyObject *cpy_r_custom_buckets);
-PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-char CPyDef_eth_portfolio_scripts___balances_____top_level__(void);
-
-static int exec_eth_portfolio__mypyc(PyObject *module)
-{
-    int res;
-    PyObject *capsule;
-    PyObject *tmp;
-    
-    extern PyObject *CPyInit_eth_portfolio____loaders____nonce(void);
-    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio____loaders____nonce, "eth_portfolio__mypyc.init_eth_portfolio____loaders____nonce", NULL);
-    if (!capsule) {
-        goto fail;
-    }
-    res = PyObject_SetAttrString(module, "init_eth_portfolio____loaders____nonce", capsule);
-    Py_DECREF(capsule);
-    if (res < 0) {
-        goto fail;
-    }
-    
-    extern PyObject *CPyInit_eth_portfolio____loaders___balances(void);
-    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio____loaders___balances, "eth_portfolio__mypyc.init_eth_portfolio____loaders___balances", NULL);
-    if (!capsule) {
-        goto fail;
-    }
-    res = PyObject_SetAttrString(module, "init_eth_portfolio____loaders___balances", capsule);
-    Py_DECREF(capsule);
-    if (res < 0) {
-        goto fail;
-    }
-    
-    extern PyObject *CPyInit_eth_portfolio____loaders___utils(void);
-    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio____loaders___utils, "eth_portfolio__mypyc.init_eth_portfolio____loaders___utils", NULL);
-    if (!capsule) {
-        goto fail;
-    }
-    res = PyObject_SetAttrString(module, "init_eth_portfolio____loaders___utils", capsule);
-    Py_DECREF(capsule);
-    if (res < 0) {
-        goto fail;
-    }
-    
-    extern PyObject *CPyInit_eth_portfolio____argspec(void);
-    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio____argspec, "eth_portfolio__mypyc.init_eth_portfolio____argspec", NULL);
-    if (!capsule) {
-        goto fail;
-    }
-    res = PyObject_SetAttrString(module, "init_eth_portfolio____argspec", capsule);
-    Py_DECREF(capsule);
-    if (res < 0) {
-        goto fail;
-    }
-    
-    extern PyObject *CPyInit_eth_portfolio____config(void);
-    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio____config, "eth_portfolio__mypyc.init_eth_portfolio____config", NULL);
-    if (!capsule) {
-        goto fail;
-    }
-    res = PyObject_SetAttrString(module, "init_eth_portfolio____config", capsule);
-    Py_DECREF(capsule);
-    if (res < 0) {
-        goto fail;
-    }
-    
-    extern PyObject *CPyInit_eth_portfolio____shitcoins(void);
-    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio____shitcoins, "eth_portfolio__mypyc.init_eth_portfolio____shitcoins", NULL);
-    if (!capsule) {
-        goto fail;
-    }
-    res = PyObject_SetAttrString(module, "init_eth_portfolio____shitcoins", capsule);
-    Py_DECREF(capsule);
-    if (res < 0) {
-        goto fail;
-    }
-    
-    extern PyObject *CPyInit_eth_portfolio____stableish(void);
-    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio____stableish, "eth_portfolio__mypyc.init_eth_portfolio____stableish", NULL);
-    if (!capsule) {
-        goto fail;
-    }
-    res = PyObject_SetAttrString(module, "init_eth_portfolio____stableish", capsule);
-    Py_DECREF(capsule);
-    if (res < 0) {
-        goto fail;
-    }
-    
-    extern PyObject *CPyInit_eth_portfolio___constants(void);
-    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio___constants, "eth_portfolio__mypyc.init_eth_portfolio___constants", NULL);
-    if (!capsule) {
-        goto fail;
-    }
-    res = PyObject_SetAttrString(module, "init_eth_portfolio___constants", capsule);
-    Py_DECREF(capsule);
-    if (res < 0) {
-        goto fail;
-    }
-    
-    extern PyObject *CPyInit_eth_portfolio_scripts___docker(void);
-    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio_scripts___docker, "eth_portfolio__mypyc.init_eth_portfolio_scripts___docker", NULL);
-    if (!capsule) {
-        goto fail;
-    }
-    res = PyObject_SetAttrString(module, "init_eth_portfolio_scripts___docker", capsule);
-    Py_DECREF(capsule);
-    if (res < 0) {
-        goto fail;
-    }
-    
-    extern PyObject *CPyInit_eth_portfolio_scripts___docker___check(void);
-    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio_scripts___docker___check, "eth_portfolio__mypyc.init_eth_portfolio_scripts___docker___check", NULL);
-    if (!capsule) {
-        goto fail;
-    }
-    res = PyObject_SetAttrString(module, "init_eth_portfolio_scripts___docker___check", capsule);
-    Py_DECREF(capsule);
-    if (res < 0) {
-        goto fail;
-    }
-    
-    extern PyObject *CPyInit_eth_portfolio_scripts___docker___docker_compose(void);
-    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio_scripts___docker___docker_compose, "eth_portfolio__mypyc.init_eth_portfolio_scripts___docker___docker_compose", NULL);
-    if (!capsule) {
-        goto fail;
-    }
-    res = PyObject_SetAttrString(module, "init_eth_portfolio_scripts___docker___docker_compose", capsule);
-    Py_DECREF(capsule);
-    if (res < 0) {
-        goto fail;
-    }
-    
-    extern PyObject *CPyInit_eth_portfolio_scripts___balances(void);
-    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio_scripts___balances, "eth_portfolio__mypyc.init_eth_portfolio_scripts___balances", NULL);
-    if (!capsule) {
-        goto fail;
-    }
-    res = PyObject_SetAttrString(module, "init_eth_portfolio_scripts___balances", capsule);
-    Py_DECREF(capsule);
-    if (res < 0) {
-        goto fail;
-    }
-    
-    return 0;
-    fail:
-    return -1;
-}
-static PyModuleDef module_def_eth_portfolio__mypyc = {
-    PyModuleDef_HEAD_INIT,
-    .m_name = "eth_portfolio__mypyc",
-    .m_doc = NULL,
-    .m_size = -1,
-    .m_methods = NULL,
-};
-PyMODINIT_FUNC PyInit_eth_portfolio__mypyc(void) {
-    static PyObject *module = NULL;
-    if (module) {
-        Py_INCREF(module);
-        return module;
-    }
-    module = PyModule_Create(&module_def_eth_portfolio__mypyc);
-    if (!module) {
-        return NULL;
-    }
-    if (exec_eth_portfolio__mypyc(module) < 0) {
-        Py_DECREF(module);
-        return NULL;
-    }
-    return module;
-}
+                                                const int CPyLit_FrozenSet[] = {0};
+                                                CPyModule *CPyModule_eth_portfolio____loaders____nonce__internal = NULL;
+                                                CPyModule *CPyModule_eth_portfolio____loaders____nonce;
+                                                PyObject *CPyStatic__nonce___globals;
+                                                CPyModule *CPyModule_builtins;
+                                                CPyModule *CPyModule_asyncio;
+                                                CPyModule *CPyModule_logging;
+                                                CPyModule *CPyModule_collections;
+                                                CPyModule *CPyModule_time;
+                                                CPyModule *CPyModule_typing;
+                                                CPyModule *CPyModule_a_sync;
+                                                CPyModule *CPyModule_dank_mids;
+                                                CPyModule *CPyModule_eth_typing;
+                                                int CPyExec_eth_portfolio____loaders____nonce(PyObject *module);
+                                                PyObject *CPyInit_eth_portfolio____loaders____nonce(void);
+                                                PyObject *CPyInitOnly_eth_portfolio____loaders____nonce(void);
+                                                CPyModule *CPyModule_eth_portfolio____loaders___balances__internal = NULL;
+                                                CPyModule *CPyModule_eth_portfolio____loaders___balances;
+                                                PyObject *CPyStatic__loaders___balances___globals;
+                                                CPyModule *CPyModule_decimal;
+                                                CPyModule *CPyModule_y;
+                                                CPyModule *CPyModule_y____decorators;
+                                                CPyModule *CPyModule_y___datatypes;
+                                                CPyModule *CPyModule_eth_portfolio____decimal;
+                                                CPyModule *CPyModule_eth_portfolio____utils;
+                                                CPyModule *CPyModule_eth_portfolio___typing;
+                                                int CPyExec_eth_portfolio____loaders___balances(PyObject *module);
+                                                PyObject *CPyInit_eth_portfolio____loaders___balances(void);
+                                                PyObject *CPyInitOnly_eth_portfolio____loaders___balances(void);
+                                                CPyModule *CPyModule_eth_portfolio____loaders___utils__internal = NULL;
+                                                CPyModule *CPyModule_eth_portfolio____loaders___utils;
+                                                PyObject *CPyStatic_utils___globals;
+                                                CPyModule *CPyModule_eth_retry;
+                                                CPyModule *CPyModule_msgspec;
+                                                CPyModule *CPyModule_faster_async_lru;
+                                                int CPyExec_eth_portfolio____loaders___utils(PyObject *module);
+                                                PyObject *CPyInit_eth_portfolio____loaders___utils(void);
+                                                PyObject *CPyInitOnly_eth_portfolio____loaders___utils(void);
+                                                CPyModule *CPyModule_eth_portfolio____argspec__internal = NULL;
+                                                CPyModule *CPyModule_eth_portfolio____argspec;
+                                                PyObject *CPyStatic__argspec___globals;
+                                                CPyModule *CPyModule_collections___abc;
+                                                CPyModule *CPyModule_inspect;
+                                                int CPyExec_eth_portfolio____argspec(PyObject *module);
+                                                PyObject *CPyInit_eth_portfolio____argspec(void);
+                                                PyObject *CPyInitOnly_eth_portfolio____argspec(void);
+                                                CPyModule *CPyModule_eth_portfolio____config__internal = NULL;
+                                                CPyModule *CPyModule_eth_portfolio____config;
+                                                PyObject *CPyStatic__config___globals;
+                                                CPyModule *CPyModule_os;
+                                                int CPyExec_eth_portfolio____config(PyObject *module);
+                                                PyObject *CPyInit_eth_portfolio____config(void);
+                                                PyObject *CPyInitOnly_eth_portfolio____config(void);
+                                                CPyModule *CPyModule_eth_portfolio____shitcoins__internal = NULL;
+                                                CPyModule *CPyModule_eth_portfolio____shitcoins;
+                                                PyObject *CPyStatic__shitcoins___globals;
+                                                int CPyExec_eth_portfolio____shitcoins(PyObject *module);
+                                                PyObject *CPyInit_eth_portfolio____shitcoins(void);
+                                                PyObject *CPyInitOnly_eth_portfolio____shitcoins(void);
+                                                CPyModule *CPyModule_eth_portfolio____stableish__internal = NULL;
+                                                CPyModule *CPyModule_eth_portfolio____stableish;
+                                                PyObject *CPyStatic__stableish___globals;
+                                                int CPyExec_eth_portfolio____stableish(PyObject *module);
+                                                PyObject *CPyInit_eth_portfolio____stableish(void);
+                                                PyObject *CPyInitOnly_eth_portfolio____stableish(void);
+                                                CPyModule *CPyModule_eth_portfolio___constants__internal = NULL;
+                                                CPyModule *CPyModule_eth_portfolio___constants;
+                                                PyObject *CPyStatic_constants___globals;
+                                                CPyModule *CPyModule_brownie;
+                                                int CPyExec_eth_portfolio___constants(PyObject *module);
+                                                PyObject *CPyInit_eth_portfolio___constants(void);
+                                                PyObject *CPyInitOnly_eth_portfolio___constants(void);
+                                                CPyModule *CPyModule_eth_portfolio_scripts___docker__internal = NULL;
+                                                CPyModule *CPyModule_eth_portfolio_scripts___docker;
+                                                PyObject *CPyStatic_docker___globals;
+                                                CPyModule *CPyModule_eth_portfolio_scripts___docker___check__internal = NULL;
+                                                CPyModule *CPyModule_eth_portfolio_scripts___docker___check;
+                                                CPyModule *CPyModule_eth_portfolio_scripts___docker___docker_compose__internal = NULL;
+                                                CPyModule *CPyModule_eth_portfolio_scripts___docker___docker_compose;
+                                                int CPyExec_eth_portfolio_scripts___docker(PyObject *module);
+                                                PyObject *CPyInit_eth_portfolio_scripts___docker(void);
+                                                PyObject *CPyInitOnly_eth_portfolio_scripts___docker(void);
+                                                PyObject *CPyStatic_check___globals;
+                                                CPyModule *CPyModule_functools;
+                                                CPyModule *CPyModule_subprocess;
+                                                int CPyExec_eth_portfolio_scripts___docker___check(PyObject *module);
+                                                PyObject *CPyInit_eth_portfolio_scripts___docker___check(void);
+                                                PyObject *CPyInitOnly_eth_portfolio_scripts___docker___check(void);
+                                                PyObject *CPyStatic_docker_compose___globals;
+                                                CPyModule *CPyModule_importlib;
+                                                CPyModule *CPyModule_typing_extensions;
+                                                int CPyExec_eth_portfolio_scripts___docker___docker_compose(PyObject *module);
+                                                PyObject *CPyInit_eth_portfolio_scripts___docker___docker_compose(void);
+                                                PyObject *CPyInitOnly_eth_portfolio_scripts___docker___docker_compose(void);
+                                                CPyModule *CPyModule_eth_portfolio_scripts___balances__internal = NULL;
+                                                CPyModule *CPyModule_eth_portfolio_scripts___balances;
+                                                PyObject *CPyStatic_eth_portfolio_scripts___balances___globals;
+                                                CPyModule *CPyModule_argparse;
+                                                CPyModule *CPyModule_datetime;
+                                                CPyModule *CPyModule_a_sync___asyncio;
+                                                CPyModule *CPyModule_eth_portfolio_scripts;
+                                                CPyModule *CPyModule_eth_portfolio_scripts____utils;
+                                                CPyModule *CPyModule_eth_portfolio_scripts____portfolio;
+                                                int CPyExec_eth_portfolio_scripts___balances(PyObject *module);
+                                                PyObject *CPyInit_eth_portfolio_scripts___balances(void);
+                                                PyObject *CPyInitOnly_eth_portfolio_scripts___balances(void);
+                                                PyObject *CPyStatic__nonce___logger = NULL;
+                                                PyObject *CPyStatic__nonce___logger_is_enabled = NULL;
+                                                PyObject *CPyStatic__nonce_____log = NULL;
+                                                CPyTagged CPyStatic__nonce___DEBUG = CPY_INT_TAG;
+                                                PyObject *CPyStatic__nonce___nonces = NULL;
+                                                PyObject *CPyStatic__nonce___locks = NULL;
+                                                PyObject *CPyStatic__nonce___get_transaction_count = NULL;
+                                                PyObject *CPyStatic__nonce___igather = NULL;
+                                                PyObject *CPyStatic__nonce___now = NULL;
+                                                PyObject *CPyStatic__nonce___BlockCache___lock = NULL;
+                                                PyTypeObject *CPyType__nonce___BlockCache;
+                                                PyObject *CPyDef__nonce___BlockCache(void);
+                                                PyTypeObject *CPyType__nonce_____mypyc_lambda__0_obj;
+                                                PyObject *CPyDef__nonce_____mypyc_lambda__0_obj(void);
+                                                CPyThreadLocal eth_portfolio____loaders____nonce_____mypyc_lambda__0_objObject *_nonce_____mypyc_lambda__0_obj_free_instance;
+                                                PyTypeObject *CPyType__nonce___get_nonce_at_block_gen;
+                                                PyObject *CPyDef__nonce___get_nonce_at_block_gen(void);
+                                                CPyThreadLocal eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *_nonce___get_nonce_at_block_gen_free_instance;
+                                                PyTypeObject *CPyType__nonce___get_block_for_nonce_gen;
+                                                PyObject *CPyDef__nonce___get_block_for_nonce_gen(void);
+                                                CPyThreadLocal eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *_nonce___get_block_for_nonce_gen_free_instance;
+                                                PyTypeObject *CPyType__nonce____get_area_gen;
+                                                PyObject *CPyDef__nonce____get_area_gen(void);
+                                                CPyThreadLocal eth_portfolio____loaders____nonce____get_area_genObject *_nonce____get_area_gen_free_instance;
+                                                PyTypeObject *CPyType__nonce___get_block_number_gen;
+                                                PyObject *CPyDef__nonce___get_block_number_gen(void);
+                                                CPyThreadLocal eth_portfolio____loaders____nonce___get_block_number_genObject *_nonce___get_block_number_gen_free_instance;
+                                                PyObject *CPyDef__nonce_____mypyc_lambda__0_obj_____get__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
+                                                PyObject *CPyPy__nonce_____mypyc_lambda__0_obj_____get__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce_____mypyc_lambda__0_obj_____call__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce_____mypyc_lambda__0_obj_____call__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_nonce_at_block_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
+                                                PyObject *CPyDef__nonce___get_nonce_at_block_gen_____next__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce___get_nonce_at_block_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_nonce_at_block_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+                                                PyObject *CPyPy__nonce___get_nonce_at_block_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_nonce_at_block_gen_____iter__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce___get_nonce_at_block_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_nonce_at_block_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+                                                PyObject *CPyPy__nonce___get_nonce_at_block_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_nonce_at_block_gen___close(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce___get_nonce_at_block_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_nonce_at_block_gen_____await__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce___get_nonce_at_block_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_nonce_at_block(PyObject *cpy_r_address, CPyTagged cpy_r_block);
+                                                PyObject *CPyPy__nonce___get_nonce_at_block(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_block_for_nonce_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
+                                                PyObject *CPyDef__nonce___get_block_for_nonce_gen_____next__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce___get_block_for_nonce_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_block_for_nonce_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+                                                PyObject *CPyPy__nonce___get_block_for_nonce_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_block_for_nonce_gen_____iter__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce___get_block_for_nonce_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_block_for_nonce_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+                                                PyObject *CPyPy__nonce___get_block_for_nonce_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_block_for_nonce_gen___close(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce___get_block_for_nonce_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_block_for_nonce_gen_____await__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce___get_block_for_nonce_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_block_for_nonce(PyObject *cpy_r_address, CPyTagged cpy_r_nonce);
+                                                PyObject *CPyPy__nonce___get_block_for_nonce(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce____get_area_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
+                                                PyObject *CPyDef__nonce____get_area_gen_____next__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce____get_area_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce____get_area_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+                                                PyObject *CPyPy__nonce____get_area_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce____get_area_gen_____iter__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce____get_area_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce____get_area_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+                                                PyObject *CPyPy__nonce____get_area_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce____get_area_gen___close(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce____get_area_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce____get_area_gen_____await__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce____get_area_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce____get_area(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, CPyTagged cpy_r_lo, CPyTagged cpy_r_hi, CPyTagged cpy_r_range_size);
+                                                PyObject *CPyPy__nonce____get_area(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                char CPyDef__nonce____update_nonces(PyObject *cpy_r_address, CPyTagged cpy_r_nonce, CPyTagged cpy_r_block);
+                                                PyObject *CPyPy__nonce____update_nonces(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                CPyTagged CPyDef__nonce____get_num_chunks(CPyTagged cpy_r_range_size);
+                                                PyObject *CPyPy__nonce____get_num_chunks(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                char CPyDef__nonce___BlockCache_____mypyc_defaults_setup(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce___BlockCache_____mypyc_defaults_setup(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_block_number_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
+                                                PyObject *CPyDef__nonce___get_block_number_gen_____next__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce___get_block_number_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_block_number_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+                                                PyObject *CPyPy__nonce___get_block_number_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_block_number_gen_____iter__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce___get_block_number_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_block_number_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+                                                PyObject *CPyPy__nonce___get_block_number_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_block_number_gen___close(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce___get_block_number_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_block_number_gen_____await__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__nonce___get_block_number_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__nonce___get_block_number(void);
+                                                PyObject *CPyPy__nonce___get_block_number(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                char CPyDef__nonce_____top_level__(void);
+                                                PyObject *CPyStatic__loaders___balances____ZERO = NULL;
+                                                PyObject *CPyStatic__loaders___balances___logger = NULL;
+                                                PyObject *CPyStatic__loaders___balances___rounding_logger = NULL;
+                                                PyObject *CPyStatic__loaders___balances____builtin_round = NULL;
+                                                PyTypeObject *CPyType__loaders___balances___load_token_balance_gen;
+                                                PyObject *CPyDef__loaders___balances___load_token_balance_gen(void);
+                                                CPyThreadLocal eth_portfolio____loaders___balances___load_token_balance_genObject *_loaders___balances___load_token_balance_gen_free_instance;
+                                                PyObject *CPyDef__loaders___balances___load_token_balance_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
+                                                PyObject *CPyDef__loaders___balances___load_token_balance_gen_____next__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__loaders___balances___load_token_balance_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__loaders___balances___load_token_balance_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+                                                PyObject *CPyPy__loaders___balances___load_token_balance_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__loaders___balances___load_token_balance_gen_____iter__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__loaders___balances___load_token_balance_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__loaders___balances___load_token_balance_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+                                                PyObject *CPyPy__loaders___balances___load_token_balance_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__loaders___balances___load_token_balance_gen___close(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__loaders___balances___load_token_balance_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__loaders___balances___load_token_balance_gen_____await__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy__loaders___balances___load_token_balance_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__loaders___balances___load_token_balance(PyObject *cpy_r_token, PyObject *cpy_r_address, PyObject *cpy_r_block);
+                                                PyObject *CPyPy__loaders___balances___load_token_balance(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__loaders___balances____calc_value(PyObject *cpy_r_balance, PyObject *cpy_r_price);
+                                                PyObject *CPyPy__loaders___balances____calc_value(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__loaders___balances___round(PyObject *cpy_r_value, CPyTagged cpy_r_digits);
+                                                PyObject *CPyPy__loaders___balances___round(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                char CPyDef__loaders___balances_____top_level__(void);
+                                                PyObject *CPyStatic_utils___Raw = NULL;
+                                                PyObject *CPyStatic_utils___get_transaction_receipt = NULL;
+                                                PyObject *CPyStatic_utils_____get_transaction_receipt = NULL;
+                                                PyTypeObject *CPyType_utils____get_transaction_receipt_gen;
+                                                PyObject *CPyDef_utils____get_transaction_receipt_gen(void);
+                                                CPyThreadLocal eth_portfolio____loaders___utils____get_transaction_receipt_genObject *utils____get_transaction_receipt_gen_free_instance;
+                                                PyObject *CPyDef_utils____get_transaction_receipt_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
+                                                PyObject *CPyDef_utils____get_transaction_receipt_gen_____next__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy_utils____get_transaction_receipt_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_utils____get_transaction_receipt_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+                                                PyObject *CPyPy_utils____get_transaction_receipt_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_utils____get_transaction_receipt_gen_____iter__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy_utils____get_transaction_receipt_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_utils____get_transaction_receipt_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+                                                PyObject *CPyPy_utils____get_transaction_receipt_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_utils____get_transaction_receipt_gen___close(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy_utils____get_transaction_receipt_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_utils____get_transaction_receipt_gen_____await__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy_utils____get_transaction_receipt_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_utils____get_transaction_receipt(PyObject *cpy_r_txhash);
+                                                PyObject *CPyPy_utils____get_transaction_receipt(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                char CPyDef_utils_____top_level__(void);
+                                                PyObject *CPyDef__argspec___get_args_type(PyObject *cpy_r_sample);
+                                                PyObject *CPyPy__argspec___get_args_type(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__argspec___get_kwargs_type(PyObject *cpy_r_sample);
+                                                PyObject *CPyPy__argspec___get_kwargs_type(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef__argspec___get_return_type(PyObject *cpy_r_sample);
+                                                PyObject *CPyPy__argspec___get_return_type(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                tuple_T3OOO CPyDef__argspec___get_types(PyObject *cpy_r_sample);
+                                                PyObject *CPyPy__argspec___get_types(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                char CPyDef__argspec_____top_level__(void);
+                                                CPyTagged CPyStatic__config___REORG_BUFFER = CPY_INT_TAG;
+                                                char CPyDef__config_____top_level__(void);
+                                                PyObject *CPyStatic__shitcoins___shitcoins = NULL;
+                                                char CPyDef__shitcoins_____top_level__(void);
+                                                PyObject *CPyStatic__stableish___stableish = NULL;
+                                                char CPyDef__stableish_____top_level__(void);
+                                                CPyTagged CPyStatic_constants___NUM_WALLETS = CPY_INT_TAG;
+                                                PyObject *CPyStatic_constants___ADDRESSES = NULL;
+                                                PyObject *CPyStatic_constants___TRANSFER_SIGS = NULL;
+                                                PyObject *CPyStatic_constants___ETH_LIKE = NULL;
+                                                PyObject *CPyStatic_constants___BTC_LIKE = NULL;
+                                                PyObject *CPyStatic_constants___INTL_STABLECOINS = NULL;
+                                                char CPyDef_constants_____top_level__(void);
+                                                char CPyDef_docker_____top_level__(void);
+                                                char CPyDef_check___check_docker(void);
+                                                PyObject *CPyPy_check___check_docker(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_check___check_docker_compose(void);
+                                                PyObject *CPyPy_check___check_docker_compose(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_check___check_system(void);
+                                                PyObject *CPyPy_check___check_system(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                char CPyDef_check_____top_level__(void);
+                                                PyObject *CPyStatic_docker_compose___logger = NULL;
+                                                PyObject *CPyStatic_docker_compose___COMPOSE_FILE = NULL;
+                                                PyTypeObject *CPyType_docker_compose___ensure_containers_env;
+                                                PyObject *CPyDef_docker_compose___ensure_containers_env(void);
+                                                CPyThreadLocal eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *docker_compose___ensure_containers_env_free_instance;
+                                                PyTypeObject *CPyType_docker_compose___compose_wrap_ensure_containers_env;
+                                                PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_env(void);
+                                                CPyThreadLocal eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *docker_compose___compose_wrap_ensure_containers_env_free_instance;
+                                                PyTypeObject *CPyType_docker_compose___compose_wrap_ensure_containers_obj;
+                                                PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj(void);
+                                                CPyThreadLocal eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *docker_compose___compose_wrap_ensure_containers_obj_free_instance;
+                                                PyTypeObject *CPyType_docker_compose___compose_wrap_gen___3_49;
+                                                PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49(void);
+                                                CPyThreadLocal eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object *docker_compose___compose_wrap_gen___3_49_free_instance;
+                                                char CPyDef_docker_compose___up(PyObject *cpy_r_services);
+                                                PyObject *CPyPy_docker_compose___up(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                char CPyDef_docker_compose___down(void);
+                                                PyObject *CPyPy_docker_compose___down(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                char CPyDef_docker_compose___build(PyObject *cpy_r_services);
+                                                PyObject *CPyPy_docker_compose___build(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                char CPyDef_docker_compose___stop(PyObject *cpy_r_services);
+                                                PyObject *CPyPy_docker_compose___stop(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____name__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____code__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____annotations__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____defaults__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____kwdefaults__(PyObject *cpy_r___mypyc_self__);
+                                                CPyTagged CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____mypyc_setter___3__name__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_value);
+                                                CPyTagged CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____mypyc_setter___3__annotations__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_value);
+                                                PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____get__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
+                                                PyObject *CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____get__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
+                                                PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49_____next__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+                                                PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49_____iter__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+                                                PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49___close(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49_____await__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy_docker_compose___compose_wrap_gen___3_49_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____call__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_args, PyObject *cpy_r_kwargs);
+                                                PyObject *CPyPy_docker_compose___compose_wrap_ensure_containers_obj_____call__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_docker_compose___ensure_containers(PyObject *cpy_r_fn);
+                                                PyObject *CPyPy_docker_compose___ensure_containers(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                char CPyDef_docker_compose____print_notice(PyObject *cpy_r_doing, PyObject *cpy_r_services);
+                                                PyObject *CPyPy_docker_compose____print_notice(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                char CPyDef_docker_compose____exec_command(PyObject *cpy_r_command, PyObject *cpy_r_compose_file, PyObject *cpy_r_compose_options);
+                                                PyObject *CPyPy_docker_compose____exec_command(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                char CPyDef_docker_compose_____top_level__(void);
+                                                PyObject *CPyStatic_eth_portfolio_scripts___balances____UTC = NULL;
+                                                PyObject *CPyStatic_eth_portfolio_scripts___balances___create_task = NULL;
+                                                PyObject *CPyStatic_eth_portfolio_scripts___balances___yield_to_loop = NULL;
+                                                PyTypeObject *CPyType_eth_portfolio_scripts___balances___export_balances_gen;
+                                                PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen(void);
+                                                CPyThreadLocal eth_portfolio_scripts___balances___export_balances_genObject *eth_portfolio_scripts___balances___export_balances_gen_free_instance;
+                                                PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg, PyObject **cpy_r_stop_iter_ptr);
+                                                PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____next__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+                                                PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen___send(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____iter__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____iter__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen___throw(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+                                                PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen___throw(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen___close(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____await__(PyObject *cpy_r___mypyc_self__);
+                                                PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances_gen_____await__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances(PyObject *cpy_r_args, PyObject *cpy_r_custom_buckets);
+                                                PyObject *CPyPy_eth_portfolio_scripts___balances___export_balances(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+                                                char CPyDef_eth_portfolio_scripts___balances_____top_level__(void);
+                                                
+                                                static int exec_eth_portfolio__mypyc(PyObject *module)
+                                                {
+                                                    int res;
+                                                    PyObject *capsule;
+                                                    PyObject *tmp;
+                                                    
+                                                    extern PyObject *CPyInit_eth_portfolio____loaders____nonce(void);
+                                                    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio____loaders____nonce, "eth_portfolio__mypyc.init_eth_portfolio____loaders____nonce", NULL);
+                                                    if (!capsule) {
+                                                        goto fail;
+                                                    }
+                                                    res = PyObject_SetAttrString(module, "init_eth_portfolio____loaders____nonce", capsule);
+                                                    Py_DECREF(capsule);
+                                                    if (res < 0) {
+                                                        goto fail;
+                                                    }
+                                                    
+                                                    extern PyObject *CPyInit_eth_portfolio____loaders___balances(void);
+                                                    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio____loaders___balances, "eth_portfolio__mypyc.init_eth_portfolio____loaders___balances", NULL);
+                                                    if (!capsule) {
+                                                        goto fail;
+                                                    }
+                                                    res = PyObject_SetAttrString(module, "init_eth_portfolio____loaders___balances", capsule);
+                                                    Py_DECREF(capsule);
+                                                    if (res < 0) {
+                                                        goto fail;
+                                                    }
+                                                    
+                                                    extern PyObject *CPyInit_eth_portfolio____loaders___utils(void);
+                                                    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio____loaders___utils, "eth_portfolio__mypyc.init_eth_portfolio____loaders___utils", NULL);
+                                                    if (!capsule) {
+                                                        goto fail;
+                                                    }
+                                                    res = PyObject_SetAttrString(module, "init_eth_portfolio____loaders___utils", capsule);
+                                                    Py_DECREF(capsule);
+                                                    if (res < 0) {
+                                                        goto fail;
+                                                    }
+                                                    
+                                                    extern PyObject *CPyInit_eth_portfolio____argspec(void);
+                                                    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio____argspec, "eth_portfolio__mypyc.init_eth_portfolio____argspec", NULL);
+                                                    if (!capsule) {
+                                                        goto fail;
+                                                    }
+                                                    res = PyObject_SetAttrString(module, "init_eth_portfolio____argspec", capsule);
+                                                    Py_DECREF(capsule);
+                                                    if (res < 0) {
+                                                        goto fail;
+                                                    }
+                                                    
+                                                    extern PyObject *CPyInit_eth_portfolio____config(void);
+                                                    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio____config, "eth_portfolio__mypyc.init_eth_portfolio____config", NULL);
+                                                    if (!capsule) {
+                                                        goto fail;
+                                                    }
+                                                    res = PyObject_SetAttrString(module, "init_eth_portfolio____config", capsule);
+                                                    Py_DECREF(capsule);
+                                                    if (res < 0) {
+                                                        goto fail;
+                                                    }
+                                                    
+                                                    extern PyObject *CPyInit_eth_portfolio____shitcoins(void);
+                                                    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio____shitcoins, "eth_portfolio__mypyc.init_eth_portfolio____shitcoins", NULL);
+                                                    if (!capsule) {
+                                                        goto fail;
+                                                    }
+                                                    res = PyObject_SetAttrString(module, "init_eth_portfolio____shitcoins", capsule);
+                                                    Py_DECREF(capsule);
+                                                    if (res < 0) {
+                                                        goto fail;
+                                                    }
+                                                    
+                                                    extern PyObject *CPyInit_eth_portfolio____stableish(void);
+                                                    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio____stableish, "eth_portfolio__mypyc.init_eth_portfolio____stableish", NULL);
+                                                    if (!capsule) {
+                                                        goto fail;
+                                                    }
+                                                    res = PyObject_SetAttrString(module, "init_eth_portfolio____stableish", capsule);
+                                                    Py_DECREF(capsule);
+                                                    if (res < 0) {
+                                                        goto fail;
+                                                    }
+                                                    
+                                                    extern PyObject *CPyInit_eth_portfolio___constants(void);
+                                                    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio___constants, "eth_portfolio__mypyc.init_eth_portfolio___constants", NULL);
+                                                    if (!capsule) {
+                                                        goto fail;
+                                                    }
+                                                    res = PyObject_SetAttrString(module, "init_eth_portfolio___constants", capsule);
+                                                    Py_DECREF(capsule);
+                                                    if (res < 0) {
+                                                        goto fail;
+                                                    }
+                                                    
+                                                    extern PyObject *CPyInit_eth_portfolio_scripts___docker(void);
+                                                    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio_scripts___docker, "eth_portfolio__mypyc.init_eth_portfolio_scripts___docker", NULL);
+                                                    if (!capsule) {
+                                                        goto fail;
+                                                    }
+                                                    res = PyObject_SetAttrString(module, "init_eth_portfolio_scripts___docker", capsule);
+                                                    Py_DECREF(capsule);
+                                                    if (res < 0) {
+                                                        goto fail;
+                                                    }
+                                                    
+                                                    extern PyObject *CPyInit_eth_portfolio_scripts___docker___check(void);
+                                                    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio_scripts___docker___check, "eth_portfolio__mypyc.init_eth_portfolio_scripts___docker___check", NULL);
+                                                    if (!capsule) {
+                                                        goto fail;
+                                                    }
+                                                    res = PyObject_SetAttrString(module, "init_eth_portfolio_scripts___docker___check", capsule);
+                                                    Py_DECREF(capsule);
+                                                    if (res < 0) {
+                                                        goto fail;
+                                                    }
+                                                    
+                                                    extern PyObject *CPyInit_eth_portfolio_scripts___docker___docker_compose(void);
+                                                    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio_scripts___docker___docker_compose, "eth_portfolio__mypyc.init_eth_portfolio_scripts___docker___docker_compose", NULL);
+                                                    if (!capsule) {
+                                                        goto fail;
+                                                    }
+                                                    res = PyObject_SetAttrString(module, "init_eth_portfolio_scripts___docker___docker_compose", capsule);
+                                                    Py_DECREF(capsule);
+                                                    if (res < 0) {
+                                                        goto fail;
+                                                    }
+                                                    
+                                                    extern PyObject *CPyInit_eth_portfolio_scripts___balances(void);
+                                                    capsule = PyCapsule_New((void *)CPyInit_eth_portfolio_scripts___balances, "eth_portfolio__mypyc.init_eth_portfolio_scripts___balances", NULL);
+                                                    if (!capsule) {
+                                                        goto fail;
+                                                    }
+                                                    res = PyObject_SetAttrString(module, "init_eth_portfolio_scripts___balances", capsule);
+                                                    Py_DECREF(capsule);
+                                                    if (res < 0) {
+                                                        goto fail;
+                                                    }
+                                                    
+                                                    return 0;
+                                                    fail:
+                                                    return -1;
+                                                }
+                                                static PyModuleDef module_def_eth_portfolio__mypyc = {
+                                                    PyModuleDef_HEAD_INIT,
+                                                    .m_name = "eth_portfolio__mypyc",
+                                                    .m_doc = NULL,
+                                                    .m_size = -1,
+                                                    .m_methods = NULL,
+                                                };
+                                                PyMODINIT_FUNC PyInit_eth_portfolio__mypyc(void) {
+                                                    static PyObject *module = NULL;
+                                                    if (module) {
+                                                        Py_INCREF(module);
+                                                        return module;
+                                                    }
+                                                    module = PyModule_Create(&module_def_eth_portfolio__mypyc);
+                                                    if (!module) {
+                                                        return NULL;
+                                                    }
+                                                    if (exec_eth_portfolio__mypyc(module) < 0) {
+                                                        Py_DECREF(module);
+                                                        return NULL;
+                                                    }
+                                                    return module;
+                                                }

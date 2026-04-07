@@ -367,7 +367,7 @@ class RemoteTokenBalances(DefaultDict[ProtocolLabel, TokenBalances], _SummableNo
             seed = seed.items()  # type: ignore [assignment]
         if not isinstance(seed, Iterable):
             raise TypeError(f"{seed} is not a valid input for TokenBalances")
-        for remote, token_balances in seed:  # type: ignore [misc]
+        for remote, token_balances in seed:  # type: ignore [str-unpack]
             if self.block != token_balances.block:
                 raise ValueError(
                     f"These objects are not from the same block ({self.block} and {token_balances.block})"
@@ -585,7 +585,7 @@ class WalletBalances(
             seed = seed.items()  # type: ignore [assignment]
         if not isinstance(seed, Iterable):
             raise TypeError(f"{seed} is not a valid input for WalletBalances")
-        for key, balances in seed:  # type: ignore [misc]
+        for key, balances in seed:  # type: ignore [str-unpack]
             if self.block != balances.block:
                 raise ValueError(
                     f"These objects are not from the same block ({self.block} and {balances.block})"
