@@ -9,7 +9,7 @@ requires = [
     "types-aiofiles",
     "types-tqdm",
     "dank-mids==4.20.207; platform_system == 'MacOS' or (platform_system == 'Linux' and platform_machine != 'i686')",
-    "eth-brownie==1.22.0.dev3; sys_platform=='linux' and platform_machine != 'i686'",
+    "eth-brownie==1.22.0.dev4; sys_platform=='linux' and platform_machine != 'i686'",
     "eth-retry==0.3.7",
     "eth-typing==5.2.1",
     "evmspec==0.5.1; sys_platform!='win32'",
