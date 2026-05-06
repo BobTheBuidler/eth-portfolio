@@ -20,27 +20,12 @@
 #include "__native_eth_portfolio.h"
 #include "__native_internal_eth_portfolio.h"
 
-PyObject *CPyDef__nonce_____mypyc__BlockCache_setup(PyObject *cpy_r_type);
-PyObject *CPyDef__nonce___BlockCache(void);
-
-static PyObject *
-_nonce___BlockCache_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-{
-    if (type != CPyType__nonce___BlockCache) {
-        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-        return NULL;
-    }
-    PyObject *self = CPyDef__nonce_____mypyc__BlockCache_setup((PyObject*)type);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
 static int
 _nonce___BlockCache_traverse(eth_portfolio____loaders____nonce___BlockCacheObject *self, visitproc visit, void *arg)
 {
     Py_VISIT(self->_lock);
-    return 0;
+    int rv = 0;
+    return rv;
 }
 
 static int
@@ -59,6 +44,22 @@ _nonce___BlockCache_dealloc(eth_portfolio____loaders____nonce___BlockCacheObject
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
     done: ;
+}
+
+PyObject *CPyDef__nonce_____mypyc__BlockCache_setup(PyObject *cpy_r_type);
+PyObject *CPyDef__nonce___BlockCache(void);
+
+static PyObject *
+_nonce___BlockCache_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+{
+    if (type != CPyType__nonce___BlockCache) {
+        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+        return NULL;
+    }
+    PyObject *self = CPyDef__nonce_____mypyc__BlockCache_setup((PyObject*)type);
+    if (self == NULL)
+        return NULL;
+    return self;
 }
 
 static CPyVTableItem _nonce___BlockCache_vtable[1];
@@ -204,27 +205,13 @@ static PyObject *CPyDunder___get___nonce_____mypyc_lambda__0_obj(PyObject *self,
     instance = instance ? instance : Py_None;
     return CPyDef__nonce_____mypyc_lambda__0_obj_____get__(self, instance, owner);
 }
-PyObject *CPyDef__nonce_____mypyc___3__mypyc_lambda__0_obj_setup(PyObject *cpy_r_type);
-PyObject *CPyDef__nonce_____mypyc_lambda__0_obj(void);
-
-static PyObject *
-_nonce_____mypyc_lambda__0_obj_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-{
-    if (type != CPyType__nonce_____mypyc_lambda__0_obj) {
-        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-        return NULL;
-    }
-    PyObject *self = CPyDef__nonce_____mypyc___3__mypyc_lambda__0_obj_setup((PyObject*)type);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
 static int
 _nonce_____mypyc_lambda__0_obj_traverse(eth_portfolio____loaders____nonce_____mypyc_lambda__0_objObject *self, visitproc visit, void *arg)
 {
-    PyObject_VisitManagedDict((PyObject *)self, visit, arg);
-    return 0;
+    int rv = 0;
+    rv = PyObject_VisitManagedDict((PyObject *)self, visit, arg);
+    if (rv != 0) return rv;
+    return rv;
 }
 
 static int
@@ -247,6 +234,22 @@ _nonce_____mypyc_lambda__0_obj_dealloc(eth_portfolio____loaders____nonce_____myp
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
     done: ;
+}
+
+PyObject *CPyDef__nonce_____mypyc___3__mypyc_lambda__0_obj_setup(PyObject *cpy_r_type);
+PyObject *CPyDef__nonce_____mypyc_lambda__0_obj(void);
+
+static PyObject *
+_nonce_____mypyc_lambda__0_obj_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+{
+    if (type != CPyType__nonce_____mypyc_lambda__0_obj) {
+        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+        return NULL;
+    }
+    PyObject *self = CPyDef__nonce_____mypyc___3__mypyc_lambda__0_obj_setup((PyObject*)type);
+    if (self == NULL)
+        return NULL;
+    return self;
 }
 
 static CPyVTableItem _nonce_____mypyc_lambda__0_obj_vtable[2];
@@ -335,22 +338,6 @@ PyObject *CPyDef__nonce_____mypyc_lambda__0_obj(void)
 static PyAsyncMethods _nonce___get_nonce_at_block_gen_as_async = {
     .am_await = CPyDef__nonce___get_nonce_at_block_gen_____await__,
 };
-PyObject *CPyDef__nonce_____mypyc__get_nonce_at_block_gen_setup(PyObject *cpy_r_type);
-PyObject *CPyDef__nonce___get_nonce_at_block_gen(void);
-
-static PyObject *
-_nonce___get_nonce_at_block_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-{
-    if (type != CPyType__nonce___get_nonce_at_block_gen) {
-        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-        return NULL;
-    }
-    PyObject *self = CPyDef__nonce_____mypyc__get_nonce_at_block_gen_setup((PyObject*)type);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
 static int
 _nonce___get_nonce_at_block_gen_traverse(eth_portfolio____loaders____nonce___get_nonce_at_block_genObject *self, visitproc visit, void *arg)
 {
@@ -367,7 +354,8 @@ _nonce___get_nonce_at_block_gen_traverse(eth_portfolio____loaders____nonce___get
     Py_VISIT(self->___mypyc_temp__2.f1);
     Py_VISIT(self->___mypyc_temp__2.f2);
     Py_VISIT(self->___mypyc_generator_attribute__e);
-    return 0;
+    int rv = 0;
+    return rv;
 }
 
 static int
@@ -422,6 +410,22 @@ _nonce___get_nonce_at_block_gen_dealloc(eth_portfolio____loaders____nonce___get_
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
     done: ;
+}
+
+PyObject *CPyDef__nonce_____mypyc__get_nonce_at_block_gen_setup(PyObject *cpy_r_type);
+PyObject *CPyDef__nonce___get_nonce_at_block_gen(void);
+
+static PyObject *
+_nonce___get_nonce_at_block_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+{
+    if (type != CPyType__nonce___get_nonce_at_block_gen) {
+        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+        return NULL;
+    }
+    PyObject *self = CPyDef__nonce_____mypyc__get_nonce_at_block_gen_setup((PyObject*)type);
+    if (self == NULL)
+        return NULL;
+    return self;
 }
 
 static CPyVTableItem _nonce___get_nonce_at_block_gen_vtable[7];
@@ -523,22 +527,6 @@ PyObject *CPyDef__nonce___get_nonce_at_block_gen(void)
 static PyAsyncMethods _nonce___get_block_for_nonce_gen_as_async = {
     .am_await = CPyDef__nonce___get_block_for_nonce_gen_____await__,
 };
-PyObject *CPyDef__nonce_____mypyc__get_block_for_nonce_gen_setup(PyObject *cpy_r_type);
-PyObject *CPyDef__nonce___get_block_for_nonce_gen(void);
-
-static PyObject *
-_nonce___get_block_for_nonce_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-{
-    if (type != CPyType__nonce___get_block_for_nonce_gen) {
-        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-        return NULL;
-    }
-    PyObject *self = CPyDef__nonce_____mypyc__get_block_for_nonce_gen_setup((PyObject*)type);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
 static int
 _nonce___get_block_for_nonce_gen_traverse(eth_portfolio____loaders____nonce___get_block_for_nonce_genObject *self, visitproc visit, void *arg)
 {
@@ -604,7 +592,8 @@ _nonce___get_block_for_nonce_gen_traverse(eth_portfolio____loaders____nonce___ge
     if (CPyTagged_CheckLong(self->___mypyc_generator_attribute__prev_block_nonce)) {
         Py_VISIT(CPyTagged_LongAsObject(self->___mypyc_generator_attribute__prev_block_nonce));
     }
-    return 0;
+    int rv = 0;
+    return rv;
 }
 
 static int
@@ -805,6 +794,22 @@ _nonce___get_block_for_nonce_gen_dealloc(eth_portfolio____loaders____nonce___get
     done: ;
 }
 
+PyObject *CPyDef__nonce_____mypyc__get_block_for_nonce_gen_setup(PyObject *cpy_r_type);
+PyObject *CPyDef__nonce___get_block_for_nonce_gen(void);
+
+static PyObject *
+_nonce___get_block_for_nonce_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+{
+    if (type != CPyType__nonce___get_block_for_nonce_gen) {
+        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+        return NULL;
+    }
+    PyObject *self = CPyDef__nonce_____mypyc__get_block_for_nonce_gen_setup((PyObject*)type);
+    if (self == NULL)
+        return NULL;
+    return self;
+}
+
 static CPyVTableItem _nonce___get_block_for_nonce_gen_vtable[7];
 static bool
 CPyDef__nonce___get_block_for_nonce_gen_trait_vtable_setup(void)
@@ -921,22 +926,6 @@ PyObject *CPyDef__nonce___get_block_for_nonce_gen(void)
 static PyAsyncMethods _nonce____get_area_gen_as_async = {
     .am_await = CPyDef__nonce____get_area_gen_____await__,
 };
-PyObject *CPyDef__nonce_____mypyc___3_get_area_gen_setup(PyObject *cpy_r_type);
-PyObject *CPyDef__nonce____get_area_gen(void);
-
-static PyObject *
-_nonce____get_area_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-{
-    if (type != CPyType__nonce____get_area_gen) {
-        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-        return NULL;
-    }
-    PyObject *self = CPyDef__nonce_____mypyc___3_get_area_gen_setup((PyObject*)type);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
 static int
 _nonce____get_area_gen_traverse(eth_portfolio____loaders____nonce____get_area_genObject *self, visitproc visit, void *arg)
 {
@@ -987,7 +976,8 @@ _nonce____get_area_gen_traverse(eth_portfolio____loaders____nonce____get_area_ge
     if (CPyTagged_CheckLong(self->___mypyc_generator_attribute__n)) {
         Py_VISIT(CPyTagged_LongAsObject(self->___mypyc_generator_attribute__n));
     }
-    return 0;
+    int rv = 0;
+    return rv;
 }
 
 static int
@@ -1181,6 +1171,22 @@ _nonce____get_area_gen_dealloc(eth_portfolio____loaders____nonce____get_area_gen
     done: ;
 }
 
+PyObject *CPyDef__nonce_____mypyc___3_get_area_gen_setup(PyObject *cpy_r_type);
+PyObject *CPyDef__nonce____get_area_gen(void);
+
+static PyObject *
+_nonce____get_area_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+{
+    if (type != CPyType__nonce____get_area_gen) {
+        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+        return NULL;
+    }
+    PyObject *self = CPyDef__nonce_____mypyc___3_get_area_gen_setup((PyObject*)type);
+    if (self == NULL)
+        return NULL;
+    return self;
+}
+
 static CPyVTableItem _nonce____get_area_gen_vtable[7];
 static bool
 CPyDef__nonce____get_area_gen_trait_vtable_setup(void)
@@ -1293,22 +1299,6 @@ PyObject *CPyDef__nonce____get_area_gen(void)
 static PyAsyncMethods _nonce___get_block_number_gen_as_async = {
     .am_await = CPyDef__nonce___get_block_number_gen_____await__,
 };
-PyObject *CPyDef__nonce_____mypyc__get_block_number_gen_setup(PyObject *cpy_r_type);
-PyObject *CPyDef__nonce___get_block_number_gen(void);
-
-static PyObject *
-_nonce___get_block_number_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-{
-    if (type != CPyType__nonce___get_block_number_gen) {
-        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-        return NULL;
-    }
-    PyObject *self = CPyDef__nonce_____mypyc__get_block_number_gen_setup((PyObject*)type);
-    if (self == NULL)
-        return NULL;
-    return self;
-}
-
 static int
 _nonce___get_block_number_gen_traverse(eth_portfolio____loaders____nonce___get_block_number_genObject *self, visitproc visit, void *arg)
 {
@@ -1335,7 +1325,8 @@ _nonce___get_block_number_gen_traverse(eth_portfolio____loaders____nonce___get_b
     Py_VISIT(self->___mypyc_temp__48.f0);
     Py_VISIT(self->___mypyc_temp__48.f1);
     Py_VISIT(self->___mypyc_temp__48.f2);
-    return 0;
+    int rv = 0;
+    return rv;
 }
 
 static int
@@ -1407,6 +1398,22 @@ _nonce___get_block_number_gen_dealloc(eth_portfolio____loaders____nonce___get_bl
     Py_TYPE(self)->tp_free((PyObject *)self);
     CPy_TRASHCAN_END(self)
     done: ;
+}
+
+PyObject *CPyDef__nonce_____mypyc__get_block_number_gen_setup(PyObject *cpy_r_type);
+PyObject *CPyDef__nonce___get_block_number_gen(void);
+
+static PyObject *
+_nonce___get_block_number_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+{
+    if (type != CPyType__nonce___get_block_number_gen) {
+        PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+        return NULL;
+    }
+    PyObject *self = CPyDef__nonce_____mypyc__get_block_number_gen_setup((PyObject*)type);
+    if (self == NULL)
+        return NULL;
+    return self;
 }
 
 static CPyVTableItem _nonce___get_block_number_gen_vtable[7];
@@ -1643,6 +1650,20 @@ PyObject *CPyInit_eth_portfolio____loaders____nonce(void)
         goto fail;
     modname = PyUnicode_FromString("eth_portfolio._loaders._nonce");
     if (modname == NULL) CPyError_OutOfMemory();
+    int rv = 0;
+    PyObject *mod_dict = PyImport_GetModuleDict();
+    PyObject *shared_lib = NULL;
+    rv = PyDict_GetItemStringRef(mod_dict, "eth_portfolio__mypyc", &shared_lib);
+    if (rv < 0) goto fail;
+    PyObject *shared_lib_file = PyObject_GetAttrString(shared_lib, "__file__");
+    if (shared_lib_file == NULL) goto fail;
+    PyObject *ext_suffix = PyUnicode_FromString(".cpython-313-x86_64-linux-gnu.so");
+    if (ext_suffix == NULL) CPyError_OutOfMemory();
+    Py_ssize_t is_pkg = 0;
+    rv = CPyImport_SetDunderAttrs(CPyModule_eth_portfolio____loaders____nonce__internal, modname, shared_lib_file, ext_suffix, is_pkg);
+    Py_DECREF(ext_suffix);
+    Py_DECREF(shared_lib_file);
+    if (rv < 0) goto fail;
     if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio____loaders____nonce__internal) < 0)
         goto fail;
     Py_CLEAR(modname);
@@ -11509,22 +11530,6 @@ CPyL73: ;
     static PyAsyncMethods _loaders___balances___load_token_balance_gen_as_async = {
         .am_await = CPyDef__loaders___balances___load_token_balance_gen_____await__,
     };
-    PyObject *CPyDef__loaders___balances_____mypyc__load_token_balance_gen_setup(PyObject *cpy_r_type);
-    PyObject *CPyDef__loaders___balances___load_token_balance_gen(void);
-    
-    static PyObject *
-    _loaders___balances___load_token_balance_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-    {
-        if (type != CPyType__loaders___balances___load_token_balance_gen) {
-            PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-            return NULL;
-        }
-        PyObject *self = CPyDef__loaders___balances_____mypyc__load_token_balance_gen_setup((PyObject*)type);
-        if (self == NULL)
-            return NULL;
-        return self;
-    }
-    
     static int
     _loaders___balances___load_token_balance_gen_traverse(eth_portfolio____loaders___balances___load_token_balance_genObject *self, visitproc visit, void *arg)
     {
@@ -11545,7 +11550,8 @@ CPyL73: ;
         Py_VISIT(self->___mypyc_temp__4.f1);
         Py_VISIT(self->___mypyc_temp__4.f2);
         Py_VISIT(self->___mypyc_generator_attribute__price);
-        return 0;
+        int rv = 0;
+        return rv;
     }
     
     static int
@@ -11602,6 +11608,22 @@ CPyL73: ;
         Py_TYPE(self)->tp_free((PyObject *)self);
         CPy_TRASHCAN_END(self)
         done: ;
+    }
+    
+    PyObject *CPyDef__loaders___balances_____mypyc__load_token_balance_gen_setup(PyObject *cpy_r_type);
+    PyObject *CPyDef__loaders___balances___load_token_balance_gen(void);
+    
+    static PyObject *
+    _loaders___balances___load_token_balance_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+    {
+        if (type != CPyType__loaders___balances___load_token_balance_gen) {
+            PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+            return NULL;
+        }
+        PyObject *self = CPyDef__loaders___balances_____mypyc__load_token_balance_gen_setup((PyObject*)type);
+        if (self == NULL)
+            return NULL;
+        return self;
     }
     
     static CPyVTableItem _loaders___balances___load_token_balance_gen_vtable[7];
@@ -11777,6 +11799,20 @@ CPyL73: ;
             goto fail;
         modname = PyUnicode_FromString("eth_portfolio._loaders.balances");
         if (modname == NULL) CPyError_OutOfMemory();
+        int rv = 0;
+        PyObject *mod_dict = PyImport_GetModuleDict();
+        PyObject *shared_lib = NULL;
+        rv = PyDict_GetItemStringRef(mod_dict, "eth_portfolio__mypyc", &shared_lib);
+        if (rv < 0) goto fail;
+        PyObject *shared_lib_file = PyObject_GetAttrString(shared_lib, "__file__");
+        if (shared_lib_file == NULL) goto fail;
+        PyObject *ext_suffix = PyUnicode_FromString(".cpython-313-x86_64-linux-gnu.so");
+        if (ext_suffix == NULL) CPyError_OutOfMemory();
+        Py_ssize_t is_pkg = 0;
+        rv = CPyImport_SetDunderAttrs(CPyModule_eth_portfolio____loaders___balances__internal, modname, shared_lib_file, ext_suffix, is_pkg);
+        Py_DECREF(ext_suffix);
+        Py_DECREF(shared_lib_file);
+        if (rv < 0) goto fail;
         if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio____loaders___balances__internal) < 0)
             goto fail;
         Py_CLEAR(modname);
@@ -13751,22 +13787,6 @@ CPyL29: ;
         static PyAsyncMethods utils____get_transaction_receipt_gen_as_async = {
             .am_await = CPyDef_utils____get_transaction_receipt_gen_____await__,
         };
-        PyObject *CPyDef_utils_____mypyc___3_get_transaction_receipt_gen_setup(PyObject *cpy_r_type);
-        PyObject *CPyDef_utils____get_transaction_receipt_gen(void);
-        
-        static PyObject *
-        utils____get_transaction_receipt_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-        {
-            if (type != CPyType_utils____get_transaction_receipt_gen) {
-                PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-                return NULL;
-            }
-            PyObject *self = CPyDef_utils_____mypyc___3_get_transaction_receipt_gen_setup((PyObject*)type);
-            if (self == NULL)
-                return NULL;
-            return self;
-        }
-        
         static int
         utils____get_transaction_receipt_gen_traverse(eth_portfolio____loaders___utils____get_transaction_receipt_genObject *self, visitproc visit, void *arg)
         {
@@ -13775,7 +13795,8 @@ CPyL29: ;
             Py_VISIT(self->___mypyc_temp__1.f0);
             Py_VISIT(self->___mypyc_temp__1.f1);
             Py_VISIT(self->___mypyc_temp__1.f2);
-            return 0;
+            int rv = 0;
+            return rv;
         }
         
         static int
@@ -13808,6 +13829,22 @@ CPyL29: ;
             Py_TYPE(self)->tp_free((PyObject *)self);
             CPy_TRASHCAN_END(self)
             done: ;
+        }
+        
+        PyObject *CPyDef_utils_____mypyc___3_get_transaction_receipt_gen_setup(PyObject *cpy_r_type);
+        PyObject *CPyDef_utils____get_transaction_receipt_gen(void);
+        
+        static PyObject *
+        utils____get_transaction_receipt_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+        {
+            if (type != CPyType_utils____get_transaction_receipt_gen) {
+                PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+                return NULL;
+            }
+            PyObject *self = CPyDef_utils_____mypyc___3_get_transaction_receipt_gen_setup((PyObject*)type);
+            if (self == NULL)
+                return NULL;
+            return self;
         }
         
         static CPyVTableItem utils____get_transaction_receipt_gen_vtable[7];
@@ -13977,6 +14014,20 @@ CPyL29: ;
                 goto fail;
             modname = PyUnicode_FromString("eth_portfolio._loaders.utils");
             if (modname == NULL) CPyError_OutOfMemory();
+            int rv = 0;
+            PyObject *mod_dict = PyImport_GetModuleDict();
+            PyObject *shared_lib = NULL;
+            rv = PyDict_GetItemStringRef(mod_dict, "eth_portfolio__mypyc", &shared_lib);
+            if (rv < 0) goto fail;
+            PyObject *shared_lib_file = PyObject_GetAttrString(shared_lib, "__file__");
+            if (shared_lib_file == NULL) goto fail;
+            PyObject *ext_suffix = PyUnicode_FromString(".cpython-313-x86_64-linux-gnu.so");
+            if (ext_suffix == NULL) CPyError_OutOfMemory();
+            Py_ssize_t is_pkg = 0;
+            rv = CPyImport_SetDunderAttrs(CPyModule_eth_portfolio____loaders___utils__internal, modname, shared_lib_file, ext_suffix, is_pkg);
+            Py_DECREF(ext_suffix);
+            Py_DECREF(shared_lib_file);
+            if (rv < 0) goto fail;
             if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio____loaders___utils__internal) < 0)
                 goto fail;
             Py_CLEAR(modname);
@@ -15173,6 +15224,20 @@ CPyL42: ;
                     goto fail;
                 modname = PyUnicode_FromString("eth_portfolio._argspec");
                 if (modname == NULL) CPyError_OutOfMemory();
+                int rv = 0;
+                PyObject *mod_dict = PyImport_GetModuleDict();
+                PyObject *shared_lib = NULL;
+                rv = PyDict_GetItemStringRef(mod_dict, "eth_portfolio__mypyc", &shared_lib);
+                if (rv < 0) goto fail;
+                PyObject *shared_lib_file = PyObject_GetAttrString(shared_lib, "__file__");
+                if (shared_lib_file == NULL) goto fail;
+                PyObject *ext_suffix = PyUnicode_FromString(".cpython-313-x86_64-linux-gnu.so");
+                if (ext_suffix == NULL) CPyError_OutOfMemory();
+                Py_ssize_t is_pkg = 0;
+                rv = CPyImport_SetDunderAttrs(CPyModule_eth_portfolio____argspec__internal, modname, shared_lib_file, ext_suffix, is_pkg);
+                Py_DECREF(ext_suffix);
+                Py_DECREF(shared_lib_file);
+                if (rv < 0) goto fail;
                 if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio____argspec__internal) < 0)
                     goto fail;
                 Py_CLEAR(modname);
@@ -16292,6 +16357,20 @@ CPyL7: ;
                         goto fail;
                     modname = PyUnicode_FromString("eth_portfolio._config");
                     if (modname == NULL) CPyError_OutOfMemory();
+                    int rv = 0;
+                    PyObject *mod_dict = PyImport_GetModuleDict();
+                    PyObject *shared_lib = NULL;
+                    rv = PyDict_GetItemStringRef(mod_dict, "eth_portfolio__mypyc", &shared_lib);
+                    if (rv < 0) goto fail;
+                    PyObject *shared_lib_file = PyObject_GetAttrString(shared_lib, "__file__");
+                    if (shared_lib_file == NULL) goto fail;
+                    PyObject *ext_suffix = PyUnicode_FromString(".cpython-313-x86_64-linux-gnu.so");
+                    if (ext_suffix == NULL) CPyError_OutOfMemory();
+                    Py_ssize_t is_pkg = 0;
+                    rv = CPyImport_SetDunderAttrs(CPyModule_eth_portfolio____config__internal, modname, shared_lib_file, ext_suffix, is_pkg);
+                    Py_DECREF(ext_suffix);
+                    Py_DECREF(shared_lib_file);
+                    if (rv < 0) goto fail;
                     if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio____config__internal) < 0)
                         goto fail;
                     Py_CLEAR(modname);
@@ -16504,6 +16583,20 @@ CPyL13: ;
                             goto fail;
                         modname = PyUnicode_FromString("eth_portfolio._shitcoins");
                         if (modname == NULL) CPyError_OutOfMemory();
+                        int rv = 0;
+                        PyObject *mod_dict = PyImport_GetModuleDict();
+                        PyObject *shared_lib = NULL;
+                        rv = PyDict_GetItemStringRef(mod_dict, "eth_portfolio__mypyc", &shared_lib);
+                        if (rv < 0) goto fail;
+                        PyObject *shared_lib_file = PyObject_GetAttrString(shared_lib, "__file__");
+                        if (shared_lib_file == NULL) goto fail;
+                        PyObject *ext_suffix = PyUnicode_FromString(".cpython-313-x86_64-linux-gnu.so");
+                        if (ext_suffix == NULL) CPyError_OutOfMemory();
+                        Py_ssize_t is_pkg = 0;
+                        rv = CPyImport_SetDunderAttrs(CPyModule_eth_portfolio____shitcoins__internal, modname, shared_lib_file, ext_suffix, is_pkg);
+                        Py_DECREF(ext_suffix);
+                        Py_DECREF(shared_lib_file);
+                        if (rv < 0) goto fail;
                         if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio____shitcoins__internal) < 0)
                             goto fail;
                         Py_CLEAR(modname);
@@ -18107,6 +18200,20 @@ CPyL70: ;
                                 goto fail;
                             modname = PyUnicode_FromString("eth_portfolio._stableish");
                             if (modname == NULL) CPyError_OutOfMemory();
+                            int rv = 0;
+                            PyObject *mod_dict = PyImport_GetModuleDict();
+                            PyObject *shared_lib = NULL;
+                            rv = PyDict_GetItemStringRef(mod_dict, "eth_portfolio__mypyc", &shared_lib);
+                            if (rv < 0) goto fail;
+                            PyObject *shared_lib_file = PyObject_GetAttrString(shared_lib, "__file__");
+                            if (shared_lib_file == NULL) goto fail;
+                            PyObject *ext_suffix = PyUnicode_FromString(".cpython-313-x86_64-linux-gnu.so");
+                            if (ext_suffix == NULL) CPyError_OutOfMemory();
+                            Py_ssize_t is_pkg = 0;
+                            rv = CPyImport_SetDunderAttrs(CPyModule_eth_portfolio____stableish__internal, modname, shared_lib_file, ext_suffix, is_pkg);
+                            Py_DECREF(ext_suffix);
+                            Py_DECREF(shared_lib_file);
+                            if (rv < 0) goto fail;
                             if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio____stableish__internal) < 0)
                                 goto fail;
                             Py_CLEAR(modname);
@@ -18717,6 +18824,20 @@ CPyL55: ;
                                     goto fail;
                                 modname = PyUnicode_FromString("eth_portfolio.constants");
                                 if (modname == NULL) CPyError_OutOfMemory();
+                                int rv = 0;
+                                PyObject *mod_dict = PyImport_GetModuleDict();
+                                PyObject *shared_lib = NULL;
+                                rv = PyDict_GetItemStringRef(mod_dict, "eth_portfolio__mypyc", &shared_lib);
+                                if (rv < 0) goto fail;
+                                PyObject *shared_lib_file = PyObject_GetAttrString(shared_lib, "__file__");
+                                if (shared_lib_file == NULL) goto fail;
+                                PyObject *ext_suffix = PyUnicode_FromString(".cpython-313-x86_64-linux-gnu.so");
+                                if (ext_suffix == NULL) CPyError_OutOfMemory();
+                                Py_ssize_t is_pkg = 0;
+                                rv = CPyImport_SetDunderAttrs(CPyModule_eth_portfolio___constants__internal, modname, shared_lib_file, ext_suffix, is_pkg);
+                                Py_DECREF(ext_suffix);
+                                Py_DECREF(shared_lib_file);
+                                if (rv < 0) goto fail;
                                 if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio___constants__internal) < 0)
                                     goto fail;
                                 Py_CLEAR(modname);
@@ -20189,6 +20310,20 @@ CPyL159: ;
                                         goto fail;
                                     modname = PyUnicode_FromString("eth_portfolio_scripts.docker");
                                     if (modname == NULL) CPyError_OutOfMemory();
+                                    int rv = 0;
+                                    PyObject *mod_dict = PyImport_GetModuleDict();
+                                    PyObject *shared_lib = NULL;
+                                    rv = PyDict_GetItemStringRef(mod_dict, "eth_portfolio__mypyc", &shared_lib);
+                                    if (rv < 0) goto fail;
+                                    PyObject *shared_lib_file = PyObject_GetAttrString(shared_lib, "__file__");
+                                    if (shared_lib_file == NULL) goto fail;
+                                    PyObject *ext_suffix = PyUnicode_FromString(".cpython-313-x86_64-linux-gnu.so");
+                                    if (ext_suffix == NULL) CPyError_OutOfMemory();
+                                    Py_ssize_t is_pkg = 1;
+                                    rv = CPyImport_SetDunderAttrs(CPyModule_eth_portfolio_scripts___docker__internal, modname, shared_lib_file, ext_suffix, is_pkg);
+                                    Py_DECREF(ext_suffix);
+                                    Py_DECREF(shared_lib_file);
+                                    if (rv < 0) goto fail;
                                     if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio_scripts___docker__internal) < 0)
                                         goto fail;
                                     Py_CLEAR(modname);
@@ -20493,6 +20628,20 @@ CPyL20: ;
                                             goto fail;
                                         modname = PyUnicode_FromString("eth_portfolio_scripts.docker.check");
                                         if (modname == NULL) CPyError_OutOfMemory();
+                                        int rv = 0;
+                                        PyObject *mod_dict = PyImport_GetModuleDict();
+                                        PyObject *shared_lib = NULL;
+                                        rv = PyDict_GetItemStringRef(mod_dict, "eth_portfolio__mypyc", &shared_lib);
+                                        if (rv < 0) goto fail;
+                                        PyObject *shared_lib_file = PyObject_GetAttrString(shared_lib, "__file__");
+                                        if (shared_lib_file == NULL) goto fail;
+                                        PyObject *ext_suffix = PyUnicode_FromString(".cpython-313-x86_64-linux-gnu.so");
+                                        if (ext_suffix == NULL) CPyError_OutOfMemory();
+                                        Py_ssize_t is_pkg = 0;
+                                        rv = CPyImport_SetDunderAttrs(CPyModule_eth_portfolio_scripts___docker___check__internal, modname, shared_lib_file, ext_suffix, is_pkg);
+                                        Py_DECREF(ext_suffix);
+                                        Py_DECREF(shared_lib_file);
+                                        if (rv < 0) goto fail;
                                         if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio_scripts___docker___check__internal) < 0)
                                             goto fail;
                                         Py_CLEAR(modname);
@@ -21364,29 +21513,14 @@ CPyL14: ;
     goto CPyL13;
 }
                                         
-                                        PyObject *CPyDef_docker_compose_____mypyc__ensure_containers_env_setup(PyObject *cpy_r_type);
-                                        PyObject *CPyDef_docker_compose___ensure_containers_env(void);
-                                        
-                                        static PyObject *
-                                        docker_compose___ensure_containers_env_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-                                        {
-                                            if (type != CPyType_docker_compose___ensure_containers_env) {
-                                                PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-                                                return NULL;
-                                            }
-                                            PyObject *self = CPyDef_docker_compose_____mypyc__ensure_containers_env_setup((PyObject*)type);
-                                            if (self == NULL)
-                                                return NULL;
-                                            return self;
-                                        }
-                                        
                                         static int
                                         docker_compose___ensure_containers_env_traverse(eth_portfolio_scripts___docker___docker_compose___ensure_containers_envObject *self, visitproc visit, void *arg)
                                         {
                                             Py_VISIT(self->___mypyc_self__);
                                             Py_VISIT(self->_fn);
                                             Py_VISIT(self->___mypyc_generator_attribute__compose_wrap);
-                                            return 0;
+                                            int rv = 0;
+                                            return rv;
                                         }
                                         
                                         static int
@@ -21414,6 +21548,22 @@ CPyL14: ;
                                             Py_TYPE(self)->tp_free((PyObject *)self);
                                             CPy_TRASHCAN_END(self)
                                             done: ;
+                                        }
+                                        
+                                        PyObject *CPyDef_docker_compose_____mypyc__ensure_containers_env_setup(PyObject *cpy_r_type);
+                                        PyObject *CPyDef_docker_compose___ensure_containers_env(void);
+                                        
+                                        static PyObject *
+                                        docker_compose___ensure_containers_env_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+                                        {
+                                            if (type != CPyType_docker_compose___ensure_containers_env) {
+                                                PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+                                                return NULL;
+                                            }
+                                            PyObject *self = CPyDef_docker_compose_____mypyc__ensure_containers_env_setup((PyObject*)type);
+                                            if (self == NULL)
+                                                return NULL;
+                                            return self;
                                         }
                                         
                                         static CPyVTableItem docker_compose___ensure_containers_env_vtable[1];
@@ -21481,22 +21631,6 @@ CPyL14: ;
                                         }
                                         
                                         
-                                        PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_env_setup(PyObject *cpy_r_type);
-                                        PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_env(void);
-                                        
-                                        static PyObject *
-                                        docker_compose___compose_wrap_ensure_containers_env_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-                                        {
-                                            if (type != CPyType_docker_compose___compose_wrap_ensure_containers_env) {
-                                                PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-                                                return NULL;
-                                            }
-                                            PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_env_setup((PyObject*)type);
-                                            if (self == NULL)
-                                                return NULL;
-                                            return self;
-                                        }
-                                        
                                         static int
                                         docker_compose___compose_wrap_ensure_containers_env_traverse(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_envObject *self, visitproc visit, void *arg)
                                         {
@@ -21513,7 +21647,8 @@ CPyL14: ;
                                             Py_VISIT(self->___mypyc_temp__1.f1);
                                             Py_VISIT(self->___mypyc_temp__1.f2);
                                             Py_VISIT(self->___mypyc_temp__2);
-                                            return 0;
+                                            int rv = 0;
+                                            return rv;
                                         }
                                         
                                         static int
@@ -21563,6 +21698,22 @@ CPyL14: ;
                                             Py_TYPE(self)->tp_free((PyObject *)self);
                                             CPy_TRASHCAN_END(self)
                                             done: ;
+                                        }
+                                        
+                                        PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_env_setup(PyObject *cpy_r_type);
+                                        PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_env(void);
+                                        
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_env_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+                                        {
+                                            if (type != CPyType_docker_compose___compose_wrap_ensure_containers_env) {
+                                                PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+                                                return NULL;
+                                            }
+                                            PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_env_setup((PyObject*)type);
+                                            if (self == NULL)
+                                                return NULL;
+                                            return self;
                                         }
                                         
                                         static CPyVTableItem docker_compose___compose_wrap_ensure_containers_env_vtable[1];
@@ -21636,29 +21787,15 @@ CPyL14: ;
                                             instance = instance ? instance : Py_None;
                                             return CPyDef_docker_compose___compose_wrap_ensure_containers_obj_____get__(self, instance, owner);
                                         }
-                                        PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_obj_setup(PyObject *cpy_r_type);
-                                        PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj(void);
-                                        
-                                        static PyObject *
-                                        docker_compose___compose_wrap_ensure_containers_obj_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-                                        {
-                                            if (type != CPyType_docker_compose___compose_wrap_ensure_containers_obj) {
-                                                PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-                                                return NULL;
-                                            }
-                                            PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_obj_setup((PyObject*)type);
-                                            if (self == NULL)
-                                                return NULL;
-                                            return self;
-                                        }
-                                        
                                         static int
                                         docker_compose___compose_wrap_ensure_containers_obj_traverse(eth_portfolio_scripts___docker___docker_compose___compose_wrap_ensure_containers_objObject *self, visitproc visit, void *arg)
                                         {
                                             Py_VISIT(self->___mypyc_env__);
                                             Py_VISIT(self->___cpyfunction__);
-                                            PyObject_VisitManagedDict((PyObject *)self, visit, arg);
-                                            return 0;
+                                            int rv = 0;
+                                            rv = PyObject_VisitManagedDict((PyObject *)self, visit, arg);
+                                            if (rv != 0) return rv;
+                                            return rv;
                                         }
                                         
                                         static int
@@ -21685,6 +21822,22 @@ CPyL14: ;
                                             Py_TYPE(self)->tp_free((PyObject *)self);
                                             CPy_TRASHCAN_END(self)
                                             done: ;
+                                        }
+                                        
+                                        PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_obj_setup(PyObject *cpy_r_type);
+                                        PyObject *CPyDef_docker_compose___compose_wrap_ensure_containers_obj(void);
+                                        
+                                        static PyObject *
+                                        docker_compose___compose_wrap_ensure_containers_obj_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+                                        {
+                                            if (type != CPyType_docker_compose___compose_wrap_ensure_containers_obj) {
+                                                PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+                                                return NULL;
+                                            }
+                                            PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_ensure_containers_obj_setup((PyObject*)type);
+                                            if (self == NULL)
+                                                return NULL;
+                                            return self;
                                         }
                                         
                                         static CPyVTableItem docker_compose___compose_wrap_ensure_containers_obj_vtable[9];
@@ -21941,27 +22094,12 @@ CPyL14: ;
                                         static PyAsyncMethods docker_compose___compose_wrap_gen___3_49_as_async = {
                                             .am_await = CPyDef_docker_compose___compose_wrap_gen___3_49_____await__,
                                         };
-                                        PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_gen___3_49_setup(PyObject *cpy_r_type);
-                                        PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49(void);
-                                        
-                                        static PyObject *
-                                        docker_compose___compose_wrap_gen___3_49_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-                                        {
-                                            if (type != CPyType_docker_compose___compose_wrap_gen___3_49) {
-                                                PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-                                                return NULL;
-                                            }
-                                            PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_gen___3_49_setup((PyObject*)type);
-                                            if (self == NULL)
-                                                return NULL;
-                                            return self;
-                                        }
-                                        
                                         static int
                                         docker_compose___compose_wrap_gen___3_49_traverse(eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object *self, visitproc visit, void *arg)
                                         {
                                             Py_VISIT(self->___mypyc_env__);
-                                            return 0;
+                                            int rv = 0;
+                                            return rv;
                                         }
                                         
                                         static int
@@ -21985,6 +22123,22 @@ CPyL14: ;
                                             Py_TYPE(self)->tp_free((PyObject *)self);
                                             CPy_TRASHCAN_END(self)
                                             done: ;
+                                        }
+                                        
+                                        PyObject *CPyDef_docker_compose_____mypyc__compose_wrap_gen___3_49_setup(PyObject *cpy_r_type);
+                                        PyObject *CPyDef_docker_compose___compose_wrap_gen___3_49(void);
+                                        
+                                        static PyObject *
+                                        docker_compose___compose_wrap_gen___3_49_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+                                        {
+                                            if (type != CPyType_docker_compose___compose_wrap_gen___3_49) {
+                                                PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+                                                return NULL;
+                                            }
+                                            PyObject *self = CPyDef_docker_compose_____mypyc__compose_wrap_gen___3_49_setup((PyObject*)type);
+                                            if (self == NULL)
+                                                return NULL;
+                                            return self;
                                         }
                                         
                                         static CPyVTableItem docker_compose___compose_wrap_gen___3_49_vtable[7];
@@ -22164,6 +22318,20 @@ CPyL14: ;
                                                 goto fail;
                                             modname = PyUnicode_FromString("eth_portfolio_scripts.docker.docker_compose");
                                             if (modname == NULL) CPyError_OutOfMemory();
+                                            int rv = 0;
+                                            PyObject *mod_dict = PyImport_GetModuleDict();
+                                            PyObject *shared_lib = NULL;
+                                            rv = PyDict_GetItemStringRef(mod_dict, "eth_portfolio__mypyc", &shared_lib);
+                                            if (rv < 0) goto fail;
+                                            PyObject *shared_lib_file = PyObject_GetAttrString(shared_lib, "__file__");
+                                            if (shared_lib_file == NULL) goto fail;
+                                            PyObject *ext_suffix = PyUnicode_FromString(".cpython-313-x86_64-linux-gnu.so");
+                                            if (ext_suffix == NULL) CPyError_OutOfMemory();
+                                            Py_ssize_t is_pkg = 0;
+                                            rv = CPyImport_SetDunderAttrs(CPyModule_eth_portfolio_scripts___docker___docker_compose__internal, modname, shared_lib_file, ext_suffix, is_pkg);
+                                            Py_DECREF(ext_suffix);
+                                            Py_DECREF(shared_lib_file);
+                                            if (rv < 0) goto fail;
                                             if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio_scripts___docker___docker_compose__internal) < 0)
                                                 goto fail;
                                             Py_CLEAR(modname);
@@ -24846,22 +25014,6 @@ CPyL37: ;
                                             static PyAsyncMethods eth_portfolio_scripts___balances___export_balances_gen_as_async = {
                                                 .am_await = CPyDef_eth_portfolio_scripts___balances___export_balances_gen_____await__,
                                             };
-                                            PyObject *CPyDef_eth_portfolio_scripts___balances_____mypyc__export_balances_gen_setup(PyObject *cpy_r_type);
-                                            PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen(void);
-                                            
-                                            static PyObject *
-                                            eth_portfolio_scripts___balances___export_balances_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
-                                            {
-                                                if (type != CPyType_eth_portfolio_scripts___balances___export_balances_gen) {
-                                                    PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
-                                                    return NULL;
-                                                }
-                                                PyObject *self = CPyDef_eth_portfolio_scripts___balances_____mypyc__export_balances_gen_setup((PyObject*)type);
-                                                if (self == NULL)
-                                                    return NULL;
-                                                return self;
-                                            }
-                                            
                                             static int
                                             eth_portfolio_scripts___balances___export_balances_gen_traverse(eth_portfolio_scripts___balances___export_balances_genObject *self, visitproc visit, void *arg)
                                             {
@@ -24898,7 +25050,8 @@ CPyL37: ;
                                                 Py_VISIT(self->___mypyc_temp__12.f0);
                                                 Py_VISIT(self->___mypyc_temp__12.f1);
                                                 Py_VISIT(self->___mypyc_temp__12.f2);
-                                                return 0;
+                                                int rv = 0;
+                                                return rv;
                                             }
                                             
                                             static int
@@ -24987,6 +25140,22 @@ CPyL37: ;
                                                 Py_TYPE(self)->tp_free((PyObject *)self);
                                                 CPy_TRASHCAN_END(self)
                                                 done: ;
+                                            }
+                                            
+                                            PyObject *CPyDef_eth_portfolio_scripts___balances_____mypyc__export_balances_gen_setup(PyObject *cpy_r_type);
+                                            PyObject *CPyDef_eth_portfolio_scripts___balances___export_balances_gen(void);
+                                            
+                                            static PyObject *
+                                            eth_portfolio_scripts___balances___export_balances_gen_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+                                            {
+                                                if (type != CPyType_eth_portfolio_scripts___balances___export_balances_gen) {
+                                                    PyErr_SetString(PyExc_TypeError, "interpreted classes cannot inherit from compiled");
+                                                    return NULL;
+                                                }
+                                                PyObject *self = CPyDef_eth_portfolio_scripts___balances_____mypyc__export_balances_gen_setup((PyObject*)type);
+                                                if (self == NULL)
+                                                    return NULL;
+                                                return self;
                                             }
                                             
                                             static CPyVTableItem eth_portfolio_scripts___balances___export_balances_gen_vtable[7];
@@ -25161,6 +25330,20 @@ CPyL37: ;
                                                     goto fail;
                                                 modname = PyUnicode_FromString("eth_portfolio_scripts.balances");
                                                 if (modname == NULL) CPyError_OutOfMemory();
+                                                int rv = 0;
+                                                PyObject *mod_dict = PyImport_GetModuleDict();
+                                                PyObject *shared_lib = NULL;
+                                                rv = PyDict_GetItemStringRef(mod_dict, "eth_portfolio__mypyc", &shared_lib);
+                                                if (rv < 0) goto fail;
+                                                PyObject *shared_lib_file = PyObject_GetAttrString(shared_lib, "__file__");
+                                                if (shared_lib_file == NULL) goto fail;
+                                                PyObject *ext_suffix = PyUnicode_FromString(".cpython-313-x86_64-linux-gnu.so");
+                                                if (ext_suffix == NULL) CPyError_OutOfMemory();
+                                                Py_ssize_t is_pkg = 0;
+                                                rv = CPyImport_SetDunderAttrs(CPyModule_eth_portfolio_scripts___balances__internal, modname, shared_lib_file, ext_suffix, is_pkg);
+                                                Py_DECREF(ext_suffix);
+                                                Py_DECREF(shared_lib_file);
+                                                if (rv < 0) goto fail;
                                                 if (PyObject_SetItem(PyImport_GetModuleDict(), modname, CPyModule_eth_portfolio_scripts___balances__internal) < 0)
                                                     goto fail;
                                                 Py_CLEAR(modname);
