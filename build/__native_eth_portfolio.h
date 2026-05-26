@@ -2,6 +2,14 @@
 #define MYPYC_NATIVE_eth_portfolio_H
 #include <Python.h>
 #include <CPy.h>
+#ifndef MYPYC_DECLARED_tuple_T2OO
+#define MYPYC_DECLARED_tuple_T2OO
+typedef struct tuple_T2OO {
+    PyObject *f0;
+    PyObject *f1;
+} tuple_T2OO;
+#endif
+
 #ifndef MYPYC_DECLARED_tuple_T3OOO
 #define MYPYC_DECLARED_tuple_T3OOO
 typedef struct tuple_T3OOO {
@@ -9,14 +17,6 @@ typedef struct tuple_T3OOO {
     PyObject *f1;
     PyObject *f2;
 } tuple_T3OOO;
-#endif
-
-#ifndef MYPYC_DECLARED_tuple_T2OO
-#define MYPYC_DECLARED_tuple_T2OO
-typedef struct tuple_T2OO {
-    PyObject *f0;
-    PyObject *f1;
-} tuple_T2OO;
 #endif
 
 #ifndef MYPYC_DECLARED_tuple_T3CIO
@@ -226,6 +226,33 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
+    PyObject *___mypyc_generator_attribute__args;
+    PyObject *___mypyc_generator_attribute__custom_buckets;
+    int32_t ___mypyc_next_label__;
+    PyObject *___mypyc_generator_attribute__interval;
+    PyObject *___mypyc_generator_attribute__portfolio;
+    PyObject *___mypyc_generator_attribute__export_start_block;
+    PyObject *___mypyc_temp__0;
+    tuple_T3OOO ___mypyc_temp__1;
+    PyObject *___mypyc_generator_attribute__start_ts;
+    PyObject *___mypyc_generator_attribute__start;
+    PyObject *___mypyc_temp__2;
+    PyObject *___mypyc_temp__3;
+    PyObject *___mypyc_temp__4;
+    tuple_T3OOO ___mypyc_temp__5;
+    tuple_T3OOO ___mypyc_temp__6;
+    PyObject *___mypyc_generator_attribute__ts;
+    PyObject *___mypyc_temp__7;
+    tuple_T3OOO ___mypyc_temp__8;
+    PyObject *___mypyc_temp__9;
+    tuple_T3OOO ___mypyc_temp__10;
+    PyObject *___mypyc_temp__11;
+    tuple_T3OOO ___mypyc_temp__12;
+} eth_portfolio_scripts___balances___export_balances_genObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
     PyObject *___mypyc_self__;
     PyObject *_fn;
     PyObject *___mypyc_generator_attribute__compose_wrap;
@@ -262,32 +289,5 @@ typedef struct {
     CPyVTableItem *vtable;
     PyObject *___mypyc_env__;
 } eth_portfolio_scripts___docker___docker_compose___compose_wrap_gen___3_49Object;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    PyObject *___mypyc_generator_attribute__args;
-    PyObject *___mypyc_generator_attribute__custom_buckets;
-    int32_t ___mypyc_next_label__;
-    PyObject *___mypyc_generator_attribute__interval;
-    PyObject *___mypyc_generator_attribute__portfolio;
-    PyObject *___mypyc_generator_attribute__export_start_block;
-    PyObject *___mypyc_temp__0;
-    tuple_T3OOO ___mypyc_temp__1;
-    PyObject *___mypyc_generator_attribute__start_ts;
-    PyObject *___mypyc_generator_attribute__start;
-    PyObject *___mypyc_temp__2;
-    PyObject *___mypyc_temp__3;
-    PyObject *___mypyc_temp__4;
-    tuple_T3OOO ___mypyc_temp__5;
-    tuple_T3OOO ___mypyc_temp__6;
-    PyObject *___mypyc_generator_attribute__ts;
-    PyObject *___mypyc_temp__7;
-    tuple_T3OOO ___mypyc_temp__8;
-    PyObject *___mypyc_temp__9;
-    tuple_T3OOO ___mypyc_temp__10;
-    PyObject *___mypyc_temp__11;
-    tuple_T3OOO ___mypyc_temp__12;
-} eth_portfolio_scripts___balances___export_balances_genObject;
 
 #endif
