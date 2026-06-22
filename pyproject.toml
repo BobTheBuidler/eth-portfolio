@@ -1,7 +1,8 @@
 [build-system]
 requires = [
-    "setuptools",
+    "setuptools>=80",
     "wheel",
+    "setuptools-scm>=8,<11",
     "mypy[mypyc]==2.1.0",
     "pandas-stubs==2.3.3.260113; python_version < '3.11'",
     "pandas-stubs==3.0.0.260204; python_version >= '3.11'",
@@ -17,6 +18,11 @@ requires = [
     "faster-async-lru==2.0.5.3",
     "typed-envs==0.2.4",
 ]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+local_scheme = "no-local-version"
+version_scheme = "python-simplified-semver"
 
 [tool.mypy]
 exclude = ["build/","cache/","env/"]
