@@ -13,4 +13,4 @@ pandas-stubs>=1.4.3,<3; python_version < '3.11'
 pandas-stubs>=1.4.3,<4; python_version >= '3.11'
 typed-envs>=0.2.3
 types-tqdm
-ypricemagic>=5.2,<5.3
+ypricemagic>=5.2.24,<5.3
