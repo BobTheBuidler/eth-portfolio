@@ -5,11 +5,12 @@ To install the `eth-portfolio` package, you should start with a fresh virtual en
 Due to the use of :mod:`setuptools_scm` for versioning, it is recommended to clone the repository first
 to ensure the version can be determined correctly.
 
-The `setup.py` file automatically handles the installation of :mod:`setuptools_scm` and :mod:`cython`,
-so you do not need to install them manually before running the setup process. Additionally,
-the `requirements.txt` file is used to specify additional dependencies that are installed via
-the `install_requires` parameter. Note that the last line of `requirements.txt` is intentionally excluded
-from installation, so ensure that any necessary dependency is not placed on the last line.
+Build requirements are declared in :mod:`pyproject.toml` and installed by PEP 517 frontends such as
+:mod:`pip` or :mod:`build`, so you do not need to install them manually before running the setup
+process. Additionally, the `requirements.txt` file is used to specify additional dependencies that are
+installed via the `install_requires` parameter. Note that the last line of `requirements.txt` is
+intentionally excluded from installation, so ensure that any necessary dependency is not placed on the
+last line.
 
 Example:
     .. code-block:: bash
@@ -110,18 +111,12 @@ setup(
     name="eth_portfolio",
     python_requires=">=3.10,<3.14",
     packages=find_packages(),
-    use_scm_version={
-        "root": ".",
-        "relative_to": __file__,
-        "local_scheme": "no-local-version",
-        "version_scheme": "python-simplified-semver",
-    },
+    use_scm_version=True,
     description="eth-portfolio makes it easy to analyze your portfolio.",
     author="BobTheBuidler",
     author_email="bobthebuidlerdefi@gmail.com",
     url="https://github.com/BobTheBuidler/eth-portfolio",
     install_requires=requirements,
-    setup_requires=["setuptools_scm"],
     package_data={
         "eth_portfolio": ["py.typed"],
         "eth_portfolio_scripts": ["py.typed"],
