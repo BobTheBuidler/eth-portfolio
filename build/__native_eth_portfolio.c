@@ -1442,19 +1442,15 @@ CPyL13: ;
         
         static PyObject *
         _nonce___BlockCache_get_lock(eth_portfolio____loaders____nonce___BlockCacheObject *self, void *closure);
-        static int
-        _nonce___BlockCache_set_lock(eth_portfolio____loaders____nonce___BlockCacheObject *self, PyObject *value, void *closure);
         static PyObject *
         _nonce___BlockCache_get_ttl(eth_portfolio____loaders____nonce___BlockCacheObject *self, void *closure);
-        static int
-        _nonce___BlockCache_set_ttl(eth_portfolio____loaders____nonce___BlockCacheObject *self, PyObject *value, void *closure);
         
         static PyGetSetDef _nonce___BlockCache_getseters[] = {
             {"lock",
-             (getter)_nonce___BlockCache_get_lock, (setter)_nonce___BlockCache_set_lock,
+             (getter)_nonce___BlockCache_get_lock, NULL,
              NULL, NULL},
             {"ttl",
-             (getter)_nonce___BlockCache_get_ttl, (setter)_nonce___BlockCache_set_ttl,
+             (getter)_nonce___BlockCache_get_ttl, NULL,
              NULL, NULL},
             {NULL}  /* Sentinel */
         };
@@ -1521,45 +1517,11 @@ CPyL13: ;
             return retval;
         }
         
-        static int
-        _nonce___BlockCache_set_lock(eth_portfolio____loaders____nonce___BlockCacheObject *self, PyObject *value, void *closure)
-        {
-            if (value == NULL) {
-                PyErr_SetString(PyExc_AttributeError,
-                    "'BlockCache' object attribute 'lock' cannot be deleted");
-                return -1;
-            }
-            if (self->_lock != NULL) {
-                CPy_DECREF(self->_lock);
-            }
-            PyObject *tmp = value;
-            CPy_INCREF(tmp);
-            self->_lock = tmp;
-            return 0;
-        }
-        
         static PyObject *
         _nonce___BlockCache_get_ttl(eth_portfolio____loaders____nonce___BlockCacheObject *self, void *closure)
         {
             PyObject *retval = PyFloat_FromDouble(self->_ttl);
             return retval;
-        }
-        
-        static int
-        _nonce___BlockCache_set_ttl(eth_portfolio____loaders____nonce___BlockCacheObject *self, PyObject *value, void *closure)
-        {
-            if (value == NULL) {
-                PyErr_SetString(PyExc_AttributeError,
-                    "'BlockCache' object attribute 'ttl' cannot be deleted");
-                return -1;
-            }
-            double tmp;
-            tmp = PyFloat_AsDouble(value);
-            if (tmp == -1.0 && PyErr_Occurred()) {
-                CPy_TypeError("float", value); return -1;
-            }
-            self->_ttl = tmp;
-            return 0;
         }
         
         static PyObject *CPyDunder___get___nonce_____mypyc_lambda__0_obj(PyObject *self, PyObject *instance, PyObject *owner) {
@@ -12358,8 +12320,7 @@ CPyL3: ;
     cpy_r_r8 = (void *)&cpy_r_r7;
     int64_t cpy_r_r9[2] = {1, 2};
     cpy_r_r10 = (void *)&cpy_r_r9;
-    cpy_r_r11 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* (('asyncio', 'asyncio', 'asyncio'),
-                                    ('logging', 'logging', 'logging')) */
+    cpy_r_r11 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* (('asyncio', 'asyncio', 'asyncio'), ('logging', 'logging', 'logging')) */
     cpy_r_r12 = CPyStatic__nonce___globals;
     cpy_r_r13 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio/_loaders/_nonce.py' */
     cpy_r_r14 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '<module>' */
@@ -12404,8 +12365,7 @@ CPyL3: ;
     cpy_r_r31 = (void *)&cpy_r_r30;
     int64_t cpy_r_r32[2] = {7, 8};
     cpy_r_r33 = (void *)&cpy_r_r32;
-    cpy_r_r34 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* (('a_sync', 'a_sync', 'a_sync'),
-                                    ('dank_mids', 'dank_mids', 'dank_mids')) */
+    cpy_r_r34 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* (('a_sync', 'a_sync', 'a_sync'), ('dank_mids', 'dank_mids', 'dank_mids')) */
     cpy_r_r35 = CPyStatic__nonce___globals;
     cpy_r_r36 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio/_loaders/_nonce.py' */
     cpy_r_r37 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '<module>' */
@@ -16224,9 +16184,7 @@ CPyL3: ;
     cpy_r_r13 = (void *)&cpy_r_r12;
     int64_t cpy_r_r14[3] = {3, 4, 5};
     cpy_r_r15 = (void *)&cpy_r_r14;
-    cpy_r_r16 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* (('dank_mids', 'dank_mids', 'dank_mids'),
-                                    ('eth_retry', 'eth_retry', 'eth_retry'),
-                                    ('msgspec', 'msgspec', 'msgspec')) */
+    cpy_r_r16 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* (('dank_mids', 'dank_mids', 'dank_mids'), ('eth_retry', 'eth_retry', 'eth_retry'), ('msgspec', 'msgspec', 'msgspec')) */
     cpy_r_r17 = CPyStatic_utils___globals;
     cpy_r_r18 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio/_loaders/utils.py' */
     cpy_r_r19 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '<module>' */
@@ -16411,8 +16369,7 @@ CPyL3: ;
     cpy_r_r88 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 1 */
     PyObject *cpy_r_r89[4] = {cpy_r_r85, cpy_r_r86, cpy_r_r87, cpy_r_r88};
     cpy_r_r90 = (PyObject **)&cpy_r_r89;
-    cpy_r_r91 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('min_sleep_time', 'max_sleep_time', 'max_retries',
-                                    'suppress_logs') */
+    cpy_r_r91 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('min_sleep_time', 'max_sleep_time', 'max_retries', 'suppress_logs') */
     cpy_r_r92 = PyObject_Vectorcall(cpy_r_r84, cpy_r_r90, 0, cpy_r_r91);
     CPy_DECREF(cpy_r_r84);
     if (unlikely(cpy_r_r92 == NULL)) {
@@ -21142,8 +21099,7 @@ CPyL31: ;
         cpy_r_r69
     };
     cpy_r_r71 = (PyObject **)&cpy_r_r70;
-    cpy_r_r72 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('label', 'start_block', 'concurrency', 'custom_buckets',
-                                    'load_prices') */
+    cpy_r_r72 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('label', 'start_block', 'concurrency', 'custom_buckets', 'load_prices') */
     cpy_r_r73 = PyObject_Vectorcall(cpy_r_r68, cpy_r_r71, 1, cpy_r_r72);
     CPy_DECREF(cpy_r_r68);
     if (unlikely(cpy_r_r73 == NULL)) {
@@ -23369,8 +23325,7 @@ CPyL3: ;
     cpy_r_r20 = (void *)&cpy_r_r19;
     int64_t cpy_r_r21[2] = {5, 6};
     cpy_r_r22 = (void *)&cpy_r_r21;
-    cpy_r_r23 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* (('a_sync', 'a_sync', 'a_sync'),
-                                    ('a_sync.asyncio', 'a_sync', 'a_sync')) */
+    cpy_r_r23 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* (('a_sync', 'a_sync', 'a_sync'), ('a_sync.asyncio', 'a_sync', 'a_sync')) */
     cpy_r_r24 = CPyStatic_eth_portfolio_scripts___balances___globals;
     cpy_r_r25 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth_portfolio_scripts/balances.py' */
     cpy_r_r26 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* '<module>' */
@@ -24079,8 +24034,7 @@ CPyL6: ;
     cpy_r_r28 = CPy_ExceptionMatches(cpy_r_r27);
     CPy_DecRef(cpy_r_r27);
     if (!cpy_r_r28) goto CPyL13;
-    cpy_r_r29 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('Docker is not installed. You must install Docker '
-                                    'before using dao-treasury.') */
+    cpy_r_r29 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Docker is not installed. You must install Docker before using dao-treasury.' */
     cpy_r_r30 = CPyModule_builtins;
     cpy_r_r31 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'RuntimeError' */
     cpy_r_r32 = CPyObject_GetAttr(cpy_r_r30, cpy_r_r31);
@@ -24477,8 +24431,7 @@ CPyL31: ;
     cpy_r_r6 = cpy_r_r68;
     goto CPyL2;
 CPyL32: ;
-    cpy_r_r69 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('Docker Compose is not installed. You must install '
-                                    'Docker Compose before using dao-treasury.') */
+    cpy_r_r69 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'Docker Compose is not installed. You must install Docker Compose before using dao-treasury.' */
     cpy_r_r70 = CPyModule_builtins;
     cpy_r_r71 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'RuntimeError' */
     cpy_r_r72 = CPyObject_GetAttr(cpy_r_r70, cpy_r_r71);
@@ -24598,8 +24551,7 @@ PyObject *CPyDef_check___check_system(void) {
     char cpy_r_r7;
     PyObject *cpy_r_r8;
     PyObject *cpy_r_r9;
-    cpy_r_r0 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* ('eth-portfolio is checking for the required docker '
-                                   'dependencies...') */
+    cpy_r_r0 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'eth-portfolio is checking for the required docker dependencies...' */
     cpy_r_r1 = CPyModule_builtins;
     cpy_r_r2 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'print' */
     cpy_r_r3 = CPyObject_GetAttr(cpy_r_r1, cpy_r_r2);
